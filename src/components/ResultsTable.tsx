@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { AlertTriangle, Bug, Shield, Code, ExternalLink, Download, ChevronDown, ChevronRight, Brain, MapPin, Loader2, BarChart3 } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -9,29 +9,21 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import { AIService } from '@/services/aiService';
 import { AnalyticsDashboard } from '@/components/AnalyticsDashboard';
 import { toast } from 'sonner';
+import { SecurityIssue } from '@/hooks/useAnalysis';
 
-interface Issue {
+// Use SecurityIssue interface from hooks, but keep backward compatibility
+interface Issue extends Partial<SecurityIssue> {
   line: number;
   tool: string;
   type: string;
   message: string;
-  severity: 'High' | 'Medium' | 'Low';
+  severity: 'Critical' | 'High' | 'Medium' | 'Low';
   recommendation: string;
   filename: string;
-  codeSnippet?: string;
-  aiSummary?: string;
-  cveId?: string;
-  confidence?: number;
-  category?: string;
-  impact?: string;
-  effort?: string;
-  startColumn?: number;
-  endColumn?: number;
-  affectedFunction?: string;
 }
 
 interface ResultsTableProps {
-  issues: Issue[];
+  issues: SecurityIssue[];
   totalFiles: number;
   analysisTime: string;
 }
@@ -45,7 +37,7 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
   const [aiSummary, setAiSummary] = useState<string>('');
   const [isGeneratingSummary, setIsGeneratingSummary] = useState(false);
   const [hasApiKeys, setHasApiKeys] = useState(false);
-  const aiService = new AIService();
+  const aiService = useMemo(() => new AIService(), []);
 
   // Check for API keys on component mount
   useEffect(() => {
@@ -78,9 +70,9 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
       console.log('Auto-generating AI summary...');
       generateAISummary();
     }
-  }, [hasApiKeys, issues.length]);
+  }, [hasApiKeys, issues.length, aiSummary, isGeneratingSummary, generateAISummary]);
 
-  const generateAISummary = async () => {
+  const generateAISummary = useCallback(async () => {
     console.log('Starting AI summary generation...');
     setIsGeneratingSummary(true);
     
@@ -140,7 +132,7 @@ Please configure your AI API keys to get detailed insights and recommendations.`
     } finally {
       setIsGeneratingSummary(false);
     }
-  };
+  }, [hasApiKeys, issues, aiService]);
 
   const toggleIssueExpansion = (index: number) => {
     const newExpanded = new Set(expandedIssues);
@@ -154,6 +146,7 @@ Please configure your AI API keys to get detailed insights and recommendations.`
 
   const getSeverityColor = (severity: string) => {
     switch (severity) {
+      case 'Critical': return 'bg-purple-100 text-purple-800 border-purple-200 dark:bg-purple-900/30 dark:text-purple-300 dark:border-purple-600';
       case 'High': return 'bg-red-100 text-red-800 border-red-200 dark:bg-red-900/30 dark:text-red-300 dark:border-red-600';
       case 'Medium': return 'bg-yellow-100 text-yellow-800 border-yellow-200 dark:bg-yellow-900/30 dark:text-yellow-300 dark:border-yellow-600';
       case 'Low': return 'bg-blue-100 text-blue-800 border-blue-200 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-600';
@@ -177,6 +170,7 @@ Please configure your AI API keys to get detailed insights and recommendations.`
   };
 
   const severityCounts = {
+    Critical: issues.filter(i => i.severity === 'Critical').length,
     High: issues.filter(i => i.severity === 'High').length,
     Medium: issues.filter(i => i.severity === 'Medium').length,
     Low: issues.filter(i => i.severity === 'Low').length,
@@ -191,50 +185,50 @@ Please configure your AI API keys to get detailed insights and recommendations.`
       {/* Enhanced Summary Cards */}
       <section aria-labelledby="summary-title">
         <h2 id="summary-title" className="sr-only">Analysis Summary</h2>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
           <Card className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/20 dark:to-orange-950/20 border-amber-200 dark:border-amber-800 card-hover animate-scale-in animate-stagger-1">
-            <CardContent className="p-3 sm:p-4">
-              <div className="flex items-center gap-2">
-                <AlertTriangle className="h-4 w-4 sm:h-5 sm:w-5 text-amber-600 dark:text-amber-400" aria-hidden="true" />
-                <div>
-                  <p className="text-lg sm:text-2xl font-bold text-amber-800 dark:text-amber-200">{issues.length}</p>
-                  <p className="text-xs sm:text-sm text-amber-600 dark:text-amber-400">Total Issues</p>
+            <CardContent className="p-3 sm:p-4 lg:p-6">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <AlertTriangle className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-amber-600 dark:text-amber-400 flex-shrink-0" aria-hidden="true" />
+                <div className="min-w-0">
+                  <p className="text-base sm:text-lg lg:text-2xl font-bold text-amber-800 dark:text-amber-200">{issues.length}</p>
+                  <p className="text-xs sm:text-sm text-amber-600 dark:text-amber-400 leading-tight">Total Issues</p>
                 </div>
               </div>
             </CardContent>
           </Card>
 
           <Card className="bg-gradient-to-br from-red-50 to-pink-50 dark:from-red-950/20 dark:to-pink-950/20 border-red-200 dark:border-red-800 card-hover animate-scale-in animate-stagger-2">
-            <CardContent className="p-3 sm:p-4">
-              <div className="flex items-center gap-2">
-                <Shield className="h-4 w-4 sm:h-5 sm:w-5 text-red-600 dark:text-red-400" aria-hidden="true" />
-                <div>
-                  <p className="text-lg sm:text-2xl font-bold text-red-800 dark:text-red-200">{securityIssues.length}</p>
-                  <p className="text-xs sm:text-sm text-red-600 dark:text-red-400">Security Issues</p>
+            <CardContent className="p-3 sm:p-4 lg:p-6">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <Shield className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-red-600 dark:text-red-400 flex-shrink-0" aria-hidden="true" />
+                <div className="min-w-0">
+                  <p className="text-base sm:text-lg lg:text-2xl font-bold text-red-800 dark:text-red-200">{securityIssues.length}</p>
+                  <p className="text-xs sm:text-sm text-red-600 dark:text-red-400 leading-tight">Security Issues</p>
                 </div>
               </div>
             </CardContent>
           </Card>
 
           <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-950/20 border-blue-200 dark:border-blue-800 card-hover animate-scale-in animate-stagger-3">
-            <CardContent className="p-3 sm:p-4">
-              <div className="flex items-center gap-2">
-                <Code className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600 dark:text-blue-400" aria-hidden="true" />
-                <div>
-                  <p className="text-lg sm:text-2xl font-bold text-blue-800 dark:text-blue-200">{totalFiles}</p>
-                  <p className="text-xs sm:text-sm text-blue-600 dark:text-blue-400">Files Analyzed</p>
+            <CardContent className="p-3 sm:p-4 lg:p-6">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <Code className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-blue-600 dark:text-blue-400 flex-shrink-0" aria-hidden="true" />
+                <div className="min-w-0">
+                  <p className="text-base sm:text-lg lg:text-2xl font-bold text-blue-800 dark:text-blue-200">{totalFiles}</p>
+                  <p className="text-xs sm:text-sm text-blue-600 dark:text-blue-400 leading-tight">Files Analyzed</p>
                 </div>
               </div>
             </CardContent>
           </Card>
 
           <Card className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/20 dark:to-emerald-950/20 border-green-200 dark:border-green-800 card-hover animate-scale-in animate-stagger-4">
-            <CardContent className="p-3 sm:p-4">
-              <div className="flex items-center gap-2">
-                <Bug className="h-4 w-4 sm:h-5 sm:w-5 text-green-600 dark:text-green-400" aria-hidden="true" />
-                <div>
-                  <p className="text-lg sm:text-2xl font-bold text-green-800 dark:text-green-200">{analysisTime}</p>
-                  <p className="text-xs sm:text-sm text-green-600 dark:text-green-400">Analysis Time</p>
+            <CardContent className="p-3 sm:p-4 lg:p-6">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <Bug className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-green-600 dark:text-green-400 flex-shrink-0" aria-hidden="true" />
+                <div className="min-w-0">
+                  <p className="text-base sm:text-lg lg:text-2xl font-bold text-green-800 dark:text-green-200">{analysisTime}</p>
+                  <p className="text-xs sm:text-sm text-green-600 dark:text-green-400 leading-tight">Analysis Time</p>
                 </div>
               </div>
             </CardContent>
@@ -245,50 +239,50 @@ Please configure your AI API keys to get detailed insights and recommendations.`
       {/* Main Tabs with Analytics */}
       <Tabs defaultValue="analytics" className="w-full">
         <TabsList
-          className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border shadow-lg rounded-lg overflow-hidden"
+          className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border shadow-lg rounded-lg overflow-hidden h-auto"
           role="tablist"
           aria-label="Analysis results tabs"
         >
           <TabsTrigger
             value="analytics"
-            className="flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-3 text-xs sm:text-sm data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white transition-all duration-300 focus-ring"
+            className="flex items-center justify-center gap-1 sm:gap-2 py-3 sm:py-3 px-2 sm:px-3 text-xs sm:text-sm data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white transition-all duration-300 focus-ring touch-target"
             role="tab"
           >
-            <BarChart3 className="h-3 w-3 sm:h-4 sm:w-4" aria-hidden="true" />
-            <span className="hidden sm:inline">Analytics</span>
-            <span className="sm:hidden">Charts</span>
+            <BarChart3 className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" aria-hidden="true" />
+            <span className="hidden xs:inline sm:hidden lg:inline">Analytics</span>
+            <span className="xs:hidden sm:inline lg:hidden">Charts</span>
           </TabsTrigger>
           <TabsTrigger
             value="all"
-            className="flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-3 text-xs sm:text-sm data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-indigo-500 data-[state=active]:text-white transition-all duration-300 focus-ring"
+            className="flex items-center justify-center gap-1 sm:gap-2 py-3 sm:py-3 px-2 sm:px-3 text-xs sm:text-sm data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-indigo-500 data-[state=active]:text-white transition-all duration-300 focus-ring touch-target"
             role="tab"
           >
-            <span className="hidden lg:inline">All Issues ({issues.length})</span>
-            <span className="lg:hidden">All ({issues.length})</span>
+            <span className="hidden md:inline">All Issues ({issues.length})</span>
+            <span className="md:hidden">All ({issues.length})</span>
           </TabsTrigger>
           <TabsTrigger
             value="security"
-            className="flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-3 text-xs sm:text-sm data-[state=active]:bg-gradient-to-r data-[state=active]:from-red-500 data-[state=active]:to-pink-500 data-[state=active]:text-white transition-all duration-300 focus-ring"
+            className="flex items-center justify-center gap-1 sm:gap-2 py-3 sm:py-3 px-2 sm:px-3 text-xs sm:text-sm data-[state=active]:bg-gradient-to-r data-[state=active]:from-red-500 data-[state=active]:to-pink-500 data-[state=active]:text-white transition-all duration-300 focus-ring touch-target"
             role="tab"
           >
-            <span className="hidden lg:inline">Security ({securityIssues.length})</span>
-            <span className="lg:hidden">Sec ({securityIssues.length})</span>
+            <span className="hidden md:inline">Security ({securityIssues.length})</span>
+            <span className="md:hidden">Sec ({securityIssues.length})</span>
           </TabsTrigger>
           <TabsTrigger
             value="bugs"
-            className="flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-3 text-xs sm:text-sm data-[state=active]:bg-gradient-to-r data-[state=active]:from-orange-500 data-[state=active]:to-red-500 data-[state=active]:text-white transition-all duration-300 focus-ring"
+            className="flex items-center justify-center gap-1 sm:gap-2 py-3 sm:py-3 px-2 sm:px-3 text-xs sm:text-sm data-[state=active]:bg-gradient-to-r data-[state=active]:from-orange-500 data-[state=active]:to-red-500 data-[state=active]:text-white transition-all duration-300 focus-ring touch-target"
             role="tab"
           >
-            <span className="hidden lg:inline">Bugs ({bugIssues.length})</span>
-            <span className="lg:hidden">Bug ({bugIssues.length})</span>
+            <span className="hidden md:inline">Bugs ({bugIssues.length})</span>
+            <span className="md:hidden">Bug ({bugIssues.length})</span>
           </TabsTrigger>
           <TabsTrigger
             value="code-smell"
-            className="flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-3 text-xs sm:text-sm data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-500 data-[state=active]:to-teal-500 data-[state=active]:text-white transition-all duration-300 focus-ring"
+            className="flex items-center justify-center gap-1 sm:gap-2 py-3 sm:py-3 px-2 sm:px-3 text-xs sm:text-sm data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-500 data-[state=active]:to-teal-500 data-[state=active]:text-white transition-all duration-300 focus-ring touch-target"
             role="tab"
           >
-            <span className="hidden lg:inline">Code Quality ({codeSmellIssues.length})</span>
-            <span className="lg:hidden">Quality ({codeSmellIssues.length})</span>
+            <span className="hidden md:inline">Code Quality ({codeSmellIssues.length})</span>
+            <span className="md:hidden">Quality ({codeSmellIssues.length})</span>
           </TabsTrigger>
         </TabsList>
 
@@ -416,23 +410,26 @@ Please configure your AI API keys to get detailed insights and recommendations.`
       </Tabs>
 
       {/* Enhanced Export Options */}
-      <div className="flex gap-2">
-        <Button variant="outline" className="flex items-center gap-2 hover:bg-blue-50 dark:hover:bg-blue-950/20">
-          <Download className="h-4 w-4" />
-          Export Detailed Report (PDF)
+      <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+        <Button variant="outline" className="btn-responsive flex items-center justify-center gap-2 hover:bg-blue-50 dark:hover:bg-blue-950/20 touch-target">
+          <Download className="h-4 w-4 flex-shrink-0" />
+          <span className="hidden sm:inline">Export Detailed Report (PDF)</span>
+          <span className="sm:hidden">Export PDF</span>
         </Button>
-        <Button variant="outline" className="flex items-center gap-2 hover:bg-green-50 dark:hover:bg-green-950/20">
-          <Download className="h-4 w-4" />
-          Export Raw Data (JSON)
+        <Button variant="outline" className="btn-responsive flex items-center justify-center gap-2 hover:bg-green-50 dark:hover:bg-green-950/20 touch-target">
+          <Download className="h-4 w-4 flex-shrink-0" />
+          <span className="hidden sm:inline">Export Raw Data (JSON)</span>
+          <span className="sm:hidden">Export JSON</span>
         </Button>
-        <Button 
-          variant="outline" 
-          className="flex items-center gap-2 hover:bg-purple-50 dark:hover:bg-purple-950/20"
+        <Button
+          variant="outline"
+          className="btn-responsive flex items-center justify-center gap-2 hover:bg-purple-50 dark:hover:bg-purple-950/20 touch-target"
           onClick={generateAISummary}
           disabled={isGeneratingSummary}
         >
-          <Brain className="h-4 w-4" />
-          {isGeneratingSummary ? 'Generating...' : 'Generate AI Summary'}
+          <Brain className="h-4 w-4 flex-shrink-0" />
+          <span className="hidden sm:inline">{isGeneratingSummary ? 'Generating...' : 'Generate AI Summary'}</span>
+          <span className="sm:hidden">{isGeneratingSummary ? 'Generating...' : 'AI Summary'}</span>
         </Button>
       </div>
     </div>
@@ -478,36 +475,41 @@ const DetailedIssuesTable: React.FC<DetailedIssuesTableProps> = ({
     <Card className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm border-0 shadow-xl">
       {/* Mobile Card Layout */}
       <div className="block lg:hidden">
-        <CardHeader>
-          <CardTitle className="text-lg">Issues Found ({issues.length})</CardTitle>
-          <CardDescription>Tap any issue to view details</CardDescription>
+        <CardHeader className="p-4 sm:p-6">
+          <CardTitle className="text-responsive-lg">Issues Found ({issues.length})</CardTitle>
+          <CardDescription className="text-responsive-sm">Tap any issue to view details</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-3 sm:space-y-4 p-4 sm:p-6 pt-0">
           {issues.map((issue, index) => (
-            <div key={index} className="border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden">
+            <div key={index} className="border border-slate-200 dark:border-slate-700 rounded-lg sm:rounded-xl overflow-hidden">
               <button
                 type="button"
                 onClick={() => toggleIssueExpansion(index)}
-                className="w-full p-4 text-left hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset"
-                aria-expanded={expandedIssues.has(index) ? 'true' : 'false'}
+                className="w-full p-3 sm:p-4 text-left hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset touch-target"
+                aria-expanded={expandedIssues.has(index)}
                 aria-controls={`issue-details-${index}`}
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-2">
-                      {getTypeIcon(issue.type)}
+                    <div className="flex items-center gap-2 mb-2 flex-wrap">
+                      <div className="flex-shrink-0">
+                        {getTypeIcon(issue.type)}
+                      </div>
                       <Badge className={`text-xs ${getSeverityColor(issue.severity)}`}>
                         {issue.severity}
                       </Badge>
+                      <Badge variant="outline" className="text-xs">
+                        {issue.tool}
+                      </Badge>
                     </div>
-                    <h4 className="font-medium text-slate-900 dark:text-white text-sm mb-1 line-clamp-2">
+                    <h4 className="font-medium text-slate-900 dark:text-white text-sm sm:text-base mb-1 leading-tight">
                       {issue.message}
                     </h4>
-                    <p className="text-xs text-slate-600 dark:text-slate-400 truncate">
+                    <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 truncate">
                       {issue.filename}:{issue.line}
                     </p>
                   </div>
-                  <div className="flex-shrink-0">
+                  <div className="flex-shrink-0 ml-2">
                     {expandedIssues.has(index) ?
                       <ChevronDown className="h-5 w-5 text-slate-400" /> :
                       <ChevronRight className="h-5 w-5 text-slate-400" />
@@ -519,30 +521,44 @@ const DetailedIssuesTable: React.FC<DetailedIssuesTableProps> = ({
               {expandedIssues.has(index) && (
                 <div
                   id={`issue-details-${index}`}
-                  className="border-t border-slate-200 dark:border-slate-700 p-4 bg-slate-50 dark:bg-slate-800/50"
+                  className="border-t border-slate-200 dark:border-slate-700 p-3 sm:p-4 bg-slate-50 dark:bg-slate-800/50"
                 >
-                  <div className="space-y-3">
+                  <div className="space-y-3 sm:space-y-4">
                     <div>
-                      <h5 className="text-sm font-medium text-slate-900 dark:text-white mb-1">
+                      <h5 className="text-sm font-medium text-slate-900 dark:text-white mb-2 flex items-center gap-2">
+                        <AlertTriangle className="h-4 w-4 text-amber-500" />
                         Recommendation
                       </h5>
-                      <p className="text-sm text-slate-600 dark:text-slate-400">
+                      <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                         {issue.recommendation}
                       </p>
                     </div>
 
+                    {issue.aiSummary && (
+                      <div>
+                        <h5 className="text-sm font-medium text-slate-900 dark:text-white mb-2 flex items-center gap-2">
+                          <Brain className="h-4 w-4 text-purple-500" />
+                          AI Analysis
+                        </h5>
+                        <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                          {issue.aiSummary}
+                        </p>
+                      </div>
+                    )}
+
                     {issue.codeSnippet && (
                       <div>
-                        <h5 className="text-sm font-medium text-slate-900 dark:text-white mb-1">
+                        <h5 className="text-sm font-medium text-slate-900 dark:text-white mb-2 flex items-center gap-2">
+                          <Code className="h-4 w-4 text-blue-500" />
                           Code Context
                         </h5>
-                        <pre className="text-xs bg-slate-100 dark:bg-slate-900 p-2 rounded overflow-x-auto">
+                        <pre className="text-xs bg-slate-100 dark:bg-slate-900 p-3 rounded-lg overflow-x-auto">
                           <code>{issue.codeSnippet}</code>
                         </pre>
                       </div>
                     )}
 
-                    <div className="flex items-center justify-between text-xs text-slate-500">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-xs text-slate-500 pt-2 border-t border-slate-200 dark:border-slate-700">
                       <span>Tool: {issue.tool}</span>
                       {issue.confidence && (
                         <span className={getConfidenceColor(issue.confidence)}>

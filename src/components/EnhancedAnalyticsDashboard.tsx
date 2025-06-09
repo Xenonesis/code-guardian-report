@@ -17,6 +17,37 @@ interface Issue {
   timestamp?: string;
 }
 
+interface FileStats {
+  file: string;
+  issues: number;
+  lines: Set<number>;
+  severities: Record<string, number>;
+}
+
+interface FileComplexityData {
+  file: string;
+  fullFile: string;
+  issues: number;
+  linesAffected: number;
+  complexity: number;
+  riskScore: number;
+}
+
+// Move color constants outside component to avoid dependency warnings
+const SEVERITY_COLORS = {
+  Critical: '#ef4444',
+  High: '#f97316',
+  Medium: '#eab308',
+  Low: '#22c55e'
+} as const;
+
+const TYPE_COLORS = {
+  Security: '#dc2626',
+  Bug: '#ea580c',
+  'Code Smell': '#ca8a04',
+  Vulnerability: '#b91c1c'
+} as const;
+
 interface EnhancedAnalyticsDashboardProps {
   issues: Issue[];
   totalFiles: number;
@@ -32,20 +63,7 @@ const EnhancedAnalyticsDashboard: React.FC<EnhancedAnalyticsDashboardProps> = ({
   const [timeframe, setTimeframe] = useState('7d');
   const [selectedMetric, setSelectedMetric] = useState('issues');
 
-  // Enhanced color schemes
-  const severityColors = {
-    Critical: '#dc2626',
-    High: '#ea580c',
-    Medium: '#d97706',
-    Low: '#65a30d'
-  };
-
-  const typeColors = {
-    Security: '#dc2626',
-    Bug: '#ea580c',
-    Vulnerability: '#d97706',
-    'Code Smell': '#65a30d'
-  };
+  // Use the constants defined outside the component
 
   // Enhanced data processing
   const severityData = useMemo(() => {
@@ -58,7 +76,7 @@ const EnhancedAnalyticsDashboard: React.FC<EnhancedAnalyticsDashboardProps> = ({
       severity,
       count,
       percentage: ((count / issues.length) * 100).toFixed(1),
-      fill: severityColors[severity as keyof typeof severityColors]
+      fill: SEVERITY_COLORS[severity as keyof typeof SEVERITY_COLORS]
     }));
   }, [issues]);
 
@@ -72,7 +90,7 @@ const EnhancedAnalyticsDashboard: React.FC<EnhancedAnalyticsDashboardProps> = ({
       type,
       count,
       percentage: ((count / issues.length) * 100).toFixed(1),
-      fill: typeColors[type as keyof typeof typeColors]
+      fill: TYPE_COLORS[type as keyof typeof TYPE_COLORS]
     }));
   }, [issues]);
 
@@ -92,10 +110,10 @@ const EnhancedAnalyticsDashboard: React.FC<EnhancedAnalyticsDashboardProps> = ({
       acc[fileName].lines.add(issue.line);
       acc[fileName].severities[issue.severity]++;
       return acc;
-    }, {} as Record<string, any>);
+    }, {} as Record<string, FileStats>);
 
     return Object.values(fileStats)
-      .map((item: any) => ({
+      .map((item: FileStats) => ({
         file: item.file.length > 15 ? item.file.substring(0, 12) + '...' : item.file,
         fullFile: item.file,
         issues: item.issues,

@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { setLocalStorageItem, removeLocalStorageItem } from '@/utils/storageEvents';
 
 interface AIProvider {
   id: string;
@@ -52,7 +53,7 @@ export const AIKeyManager: React.FC = () => {
 
   // Save API keys to localStorage whenever they change
   useEffect(() => {
-    localStorage.setItem('aiApiKeys', JSON.stringify(apiKeys));
+    setLocalStorageItem('aiApiKeys', JSON.stringify(apiKeys));
   }, [apiKeys]);
 
   const validateForm = () => {

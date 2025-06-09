@@ -4,19 +4,29 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { 
-  Activity, 
-  Zap, 
-  Clock, 
-  Database, 
-  Wifi, 
-  Monitor, 
-  Cpu, 
+import {
+  Activity,
+  Zap,
+  Clock,
+  Database,
+  Wifi,
+  Monitor,
+  Cpu,
   HardDrive,
   RefreshCw,
   TrendingUp,
   AlertTriangle
 } from 'lucide-react';
+
+interface MemoryInfo {
+  usedJSHeapSize: number;
+  totalJSHeapSize: number;
+  jsHeapSizeLimit: number;
+}
+
+interface PerformanceWithMemory extends Performance {
+  memory?: MemoryInfo;
+}
 
 interface PerformanceMetrics {
   loadTime: number;
@@ -58,7 +68,7 @@ const PerformanceMonitor: React.FC<PerformanceMonitorProps> = ({ className = '' 
     const renderTime = paint.find(p => p.name === 'first-contentful-paint')?.startTime || 0;
 
     // Memory usage (if available)
-    const memoryInfo = (performance as any).memory;
+    const memoryInfo = (performance as PerformanceWithMemory).memory;
     const memoryUsage = memoryInfo ? 
       Math.round((memoryInfo.usedJSHeapSize / memoryInfo.totalJSHeapSize) * 100) : 0;
 

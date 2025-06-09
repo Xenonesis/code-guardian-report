@@ -1,5 +1,5 @@
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Bot, Send, X, MessageCircle, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -15,8 +15,23 @@ interface ChatMessage {
   timestamp: Date;
 }
 
+interface AnalysisResults {
+  issues: Array<{
+    severity: string;
+    type: string;
+    message: string;
+    filename: string;
+    line: number;
+  }>;
+  totalFiles: number;
+  summary?: {
+    securityScore?: number;
+    qualityScore?: number;
+  };
+}
+
 interface FloatingChatBotProps {
-  analysisResults: any;
+  analysisResults: AnalysisResults;
 }
 
 export const FloatingChatBot: React.FC<FloatingChatBotProps> = ({ analysisResults }) => {
@@ -45,13 +60,17 @@ How can I help you today?`,
       };
       setMessages([welcomeMessage]);
     }
-  }, [isOpen, analysisResults]);
+  }, [isOpen, analysisResults, messages.length]);
 
-  useEffect(() => {
+  const scrollToBottom = useCallback(() => {
     if (scrollAreaRef.current) {
       scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight;
     }
-  }, [messages]);
+  }, []);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages.length, scrollToBottom]);
 
   const handleSendMessage = async () => {
     if (!input.trim() || isLoading) return;

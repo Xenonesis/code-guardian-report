@@ -23,24 +23,45 @@ export default defineConfig(({ mode }) => ({
     rollupOptions: {
       output: {
         manualChunks: {
-          // Vendor chunks
+          // Core vendor chunks
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          'ui-vendor': ['@radix-ui/react-toast', '@radix-ui/react-tabs', '@radix-ui/react-select', '@radix-ui/react-checkbox'],
+          'ui-vendor': [
+            '@radix-ui/react-toast',
+            '@radix-ui/react-tabs',
+            '@radix-ui/react-select',
+            '@radix-ui/react-checkbox',
+            '@radix-ui/react-dialog',
+            '@radix-ui/react-dropdown-menu',
+            '@radix-ui/react-popover'
+          ],
+          // Chart library as single chunk (recharts doesn't expose lib structure)
           'chart-vendor': ['recharts'],
           'query-vendor': ['@tanstack/react-query'],
           'icons-vendor': ['lucide-react'],
-          // Feature chunks
-          'analytics': ['src/components/AnalyticsDashboard.tsx', 'src/components/EnhancedAnalyticsDashboard.tsx'],
-          'export': ['src/components/DataExport.tsx'],
-          'search': ['src/components/AdvancedSearch.tsx'],
-          'performance': ['src/components/PerformanceMonitor.tsx'],
+          // Feature-based chunks
+          'analytics': [
+            'src/components/AnalyticsDashboard.tsx',
+            'src/components/EnhancedAnalyticsDashboard.tsx'
+          ],
+          'ai-features': [
+            'src/components/AISecurityInsights.tsx',
+            'src/components/FloatingChatBot.tsx',
+            'src/services/aiService.ts'
+          ],
+          'export-search': [
+            'src/components/DataExport.tsx',
+            'src/components/AdvancedSearch.tsx'
+          ],
+          'monitoring': ['src/components/PerformanceMonitor.tsx'],
         },
       },
     },
-    chunkSizeWarningLimit: 600,
+    chunkSizeWarningLimit: 500,
     sourcemap: false,
     minify: 'esbuild',
     target: 'es2020',
+    cssCodeSplit: true,
+    reportCompressedSize: false, // Faster builds
   },
   optimizeDeps: {
     include: [
@@ -49,7 +70,15 @@ export default defineConfig(({ mode }) => ({
       'react-router-dom',
       '@tanstack/react-query',
       'recharts',
-      'lucide-react'
+      'lucide-react',
+      'date-fns',
+      'clsx',
+      'tailwind-merge'
     ],
+    exclude: ['@vite/client', '@vite/env']
+  },
+  esbuild: {
+    // Remove console logs in production
+    drop: process.env.NODE_ENV === 'production' ? ['console', 'debugger'] : [],
   },
 }));

@@ -134,25 +134,8 @@ class ErrorBoundary extends Component<Props, State> {
   }
 }
 
-// Hook version for functional components
-export const useErrorHandler = () => {
-  const [error, setError] = React.useState<Error | null>(null);
-
-  const resetError = () => setError(null);
-
-  const handleError = React.useCallback((error: Error) => {
-    console.error('Error handled:', error);
-    setError(error);
-  }, []);
-
-  React.useEffect(() => {
-    if (error) {
-      throw error;
-    }
-  }, [error]);
-
-  return { handleError, resetError };
-};
+// Hook moved to separate file for better fast refresh support
+export { useErrorHandler } from '@/hooks/useErrorHandler';
 
 // Simple error fallback component
 export const ErrorFallback: React.FC<{ 

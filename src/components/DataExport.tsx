@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { Download, FileText, FileSpreadsheet, Code, Image, Loader2, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -61,7 +61,7 @@ const DataExport: React.FC<DataExportProps> = ({ data, className = '' }) => {
     groupByFile: false,
   });
 
-  const exportFormats = [
+  const exportFormats = useMemo(() => [
     {
       value: 'json',
       label: 'JSON',
@@ -102,7 +102,7 @@ const DataExport: React.FC<DataExportProps> = ({ data, className = '' }) => {
       mimeType: 'application/xml',
       extension: 'xml',
     },
-  ];
+  ], []);
 
   const severityOptions = ['Critical', 'High', 'Medium', 'Low'];
 

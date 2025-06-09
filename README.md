@@ -1,119 +1,234 @@
-# 🛡️ Code Guardian Report - AI-Powered Code Analysis Platform
+<div align="center">
+
+# 🛡️ Code Guardian Report
+### AI-Powered Code Analysis Platform
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![React](https://img.shields.io/badge/React-18.3.1-blue.svg)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.5.3-blue.svg)](https://typescriptlang.org/)
-[![Vite](https://img.shields.io/badge/Vite-5.4.1-purple.svg)](https://vitejs.dev/)
+[![Vite](https://img.shields.io/badge/Vite-6.3.5-purple.svg)](https://vitejs.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4.11-38B2AC.svg)](https://tailwindcss.com/)
 
-A comprehensive, AI-powered static code analysis platform that identifies security vulnerabilities, bugs, and code quality issues with real-time processing and intelligent insights.
+[![GitHub stars](https://img.shields.io/github/stars/Xenonesis/code-guardian-report?style=social)](https://github.com/Xenonesis/code-guardian-report/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/Xenonesis/code-guardian-report?style=social)](https://github.com/Xenonesis/code-guardian-report/network/members)
+[![GitHub issues](https://img.shields.io/github/issues/Xenonesis/code-guardian-report)](https://github.com/Xenonesis/code-guardian-report/issues)
+[![GitHub pull requests](https://img.shields.io/github/issues-pr/Xenonesis/code-guardian-report)](https://github.com/Xenonesis/code-guardian-report/pulls)
+
+**A comprehensive, AI-powered static code analysis platform that identifies security vulnerabilities, bugs, and code quality issues with real-time processing and intelligent insights.**
+
+[🚀 Live Demo](https://code-guardian-report.vercel.app) • [📖 Documentation](https://github.com/Xenonesis/code-guardian-report/wiki) • [🐛 Report Bug](https://github.com/Xenonesis/code-guardian-report/issues) • [✨ Request Feature](https://github.com/Xenonesis/code-guardian-report/issues)
 
 ![Code Guardian Dashboard](public/placeholder.svg)
 
-## ✨ Features
+</div>
 
-### 🔍 **Comprehensive Code Analysis**
-- **Security Vulnerability Detection**: Identifies injection flaws, authentication issues, and security weaknesses
-- **Bug Detection**: Finds logic errors, null pointer exceptions, and runtime issues
-- **Code Quality Assessment**: Detects code smells, complexity issues, and maintainability problems
-- **Multi-Language Support**: Supports Python, JavaScript, TypeScript, and more
+## ✨ Key Features
 
-### 🤖 **AI-Powered Insights**
-- **Natural Language Explanations**: Get human-readable explanations for complex issues
-- **Smart Recommendations**: AI-generated solutions and best practices
-- **Multiple AI Provider Support**: Compatible with OpenAI, Anthropic, and other providers
-- **Contextual Analysis**: Understands your codebase context for better insights
+<table>
+<tr>
+<td width="50%">
 
-### 📊 **Advanced Analytics Dashboard**
-- **Interactive Charts**: Recharts-powered visualizations with responsive design
-- **Risk Assessment**: Comprehensive security and quality metrics
-- **Trend Analysis**: Historical data visualization and progress tracking
-- **Performance Metrics**: Real-time monitoring and optimization insights
-- **Export Capabilities**: Multiple format support (JSON, CSV, PDF, HTML, XML)
+### 🔍 **Advanced Code Analysis**
+- 🛡️ **Security Vulnerability Detection**
+  - OWASP Top 10 compliance checking
+  - Injection flaw identification
+  - Authentication & authorization issues
+  - Cryptographic vulnerability detection
+- 🐛 **Intelligent Bug Detection**
+  - Logic error identification
+  - Null pointer exception prevention
+  - Memory leak detection
+  - Performance bottleneck analysis
+- 📏 **Code Quality Assessment**
+  - Code smell detection
+  - Complexity analysis (Cyclomatic, Cognitive)
+  - Maintainability scoring
+  - Technical debt calculation
 
-### 🎨 **Modern UI/UX**
-- **Mobile-First Design**: Responsive across all devices and screen sizes
-- **Dark/Light Theme**: Seamless theme switching with system preference detection
-- **Accessibility Compliant**: WCAG 2.1 AA standards with screen reader support
-- **Smooth Animations**: Hardware-accelerated micro-interactions and transitions
-- **Glass Morphism**: Modern design with backdrop blur effects
+### 🤖 **AI-Powered Intelligence**
+- 🧠 **Natural Language Processing**
+  - Human-readable issue explanations
+  - Context-aware recommendations
+  - Smart code suggestions
+- 🔗 **Multi-Provider Support**
+  - OpenAI GPT-4/GPT-3.5 integration
+  - Anthropic Claude support
+  - Custom AI model compatibility
+- 💡 **Contextual Analysis**
+  - Codebase-specific insights
+  - Project pattern recognition
+  - Historical trend analysis
 
-## 🚀 Tech Stack
+</td>
+<td width="50%">
 
-### **Frontend Framework**
-- **React 18.3.1** - Modern component-based UI library
-- **TypeScript 5.5.3** - Type-safe JavaScript with enhanced developer experience
-- **Vite 5.4.1** - Lightning-fast build tool and development server
+### 📊 **Rich Analytics Dashboard**
+- 📈 **Interactive Visualizations**
+  - Real-time charts with Recharts
+  - Responsive design across devices
+  - Customizable dashboard layouts
+- 🎯 **Risk Assessment Matrix**
+  - Severity-based issue categorization
+  - Security posture scoring
+  - Compliance tracking
+- 📤 **Advanced Export Options**
+  - JSON, CSV, PDF, HTML, XML formats
+  - Custom report templates
+  - Automated report generation
 
-### **Styling & UI Components**
-- **Tailwind CSS 3.4.11** - Utility-first CSS framework for rapid styling
-- **Radix UI** - Accessible, unstyled UI components
-- **shadcn/ui** - Beautiful, customizable component library
-- **Lucide React** - Modern icon library with 1000+ icons
+### 🎨 **Modern User Experience**
+- 📱 **Mobile-First Design**
+  - Responsive across all screen sizes
+  - Touch-optimized interactions
+  - Progressive Web App capabilities
+- 🌓 **Adaptive Theming**
+  - Dark/Light mode with system detection
+  - Custom theme creation
+  - Accessibility-focused color schemes
+- ♿ **Accessibility Excellence**
+  - WCAG 2.1 AA compliance
+  - Screen reader optimization
+  - Keyboard navigation support
+  - High contrast mode
+- ✨ **Smooth Interactions**
+  - Hardware-accelerated animations
+  - Glass morphism effects
+  - Micro-interactions for better UX
 
-### **State Management & Data**
-- **TanStack Query 5.56.2** - Powerful data synchronization for React
-- **React Hook Form 7.53.0** - Performant forms with easy validation
-- **Zod 3.23.8** - TypeScript-first schema validation
+</td>
+</tr>
+</table>
 
-### **Charts & Visualization**
-- **Recharts 2.15.3** - Composable charting library built on React and D3
-- **Data Visualization**: Interactive pie charts, bar charts, line graphs, and area charts
+## 🚀 Technology Stack
 
-### **Developer Experience**
-- **ESLint 9.9.0** - Code linting and quality enforcement
-- **PostCSS 8.4.47** - CSS post-processing with autoprefixer
-- **TypeScript ESLint** - TypeScript-specific linting rules
+<div align="center">
 
-### **Build & Optimization**
-- **Vite React SWC Plugin** - Fast React refresh and compilation
-- **Code Splitting** - Lazy loading for optimal performance
-- **Bundle Optimization** - Tree shaking and dead code elimination
+### Core Technologies
 
-## 🛠️ Installation & Setup
+| Category | Technology | Version | Purpose |
+|----------|------------|---------|---------|
+| **Frontend** | React | 18.3.1 | Component-based UI library |
+| **Language** | TypeScript | 5.5.3 | Type-safe development |
+| **Build Tool** | Vite | 6.3.5 | Lightning-fast bundling |
+| **Styling** | Tailwind CSS | 3.4.11 | Utility-first CSS framework |
 
-### Prerequisites
-- **Node.js** (v18.0.0 or higher)
-- **npm** or **bun** package manager
+</div>
 
-### Quick Start
+### 🎨 **UI & Design System**
+```
+📦 UI Components
+├── 🎯 Radix UI - Accessible, unstyled primitives
+├── 🎨 shadcn/ui - Beautiful, customizable components
+├── 🔍 Lucide React - 1000+ modern icons
+└── ✨ Tailwind CSS - Utility-first styling
+```
 
-1. **Clone the repository**
+### 📊 **Data & State Management**
+```
+📦 Data Layer
+├── 🔄 TanStack Query 5.56.2 - Server state management
+├── 📝 React Hook Form 7.53.0 - Form handling & validation
+├── 🛡️ Zod 3.23.8 - Schema validation
+└── 📈 Recharts 2.15.3 - Data visualization
+```
+
+### 🛠️ **Development Tools**
+```
+📦 Developer Experience
+├── 🔍 ESLint 9.9.0 - Code linting & quality
+├── 🎯 TypeScript ESLint - TS-specific rules
+├── 🎨 PostCSS 8.4.47 - CSS post-processing
+├── ⚡ Vite SWC Plugin - Fast React refresh
+└── 📦 Code Splitting - Optimized loading
+```
+
+### 🔧 **Build & Optimization**
+- **⚡ Lightning Fast Builds**: Vite with SWC for sub-second rebuilds
+- **📦 Smart Bundling**: Automatic code splitting and tree shaking
+- **🎯 Performance**: Lazy loading and optimized chunk sizes
+- **🔄 Hot Reload**: Instant feedback during development
+
+## 🛠️ Quick Start Guide
+
+### 📋 Prerequisites
+
+<table>
+<tr>
+<td width="50%">
+
+**Required:**
+- 🟢 **Node.js** v18.0.0+ ([Download](https://nodejs.org/))
+- 📦 **Package Manager**: npm, yarn, or bun
+- 🌐 **Modern Browser**: Chrome 90+, Firefox 88+, Safari 14+
+
+</td>
+<td width="50%">
+
+**Recommended:**
+- 💻 **VS Code** with TypeScript extension
+- 🔧 **Git** for version control
+- 🚀 **Bun** for faster package management
+
+</td>
+</tr>
+</table>
+
+### ⚡ Installation
+
+<details>
+<summary><b>🚀 Option 1: One-Click Deploy (Recommended)</b></summary>
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Xenonesis/code-guardian-report)
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/Xenonesis/code-guardian-report)
+
+</details>
+
+<details>
+<summary><b>💻 Option 2: Local Development</b></summary>
+
 ```bash
+# 1️⃣ Clone the repository
 git clone https://github.com/Xenonesis/code-guardian-report.git
 cd code-guardian-report
+
+# 2️⃣ Install dependencies (choose one)
+npm install        # Using npm
+yarn install       # Using yarn
+bun install        # Using bun (fastest)
+
+# 3️⃣ Start development server
+npm run dev        # Using npm
+yarn dev           # Using yarn
+bun dev            # Using bun
+
+# 4️⃣ Open in browser
+# Navigate to http://localhost:8080
 ```
 
-2. **Install dependencies**
-```bash
-# Using npm
-npm install
+</details>
 
-# Using bun (recommended)
-bun install
-```
+### 📜 Available Scripts
 
-3. **Start development server**
-```bash
-# Using npm
-npm run dev
+| Command | Description | Usage |
+|---------|-------------|-------|
+| `dev` | Start development server | `npm run dev` |
+| `build` | Build for production | `npm run build` |
+| `build:dev` | Build for development | `npm run build:dev` |
+| `preview` | Preview production build | `npm run preview` |
+| `lint` | Run ESLint code quality check | `npm run lint` |
 
-# Using bun
-bun dev
-```
+### 🔧 Environment Setup
 
-4. **Open your browser**
-Navigate to `http://localhost:8080` to access the application.
+Create a `.env.local` file in the root directory:
 
-### Available Scripts
+```env
+# AI Provider Configuration (Optional)
+VITE_OPENAI_API_URL=https://api.openai.com/v1
+VITE_ANTHROPIC_API_URL=https://api.anthropic.com/v1
 
-```bash
-# Development
-npm run dev          # Start development server
-npm run build        # Build for production
-npm run build:dev    # Build for development
-npm run preview      # Preview production build
-npm run lint         # Run ESLint for code quality
+# Application Settings
+VITE_APP_NAME="Code Guardian Report"
+VITE_APP_VERSION="0.11.0"
 ```
 
 ## 📱 Usage Guide
@@ -277,20 +392,42 @@ We welcome contributions! Please follow these steps:
 - **FID (First Input Delay)**: < 100ms
 - **CLS (Cumulative Layout Shift)**: < 0.1
 
+## 📈 Changelog
+
+### 🎉 Version 0.11.0 (Latest) - January 2025
+- ✨ **Major Codebase Cleanup**: Removed unnecessary documentation files and build artifacts
+- 🚀 **Enhanced README**: Comprehensive documentation with modern design
+- 📦 **Package Management**: Resolved conflicting lock files (removed bun.lockb)
+- 🎯 **Performance**: Optimized project structure for better maintainability
+- 🔧 **Developer Experience**: Improved development workflow and documentation
+
+### 🔄 Version 0.10.0-beta - Previous Release
+- 🤖 AI-powered security insights and recommendations
+- 📊 Advanced analytics dashboard with interactive charts
+- ♿ WCAG 2.1 AA accessibility compliance
+- 🎨 Modern UI/UX with dark/light theme support
+- 🔍 Comprehensive code analysis engine
+
 ## 🔮 Roadmap
 
-### **Upcoming Features**
-- [ ] **Multi-language Support**: Internationalization (i18n)
-- [ ] **Progressive Web App**: Offline functionality and app-like experience
-- [ ] **Advanced Integrations**: GitHub, GitLab, and Bitbucket integration
-- [ ] **Team Collaboration**: Shared workspaces and team management
-- [ ] **Custom Rules**: User-defined analysis rules and patterns
+<details>
+<summary><b>🚀 Upcoming Features (Q1-Q2 2025)</b></summary>
 
-### **Long-term Goals**
-- [ ] **Voice Commands**: Voice-controlled file upload and navigation
-- [ ] **Machine Learning**: Custom ML models for project-specific analysis
-- [ ] **Enterprise Features**: SSO, audit logs, and compliance reporting
-- [ ] **Plugin System**: Extensible architecture for third-party tools
+### **Next Release (v0.12.0)**
+- [ ] 🌍 **Multi-language Support**: Internationalization (i18n) with 10+ languages
+- [ ] 📱 **Progressive Web App**: Offline functionality and app-like experience
+- [ ] 🔗 **Git Integration**: GitHub, GitLab, and Bitbucket direct integration
+- [ ] 👥 **Team Collaboration**: Shared workspaces and team management
+- [ ] 🎯 **Custom Rules**: User-defined analysis rules and patterns
+
+### **Future Releases (v0.13.0+)**
+- [ ] 🎤 **Voice Commands**: Voice-controlled file upload and navigation
+- [ ] 🧠 **Machine Learning**: Custom ML models for project-specific analysis
+- [ ] 🏢 **Enterprise Features**: SSO, audit logs, and compliance reporting
+- [ ] 🔌 **Plugin System**: Extensible architecture for third-party tools
+- [ ] 📊 **Advanced Analytics**: Predictive analysis and trend forecasting
+
+</details>
 
 ## 📄 License
 
@@ -299,9 +436,16 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 ## 👤 Author
 
 **Aditya Kumar Tiwari**
-- Email: [itisaddy7@gmail.com](mailto:itisaddy7@gmail.com)
-- GitHub: [@adityakumartiwari](https://github.com/adityakumartiwari)
-- LinkedIn: [Aditya Kumar Tiwari](https://linkedin.com/in/adityakumartiwari)
+- 🎓 BCA in Cybersecurity, Sushant University
+- 💼 Cybersecurity Enthusiast | Full-Stack Developer | Lifelong Learner
+- 📧 Email: [itisaddy7@gmail.com](mailto:itisaddy7@gmail.com)
+- 🐙 GitHub: [@Xenonesis](https://github.com/Xenonesis)
+- 💼 LinkedIn: [Aditya Kumar Tiwari](https://linkedin.com/in/itisaddy)
+- 📸 Instagram: [@i__aditya7](https://instagram.com/i__aditya7)
+- 🌐 Portfolio: [iaddy.netlify.app](https://iaddy.netlify.app)
+
+### 🚀 About the Developer
+Passionate about the intersection of cybersecurity and development, Aditya specializes in creating secure and scalable solutions. Currently pursuing BCA in Cybersecurity with expertise in Python, JavaScript, Linux, and Cloud Computing. Committed to building impactful digital experiences that prioritize security and innovation.
 
 ## 🙏 Acknowledgments
 
@@ -325,8 +469,49 @@ If you encounter any issues or have questions:
 
 <div align="center">
 
-**Made with ❤️ by [Aditya Kumar Tiwari](mailto:itisaddy7@gmail.com)**
+## 🌟 Show Your Support
 
-[⭐ Star this repository](https://github.com/Xenonesis/code-guardian-report) if you find it helpful!
+If this project helped you, please consider:
+
+[![GitHub stars](https://img.shields.io/github/stars/Xenonesis/code-guardian-report?style=social)](https://github.com/Xenonesis/code-guardian-report/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/Xenonesis/code-guardian-report?style=social)](https://github.com/Xenonesis/code-guardian-report/network/members)
+[![GitHub watchers](https://img.shields.io/github/watchers/Xenonesis/code-guardian-report?style=social)](https://github.com/Xenonesis/code-guardian-report/watchers)
+
+**⭐ [Star this repository](https://github.com/Xenonesis/code-guardian-report) if you find it helpful!**
+
+## 👨‍💻 About the Developer
+
+<table>
+<tr>
+<td width="30%" align="center">
+<img src="https://github.com/Xenonesis.png" width="150" style="border-radius: 50%;" alt="Aditya Kumar Tiwari"/>
+</td>
+<td width="70%">
+
+**Aditya Kumar Tiwari**
+*Cybersecurity Enthusiast | Full-Stack Developer | Lifelong Learner*
+
+🎓 **BCA in Cybersecurity** - Sushant University
+💼 **Specialization**: Secure application development, AI integration, modern web technologies
+🌟 **Mission**: Building impactful digital experiences that prioritize security and innovation
+
+**Connect with me:**
+- 🌐 [Portfolio](https://iaddy.netlify.app)
+- 💼 [LinkedIn](https://linkedin.com/in/itisaddy)
+- 🐙 [GitHub](https://github.com/Xenonesis)
+- 📧 [Email](mailto:itisaddy7@gmail.com)
+- 📸 [Instagram](https://instagram.com/i__aditya7)
+
+</td>
+</tr>
+</table>
+
+## 📄 License & Copyright
+
+**© 2025 Code Guardian Report**
+
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+Built with ❤️ for the developer community. **Made for secure development.**
 
 </div>

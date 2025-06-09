@@ -3,9 +3,12 @@ import { useEffect } from "react";
 import { Home, ArrowLeft, Search, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { PageLayout } from "@/components/layouts/PageLayout";
+import { useDarkMode } from "@/hooks/useDarkMode";
 
 const NotFound = () => {
   const location = useLocation();
+  const { isDarkMode, toggleDarkMode } = useDarkMode();
 
   useEffect(() => {
     console.error(
@@ -15,8 +18,9 @@ const NotFound = () => {
   }, [location.pathname]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-slate-950 dark:via-slate-900 dark:to-blue-950 flex items-center justify-center p-4">
-      <Card className="w-full max-w-2xl bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm border-0 shadow-2xl animate-fade-in">
+    <PageLayout isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} showNavigation={false}>
+      <div className="min-h-[80vh] flex items-center justify-center">
+        <Card className="w-full max-w-2xl bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm border-0 shadow-2xl animate-fade-in">
         <CardHeader className="text-center pb-6">
           <div className="mx-auto mb-6 p-4 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full w-fit animate-bounce-in">
             <Shield className="h-12 w-12 text-white" />
@@ -83,7 +87,8 @@ const NotFound = () => {
           </div>
         </CardContent>
       </Card>
-    </div>
+      </div>
+    </PageLayout>
   );
 };
 
