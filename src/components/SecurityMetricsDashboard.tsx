@@ -1,48 +1,26 @@
 import React from 'react';
-import { 
-  Shield, 
-  AlertTriangle, 
-  TrendingUp, 
-  Target, 
-  Clock, 
-  FileText,
-  Bug,
-  Code,
-  Zap,
-  CheckCircle
-} from 'lucide-react';
+import { Shield, Target, Clock, FileText, Bug, Zap } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
+import { TooltipProvider } from '@/components/ui/tooltip';
 import { AnalysisResults } from '@/hooks/useAnalysis';
-import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { MetricsCard } from '@/components/dashboard/MetricsCard';
+import { QualityScoreCard } from '@/components/dashboard/QualityScoreCard';
+import { SeverityChart } from '@/components/dashboard/SeverityChart';
+import { OwaspChart } from '@/components/dashboard/OwaspChart';
+import { SecurityRecommendations } from '@/components/dashboard/SecurityRecommendations';
 
 interface SecurityMetricsDashboardProps {
   results: AnalysisResults;
 }
 
 export const SecurityMetricsDashboard: React.FC<SecurityMetricsDashboardProps> = ({ results }) => {
-  // Prepare data for charts
-  const severityData = [
-    { name: 'Critical', value: results.summary.criticalIssues, color: '#8B5CF6' },
-    { name: 'High', value: results.summary.highIssues, color: '#EF4444' },
-    { name: 'Medium', value: results.summary.mediumIssues, color: '#F59E0B' },
-    { name: 'Low', value: results.summary.lowIssues, color: '#3B82F6' }
-  ];
 
-  const owaspData = results.issues.reduce((acc, issue) => {
-    if (issue.owaspCategory) {
-      const category = issue.owaspCategory.split(' – ')[1] || issue.owaspCategory;
-      acc[category] = (acc[category] || 0) + 1;
-    }
-    return acc;
-  }, {} as Record<string, number>);
-
-  const owaspChartData = Object.entries(owaspData).map(([name, value]) => ({
-    name: name.length > 20 ? name.substring(0, 17) + '...' : name,
-    value,
-    fullName: name
-  }));
+  // Ensure quality score is a valid number
+  const safeQualityScore = typeof results.summary.qualityScore === 'number' && !isNaN(results.summary.qualityScore)
+    ? results.summary.qualityScore
+    : 0;
 
   const getScoreColor = (score: number) => {
     if (score >= 80) return 'text-green-600';
@@ -58,160 +36,65 @@ export const SecurityMetricsDashboard: React.FC<SecurityMetricsDashboardProps> =
     return 'bg-red-100 dark:bg-red-900/20';
   };
 
+  const getQualityRating = (score: number): string => {
+    if (score >= 90) return 'Excellent';
+    if (score >= 80) return 'Very Good';
+    if (score >= 70) return 'Good';
+    if (score >= 60) return 'Fair';
+    if (score >= 40) return 'Poor';
+    return 'Critical';
+  };
+
   return (
-    <div className="space-y-6">
-      {/* Key Metrics Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className={`${getScoreBgColor(results.summary.securityScore)} border-0`}>
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-slate-600 dark:text-slate-400">Security Score</p>
-                <p className={`text-2xl font-bold ${getScoreColor(results.summary.securityScore)}`}>
-                  {results.summary.securityScore}/100
-                </p>
-              </div>
-              <Shield className={`h-8 w-8 ${getScoreColor(results.summary.securityScore)}`} />
-            </div>
-            <Progress 
-              value={results.summary.securityScore} 
-              className="mt-2 h-2"
-            />
-          </CardContent>
-        </Card>
+    <TooltipProvider>
+      <div className="space-y-6">
+        {/* Key Metrics Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <MetricsCard
+            title="Security Score"
+            value={`${results.summary.securityScore}/100`}
+            icon={Shield}
+            score={results.summary.securityScore}
+            className={getScoreBgColor(results.summary.securityScore)}
+            iconClassName={getScoreColor(results.summary.securityScore)}
+            valueClassName={getScoreColor(results.summary.securityScore)}
+            showProgress={true}
+          />
 
-        <Card className={`${getScoreBgColor(results.summary.qualityScore)} border-0`}>
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-slate-600 dark:text-slate-400">Quality Score</p>
-                <p className={`text-2xl font-bold ${getScoreColor(results.summary.qualityScore)}`}>
-                  {results.summary.qualityScore}/100
-                </p>
-              </div>
-              <Code className={`h-8 w-8 ${getScoreColor(results.summary.qualityScore)}`} />
-            </div>
-            <Progress 
-              value={results.summary.qualityScore} 
-              className="mt-2 h-2"
-            />
-          </CardContent>
-        </Card>
+          <QualityScoreCard score={safeQualityScore} />
 
-        <Card className="bg-blue-50 dark:bg-blue-900/20 border-0">
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-slate-600 dark:text-slate-400">Vulnerability Density</p>
-                <p className="text-2xl font-bold text-blue-600">
-                  {results.metrics.vulnerabilityDensity}
-                </p>
-                <p className="text-xs text-slate-500">per 1000 lines</p>
-              </div>
-              <Target className="h-8 w-8 text-blue-600" />
-            </div>
-          </CardContent>
-        </Card>
+          <MetricsCard
+            title="Vulnerability Density"
+            value={results.metrics.vulnerabilityDensity}
+            subtitle="per 1000 lines"
+            icon={Target}
+            className="bg-blue-50 dark:bg-blue-900/20"
+            iconClassName="text-blue-600"
+            valueClassName="text-blue-600"
+          />
 
-        <Card className="bg-purple-50 dark:bg-purple-900/20 border-0">
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-slate-600 dark:text-slate-400">Technical Debt</p>
-                <p className="text-2xl font-bold text-purple-600">
-                  {results.metrics.technicalDebt}
-                </p>
-                <p className="text-xs text-slate-500">estimated</p>
-              </div>
-              <Clock className="h-8 w-8 text-purple-600" />
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+          <MetricsCard
+            title="Technical Debt"
+            value={results.metrics.technicalDebt}
+            subtitle="estimated"
+            icon={Clock}
+            className="bg-purple-50 dark:bg-purple-900/20"
+            iconClassName="text-purple-600"
+            valueClassName="text-purple-600"
+          />
+        </div>
 
-      {/* Detailed Metrics Cards */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Severity Distribution */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <AlertTriangle className="h-5 w-5" />
-              Issue Severity Distribution
-            </CardTitle>
-            <CardDescription>
-              Breakdown of security issues by severity level
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="h-64">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={severityData}
-                    cx="50%"
-                    cy="50%"
-                    labelLine={false}
-                    label={({ name, value }) => `${name}: ${value}`}
-                    outerRadius={80}
-                    fill="#8884d8"
-                    dataKey="value"
-                  >
-                    {severityData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
-            <div className="grid grid-cols-2 gap-4 mt-4">
-              {severityData.map((item) => (
-                <div key={item.name} className="flex items-center gap-2">
-                  <div 
-                    className="w-3 h-3 rounded-full" 
-                    style={{ backgroundColor: item.color }}
-                  />
-                  <span className="text-sm">{item.name}: {item.value}</span>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+        {/* Detailed Metrics Cards */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <SeverityChart
+            criticalIssues={results.summary.criticalIssues}
+            highIssues={results.summary.highIssues}
+            mediumIssues={results.summary.mediumIssues}
+            lowIssues={results.summary.lowIssues}
+          />
 
-        {/* OWASP Top 10 Distribution */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Shield className="h-5 w-5" />
-              OWASP Top 10 Categories
-            </CardTitle>
-            <CardDescription>
-              Security issues mapped to OWASP Top 10 2021
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="h-64">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={owaspChartData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis 
-                    dataKey="name" 
-                    angle={-45}
-                    textAnchor="end"
-                    height={80}
-                    fontSize={12}
-                  />
-                  <YAxis />
-                  <Tooltip 
-                    formatter={(value, name, props) => [value, props.payload.fullName]}
-                  />
-                  <Bar dataKey="value" fill="#8B5CF6" />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+          <OwaspChart issues={results.issues} />
+        </div>
 
       {/* Analysis Summary */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -239,14 +122,26 @@ export const SecurityMetricsDashboard: React.FC<SecurityMetricsDashboardProps> =
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border-blue-200 dark:border-blue-800">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Bug className="h-5 w-5" />
-              Quality Metrics
+              <Bug className="h-5 w-5 text-blue-600" />
+              Code Quality Metrics
             </CardTitle>
+            <CardDescription>
+              Detailed quality assessment and maintainability indicators
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
+            <div className="flex justify-between items-center p-3 bg-white/50 dark:bg-slate-800/50 rounded-lg">
+              <div>
+                <span className="text-sm font-medium">Quality Score</span>
+                <p className="text-xs text-slate-500">Overall code quality rating</p>
+              </div>
+              <Badge variant="outline" className={`text-lg font-bold ${getScoreColor(safeQualityScore)}`}>
+                {Math.round(safeQualityScore)}/100
+              </Badge>
+            </div>
             <div className="flex justify-between items-center">
               <span className="text-sm">Maintainability Index</span>
               <Badge variant="outline">{results.metrics.maintainabilityIndex}</Badge>
@@ -261,6 +156,14 @@ export const SecurityMetricsDashboard: React.FC<SecurityMetricsDashboardProps> =
                 <Badge variant="outline">{results.metrics.testCoverage}%</Badge>
               </div>
             )}
+            <div className="mt-4 p-3 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
+              <p className="text-xs text-blue-800 dark:text-blue-200">
+                <strong>Quality Rating:</strong> {getQualityRating(safeQualityScore)}
+              </p>
+              <p className="text-xs text-blue-600 dark:text-blue-300 mt-1">
+                Based on code complexity, maintainability, and best practices
+              </p>
+            </div>
           </CardContent>
         </Card>
 
@@ -298,77 +201,8 @@ export const SecurityMetricsDashboard: React.FC<SecurityMetricsDashboardProps> =
         </Card>
       </div>
 
-      {/* Recommendations */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <CheckCircle className="h-5 w-5" />
-            Security Recommendations
-          </CardTitle>
-          <CardDescription>
-            Priority actions to improve your security posture
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-3">
-            {results.summary.criticalIssues > 0 && (
-              <div className="flex items-start gap-3 p-3 bg-red-50 dark:bg-red-900/20 rounded-lg">
-                <AlertTriangle className="h-5 w-5 text-red-600 mt-0.5" />
-                <div>
-                  <p className="font-medium text-red-800 dark:text-red-200">
-                    Address {results.summary.criticalIssues} critical security issues immediately
-                  </p>
-                  <p className="text-sm text-red-600 dark:text-red-400">
-                    These issues pose immediate security risks and should be fixed as soon as possible.
-                  </p>
-                </div>
-              </div>
-            )}
-            
-            {results.summary.securityScore < 70 && (
-              <div className="flex items-start gap-3 p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
-                <Shield className="h-5 w-5 text-yellow-600 mt-0.5" />
-                <div>
-                  <p className="font-medium text-yellow-800 dark:text-yellow-200">
-                    Improve security score to at least 70
-                  </p>
-                  <p className="text-sm text-yellow-600 dark:text-yellow-400">
-                    Focus on high and medium severity issues to improve overall security posture.
-                  </p>
-                </div>
-              </div>
-            )}
-
-            {results.dependencies && results.dependencies.vulnerable > 0 && (
-              <div className="flex items-start gap-3 p-3 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
-                <Zap className="h-5 w-5 text-orange-600 mt-0.5" />
-                <div>
-                  <p className="font-medium text-orange-800 dark:text-orange-200">
-                    Update {results.dependencies.vulnerable} vulnerable dependencies
-                  </p>
-                  <p className="text-sm text-orange-600 dark:text-orange-400">
-                    Outdated dependencies may contain known security vulnerabilities.
-                  </p>
-                </div>
-              </div>
-            )}
-
-            {results.summary.securityScore >= 80 && results.summary.criticalIssues === 0 && (
-              <div className="flex items-start gap-3 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
-                <CheckCircle className="h-5 w-5 text-green-600 mt-0.5" />
-                <div>
-                  <p className="font-medium text-green-800 dark:text-green-200">
-                    Excellent security posture!
-                  </p>
-                  <p className="text-sm text-green-600 dark:text-green-400">
-                    Your code demonstrates good security practices. Continue monitoring for new issues.
-                  </p>
-                </div>
-              </div>
-            )}
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+        <SecurityRecommendations results={results} />
+      </div>
+    </TooltipProvider>
   );
 };

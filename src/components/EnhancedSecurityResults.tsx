@@ -20,8 +20,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { SecurityIssue, AnalysisResults } from '@/hooks/useAnalysis';
 import { SecurityMetricsDashboard } from '@/components/SecurityMetricsDashboard';
 import { AISecurityInsights } from '@/components/AISecurityInsights';
-import { AIDebugPanel } from '@/components/AIDebugPanel';
-import { AIModelTester } from '@/components/AIModelTester';
 import { toast } from 'sonner';
 
 interface EnhancedSecurityResultsProps {
@@ -90,11 +88,10 @@ export const EnhancedSecurityResults: React.FC<EnhancedSecurityResultsProps> = (
     <div className="space-y-6">
       {/* Tabs for different views */}
       <Tabs defaultValue="overview" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="overview">Security Overview</TabsTrigger>
           <TabsTrigger value="ai-insights">AI Insights</TabsTrigger>
           <TabsTrigger value="metrics">Detailed Metrics</TabsTrigger>
-          <TabsTrigger value="debug">Debug</TabsTrigger>
         </TabsList>
 
         <TabsContent value="overview" className="space-y-6">
@@ -380,12 +377,7 @@ export const EnhancedSecurityResults: React.FC<EnhancedSecurityResultsProps> = (
           <SecurityMetricsDashboard results={results} />
         </TabsContent>
 
-        <TabsContent value="debug">
-          <div className="space-y-6">
-            <AIDebugPanel />
-            <AIModelTester />
-          </div>
-        </TabsContent>
+
       </Tabs>
     </div>
   );

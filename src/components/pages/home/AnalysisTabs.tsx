@@ -3,7 +3,7 @@ import { FileCode, Bot, Shield } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { UploadForm } from '@/components/UploadForm';
-import { LoadingSpinner } from '@/components/LoadingStates';
+import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { AnalysisResults } from '@/hooks/useAnalysis';
 import { EnhancedSecurityResults } from '@/components/EnhancedSecurityResults';
 

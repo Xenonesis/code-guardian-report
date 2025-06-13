@@ -50,7 +50,9 @@ export const UploadForm: React.FC<UploadFormProps> = ({ onFileSelect, onAnalysis
           console.log('Enhanced analysis complete:', {
             totalIssues: analysisResults.issues.length,
             securityScore: analysisResults.summary.securityScore,
-            criticalIssues: analysisResults.summary.criticalIssues
+            qualityScore: analysisResults.summary.qualityScore,
+            criticalIssues: analysisResults.summary.criticalIssues,
+            fullSummary: analysisResults.summary
           });
 
           setIsAnalyzing(false);

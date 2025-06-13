@@ -134,43 +134,6 @@ class ErrorBoundary extends Component<Props, State> {
   }
 }
 
-// Hook moved to separate file for better fast refresh support
 export { useErrorHandler } from '@/hooks/useErrorHandler';
-
-// Simple error fallback component
-export const ErrorFallback: React.FC<{ 
-  error?: Error; 
-  resetError?: () => void;
-  title?: string;
-  description?: string;
-}> = ({ 
-  error, 
-  resetError, 
-  title = "Something went wrong",
-  description = "An unexpected error occurred. Please try again."
-}) => (
-  <div className="flex flex-col items-center justify-center p-8 text-center">
-    <div className="mb-4 p-3 bg-gradient-to-r from-red-500 to-pink-600 rounded-full">
-      <AlertTriangle className="h-6 w-6 text-white" />
-    </div>
-    <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
-      {title}
-    </h3>
-    <p className="text-slate-600 dark:text-slate-300 mb-4 max-w-md">
-      {description}
-    </p>
-    {error && (
-      <p className="text-sm text-red-600 dark:text-red-400 mb-4 font-mono">
-        {error.message}
-      </p>
-    )}
-    {resetError && (
-      <Button onClick={resetError} className="focus-ring">
-        <RefreshCw className="h-4 w-4 mr-2" />
-        Try Again
-      </Button>
-    )}
-  </div>
-);
 
 export default ErrorBoundary;

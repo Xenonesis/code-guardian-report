@@ -23,7 +23,6 @@ import { Progress } from '@/components/ui/progress';
 import { AIService } from '@/services/aiService';
 import { AnalysisResults } from '@/hooks/useAnalysis';
 import { hasConfiguredApiKeys, formatAIError, getAIFeatureStatus } from '@/utils/aiUtils';
-import { debugAIConfiguration, debugAnalysisResults, debugComponentState, debugLog } from '@/utils/debugAI';
 import { toast } from 'sonner';
 
 interface AISecurityInsightsProps {
@@ -42,13 +41,7 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
   const [aiFeatureStatus, setAiFeatureStatus] = useState(getAIFeatureStatus());
   const [aiService] = useState(() => new AIService());
 
-  // Debug logging on component mount
-  useEffect(() => {
-    debugLog('AISecurityInsights component mounted');
-    debugAIConfiguration();
-    debugAnalysisResults(results);
-    debugComponentState('AISecurityInsights', { aiFeatureStatus, resultsLength: results.issues.length });
-  }, [aiFeatureStatus, results]);
+
   
   // Separate state for each type of insight
   const [securityInsights, setSecurityInsights] = useState<InsightState>({
@@ -71,7 +64,6 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
   useEffect(() => {
     const updateFeatureStatus = () => {
       const newStatus = getAIFeatureStatus();
-      debugLog('Updating AI feature status', newStatus);
       setAiFeatureStatus(newStatus);
     };
 
@@ -79,7 +71,6 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
 
     // Listen for storage changes
     const handleStorageChange = (event: StorageEvent) => {
-      debugLog('Storage change detected', { key: event.key, newValue: event.newValue });
       if (event.key === 'aiApiKeys') {
         updateFeatureStatus();
       }
@@ -87,7 +78,6 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
 
     // Also listen for custom events (for same-tab changes)
     const handleCustomStorageChange = () => {
-      debugLog('Custom storage change detected');
       updateFeatureStatus();
     };
 
@@ -102,22 +92,10 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
 
   // Define generateSecurityInsights first
   const generateSecurityInsights = useCallback(async () => {
-    debugLog('generateSecurityInsights called');
     setSecurityInsights(prev => ({ ...prev, isLoading: true, error: null }));
 
     try {
-      debugLog('Calling aiService.generateSecurityInsights with results:', {
-        issuesCount: results.issues.length,
-        totalFiles: results.totalFiles,
-        hasSummary: !!results.summary
-      });
-
       const insights = await aiService.generateSecurityInsights(results);
-
-      debugLog('Security insights generated successfully', {
-        responseLength: insights.length,
-        preview: insights.substring(0, 100)
-      });
 
       setSecurityInsights({
         content: insights,
@@ -127,7 +105,6 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
       });
       toast.success('Security insights generated successfully!');
     } catch (error) {
-      debugLog('Error generating security insights', error);
       const errorMessage = formatAIError(error);
       setSecurityInsights(prev => ({
         ...prev,
@@ -140,15 +117,7 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
 
   // Auto-generate insights when API keys are available
   useEffect(() => {
-    debugLog('Auto-generation effect triggered', {
-      hasApiKeys: aiFeatureStatus.hasApiKeys,
-      issuesLength: results.issues.length,
-      hasContent: !!securityInsights.content,
-      isLoading: securityInsights.isLoading
-    });
-
     if (aiFeatureStatus.hasApiKeys && results.issues.length > 0 && !securityInsights.content && !securityInsights.isLoading) {
-      debugLog('Starting auto-generation of security insights');
       // Add a small delay to ensure the UI is ready
       const timer = setTimeout(() => {
         generateSecurityInsights();

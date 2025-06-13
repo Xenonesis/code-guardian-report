@@ -84,8 +84,8 @@ def run_command(cmd):
     const language = this.getFileLanguage(filename);
     const rules = SECURITY_RULES[language] || SECURITY_RULES.javascript;
 
-    // Simulate realistic file analysis
-    const numIssues = Math.floor(Math.random() * 8) + 2; // 2-9 issues per file
+    // Simulate realistic file analysis with fewer issues per file
+    const numIssues = Math.floor(Math.random() * 4) + 1; // 1-4 issues per file
     const usedRules = new Set<number>();
 
     for (let i = 0; i < numIssues; i++) {
@@ -187,8 +187,7 @@ def run_command(cmd):
     total: number;
     vulnerable: number;
     outdated: number;
-    riskScore: number;
-    recommendations: string[];
+    licenses: string[];
   } {
     // Simulate dependency analysis
     const totalDeps = Math.floor(Math.random() * 50) + 20;
@@ -204,12 +203,11 @@ def run_command(cmd):
   }
 
   public async analyzeCodebase(filename: string): Promise<AnalysisResults> {
-    console.log('Starting enhanced security analysis for:', filename);
 
     // Simulate analyzing multiple files
     const fileTypes = ['.js', '.ts', '.jsx', '.tsx', '.py', '.java', '.php'];
     const directories = ['components', 'utils', 'services', 'pages', 'api', 'lib'];
-    const totalFiles = Math.floor(Math.random() * 30) + 15;
+    const totalFiles = Math.floor(Math.random() * 15) + 8; // 8-22 files
     
     let allIssues: SecurityIssue[] = [];
     let linesAnalyzed = 0;
@@ -232,7 +230,28 @@ def run_command(cmd):
     const lowIssues = allIssues.filter(i => i.severity === 'Low').length;
 
     const securityScore = calculateSecurityScore(allIssues);
-    const qualityScore = Math.max(0, 100 - (allIssues.length * 2));
+
+    // Improved quality score calculation based on issue severity and density
+    const criticalWeight = criticalIssues * 10;
+    const highWeight = highIssues * 5;
+    const mediumWeight = mediumIssues * 2;
+    const lowWeight = lowIssues * 1;
+    const totalWeightedIssues = criticalWeight + highWeight + mediumWeight + lowWeight;
+
+    // Calculate quality score based on issue density per 1000 lines
+    const issueDensity = (totalWeightedIssues / linesAnalyzed) * 1000;
+    let qualityScore = Math.max(0, Math.min(100, 100 - (issueDensity * 2)));
+
+    // Ensure minimum score of 10 if there are any issues, 100 if no issues
+    if (allIssues.length === 0) {
+      qualityScore = 100;
+    } else if (qualityScore < 10) {
+      qualityScore = 10;
+    }
+
+    // Round to nearest integer
+    qualityScore = Math.round(qualityScore);
+
     const vulnerabilityDensity = (allIssues.length / linesAnalyzed) * 1000; // per 1000 lines
 
     const analysisResults: AnalysisResults = {
@@ -259,11 +278,7 @@ def run_command(cmd):
       dependencies: this.analyzeDependencies()
     };
 
-    console.log('Enhanced analysis complete:', {
-      totalIssues: allIssues.length,
-      securityScore,
-      qualityScore
-    });
+
 
     return analysisResults;
   }

@@ -6,7 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { useNotifications } from './NotificationSystem';
+import { toast } from 'sonner';
 
 export interface ExportData {
   issues: Array<{
@@ -47,7 +47,6 @@ interface DataExportProps {
 }
 
 const DataExport: React.FC<DataExportProps> = ({ data, className = '' }) => {
-  const { showSuccess, showError } = useNotifications();
   const [isExporting, setIsExporting] = useState(false);
   const [exportProgress, setExportProgress] = useState(0);
   const [lastExport, setLastExport] = useState<{ format: string; timestamp: Date } | null>(null);
@@ -367,15 +366,15 @@ const DataExport: React.FC<DataExportProps> = ({ data, className = '' }) => {
       downloadFile(content, fileName, format.mimeType);
 
       setLastExport({ format: format.label, timestamp: new Date() });
-      showSuccess('Export Complete', `Report exported as ${fileName}`);
+      toast.success(`Export Complete - Report exported as ${fileName}`);
 
     } catch (error) {
-      showError('Export Failed', error instanceof Error ? error.message : 'Unknown error occurred');
+      toast.error(`Export Failed - ${error instanceof Error ? error.message : 'Unknown error occurred'}`);
     } finally {
       setIsExporting(false);
       setTimeout(() => setExportProgress(0), 1000);
     }
-  }, [data, options, filterData, exportFormats, exportAsJSON, exportAsCSV, exportAsHTML, exportAsXML, generateFileName, downloadFile, showSuccess, showError]);
+  }, [data, options, filterData, exportFormats, exportAsJSON, exportAsCSV, exportAsHTML, exportAsXML, generateFileName, downloadFile]);
 
   const selectedFormat = exportFormats.find(f => f.value === options.format)!;
   const filteredIssueCount = filterData(data).issues.length;

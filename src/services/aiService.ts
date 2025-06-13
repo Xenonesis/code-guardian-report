@@ -1,5 +1,5 @@
 
-import { debugAIServiceCall, debugAIServiceResponse, debugLog, debugError } from '@/utils/debugAI';
+
 
 interface AIProvider {
   id: string;
@@ -356,16 +356,8 @@ export class AIService {
   }
 
   async generateSecurityInsights(analysisResults: AnalysisResults): Promise<string> {
-    debugAIServiceCall('generateSecurityInsights', {
-      issuesCount: analysisResults?.issues?.length,
-      totalFiles: analysisResults?.totalFiles,
-      hasSummary: !!analysisResults?.summary
-    });
-
     if (!analysisResults || !analysisResults.issues) {
-      const error = new Error('No analysis results provided for security insights generation');
-      debugAIServiceResponse('generateSecurityInsights', null, error);
-      throw error;
+      throw new Error('No analysis results provided for security insights generation');
     }
 
     const systemPrompt = {
@@ -431,11 +423,8 @@ Please provide actionable insights that help prioritize security improvements an
 
     try {
       const response = await this.generateResponse([systemPrompt, userPrompt]);
-      debugAIServiceResponse('generateSecurityInsights', response);
       return response;
     } catch (error) {
-      debugAIServiceResponse('generateSecurityInsights', null, error);
-      debugError('Security insights generation failed', error);
       throw new Error(`Failed to generate security insights: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }

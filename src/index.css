@@ -356,69 +356,13 @@
     @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 sm:gap-6 lg:gap-8;
   }
 
-  /* Mobile-first table utilities */
-  .table-responsive {
-    @apply w-full overflow-x-auto;
-  }
-
-  .table-mobile-card {
-    @apply block lg:table;
-  }
-
-  .table-mobile-row {
-    @apply block lg:table-row border-b border-slate-200 dark:border-slate-700 mb-4 lg:mb-0 p-4 lg:p-0 rounded-lg lg:rounded-none bg-white dark:bg-slate-800 lg:bg-transparent shadow-sm lg:shadow-none;
-  }
-
-  .table-mobile-cell {
-    @apply block lg:table-cell py-2 lg:py-4 px-0 lg:px-4 border-0 lg:border-b lg:border-slate-200 dark:lg:border-slate-700;
-  }
-
-  .table-mobile-label {
-    @apply inline-block lg:hidden font-semibold text-slate-600 dark:text-slate-400 text-sm mb-1 min-w-[120px];
-  }
-
-  /* Responsive navigation utilities */
-  .nav-mobile {
-    @apply flex lg:hidden;
-  }
-
-  .nav-desktop {
-    @apply hidden lg:flex;
-  }
-
-  /* Responsive button utilities */
+  /* Essential responsive utilities */
   .btn-responsive {
     @apply px-3 py-2 sm:px-4 sm:py-2 md:px-6 md:py-3 text-sm sm:text-base;
   }
 
-  .btn-responsive-lg {
-    @apply px-4 py-3 sm:px-6 sm:py-3 md:px-8 md:py-4 text-base sm:text-lg;
-  }
-
-  /* Mobile-optimized form utilities */
-  .form-responsive {
-    @apply space-y-4 sm:space-y-6;
-  }
-
-  .input-responsive {
-    @apply w-full px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base;
-  }
-
-  .label-responsive {
-    @apply block text-sm sm:text-base font-medium mb-2;
-  }
-
-  /* Responsive modal and overlay utilities */
   .modal-responsive {
     @apply w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl mx-4 sm:mx-auto;
-  }
-
-  .overlay-responsive {
-    @apply fixed inset-0 bg-black/50 backdrop-blur-sm z-50 p-4 sm:p-6 lg:p-8;
-  }
-
-  .mobile-text {
-    @apply text-sm sm:text-base lg:text-lg;
   }
 
   /* Improved focus states for accessibility */
@@ -457,32 +401,9 @@
     @apply skeleton h-12 w-12 rounded-full;
   }
 
-  /* Enhanced card hover effects */
+  /* Essential hover effects */
   .card-hover {
     @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:scale-[1.02];
-  }
-
-  /* Improved table responsiveness */
-  .table-responsive {
-    @apply overflow-x-auto scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-slate-600;
-  }
-
-  /* Custom scrollbar for webkit browsers */
-  .scrollbar-thin {
-    scrollbar-width: thin;
-  }
-
-  .scrollbar-thin::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
-
-  .scrollbar-thumb-slate-300::-webkit-scrollbar-thumb {
-    @apply bg-slate-300 rounded-full;
-  }
-
-  .dark .scrollbar-thumb-slate-600::-webkit-scrollbar-thumb {
-    @apply bg-slate-600 rounded-full;
   }
 }
 

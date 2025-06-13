@@ -1,7 +1,7 @@
 import * as React from "react"
 import * as ToastPrimitives from "@radix-ui/react-toast"
 import { cva, type VariantProps } from "class-variance-authority"
-import { X, CheckCircle, AlertTriangle, Info, AlertCircle } from "lucide-react"
+import { X } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
@@ -29,13 +29,7 @@ const toastVariants = cva(
       variant: {
         default: "border bg-background text-foreground",
         destructive:
-          "destructive group border-destructive bg-destructive text-destructive-foreground",
-        success:
-          "border-green-200 bg-green-50 text-green-900 dark:border-green-800 dark:bg-green-950 dark:text-green-100",
-        warning:
-          "border-amber-200 bg-amber-50 text-amber-900 dark:border-amber-800 dark:bg-amber-950 dark:text-amber-100",
-        info:
-          "border-blue-200 bg-blue-50 text-blue-900 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-100",
+          "destructive border-destructive bg-destructive text-destructive-foreground",
       },
     },
     defaultVariants: {
@@ -120,45 +114,6 @@ type ToastProps = React.ComponentPropsWithoutRef<typeof Toast>
 
 type ToastActionElement = React.ReactElement<typeof ToastAction>
 
-// Enhanced toast with icons
-const ToastWithIcon: React.FC<{
-  variant?: "default" | "destructive" | "success" | "warning" | "info"
-  title: string
-  description?: string
-  action?: ToastActionElement
-}> = ({ variant = "default", title, description, action }) => {
-  const getIcon = () => {
-    switch (variant) {
-      case "success":
-        return <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400" />
-      case "destructive":
-        return <AlertCircle className="h-5 w-5 text-red-600 dark:text-red-400" />
-      case "warning":
-        return <AlertTriangle className="h-5 w-5 text-amber-600 dark:text-amber-400" />
-      case "info":
-        return <Info className="h-5 w-5 text-blue-600 dark:text-blue-400" />
-      default:
-        return <Info className="h-5 w-5 text-slate-600 dark:text-slate-400" />
-    }
-  }
-
-  return (
-    <Toast variant={variant}>
-      <div className="flex items-start gap-3">
-        <div className="flex-shrink-0 mt-0.5">
-          {getIcon()}
-        </div>
-        <div className="flex-1 min-w-0">
-          <ToastTitle>{title}</ToastTitle>
-          {description && <ToastDescription>{description}</ToastDescription>}
-        </div>
-      </div>
-      {action}
-      <ToastClose />
-    </Toast>
-  )
-}
-
 export {
   type ToastProps,
   type ToastActionElement,
@@ -169,5 +124,4 @@ export {
   ToastDescription,
   ToastClose,
   ToastAction,
-  ToastWithIcon,
 }
