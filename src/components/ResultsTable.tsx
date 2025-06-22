@@ -7,7 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { AIService } from '@/services/aiService';
-import { AnalyticsDashboard } from '@/components/AnalyticsDashboard';
+import EnhancedAnalyticsDashboard from '@/components/EnhancedAnalyticsDashboard';
 import { toast } from 'sonner';
 import { SecurityIssue } from '@/hooks/useAnalysis';
 
@@ -287,7 +287,7 @@ Please configure your AI API keys to get detailed insights and recommendations.`
         </TabsList>
 
         <TabsContent value="analytics">
-          <AnalyticsDashboard issues={issues} />
+          <EnhancedAnalyticsDashboard issues={issues} />
         </TabsContent>
 
         <TabsContent value="all">

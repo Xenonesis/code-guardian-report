@@ -1,0 +1,258 @@
+/* Modern UI Enhancements for Code Guardian */
+
+@layer components {
+  /* Modern Interactive Elements */
+  .interactive-card {
+    @apply transition-all duration-500 ease-out cursor-pointer;
+  }
+
+  .interactive-card:hover {
+    @apply transform -translate-y-2 scale-[1.02] shadow-2xl;
+  }
+
+  .interactive-card:active {
+    @apply transform -translate-y-1 scale-[1.01] shadow-xl;
+  }
+
+  /* Gradient Text Effects */
+  .gradient-text-blue {
+    @apply bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent;
+  }
+
+  .gradient-text-purple {
+    @apply bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent;
+  }
+
+  .gradient-text-green {
+    @apply bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent;
+  }
+
+  .gradient-text-orange {
+    @apply bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent;
+  }
+
+  /* Modern Grid Background */
+  .bg-grid-slate-100 {
+    background-image: linear-gradient(rgba(148, 163, 184, 0.1) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(148, 163, 184, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  .bg-grid-slate-800 {
+    background-image: linear-gradient(rgba(71, 85, 105, 0.1) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(71, 85, 105, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  /* Enhanced Card Variants */
+  .card-modern-elevated {
+    @apply bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border-0 p-6 transition-all duration-500;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  }
+
+  .card-modern-elevated:hover {
+    @apply transform -translate-y-3 scale-[1.03];
+    box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  }
+
+  .card-glass-modern {
+    @apply backdrop-blur-2xl bg-white/5 dark:bg-black/5 border border-white/10 dark:border-white/5 rounded-2xl shadow-2xl;
+  }
+
+  /* Modern Button Enhancements */
+  .btn-modern-primary {
+    @apply relative overflow-hidden bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 text-white font-semibold px-8 py-4 rounded-2xl shadow-xl transition-all duration-300 transform hover:scale-105 focus:scale-105;
+  }
+
+  .btn-modern-primary::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-500 opacity-0 transition-opacity duration-300;
+  }
+
+  .btn-modern-primary:hover::before {
+    @apply opacity-100;
+  }
+
+  .btn-modern-secondary {
+    @apply bg-white/10 dark:bg-black/10 backdrop-blur-xl border border-white/20 dark:border-white/10 text-slate-900 dark:text-white font-semibold px-8 py-4 rounded-2xl shadow-xl transition-all duration-300 transform hover:scale-105 hover:bg-white/20 dark:hover:bg-black/20;
+  }
+
+  /* Enhanced Metrics Display */
+  .metrics-card-modern {
+    @apply bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-900 rounded-2xl p-6 shadow-xl border-0 transition-all duration-500 hover:shadow-2xl hover:-translate-y-1;
+  }
+
+  .metrics-value-large {
+    @apply text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent;
+  }
+
+  /* Modern Navigation Enhancements */
+  .nav-modern {
+    @apply backdrop-blur-2xl bg-white/90 dark:bg-slate-900/90 border-b border-white/20 dark:border-slate-700/50 shadow-2xl;
+  }
+
+  .nav-item-modern {
+    @apply relative px-4 py-2 rounded-xl font-medium transition-all duration-300 hover:bg-white/50 dark:hover:bg-white/10;
+  }
+
+  .nav-item-modern::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 rounded-xl opacity-0 transition-opacity duration-300;
+  }
+
+  .nav-item-modern:hover::before {
+    @apply opacity-100;
+  }
+
+  /* Enhanced Form Elements */
+  .input-modern {
+    @apply bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 transition-all duration-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent;
+  }
+
+  .input-modern:focus {
+    @apply bg-white dark:bg-slate-800 shadow-xl;
+  }
+
+  /* Modern Loading States */
+  .loading-modern {
+    @apply animate-pulse bg-gradient-to-r from-slate-200 via-slate-300 to-slate-200 dark:from-slate-700 dark:via-slate-600 dark:to-slate-700 rounded-xl;
+    background-size: 200% 100%;
+    animation: shimmer-modern 2s infinite;
+  }
+
+  /* Enhanced Status Indicators */
+  .status-success-modern {
+    @apply bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-3 py-1 rounded-full text-sm font-medium shadow-lg;
+  }
+
+  .status-warning-modern {
+    @apply bg-gradient-to-r from-amber-500 to-orange-500 text-white px-3 py-1 rounded-full text-sm font-medium shadow-lg;
+  }
+
+  .status-error-modern {
+    @apply bg-gradient-to-r from-red-500 to-pink-500 text-white px-3 py-1 rounded-full text-sm font-medium shadow-lg;
+  }
+
+  /* Modern Progress Indicators */
+  .progress-modern {
+    @apply h-3 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden shadow-inner;
+  }
+
+  .progress-fill-modern {
+    @apply h-full bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full transition-all duration-1000 ease-out shadow-lg;
+  }
+
+  /* Enhanced Tooltips */
+  .tooltip-modern {
+    @apply bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 px-3 py-2 rounded-xl text-sm font-medium shadow-2xl backdrop-blur-sm;
+  }
+
+  /* Modern Dropdown Menus */
+  .dropdown-modern {
+    @apply bg-white/95 dark:bg-slate-800/95 backdrop-blur-xl border border-slate-200 dark:border-slate-700 rounded-2xl shadow-2xl p-2;
+  }
+
+  .dropdown-item-modern {
+    @apply px-4 py-3 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all duration-200 cursor-pointer;
+  }
+
+  /* Enhanced Modal Styles */
+  .modal-modern {
+    @apply bg-white/95 dark:bg-slate-800/95 backdrop-blur-2xl border border-slate-200 dark:border-slate-700 rounded-3xl shadow-2xl p-8;
+  }
+
+  .modal-overlay-modern {
+    @apply fixed inset-0 bg-black/20 backdrop-blur-sm;
+  }
+}
+
+@layer utilities {
+  /* Modern Animation Utilities */
+  .animate-shimmer-modern {
+    animation: shimmer-modern 2s infinite;
+  }
+
+  .animate-glow-pulse {
+    animation: glow-pulse 2s ease-in-out infinite;
+  }
+
+  .animate-float-gentle {
+    animation: float-gentle 4s ease-in-out infinite;
+  }
+
+  .animate-scale-bounce {
+    animation: scale-bounce 0.6s ease-out;
+  }
+
+  /* Modern Hover Effects */
+  .hover-glow-blue:hover {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.4), 0 0 40px rgba(59, 130, 246, 0.2);
+  }
+
+  .hover-glow-purple:hover {
+    box-shadow: 0 0 20px rgba(147, 51, 234, 0.4), 0 0 40px rgba(147, 51, 234, 0.2);
+  }
+
+  .hover-glow-green:hover {
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.4), 0 0 40px rgba(16, 185, 129, 0.2);
+  }
+
+  /* Modern Text Effects */
+  .text-shimmer {
+    background: linear-gradient(90deg, #64748b, #3b82f6, #8b5cf6, #64748b);
+    background-size: 200% 100%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: text-shimmer 3s ease-in-out infinite;
+  }
+}
+
+/* Modern Keyframes */
+@keyframes shimmer-modern {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.6), 0 0 30px rgba(59, 130, 246, 0.4);
+  }
+}
+
+@keyframes float-gentle {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes scale-bounce {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes text-shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
