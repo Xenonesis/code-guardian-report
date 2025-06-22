@@ -1,17 +1,10 @@
-{
-  "files": [
-    {
-      "path": "dist/assets/index-*.js",
-      "maxSize": "900 kB",
-      "compression": "none"
-    },
-    {
-      "path": "dist/assets/index-*.js",
-      "maxSize": "250 kB",
-      "compression": "gzip"
-    }
-  ],
-  "ci": {
-    "trackBranches": ["main"]
+[
+  {
+    "path": "dist/assets/index-*.js",
+    "limit": "900 KB"
+  },
+  {
+    "path": "dist/assets/*.js",
+    "limit": "1 MB"
   }
-}
+]

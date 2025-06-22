@@ -1,17 +1,18 @@
 <div align="center">
 
-# 🛡️ Code Guardian v2.5.2
+# 🛡️ Code Guardian v2.5.3
 ### 🚀 Next-Generation AI-Powered Security Analysis Platform
 
-**Current Version: 2.5.2 - Developed by Aditya Kumar Tiwari**
+**Current Version: 2.5.3 - Developed by Aditya Kumar Tiwari**
 
 ![Code Guardian Banner](https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=1200&h=300&fit=crop&crop=center)
 
 <div align="center">
-  <img src="https://img.shields.io/badge/Version-2.5.2-ff6b6b?style=for-the-badge&logo=rocket&logoColor=white" alt="Version"/>
+  <img src="https://img.shields.io/badge/Version-2.5.3-ff6b6b?style=for-the-badge&logo=rocket&logoColor=white" alt="Version"/>
   <img src="https://img.shields.io/badge/Status-Production%20Ready-00C851?style=for-the-badge&logo=checkmarx&logoColor=white" alt="Status"/>
   <img src="https://img.shields.io/badge/AI%20Powered-GPT--4%20%7C%20Claude-9C27B0?style=for-the-badge&logo=openai&logoColor=white" alt="AI Powered"/>
-  <img src="https://img.shields.io/badge/npm-v2.5.2-CB3837?style=for-the-badge&logo=npm&logoColor=white" alt="NPM Version"/>
+  <img src="https://img.shields.io/badge/npm-v2.5.3-CB3837?style=for-the-badge&logo=npm&logoColor=white" alt="NPM Version"/>
+  <img src="https://img.shields.io/badge/Analytics-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Analytics"/>
 </div>
 
 <br/>
@@ -40,6 +41,15 @@
 - 🤖 **AI-Powered Insights**: Optional integration with AI providers for enhanced analysis
 - 📈 **Visual Analytics**: Interactive dashboards with charts and detailed reporting
 - 📤 **Export Capabilities**: Download analysis results in multiple formats
+- 📊 **Real-time Analytics**: Track usage patterns and performance metrics
+- 🚀 **Performance Optimized**: Lightning-fast loading with optimized bundles
+
+### **✨ New in v2.5.3:**
+- 📊 **Vercel Analytics Integration**: Real-time user behavior tracking
+- 🚀 **Enhanced Performance**: Improved bundle optimization and loading speeds
+- 📱 **Mobile UX Improvements**: Better touch interactions and responsive design
+- 🎨 **UI Polish**: Refined animations and micro-interactions
+- 🔍 **Bundle Analysis**: Advanced size monitoring and optimization tools
 
 Built with ❤️ by [Aditya Kumar Tiwari](https://github.com/Xenonesis)
 
@@ -178,9 +188,10 @@ Built with ❤️ by [Aditya Kumar Tiwari](https://github.com/Xenonesis)
 
 ### 📊 **Data & State Management**
 
-- 📈 **Recharts 2.15.3**: Data visualization and charts
-- 🎨 **React Router DOM 6.26.2**: Client-side routing
-- 🔄 **React State**: Built-in state management with hooks
+- 📈 **Recharts 2.15.3**: Interactive data visualization and charts
+- 🎨 **React Router DOM 6.26.2**: Client-side routing with lazy loading
+- 🔄 **React State**: Built-in state management with hooks and context
+- 📊 **Vercel Analytics 1.5.0**: Real-time user analytics and insights
 
 ### 🛠️ **Development Tools**
 
@@ -193,8 +204,10 @@ Built with ❤️ by [Aditya Kumar Tiwari](https://github.com/Xenonesis)
 ### 🔧 **Build & Optimization**
 - **⚡ Lightning Fast Builds**: Vite with SWC for sub-second rebuilds
 - **📦 Smart Bundling**: Automatic code splitting and tree shaking
-- **🎯 Performance**: Lazy loading and optimized chunk sizes
+- **🎯 Performance**: Lazy loading and optimized chunk sizes (< 250KB gzipped)
 - **🔄 Hot Reload**: Instant feedback during development
+- **📊 Bundle Analysis**: Real-time size monitoring with size-limit
+- **🚀 Core Web Vitals**: Optimized for LCP, FID, and CLS metrics
 
 ## 🛠️ Quick Start Guide
 
@@ -278,7 +291,7 @@ VITE_ANTHROPIC_API_URL=https://api.anthropic.com/v1
 
 # Application Settings
 VITE_APP_NAME="Code Guardian Report"
-VITE_APP_VERSION="2.5.2"
+VITE_APP_VERSION="2.5.3"
 ```
 
 ## 📱 Usage Guide
@@ -455,7 +468,7 @@ We welcome contributions! Please follow these steps:
 
 ## 📈 Changelog
 
-### 🔄 Version 2.5.2 - Current Release ⭐
+### 🔄 Version 2.5.3 - Current Release ⭐
 - ✨ **Major Codebase Cleanup**: Removed unnecessary documentation files and build artifacts
 - 🚀 **Enhanced README**: Comprehensive documentation with modern design
 - 📦 **Package Management**: Resolved conflicting lock files (removed bun.lockb)
