@@ -15,7 +15,8 @@
     "test:watch": "vitest watch",
     "test:coverage": "vitest run --coverage",
     "bundle-analysis": "node scripts/bundle-analysis.js",
-    "size-check": "size-limit"
+    "size-check": "size-limit",
+    "bundlesize": "size-limit"
   },
   "dependencies": {
     "@radix-ui/react-checkbox": "^1.3.2",
