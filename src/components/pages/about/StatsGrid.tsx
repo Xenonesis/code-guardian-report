@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
 import { getTotalFilesAnalyzed } from '@services/analysisTracker';
 import { Users, FileCode, Shield, Award } from 'lucide-react';
 
@@ -51,17 +51,19 @@ export const StatsGrid: React.FC<StatsGridProps> = ({ className = '' }) => {
       { threshold: 0.5 }
     );
 
-    if (gridRef.current) {
-      observer.observe(gridRef.current);
+    const currentGrid = gridRef.current;
+    if (currentGrid) {
+      observer.observe(currentGrid);
     }
 
     return () => {
-      if (gridRef.current) {
-        observer.unobserve(gridRef.current);
+      if (currentGrid) {
+        observer.unobserve(currentGrid);
       }
     };
-  }, []);
-  const stats: Stat[] = [
+  }, [stats]);
+  
+  const stats: Stat[] = useMemo(() => [
     { icon: <Users className="h-5 w-5" />, label: 'Developers Trust Us', value: '10,000+' },
     {
       icon: <FileCode className="h-5 w-5" />,
@@ -70,7 +72,7 @@ export const StatsGrid: React.FC<StatsGridProps> = ({ className = '' }) => {
     },
     { icon: <Shield className="h-5 w-5" />, label: 'Vulnerabilities Found', value: '50,000+' },
     { icon: <Award className="h-5 w-5" />, label: 'Languages Supported', value: '15+' }
-  ];
+  ], []);
 
   return (
     <div ref={gridRef} className={`grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 max-w-4xl mx-auto ${className}`}>

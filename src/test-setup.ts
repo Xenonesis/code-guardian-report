@@ -11,7 +11,7 @@ global.IntersectionObserver = class IntersectionObserver {
   rootMargin = '';
   thresholds = [];
   takeRecords() { return []; }
-} as any;
+} as typeof IntersectionObserver;
 
 // Mock localStorage
 Object.defineProperty(window, 'localStorage', {

@@ -134,6 +134,4 @@ class ErrorBoundary extends Component<Props, State> {
   }
 }
 
-export { useErrorHandler } from '@/hooks/useErrorHandler';
-
 export default ErrorBoundary;

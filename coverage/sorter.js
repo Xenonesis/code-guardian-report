@@ -1,4 +1,3 @@
-/* eslint-disable */
 var addSorting = (function() {
     'use strict';
     var cols,
