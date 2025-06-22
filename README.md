@@ -1,17 +1,17 @@
 <div align="center">
 
-# 🛡️ Code Guardian v2.1.0
+# 🛡️ Code Guardian v2.5.2
 ### 🚀 Next-Generation AI-Powered Security Analysis Platform
 
-**Current Version: 2.5.0 - Developed by Aditya Kumar Tiwari**
+**Current Version: 2.5.2 - Developed by Aditya Kumar Tiwari**
 
 ![Code Guardian Banner](https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=1200&h=300&fit=crop&crop=center)
 
 <div align="center">
-  <img src="https://img.shields.io/badge/Version-2.1.0-ff6b6b?style=for-the-badge&logo=rocket&logoColor=white" alt="Version"/>
+  <img src="https://img.shields.io/badge/Version-2.5.2-ff6b6b?style=for-the-badge&logo=rocket&logoColor=white" alt="Version"/>
   <img src="https://img.shields.io/badge/Status-Production%20Ready-00C851?style=for-the-badge&logo=checkmarx&logoColor=white" alt="Status"/>
   <img src="https://img.shields.io/badge/AI%20Powered-GPT--4%20%7C%20Claude-9C27B0?style=for-the-badge&logo=openai&logoColor=white" alt="AI Powered"/>
-  <img src="https://img.shields.io/badge/npm-v2.1.0-CB3837?style=for-the-badge&logo=npm&logoColor=white" alt="NPM Version"/>
+  <img src="https://img.shields.io/badge/npm-v2.5.2-CB3837?style=for-the-badge&logo=npm&logoColor=white" alt="NPM Version"/>
 </div>
 
 <br/>
@@ -278,7 +278,7 @@ VITE_ANTHROPIC_API_URL=https://api.anthropic.com/v1
 
 # Application Settings
 VITE_APP_NAME="Code Guardian Report"
-VITE_APP_VERSION="2.1.0"
+VITE_APP_VERSION="2.5.2"
 ```
 
 ## 📱 Usage Guide
@@ -455,7 +455,7 @@ We welcome contributions! Please follow these steps:
 
 ## 📈 Changelog
 
-### 🔄 Version 2.1.0 - Current Release ⭐
+### 🔄 Version 2.5.2 - Current Release ⭐
 - ✨ **Major Codebase Cleanup**: Removed unnecessary documentation files and build artifacts
 - 🚀 **Enhanced README**: Comprehensive documentation with modern design
 - 📦 **Package Management**: Resolved conflicting lock files (removed bun.lockb)
