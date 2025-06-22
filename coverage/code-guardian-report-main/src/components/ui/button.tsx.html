@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/16</span>
+                <span class='fraction'>0/26</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/16</span>
+                <span class='fraction'>0/26</span>
             </div>
         
             
@@ -93,13 +93,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -109,23 +102,30 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import * as React from "react"<span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ></span></span></span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >import * as React from "react"</span></span></span>
 <span class="cstat-no" title="statement not covered" >import { Slot } from "@radix-ui/react-slot"</span>
 <span class="cstat-no" title="statement not covered" >import { cn } from "@/lib/utils"</span>
 <span class="cstat-no" title="statement not covered" >import { buttonVariants, type ButtonProps as ButtonVariantProps } from "@/utils/uiVariants"</span>
-&nbsp;
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes&lt;HTMLButtonElement&gt;,
-    ButtonVariantProps {
-  asChild?: boolean
-}
-&nbsp;
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >export interface ButtonProps</span>
+<span class="cstat-no" title="statement not covered" >  extends React.ButtonHTMLAttributes&lt;HTMLButtonElement&gt;,</span>
+<span class="cstat-no" title="statement not covered" >    ButtonVariantProps {</span>
+<span class="cstat-no" title="statement not covered" >  asChild?: boolean</span>
+<span class="cstat-no" title="statement not covered" >}</span>
+<span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >const Button = React.forwardRef&lt;HTMLButtonElement, ButtonProps&gt;(</span>
 <span class="cstat-no" title="statement not covered" >  ({ className, variant, size, asChild = false, ...props }, ref) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    const Comp = asChild ? Slot : "button"</span>
@@ -135,12 +135,12 @@ export interface ButtonProps
 <span class="cstat-no" title="statement not covered" >        ref={ref}</span>
 <span class="cstat-no" title="statement not covered" >        {...props}</span>
 <span class="cstat-no" title="statement not covered" >      /&gt;</span>
-    )
+<span class="cstat-no" title="statement not covered" >    )</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
 <span class="cstat-no" title="statement not covered" >)</span>
 <span class="cstat-no" title="statement not covered" >Button.displayName = "Button"</span>
-&nbsp;
-export { Button }
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >export { Button }</span>
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -148,7 +148,7 @@ export { Button }
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-06-22T09:57:51.953Z
+                at 2025-06-22T10:49:34.046Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

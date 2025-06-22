@@ -20,6 +20,17 @@ export const StatsGrid: React.FC<StatsGridProps> = ({ className = '' }) => {
     '15'
   ]);
   const gridRef = useRef<HTMLDivElement>(null);
+  
+  const stats: Stat[] = useMemo(() => [
+    { icon: <Users className="h-5 w-5" />, label: 'Developers Trust Us', value: '10,000+' },
+    {
+      icon: <FileCode className="h-5 w-5" />,
+      label: 'Files Analyzed',
+      value: getTotalFilesAnalyzed().toLocaleString()
+    },
+    { icon: <Shield className="h-5 w-5" />, label: 'Vulnerabilities Found', value: '50,000+' },
+    { icon: <Award className="h-5 w-5" />, label: 'Languages Supported', value: '15+' }
+  ], []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -62,17 +73,6 @@ export const StatsGrid: React.FC<StatsGridProps> = ({ className = '' }) => {
       }
     };
   }, [stats]);
-  
-  const stats: Stat[] = useMemo(() => [
-    { icon: <Users className="h-5 w-5" />, label: 'Developers Trust Us', value: '10,000+' },
-    {
-      icon: <FileCode className="h-5 w-5" />,
-      label: 'Files Analyzed',
-      value: getTotalFilesAnalyzed().toLocaleString()
-    },
-    { icon: <Shield className="h-5 w-5" />, label: 'Vulnerabilities Found', value: '50,000+' },
-    { icon: <Award className="h-5 w-5" />, label: 'Languages Supported', value: '15+' }
-  ], []);
 
   return (
     <div ref={gridRef} className={`grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 max-w-4xl mx-auto ${className}`}>

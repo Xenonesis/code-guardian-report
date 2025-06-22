@@ -1,5 +1,5 @@
 import React, { useState, Suspense, lazy } from 'react';
-import { Shield, Code, Zap, Bot } from 'lucide-react';
+
 import { PageLayout } from '@/components/layouts/PageLayout';
 import { HomeHero } from '@/components/pages/home/HomeHero';
 import { AnalysisTabs } from '@/components/pages/home/AnalysisTabs';
@@ -49,44 +49,11 @@ const Index = () => {
     }, 1500);
   };
 
-  const features = [
-    {
-      icon: <Shield className="h-6 w-6" />,
-      title: 'Advanced Security Scanning',
-      description: 'Comprehensive vulnerability detection using OWASP Top 10, CVE database, and custom security rules.',
-      gradient: 'from-emerald-500 to-teal-600',
-      benefits: ['OWASP Top 10 Coverage', 'CVE Integration', 'Zero-day Detection', 'Custom Security Rules']
-    },
-    {
-      icon: <Code className="h-6 w-6" />,
-      title: 'Code Quality Assessment',
-      description: 'Deep analysis of code complexity, maintainability, and technical debt with actionable insights.',
-      gradient: 'from-blue-500 to-indigo-600',
-      benefits: ['Complexity Metrics', 'Technical Debt Analysis', 'Maintainability Index', 'Code Smells Detection']
-    },
-    {
-      icon: <Bot className="h-6 w-6" />,
-      title: 'AI-Powered Intelligence',
-      description: 'Leverage cutting-edge AI for natural language explanations and intelligent fix suggestions.',
-      gradient: 'from-purple-500 to-pink-600',
-      benefits: ['Natural Language Explanations', 'Auto-fix Suggestions', 'Context-aware Analysis', 'Learning Algorithms']
-    },
-    {
-      icon: <Zap className="h-6 w-6" />,
-      title: 'Lightning Performance',
-      description: 'Optimized analysis pipeline with parallel processing for enterprise-scale codebases.',
-      gradient: 'from-amber-500 to-orange-600',
-      benefits: ['Parallel Processing', 'Incremental Analysis', 'Real-time Results', 'Scalable Architecture']
-    }
-  ];
-
-
 
   return (
     <PageLayout
       isDarkMode={isDarkMode}
       toggleDarkMode={toggleDarkMode}
-      features={features}
     >
       <HomeHero onStartAnalysis={handleStartAnalysis} />
 

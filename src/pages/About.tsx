@@ -5,6 +5,8 @@ import { HeroSection } from '@/components/layouts/HeroSection';
 import { FeatureGrid } from '@/components/features/FeatureGrid';
 import { AnimatedBackground } from '@/components/pages/about/AnimatedBackground';
 import { StatsGrid } from '@/components/pages/about/StatsGrid';
+import { VersionInfo } from '@/components/pages/about/VersionInfo';
+import { DetailedInfo } from '@/components/pages/about/DetailedInfo';
 import { SupportedToolsSection } from '@/components/pages/about/SupportedToolsSection';
 import { DeveloperSection } from '@/components/pages/about/DeveloperSection';
 import { CallToActionSection } from '@/components/pages/about/CallToActionSection';
@@ -57,8 +59,11 @@ const About = () => {
           titleId="about-hero-title"
           variant="gradient"
         >
+          <VersionInfo />
           <StatsGrid />
         </HeroSection>
+
+        <DetailedInfo />
 
         <FeatureGrid
           features={features}
