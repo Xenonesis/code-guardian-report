@@ -1,8 +1,14 @@
 {
   "files": [
     {
-      "path": "dist/*.js",
-      "maxSize": "50 kB"
+      "path": "dist/assets/index-*.js",
+      "maxSize": "900 kB",
+      "compression": "none"
+    },
+    {
+      "path": "dist/assets/index-*.js",
+      "maxSize": "250 kB",
+      "compression": "gzip"
     }
   ],
   "ci": {
