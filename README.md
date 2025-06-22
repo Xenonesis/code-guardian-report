@@ -76,7 +76,7 @@
 </tr>
 <tr>
 <td width="33%" align="center">
-  <img src="https://img.icons8.com/fluency/96/code-quality.png" alt="Quality" width="64"/>
+  <img src="https://img.icons8.com/fluency/96/code.png" alt="Quality" width="64"/>
   <h4>📈 Quality Assessment</h4>
   <p>Comprehensive code quality scoring and maintainability metrics</p>
 </td>
@@ -554,7 +554,7 @@ VITE_APP_VERSION="2.5.4"
 </td>
 <td width="50%" align="center">
   <h4>🌙 Dark Mode</h4>
-  <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=500&h=300&fit=crop&auto=format&q=80" alt="Dark Theme" style="border-radius: 8px;" width="100%"/>
+  <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=500&h=300&fit=crop&auto=format&q=80" alt="Dark Theme" style="border-radius: 8px;" width="100%"/>
 </td>
 </tr>
 </table>
