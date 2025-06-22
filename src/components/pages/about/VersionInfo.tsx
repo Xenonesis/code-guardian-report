@@ -13,7 +13,7 @@ export const VersionInfo: React.FC = () => {
     <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 mb-8">
       <div className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800 rounded-full">
         <span className="text-sm font-medium text-slate-600 dark:text-slate-400">Version</span>
-        <span className="text-sm font-bold text-blue-600 dark:text-blue-400">2.3.0</span>
+        <span className="text-sm font-bold text-blue-600 dark:text-blue-400">2.4</span>
       </div>
       
       <div className="flex items-center gap-3">
