@@ -14,8 +14,19 @@ import {
   Activity
 } from 'lucide-react';
 
+interface AnalysisResults {
+  issues?: unknown[];
+  criticalIssues?: number;
+  warningIssues?: number;
+  infoIssues?: number;
+  totalFiles?: number;
+  linesOfCode?: number;
+  securityScore?: number;
+  qualityScore?: number;
+}
+
 interface ModernDashboardProps {
-  analysisResults?: any;
+  analysisResults?: AnalysisResults;
   className?: string;
 }
 
