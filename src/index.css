@@ -173,7 +173,14 @@
   }
 
   .glass-nav {
-    @apply backdrop-blur-md bg-white/80 dark:bg-black/80 border-b border-white/20 dark:border-white/10;
+    @apply backdrop-blur-xl bg-white/95 dark:bg-slate-900/95 border-b border-slate-200/50 dark:border-slate-700/50 shadow-lg;
+  }
+
+  /* Mobile-specific navbar improvements */
+  @media (max-width: 768px) {
+    .glass-nav {
+      @apply bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700;
+    }
   }
 
   /* Modern Gradients */
@@ -366,6 +373,25 @@
   /* Mobile-optimized touch targets */
   .touch-target {
     @apply min-h-[44px] min-w-[44px] flex items-center justify-center;
+  }
+
+  /* Enhanced mobile navigation */
+  .mobile-nav-item {
+    @apply relative overflow-hidden;
+  }
+
+  .mobile-nav-item::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 transform scale-x-0 transition-transform duration-300 origin-left;
+  }
+
+  .mobile-nav-item:hover::before {
+    @apply scale-x-100;
+  }
+
+  /* Improved mobile menu backdrop */
+  .mobile-menu-backdrop {
+    @apply fixed inset-0 bg-black/20 backdrop-blur-sm z-40;
   }
 
   /* Responsive grid layouts */

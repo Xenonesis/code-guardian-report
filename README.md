@@ -3,7 +3,7 @@
 # 🛡️ Code Guardian v2.1.0
 ### 🚀 Next-Generation AI-Powered Security Analysis Platform
 
-**Current Version: 2.1.0 - Developed by Aditya Kumar Tiwari**
+**Current Version: 2.5.0 - Developed by Aditya Kumar Tiwari**
 
 ![Code Guardian Banner](https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=1200&h=300&fit=crop&crop=center)
 

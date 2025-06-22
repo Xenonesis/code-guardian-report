@@ -38,7 +38,7 @@ export const Navigation: React.FC<NavigationProps> = ({ isDarkMode, toggleDarkMo
   };
 
   return (
-    <nav className="glass-nav sticky top-0 z-50 border-b border-white/10 dark:border-white/5">
+    <nav className="glass-nav sticky top-0 z-50">
       <div className="container mx-auto mobile-container">
         <div className="flex items-center justify-between h-14 sm:h-16 lg:h-20">
           {/* Logo and Brand */}
@@ -119,14 +119,14 @@ export const Navigation: React.FC<NavigationProps> = ({ isDarkMode, toggleDarkMo
               variant="ghost"
               size="sm"
               onClick={toggleDarkMode}
-              className="relative p-1.5 sm:p-2 rounded-lg sm:rounded-xl hover:bg-white/20 dark:hover:bg-white/10 transition-all duration-300 group touch-target"
+              className="relative p-1.5 sm:p-2 rounded-lg sm:rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-300 group touch-target"
               aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
             >
               <div className="relative">
                 {isDarkMode ? (
                   <Sun className="h-4 w-4 sm:h-5 sm:w-5 text-amber-500 group-hover:rotate-180 transition-transform duration-500" />
                 ) : (
-                  <Moon className="h-4 w-4 sm:h-5 sm:w-5 text-slate-600 dark:text-slate-400 group-hover:rotate-12 transition-transform duration-300" />
+                  <Moon className="h-4 w-4 sm:h-5 sm:w-5 text-slate-700 dark:text-slate-300 group-hover:rotate-12 transition-transform duration-300" />
                 )}
               </div>
             </Button>
@@ -136,13 +136,14 @@ export const Navigation: React.FC<NavigationProps> = ({ isDarkMode, toggleDarkMo
               variant="ghost"
               size="sm"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-1.5 sm:p-2 rounded-lg sm:rounded-xl hover:bg-white/20 dark:hover:bg-white/10 transition-all duration-300 touch-target"
+              className="md:hidden p-1.5 sm:p-2 rounded-lg sm:rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-300 touch-target"
               aria-label="Toggle mobile menu"
+              aria-expanded={isMobileMenuOpen}
             >
               {isMobileMenuOpen ? (
-                <X className="h-4 w-4 sm:h-5 sm:w-5 text-slate-600 dark:text-slate-400" />
+                <X className="h-4 w-4 sm:h-5 sm:w-5 text-slate-700 dark:text-slate-300" />
               ) : (
-                <Menu className="h-4 w-4 sm:h-5 sm:w-5 text-slate-600 dark:text-slate-400" />
+                <Menu className="h-4 w-4 sm:h-5 sm:w-5 text-slate-700 dark:text-slate-300" />
               )}
             </Button>
           </div>
@@ -150,34 +151,44 @@ export const Navigation: React.FC<NavigationProps> = ({ isDarkMode, toggleDarkMo
 
         {/* Mobile Navigation Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden absolute top-full left-0 right-0 glass-card border-t border-white/10 dark:border-white/5 animate-slide-down max-h-screen overflow-y-auto">
-            <div className="container mx-auto mobile-container py-4">
-              <div className="flex flex-col gap-2">
-                {navItems.map((item) => (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className={cn(
-                      "flex items-center gap-3 px-4 py-4 rounded-xl font-medium transition-all duration-300 touch-target",
-                      isActive(item.path)
-                        ? `bg-gradient-to-r ${item.gradient} text-white shadow-lg`
-                        : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white/50 dark:hover:bg-white/10"
-                    )}
-                    aria-current={isActive(item.path) ? 'page' : undefined}
-                  >
-                    <div className="flex-shrink-0">
-                      {item.icon}
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <div className="font-medium text-sm sm:text-base">{item.label}</div>
-                      <div className="text-xs opacity-70 mt-0.5">{item.description}</div>
-                    </div>
-                  </Link>
-                ))}
+          <>
+            {/* Mobile Menu Backdrop */}
+            <div 
+              className="md:hidden fixed inset-0 bg-black/20 backdrop-blur-sm z-40"
+              onClick={() => setIsMobileMenuOpen(false)}
+              aria-hidden="true"
+            />
+            
+            {/* Mobile Menu Content */}
+            <div className="md:hidden absolute top-full left-0 right-0 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-700 shadow-xl animate-slide-down max-h-screen overflow-y-auto z-50">
+              <div className="container mx-auto mobile-container py-4">
+                <div className="flex flex-col gap-2">
+                  {navItems.map((item) => (
+                    <Link
+                      key={item.path}
+                      to={item.path}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className={cn(
+                        "mobile-nav-item flex items-center gap-3 px-4 py-4 rounded-xl font-medium transition-all duration-300 touch-target",
+                        isActive(item.path)
+                          ? `bg-gradient-to-r ${item.gradient} text-white shadow-lg`
+                          : "text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800"
+                      )}
+                      aria-current={isActive(item.path) ? 'page' : undefined}
+                    >
+                      <div className="flex-shrink-0">
+                        {item.icon}
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <div className="font-medium text-sm sm:text-base">{item.label}</div>
+                        <div className="text-xs opacity-70 mt-0.5">{item.description}</div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
+          </>
         )}
       </div>
     </nav>
