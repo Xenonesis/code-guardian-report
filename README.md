@@ -5,10 +5,7 @@
 
 **Current Version: 2.5.6 - Developed by Aditya Kumar Tiwari**
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=1200&h=400&fit=crop&crop=center&auto=format&q=80">
-  <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=1200&h=400&fit=crop&crop=center&auto=format&q=80" alt="Code Guardian - AI-Powered Security Analysis Platform" width="100%" style="border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.12);">
-</picture>
+<img src="./public/home.png" alt="Code Guardian - AI-Powered Security Analysis Platform" width="100%" style="border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.12);">
 
 <div align="center">
   <img src="https://img.shields.io/badge/Version-2.5.6-ff6b6b?style=for-the-badge&logo=rocket&logoColor=white" alt="Version"/>
@@ -59,7 +56,7 @@
 <table>
 <tr>
 <td width="33%" align="center">
-  <img src="https://img.icons8.com/fluency/96/security-shield-green.png" alt="Security" width="64"/>
+  <img src="./public/cc.png" alt="Security" width="64"/>
   <h4>🛡️ Security Analysis</h4>
   <p>Detects vulnerabilities and security issues using OWASP standards</p>
 </td>
@@ -514,12 +511,12 @@ VITE_APP_VERSION="2.5.6"
 <tr>
 <td width="50%">
   <h4>🏠 Dashboard Overview</h4>
-  <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop&auto=format&q=80" alt="Dashboard" style="border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.1);" width="100%"/>
+  <img src="./public/home.png" alt="Dashboard" style="border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.1);" width="100%"/>
   <p><em>Clean, intuitive dashboard with real-time analytics</em></p>
 </td>
 <td width="50%">
   <h4>🔍 Security Analysis</h4>
-  <img src="https://images.unsplash.com/photo-1563206767-5b18f218e8de?w=600&h=400&fit=crop&auto=format&q=80" alt="Security Analysis" style="border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.1);" width="100%"/>
+  <img src="./public/cc.png" alt="Security Analysis" style="border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.1);" width="100%"/>
   <p><em>Comprehensive security vulnerability detection</em></p>
 </td>
 </tr>
