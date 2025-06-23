@@ -1,9 +1,9 @@
 <div align="center">
 
-# 🛡️ Code Guardian v2.5.5
+# 🛡️ Code Guardian v2.5.6
 ### 🚀 Next-Generation AI-Powered Security Analysis Platform
 
-**Current Version: 2.5.5 - Developed by Aditya Kumar Tiwari**
+**Current Version: 2.5.6 - Developed by Aditya Kumar Tiwari**
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=1200&h=400&fit=crop&crop=center&auto=format&q=80">
@@ -11,10 +11,10 @@
 </picture>
 
 <div align="center">
-  <img src="https://img.shields.io/badge/Version-2.5.5-ff6b6b?style=for-the-badge&logo=rocket&logoColor=white" alt="Version"/>
+  <img src="https://img.shields.io/badge/Version-2.5.6-ff6b6b?style=for-the-badge&logo=rocket&logoColor=white" alt="Version"/>
   <img src="https://img.shields.io/badge/Status-Production%20Ready-00C851?style=for-the-badge&logo=checkmarx&logoColor=white" alt="Status"/>
   <img src="https://img.shields.io/badge/AI%20Powered-GPT--4%20%7C%20Claude-9C27B0?style=for-the-badge&logo=openai&logoColor=white" alt="AI Powered"/>
-  <img src="https://img.shields.io/badge/npm-v2.5.5-CB3837?style=for-the-badge&logo=npm&logoColor=white" alt="NPM Version"/>
+  <img src="https://img.shields.io/badge/npm-v2.5.6-CB3837?style=for-the-badge&logo=npm&logoColor=white" alt="NPM Version"/>
   <img src="https://img.shields.io/badge/Analytics-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Analytics"/>
   <img src="https://img.shields.io/badge/PWA-Ready-FF6F00?style=for-the-badge&logo=pwa&logoColor=white" alt="PWA Ready"/>
 </div>
@@ -379,7 +379,7 @@ VITE_ANTHROPIC_API_URL=https://api.anthropic.com/v1
 
 # Application Settings
 VITE_APP_NAME="Code Guardian Report"
-VITE_APP_VERSION="2.5.5"
+VITE_APP_VERSION="2.5.6"
 ```
 
 ## 📱 Usage Guide
