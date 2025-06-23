@@ -503,6 +503,9 @@ VITE_APP_VERSION="2.5.6"
 
 ## 📸 Screenshots & Demo
 
+![Mermaid Diagram](./mermaid_diagram.png)
+*Interactive Mermaid diagram of system flow*
+
 <div align="center">
 
 ### 🖥️ **Desktop Experience**
@@ -744,6 +747,9 @@ We welcome contributions! Please follow these steps:
 <div align="center">
 
 ### **🚀 Development Timeline**
+
+![UML Class Diagram](./UML%20class%20Diagram.png)
+*UML Class Diagram of the system*
 
 ```mermaid
 gantt
