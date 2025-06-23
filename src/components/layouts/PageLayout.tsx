@@ -96,7 +96,7 @@ export const PageLayout: React.FC<PageLayoutProps> = ({
             {/* Copyright */}
             <div className="flex flex-col items-center justify-center gap-3 text-sm text-slate-500 dark:text-slate-500">
               <div className="flex items-center gap-2">
-                <span>© 2025 Code Guardian Report. Built with</span>
+                <span>© June 2025 Code Guardian Report. Built with</span>
                 <Heart className="h-4 w-4 text-red-500 animate-pulse" />
                 <span>by Aditya Kumar Tiwari</span>
               </div>

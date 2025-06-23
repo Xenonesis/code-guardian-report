@@ -1,9 +1,9 @@
 <div align="center">
 
-# 🛡️ Code Guardian v2.5.4
+# 🛡️ Code Guardian v2.5.5
 ### 🚀 Next-Generation AI-Powered Security Analysis Platform
 
-**Current Version: 2.5.4 - Developed by Aditya Kumar Tiwari**
+**Current Version: 2.5.5 - Developed by Aditya Kumar Tiwari**
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=1200&h=400&fit=crop&crop=center&auto=format&q=80">
@@ -11,10 +11,10 @@
 </picture>
 
 <div align="center">
-  <img src="https://img.shields.io/badge/Version-2.5.4-ff6b6b?style=for-the-badge&logo=rocket&logoColor=white" alt="Version"/>
+  <img src="https://img.shields.io/badge/Version-2.5.5-ff6b6b?style=for-the-badge&logo=rocket&logoColor=white" alt="Version"/>
   <img src="https://img.shields.io/badge/Status-Production%20Ready-00C851?style=for-the-badge&logo=checkmarx&logoColor=white" alt="Status"/>
   <img src="https://img.shields.io/badge/AI%20Powered-GPT--4%20%7C%20Claude-9C27B0?style=for-the-badge&logo=openai&logoColor=white" alt="AI Powered"/>
-  <img src="https://img.shields.io/badge/npm-v2.5.4-CB3837?style=for-the-badge&logo=npm&logoColor=white" alt="NPM Version"/>
+  <img src="https://img.shields.io/badge/npm-v2.5.5-CB3837?style=for-the-badge&logo=npm&logoColor=white" alt="NPM Version"/>
   <img src="https://img.shields.io/badge/Analytics-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Analytics"/>
   <img src="https://img.shields.io/badge/PWA-Ready-FF6F00?style=for-the-badge&logo=pwa&logoColor=white" alt="PWA Ready"/>
 </div>
@@ -93,16 +93,16 @@
 </tr>
 </table>
 
-### **✨ New in v2.5.4:**
+### **✨ New in v2.5.5:**
 
 <div align="center">
 
 | 🆕 Feature | 📝 Description | 🎯 Impact |
 |------------|-----------------|------------|
-| 📝 **Enhanced About Page** | Version info and tech stack display | Better project transparency |
-| 🛡️ **Bug Fixes** | Fixed StatsGrid temporal dead zone error | Improved stability |
-| 🏠 **UI Cleanup** | Removed redundant home page sections | Cleaner user interface |
-| 🏷️ **Version Management** | Consistent version tracking across project | Better release management |
+| 📦 **Bundle Monitoring** | Added bundlesize configuration and scripts | Better performance tracking |
+| 🔧 **TypeScript Fixes** | Resolved lint errors with proper types | Improved code quality |
+| 🖼️ **Documentation** | Fixed broken README images | Better project presentation |
+| 📝 **License Update** | Updated copyright to June 2025 | Current legal compliance |
 | 🔍 **Bundle Analysis** | Advanced size monitoring (< 900KB) | Optimal performance |
 | 🧪 **Testing Suite** | Comprehensive test coverage with Vitest | Higher code reliability |
 
@@ -379,7 +379,7 @@ VITE_ANTHROPIC_API_URL=https://api.anthropic.com/v1
 
 # Application Settings
 VITE_APP_NAME="Code Guardian Report"
-VITE_APP_VERSION="2.5.4"
+VITE_APP_VERSION="2.5.5"
 ```
 
 ## 📱 Usage Guide
@@ -714,7 +714,14 @@ We welcome contributions! Please follow these steps:
 
 ## 📈 Changelog
 
-### 🔄 Version 2.5.4 - Current Release ⭐
+### 🔄 Version 2.5.5 - Current Release ⭐
+- 📦 **Bundle Size Monitoring**: Added bundlesize configuration and npm script
+- 🔧 **TypeScript Fixes**: Resolved lint errors with proper type definitions
+- 🖼️ **README Images**: Fixed broken image links for better documentation
+- 📝 **License Update**: Updated copyright to June 2025
+- ⚙️ **Development Tools**: Enhanced development workflow with size monitoring
+
+### 🔄 Version 2.5.4 - Previous Release
 - ✨ **Enhanced About Page**: Added version info and tech stack display
 - 🛡️ **Fixed StatsGrid**: Resolved temporal dead zone error in component
 - 🏠 **Home Page Cleanup**: Removed redundant features section
