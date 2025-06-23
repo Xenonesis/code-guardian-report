@@ -152,6 +152,17 @@ Built with ❤️ by [Aditya Kumar Tiwari](https://github.com/Xenonesis)
   - [⚡ Installation](#-installation)
   - [📜 Available Scripts](#-available-scripts)
   - [🔧 Environment Setup](#-environment-setup)
+### 📝 Analysis Tracker Service (v2.5.6+)
+
+- **Persistence:** Uses an in-memory cache for all analysis tracking (no localStorage).
+- **API:**
+  - `trackFileAnalysis(userId: string): void` — Track a file analysis event for a user.
+  - `getTotalFilesAnalyzed(): number` — Get the total number of files analyzed.
+  - `getUserAnalysis(userId: string): UserAnalysis | null` — Get analysis stats for a user.
+  - `getAllUserAnalytics(): UserAnalysis[]` — Get stats for all users.
+  - `resetAnalysisCache(): void` — Reset the in-memory cache (for testing).
+- **Testing:** All tests use the in-memory cache and `resetAnalysisCache()` for isolation.
+- **Note:** No browser storage is used; all analytics are ephemeral and reset on reload.
 - [📱 Usage Guide](#-usage-guide)
 - [🎯 Supported Analysis Tools](#-supported-analysis-tools)
 - [📸 Screenshots & Demo](#-screenshots--demo)

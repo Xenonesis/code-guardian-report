@@ -70,6 +70,16 @@ graph TD
 ### Analysis Tracker
 - **Description**: Tracks and logs analysis activities.
 - **Components**: AnalysisTracker
+#### Analysis Tracker (Updated v2.5.6+)
+- **Persistence:** Uses an in-memory cache for all analysis tracking (no localStorage or browser storage).
+- **API:**
+  - `trackFileAnalysis(userId: string): void` — Track a file analysis event for a user.
+  - `getTotalFilesAnalyzed(): number` — Get the total number of files analyzed.
+  - `getUserAnalysis(userId: string): UserAnalysis | null` — Get analysis stats for a user.
+  - `getAllUserAnalytics(): UserAnalysis[]` — Get stats for all users.
+  - `resetAnalysisCache(): void` — Reset the in-memory cache (for testing).
+- **Testing:** All tests use the in-memory cache and `resetAnalysisCache()` for isolation.
+- **Note:** All analytics are ephemeral and reset on reload; no persistent storage is used.
 
 ### Metrics Calculator
 - **Description**: Calculates various security metrics.
