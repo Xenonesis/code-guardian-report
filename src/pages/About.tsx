@@ -19,32 +19,32 @@ const About = () => {
 
   const features = [
     {
-      icon: <Shield className="h-6 w-6" />,
+      icon: <Shield className="h-8 w-8" />,
       title: 'Enterprise Security Analysis',
-      description: 'Military-grade security scanning with comprehensive vulnerability detection and threat intelligence.',
-      gradient: 'from-emerald-500 to-teal-600',
-      benefits: ['OWASP Top 10 Coverage', 'CVE Database Integration', 'Zero-day Detection', 'Threat Intelligence', 'Compliance Reporting']
+      description: 'Military-grade security scanning with comprehensive vulnerability detection, threat intelligence, and real-time monitoring for enterprise-scale applications.',
+      gradient: 'from-emerald-500 via-teal-500 to-cyan-600',
+      benefits: ['OWASP Top 10 Coverage', 'CVE Database Integration', 'Zero-day Detection', 'Threat Intelligence', 'Compliance Reporting', 'Real-time Monitoring']
     },
     {
-      icon: <Code className="h-6 w-6" />,
+      icon: <Code className="h-8 w-8" />,
       title: 'Advanced Code Quality',
-      description: 'Deep code analysis with AI-powered insights for maintainability, performance, and technical debt.',
-      gradient: 'from-blue-500 to-indigo-600',
-      benefits: ['Cyclomatic Complexity', 'Technical Debt Analysis', 'Maintainability Index', 'Performance Metrics', 'Refactoring Suggestions']
+      description: 'Deep code analysis with AI-powered insights for maintainability, performance optimization, and technical debt reduction across multiple programming languages.',
+      gradient: 'from-blue-500 via-indigo-500 to-purple-600',
+      benefits: ['Cyclomatic Complexity', 'Technical Debt Analysis', 'Maintainability Index', 'Performance Metrics', 'Refactoring Suggestions', 'Multi-language Support']
     },
     {
-      icon: <Bot className="h-6 w-6" />,
+      icon: <Bot className="h-8 w-8" />,
       title: 'AI-Powered Intelligence',
-      description: 'Next-generation AI that understands your code context and provides intelligent recommendations.',
-      gradient: 'from-purple-500 to-pink-600',
-      benefits: ['Natural Language Explanations', 'Auto-fix Suggestions', 'Impact Assessment', 'Learning Algorithms', 'Context Awareness']
+      description: 'Next-generation AI that understands your code context, learns from patterns, and provides intelligent recommendations with natural language explanations.',
+      gradient: 'from-purple-500 via-pink-500 to-rose-600',
+      benefits: ['Natural Language Explanations', 'Auto-fix Suggestions', 'Impact Assessment', 'Learning Algorithms', 'Context Awareness', 'Smart Recommendations']
     },
     {
-      icon: <Zap className="h-6 w-6" />,
+      icon: <Zap className="h-8 w-8" />,
       title: 'Hyper-Fast Processing',
-      description: 'Cutting-edge analysis engine with distributed processing for enterprise-scale codebases.',
-      gradient: 'from-amber-500 to-orange-600',
-      benefits: ['Parallel Processing', 'Incremental Analysis', 'Real-time Results', 'Distributed Computing', 'Edge Optimization']
+      description: 'Cutting-edge analysis engine with distributed processing, parallel computing, and edge optimization for lightning-fast results on enterprise-scale codebases.',
+      gradient: 'from-amber-500 via-orange-500 to-red-600',
+      benefits: ['Parallel Processing', 'Incremental Analysis', 'Real-time Results', 'Distributed Computing', 'Edge Optimization', 'Cloud Scaling']
     }
   ];
 
@@ -71,8 +71,8 @@ const About = () => {
 
         <FeatureGrid
           features={features}
-          title="Platform Capabilities"
-          subtitle="Everything you need for comprehensive code security and quality analysis"
+          title="🚀 Platform Capabilities"
+          subtitle="Everything you need for comprehensive code security, quality analysis, and performance optimization"
           columns={2}
           variant="modern"
         />

@@ -16,7 +16,7 @@ export const CallToActionSection: React.FC<CallToActionSectionProps> = ({ classN
           <h3 className="text-2xl font-bold mb-4 group-hover:scale-105 transition-transform duration-300 text-slate-800 dark:text-white">
             Ready to Secure Your Code?
           </h3>
-          <p className="text-slate-600 dark:text-blue-200 mb-6 text-lg group-hover:text-slate-700 dark:group-hover:text-white transition-colors duration-300">
+          <p className="text-slate-600 dark:text-slate-200 mb-6 text-lg group-hover:text-slate-700 dark:group-hover:text-white transition-colors duration-300">
             Start analyzing your codebase today with our comprehensive security and quality tools.
           </p>
           <Button

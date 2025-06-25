@@ -1,17 +1,17 @@
 <div align="center">
 
-# 🛡️ Code Guardian v2.5.9
+# 🛡️ Code Guardian v2.6.0
 ### 🚀 Next-Generation AI-Powered Security Analysis Platform
 
-**Current Version: 2.5.9 - Developed by Aditya Kumar Tiwari**
+**Current Version: 2.6.0 - Developed by Aditya Kumar Tiwari**
 
 <img src="./public/home.png" alt="Code Guardian - AI-Powered Security Analysis Platform" width="100%" style="border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.12);">
 
 <div align="center">
-  <img src="https://img.shields.io/badge/Version-2.5.9-ff6b6b?style=for-the-badge&logo=rocket&logoColor=white" alt="Version"/>
+  <img src="https://img.shields.io/badge/Version-2.6.0-ff6b6b?style=for-the-badge&logo=rocket&logoColor=white" alt="Version"/>
   <img src="https://img.shields.io/badge/Status-Production%20Ready-00C851?style=for-the-badge&logo=checkmarx&logoColor=white" alt="Status"/>
   <img src="https://img.shields.io/badge/AI%20Powered-GPT--4%20%7C%20Claude-9C27B0?style=for-the-badge&logo=openai&logoColor=white" alt="AI Powered"/>
-  <img src="https://img.shields.io/badge/npm-v2.5.9-CB3837?style=for-the-badge&logo=npm&logoColor=white" alt="NPM Version"/>
+  <img src="https://img.shields.io/badge/npm-v2.6.0-CB3837?style=for-the-badge&logo=npm&logoColor=white" alt="NPM Version"/>
   <img src="https://img.shields.io/badge/Analytics-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Analytics"/>
   <img src="https://img.shields.io/badge/PWA-Ready-FF6F00?style=for-the-badge&logo=pwa&logoColor=white" alt="PWA Ready"/>
 </div>
@@ -90,7 +90,7 @@
 </tr>
 </table>
 
-### **✨ New in v2.5.9:**
+### **✨ New in v2.6.0:**
 
 <div align="center">
 
@@ -152,7 +152,7 @@ Built with ❤️ by [Aditya Kumar Tiwari](https://github.com/Xenonesis)
   - [⚡ Installation](#-installation)
   - [📜 Available Scripts](#-available-scripts)
   - [🔧 Environment Setup](#-environment-setup)
-### 📝 Analysis Tracker Service (v2.5.9+)
+### 📝 Analysis Tracker Service (v2.6.0+)
 
 - **Persistence:** Uses an in-memory cache for all analysis tracking (no localStorage).
 - **API:**
@@ -287,7 +287,7 @@ Built with ❤️ by [Aditya Kumar Tiwari](https://github.com/Xenonesis)
 - 📈 **Recharts 2.15.3**: Interactive data visualization and charts
 - 🎨 **React Router DOM 6.26.2**: Client-side routing with lazy loading
 - 🔄 **React State**: Built-in state management with hooks and context
-- 📊 **Vercel Analytics 2.5.9**: Real-time user analytics and insights
+- 📊 **Vercel Analytics 2.6.0**: Real-time user analytics and insights
 
 ### 🛠️ **Development Tools**
 
@@ -387,7 +387,7 @@ VITE_ANTHROPIC_API_URL=https://api.anthropic.com/v1
 
 # Application Settings
 VITE_APP_NAME="Code Guardian Report"
-VITE_APP_VERSION="2.5.9"
+VITE_APP_VERSION="2.6.0"
 ```
 
 ## 📱 Usage Guide
@@ -725,21 +725,21 @@ We welcome contributions! Please follow these steps:
 
 ## 📈 Changelog
 
-### 🔄 Version 2.5.9 - Current Release ⭐
+### 🔄 Version 2.6.0 - Current Release ⭐
 - 📦 **Bundle Size Monitoring**: Added bundlesize configuration and npm script
 - 🔧 **TypeScript Fixes**: Resolved lint errors with proper type definitions
 - 🖼️ **README Images**: Fixed broken image links for better documentation
 - 📝 **License Update**: Updated copyright to June 2025
 - ⚙️ **Development Tools**: Enhanced development workflow with size monitoring
 
-### 🔄 Version 2.5.9 - Previous Release
+### 🔄 Version 2.6.0 - Previous Release
 - ✨ **Enhanced About Page**: Added version info and tech stack display
 - 🛡️ **Fixed StatsGrid**: Resolved temporal dead zone error in component
 - 🏠 **Home Page Cleanup**: Removed redundant features section
 - 📦 **Version Management**: Updated all version references across the project
 - 🚀 **GitHub Integration**: Proper version tagging and release management
 
-### 🔄 Version 2.5.9 - Previous Release
+### 🔄 Version 2.6.0 - Previous Release
 - ✨ **Major Codebase Cleanup**: Removed unnecessary documentation files and build artifacts
 - 🚀 **Enhanced README**: Comprehensive documentation with modern design
 - 📦 **Package Management**: Resolved conflicting lock files (removed bun.lockb)

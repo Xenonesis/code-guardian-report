@@ -1,5 +1,19 @@
-import React from 'react';
-import { Shield, Search, Brain, Gauge, Lock, FileText, Users, Globe, Code, Zap, Bug, Database, CheckCircle, Star } from 'lucide-react';
+import React from "react";
+import {
+  Shield,
+  Brain,
+  Lock,
+  FileText,
+  Users,
+  Globe,
+  Code,
+  Zap,
+  Bug,
+  Database,
+  CheckCircle,
+  Star,
+} from "lucide-react";
+import { BentoGrid, type BentoItem } from "@/components/ui/bento-grid";
 
 export const DetailedInfo: React.FC = () => {
   const capabilities = [
@@ -34,6 +48,12 @@ export const DetailedInfo: React.FC = () => {
       description: "Get custom AI prompts tailored to your specific issues, ready to use with Cursor, Windsurf, or GitHub Copilot."
     }
   ];
+
+  const capabilityItems: BentoItem[] = capabilities.map((c) => ({
+    title: c.title,
+    description: c.description,
+    icon: c.icon,
+  }));
 
   const features = [
     {
@@ -99,24 +119,9 @@ export const DetailedInfo: React.FC = () => {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            {capabilities.map((capability, index) => (
-              <div key={index} className="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm">
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg text-blue-600 dark:text-blue-400">
-                    {capability.icon}
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-slate-900 dark:text-white mb-2">
-                      {capability.title}
-                    </h3>
-                    <p className="text-slate-600 dark:text-slate-400 text-sm">
-                      {capability.description}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
+          <div className="mb-12">
+            <BentoGrid items={capabilityItems} />
+
           </div>
 
           <div className="bg-white dark:bg-slate-800 p-8 rounded-lg shadow-sm">
