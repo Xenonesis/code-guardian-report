@@ -54,7 +54,7 @@ export const Navigation: React.FC<NavigationProps> = ({ isDarkMode, toggleDarkMo
             </div>
             <div className="hidden xs:block min-w-0">
               <h1 className="text-sm sm:text-lg lg:text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent truncate">
-                Bug & Weak Code Finder
+                Code Guardian
               </h1>
               <p className="text-xs text-slate-600 dark:text-slate-400 flex items-center gap-1">
                 <Zap className="h-2.5 w-2.5 sm:h-3 sm:w-3" />

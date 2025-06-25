@@ -6,6 +6,7 @@ import { UploadForm } from '@/components/UploadForm';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { AnalysisResults } from '@/hooks/useAnalysis';
 import { EnhancedSecurityResults } from '@/components/EnhancedSecurityResults';
+import PromptGenerator from '@/components/PromptGenerator';
 
 // Lazy load heavy components
 const ResultsTable = React.lazy(() => import('@/components/ResultsTable').then(module => ({ default: module.ResultsTable })));
@@ -51,6 +52,16 @@ export const TabContent: React.FC<TabContentProps> = ({
         }>
           <AIKeyManager />
         </Suspense>
+      </TabsContent>
+
+      <TabsContent
+        value="prompts"
+        className="animate-fade-in"
+        role="tabpanel"
+        id="prompts-panel"
+        aria-labelledby="prompts-tab"
+      >
+        <PromptGenerator analysisResults={analysisResults} />
       </TabsContent>
 
       <TabsContent

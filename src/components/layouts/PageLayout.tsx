@@ -67,7 +67,7 @@ export const PageLayout: React.FC<PageLayoutProps> = ({
                 <Shield className="h-6 w-6 text-white" />
               </div>
               <h3 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                Bug & Weak Code Finder
+                Code Guardian
               </h3>
             </div>
 

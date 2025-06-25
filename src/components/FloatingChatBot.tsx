@@ -34,7 +34,7 @@ interface FloatingChatBotProps {
   analysisResults: AnalysisResults;
 }
 
-export const FloatingChatBot: React.FC<FloatingChatBotProps> = ({ analysisResults }) => {
+const FloatingChatBot: React.FC<FloatingChatBotProps> = ({ analysisResults }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
@@ -248,3 +248,5 @@ How can I help you today?`,
     </>
   );
 };
+
+export default FloatingChatBot;

@@ -8,7 +8,7 @@ import { useAnalysis, AnalysisResults } from '@/hooks/useAnalysis';
 import { useToast } from '@/hooks/use-toast';
 
 // Lazy load heavy components for better performance
-const FloatingChatBot = lazy(() => import('@/components/FloatingChatBot').then(module => ({ default: module.FloatingChatBot })));
+const FloatingChatBot = lazy(() => import('@/components/FloatingChatBot'));
 
 const Index = () => {
   const [currentTab, setCurrentTab] = useState('upload');

@@ -70,7 +70,7 @@ graph TD
 ### Analysis Tracker
 - **Description**: Tracks and logs analysis activities.
 - **Components**: AnalysisTracker
-#### Analysis Tracker (Updated v2.5.6+)
+#### Analysis Tracker (Updated v2.5.9+)
 - **Persistence:** Uses an in-memory cache for all analysis tracking (no localStorage or browser storage).
 - **API:**
   - `trackFileAnalysis(userId: string): void` — Track a file analysis event for a user.

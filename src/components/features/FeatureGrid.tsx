@@ -38,15 +38,15 @@ export const FeatureGrid: React.FC<FeatureGridProps> = ({
   };
 
   return (
-    <section className={`py-8 sm:py-12 md:py-16 lg:py-20 xl:py-24 relative ${className}`} aria-labelledby="features-title">
+    <section className={`py-8 sm:py-12 md:py-16 lg:py-20 xl:py-24 relative ${className}`}>
       {/* Section Header */}
       {title && (
         <div className="text-center mb-8 sm:mb-12 lg:mb-16 px-4 sm:px-0">
-          <h2 id="features-title" className="text-responsive-xl font-bold text-slate-900 dark:text-white mb-3 sm:mb-4">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white mb-3 sm:mb-4">
             {title}
           </h2>
           {subtitle && (
-            <p className="text-responsive-base text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
+            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
               {subtitle}
             </p>
           )}
@@ -54,7 +54,7 @@ export const FeatureGrid: React.FC<FeatureGridProps> = ({
       )}
 
       {/* Features Grid */}
-      <div className={`grid ${getGridCols()} gap-4 sm:gap-6 lg:gap-8 container mx-auto mobile-container`}>
+      <div className={`grid ${getGridCols()} gap-4 sm:gap-6 lg:gap-8 container mx-auto px-4`}>
         {features.map((feature, index) => (
           <Card
             key={index}
@@ -64,13 +64,11 @@ export const FeatureGrid: React.FC<FeatureGridProps> = ({
                 : 'bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm border shadow-lg hover:shadow-xl'
             }`}
             style={{ animationDelay: `${index * 0.1}s` }}
-            role="article"
-            aria-labelledby={`feature-${index}-title`}
-            tabIndex={0}
+
           >
             {/* Gradient Top Border */}
             {feature.gradient && (
-              <div className={`h-1 bg-gradient-to-r ${feature.gradient} group-hover:h-2 transition-all duration-300`} aria-hidden="true"></div>
+              <div className={`h-1 bg-gradient-to-r ${feature.gradient} group-hover:h-2 transition-all duration-300`}></div>
             )}
 
             {/* Coming Soon Badge */}
@@ -100,7 +98,6 @@ export const FeatureGrid: React.FC<FeatureGridProps> = ({
 
               {/* Title */}
               <CardTitle
-                id={`feature-${index}-title`}
                 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300 leading-tight"
               >
                 {feature.title}

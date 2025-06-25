@@ -10,6 +10,8 @@ import { DetailedInfo } from '@/components/pages/about/DetailedInfo';
 import { SupportedToolsSection } from '@/components/pages/about/SupportedToolsSection';
 import { DeveloperSection } from '@/components/pages/about/DeveloperSection';
 import { CallToActionSection } from '@/components/pages/about/CallToActionSection';
+import HowToUseSection from '@/components/pages/about/HowToUseSection';
+import MeetDeveloperSection from '@/components/pages/about/MeetDeveloperSection';
 import { useDarkMode } from '@/hooks/useDarkMode';
 
 const About = () => {
@@ -53,9 +55,9 @@ const About = () => {
       {/* Content with relative positioning to appear above background */}
       <div className="relative z-10">
         <HeroSection
-          title="Enterprise-Grade Code Security Platform"
-          subtitle="Trusted by 10,000+ developers worldwide"
-          description="Our platform combines industry-leading static analysis tools with cutting-edge AI to provide comprehensive security and quality assessment for your codebase. Built by developers, for developers."
+          title="Code Guardian"
+          subtitle="AI-Powered Security Analysis Platform"
+          description="Next-generation AI-powered code analysis platform that identifies security vulnerabilities, code quality issues, and performance bottlenecks. Upload your code and get instant insights with actionable fixes and AI-generated prompts for popular development tools."
           titleId="about-hero-title"
           variant="gradient"
         >
@@ -65,17 +67,19 @@ const About = () => {
 
         <DetailedInfo />
 
+        <HowToUseSection />
+
         <FeatureGrid
           features={features}
           title="Platform Capabilities"
           subtitle="Everything you need for comprehensive code security and quality analysis"
-          columns={4}
+          columns={2}
           variant="modern"
         />
 
         <SupportedToolsSection />
 
-        <DeveloperSection />
+        <MeetDeveloperSection />
 
         <CallToActionSection />
       </div>
