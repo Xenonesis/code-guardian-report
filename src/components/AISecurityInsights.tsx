@@ -12,7 +12,19 @@ import {
   Info,
   Lightbulb,
   BookOpen,
-  Zap
+  Zap,
+  Activity,
+  BarChart3,
+  Clock,
+  FileText,
+  GitBranch,
+  Lock,
+  Radar,
+  Search,
+  Sparkles,
+  TrendingDown,
+  Users,
+  Workflow
 } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -59,6 +71,42 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
   });
 
   const [owaspExplanations, setOwaspExplanations] = useState<Record<string, InsightState>>({});
+  const [threatModeling, setThreatModeling] = useState<InsightState>({
+    content: '',
+    isLoading: false,
+    error: null,
+    lastGenerated: null
+  });
+  const [complianceAnalysis, setComplianceAnalysis] = useState<InsightState>({
+    content: '',
+    isLoading: false,
+    error: null,
+    lastGenerated: null
+  });
+  const [riskAssessment, setRiskAssessment] = useState<InsightState>({
+    content: '',
+    isLoading: false,
+    error: null,
+    lastGenerated: null
+  });
+  const [performanceImpact, setPerformanceImpact] = useState<InsightState>({
+    content: '',
+    isLoading: false,
+    error: null,
+    lastGenerated: null
+  });
+  const [codeQualityInsights, setCodeQualityInsights] = useState<InsightState>({
+    content: '',
+    isLoading: false,
+    error: null,
+    lastGenerated: null
+  });
+  const [trendsAnalysis, setTrendsAnalysis] = useState<InsightState>({
+    content: '',
+    isLoading: false,
+    error: null,
+    lastGenerated: null
+  });
 
   // Check for API keys on component mount and listen for changes
   useEffect(() => {
@@ -114,6 +162,144 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
       toast.error(`Failed to generate insights: ${errorMessage}`);
     }
   }, [results, aiService]);
+
+  const generateThreatModeling = async () => {
+    setThreatModeling(prev => ({ ...prev, isLoading: true, error: null }));
+    
+    try {
+      const threats = await aiService.generateThreatModeling(results);
+      setThreatModeling({
+        content: threats,
+        isLoading: false,
+        error: null,
+        lastGenerated: new Date()
+      });
+      toast.success('Threat modeling analysis generated!');
+    } catch (error) {
+      const errorMessage = formatAIError(error);
+      setThreatModeling(prev => ({
+        ...prev,
+        isLoading: false,
+        error: errorMessage
+      }));
+      toast.error(`Failed to generate threat modeling: ${errorMessage}`);
+    }
+  };
+
+  const generateComplianceAnalysis = async () => {
+    setComplianceAnalysis(prev => ({ ...prev, isLoading: true, error: null }));
+    
+    try {
+      const compliance = await aiService.generateComplianceAnalysis(results);
+      setComplianceAnalysis({
+        content: compliance,
+        isLoading: false,
+        error: null,
+        lastGenerated: new Date()
+      });
+      toast.success('Compliance analysis generated!');
+    } catch (error) {
+      const errorMessage = formatAIError(error);
+      setComplianceAnalysis(prev => ({
+        ...prev,
+        isLoading: false,
+        error: errorMessage
+      }));
+      toast.error(`Failed to generate compliance analysis: ${errorMessage}`);
+    }
+  };
+
+  const generateRiskAssessment = async () => {
+    setRiskAssessment(prev => ({ ...prev, isLoading: true, error: null }));
+    
+    try {
+      const risk = await aiService.generateRiskAssessment(results);
+      setRiskAssessment({
+        content: risk,
+        isLoading: false,
+        error: null,
+        lastGenerated: new Date()
+      });
+      toast.success('Risk assessment generated!');
+    } catch (error) {
+      const errorMessage = formatAIError(error);
+      setRiskAssessment(prev => ({
+        ...prev,
+        isLoading: false,
+        error: errorMessage
+      }));
+      toast.error(`Failed to generate risk assessment: ${errorMessage}`);
+    }
+  };
+
+  const generatePerformanceImpact = async () => {
+    setPerformanceImpact(prev => ({ ...prev, isLoading: true, error: null }));
+    
+    try {
+      const performance = await aiService.generatePerformanceImpact(results);
+      setPerformanceImpact({
+        content: performance,
+        isLoading: false,
+        error: null,
+        lastGenerated: new Date()
+      });
+      toast.success('Performance impact analysis generated!');
+    } catch (error) {
+      const errorMessage = formatAIError(error);
+      setPerformanceImpact(prev => ({
+        ...prev,
+        isLoading: false,
+        error: errorMessage
+      }));
+      toast.error(`Failed to generate performance analysis: ${errorMessage}`);
+    }
+  };
+
+  const generateCodeQualityInsights = async () => {
+    setCodeQualityInsights(prev => ({ ...prev, isLoading: true, error: null }));
+    
+    try {
+      const quality = await aiService.generateCodeQualityInsights(results);
+      setCodeQualityInsights({
+        content: quality,
+        isLoading: false,
+        error: null,
+        lastGenerated: new Date()
+      });
+      toast.success('Code quality insights generated!');
+    } catch (error) {
+      const errorMessage = formatAIError(error);
+      setCodeQualityInsights(prev => ({
+        ...prev,
+        isLoading: false,
+        error: errorMessage
+      }));
+      toast.error(`Failed to generate code quality insights: ${errorMessage}`);
+    }
+  };
+
+  const generateTrendsAnalysis = async () => {
+    setTrendsAnalysis(prev => ({ ...prev, isLoading: true, error: null }));
+    
+    try {
+      const trends = await aiService.generateTrendsAnalysis(results);
+      setTrendsAnalysis({
+        content: trends,
+        isLoading: false,
+        error: null,
+        lastGenerated: new Date()
+      });
+      toast.success('Trends analysis generated!');
+    } catch (error) {
+      const errorMessage = formatAIError(error);
+      setTrendsAnalysis(prev => ({
+        ...prev,
+        isLoading: false,
+        error: errorMessage
+      }));
+      toast.error(`Failed to generate trends analysis: ${errorMessage}`);
+    }
+  };
 
   // Auto-generate insights when API keys are available
   useEffect(() => {
@@ -197,6 +383,24 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
     });
   };
 
+  const getInsightsSummary = () => {
+    const totalInsights = [
+      securityInsights,
+      remediationStrategy,
+      threatModeling,
+      complianceAnalysis,
+      riskAssessment,
+      performanceImpact,
+      codeQualityInsights,
+      trendsAnalysis
+    ];
+    
+    const generated = totalInsights.filter(insight => insight.content).length;
+    const loading = totalInsights.filter(insight => insight.isLoading).length;
+    
+    return { total: totalInsights.length, generated, loading };
+  };
+
   if (!aiFeatureStatus.isSupported) {
     return (
       <Card className={className}>
@@ -256,31 +460,69 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
     <div className={`space-y-6 ${className}`}>
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Brain className="h-5 w-5 text-purple-600" />
-            AI Security Insights
-            <Badge className="bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300">
-              {aiFeatureStatus.primaryProvider ? `${aiFeatureStatus.primaryProvider.toUpperCase()} Connected` : 'API Connected'}
-            </Badge>
-          </CardTitle>
-          <CardDescription>
-            {aiFeatureStatus.message}
-          </CardDescription>
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle className="flex items-center gap-2">
+                <Brain className="h-5 w-5 text-purple-600" />
+                AI Security Insights
+                <Badge className="bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300">
+                  {aiFeatureStatus.primaryProvider ? `${aiFeatureStatus.primaryProvider.toUpperCase()} Connected` : 'API Connected'}
+                </Badge>
+              </CardTitle>
+              <CardDescription>
+                {aiFeatureStatus.message}
+              </CardDescription>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="text-right">
+                <div className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                  Insights Generated
+                </div>
+                <div className="text-2xl font-bold text-purple-600">
+                  {(() => {
+                    const summary = getInsightsSummary();
+                    return `${summary.generated}/${summary.total}`;
+                  })()}
+                </div>
+              </div>
+              {(() => {
+                const summary = getInsightsSummary();
+                return summary.loading > 0 && (
+                  <div className="flex items-center gap-2 text-sm text-slate-600">
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    {summary.loading} generating...
+                  </div>
+                );
+              })()}
+            </div>
+          </div>
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="overview" className="w-full">
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="overview" className="flex items-center gap-2">
-                <Shield className="h-4 w-4" />
+            <TabsList className="grid w-full grid-cols-6 h-auto">
+              <TabsTrigger value="overview" className="flex items-center gap-2 text-xs">
+                <Shield className="h-3 w-3" />
                 Security Overview
               </TabsTrigger>
-              <TabsTrigger value="remediation" className="flex items-center gap-2">
-                <Target className="h-4 w-4" />
+              <TabsTrigger value="remediation" className="flex items-center gap-2 text-xs">
+                <Target className="h-3 w-3" />
                 Remediation Plan
               </TabsTrigger>
-              <TabsTrigger value="owasp" className="flex items-center gap-2">
-                <BookOpen className="h-4 w-4" />
+              <TabsTrigger value="owasp" className="flex items-center gap-2 text-xs">
+                <BookOpen className="h-3 w-3" />
                 OWASP Analysis
+              </TabsTrigger>
+              <TabsTrigger value="threats" className="flex items-center gap-2 text-xs">
+                <Radar className="h-3 w-3" />
+                Threat Modeling
+              </TabsTrigger>
+              <TabsTrigger value="compliance" className="flex items-center gap-2 text-xs">
+                <Lock className="h-3 w-3" />
+                Compliance
+              </TabsTrigger>
+              <TabsTrigger value="advanced" className="flex items-center gap-2 text-xs">
+                <Sparkles className="h-3 w-3" />
+                Advanced
               </TabsTrigger>
             </TabsList>
 
@@ -523,6 +765,375 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
                   })}
                 </div>
               )}
+            </TabsContent>
+
+            <TabsContent value="threats" className="space-y-4">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold">Threat Modeling & Attack Vectors</h3>
+                <Button
+                  onClick={generateThreatModeling}
+                  disabled={threatModeling.isLoading}
+                  variant="outline"
+                  size="sm"
+                >
+                  {threatModeling.isLoading ? (
+                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                  ) : (
+                    <Radar className="h-4 w-4 mr-2" />
+                  )}
+                  {threatModeling.isLoading ? 'Analyzing...' : 'Generate Analysis'}
+                </Button>
+              </div>
+
+              {threatModeling.isLoading && (
+                <div className="flex items-center justify-center p-8">
+                  <div className="text-center space-y-4">
+                    <Loader2 className="h-8 w-8 animate-spin mx-auto text-red-600" />
+                    <div className="space-y-2">
+                      <p className="text-sm font-medium">Modeling potential threats...</p>
+                      <Progress value={undefined} className="w-64" />
+                      <p className="text-xs text-slate-500">
+                        Analyzing attack surfaces and threat vectors
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {threatModeling.error && (
+                <Alert variant="destructive">
+                  <XCircle className="h-4 w-4" />
+                  <AlertDescription>
+                    Failed to generate threat modeling: {threatModeling.error}
+                  </AlertDescription>
+                </Alert>
+              )}
+
+              {threatModeling.content && (
+                <div className="space-y-4">
+                  <div className="bg-red-50 dark:bg-red-950/20 p-4 rounded-lg border border-red-200 dark:border-red-800">
+                    <div className="whitespace-pre-wrap text-sm text-slate-700 dark:text-slate-300">
+                      {threatModeling.content}
+                    </div>
+                  </div>
+                  {threatModeling.lastGenerated && (
+                    <div className="flex items-center gap-2 text-xs text-slate-500">
+                      <CheckCircle className="h-3 w-3" />
+                      Generated on {formatTimestamp(threatModeling.lastGenerated)}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {!threatModeling.content && !threatModeling.isLoading && !threatModeling.error && (
+                <div className="text-center py-8">
+                  <Button onClick={generateThreatModeling} className="bg-red-600 hover:bg-red-700">
+                    <Radar className="h-4 w-4 mr-2" />
+                    Generate Threat Model
+                  </Button>
+                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
+                    Identify potential attack vectors and security threats specific to your codebase
+                  </p>
+                </div>
+              )}
+            </TabsContent>
+
+            <TabsContent value="compliance" className="space-y-4">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold">Compliance & Standards Analysis</h3>
+                <Button
+                  onClick={generateComplianceAnalysis}
+                  disabled={complianceAnalysis.isLoading}
+                  variant="outline"
+                  size="sm"
+                >
+                  {complianceAnalysis.isLoading ? (
+                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                  ) : (
+                    <Lock className="h-4 w-4 mr-2" />
+                  )}
+                  {complianceAnalysis.isLoading ? 'Analyzing...' : 'Generate Analysis'}
+                </Button>
+              </div>
+
+              {complianceAnalysis.isLoading && (
+                <div className="flex items-center justify-center p-8">
+                  <div className="text-center space-y-4">
+                    <Loader2 className="h-8 w-8 animate-spin mx-auto text-green-600" />
+                    <div className="space-y-2">
+                      <p className="text-sm font-medium">Analyzing compliance requirements...</p>
+                      <Progress value={undefined} className="w-64" />
+                      <p className="text-xs text-slate-500">
+                        Checking against security standards and regulations
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {complianceAnalysis.error && (
+                <Alert variant="destructive">
+                  <XCircle className="h-4 w-4" />
+                  <AlertDescription>
+                    Failed to generate compliance analysis: {complianceAnalysis.error}
+                  </AlertDescription>
+                </Alert>
+              )}
+
+              {complianceAnalysis.content && (
+                <div className="space-y-4">
+                  <div className="bg-green-50 dark:bg-green-950/20 p-4 rounded-lg border border-green-200 dark:border-green-800">
+                    <div className="whitespace-pre-wrap text-sm text-slate-700 dark:text-slate-300">
+                      {complianceAnalysis.content}
+                    </div>
+                  </div>
+                  {complianceAnalysis.lastGenerated && (
+                    <div className="flex items-center gap-2 text-xs text-slate-500">
+                      <CheckCircle className="h-3 w-3" />
+                      Generated on {formatTimestamp(complianceAnalysis.lastGenerated)}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {!complianceAnalysis.content && !complianceAnalysis.isLoading && !complianceAnalysis.error && (
+                <div className="text-center py-8">
+                  <Button onClick={generateComplianceAnalysis} className="bg-green-600 hover:bg-green-700">
+                    <Lock className="h-4 w-4 mr-2" />
+                    Generate Compliance Analysis
+                  </Button>
+                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
+                    Assess compliance with security standards like SOC 2, PCI DSS, GDPR, and more
+                  </p>
+                </div>
+              )}
+            </TabsContent>
+
+            <TabsContent value="advanced" className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Risk Assessment Card */}
+                <Card className="border-l-4 border-l-yellow-500">
+                  <CardHeader>
+                    <div className="flex items-center justify-between">
+                      <CardTitle className="text-base flex items-center gap-2">
+                        <BarChart3 className="h-4 w-4 text-yellow-600" />
+                        Risk Assessment
+                      </CardTitle>
+                      <Button
+                        onClick={generateRiskAssessment}
+                        disabled={riskAssessment.isLoading}
+                        variant="outline"
+                        size="sm"
+                      >
+                        {riskAssessment.isLoading ? (
+                          <Loader2 className="h-3 w-3 animate-spin" />
+                        ) : (
+                          <BarChart3 className="h-3 w-3" />
+                        )}
+                      </Button>
+                    </div>
+                    <CardDescription>
+                      Quantitative risk analysis and business impact assessment
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    {riskAssessment.isLoading && (
+                      <div className="flex items-center gap-3 p-4">
+                        <Loader2 className="h-5 w-5 animate-spin text-yellow-600" />
+                        <div>
+                          <p className="text-sm font-medium">Calculating risk metrics...</p>
+                          <p className="text-xs text-slate-500">Analyzing business impact</p>
+                        </div>
+                      </div>
+                    )}
+                    {riskAssessment.content && (
+                      <div className="bg-yellow-50 dark:bg-yellow-950/20 p-3 rounded text-sm">
+                        {riskAssessment.content.substring(0, 200)}...
+                      </div>
+                    )}
+                    {!riskAssessment.content && !riskAssessment.isLoading && (
+                      <Button onClick={generateRiskAssessment} variant="ghost" size="sm" className="w-full">
+                        Generate Risk Assessment
+                      </Button>
+                    )}
+                  </CardContent>
+                </Card>
+
+                {/* Performance Impact Card */}
+                <Card className="border-l-4 border-l-indigo-500">
+                  <CardHeader>
+                    <div className="flex items-center justify-between">
+                      <CardTitle className="text-base flex items-center gap-2">
+                        <Activity className="h-4 w-4 text-indigo-600" />
+                        Performance Impact
+                      </CardTitle>
+                      <Button
+                        onClick={generatePerformanceImpact}
+                        disabled={performanceImpact.isLoading}
+                        variant="outline"
+                        size="sm"
+                      >
+                        {performanceImpact.isLoading ? (
+                          <Loader2 className="h-3 w-3 animate-spin" />
+                        ) : (
+                          <Activity className="h-3 w-3" />
+                        )}
+                      </Button>
+                    </div>
+                    <CardDescription>
+                      Security fixes impact on application performance
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    {performanceImpact.isLoading && (
+                      <div className="flex items-center gap-3 p-4">
+                        <Loader2 className="h-5 w-5 animate-spin text-indigo-600" />
+                        <div>
+                          <p className="text-sm font-medium">Analyzing performance...</p>
+                          <p className="text-xs text-slate-500">Measuring security overhead</p>
+                        </div>
+                      </div>
+                    )}
+                    {performanceImpact.content && (
+                      <div className="bg-indigo-50 dark:bg-indigo-950/20 p-3 rounded text-sm">
+                        {performanceImpact.content.substring(0, 200)}...
+                      </div>
+                    )}
+                    {!performanceImpact.content && !performanceImpact.isLoading && (
+                      <Button onClick={generatePerformanceImpact} variant="ghost" size="sm" className="w-full">
+                        Analyze Performance Impact
+                      </Button>
+                    )}
+                  </CardContent>
+                </Card>
+
+                {/* Code Quality Insights Card */}
+                <Card className="border-l-4 border-l-teal-500">
+                  <CardHeader>
+                    <div className="flex items-center justify-between">
+                      <CardTitle className="text-base flex items-center gap-2">
+                        <FileText className="h-4 w-4 text-teal-600" />
+                        Code Quality Insights
+                      </CardTitle>
+                      <Button
+                        onClick={generateCodeQualityInsights}
+                        disabled={codeQualityInsights.isLoading}
+                        variant="outline"
+                        size="sm"
+                      >
+                        {codeQualityInsights.isLoading ? (
+                          <Loader2 className="h-3 w-3 animate-spin" />
+                        ) : (
+                          <FileText className="h-3 w-3" />
+                        )}
+                      </Button>
+                    </div>
+                    <CardDescription>
+                      Deep code quality analysis and maintainability metrics
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    {codeQualityInsights.isLoading && (
+                      <div className="flex items-center gap-3 p-4">
+                        <Loader2 className="h-5 w-5 animate-spin text-teal-600" />
+                        <div>
+                          <p className="text-sm font-medium">Analyzing code quality...</p>
+                          <p className="text-xs text-slate-500">Evaluating maintainability</p>
+                        </div>
+                      </div>
+                    )}
+                    {codeQualityInsights.content && (
+                      <div className="bg-teal-50 dark:bg-teal-950/20 p-3 rounded text-sm">
+                        {codeQualityInsights.content.substring(0, 200)}...
+                      </div>
+                    )}
+                    {!codeQualityInsights.content && !codeQualityInsights.isLoading && (
+                      <Button onClick={generateCodeQualityInsights} variant="ghost" size="sm" className="w-full">
+                        Generate Quality Insights
+                      </Button>
+                    )}
+                  </CardContent>
+                </Card>
+
+                {/* Trends Analysis Card */}
+                <Card className="border-l-4 border-l-pink-500">
+                  <CardHeader>
+                    <div className="flex items-center justify-between">
+                      <CardTitle className="text-base flex items-center gap-2">
+                        <TrendingUp className="h-4 w-4 text-pink-600" />
+                        Security Trends
+                      </CardTitle>
+                      <Button
+                        onClick={generateTrendsAnalysis}
+                        disabled={trendsAnalysis.isLoading}
+                        variant="outline"
+                        size="sm"
+                      >
+                        {trendsAnalysis.isLoading ? (
+                          <Loader2 className="h-3 w-3 animate-spin" />
+                        ) : (
+                          <TrendingUp className="h-3 w-3" />
+                        )}
+                      </Button>
+                    </div>
+                    <CardDescription>
+                      Industry trends and emerging security patterns
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    {trendsAnalysis.isLoading && (
+                      <div className="flex items-center gap-3 p-4">
+                        <Loader2 className="h-5 w-5 animate-spin text-pink-600" />
+                        <div>
+                          <p className="text-sm font-medium">Analyzing trends...</p>
+                          <p className="text-xs text-slate-500">Comparing with industry data</p>
+                        </div>
+                      </div>
+                    )}
+                    {trendsAnalysis.content && (
+                      <div className="bg-pink-50 dark:bg-pink-950/20 p-3 rounded text-sm">
+                        {trendsAnalysis.content.substring(0, 200)}...
+                      </div>
+                    )}
+                    {!trendsAnalysis.content && !trendsAnalysis.isLoading && (
+                      <Button onClick={generateTrendsAnalysis} variant="ghost" size="sm" className="w-full">
+                        Analyze Security Trends
+                      </Button>
+                    )}
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Expanded View for Advanced Insights */}
+              <div className="space-y-4">
+                {[riskAssessment, performanceImpact, codeQualityInsights, trendsAnalysis].map((insight, index) => {
+                  const titles = ['Risk Assessment', 'Performance Impact', 'Code Quality Insights', 'Security Trends'];
+                  const colors = ['yellow', 'indigo', 'teal', 'pink'];
+                  
+                  if (!insight.content) return null;
+                  
+                  return (
+                    <Card key={index} className={`border-l-4 border-l-${colors[index]}-500`}>
+                      <CardHeader>
+                        <CardTitle className="text-lg">{titles[index]} - Detailed Analysis</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className={`bg-${colors[index]}-50 dark:bg-${colors[index]}-950/20 p-4 rounded-lg border border-${colors[index]}-200 dark:border-${colors[index]}-800`}>
+                          <div className="whitespace-pre-wrap text-sm text-slate-700 dark:text-slate-300">
+                            {insight.content}
+                          </div>
+                        </div>
+                        {insight.lastGenerated && (
+                          <div className="flex items-center gap-2 text-xs text-slate-500 mt-3">
+                            <CheckCircle className="h-3 w-3" />
+                            Generated on {formatTimestamp(insight.lastGenerated)}
+                          </div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  );
+                })}
+              </div>
             </TabsContent>
           </Tabs>
         </CardContent>
