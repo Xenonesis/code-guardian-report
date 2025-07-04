@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@services/*": ["./src/services/*"]
+    },
+    "noImplicitAny": true,
+    "noUnusedParameters": true,
+    "skipLibCheck": true,
+    "allowJs": true,
+    "noUnusedLocals": true,
+    "strictNullChecks": true,
+    "strict": true
+  },
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
+}

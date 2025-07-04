@@ -1,0 +1,345 @@
+/* Background Effects Animations */
+
+/* Floating Particles */
+.particle-0 {
+  left: 10%;
+  top: 20%;
+  animation-delay: 0s;
+  animation-duration: 3s;
+}
+
+.particle-1 {
+  left: 80%;
+  top: 15%;
+  animation-delay: 1s;
+  animation-duration: 4s;
+}
+
+.particle-2 {
+  left: 60%;
+  top: 70%;
+  animation-delay: 2s;
+  animation-duration: 3.5s;
+}
+
+.particle-3 {
+  left: 25%;
+  top: 80%;
+  animation-delay: 0.5s;
+  animation-duration: 4.5s;
+}
+
+/* Additional particle positions for variety */
+.particle-0:nth-child(5n) {
+  left: 90%;
+  top: 60%;
+}
+
+.particle-1:nth-child(5n) {
+  left: 15%;
+  top: 45%;
+}
+
+.particle-2:nth-child(5n) {
+  left: 70%;
+  top: 30%;
+}
+
+.particle-3:nth-child(5n) {
+  left: 40%;
+  top: 85%;
+}
+
+/* Pulsing animation for gradient orbs */
+@keyframes gentle-pulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.1);
+  }
+}
+
+.gentle-pulse {
+  animation: gentle-pulse 4s ease-in-out infinite;
+}
+
+/* Floating animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.float-animation {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Rotating animation for decorative elements */
+@keyframes slow-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.slow-rotate {
+  animation: slow-rotate 20s linear infinite;
+}
+
+/* Animation delay classes */
+.delay-2s {
+  animation-delay: 2s;
+}
+
+.delay-3s {
+  animation-delay: 3s;
+}
+
+.delay-4s {
+  animation-delay: 4s;
+}
+
+.delay-1s {
+  animation-delay: 1s;
+}
+
+/* Reverse rotation */
+.reverse-rotate {
+  animation-direction: reverse;
+}
+
+/* Hover floating effects */
+.hover-float {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-float:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.hover-float-subtle {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hover-float-subtle:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.hover-float-strong {
+  transition: transform 0.4s ease, box-shadow 0.4s ease, filter 0.3s ease;
+}
+
+.hover-float-strong:hover {
+  transform: translateY(-12px) scale(1.02);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+  filter: brightness(1.05);
+}
+
+/* Hover glow effect */
+.hover-glow {
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Hover scale with float */
+.hover-scale-float {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-scale-float:hover {
+  transform: translateY(-6px) scale(1.05);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+/* Bounce hover effect */
+.hover-bounce {
+  transition: transform 0.2s ease;
+}
+
+.hover-bounce:hover {
+  animation: bounce-hover 0.6s ease;
+}
+
+@keyframes bounce-hover {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Stats Grid Floating Animation */
+@keyframes stats-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.stats-float {
+  animation: stats-float 5s ease-in-out infinite;
+  animation-delay: var(--stats-delay, 0s);
+}
+
+/* Enhanced Tool Card Animations */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.shimmer-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-effect::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  animation: shimmer 2s infinite;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out forwards;
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-scale-in {
+  animation: scale-in 0.5s ease-out forwards;
+}
+
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 3s ease infinite;
+}
+
+/* Stagger animation delays */
+.animate-stagger-1 {
+  animation-delay: 0.1s;
+}
+
+.animate-stagger-2 {
+  animation-delay: 0.2s;
+}
+
+.animate-stagger-3 {
+  animation-delay: 0.3s;
+}
+
+.animate-stagger-4 {
+  animation-delay: 0.4s;
+}
+
+/* Modern card styling */
+.modern-card {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modern-card:hover {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+/* Responsive text sizing */
+.text-responsive-xs {
+  font-size: 0.75rem;
+}
+
+.text-responsive-sm {
+  font-size: 0.875rem;
+}
+
+.text-responsive-base {
+  font-size: 1rem;
+}
+
+.text-responsive-lg {
+  font-size: 1.125rem;
+}
+
+.text-responsive-xl {
+  font-size: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .text-responsive-xs { font-size: 0.875rem; }
+  .text-responsive-sm { font-size: 1rem; }
+  .text-responsive-base { font-size: 1.125rem; }
+  .text-responsive-lg { font-size: 1.25rem; }
+  .text-responsive-xl { font-size: 1.5rem; }
+}
+
+@media (min-width: 1024px) {
+  .text-responsive-xs { font-size: 1rem; }
+  .text-responsive-sm { font-size: 1.125rem; }
+  .text-responsive-base { font-size: 1.25rem; }
+  .text-responsive-lg { font-size: 1.5rem; }
+  .text-responsive-xl { font-size: 2rem; }
+}
