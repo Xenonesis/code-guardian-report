@@ -1,0 +1,14 @@
+[
+  {
+    "path": "dist/assets/charts-*.js",
+    "maxSize": "450 KB"
+  },
+  {
+    "path": "dist/assets/index-*.js",
+    "maxSize": "200 KB"
+  },
+  {
+    "path": "dist/assets/index-*.css",
+    "maxSize": "140 KB"
+  }
+]
