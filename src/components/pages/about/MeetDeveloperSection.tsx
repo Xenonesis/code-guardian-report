@@ -57,7 +57,7 @@ const MeetDeveloperSection = () => {
   const projectHighlights = [
     {
       icon: <Trophy className="w-5 h-5" />,
-      title: "Latest v3.1.0 Release",
+      title: "Latest v3.3.0 Release",
       description: "Enhanced with persistent storage and advanced analytics"
     },
     {
@@ -194,7 +194,7 @@ const MeetDeveloperSection = () => {
                 <Code className="w-5 h-5" />
                 Project Details
               </CardTitle>            <CardDescription>
-              Code Guardian v3.1.0 - Revolutionary AI-powered security analysis platform with persistent storage, enhanced analytics, and intelligent AI integration
+              Code Guardian v3.3.0 - Revolutionary AI-powered security analysis platform with persistent storage, enhanced analytics, and intelligent AI integration
             </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">

@@ -13,6 +13,7 @@ import { CallToActionSection } from '@/components/pages/about/CallToActionSectio
 import HowToUseSection from '@/components/pages/about/HowToUseSection';
 import HowItWorksSection from '@/components/pages/about/HowItWorksSection';
 import MeetDeveloperSection from '@/components/pages/about/MeetDeveloperSection';
+import { EnhancedFeatureShowcase } from '@/components/pages/about/EnhancedFeatureShowcase';
 import { useDarkMode } from '@/hooks/useDarkMode';
 
 const About = () => {
@@ -56,7 +57,7 @@ const About = () => {
       {/* Content with relative positioning to appear above background */}
       <div className="relative z-10">
         <HeroSection
-          title="Code Guardian v3.1.0"
+          title="Code Guardian v3.3.0"
           subtitle="Next-Generation AI-Powered Security Analysis Platform"
           description="Revolutionary AI-powered code analysis platform with persistent storage, enhanced analytics, and intelligent insights. Upload your code and get instant security analysis with persistent results that save until your next upload. Features advanced AI integration, comprehensive vulnerability detection, and enterprise-grade reporting capabilities."
           titleId="about-hero-title"
@@ -68,14 +69,16 @@ const About = () => {
 
         <DetailedInfo />
 
+        <EnhancedFeatureShowcase />
+
         <HowToUseSection />
 
         <HowItWorksSection />
 
         <FeatureGrid
           features={features}
-          title="🚀 Platform Capabilities"
-          subtitle="Everything you need for comprehensive code security, quality analysis, and performance optimization"
+          title="Advanced Features"
+          subtitle="Comprehensive tools and capabilities for enterprise-grade security analysis"
           columns={2}
           variant="modern"
         />

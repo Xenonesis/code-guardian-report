@@ -85,7 +85,7 @@ export const PageLayout: React.FC<PageLayoutProps> = ({
           { href: "/terms", label: "Terms" },
         ]}
         copyright={{
-          text: "© 2025 Code Guardian v2.7.0",
+          text: "© 2025 Code Guardian v3.3.0",
           license: "Developed by Aditya Kumar Tiwari - MIT License",
         }}
       />
