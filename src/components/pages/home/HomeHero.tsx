@@ -71,7 +71,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ onStartAnalysis }) => {
           >
             <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 opacity-100 group-hover:opacity-90 transition-opacity duration-300" />
             <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <div className="relative flex items-center justify-center gap-2 sm:gap-3">
+            <div className="relative flex items-center justify-center gap-2 sm:gap-3 text-white">
               <Sparkles className="h-5 w-5 sm:h-6 sm:w-6 group-hover:animate-spin" />
               <span className="whitespace-nowrap">Start Code Analysis</span>
               <ArrowRight className="h-5 w-5 sm:h-6 sm:w-6 group-hover:translate-x-2 transition-transform duration-300" />

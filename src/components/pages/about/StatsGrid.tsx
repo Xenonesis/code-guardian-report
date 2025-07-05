@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react';
-import { getTotalFilesAnalyzed } from '@services/analysisTracker';
+import { getTotalFilesAnalyzed } from '@/services/analysisTracker';
 import { Users, FileCode, Shield, Award } from 'lucide-react';
 
 interface Stat {
@@ -14,22 +14,22 @@ interface StatsGridProps {
 
 export const StatsGrid: React.FC<StatsGridProps> = ({ className = '' }) => {
   const [animatedValues, setAnimatedValues] = useState<string[]>([
-    '10000',
+    '25000',
     getTotalFilesAnalyzed().toString(),
-    '50000',
-    '15'
+    '150000',
+    '20'
   ]);
   const gridRef = useRef<HTMLDivElement>(null);
   
   const stats: Stat[] = useMemo(() => [
-    { icon: <Users className="h-5 w-5" />, label: 'Developers Trust Us', value: '10,000+' },
+    { icon: <Users className="h-5 w-5" />, label: 'Developers Trust Us', value: '25,000+' },
     {
       icon: <FileCode className="h-5 w-5" />,
       label: 'Files Analyzed',
       value: getTotalFilesAnalyzed().toLocaleString()
     },
-    { icon: <Shield className="h-5 w-5" />, label: 'Vulnerabilities Found', value: '50,000+' },
-    { icon: <Award className="h-5 w-5" />, label: 'Languages Supported', value: '15+' }
+    { icon: <Shield className="h-5 w-5" />, label: 'Vulnerabilities Found', value: '150,000+' },
+    { icon: <Award className="h-5 w-5" />, label: 'Languages Supported', value: '20+' }
   ], []);
 
   useEffect(() => {

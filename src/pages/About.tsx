@@ -21,31 +21,31 @@ const About = () => {
   const features = [
     {
       icon: <Shield className="h-8 w-8" />,
-      title: 'Enterprise Security Analysis',
-      description: 'Military-grade security scanning with comprehensive vulnerability detection, threat intelligence, and real-time monitoring for enterprise-scale applications.',
+      title: 'Advanced Security Analysis',
+      description: 'Military-grade security scanning with comprehensive vulnerability detection, OWASP Top 10 coverage, and real-time threat intelligence for enterprise-scale applications.',
       gradient: 'from-emerald-500 via-teal-500 to-cyan-600',
       benefits: ['OWASP Top 10 Coverage', 'CVE Database Integration', 'Zero-day Detection', 'Threat Intelligence', 'Compliance Reporting', 'Real-time Monitoring']
     },
     {
       icon: <Code className="h-8 w-8" />,
-      title: 'Advanced Code Quality',
-      description: 'Deep code analysis with AI-powered insights for maintainability, performance optimization, and technical debt reduction across multiple programming languages.',
+      title: 'Persistent Storage System',
+      description: 'Advanced analysis results storage with cross-tab synchronization, automatic compression, and intelligent history management. Results persist until new uploads with full export capabilities.',
       gradient: 'from-blue-500 via-indigo-500 to-purple-600',
-      benefits: ['Cyclomatic Complexity', 'Technical Debt Analysis', 'Maintainability Index', 'Performance Metrics', 'Refactoring Suggestions', 'Multi-language Support']
+      benefits: ['Persistent Results', 'Cross-tab Sync', 'Data Compression', 'History Management', 'Export Formats', 'Storage Analytics']
     },
     {
       icon: <Bot className="h-8 w-8" />,
-      title: 'AI-Powered Intelligence',
-      description: 'Next-generation AI that understands your code context, learns from patterns, and provides intelligent recommendations with natural language explanations.',
+      title: 'Enhanced AI Intelligence',
+      description: 'Next-generation AI with GPT-4 and Claude integration, contextual understanding, intelligent key management, and natural language explanations for complex security issues.',
       gradient: 'from-purple-500 via-pink-500 to-rose-600',
-      benefits: ['Natural Language Explanations', 'Auto-fix Suggestions', 'Impact Assessment', 'Learning Algorithms', 'Context Awareness', 'Smart Recommendations']
+      benefits: ['AI Key Management', 'Contextual Analysis', 'Auto-fix Suggestions', 'Impact Assessment', 'Learning Algorithms', 'Smart Recommendations']
     },
     {
       icon: <Zap className="h-8 w-8" />,
-      title: 'Hyper-Fast Processing',
-      description: 'Cutting-edge analysis engine with distributed processing, parallel computing, and edge optimization for lightning-fast results on enterprise-scale codebases.',
+      title: 'Performance & Analytics',
+      description: 'Lightning-fast processing with enhanced analytics dashboard, real-time metrics, performance tracking, and comprehensive bundle monitoring for optimal user experience.',
       gradient: 'from-amber-500 via-orange-500 to-red-600',
-      benefits: ['Parallel Processing', 'Incremental Analysis', 'Real-time Results', 'Distributed Computing', 'Edge Optimization', 'Cloud Scaling']
+      benefits: ['Bundle Monitoring', 'Performance Metrics', 'Real-time Analytics', 'Usage Statistics', 'Performance Tracking', 'Optimization Insights']
     }
   ];
 
@@ -56,9 +56,9 @@ const About = () => {
       {/* Content with relative positioning to appear above background */}
       <div className="relative z-10">
         <HeroSection
-          title="Code Guardian"
-          subtitle="AI-Powered Security Analysis Platform"
-          description="Next-generation AI-powered code analysis platform that identifies security vulnerabilities, code quality issues, and performance bottlenecks. Upload your code and get instant insights with actionable fixes and AI-generated prompts for popular development tools."
+          title="Code Guardian v3.1.0"
+          subtitle="Next-Generation AI-Powered Security Analysis Platform"
+          description="Revolutionary AI-powered code analysis platform with persistent storage, enhanced analytics, and intelligent insights. Upload your code and get instant security analysis with persistent results that save until your next upload. Features advanced AI integration, comprehensive vulnerability detection, and enterprise-grade reporting capabilities."
           titleId="about-hero-title"
           variant="gradient"
         >

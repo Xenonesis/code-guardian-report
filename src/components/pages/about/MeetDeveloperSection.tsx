@@ -19,60 +19,69 @@ const MeetDeveloperSection = () => {
   const teamMembers = [
     {
       name: "Aditya Kumar Tiwari",
-      role: "Cybersecurity Expert & Developer",
-      icon: <Shield className="w-5 h-5" />,
-      description: "Security architecture and vulnerability analysis specialist",
-      expertise: ["Cybersecurity", "Penetration Testing", "Security Architecture", "Vulnerability Assessment"]
+      role: "Team Leader & Security Expert",
+      icon: <Crown className="w-5 h-5" />,
+      description: "Cybersecurity expert and lead developer specializing in security architecture and vulnerability analysis",
+      expertise: ["Team Leadership", "Cybersecurity", "Penetration Testing", "Security Architecture", "Vulnerability Assessment", "Project Management"]
     },
     {
-      name: "Swati Mishra",
-      role: "Team Leader",
-      icon: <Crown className="w-5 h-5" />,
-      description: "Project management and strategic development lead",
-      expertise: ["Team Leadership", "Project Management", "Strategic Planning", "Product Development"]
+      name: "Mohammad Ehshan",
+      role: "Backend Developer",
+      icon: <Code className="w-5 h-5" />,
+      description: "Backend development specialist focused on API design and server-side architecture",
+      expertise: ["Backend Development", "API Development", "Database Design", "Server Architecture", "Node.js", "System Integration"]
+    },
+    {
+      name: "Vishupal Goyal",
+      role: "Frontend Developer",
+      icon: <User className="w-5 h-5" />,
+      description: "Frontend development and user experience design specialist",
+      expertise: ["Frontend Development", "UI/UX Design", "React Development", "User Experience", "Responsive Design", "Component Architecture"]
     },
     {
       name: "Aayush Tonk",
-      role: "Developer",
-      icon: <Code className="w-5 h-5" />,
-      description: "Full-stack development and system architecture",
-      expertise: ["Full-Stack Development", "System Design", "API Development", "Database Management"]
+      role: "Full-Stack Developer",
+      icon: <Zap className="w-5 h-5" />,
+      description: "Full-stack development and system architecture specialist",
+      expertise: ["Full-Stack Development", "System Design", "DevOps", "Database Management", "Performance Optimization", "Technical Documentation"]
     },
     {
-      name: "Munner",
+      name: "Muneer Ali",
       role: "Developer",
-      icon: <User className="w-5 h-5" />,
-      description: "Frontend development and user experience design",
-      expertise: ["Frontend Development", "UI/UX Design", "React Development", "User Experience"]
+      icon: <Star className="w-5 h-5" />,
+      description: "Developer contributing to various aspects of the project",
+      expertise: ["Software Development", "Code Review", "Testing", "Documentation", "Collaboration"]
     }
   ];
 
   const projectHighlights = [
     {
       icon: <Trophy className="w-5 h-5" />,
-      title: "Hackathon Project",
-      description: "Built for competitive hackathon environment"
+      title: "Latest v3.1.0 Release",
+      description: "Enhanced with persistent storage and advanced analytics"
     },
     {
       icon: <Zap className="w-5 h-5" />,
       title: "AI-Powered Innovation",
-      description: "Leveraging GPT-4 and Claude for advanced analysis"
+      description: "Advanced GPT-4 & Claude integration with intelligent key management"
     },
     {
       icon: <Star className="w-5 h-5" />,
       title: "Developer-Centric",
-      description: "Designed to integrate seamlessly into workflows"
+      description: "Persistent results with cross-tab synchronization and export capabilities"
     },
     {
       icon: <Globe className="w-5 h-5" />,
-      title: "Open Source",
-      description: "Contributing to the developer community"
+      title: "Production Ready",
+      description: "Enterprise-grade security analysis with comprehensive reporting"
     }
   ];
 
   const technologies = [
-    "React", "TypeScript", "Vite", "Tailwind CSS", "AI Services (GPT-4, Claude)", 
-    "Node.js", "Static Analysis Tools", "Security Frameworks"
+    "React 18.3.1", "TypeScript 5.5.3", "Vite 6.3.5", "Tailwind CSS 3.4.11", 
+    "AI Services (GPT-4, Claude)", "Recharts 2.15.3", "Radix UI", "shadcn/ui",
+    "Node.js", "Static Analysis Tools", "Security Frameworks", "Persistent Storage API",
+    "Web Crypto API", "IndexedDB", "Service Workers", "Bundle Analysis"
   ];
 
   return (
@@ -184,10 +193,9 @@ const MeetDeveloperSection = () => {
               <CardTitle className="flex items-center gap-2">
                 <Code className="w-5 h-5" />
                 Project Details
-              </CardTitle>
-              <CardDescription>
-                Code Guardian - Next-generation AI-powered security analysis platform
-              </CardDescription>
+              </CardTitle>            <CardDescription>
+              Code Guardian v3.1.0 - Revolutionary AI-powered security analysis platform with persistent storage, enhanced analytics, and intelligent AI integration
+            </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               {/* USP */}
@@ -197,21 +205,21 @@ const MeetDeveloperSection = () => {
                 </h4>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="p-4 bg-blue-50 dark:bg-blue-950/30 rounded-lg">
-                    <h5 className="font-medium text-blue-900 dark:text-blue-100 mb-2">AI-Powered Accuracy</h5>
+                    <h5 className="font-medium text-blue-900 dark:text-blue-100 mb-2">Persistent Intelligence</h5>
                     <p className="text-sm text-blue-800 dark:text-blue-200">
-                      Advanced AI models for superior vulnerability detection compared to traditional methods
+                      Advanced storage system with cross-tab sync and intelligent history management for continuous analysis
                     </p>
                   </div>
                   <div className="p-4 bg-green-50 dark:bg-green-950/30 rounded-lg">
-                    <h5 className="font-medium text-green-900 dark:text-green-100 mb-2">Comprehensive Insights</h5>
+                    <h5 className="font-medium text-green-900 dark:text-green-100 mb-2">Enhanced AI Integration</h5>
                     <p className="text-sm text-green-800 dark:text-green-200">
-                      In-depth security reports with clear explanations and actionable recommendations
+                      Advanced AI key management with GPT-4 and Claude integration for superior vulnerability detection
                     </p>
                   </div>
                   <div className="p-4 bg-purple-50 dark:bg-purple-950/30 rounded-lg">
-                    <h5 className="font-medium text-purple-900 dark:text-purple-100 mb-2">Developer-Centric</h5>
+                    <h5 className="font-medium text-purple-900 dark:text-purple-100 mb-2">Performance Analytics</h5>
                     <p className="text-sm text-purple-800 dark:text-purple-200">
-                      Seamlessly integrates into developer workflows, minimizing disruption
+                      Comprehensive bundle monitoring and performance tracking with real-time analytics dashboard
                     </p>
                   </div>
                 </div>
@@ -240,27 +248,27 @@ const MeetDeveloperSection = () => {
                   <div className="flex items-start gap-3">
                     <Shield className="w-5 h-5 text-red-500 mt-0.5" />
                     <div>
-                      <h5 className="font-medium text-slate-900 dark:text-white">Proactive Security</h5>
+                      <h5 className="font-medium text-slate-900 dark:text-white">Persistent Security</h5>
                       <p className="text-sm text-slate-600 dark:text-slate-400">
-                        Early detection prevents security breaches and data loss
+                        Continuous analysis with persistent results that maintain security insights across sessions
                       </p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <Zap className="w-5 h-5 text-yellow-500 mt-0.5" />
                     <div>
-                      <h5 className="font-medium text-slate-900 dark:text-white">Reduced Costs</h5>
+                      <h5 className="font-medium text-slate-900 dark:text-white">Enhanced Productivity</h5>
                       <p className="text-sm text-slate-600 dark:text-slate-400">
-                        Streamlines security analysis, saving time and resources
+                        Advanced storage and analytics reduce analysis time while improving code quality insights
                       </p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <Star className="w-5 h-5 text-blue-500 mt-0.5" />
                     <div>
-                      <h5 className="font-medium text-slate-900 dark:text-white">Better Code Quality</h5>
+                      <h5 className="font-medium text-slate-900 dark:text-white">Enterprise Features</h5>
                       <p className="text-sm text-slate-600 dark:text-slate-400">
-                        Promotes secure coding practices and software quality
+                        Production-ready with comprehensive reporting, export capabilities, and performance monitoring
                       </p>
                     </div>
                   </div>
