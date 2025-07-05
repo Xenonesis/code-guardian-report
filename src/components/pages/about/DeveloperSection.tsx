@@ -69,19 +69,31 @@ export const DeveloperSection: React.FC<DeveloperSectionProps> = ({ className = 
         </p>
       </div>
 
-      <div className="max-w-4xl mx-auto">
-        <Card className="modern-card hover-float-strong group cursor-pointer overflow-hidden">
-          <CardContent className="p-8 sm:p-12">
+      <div className="max-w-5xl mx-auto">
+        <Card className="relative overflow-hidden bg-gradient-to-br from-white/95 to-white/80 dark:from-slate-800/95 dark:to-slate-900/80 backdrop-blur-2xl border border-white/30 dark:border-white/10 rounded-3xl shadow-2xl hover:shadow-3xl hover:scale-[1.02] transition-all duration-700 group cursor-pointer">
+          {/* Animated background elements */}
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+          <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-purple-400/20 to-pink-400/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-1000"></div>
+          <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-blue-400/20 to-cyan-400/20 rounded-full blur-2xl group-hover:scale-125 transition-transform duration-1000 delay-200"></div>
+          
+          <CardContent className="relative z-10 p-8 sm:p-12">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
-              {/* Profile Image/Avatar */}
+              {/* Enhanced Profile Image/Avatar */}
               <div className="text-center lg:text-left">
-                <div className="w-32 h-32 mx-auto lg:mx-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white text-4xl font-bold mb-4 group-hover:scale-110 transition-transform duration-300 shadow-xl">
-                  AT
+                <div className="relative">
+                  <div className="w-36 h-36 mx-auto lg:mx-0 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 rounded-full flex items-center justify-center text-white text-4xl font-bold mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 shadow-2xl relative overflow-hidden">
+                    {/* Animated shine effect */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
+                    <span className="relative z-10">AT</span>
+                  </div>
+                  {/* Floating particles around avatar */}
+                  <div className="absolute top-2 right-2 w-3 h-3 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full animate-bounce opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-300"></div>
+                  <div className="absolute bottom-2 left-2 w-2 h-2 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full animate-pulse opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-500"></div>
                 </div>
                 <div className="space-y-2">
                   <h4 className="text-xl font-bold text-slate-900 dark:text-white">Aditya Kumar Tiwari</h4>
                   <p className="text-slate-600 dark:text-slate-400 text-sm">Cybersecurity Enthusiast | Full-Stack Developer</p>
-                  <p className="text-slate-500 dark:text-slate-500 text-xs">BCA in Cybersecurity, Sushant University</p>
+                  <p className="text-slate-500 dark:text-slate-400 text-xs">BCA in Cybersecurity, Sushant University</p>
                 </div>
               </div>
 

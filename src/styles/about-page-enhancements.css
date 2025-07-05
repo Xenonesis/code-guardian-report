@@ -1,0 +1,251 @@
+/* About Page Specific Enhancements */
+
+@layer components {
+  /* Enhanced glass morphism effects */
+  .glass-card-ultra {
+    @apply bg-white/10 dark:bg-black/10 backdrop-blur-3xl border border-white/20 dark:border-white/10 rounded-3xl shadow-2xl;
+    background-image: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+  }
+
+  .dark .glass-card-ultra {
+    background-image: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Animated gradient text */
+  .gradient-text-animated {
+    background: linear-gradient(-45deg, #3b82f6, #8b5cf6, #ec4899, #f97316, #10b981);
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 8s ease infinite;
+  }
+
+  /* Enhanced hover effects for stats */
+  .stat-card-enhanced {
+    @apply relative overflow-hidden transition-all duration-500 hover:scale-105 hover:shadow-2xl cursor-pointer;
+    background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.3);
+  }
+
+  .dark .stat-card-enhanced {
+    background: linear-gradient(135deg, rgba(30,41,59,0.9) 0%, rgba(15,23,42,0.7) 100%);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .dark .stat-card-enhanced:hover {
+    box-shadow: 0 25px 50px -12px rgba(59, 130, 246, 0.3);
+  }
+
+  .stat-card-enhanced::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    transition: left 0.5s;
+  }
+
+  .stat-card-enhanced:hover::before {
+    left: 100%;
+  }
+
+  /* Floating animation for decorative elements */
+  .float-animation {
+    animation: floatSlow 6s ease-in-out infinite;
+  }
+
+  .float-animation.delay-2s {
+    animation-delay: 2s;
+  }
+
+  .float-animation.delay-4s {
+    animation-delay: 4s;
+  }
+
+  /* Enhanced button with ripple effect */
+  .btn-enhanced-cta {
+    @apply relative overflow-hidden;
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 25%, #ec4899 50%, #f97316 75%, #10b981 100%);
+    background-size: 300% 300%;
+    animation: gradientFlow 8s ease infinite;
+  }
+
+  .dark .btn-enhanced-cta {
+    box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+  }
+
+  .dark .btn-enhanced-cta:hover {
+    box-shadow: 0 20px 40px rgba(59, 130, 246, 0.4);
+  }
+
+  .btn-enhanced-cta::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
+
+  .btn-enhanced-cta:hover::before {
+    width: 300px;
+    height: 300px;
+  }
+
+  /* Particle system for background */
+  .particle-system {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+    border-radius: 50%;
+    animation: particleFloat 10s linear infinite;
+  }
+
+  .dark .particle {
+    background: linear-gradient(45deg, #60a5fa, #a78bfa);
+    box-shadow: 0 0 6px rgba(96, 165, 250, 0.5);
+  }
+
+  /* Enhanced card hover effects */
+  .enhanced-card-hover {
+    @apply transition-all duration-700 hover:scale-[1.02] hover:shadow-3xl;
+  }
+
+  .enhanced-card-hover:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  }
+
+  .dark .enhanced-card-hover:hover {
+    box-shadow: 0 25px 50px -12px rgba(255, 255, 255, 0.1);
+  }
+
+  /* Glow effects for interactive elements */
+  .glow-on-hover {
+    @apply transition-all duration-500;
+  }
+
+  .glow-on-hover:hover {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.4), 0 0 40px rgba(59, 130, 246, 0.2);
+  }
+
+  .dark .glow-on-hover:hover {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.6), 0 0 40px rgba(59, 130, 246, 0.3);
+  }
+
+  /* Animated border gradient */
+  .animated-border {
+    position: relative;
+    background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899, #f97316);
+    background-size: 400% 400%;
+    animation: gradientShift 8s ease infinite;
+    padding: 2px;
+    border-radius: 1rem;
+  }
+
+  .animated-border::before {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    background: white;
+    border-radius: calc(1rem - 2px);
+    z-index: -1;
+  }
+
+  /* Dark mode adjustments */
+  .dark .animated-border::before {
+    background: rgb(30 41 59);
+  }
+}
+
+/* Keyframe animations */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(5deg); }
+}
+
+@keyframes particleFloat {
+  0% {
+    transform: translateY(100vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Responsive enhancements */
+@media (max-width: 768px) {
+  .enhanced-card-hover:hover {
+    transform: translateY(-4px) scale(1.01);
+  }
+  
+  .stat-card-enhanced {
+    @apply hover:scale-105;
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  .float-animation,
+  .gradient-text-animated,
+  .btn-enhanced-cta,
+  .particle {
+    animation: none;
+  }
+  
+  .enhanced-card-hover:hover {
+    transform: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .glass-card-ultra {
+    @apply bg-white dark:bg-black border-2 border-black dark:border-white;
+    backdrop-filter: none;
+  }
+  
+  .gradient-text-animated {
+    -webkit-text-fill-color: inherit;
+    background: none;
+    @apply text-black dark:text-white;
+  }
+}

@@ -13,7 +13,7 @@ import { CallToActionSection } from '@/components/pages/about/CallToActionSectio
 import HowToUseSection from '@/components/pages/about/HowToUseSection';
 import HowItWorksSection from '@/components/pages/about/HowItWorksSection';
 import MeetDeveloperSection from '@/components/pages/about/MeetDeveloperSection';
-import { EnhancedFeatureShowcase } from '@/components/pages/about/EnhancedFeatureShowcase';
+import EnhancedFeatureShowcase from '@/components/pages/about/EnhancedFeatureShowcase';
 import { useDarkMode } from '@/hooks/useDarkMode';
 
 const About = () => {
