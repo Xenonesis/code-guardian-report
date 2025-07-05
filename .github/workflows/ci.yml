@@ -1,0 +1,172 @@
+name: 🚀 CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: 🧪 Test & Quality Check
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 📦 Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        
+    - name: 📋 Install dependencies
+      run: npm ci
+      
+    - name: 🔍 Type check
+      run: npm run type-check
+      
+    - name: 🧹 Lint code
+      run: npm run lint
+      
+    - name: 🧪 Run tests
+      run: npm run test:coverage
+      
+    - name: 📊 Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./coverage/coverage.json
+        flags: unittests
+        name: codecov-umbrella
+        
+    - name: 🏗️ Build application
+      run: npm run build
+      
+    - name: 📈 Bundle size check
+      run: |
+        npm install -g bundlesize
+        bundlesize
+
+  security:
+    name: 🔒 Security Audit
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 📦 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+        
+    - name: 📋 Install dependencies
+      run: npm ci
+      
+    - name: 🔍 Security audit
+      run: npm audit --audit-level=moderate
+      
+    - name: 🛡️ Dependency check
+      run: |
+        npx audit-ci --moderate
+
+  lighthouse:
+    name: 🚦 Lighthouse Performance
+    runs-on: ubuntu-latest
+    needs: test
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 📦 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+        
+    - name: 📋 Install dependencies
+      run: npm ci
+      
+    - name: 🏗️ Build application
+      run: npm run build
+      
+    - name: 🚦 Run Lighthouse CI
+      run: |
+        npm install -g @lhci/cli@0.12.x
+        lhci autorun
+      env:
+        LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+
+  deploy-preview:
+    name: 🚀 Deploy Preview
+    runs-on: ubuntu-latest
+    needs: [test, security]
+    if: github.event_name == 'pull_request'
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 📦 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+        
+    - name: 📋 Install dependencies
+      run: npm ci
+      
+    - name: 🏗️ Build application
+      run: npm run build
+      
+    - name: 🚀 Deploy to Netlify
+      uses: nwtgck/actions-netlify@v2.0
+      with:
+        publish-dir: './dist'
+        production-branch: main
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        deploy-message: "Deploy from GitHub Actions"
+        enable-pull-request-comment: true
+        enable-commit-comment: true
+        overwrites-pull-request-comment: true
+      env:
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+
+  deploy-production:
+    name: 🌟 Deploy Production
+    runs-on: ubuntu-latest
+    needs: [test, security, lighthouse]
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 📦 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+        
+    - name: 📋 Install dependencies
+      run: npm ci
+      
+    - name: 🏗️ Build application
+      run: npm run build
+      
+    - name: 🚀 Deploy to Vercel
+      uses: amondnet/vercel-action@v25
+      with:
+        vercel-token: ${{ secrets.VERCEL_TOKEN }}
+        vercel-args: '--prod'
+        vercel-org-id: ${{ secrets.ORG_ID }}
+        vercel-project-id: ${{ secrets.PROJECT_ID }}
+        working-directory: ./

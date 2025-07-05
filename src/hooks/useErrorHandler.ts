@@ -1,0 +1,1 @@
+export { useErrorHandler } from '@/hooks/useErrorHandler';
