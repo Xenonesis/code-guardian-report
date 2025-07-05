@@ -1,4 +1,5 @@
 import React from 'react';
+import { Shield, Github, Twitter } from 'lucide-react';
 import { Navigation } from '@/components/Navigation';
 import { FeatureGrid } from '@/components/features/FeatureGrid';
 import { Footer } from '@/components/ui/footer';
@@ -58,7 +59,36 @@ export const PageLayout: React.FC<PageLayoutProps> = ({
       )}
 
       {/* Enhanced Footer Component */}
-      <Footer />
+      <Footer
+        logo={<Shield className="h-10 w-10 text-primary" />}
+        brandName="Code Guardian"
+        socialLinks={[
+          {
+            icon: <Github className="h-5 w-5" />,
+            href: "https://github.com/Xenonesis/code-guardian-report",
+            label: "GitHub",
+          },
+          {
+            icon: <Twitter className="h-5 w-5" />,
+            href: "https://twitter.com",
+            label: "Twitter",
+          },
+        ]}
+        mainLinks={[
+          { href: "/", label: "Home" },
+          { href: "/about", label: "About" },
+          { href: "https://code-guardian-report.vercel.app", label: "Live Demo" },
+          { href: "mailto:itisaddy7@gmail.com", label: "Contact" },
+        ]}
+        legalLinks={[
+          { href: "/privacy", label: "Privacy" },
+          { href: "/terms", label: "Terms" },
+        ]}
+        copyright={{
+          text: "© 2025 Code Guardian v2.7.0",
+          license: "Developed by Aditya Kumar Tiwari - MIT License",
+        }}
+      />
     </div>
   );
 };
