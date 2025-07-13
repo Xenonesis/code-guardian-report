@@ -110,7 +110,7 @@ export class SecretDetectionService {
         entropy: { min: 4.0, max: 5.5 },
         confidence: 90,
         description: 'Slack API Token',
-        examples: ['xoxb-123456789012-123456789012-abcdefghijklmnopqrstuvwx']
+        examples: ['xoxb-XXXXXXXXXXXX-XXXXXXXXXXXX-XXXXXXXXXXXXXXXXXXXXXXXX']
       },
       
       // Stripe API Keys

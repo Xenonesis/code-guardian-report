@@ -56,7 +56,7 @@ describe('SecretDetectionService', () => {
 
     it('should detect Slack tokens', () => {
       const content = `
-        const slackToken = "xoxb-123456789012-123456789012-abcdefghijklmnopqrstuvwx";
+        const slackToken = "xoxb-XXXXXXXXXXXX-XXXXXXXXXXXX-XXXXXXXXXXXXXXXXXXXXXXXX";
       `;
       
       const result = service.detectSecrets(content);
