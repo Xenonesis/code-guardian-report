@@ -1,19 +1,19 @@
 ﻿<div align="center">
 
-# 🛡️ Code Guardian v3.4.0
+# 🛡️ Code Guardian v3.5.0
 ### 🚀 Next-Generation AI-Powered Security Analysis Platform
 Enhanced with Bundle Monitoring, TypeScript Fixes, and Improved Documentation
 
-**Current Version: 3.4.0 - Developed by Aditya Kumar Tiwari**
+**Current Version: 3.5.0 - Developed by Aditya Kumar Tiwari**
 Optimized for Performance and Reliability
 
 <img src="./public/home.png" alt="Code Guardian - AI-Powered Security Analysis Platform" width="100%" style="border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.12);">
 
 <div align="center">
-  <img src="https://img.shields.io/badge/Version-3.4.0-ff6b6b?style=for-the-badge&logo=rocket&logoColor=white" alt="Version"/>
+  <img src="https://img.shields.io/badge/Version-3.5.0-ff6b6b?style=for-the-badge&logo=rocket&logoColor=white" alt="Version"/>
   <img src="https://img.shields.io/badge/Status-Production%20Ready-00C851?style=for-the-badge&logo=checkmarx&logoColor=white" alt="Status"/>
   <img src="https://img.shields.io/badge/AI%20Powered-GPT--4%20%7C%20Claude-9C27B0?style=for-the-badge&logo=openai&logoColor=white" alt="AI Powered"/>
-  <img src="https://img.shields.io/badge/npm-v3.4.0-CB3837?style=for-the-badge&logo=npm&logoColor=white" alt="NPM Version"/>
+  <img src="https://img.shields.io/badge/npm-v3.5.0-CB3837?style=for-the-badge&logo=npm&logoColor=white" alt="NPM Version"/>
   <img src="https://img.shields.io/badge/Analytics-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Analytics"/>
   <img src="https://img.shields.io/badge/PWA-Ready-FF6F00?style=for-the-badge&logo=pwa&logoColor=white" alt="PWA Ready"/>
 </div>
@@ -92,7 +92,7 @@ Optimized for Performance and Reliability
 </tr>
 </table>
 
-### **✨ New in v2.6.0:**
+### **✨ New in v3.5.0:**
 
 <div align="center">
 
@@ -154,7 +154,7 @@ Built with ❤️ by [Aditya Kumar Tiwari](https://github.com/Xenonesis)
   - [⚡ Installation](#-installation)
   - [📜 Available Scripts](#-available-scripts)
   - [🔧 Environment Setup](#-environment-setup)
-### 📝 Analysis Tracker Service (v2.6.0+)
+### 📝 Analysis Tracker Service (v3.5.0+)
 
 - **Persistence:** Uses an in-memory cache for all analysis tracking (no localStorage).
 - **API:**
@@ -293,7 +293,7 @@ Built with ❤️ by [Aditya Kumar Tiwari](https://github.com/Xenonesis)
 - 📈 **Recharts 2.15.3**: Interactive data visualization and charts
 - 🎨 **React Router DOM 6.26.2**: Client-side routing with lazy loading
 - 🔄 **React State**: Built-in state management with hooks and context
-- 📊 **Vercel Analytics 2.6.0**: Real-time user analytics and insights
+- 📊 **Vercel Analytics 3.5.0**: Real-time user analytics and insights
 
 ### 🛠️ **Development Tools**
 
@@ -393,7 +393,7 @@ VITE_ANTHROPIC_API_URL=https://api.anthropic.com/v1
 
 # Application Settings
 VITE_APP_NAME="Code Guardian Report"
-VITE_APP_VERSION="3.4.0"
+VITE_APP_VERSION="3.5.0"
 ```
 
 ## 📱 Usage Guide
@@ -738,9 +738,9 @@ We welcome contributions! Please follow these steps:
 
 ## 📈 Changelog
 
-### 🔄 Version 3.4.0 - Current Release ⭐
-- ⬆️ **Version Bump**: Updated all version references to 3.4.0 in code, documentation, and badges
-- 📝 **Changelog**: Synced documentation and changelog for 3.4.0 release
+### 🔄 Version 3.5.0 - Current Release ⭐
+- ⬆️ **Version Bump**: Updated all version references to 3.5.0 in code, documentation, and badges
+- 📝 **Changelog**: Synced documentation and changelog for 3.5.0 release
 - 📦 **Dependency Updates**: (If any, describe here)
 - ⚡ **Other Improvements**: (If any, describe here)
 
