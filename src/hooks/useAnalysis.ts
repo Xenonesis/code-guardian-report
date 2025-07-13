@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { DetectionResult } from '@/services/languageDetectionService';
 
 export interface SecurityIssue {
   id: string;
@@ -46,6 +47,7 @@ export interface AnalysisResults {
     coveragePercentage: number;
     linesAnalyzed: number;
   };
+  languageDetection?: DetectionResult; // Smart language detection results
   metrics: {
     vulnerabilityDensity: number;
     technicalDebt: string;

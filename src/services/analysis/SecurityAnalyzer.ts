@@ -4,23 +4,377 @@ import {
   calculateCVSSScore
 } from '../securityAnalysisEngine';
 import { SecretDetectionService, SecretMatch, SecretType } from '../secretDetectionService';
+import { LanguageDetectionService, DetectionResult, LanguageInfo, FrameworkInfo } from '../languageDetectionService';
+import { FrameworkDetectionEngine, DependencyInfo } from '../frameworkDetectionEngine';
 
 type SupportedLanguage = 'javascript' | 'typescript' | 'python' | 'java' | 'php' | 'ruby' | 'golang' | 'csharp';
 type ToolsByLanguage = Record<SupportedLanguage, string[]>;
 type AdditionalTagsType = Record<string, string[]>;
 
+export interface EnhancedAnalysisContext {
+  detectionResult: DetectionResult;
+  frameworkSpecificRules: SecurityRule[];
+  recommendedTools: string[];
+}
+
+export interface SecurityRule {
+  id: string;
+  name: string;
+  description: string;
+  severity: 'Critical' | 'High' | 'Medium' | 'Low';
+  category: string;
+  languages: string[];
+  frameworks?: string[];
+  pattern: RegExp;
+  cweId?: string;
+  owaspCategory?: string;
+  remediation: {
+    description: string;
+    example?: string;
+  };
+}
+
 export class SecurityAnalyzer {
   private secretDetectionService: SecretDetectionService;
+  private languageDetectionService: LanguageDetectionService;
+  private frameworkDetectionEngine: FrameworkDetectionEngine;
+  private analysisContext?: EnhancedAnalysisContext;
 
   constructor() {
     this.secretDetectionService = new SecretDetectionService();
+    this.languageDetectionService = new LanguageDetectionService();
+    this.frameworkDetectionEngine = new FrameworkDetectionEngine();
+  }
+
+  /**
+   * Initialize analysis context with smart language and framework detection
+   */
+  public async initializeAnalysisContext(files: { filename: string; content: string }[]): Promise<EnhancedAnalysisContext> {
+    console.log('🔍 Initializing smart language detection...');
+
+    // Detect languages and frameworks
+    const detectionResult = await this.languageDetectionService.analyzeCodebase(files);
+
+    // Get framework-specific security rules
+    const frameworkSpecificRules = this.getFrameworkSpecificRules(detectionResult.frameworks);
+
+    // Get recommended analysis tools
+    const recommendedTools = this.languageDetectionService.getRecommendedTools(detectionResult);
+
+    this.analysisContext = {
+      detectionResult,
+      frameworkSpecificRules,
+      recommendedTools
+    };
+
+    console.log('✅ Language detection complete:', {
+      primaryLanguage: detectionResult.primaryLanguage.name,
+      frameworks: detectionResult.frameworks.map(f => f.name),
+      projectType: detectionResult.projectStructure.type,
+      recommendedTools: recommendedTools.slice(0, 3)
+    });
+
+    return this.analysisContext;
   }
 
   private generateUniqueId(): string {
     return `issue_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
   }
 
+  /**
+   * Get framework-specific security rules
+   */
+  private getFrameworkSpecificRules(frameworks: FrameworkInfo[]): SecurityRule[] {
+    const rules: SecurityRule[] = [];
+
+    for (const framework of frameworks) {
+      switch (framework.name) {
+        case 'React':
+        case 'Next.js':
+          rules.push(...this.getReactSecurityRules());
+          break;
+        case 'Angular':
+          rules.push(...this.getAngularSecurityRules());
+          break;
+        case 'Vue.js':
+        case 'Nuxt.js':
+          rules.push(...this.getVueSecurityRules());
+          break;
+        case 'Django':
+          rules.push(...this.getDjangoSecurityRules());
+          break;
+        case 'Flask':
+        case 'FastAPI':
+          rules.push(...this.getPythonWebSecurityRules());
+          break;
+        case 'Spring Boot':
+          rules.push(...this.getSpringSecurityRules());
+          break;
+        case 'Express.js':
+        case 'NestJS':
+          rules.push(...this.getNodeSecurityRules());
+          break;
+        case 'Laravel':
+          rules.push(...this.getLaravelSecurityRules());
+          break;
+      }
+    }
+
+    return rules;
+  }
+
+  private getReactSecurityRules(): SecurityRule[] {
+    return [
+      {
+        id: 'react-xss-dangerouslySetInnerHTML',
+        name: 'Dangerous innerHTML Usage',
+        description: 'Usage of dangerouslySetInnerHTML without proper sanitization can lead to XSS attacks',
+        severity: 'High',
+        category: 'Cross-Site Scripting',
+        languages: ['javascript', 'typescript'],
+        frameworks: ['React', 'Next.js'],
+        pattern: /dangerouslySetInnerHTML\s*:\s*\{\s*__html\s*:/,
+        cweId: 'CWE-79',
+        owaspCategory: 'A03:2021 – Injection',
+        remediation: {
+          description: 'Use DOMPurify or similar library to sanitize HTML content before rendering',
+          example: 'import DOMPurify from "dompurify"; const clean = DOMPurify.sanitize(dirty);'
+        }
+      },
+      {
+        id: 'react-href-javascript',
+        name: 'JavaScript URL in href',
+        description: 'Using javascript: URLs in href attributes can lead to XSS vulnerabilities',
+        severity: 'Medium',
+        category: 'Cross-Site Scripting',
+        languages: ['javascript', 'typescript'],
+        frameworks: ['React', 'Next.js'],
+        pattern: /href\s*=\s*["`']javascript:/,
+        cweId: 'CWE-79',
+        owaspCategory: 'A03:2021 – Injection',
+        remediation: {
+          description: 'Use onClick handlers instead of javascript: URLs',
+          example: '<a onClick={handleClick}>Click me</a>'
+        }
+      },
+      {
+        id: 'react-eval-usage',
+        name: 'Eval Usage in React',
+        description: 'Using eval() function can lead to code injection vulnerabilities',
+        severity: 'Critical',
+        category: 'Code Injection',
+        languages: ['javascript', 'typescript'],
+        frameworks: ['React', 'Next.js'],
+        pattern: /\beval\s*\(/,
+        cweId: 'CWE-95',
+        owaspCategory: 'A03:2021 – Injection',
+        remediation: {
+          description: 'Avoid using eval(). Use JSON.parse() for JSON data or Function constructor for safer alternatives',
+          example: 'const data = JSON.parse(jsonString);'
+        }
+      }
+    ];
+  }
+
+  private getAngularSecurityRules(): SecurityRule[] {
+    return [
+      {
+        id: 'angular-bypassSecurityTrust',
+        name: 'Bypassing Angular Security',
+        description: 'Using bypassSecurityTrust methods without proper validation can introduce XSS vulnerabilities',
+        severity: 'High',
+        category: 'Cross-Site Scripting',
+        languages: ['typescript'],
+        frameworks: ['Angular'],
+        pattern: /bypassSecurityTrust(Html|Style|Script|Url|ResourceUrl)/,
+        cweId: 'CWE-79',
+        owaspCategory: 'A03:2021 – Injection',
+        remediation: {
+          description: 'Validate and sanitize content before bypassing Angular security',
+          example: 'Only bypass security for trusted content from secure sources'
+        }
+      },
+      {
+        id: 'angular-innerHTML',
+        name: 'Direct innerHTML Usage',
+        description: 'Direct manipulation of innerHTML bypasses Angular sanitization',
+        severity: 'Medium',
+        category: 'Cross-Site Scripting',
+        languages: ['typescript'],
+        frameworks: ['Angular'],
+        pattern: /\.innerHTML\s*=/,
+        cweId: 'CWE-79',
+        owaspCategory: 'A03:2021 – Injection',
+        remediation: {
+          description: 'Use Angular data binding or Renderer2 for DOM manipulation',
+          example: 'Use [innerHTML] binding or this.renderer.setProperty()'
+        }
+      }
+    ];
+  }
+
+  private getVueSecurityRules(): SecurityRule[] {
+    return [
+      {
+        id: 'vue-v-html-xss',
+        name: 'Unsafe v-html Usage',
+        description: 'Using v-html directive with unsanitized content can lead to XSS attacks',
+        severity: 'High',
+        category: 'Cross-Site Scripting',
+        languages: ['javascript', 'typescript'],
+        frameworks: ['Vue.js', 'Nuxt.js'],
+        pattern: /v-html\s*=\s*["`'][^"`']*["`']/,
+        cweId: 'CWE-79',
+        owaspCategory: 'A03:2021 – Injection',
+        remediation: {
+          description: 'Sanitize HTML content before using v-html directive',
+          example: 'Use DOMPurify.sanitize() before binding to v-html'
+        }
+      }
+    ];
+  }
+
+  private getDjangoSecurityRules(): SecurityRule[] {
+    return [
+      {
+        id: 'django-sql-injection',
+        name: 'Django SQL Injection',
+        description: 'Raw SQL queries without parameterization can lead to SQL injection',
+        severity: 'Critical',
+        category: 'SQL Injection',
+        languages: ['python'],
+        frameworks: ['Django'],
+        pattern: /\.raw\s*\(\s*[f"'`][^"'`]*%[^"'`]*[f"'`]/,
+        cweId: 'CWE-89',
+        owaspCategory: 'A03:2021 – Injection',
+        remediation: {
+          description: 'Use Django ORM or parameterized queries',
+          example: 'Model.objects.raw("SELECT * FROM table WHERE id = %s", [user_id])'
+        }
+      },
+      {
+        id: 'django-debug-true',
+        name: 'Debug Mode in Production',
+        description: 'DEBUG = True in production exposes sensitive information',
+        severity: 'High',
+        category: 'Information Disclosure',
+        languages: ['python'],
+        frameworks: ['Django'],
+        pattern: /DEBUG\s*=\s*True/,
+        cweId: 'CWE-200',
+        owaspCategory: 'A01:2021 – Broken Access Control',
+        remediation: {
+          description: 'Set DEBUG = False in production settings',
+          example: 'DEBUG = False'
+        }
+      }
+    ];
+  }
+
+  private getPythonWebSecurityRules(): SecurityRule[] {
+    return [
+      {
+        id: 'flask-debug-mode',
+        name: 'Flask Debug Mode',
+        description: 'Running Flask in debug mode in production is dangerous',
+        severity: 'High',
+        category: 'Information Disclosure',
+        languages: ['python'],
+        frameworks: ['Flask'],
+        pattern: /app\.run\s*\([^)]*debug\s*=\s*True/,
+        cweId: 'CWE-200',
+        owaspCategory: 'A01:2021 – Broken Access Control',
+        remediation: {
+          description: 'Disable debug mode in production',
+          example: 'app.run(debug=False)'
+        }
+      }
+    ];
+  }
+
+  private getSpringSecurityRules(): SecurityRule[] {
+    return [
+      {
+        id: 'spring-sql-injection',
+        name: 'Spring SQL Injection',
+        description: 'String concatenation in SQL queries can lead to SQL injection',
+        severity: 'Critical',
+        category: 'SQL Injection',
+        languages: ['java'],
+        frameworks: ['Spring Boot'],
+        pattern: /createQuery\s*\(\s*["`'][^"`']*\+[^"`']*["`']/,
+        cweId: 'CWE-89',
+        owaspCategory: 'A03:2021 – Injection',
+        remediation: {
+          description: 'Use parameterized queries or JPA criteria API',
+          example: 'createQuery("SELECT u FROM User u WHERE u.id = :id").setParameter("id", userId)'
+        }
+      }
+    ];
+  }
+
+  private getNodeSecurityRules(): SecurityRule[] {
+    return [
+      {
+        id: 'node-eval-usage',
+        name: 'Node.js Eval Usage',
+        description: 'Using eval() in Node.js can lead to code injection',
+        severity: 'Critical',
+        category: 'Code Injection',
+        languages: ['javascript', 'typescript'],
+        frameworks: ['Express.js', 'NestJS'],
+        pattern: /\beval\s*\(/,
+        cweId: 'CWE-95',
+        owaspCategory: 'A03:2021 – Injection',
+        remediation: {
+          description: 'Avoid eval(). Use JSON.parse() or safer alternatives',
+          example: 'const data = JSON.parse(jsonString);'
+        }
+      }
+    ];
+  }
+
+  private getLaravelSecurityRules(): SecurityRule[] {
+    return [
+      {
+        id: 'laravel-raw-queries',
+        name: 'Laravel Raw SQL',
+        description: 'Raw SQL queries without parameter binding can cause SQL injection',
+        severity: 'Critical',
+        category: 'SQL Injection',
+        languages: ['php'],
+        frameworks: ['Laravel'],
+        pattern: /DB::raw\s*\(\s*["`'][^"`']*\$[^"`']*["`']/,
+        cweId: 'CWE-89',
+        owaspCategory: 'A03:2021 – Injection',
+        remediation: {
+          description: 'Use Eloquent ORM or parameter binding',
+          example: 'DB::select("SELECT * FROM users WHERE id = ?", [$id])'
+        }
+      }
+    ];
+  }
+
   private getFileLanguage(filename: string): SupportedLanguage {
+    // Use the enhanced language detection if available
+    if (this.analysisContext?.detectionResult) {
+      const detectedLang = this.analysisContext.detectionResult.primaryLanguage.name;
+      switch (detectedLang) {
+        case 'javascript':
+        case 'typescript':
+        case 'python':
+        case 'java':
+        case 'php':
+        case 'ruby':
+        case 'go':
+        case 'csharp':
+          return detectedLang as SupportedLanguage;
+        default:
+          break;
+      }
+    }
+
+    // Fallback to extension-based detection
     const extension = filename.split('.').pop()?.toLowerCase();
     switch (extension) {
       case 'js':
@@ -46,7 +400,16 @@ export class SecurityAnalyzer {
     }
   }
 
-  private selectAnalysisTool(language: SupportedLanguage): string {
+  private selectAnalysisTool(language: SupportedLanguage, filename?: string): string {
+    // Use recommended tools from language detection if available
+    if (this.analysisContext?.recommendedTools.length) {
+      const recommendedTool = this.analysisContext.recommendedTools[0];
+      if (recommendedTool) {
+        return recommendedTool;
+      }
+    }
+
+    // Enhanced tool selection based on language and frameworks
     const tools: ToolsByLanguage = {
       javascript: ['ESLint Security', 'Semgrep', 'CodeQL', 'SonarJS', 'Bandit-JS'],
       typescript: ['TSLint Security', 'Semgrep', 'CodeQL', 'SonarTS'],
@@ -58,8 +421,30 @@ export class SecurityAnalyzer {
       csharp: ['SonarC#', 'CodeQL', 'Security Code Scan']
     };
 
+    // Framework-specific tool selection
+    if (this.analysisContext?.detectionResult.frameworks.length) {
+      const frameworks = this.analysisContext.detectionResult.frameworks;
+
+      for (const framework of frameworks) {
+        switch (framework.name) {
+          case 'React':
+          case 'Next.js':
+            return 'React Security Scanner';
+          case 'Angular':
+            return 'Angular Security Scanner';
+          case 'Vue.js':
+            return 'Vue Security Scanner';
+          case 'Django':
+            return 'Django Security Scanner';
+          case 'Spring Boot':
+            return 'Spring Security Scanner';
+          case 'Laravel':
+            return 'Laravel Security Scanner';
+        }
+      }
+    }
+
     const languageTools = tools[language];
-    // Use the first tool as default for more consistent results
     return languageTools[0];
   }
 
@@ -409,8 +794,15 @@ export class SecurityAnalyzer {
 
     if (content) {
       // Real analysis with actual file content
-      console.log(`Analyzing real content for ${filename} (${content.length} characters)`);
-      
+      console.log(`🔍 Analyzing ${filename} (${content.length} characters) with smart detection`);
+
+      // Apply framework-specific rules if available
+      if (this.analysisContext?.frameworkSpecificRules.length) {
+        console.log(`📋 Applying ${this.analysisContext.frameworkSpecificRules.length} framework-specific rules`);
+        const frameworkIssues = this.applyFrameworkSpecificRules(filename, content, this.analysisContext.frameworkSpecificRules);
+        issues.push(...frameworkIssues);
+      }
+
       const lines = content.split('\n');
       
       rules.forEach((rule: typeof rules[0]) => {
@@ -433,7 +825,7 @@ export class SecurityAnalyzer {
               id: this.generateUniqueId(),
               line: lineNumber,
               column: content.indexOf(match) - characterIndex + 1,
-              tool: this.selectAnalysisTool(language),
+              tool: this.selectAnalysisTool(language, filename),
               type: rule.type,
               category: rule.category,
               message: rule.message,
@@ -487,6 +879,118 @@ export class SecurityAnalyzer {
     }
     
     return snippet.trim();
+  }
+
+  /**
+   * Apply framework-specific security rules
+   */
+  private applyFrameworkSpecificRules(filename: string, content: string, rules: SecurityRule[]): SecurityIssue[] {
+    const issues: SecurityIssue[] = [];
+    const lines = content.split('\n');
+
+    for (const rule of rules) {
+      // Check if rule applies to this file's language/framework
+      const language = this.getFileLanguage(filename);
+      if (!rule.languages.includes(language)) {
+        continue;
+      }
+
+      // Apply the rule pattern
+      const matches = content.match(new RegExp(rule.pattern.source, 'g'));
+      if (matches) {
+        for (const match of matches) {
+          const matchIndex = content.indexOf(match);
+          const lineNumber = content.substring(0, matchIndex).split('\n').length;
+          const column = matchIndex - content.lastIndexOf('\n', matchIndex - 1);
+
+          const issue: SecurityIssue = {
+            id: this.generateUniqueId(),
+            line: lineNumber,
+            column: Math.max(1, column),
+            tool: this.getFrameworkSpecificTool(rule),
+            type: rule.name,
+            category: rule.category,
+            message: rule.description,
+            severity: rule.severity,
+            confidence: 85, // High confidence for framework-specific rules
+            cvssScore: this.calculateFrameworkRuleCVSS(rule.severity),
+            cweId: rule.cweId,
+            owaspCategory: rule.owaspCategory,
+            recommendation: rule.remediation.description,
+            remediation: {
+              description: rule.remediation.description,
+              example: rule.remediation.example || '',
+              references: []
+            },
+            filename,
+            codeSnippet: this.extractCodeSnippet(lines, lineNumber),
+            riskRating: this.calculateRiskRating(rule.severity, 85),
+            impact: this.getFrameworkRuleImpact(rule.severity),
+            likelihood: 'Medium',
+            references: [`Framework: ${rule.frameworks?.join(', ') || 'Generic'}`],
+            tags: [`framework-specific`, rule.category.toLowerCase().replace(/\s+/g, '-')]
+          };
+
+          issues.push(issue);
+        }
+      }
+    }
+
+    return issues;
+  }
+
+  /**
+   * Get tool name for framework-specific rules
+   */
+  private getFrameworkSpecificTool(rule: SecurityRule): string {
+    if (rule.frameworks?.length) {
+      return `${rule.frameworks[0]} Security Scanner`;
+    }
+    return 'Framework Security Scanner';
+  }
+
+  /**
+   * Calculate CVSS score for framework-specific rules
+   */
+  private calculateFrameworkRuleCVSS(severity: SecurityRule['severity']): number {
+    switch (severity) {
+      case 'Critical': return 9.0;
+      case 'High': return 7.5;
+      case 'Medium': return 5.0;
+      case 'Low': return 2.5;
+      default: return 5.0;
+    }
+  }
+
+  /**
+   * Get impact description for framework-specific rules
+   */
+  private getFrameworkRuleImpact(severity: SecurityRule['severity']): string {
+    switch (severity) {
+      case 'Critical': return 'Critical security vulnerability that could lead to complete system compromise';
+      case 'High': return 'High-risk vulnerability that could lead to significant security breach';
+      case 'Medium': return 'Medium-risk vulnerability that could be exploited under certain conditions';
+      case 'Low': return 'Low-risk vulnerability with limited impact';
+      default: return 'Security vulnerability requiring attention';
+    }
+  }
+
+  /**
+   * Get analysis context for external use
+   */
+  public getAnalysisContext(): EnhancedAnalysisContext | undefined {
+    return this.analysisContext;
+  }
+
+  /**
+   * Get language detection summary
+   */
+  public getLanguageDetectionSummary(): string {
+    if (!this.analysisContext) {
+      return 'Language detection not initialized';
+    }
+
+    return this.languageDetectionService.getLanguageSummary(this.analysisContext.detectionResult);
   }
 
 }

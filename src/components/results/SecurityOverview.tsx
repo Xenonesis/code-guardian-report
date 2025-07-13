@@ -5,6 +5,7 @@ import { AnalysisResults } from '@/hooks/useAnalysis';
 import { SecuritySummaryCards } from '@/components/security/SecuritySummaryCards';
 import { SecurityIssueItem } from '@/components/security/SecurityIssueItem';
 import { SecretDetectionCard } from '@/components/security/SecretDetectionCard';
+import { LanguageDetectionSummary } from '@/components/LanguageDetectionSummary';
 
 interface SecurityOverviewProps {
   results: AnalysisResults;
@@ -29,6 +30,14 @@ export const SecurityOverview: React.FC<SecurityOverviewProps> = ({ results }) =
 
   return (
     <div className="space-y-6">
+      {/* Language Detection Summary */}
+      {results.languageDetection && (
+        <LanguageDetectionSummary
+          detectionResult={results.languageDetection}
+          className="mb-6"
+        />
+      )}
+
       <SecuritySummaryCards results={results} />
 
       {/* Secret Detection Section */}

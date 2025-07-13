@@ -111,18 +111,32 @@ export class EnhancedAnalysisEngine {
         
         console.log(`Found ${totalFiles} analyzable files in zip`);
 
-        // Analyze files with progress tracking
+        // Initialize smart language detection
+        console.log('🚀 Initializing smart language detection...');
+        const analysisContext = await this.securityAnalyzer.initializeAnalysisContext(fileContents);
+
+        console.log('📊 Language Detection Results:', {
+          primaryLanguage: analysisContext.detectionResult.primaryLanguage.name,
+          allLanguages: analysisContext.detectionResult.allLanguages.map(l => `${l.name} (${l.confidence}%)`),
+          frameworks: analysisContext.detectionResult.frameworks.map(f => `${f.name} (${f.confidence}%)`),
+          projectType: analysisContext.detectionResult.projectStructure.type,
+          buildTools: analysisContext.detectionResult.buildTools,
+          packageManagers: analysisContext.detectionResult.packageManagers,
+          recommendedTools: analysisContext.recommendedTools.slice(0, 5)
+        });
+
+        // Analyze files with progress tracking and enhanced context
         for (let i = 0; i < fileContents.length; i++) {
           const fileContent = fileContents[i];
-          console.log(`Analyzing file ${i + 1}/${totalFiles}: ${fileContent.filename}`);
-          
+          console.log(`🔍 Analyzing file ${i + 1}/${totalFiles}: ${fileContent.filename}`);
+
           const fileIssues = this.securityAnalyzer.analyzeFile(fileContent.filename, fileContent.content);
           allIssues = [...allIssues, ...fileIssues];
           linesAnalyzed += fileContent.content.split('\n').length;
-          
+
           // Log progress for larger codebases
           if (totalFiles > 10 && (i + 1) % 5 === 0) {
-            console.log(`Progress: ${i + 1}/${totalFiles} files analyzed, ${allIssues.length} issues found so far`);
+            console.log(`📈 Progress: ${i + 1}/${totalFiles} files analyzed, ${allIssues.length} issues found so far`);
           }
         }
       } catch (error) {
@@ -161,6 +175,7 @@ export class EnhancedAnalysisEngine {
       totalFiles,
       analysisTime,
       summary: this.metricsCalculator.calculateSummaryMetrics(allIssues, linesAnalyzed),
+      languageDetection: this.securityAnalyzer.getAnalysisContext()?.detectionResult,
       metrics: this.metricsCalculator.calculateDetailedMetrics(allIssues, linesAnalyzed),
       dependencies: this.metricsCalculator.analyzeDependencies()
     };
