@@ -106,16 +106,7 @@ export class EnhancedAnalysisEngine {
         totalFiles = fileContents.length;
         
         if (totalFiles === 0) {
-          console.warn('No analyzable files found in zip, but continuing with empty analysis');
-          // Return empty but valid analysis results
-          return {
-            issues: [],
-            totalFiles: 0,
-            analysisTime: '0.1s',
-            summary: this.metricsCalculator.calculateSummaryMetrics([], 0),
-            metrics: this.metricsCalculator.calculateDetailedMetrics([], 0),
-            dependencies: this.metricsCalculator.analyzeDependencies()
-          };
+          throw new Error('This ZIP file does not contain any code files. Please upload a ZIP file with source code (.js, .py, .java, .ts, etc.)');
         }
         
         console.log(`Found ${totalFiles} analyzable files in zip`);

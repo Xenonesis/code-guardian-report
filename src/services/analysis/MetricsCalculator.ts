@@ -84,6 +84,16 @@ export class MetricsCalculator {
       modifiedScore += 3;
     }
 
+    // Additional penalty for secret detection issues
+    const secretIssues = issues.filter(issue => issue.category === 'Secret Detection' || issue.type === 'Secret');
+    if (secretIssues.length > 0) {
+      const criticalSecrets = secretIssues.filter(s => s.severity === 'Critical').length;
+      const highSecrets = secretIssues.filter(s => s.severity === 'High').length;
+
+      // Heavy penalty for exposed secrets
+      modifiedScore -= (criticalSecrets * 8) + (highSecrets * 5) + (secretIssues.length * 2);
+    }
+
     return Math.max(0, Math.min(100, modifiedScore));
   }
 
@@ -269,12 +279,16 @@ export class MetricsCalculator {
   private calculateSecurityMaturity(issues: SecurityIssue[]): number {
     const criticalIssues = issues.filter(i => i.severity === 'Critical').length;
     const totalIssues = issues.length;
-    
+
     if (totalIssues === 0) return 95;
-    
+
+    // Additional penalty for secret detection issues
+    const secretIssues = issues.filter(issue => issue.category === 'Secret Detection' || issue.type === 'Secret');
+    const secretPenalty = secretIssues.length * 5; // Secrets indicate poor security practices
+
     const criticalRatio = criticalIssues / totalIssues;
-    const maturityScore = 100 - (criticalRatio * 60) - ((totalIssues / 10) * 5);
-    
+    const maturityScore = 100 - (criticalRatio * 60) - ((totalIssues / 10) * 5) - secretPenalty;
+
     return Math.max(10, Math.min(100, maturityScore));
   }
 
@@ -282,6 +296,16 @@ export class MetricsCalculator {
     const criticalCount = issues.filter(i => i.severity === 'Critical').length;
     const highCount = issues.filter(i => i.severity === 'High').length;
     const issueRatio = linesAnalyzed > 0 ? issues.length / linesAnalyzed * 1000 : 0;
+
+    // Check for secret detection issues which increase risk significantly
+    const secretIssues = issues.filter(issue => issue.category === 'Secret Detection' || issue.type === 'Secret');
+    const criticalSecrets = secretIssues.filter(s => s.severity === 'Critical').length;
+    const highSecrets = secretIssues.filter(s => s.severity === 'High').length;
+
+    // Any critical secrets automatically elevate risk
+    if (criticalSecrets > 0) return 'Very High';
+    if (highSecrets > 2 || secretIssues.length > 5) return 'Very High';
+    if (secretIssues.length > 0) return 'High';
 
     if (criticalCount > 5 || issueRatio > 20) return 'Very High';
     if (criticalCount > 2 || highCount > 10 || issueRatio > 10) return 'High';

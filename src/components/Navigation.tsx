@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Shield, Info, Home, Moon, Sun, Menu, X, Sparkles, Zap } from 'lucide-react';
+import { Shield, Info, Home, Moon, Sun, Menu, X, Settings, Users, FileCheck, Scale, FileText, ChevronDown, Building2, Lock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -12,21 +12,62 @@ interface NavigationProps {
 export const Navigation: React.FC<NavigationProps> = ({ isDarkMode, toggleDarkMode }) => {
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  // Enhanced scroll detection for navbar styling
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [location.pathname]);
 
   const navItems = [
     {
       path: '/',
-      label: 'Home',
+      label: 'Platform',
       icon: <Home className="h-4 w-4" />,
-      description: 'Code Analysis Platform',
-      gradient: 'from-blue-500 to-indigo-500'
+      description: 'Security Analysis Dashboard',
+      gradient: 'from-slate-600 via-slate-700 to-slate-800',
+      hoverColor: 'hover:text-slate-700 dark:hover:text-slate-300',
+      category: 'main'
     },
     {
       path: '/about',
-      label: 'About',
-      icon: <Info className="h-4 w-4" />,
-      description: 'Tools & Features',
-      gradient: 'from-purple-500 to-pink-500'
+      label: 'Solutions',
+      icon: <Building2 className="h-4 w-4" />,
+      description: 'Enterprise Security Tools',
+      gradient: 'from-blue-600 via-blue-700 to-blue-800',
+      hoverColor: 'hover:text-blue-700 dark:hover:text-blue-300',
+      category: 'main'
+    }
+  ];
+
+  const legalItems = [
+    {
+      path: '/privacy',
+      label: 'Privacy Policy',
+      icon: <Lock className="h-4 w-4" />,
+      description: 'Data Protection & Privacy',
+      gradient: 'from-slate-600 via-slate-700 to-slate-800',
+      hoverColor: 'hover:text-slate-700 dark:hover:text-slate-300',
+      category: 'legal'
+    },
+    {
+      path: '/terms',
+      label: 'Terms of Service',
+      icon: <FileCheck className="h-4 w-4" />,
+      description: 'Service Agreement',
+      gradient: 'from-slate-600 via-slate-700 to-slate-800',
+      hoverColor: 'hover:text-slate-700 dark:hover:text-slate-300',
+      category: 'legal'
     }
   ];
 
@@ -38,155 +79,276 @@ export const Navigation: React.FC<NavigationProps> = ({ isDarkMode, toggleDarkMo
   };
 
   return (
-    <nav className="glass-nav sticky top-0 z-50">
-      <div className="container mx-auto mobile-container">
-        <div className="flex items-center justify-between h-16 sm:h-18 lg:h-20">
-          {/* Logo and Brand */}
+    <nav className={cn(
+      "professional-nav sticky top-0 z-50 transition-all duration-300",
+      isScrolled
+        ? "bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl shadow-lg border-b border-slate-200/50 dark:border-slate-700/50"
+        : "bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200/30 dark:border-slate-700/30"
+    )}>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 lg:h-18">
+          {/* Professional Logo and Brand */}
           <Link
             to="/"
-            className="flex items-center gap-2 sm:gap-3 group cursor-pointer hover-lift transition-all duration-300 min-w-0 flex-1 sm:flex-initial"
+            className="flex items-center gap-3 group cursor-pointer transition-all duration-300 min-w-0 flex-1 sm:flex-initial"
             onClick={() => setIsMobileMenuOpen(false)}
           >
-            <div className="relative p-2 sm:p-3 lg:p-4 rounded-2xl shadow-2xl hover:shadow-[0_20px_40px_-12px_rgba(59,130,246,0.4)] transition-all duration-500 group-hover:scale-110 flex-shrink-0">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-2xl animate-gradient-flow"></div>
-              <div className="relative bg-white/10 backdrop-blur-sm rounded-xl p-1">
-                <Shield className="h-6 w-6 sm:h-7 sm:w-7 lg:h-9 lg:w-9 text-white transition-all duration-500" />
-              </div>
-              <Sparkles className="absolute -top-1 -right-1 h-3 w-3 sm:h-4 sm:w-4 text-yellow-400 animate-pulse" />
+            <div className="relative p-2.5 lg:p-3 rounded-xl bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 shadow-lg group-hover:shadow-xl transition-all duration-300 flex-shrink-0">
+              <Shield className="h-6 w-6 lg:h-7 lg:w-7 text-white" />
+              <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-blue-600/20 to-indigo-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </div>
-            <div className="hidden xs:block min-w-0">
-              <h1 className="text-base sm:text-xl lg:text-2xl font-bold gradient-text-rainbow truncate">
-                Code Guardian
-              </h1>
-              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 flex items-center gap-1 font-medium">
-                <Zap className="h-3 w-3 sm:h-4 sm:w-4 text-yellow-500" />
-                <span className="hidden sm:inline">AI-Powered Analysis</span>
-                <span className="sm:hidden">AI Analysis</span>
-              </p>
+
+            <div className="min-w-0 flex-1 sm:flex-initial">
+              <div className="flex items-center gap-2">
+                <h1 className="text-lg lg:text-xl font-bold text-slate-900 dark:text-white truncate">
+                  Code Guardian
+                </h1>
+                <div className="hidden lg:flex items-center">
+                  <span className="px-2 py-0.5 text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-md">
+                    Enterprise
+                  </span>
+                </div>
+              </div>
+              <div className="hidden sm:block text-xs text-slate-600 dark:text-slate-400 font-medium">
+                Enterprise Security Platform
+              </div>
             </div>
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-4 xl:gap-6">
+          {/* Professional Desktop Navigation */}
+          <div className="hidden lg:flex items-center gap-1">
             {navItems.map((item) => (
               <Link
                 key={item.path}
                 to={item.path}
                 className={cn(
-                  "relative flex items-center gap-3 px-4 py-3 lg:px-6 lg:py-3 rounded-2xl font-semibold transition-all duration-500 group text-sm lg:text-base hover:scale-105",
+                  "relative flex items-center gap-2 px-4 py-2.5 rounded-lg font-medium transition-all duration-300 text-sm",
                   isActive(item.path)
-                    ? `bg-gradient-to-r ${item.gradient} text-white shadow-2xl hover:shadow-[0_10px_25px_-5px_rgba(59,130,246,0.4)]`
-                    : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white/20 dark:hover:bg-white/10 backdrop-blur-sm"
+                    ? "bg-slate-900 dark:bg-slate-700 text-white shadow-lg"
+                    : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white"
                 )}
                 aria-current={isActive(item.path) ? 'page' : undefined}
               >
-                <div className="transition-all duration-300">
+                <div className="flex-shrink-0">
                   {item.icon}
                 </div>
-                <span className="hidden xl:inline">{item.label}</span>
+                <span>{item.label}</span>
+
+                {/* Professional Active Indicator */}
                 {isActive(item.path) && (
-                  <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-white rounded-full animate-pulse"></div>
+                  <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-white rounded-full"></div>
                 )}
               </Link>
             ))}
           </div>
 
-          {/* Tablet Navigation */}
-          <div className="hidden md:flex lg:hidden items-center gap-2">
+          {/* Professional Tablet Navigation */}
+          <div className="hidden md:flex lg:hidden items-center gap-1">
             {navItems.map((item) => (
               <Link
                 key={item.path}
                 to={item.path}
                 className={cn(
-                  "relative flex items-center justify-center p-3 rounded-2xl font-semibold transition-all duration-500 group touch-target hover:scale-110",
+                  "relative flex items-center justify-center p-3 rounded-lg font-medium transition-all duration-300 touch-target",
                   isActive(item.path)
-                    ? `bg-gradient-to-r ${item.gradient} text-white shadow-2xl hover:shadow-[0_10px_25px_-5px_rgba(59,130,246,0.4)]`
-                    : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-white/20 dark:hover:bg-white/10 backdrop-blur-sm"
+                    ? "bg-slate-900 dark:bg-slate-700 text-white shadow-lg"
+                    : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
                 )}
                 aria-current={isActive(item.path) ? 'page' : undefined}
                 aria-label={`${item.label} - ${item.description}`}
               >
                 {item.icon}
+
+                {/* Professional Active Indicator */}
                 {isActive(item.path) && (
-                  <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-white rounded-full animate-pulse"></div>
+                  <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-white rounded-full"></div>
                 )}
               </Link>
             ))}
           </div>
 
-          {/* Mobile Menu Button & Controls */}
-          <div className="flex items-center gap-2 sm:gap-3">
-            {/* Dark Mode Toggle */}
+          {/* Professional Controls */}
+          <div className="flex items-center gap-2">
+            {/* Professional Dark Mode Toggle */}
             <Button
               variant="ghost"
               size="sm"
               onClick={toggleDarkMode}
-              className="relative p-2 sm:p-3 rounded-2xl hover:bg-white/20 dark:hover:bg-black/20 backdrop-blur-sm transition-all duration-500 group touch-target hover:scale-110 shadow-lg"
+              className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-300 touch-target"
               aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
             >
-              <div className="relative">
-                {isDarkMode ? (
-                  <Sun className="h-4 w-4 sm:h-5 sm:w-5 text-amber-500 group-hover:rotate-180 transition-transform duration-500" />
-                ) : (
-                  <Moon className="h-4 w-4 sm:h-5 sm:w-5 text-slate-700 dark:text-slate-300 group-hover:rotate-12 transition-transform duration-300" />
-                )}
-              </div>
+              {isDarkMode ? (
+                <Sun className="h-5 w-5 text-amber-500" />
+              ) : (
+                <Moon className="h-5 w-5 text-slate-600 dark:text-slate-400" />
+              )}
             </Button>
 
-            {/* Mobile Menu Button */}
+            {/* Professional Mobile Menu Button */}
             <Button
               variant="ghost"
               size="sm"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2 sm:p-3 rounded-2xl hover:bg-white/20 dark:hover:bg-black/20 backdrop-blur-sm transition-all duration-500 touch-target hover:scale-110 shadow-lg"
+              className="md:hidden p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-300 touch-target"
               aria-label="Toggle mobile menu"
               aria-expanded={isMobileMenuOpen}
             >
               {isMobileMenuOpen ? (
-                <X className="h-4 w-4 sm:h-5 sm:w-5 text-slate-700 dark:text-slate-300" />
+                <X className="h-5 w-5 text-slate-600 dark:text-slate-400" />
               ) : (
-                <Menu className="h-4 w-4 sm:h-5 sm:w-5 text-slate-700 dark:text-slate-300" />
+                <Menu className="h-5 w-5 text-slate-600 dark:text-slate-400" />
               )}
             </Button>
           </div>
         </div>
 
-        {/* Mobile Navigation Menu */}
+        {/* Enhanced Mobile Navigation Menu */}
         {isMobileMenuOpen && (
           <>
-            {/* Mobile Menu Backdrop */}
-            <div 
-              className="md:hidden fixed inset-0 bg-black/20 backdrop-blur-sm z-40"
+            {/* Enhanced Mobile Menu Backdrop */}
+            <div
+              className="md:hidden fixed inset-0 bg-black/30 backdrop-blur-md z-40 animate-fade-in"
               onClick={() => setIsMobileMenuOpen(false)}
               aria-hidden="true"
             />
-            
-            {/* Mobile Menu Content */}
-            <div className="md:hidden absolute top-full left-0 right-0 bg-white/95 dark:bg-slate-900/95 backdrop-blur-2xl border-t border-white/20 dark:border-white/10 shadow-2xl animate-slide-down max-h-screen overflow-y-auto z-50">
-              <div className="container mx-auto mobile-container py-4">
-                <div className="flex flex-col gap-2">
-                  {navItems.map((item) => (
+
+            {/* Enhanced Mobile Menu Content */}
+            <div className="md:hidden absolute top-full left-0 right-0 glass-card-ultra border-t border-white/30 dark:border-white/20 shadow-2xl animate-slide-down max-h-screen overflow-y-auto z-50">
+              {/* Mobile Menu Header */}
+              <div className="container mx-auto mobile-container py-4 border-b border-white/20 dark:border-white/10">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-gradient-to-r from-slate-700 to-slate-800 rounded-xl">
+                      <Shield className="h-5 w-5 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-slate-900 dark:text-white">Menu</h3>
+                      <p className="text-xs text-slate-600 dark:text-slate-400">Platform Navigation</p>
+                    </div>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="p-2 rounded-xl hover:bg-red-500/20 text-slate-600 dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400"
+                  >
+                    <X className="h-5 w-5" />
+                  </Button>
+                </div>
+              </div>
+
+              {/* Mobile Menu Items */}
+              <div className="container mx-auto mobile-container py-6">
+                {/* Main Navigation */}
+                <div className="mb-8">
+                  <h4 className="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-4 px-2">Platform</h4>
+                  <div className="flex flex-col gap-4">
+                    {navItems.map((item, index) => (
                     <Link
                       key={item.path}
                       to={item.path}
                       onClick={() => setIsMobileMenuOpen(false)}
                       className={cn(
-                        "mobile-nav-item flex items-center gap-3 px-4 py-4 rounded-xl font-medium transition-all duration-300 touch-target",
+                        "mobile-nav-item glass-card-ultra enhanced-card-hover flex items-center gap-4 px-6 py-5 rounded-2xl font-medium transition-all duration-500 touch-target group",
                         isActive(item.path)
-                          ? `bg-gradient-to-r ${item.gradient} text-white shadow-lg`
-                          : "text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800"
+                          ? `bg-gradient-to-r ${item.gradient} text-white shadow-2xl glow-on-hover border-2 border-white/30`
+                          : `text-slate-800 dark:text-slate-200 ${item.hoverColor} hover:scale-[1.02]`
                       )}
                       aria-current={isActive(item.path) ? 'page' : undefined}
+                      style={{ animationDelay: `${index * 0.1}s` }}
                     >
-                      <div className="flex-shrink-0">
+                      <div className={cn(
+                        "flex-shrink-0 p-3 rounded-xl transition-all duration-500",
+                        isActive(item.path)
+                          ? "bg-white/20 text-white scale-110"
+                          : "bg-gradient-to-r from-blue-500/10 to-purple-500/10 group-hover:scale-125 group-hover:rotate-12"
+                      )}>
                         {item.icon}
                       </div>
                       <div className="min-w-0 flex-1">
-                        <div className="font-medium text-sm sm:text-base">{item.label}</div>
-                        <div className="text-xs opacity-70 mt-0.5">{item.description}</div>
+                        <div className="font-semibold text-base sm:text-lg mb-1">{item.label}</div>
+                        <div className={cn(
+                          "text-sm transition-colors duration-300",
+                          isActive(item.path)
+                            ? "text-white/80"
+                            : "text-slate-600 dark:text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-300"
+                        )}>
+                          {item.description}
+                        </div>
                       </div>
+
+                      {/* Active Indicator */}
+                      {isActive(item.path) && (
+                        <div className="flex flex-col gap-1">
+                          <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                          <div className="w-1.5 h-1.5 bg-white/70 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+                          <div className="w-2 h-2 bg-white rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+                        </div>
+                      )}
+
+                      {/* Hover Effect Overlay */}
+                      {!isActive(item.path) && (
+                        <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                      )}
                     </Link>
-                  ))}
+                    ))}
+                  </div>
+                </div>
+
+                {/* Legal Pages */}
+                <div>
+                  <h4 className="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-4 px-2">Legal & Compliance</h4>
+                  <div className="flex flex-col gap-4">
+                    {legalItems.map((item, index) => (
+                      <Link
+                        key={item.path}
+                        to={item.path}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className={cn(
+                          "mobile-nav-item glass-card-ultra enhanced-card-hover flex items-center gap-4 px-6 py-5 rounded-2xl font-medium transition-all duration-500 touch-target group",
+                          isActive(item.path)
+                            ? `bg-gradient-to-r ${item.gradient} text-white shadow-2xl glow-on-hover border-2 border-white/30`
+                            : `text-slate-800 dark:text-slate-200 ${item.hoverColor} hover:scale-[1.02]`
+                        )}
+                        aria-current={isActive(item.path) ? 'page' : undefined}
+                        style={{ animationDelay: `${(navItems.length + index) * 0.1}s` }}
+                      >
+                        <div className={cn(
+                          "flex-shrink-0 p-3 rounded-xl transition-all duration-500",
+                          isActive(item.path)
+                            ? "bg-white/20 text-white scale-110"
+                            : "bg-gradient-to-r from-blue-500/10 to-purple-500/10 group-hover:scale-125 group-hover:rotate-12"
+                        )}>
+                          {item.icon}
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <div className="font-semibold text-base sm:text-lg mb-1">{item.label}</div>
+                          <div className={cn(
+                            "text-sm transition-colors duration-300",
+                            isActive(item.path)
+                              ? "text-white/80"
+                              : "text-slate-600 dark:text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-300"
+                          )}>
+                            {item.description}
+                          </div>
+                        </div>
+
+                        {/* Active Indicator */}
+                        {isActive(item.path) && (
+                          <div className="flex flex-col gap-1">
+                            <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                            <div className="w-1.5 h-1.5 bg-white/70 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+                            <div className="w-2 h-2 bg-white rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+                          </div>
+                        )}
+
+                        {/* Hover Effect Overlay */}
+                        {!isActive(item.path) && (
+                          <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        )}
+                      </Link>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>

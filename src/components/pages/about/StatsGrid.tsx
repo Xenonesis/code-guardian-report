@@ -22,14 +22,14 @@ export const StatsGrid: React.FC<StatsGridProps> = ({ className = '' }) => {
   const gridRef = useRef<HTMLDivElement>(null);
   
   const stats: Stat[] = useMemo(() => [
-    { icon: <Users className="h-5 w-5" />, label: 'Developers Trust Us', value: '25,000+' },
+    { icon: <Users className="h-5 w-5" />, label: 'Enterprise Clients', value: '25,000+' },
     {
       icon: <FileCode className="h-5 w-5" />,
-      label: 'Files Analyzed',
+      label: 'Code Files Analyzed',
       value: getTotalFilesAnalyzed().toLocaleString()
     },
-    { icon: <Shield className="h-5 w-5" />, label: 'Vulnerabilities Found', value: '150,000+' },
-    { icon: <Award className="h-5 w-5" />, label: 'Languages Supported', value: '20+' }
+    { icon: <Shield className="h-5 w-5" />, label: 'Security Issues Detected', value: '150,000+' },
+    { icon: <Award className="h-5 w-5" />, label: 'Programming Languages', value: '20+' }
   ], []);
 
   useEffect(() => {
@@ -75,34 +75,52 @@ export const StatsGrid: React.FC<StatsGridProps> = ({ className = '' }) => {
   }, [stats]);
 
   return (
-    <div ref={gridRef} className={`grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 max-w-5xl mx-auto ${className}`}>
+    <div ref={gridRef} className={`grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-6xl mx-auto ${className}`}>
       {stats.map((stat, index) => (
         <div
           key={index}
-          className="relative overflow-hidden bg-gradient-to-br from-white/90 to-white/70 dark:from-slate-800/90 dark:to-slate-900/70 backdrop-blur-xl border border-white/30 dark:border-white/10 rounded-2xl p-6 lg:p-8 group hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/20 transition-all duration-500 cursor-pointer"
+          className="stat-card-enhanced glass-card-ultra enhanced-card-hover glow-on-hover relative overflow-hidden p-6 lg:p-8 group"
           style={{
-            backdropFilter: 'blur(20px)',
-            boxShadow: '0 8px 32px rgba(0,0,0,0.1)'
+            animationDelay: `${index * 0.1}s`
           }}
         >
-          {/* Gradient border effect */}
-          <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 opacity-0 group-hover:opacity-20 transition-opacity duration-500 -z-10"></div>
-          
-          {/* Animated background orb */}
-          <div className="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-xl group-hover:scale-150 transition-transform duration-700"></div>
-          
+          {/* Enhanced Gradient Border Effect */}
+          <div className="animated-border absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+
+          {/* Multiple Floating Orbs for Depth */}
+          <div className="absolute -top-6 -right-6 w-20 h-20 bg-gradient-to-br from-blue-500/30 via-purple-500/20 to-pink-500/30 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700 float-animation"></div>
+          <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-gradient-to-br from-emerald-500/25 to-teal-500/25 rounded-full blur-xl group-hover:scale-125 transition-transform duration-500 float-animation delay-2s"></div>
+
+          {/* Particle System */}
+          <div className="particle-system opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+            <div className="particle" style={{ left: '20%', animationDelay: '0s' }}></div>
+            <div className="particle" style={{ left: '80%', animationDelay: '2s' }}></div>
+          </div>
+
           <div className="relative z-10 text-center">
-            <div className="flex items-center justify-center mb-4 text-blue-600 dark:text-blue-400 group-hover:scale-125 group-hover:rotate-12 transition-all duration-500">
-              <div className="p-3 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-xl group-hover:from-blue-500/20 group-hover:to-purple-500/20 transition-colors duration-500">
-                {stat.icon}
+            {/* Enhanced Icon Container */}
+            <div className="flex items-center justify-center mb-6 text-blue-600 dark:text-blue-400 group-hover:scale-125 group-hover:rotate-12 transition-all duration-700">
+              <div className="p-4 bg-gradient-to-br from-blue-500/15 via-purple-500/10 to-pink-500/15 rounded-2xl group-hover:from-blue-500/30 group-hover:via-purple-500/20 group-hover:to-pink-500/30 transition-all duration-700 shadow-lg group-hover:shadow-xl">
+                <div className="text-lg">
+                  {stat.icon}
+                </div>
               </div>
             </div>
-            <div className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent mb-2 group-hover:from-blue-600 group-hover:to-purple-600 transition-all duration-500">
+
+            {/* Enhanced Value Display */}
+            <div className="text-4xl lg:text-5xl font-bold mb-3 gradient-text-animated group-hover:scale-110 transition-transform duration-500">
               {animatedValues[index]}
             </div>
-            <div className="text-sm font-medium text-slate-600 dark:text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-300 transition-colors duration-300">
+
+            {/* Enhanced Label */}
+            <div className="text-sm lg:text-base font-semibold text-slate-700 dark:text-slate-300 group-hover:text-slate-800 dark:group-hover:text-slate-200 transition-colors duration-300 tracking-wide">
               {stat.label}
             </div>
+          </div>
+
+          {/* Shimmer Effect */}
+          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12 transform translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
           </div>
         </div>
       ))}

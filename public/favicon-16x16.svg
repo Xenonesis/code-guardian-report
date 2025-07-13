@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+  <defs>
+    <linearGradient id="professionalShieldGrad16" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e293b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#334155;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- Simplified shield for small size -->
+  <path d="M8 2 L3 4 L3 9 Q3 12 8 14 Q13 12 13 9 L13 4 Z" fill="url(#professionalShieldGrad16)" stroke="#0f172a" stroke-width="0.5"/>
+  <!-- Simple checkmark -->
+  <path d="M6 8 L7 9 L10 6" stroke="#3b82f6" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+</svg>

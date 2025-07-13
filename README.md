@@ -1,19 +1,19 @@
-<div align="center">
+﻿<div align="center">
 
-# 🛡️ Code Guardian v3.3.0
+# 🛡️ Code Guardian v3.4.0
 ### 🚀 Next-Generation AI-Powered Security Analysis Platform
 Enhanced with Bundle Monitoring, TypeScript Fixes, and Improved Documentation
 
-**Current Version: 3.3.0 - Developed by Aditya Kumar Tiwari**
+**Current Version: 3.4.0 - Developed by Aditya Kumar Tiwari**
 Optimized for Performance and Reliability
 
 <img src="./public/home.png" alt="Code Guardian - AI-Powered Security Analysis Platform" width="100%" style="border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.12);">
 
 <div align="center">
-  <img src="https://img.shields.io/badge/Version-3.3.0-ff6b6b?style=for-the-badge&logo=rocket&logoColor=white" alt="Version"/>
+  <img src="https://img.shields.io/badge/Version-3.4.0-ff6b6b?style=for-the-badge&logo=rocket&logoColor=white" alt="Version"/>
   <img src="https://img.shields.io/badge/Status-Production%20Ready-00C851?style=for-the-badge&logo=checkmarx&logoColor=white" alt="Status"/>
   <img src="https://img.shields.io/badge/AI%20Powered-GPT--4%20%7C%20Claude-9C27B0?style=for-the-badge&logo=openai&logoColor=white" alt="AI Powered"/>
-  <img src="https://img.shields.io/badge/npm-v3.3.0-CB3837?style=for-the-badge&logo=npm&logoColor=white" alt="NPM Version"/>
+  <img src="https://img.shields.io/badge/npm-v3.4.0-CB3837?style=for-the-badge&logo=npm&logoColor=white" alt="NPM Version"/>
   <img src="https://img.shields.io/badge/Analytics-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Analytics"/>
   <img src="https://img.shields.io/badge/PWA-Ready-FF6F00?style=for-the-badge&logo=pwa&logoColor=white" alt="PWA Ready"/>
 </div>
@@ -195,6 +195,12 @@ Built with ❤️ by [Aditya Kumar Tiwari](https://github.com/Xenonesis)
   - Injection flaw identification
   - Authentication & authorization issues
   - Cryptographic vulnerability detection
+- 🔐 **Secret Detection Engine**
+  - API key and token detection (AWS, GitHub, Stripe, etc.)
+  - JWT token identification and validation
+  - Database credential exposure detection
+  - ML-powered entropy analysis for unknown secrets
+  - Pattern matching with 95%+ accuracy
 - 🐛 **Intelligent Bug Detection**
   - Logic error identification
   - Null pointer exception prevention
@@ -387,7 +393,7 @@ VITE_ANTHROPIC_API_URL=https://api.anthropic.com/v1
 
 # Application Settings
 VITE_APP_NAME="Code Guardian Report"
-VITE_APP_VERSION="3.3.0"
+VITE_APP_VERSION="3.4.0"
 ```
 
 ## 📱 Usage Guide
@@ -430,6 +436,7 @@ VITE_APP_VERSION="3.3.0"
 | 📁 **File Upload** | Drag & drop ZIP files with intelligent parsing | `.zip`, `.tar.gz`, `.rar` |
 | 🔍 **Code Analysis** | Multi-language static analysis engine | `Python`, `JavaScript`, `TypeScript`, `Java`, `C++`, `Go`, `Rust` |
 | 🛡️ **Security Scan** | OWASP Top 10 vulnerability detection | `SQL Injection`, `XSS`, `CSRF`, `Auth Issues` |
+| 🔐 **Secret Detection** | AI-powered secret and credential detection | `API Keys`, `JWT Tokens`, `DB Credentials`, `Private Keys` |
 | 📊 **Quality Metrics** | Comprehensive code quality assessment | `Complexity`, `Maintainability`, `Technical Debt` |
 | 🤖 **AI Insights** | Intelligent recommendations and fixes | `GPT-4`, `Claude-3`, `Custom Models` |
 | 📤 **Export Options** | Multiple export formats for reports | `JSON`, `CSV`, `PDF`, `HTML`, `XML` |
@@ -458,6 +465,12 @@ VITE_APP_VERSION="3.3.0"
 <td></td>
 <td>Semgrep</td>
 <td>Static analysis for security</td>
+<td>Multi-language</td>
+</tr>
+<tr>
+<td></td>
+<td>Secret Scanner</td>
+<td>AI-powered secret and credential detection</td>
 <td>Multi-language</td>
 </tr>
 <tr>
@@ -725,7 +738,13 @@ We welcome contributions! Please follow these steps:
 
 ## 📈 Changelog
 
-### 🔄 Version 3.3.0 - Current Release ⭐
+### 🔄 Version 3.4.0 - Current Release ⭐
+- ⬆️ **Version Bump**: Updated all version references to 3.4.0 in code, documentation, and badges
+- 📝 **Changelog**: Synced documentation and changelog for 3.4.0 release
+- 📦 **Dependency Updates**: (If any, describe here)
+- ⚡ **Other Improvements**: (If any, describe here)
+
+### 🔄 Version 3.3.0
 - 📦 **Bundle Size Monitoring**: Implemented bundlesize configuration and scripts for performance tracking
 - 🔧 **TypeScript Fixes**: Resolved linting errors with improved type definitions
 - 🖼️ **Documentation**: Fixed broken image links and updated documentation for improved usability

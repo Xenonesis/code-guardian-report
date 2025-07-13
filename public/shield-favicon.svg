@@ -1,11 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
   <defs>
-    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="professionalShieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e293b;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#475569;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#334155;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
-      <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1d4ed8;stop-opacity:1" />
     </linearGradient>
   </defs>
-  <path d="M50 10 L20 25 L20 55 Q20 75 50 90 Q80 75 80 55 L80 25 Z" fill="url(#shieldGrad)" stroke="#1e293b" stroke-width="2"/>
-  <path d="M35 45 L45 55 L65 35" stroke="white" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Main shield body -->
+  <path d="M50 10 L20 25 L20 55 Q20 75 50 90 Q80 75 80 55 L80 25 Z" fill="url(#professionalShieldGrad)" stroke="#0f172a" stroke-width="2"/>
+  <!-- Security checkmark -->
+  <path d="M35 45 L45 55 L65 35" stroke="url(#accentGrad)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Professional highlight -->
+  <path d="M50 15 L25 28 L25 35 L50 22 L75 35 L75 28 Z" fill="url(#accentGrad)" opacity="0.3"/>
 </svg>

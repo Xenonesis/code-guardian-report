@@ -406,6 +406,32 @@
     @apply transform -translate-y-1 shadow-xl;
   }
 
+  /* Additional utility classes */
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+
+  .animate-slide-down {
+    animation: slideDown 0.3s ease-out;
+  }
+
+  .scale-102 {
+    transform: scale(1.02);
+  }
+
+  .scale-103 {
+    transform: scale(1.03);
+  }
+
+  .gradient-text-rainbow {
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 25%, #ec4899 50%, #f97316 75%, #10b981 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 300% 300%;
+    animation: gradientFlow 6s ease infinite;
+  }
+
   .hover-float-subtle {
     @apply transition-all duration-200 ease-out;
   }
@@ -451,6 +477,153 @@
 
   .mobile-grid {
     @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8;
+  }
+
+  /* Enhanced responsive utilities */
+  .touch-target {
+    @apply min-h-[48px] min-w-[48px];
+  }
+
+  .touch-target-lg {
+    @apply min-h-[56px] min-w-[56px];
+  }
+
+  /* Professional Typography System */
+  .text-professional-xs {
+    @apply text-xs sm:text-sm font-medium tracking-wide;
+  }
+
+  .text-professional-sm {
+    @apply text-sm sm:text-base font-medium;
+  }
+
+  .text-professional-base {
+    @apply text-base sm:text-lg font-normal leading-relaxed;
+  }
+
+  .text-professional-lg {
+    @apply text-lg sm:text-xl lg:text-2xl font-semibold leading-tight;
+  }
+
+  .text-professional-xl {
+    @apply text-xl sm:text-2xl lg:text-3xl font-bold leading-tight;
+  }
+
+  .text-professional-2xl {
+    @apply text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight tracking-tight;
+  }
+
+  /* Professional heading styles */
+  .heading-enterprise {
+    @apply font-bold text-slate-900 dark:text-white leading-tight tracking-tight;
+  }
+
+  .subheading-enterprise {
+    @apply font-semibold text-slate-700 dark:text-slate-300 leading-relaxed;
+  }
+
+  .body-enterprise {
+    @apply font-normal text-slate-600 dark:text-slate-400 leading-relaxed;
+  }
+
+  /* Keep existing responsive utilities for backward compatibility */
+  .responsive-text-xs {
+    @apply text-xs sm:text-sm;
+  }
+
+  .responsive-text-sm {
+    @apply text-sm sm:text-base;
+  }
+
+  .responsive-text-base {
+    @apply text-base sm:text-lg;
+  }
+
+  .responsive-text-lg {
+    @apply text-lg sm:text-xl lg:text-2xl;
+  }
+
+  .responsive-text-xl {
+    @apply text-xl sm:text-2xl lg:text-3xl;
+  }
+
+  .responsive-text-2xl {
+    @apply text-2xl sm:text-3xl lg:text-4xl xl:text-5xl;
+  }
+
+  .responsive-spacing-sm {
+    @apply space-y-4 sm:space-y-6 lg:space-y-8;
+  }
+
+  .responsive-spacing-md {
+    @apply space-y-6 sm:space-y-8 lg:space-y-12;
+  }
+
+  .responsive-spacing-lg {
+    @apply space-y-8 sm:space-y-12 lg:space-y-16;
+  }
+
+  .responsive-padding-sm {
+    @apply p-4 sm:p-6 lg:p-8;
+  }
+
+  .responsive-padding-md {
+    @apply p-6 sm:p-8 lg:p-12;
+  }
+
+  .responsive-padding-lg {
+    @apply p-8 sm:p-12 lg:p-16;
+  }
+
+  /* Mobile performance optimizations */
+  @media (max-width: 768px) {
+    .mobile-optimized {
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .mobile-text-rendering {
+      text-rendering: optimizeSpeed;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .mobile-transform {
+      transform: translateZ(0);
+      will-change: transform;
+    }
+
+    /* Reduce motion on mobile for better performance */
+    .animate-float-slow,
+    .animate-float-delayed,
+    .animate-pulse-slow {
+      animation-duration: 4s;
+    }
+
+    /* Simplified shadows on mobile */
+    .shadow-2xl {
+      @apply shadow-lg;
+    }
+
+    .shadow-3xl {
+      @apply shadow-xl;
+    }
+  }
+
+  /* Touch-friendly improvements */
+  @media (hover: none) and (pointer: coarse) {
+    .hover\:scale-105:hover {
+      transform: scale(1.02);
+    }
+
+    .hover\:scale-110:hover {
+      transform: scale(1.05);
+    }
+
+    .hover\:scale-125:hover {
+      transform: scale(1.1);
+    }
   }
 
   /* Responsive text utilities */

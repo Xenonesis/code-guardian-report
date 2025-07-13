@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { AnalysisResults } from '@/hooks/useAnalysis';
 import { SecuritySummaryCards } from '@/components/security/SecuritySummaryCards';
 import { SecurityIssueItem } from '@/components/security/SecurityIssueItem';
+import { SecretDetectionCard } from '@/components/security/SecretDetectionCard';
 
 interface SecurityOverviewProps {
   results: AnalysisResults;
@@ -22,15 +23,22 @@ export const SecurityOverview: React.FC<SecurityOverviewProps> = ({ results }) =
     setExpandedIssues(newExpanded);
   };
 
+  // Separate secret detection issues from other security issues
+  const secretIssues = results.issues.filter(issue => issue.category === 'Secret Detection' || issue.type === 'Secret');
+  const otherIssues = results.issues.filter(issue => issue.category !== 'Secret Detection' && issue.type !== 'Secret');
+
   return (
     <div className="space-y-6">
       <SecuritySummaryCards results={results} />
+
+      {/* Secret Detection Section */}
+      <SecretDetectionCard secretIssues={secretIssues} />
 
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Shield className="h-5 w-5" />
-            Security Issues ({results.issues.length})
+            Other Security Issues ({otherIssues.length})
           </CardTitle>
           <CardDescription>
             Comprehensive security analysis with OWASP classifications and CVSS scoring
@@ -38,7 +46,7 @@ export const SecurityOverview: React.FC<SecurityOverviewProps> = ({ results }) =
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {results.issues.map((issue) => (
+            {otherIssues.map((issue) => (
               <SecurityIssueItem
                 key={issue.id}
                 issue={issue}
@@ -46,6 +54,11 @@ export const SecurityOverview: React.FC<SecurityOverviewProps> = ({ results }) =
                 onToggle={() => toggleIssueExpansion(issue.id)}
               />
             ))}
+            {otherIssues.length === 0 && (
+              <p className="text-slate-600 dark:text-slate-400 text-center py-4">
+                No other security issues detected.
+              </p>
+            )}
           </div>
         </CardContent>
       </Card>

@@ -1,15 +1,94 @@
 /* About Page Specific Enhancements */
 
 @layer components {
-  /* Enhanced glass morphism effects */
+  /* Professional Navigation Styles */
+  .professional-nav {
+    @apply backdrop-blur-xl border-b shadow-sm;
+  }
+
+  .professional-nav-item {
+    @apply relative px-4 py-2.5 rounded-lg font-medium transition-all duration-300 text-sm;
+  }
+
+  .professional-nav-item:hover {
+    @apply bg-slate-100 dark:bg-slate-800;
+  }
+
+  .professional-nav-item.active {
+    @apply bg-slate-900 dark:bg-slate-700 text-white shadow-lg;
+  }
+
+  /* Professional Color Palette */
+  :root {
+    --color-primary: #1e293b;
+    --color-primary-hover: #334155;
+    --color-secondary: #475569;
+    --color-accent: #3b82f6;
+    --color-success: #10b981;
+    --color-warning: #f59e0b;
+    --color-error: #ef4444;
+    --color-surface: #ffffff;
+    --color-surface-dark: #0f172a;
+    --color-border: #e2e8f0;
+    --color-border-dark: #334155;
+  }
+
+  [data-theme="dark"] {
+    --color-surface: #0f172a;
+    --color-border: #334155;
+  }
+
+  /* Legal Page Enhancements */
+  .prose {
+    @apply max-w-none;
+  }
+
+  .prose h2 {
+    @apply text-2xl sm:text-3xl font-bold mb-6 mt-8 first:mt-0;
+  }
+
+  .prose h3 {
+    @apply text-xl font-semibold mb-4 mt-6;
+  }
+
+  .prose p {
+    @apply mb-4 leading-relaxed;
+  }
+
+  .prose ul, .prose ol {
+    @apply mb-6 space-y-2;
+  }
+
+  .prose li {
+    @apply leading-relaxed;
+  }
+
+  /* Legal section animations */
+  .legal-section-enter {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: legalSectionEnter 0.6s ease-out forwards;
+  }
+
+  @keyframes legalSectionEnter {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  /* Professional glass morphism effects */
   .glass-card-ultra {
-    @apply bg-white/10 dark:bg-black/10 backdrop-blur-3xl border border-white/20 dark:border-white/10 rounded-3xl shadow-2xl;
-    background-image: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+    @apply bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border border-slate-200/50 dark:border-slate-700/50 rounded-2xl shadow-lg;
+    background-image: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
   }
 
   .dark .glass-card-ultra {
-    background-image: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    background-image: linear-gradient(135deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.01) 100%);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+  }
+
+  .glass-card-professional {
+    @apply bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border border-slate-200/60 dark:border-slate-700/60 rounded-xl shadow-md;
   }
 
   /* Animated gradient text */
@@ -126,7 +205,7 @@
 
   /* Enhanced card hover effects */
   .enhanced-card-hover {
-    @apply transition-all duration-700 hover:scale-[1.02] hover:shadow-3xl;
+    @apply transition-all duration-700 hover:scale-[1.02] hover:shadow-2xl;
   }
 
   .enhanced-card-hover:hover {
@@ -211,14 +290,83 @@
   }
 }
 
-/* Responsive enhancements */
+/* Enhanced Responsive Design */
+@media (max-width: 475px) {
+  /* Extra small devices */
+  .glass-card-ultra {
+    @apply p-4 rounded-2xl;
+  }
+
+  .enhanced-card-hover:hover {
+    transform: translateY(-2px) scale(1.005);
+  }
+
+  .stat-card-enhanced {
+    @apply p-4 hover:scale-102;
+  }
+
+  .gradient-text-animated {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+  }
+
+  .nav-item-ultra {
+    @apply px-4 py-2 text-sm;
+  }
+}
+
+@media (max-width: 640px) {
+  /* Small devices */
+  .enhanced-card-hover:hover {
+    transform: translateY(-3px) scale(1.01);
+  }
+
+  .stat-card-enhanced {
+    @apply hover:scale-103;
+  }
+
+  .glass-nav-ultra {
+    @apply bg-white/95 dark:bg-slate-900/95;
+  }
+
+  .particle-system {
+    display: none; /* Hide particles on mobile for performance */
+  }
+}
+
 @media (max-width: 768px) {
+  /* Medium devices */
   .enhanced-card-hover:hover {
     transform: translateY(-4px) scale(1.01);
   }
-  
+
   .stat-card-enhanced {
     @apply hover:scale-105;
+  }
+
+  .float-animation {
+    animation-duration: 8s; /* Slower animations on mobile */
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  /* Tablet devices */
+  .glass-card-ultra {
+    @apply p-6;
+  }
+
+  .enhanced-card-hover:hover {
+    transform: translateY(-6px) scale(1.015);
+  }
+}
+
+@media (min-width: 1025px) {
+  /* Desktop devices */
+  .enhanced-card-hover:hover {
+    transform: translateY(-8px) scale(1.02);
+  }
+
+  .particle-system {
+    opacity: 1; /* Full particles on desktop */
   }
 }
 

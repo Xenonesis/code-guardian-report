@@ -22,31 +22,31 @@ const About = () => {
   const features = [
     {
       icon: <Shield className="h-8 w-8" />,
-      title: 'Advanced Security Analysis',
-      description: 'Military-grade security scanning with comprehensive vulnerability detection, OWASP Top 10 coverage, and real-time threat intelligence for enterprise-scale applications.',
-      gradient: 'from-emerald-500 via-teal-500 to-cyan-600',
-      benefits: ['OWASP Top 10 Coverage', 'CVE Database Integration', 'Zero-day Detection', 'Threat Intelligence', 'Compliance Reporting', 'Real-time Monitoring']
+      title: 'Enterprise Security Framework',
+      description: 'Comprehensive security analysis engine with OWASP Top 10 compliance, CVE database integration, and advanced threat detection capabilities. Designed for enterprise-scale applications with stringent security requirements.',
+      gradient: 'from-slate-600 via-slate-700 to-slate-800',
+      benefits: ['OWASP Top 10 Compliance', 'CVE Database Integration', 'Advanced Threat Detection', 'Security Intelligence', 'Compliance Reporting', 'Risk Assessment']
     },
     {
       icon: <Code className="h-8 w-8" />,
-      title: 'Persistent Storage System',
-      description: 'Advanced analysis results storage with cross-tab synchronization, automatic compression, and intelligent history management. Results persist until new uploads with full export capabilities.',
-      gradient: 'from-blue-500 via-indigo-500 to-purple-600',
-      benefits: ['Persistent Results', 'Cross-tab Sync', 'Data Compression', 'History Management', 'Export Formats', 'Storage Analytics']
+      title: 'Intelligent Analysis Engine',
+      description: 'Advanced static code analysis with persistent storage, cross-session synchronization, and intelligent caching. Maintains comprehensive analysis history with detailed reporting and export capabilities.',
+      gradient: 'from-blue-600 via-blue-700 to-blue-800',
+      benefits: ['Persistent Analysis Results', 'Cross-Session Sync', 'Intelligent Caching', 'Historical Tracking', 'Multiple Export Formats', 'Performance Analytics']
     },
     {
       icon: <Bot className="h-8 w-8" />,
-      title: 'Enhanced AI Intelligence',
-      description: 'Next-generation AI with GPT-4 and Claude integration, contextual understanding, intelligent key management, and natural language explanations for complex security issues.',
-      gradient: 'from-purple-500 via-pink-500 to-rose-600',
-      benefits: ['AI Key Management', 'Contextual Analysis', 'Auto-fix Suggestions', 'Impact Assessment', 'Learning Algorithms', 'Smart Recommendations']
+      title: 'AI-Powered Insights',
+      description: 'Integration with leading AI platforms including GPT-4 and Claude for contextual code analysis, intelligent recommendations, and automated security assessments with natural language explanations.',
+      gradient: 'from-indigo-600 via-indigo-700 to-indigo-800',
+      benefits: ['AI-Driven Analysis', 'Contextual Understanding', 'Automated Recommendations', 'Impact Assessment', 'Natural Language Reports', 'Intelligent Prioritization']
     },
     {
       icon: <Zap className="h-8 w-8" />,
-      title: 'Performance & Analytics',
-      description: 'Lightning-fast processing with enhanced analytics dashboard, real-time metrics, performance tracking, and comprehensive bundle monitoring for optimal user experience.',
-      gradient: 'from-amber-500 via-orange-500 to-red-600',
-      benefits: ['Bundle Monitoring', 'Performance Metrics', 'Real-time Analytics', 'Usage Statistics', 'Performance Tracking', 'Optimization Insights']
+      title: 'Performance & Monitoring',
+      description: 'High-performance analysis engine with real-time monitoring, comprehensive metrics dashboard, and advanced performance tracking for optimal development workflow integration.',
+      gradient: 'from-emerald-600 via-emerald-700 to-emerald-800',
+      benefits: ['Real-time Monitoring', 'Performance Metrics', 'Analytics Dashboard', 'Workflow Integration', 'Resource Optimization', 'Scalability Insights']
     }
   ];
 
@@ -54,40 +54,60 @@ const About = () => {
     <PageLayout isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode}>
       <AnimatedBackground />
 
-      {/* Content with relative positioning to appear above background */}
-      <div className="relative z-10">
+      {/* Enhanced Content with Modern Layout */}
+      <div className="relative z-10 space-y-16 sm:space-y-20 lg:space-y-24">
+        {/* Enhanced Hero Section */}
         <HeroSection
-          title="Code Guardian v3.3.0"
-          subtitle="Next-Generation AI-Powered Security Analysis Platform"
-          description="Revolutionary AI-powered code analysis platform with persistent storage, enhanced analytics, and intelligent insights. Upload your code and get instant security analysis with persistent results that save until your next upload. Features advanced AI integration, comprehensive vulnerability detection, and enterprise-grade reporting capabilities."
+          title="Code Guardian Enterprise"
+          subtitle="Advanced Security Analysis Platform for Modern Development Teams"
+          description="Enterprise-grade static code analysis platform powered by artificial intelligence. Delivers comprehensive security assessments, vulnerability detection, and compliance reporting for mission-critical applications. Trusted by development teams worldwide for maintaining secure, high-quality codebases."
           titleId="about-hero-title"
           variant="gradient"
         >
-          <VersionInfo />
-          <StatsGrid />
+          <div className="space-y-8 sm:space-y-10">
+            <VersionInfo />
+            <StatsGrid />
+          </div>
         </HeroSection>
 
-        <DetailedInfo />
+        {/* Enhanced Information Sections */}
+        <div className="space-y-16 sm:space-y-20">
+          <DetailedInfo />
 
-        <EnhancedFeatureShowcase />
+          <EnhancedFeatureShowcase />
 
-        <HowToUseSection />
+          <HowToUseSection />
 
-        <HowItWorksSection />
+          <HowItWorksSection />
+        </div>
 
-        <FeatureGrid
-          features={features}
-          title="Advanced Features"
-          subtitle="Comprehensive tools and capabilities for enterprise-grade security analysis"
-          columns={2}
-          variant="modern"
-        />
+        {/* Enhanced Feature Grid Section */}
+        <div className="relative py-16 sm:py-20">
+          {/* Background Elements */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-full blur-3xl float-animation"></div>
+            <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 rounded-full blur-2xl float-animation delay-2s"></div>
+          </div>
 
-        <SupportedToolsSection />
+          <div className="relative z-10">
+            <FeatureGrid
+              features={features}
+              title="Enterprise Capabilities"
+              subtitle="Comprehensive security analysis tools designed for modern development environments"
+              columns={2}
+              variant="modern"
+            />
+          </div>
+        </div>
 
-        <MeetDeveloperSection />
+        {/* Enhanced Bottom Sections */}
+        <div className="space-y-16 sm:space-y-20">
+          <SupportedToolsSection />
 
-        <CallToActionSection />
+          <MeetDeveloperSection />
+
+          <CallToActionSection />
+        </div>
       </div>
     </PageLayout>
   );

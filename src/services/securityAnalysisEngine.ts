@@ -299,6 +299,7 @@ export function calculateCVSSScore(issue: Partial<SecurityIssue>): number {
   if (issue.category?.includes('Injection')) baseScore += 3;
   if (issue.category?.includes('XSS')) baseScore += 2.5;
   if (issue.category?.includes('Hardcoded')) baseScore += 2;
+  if (issue.category?.includes('Secret Detection')) baseScore += 2.5;
   
   // Confidence adjustment
   const confidenceMultiplier = (issue.confidence || 50) / 100;
@@ -427,6 +428,15 @@ function applySecurityModifiers(baseScore: number, issues: SecurityIssue[]): num
   );
   if (hasAuthIssues) {
     modifiedScore -= 5;
+  }
+
+  // Additional penalty for secret detection issues
+  const hasSecretIssues = issues.some(issue =>
+    issue.category === 'Secret Detection' ||
+    issue.type === 'Secret'
+  );
+  if (hasSecretIssues) {
+    modifiedScore -= 8; // Higher penalty for exposed secrets
   }
 
   return Math.max(5, Math.min(100, modifiedScore));

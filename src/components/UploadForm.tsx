@@ -19,6 +19,7 @@ export const UploadForm: React.FC<UploadFormProps> = ({ onFileSelect, onAnalysis
   const [isUploading, setIsUploading] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [uploadComplete, setUploadComplete] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [analysisEngine] = useState(() => new EnhancedAnalysisEngine());
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
@@ -61,7 +62,16 @@ export const UploadForm: React.FC<UploadFormProps> = ({ onFileSelect, onAnalysis
         } catch (analysisError) {
           console.error('Analysis engine error:', analysisError);
           setIsAnalyzing(false);
-          // Return empty results on error instead of fallback
+          
+          // Check if it's a validation error (no code files)
+          if (analysisError instanceof Error && analysisError.message.includes('does not contain any code files')) {
+            setError(analysisError.message);
+            setSelectedFile(null);
+            setUploadComplete(false);
+            return;
+          }
+          
+          // For other errors, return empty results
           const emptyResults = {
             issues: [],
             totalFiles: 0,
@@ -96,15 +106,58 @@ export const UploadForm: React.FC<UploadFormProps> = ({ onFileSelect, onAnalysis
     } catch (error) {
       console.error('Error processing file:', error);
       setIsAnalyzing(false);
+      setError('Failed to process the ZIP file. Please try again.');
     }
   }, [onAnalysisComplete, analysisEngine]);
+
+  // Validate ZIP contains code files
+  const validateZipFile = useCallback(async (file: File): Promise<{isValid: boolean, message: string}> => {
+    try {
+      const JSZip = (await import('jszip')).default;
+      const zip = new JSZip();
+      const zipData = await zip.loadAsync(file);
+      
+      const codeExtensions = ['.js', '.jsx', '.ts', '.tsx', '.py', '.java', '.php', '.rb', '.go', '.cs', '.cpp', '.c', '.h', '.rs', '.vue', '.html', '.css'];
+      const files = Object.keys(zipData.files).filter(name => !zipData.files[name].dir);
+      
+      if (files.length === 0) {
+        return {isValid: false, message: 'This ZIP file is empty. Please upload a ZIP containing source code files.'};
+      }
+      
+      const codeFiles = files.filter(filename => 
+        codeExtensions.some(ext => filename.toLowerCase().endsWith(ext))
+      );
+      
+      if (codeFiles.length === 0) {
+        const foundExtensions = [...new Set(files.map(f => f.split('.').pop()?.toLowerCase()).filter(Boolean))];
+        return {
+          isValid: false, 
+          message: `This ZIP contains ${files.length} files but no source code. Found: ${foundExtensions.map(ext => '.' + ext).join(', ')}. Please upload a ZIP with code files (.js, .py, .java, .ts, etc.)`
+        };
+      }
+      
+      return {isValid: true, message: ''};
+    } catch {
+      return {isValid: false, message: 'Failed to read ZIP file. Please ensure it\'s a valid ZIP archive.'};
+    }
+  }, []);
 
   // Define processZipFile second
   const processZipFile = useCallback(async (file: File) => {
     console.log('Starting to process zip file:', file.name);
+    
+    // Validate ZIP contains code files first
+    const validation = await validateZipFile(file);
+    if (!validation.isValid) {
+      setError(validation.message);
+      setSelectedFile(null);
+      return;
+    }
+    
     setIsUploading(true);
     setUploadProgress(0);
     setUploadComplete(false);
+    setError(null);
 
     // Simulate upload progress
     const uploadInterval = setInterval(() => {
@@ -119,7 +172,7 @@ export const UploadForm: React.FC<UploadFormProps> = ({ onFileSelect, onAnalysis
         return prev + 10;
       });
     }, 150);
-  }, [analyzeCode]);
+  }, [analyzeCode, validateZipFile]);
 
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -162,6 +215,7 @@ export const UploadForm: React.FC<UploadFormProps> = ({ onFileSelect, onAnalysis
     setIsUploading(false);
     setIsAnalyzing(false);
     setUploadComplete(false);
+    setError(null);
   };
 
   return (
@@ -203,6 +257,14 @@ export const UploadForm: React.FC<UploadFormProps> = ({ onFileSelect, onAnalysis
             <strong>Privacy & Security:</strong> Your code is analyzed locally and securely. Files are processed in-browser with persistent storage for your convenience. Analysis results are automatically saved until you upload a new file.
           </AlertDescription>
         </Alert>
+        {error && (
+          <Alert className="border-l-4 border-l-red-500 bg-red-50 dark:bg-red-950/20 dark:border-l-red-400" role="alert">
+            <AlertTriangle className="h-5 w-5 text-red-600 dark:text-red-400" aria-hidden="true" />
+            <AlertDescription className="text-red-800 dark:text-red-200 text-sm sm:text-base">
+              <strong>Invalid ZIP File:</strong> {error}
+            </AlertDescription>
+          </Alert>
+        )}
       </CardContent>
     </Card>
   );

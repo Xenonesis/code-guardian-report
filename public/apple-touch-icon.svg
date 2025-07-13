@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180">
+  <defs>
+    <linearGradient id="professionalShieldGradApple" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e293b;stop-opacity:1" />
+      <stop offset="30%" style="stop-color:#475569;stop-opacity:1" />
+      <stop offset="70%" style="stop-color:#334155;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e293b;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accentGradApple" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1d4ed8;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- Background rounded rectangle for iOS -->
+  <rect x="0" y="0" width="180" height="180" rx="40" ry="40" fill="#f8fafc"/>
+  <!-- Main shield body -->
+  <path d="M90 30 L45 50 L45 110 Q45 140 90 160 Q135 140 135 110 L135 50 Z" fill="url(#professionalShieldGradApple)" stroke="#0f172a" stroke-width="3"/>
+  <!-- Security checkmark -->
+  <path d="M70 90 L85 105 L115 75" stroke="url(#accentGradApple)" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Professional highlight -->
+  <path d="M90 38 L52 58 L52 70 L90 50 L128 70 L128 58 Z" fill="url(#accentGradApple)" opacity="0.4"/>
+  <!-- Additional security elements -->
+  <circle cx="90" cy="130" r="3" fill="url(#accentGradApple)" opacity="0.6"/>
+  <circle cx="80" cy="125" r="2" fill="url(#accentGradApple)" opacity="0.4"/>
+  <circle cx="100" cy="125" r="2" fill="url(#accentGradApple)" opacity="0.4"/>
+</svg>
