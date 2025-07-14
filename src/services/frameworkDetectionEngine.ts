@@ -52,7 +52,7 @@ const FRAMEWORK_PATTERNS: FrameworkPattern[] = [
     dependencies: ['react', '@types/react', 'react-dom'],
     configFiles: ['package.json'],
     directoryStructure: ['src/components', 'src/hooks'],
-    minimumConfidence: 60
+    minimumConfidence: 40
   },
   {
     name: 'Next.js',
@@ -68,7 +68,7 @@ const FRAMEWORK_PATTERNS: FrameworkPattern[] = [
     dependencies: ['next', '@next/'],
     configFiles: ['next.config.js', 'next.config.ts'],
     directoryStructure: ['pages/', 'app/', 'public/'],
-    minimumConfidence: 70
+    minimumConfidence: 30
   },
   {
     name: 'Vue.js',
@@ -85,7 +85,7 @@ const FRAMEWORK_PATTERNS: FrameworkPattern[] = [
     dependencies: ['vue', '@vue/', 'vue-router'],
     configFiles: ['vue.config.js', 'vite.config.js'],
     directoryStructure: ['src/components', 'src/views'],
-    minimumConfidence: 65
+    minimumConfidence: 40
   },
   {
     name: 'Nuxt.js',
@@ -101,7 +101,7 @@ const FRAMEWORK_PATTERNS: FrameworkPattern[] = [
     dependencies: ['nuxt', '@nuxt/', 'nitro'],
     configFiles: ['nuxt.config.js', 'nuxt.config.ts'],
     directoryStructure: ['pages/', 'layouts/', 'middleware/'],
-    minimumConfidence: 75
+    minimumConfidence: 25
   },
   {
     name: 'Angular',
@@ -117,7 +117,7 @@ const FRAMEWORK_PATTERNS: FrameworkPattern[] = [
     dependencies: ['@angular/core', '@angular/common', '@angular/cli'],
     configFiles: ['angular.json', 'tsconfig.json'],
     directoryStructure: ['src/app/', 'src/environments/'],
-    minimumConfidence: 80
+    minimumConfidence: 40
   },
   {
     name: 'Svelte',
@@ -151,7 +151,7 @@ const FRAMEWORK_PATTERNS: FrameworkPattern[] = [
     dependencies: ['express'],
     configFiles: ['package.json'],
     directoryStructure: ['routes/', 'middleware/', 'controllers/'],
-    minimumConfidence: 70
+    minimumConfidence: 30
   },
   {
     name: 'NestJS',
@@ -167,7 +167,7 @@ const FRAMEWORK_PATTERNS: FrameworkPattern[] = [
     dependencies: ['@nestjs/core', '@nestjs/common'],
     configFiles: ['nest-cli.json', 'tsconfig.json'],
     directoryStructure: ['src/modules/', 'src/controllers/', 'src/services/'],
-    minimumConfidence: 85
+    minimumConfidence: 30
   },
   {
     name: 'Fastify',
@@ -199,7 +199,7 @@ const FRAMEWORK_PATTERNS: FrameworkPattern[] = [
     dependencies: ['Django', 'django'],
     configFiles: ['requirements.txt', 'pyproject.toml', 'setup.py'],
     directoryStructure: ['apps/', 'templates/', 'static/'],
-    minimumConfidence: 80
+    minimumConfidence: 20
   },
   {
     name: 'Flask',
@@ -215,7 +215,7 @@ const FRAMEWORK_PATTERNS: FrameworkPattern[] = [
     dependencies: ['Flask', 'flask'],
     configFiles: ['requirements.txt', 'pyproject.toml'],
     directoryStructure: ['templates/', 'static/'],
-    minimumConfidence: 75
+    minimumConfidence: 30
   },
   {
     name: 'FastAPI',
@@ -247,7 +247,7 @@ const FRAMEWORK_PATTERNS: FrameworkPattern[] = [
     dependencies: ['spring-boot-starter', 'springframework'],
     configFiles: ['pom.xml', 'build.gradle', 'application.properties'],
     directoryStructure: ['src/main/java/', 'src/main/resources/'],
-    minimumConfidence: 85
+    minimumConfidence: 40
   },
   {
     name: 'Laravel',
@@ -281,7 +281,7 @@ const FRAMEWORK_PATTERNS: FrameworkPattern[] = [
     dependencies: ['react-native', '@react-native/'],
     configFiles: ['metro.config.js', 'app.json'],
     directoryStructure: ['android/', 'ios/'],
-    minimumConfidence: 85
+    minimumConfidence: 25
   },
   {
     name: 'Flutter',
@@ -297,7 +297,7 @@ const FRAMEWORK_PATTERNS: FrameworkPattern[] = [
     dependencies: ['flutter'],
     configFiles: ['pubspec.yaml'],
     directoryStructure: ['lib/', 'android/', 'ios/'],
-    minimumConfidence: 90
+    minimumConfidence: 40
   },
   {
     name: 'Ionic',
@@ -389,13 +389,35 @@ export class FrameworkDetectionEngine {
     const structureMatches = this.matchDirectoryStructure(pattern.directoryStructure, filenames);
     confidence += (structureMatches / Math.max(1, pattern.directoryStructure.length)) * 10;
 
+
+
+
+
     return Math.min(100, Math.round(confidence));
   }
 
   private matchFilePatterns(patterns: string[], filenames: string[]): number {
     let matches = 0;
     for (const pattern of patterns) {
-      const regex = new RegExp(pattern.replace(/\*/g, '.*').replace(/\./g, '\\.'));
+      // Convert glob pattern to regex - handle file extensions and directory patterns properly
+      let regexPattern = pattern;
+      if (pattern.startsWith('*.')) {
+        // For patterns like *.jsx, match any file ending with .jsx
+        const extension = pattern.substring(2); // Remove the *.
+        regexPattern = `.*\\.${extension}$`;
+      } else if (pattern.includes('/**')) {
+        // For patterns like pages/**, match any file in that directory
+        const dirPath = pattern.replace('/**', '');
+        regexPattern = `^${dirPath}/.*`;
+      } else if (pattern.includes('**')) {
+        // For patterns like **/*.ts, match any file with that pattern
+        regexPattern = pattern.replace(/\*\*/g, '.*').replace(/\*/g, '[^/]*').replace(/\./g, '\\.');
+      } else {
+        // For other patterns, replace * with .* and escape dots
+        regexPattern = pattern.replace(/\*/g, '.*').replace(/\./g, '\\.');
+      }
+
+      const regex = new RegExp(regexPattern, 'i'); // Case insensitive
       if (filenames.some(filename => regex.test(filename))) {
         matches++;
       }

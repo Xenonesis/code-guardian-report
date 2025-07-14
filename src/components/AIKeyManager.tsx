@@ -369,6 +369,78 @@ export const AIKeyManager: React.FC = () => {
           </div>
         </section>
 
+        {/* AI-Powered Security Features Status */}
+        <section className="space-y-4">
+          <h3 className="text-lg font-semibold flex items-center gap-2">
+            <Bot className="h-5 w-5" />
+            AI-Powered Security Features
+          </h3>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <Card className="bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-950/20 dark:to-blue-900/20">
+              <CardContent className="p-4">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-purple-500 rounded-lg">
+                    <Bot className="h-4 w-4 text-white" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-purple-800 dark:text-purple-200">
+                      AI Fix Suggestions
+                    </p>
+                    <p className="text-sm text-purple-600 dark:text-purple-400">
+                      {apiKeys.length > 0 ? 'Available' : 'Requires API Key'}
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-900/20">
+              <CardContent className="p-4">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-blue-500 rounded-lg">
+                    <Key className="h-4 w-4 text-white" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-blue-800 dark:text-blue-200">
+                      Secure Code Search
+                    </p>
+                    <p className="text-sm text-blue-600 dark:text-blue-400">
+                      Always Available
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/20 dark:to-emerald-900/20">
+              <CardContent className="p-4">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-green-500 rounded-lg">
+                    <AlertTriangle className="h-4 w-4 text-white" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-green-800 dark:text-green-200">
+                      Code Provenance
+                    </p>
+                    <p className="text-sm text-green-600 dark:text-green-400">
+                      Always Available
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          <Alert className="bg-blue-50 border-blue-200 dark:bg-blue-950/20 dark:border-blue-800">
+            <Bot className="h-4 w-4 text-blue-600" />
+            <AlertDescription className="text-blue-800 dark:text-blue-200">
+              <strong>AI Fix Suggestions</strong> require at least one configured AI provider.
+              The Secure Code Search Engine and Code Provenance features work without API keys.
+            </AlertDescription>
+          </Alert>
+        </section>
+
         {/* Security Notice */}
         <Alert className="animate-fade-in" role="note">
           <Key className="h-4 w-4" aria-hidden="true" />

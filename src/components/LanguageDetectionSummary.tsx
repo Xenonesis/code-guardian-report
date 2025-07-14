@@ -243,7 +243,7 @@ export const LanguageDetectionSummary: React.FC<LanguageDetectionSummaryProps> =
                   </TooltipTrigger>
                   <TooltipContent>
                     <p>{projectStructure.confidence}% confidence</p>
-                    {projectStructure.indicators.length > 0 && (
+                    {projectStructure.indicators && projectStructure.indicators.length > 0 && (
                       <div className="mt-1">
                         <p className="font-medium">Indicators:</p>
                         <ul className="text-xs">

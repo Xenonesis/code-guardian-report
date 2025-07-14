@@ -5,7 +5,11 @@ import { AnalysisResults } from '@/hooks/useAnalysis';
 import { SecuritySummaryCards } from '@/components/security/SecuritySummaryCards';
 import { SecurityIssueItem } from '@/components/security/SecurityIssueItem';
 import { SecretDetectionCard } from '@/components/security/SecretDetectionCard';
+import { SecureCodeSearchCard } from '@/components/security/SecureCodeSearchCard';
+import { CodeProvenanceCard } from '@/components/security/CodeProvenanceCard';
 import { LanguageDetectionSummary } from '@/components/LanguageDetectionSummary';
+import { FixSuggestion } from '@/services/aiFixSuggestionsService';
+import { toast } from 'sonner';
 
 interface SecurityOverviewProps {
   results: AnalysisResults;
@@ -24,9 +28,30 @@ export const SecurityOverview: React.FC<SecurityOverviewProps> = ({ results }) =
     setExpandedIssues(newExpanded);
   };
 
+  const handleApplyFix = (suggestion: FixSuggestion) => {
+    // For now, just show a toast with the fix information
+    // In a real implementation, this would apply the fix to the actual code
+    toast.success(`Fix suggestion "${suggestion.title}" would be applied`, {
+      description: `This would apply ${suggestion.codeChanges.length} code changes with ${suggestion.confidence}% confidence.`
+    });
+
+    // TODO: Implement actual fix application logic
+    console.log('Applying fix suggestion:', suggestion);
+  };
+
+  // Extract language and framework information from detection results
+  const primaryLanguage = results.languageDetection?.primaryLanguage?.name || 'unknown';
+  const primaryFramework = results.languageDetection?.frameworks?.[0]?.name;
+
   // Separate secret detection issues from other security issues
   const secretIssues = results.issues.filter(issue => issue.category === 'Secret Detection' || issue.type === 'Secret');
   const otherIssues = results.issues.filter(issue => issue.category !== 'Secret Detection' && issue.type !== 'Secret');
+
+  // Prepare files for provenance monitoring (mock data for demo)
+  const filesForProvenance = otherIssues.map(issue => ({
+    filename: issue.filename,
+    content: issue.codeSnippet || `// File: ${issue.filename}\n// Issue: ${issue.message}`
+  }));
 
   return (
     <div className="space-y-6">
@@ -42,6 +67,21 @@ export const SecurityOverview: React.FC<SecurityOverviewProps> = ({ results }) =
 
       {/* Secret Detection Section */}
       <SecretDetectionCard secretIssues={secretIssues} />
+
+      {/* Secure Code Search Section */}
+      <SecureCodeSearchCard
+        language={primaryLanguage}
+        framework={primaryFramework}
+        vulnerabilityType={otherIssues.length > 0 ? otherIssues[0].type : undefined}
+      />
+
+      {/* Code Provenance & Integrity Monitoring Section */}
+      <CodeProvenanceCard
+        files={filesForProvenance}
+        onInitializeMonitoring={() => {
+          toast.success('File integrity monitoring initialized');
+        }}
+      />
 
       <Card>
         <CardHeader>
@@ -61,6 +101,10 @@ export const SecurityOverview: React.FC<SecurityOverviewProps> = ({ results }) =
                 issue={issue}
                 isExpanded={expandedIssues.has(issue.id)}
                 onToggle={() => toggleIssueExpansion(issue.id)}
+                codeContext={issue.codeSnippet || `// Code context for ${issue.filename}:${issue.line}\n// ${issue.message}`}
+                language={primaryLanguage}
+                framework={primaryFramework}
+                onApplyFix={handleApplyFix}
               />
             ))}
             {otherIssues.length === 0 && (

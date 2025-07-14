@@ -5,13 +5,13 @@ import { StatsGrid } from './StatsGrid';
 describe('StatsGrid', () => {
   it('renders without crashing', () => {
     render(<StatsGrid />);
-    expect(screen.getByText('Developers Trust Us')).toBeInTheDocument();
+    expect(screen.getByText('Enterprise Clients')).toBeInTheDocument();
   });
 
   it('displays all statistics', () => {
     render(<StatsGrid />);
-    expect(screen.getByText('Files Analyzed')).toBeInTheDocument();
-    expect(screen.getByText('Vulnerabilities Found')).toBeInTheDocument();
-    expect(screen.getByText('Languages Supported')).toBeInTheDocument();
+    expect(screen.getByText('Code Files Analyzed')).toBeInTheDocument();
+    expect(screen.getByText('Security Issues Detected')).toBeInTheDocument();
+    expect(screen.getByText('Programming Languages')).toBeInTheDocument();
   });
 });

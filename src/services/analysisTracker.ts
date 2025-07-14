@@ -53,3 +53,8 @@ export function getUserAnalysis(userId: string): UserAnalysis | null {
 export function getAllUserAnalytics(): UserAnalysis[] {
   return Object.values(analysisCache.users);
 }
+
+export function resetAnalysisCache(): void {
+  analysisCache.totalFilesAnalyzed = 0;
+  analysisCache.users = {};
+}

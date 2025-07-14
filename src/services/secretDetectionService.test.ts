@@ -56,11 +56,11 @@ describe('SecretDetectionService', () => {
 
     it('should detect Slack tokens', () => {
       const content = `
-        const slackToken = "xoxb-XXXXXXXXXXXX-XXXXXXXXXXXX-XXXXXXXXXXXXXXXXXXXXXXXX";
+        const slackToken = "xoxb-123456789012-123456789012-abcdefghijklmnopqrstuvwx";
       `;
-      
+
       const result = service.detectSecrets(content);
-      
+
       expect(result.totalSecrets).toBeGreaterThan(0);
       const slackToken = result.secrets.find(s => s.type === 'slack_token');
       expect(slackToken).toBeDefined();

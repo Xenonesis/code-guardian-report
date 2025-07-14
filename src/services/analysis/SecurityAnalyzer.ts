@@ -684,7 +684,7 @@ export class SecurityAnalyzer {
     };
 
     return remediations[type] || {
-      description: 'Review and secure this potential secret',
+      description: 'Review and secure this potential secret by moving it to environment variables or secure configuration',
       effort: 'Medium',
       priority: 3
     };

@@ -1,27 +1,40 @@
 import React, { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { 
-  ChevronDown, 
-  ChevronRight, 
-  Copy, 
-  CheckCircle, 
-  ExternalLink, 
-  Star 
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import {
+  ChevronDown,
+  ChevronRight,
+  Copy,
+  CheckCircle,
+  ExternalLink,
+  Star,
+  Brain,
+  Lightbulb
 } from 'lucide-react';
 import { SecurityIssue } from '@/hooks/useAnalysis';
+import { AIFixSuggestionsCard } from './AIFixSuggestionsCard';
+import { FixSuggestion } from '@/services/aiFixSuggestionsService';
 import { toast } from 'sonner';
 
 interface SecurityIssueItemProps {
   issue: SecurityIssue;
   isExpanded: boolean;
   onToggle: () => void;
+  codeContext?: string;
+  language?: string;
+  framework?: string;
+  onApplyFix?: (suggestion: FixSuggestion) => void;
 }
 
-export const SecurityIssueItem: React.FC<SecurityIssueItemProps> = ({ 
-  issue, 
-  isExpanded, 
-  onToggle 
+export const SecurityIssueItem: React.FC<SecurityIssueItemProps> = ({
+  issue,
+  isExpanded,
+  onToggle,
+  codeContext,
+  language,
+  framework,
+  onApplyFix
 }) => {
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
 
@@ -113,147 +126,218 @@ export const SecurityIssueItem: React.FC<SecurityIssueItemProps> = ({
       </button>
 
       {isExpanded && (
-        <div className="border-t bg-slate-50 dark:bg-slate-800/50 p-4 space-y-4">
-          {/* Issue Details */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <h4 className="font-semibold mb-2">Issue Details</h4>
-              <div className="space-y-2 text-sm">
-                {issue.cweId && (
-                  <div className="flex items-center gap-2">
-                    <span className="font-medium">CWE:</span>
-                    <a 
-                      href={`https://cwe.mitre.org/data/definitions/${issue.cweId.replace('CWE-', '')}.html`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 hover:underline flex items-center gap-1"
-                    >
-                      {issue.cweId}
-                      <ExternalLink className="h-3 w-3" />
-                    </a>
+        <div className="border-t bg-slate-50 dark:bg-slate-800/50 p-4">
+          <Tabs defaultValue="details" className="w-full">
+            <TabsList className="grid w-full grid-cols-4">
+              <TabsTrigger value="details">Issue Details</TabsTrigger>
+              <TabsTrigger value="remediation">Remediation</TabsTrigger>
+              <TabsTrigger value="ai-fixes" className="flex items-center gap-2">
+                <Brain className="h-3 w-3" />
+                AI Fixes
+              </TabsTrigger>
+              <TabsTrigger value="references">References</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="details" className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <h4 className="font-semibold mb-2">Issue Details</h4>
+                  <div className="space-y-2 text-sm">
+                    {issue.cweId && (
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium">CWE:</span>
+                        <a
+                          href={`https://cwe.mitre.org/data/definitions/${issue.cweId.replace('CWE-', '')}.html`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 hover:underline flex items-center gap-1"
+                        >
+                          {issue.cweId}
+                          <ExternalLink className="h-3 w-3" />
+                        </a>
+                      </div>
+                    )}
+                    {issue.owaspCategory && (
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium">OWASP:</span>
+                        <span className="text-slate-600 dark:text-slate-400">
+                          {issue.owaspCategory}
+                        </span>
+                      </div>
+                    )}
+                    <div className="flex items-center gap-2">
+                      <span className="font-medium">Risk:</span>
+                      <span className={getRiskColor(issue.riskRating)}>
+                        {issue.riskRating}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-medium">Impact:</span>
+                      <span className="text-slate-600 dark:text-slate-400">
+                        {issue.impact}
+                      </span>
+                    </div>
                   </div>
-                )}
-                {issue.owaspCategory && (
-                  <div className="flex items-center gap-2">
-                    <span className="font-medium">OWASP:</span>
-                    <span className="text-slate-600 dark:text-slate-400">
-                      {issue.owaspCategory}
-                    </span>
-                  </div>
-                )}
-                <div className="flex items-center gap-2">
-                  <span className="font-medium">Risk:</span>
-                  <span className={getRiskColor(issue.riskRating)}>
-                    {issue.riskRating}
-                  </span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="font-medium">Impact:</span>
-                  <span className="text-slate-600 dark:text-slate-400">
-                    {issue.impact}
-                  </span>
+
+                <div>
+                  <h4 className="font-semibold mb-2">Technical Information</h4>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex items-center gap-2">
+                      <span className="font-medium">File:</span>
+                      <span className="text-slate-600 dark:text-slate-400">
+                        {issue.filename}:{issue.line}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-medium">Category:</span>
+                      <span className="text-slate-600 dark:text-slate-400">
+                        {issue.category}
+                      </span>
+                    </div>
+                    {issue.tool && (
+                      <div className="flex items-center gap-2">
+                        <span className="font-medium">Detected by:</span>
+                        <Badge variant="outline" size="sm">
+                          {issue.tool}
+                        </Badge>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
+            </TabsContent>
 
-            <div>
-              <h4 className="font-semibold mb-2">Remediation</h4>
-              <div className="space-y-2 text-sm">
-                <p className="text-slate-600 dark:text-slate-400">
-                  {issue.remediation.description}
-                </p>
-                <div className="flex items-center gap-2">
-                  <span className="font-medium">Effort:</span>
-                  <Badge variant="outline" size="sm">
-                    {issue.remediation.effort}
-                  </Badge>
-                  <span className="font-medium">Priority:</span>
-                  <div className="flex">
-                    {Array.from({ length: 5 }, (_, i) => (
-                      <Star
-                        key={i}
-                        className={`h-3 w-3 ${
-                          i < issue.remediation.priority
-                            ? 'text-yellow-400 fill-current'
-                            : 'text-gray-300'
-                        }`}
-                      />
+            <TabsContent value="remediation" className="space-y-4">
+              <div>
+                <h4 className="font-semibold mb-2">Remediation Guidance</h4>
+                <div className="space-y-2 text-sm">
+                  <p className="text-slate-600 dark:text-slate-400">
+                    {issue.remediation.description}
+                  </p>
+                  <div className="flex items-center gap-2">
+                    <span className="font-medium">Effort:</span>
+                    <Badge variant="outline" size="sm">
+                      {issue.remediation.effort}
+                    </Badge>
+                    <span className="font-medium">Priority:</span>
+                    <div className="flex">
+                      {Array.from({ length: 5 }, (_, i) => (
+                        <Star
+                          key={i}
+                          className={`h-3 w-3 ${
+                            i < issue.remediation.priority
+                              ? 'text-yellow-400 fill-current'
+                              : 'text-gray-300'
+                          }`}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Code Examples */}
+              {(issue.codeSnippet || issue.remediation.codeExample) && (
+                <div className="space-y-4">
+                  {issue.remediation.codeExample && (
+                    <div>
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="font-semibold text-red-600">Vulnerable Code</h4>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => copyToClipboard(issue.remediation.codeExample!, 'Vulnerable code')}
+                        >
+                          {copiedCode === 'Vulnerable code' ? (
+                            <CheckCircle className="h-4 w-4" />
+                          ) : (
+                            <Copy className="h-4 w-4" />
+                          )}
+                        </Button>
+                      </div>
+                      <pre className="bg-red-50 dark:bg-red-950/20 p-3 rounded border text-sm overflow-x-auto">
+                        <code>{issue.remediation.codeExample}</code>
+                      </pre>
+                    </div>
+                  )}
+
+                  {issue.remediation.fixExample && (
+                    <div>
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="font-semibold text-green-600">Fixed Code</h4>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => copyToClipboard(issue.remediation.fixExample!, 'Fixed code')}
+                        >
+                          {copiedCode === 'Fixed code' ? (
+                            <CheckCircle className="h-4 w-4" />
+                          ) : (
+                            <Copy className="h-4 w-4" />
+                          )}
+                        </Button>
+                      </div>
+                      <pre className="bg-green-50 dark:bg-green-950/20 p-3 rounded border text-sm overflow-x-auto">
+                        <code>{issue.remediation.fixExample}</code>
+                      </pre>
+                    </div>
+                  )}
+                </div>
+              )}
+            </TabsContent>
+
+            <TabsContent value="ai-fixes" className="space-y-4">
+              {codeContext && language ? (
+                <AIFixSuggestionsCard
+                  issue={issue}
+                  codeContext={codeContext}
+                  language={language}
+                  framework={framework}
+                  onApplyFix={onApplyFix}
+                />
+              ) : (
+                <div className="text-center py-8">
+                  <Lightbulb className="h-12 w-12 text-slate-400 mx-auto mb-4" />
+                  <p className="text-slate-600 dark:text-slate-400 mb-2">
+                    AI fix suggestions require code context
+                  </p>
+                  <p className="text-sm text-slate-500 dark:text-slate-500">
+                    Upload a file with this issue to get AI-powered fix suggestions
+                  </p>
+                </div>
+              )}
+            </TabsContent>
+
+            <TabsContent value="references" className="space-y-4">
+              {issue.references && issue.references.length > 0 ? (
+                <div>
+                  <h4 className="font-semibold mb-2">External References</h4>
+                  <div className="space-y-1">
+                    {issue.references.map((ref, index) => (
+                      <a
+                        key={index}
+                        href={ref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 hover:underline text-sm flex items-center gap-1"
+                      >
+                        {ref}
+                        <ExternalLink className="h-3 w-3" />
+                      </a>
                     ))}
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Code Examples */}
-          {(issue.codeSnippet || issue.remediation.codeExample) && (
-            <div className="space-y-4">
-              {issue.remediation.codeExample && (
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-semibold text-red-600">Vulnerable Code</h4>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => copyToClipboard(issue.remediation.codeExample!, 'Vulnerable code')}
-                    >
-                      {copiedCode === 'Vulnerable code' ? (
-                        <CheckCircle className="h-4 w-4" />
-                      ) : (
-                        <Copy className="h-4 w-4" />
-                      )}
-                    </Button>
-                  </div>
-                  <pre className="bg-red-50 dark:bg-red-950/20 p-3 rounded border text-sm overflow-x-auto">
-                    <code>{issue.remediation.codeExample}</code>
-                  </pre>
+              ) : (
+                <div className="text-center py-8">
+                  <ExternalLink className="h-12 w-12 text-slate-400 mx-auto mb-4" />
+                  <p className="text-slate-600 dark:text-slate-400">
+                    No external references available for this issue
+                  </p>
                 </div>
               )}
-
-              {issue.remediation.fixExample && (
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-semibold text-green-600">Fixed Code</h4>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => copyToClipboard(issue.remediation.fixExample!, 'Fixed code')}
-                    >
-                      {copiedCode === 'Fixed code' ? (
-                        <CheckCircle className="h-4 w-4" />
-                      ) : (
-                        <Copy className="h-4 w-4" />
-                      )}
-                    </Button>
-                  </div>
-                  <pre className="bg-green-50 dark:bg-green-950/20 p-3 rounded border text-sm overflow-x-auto">
-                    <code>{issue.remediation.fixExample}</code>
-                  </pre>
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* References */}
-          {issue.references && issue.references.length > 0 && (
-            <div>
-              <h4 className="font-semibold mb-2">References</h4>
-              <div className="space-y-1">
-                {issue.references.map((ref, index) => (
-                  <a
-                    key={index}
-                    href={ref}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-600 hover:underline text-sm flex items-center gap-1"
-                  >
-                    {ref}
-                    <ExternalLink className="h-3 w-3" />
-                  </a>
-                ))}
-              </div>
-            </div>
-          )}
+            </TabsContent>
+          </Tabs>
         </div>
       )}
     </div>

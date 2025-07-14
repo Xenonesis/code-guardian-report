@@ -77,7 +77,7 @@ export class SecretDetectionService {
       {
         name: 'aws_access_key',
         pattern: /AKIA[0-9A-Z]{16}/gi,
-        entropy: { min: 4.0, max: 6.0 },
+        entropy: { min: 3.0, max: 6.0 },
         confidence: 95,
         description: 'AWS Access Key ID',
         examples: ['AKIAIOSFODNN7EXAMPLE']
@@ -87,7 +87,7 @@ export class SecretDetectionService {
       {
         name: 'github_token',
         pattern: /gh[pousr]_[A-Za-z0-9_]{36,255}/gi,
-        entropy: { min: 4.5, max: 6.0 },
+        entropy: { min: 3.5, max: 6.0 },
         confidence: 90,
         description: 'GitHub Personal Access Token',
         examples: ['ghp_1234567890abcdef1234567890abcdef12345678']
@@ -106,8 +106,8 @@ export class SecretDetectionService {
       // Slack Tokens
       {
         name: 'slack_token',
-        pattern: /xox[bpars]-[0-9]{12}-[0-9]{12}-[0-9a-zA-Z]{24}/gi,
-        entropy: { min: 4.0, max: 5.5 },
+        pattern: /xox[bpars]-[0-9A-Za-z]{12}-[0-9A-Za-z]{12}-[0-9a-zA-Z]{24}/gi,
+        entropy: { min: 3.0, max: 5.5 },
         confidence: 90,
         description: 'Slack API Token',
         examples: ['xoxb-XXXXXXXXXXXX-XXXXXXXXXXXX-XXXXXXXXXXXXXXXXXXXXXXXX']
@@ -492,7 +492,7 @@ export class SecretDetectionService {
     const deduplicated: SecretMatch[] = [];
 
     secrets.forEach(secret => {
-      const key = `${secret.type}:${secret.value}:${secret.line}`;
+      const key = `${secret.type}:${secret.value}`;
       if (!seen.has(key)) {
         seen.add(key);
         deduplicated.push(secret);

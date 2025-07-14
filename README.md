@@ -1,19 +1,19 @@
 ﻿<div align="center">
 
-# 🛡️ Code Guardian v3.5.0
+# 🛡️ Code Guardian v4.0.0
 ### 🚀 Next-Generation AI-Powered Security Analysis Platform
-Enhanced with Bundle Monitoring, TypeScript Fixes, and Improved Documentation
+Enhanced with AI Fix Suggestions, Secure Code Search, and Code Provenance Monitoring
 
-**Current Version: 3.5.0 - Developed by Aditya Kumar Tiwari**
-Optimized for Performance and Reliability
+**Current Version: 4.0.0 - Developed by Aditya Kumar Tiwari**
+Now with Advanced AI-Powered Security Features
 
 <img src="./public/home.png" alt="Code Guardian - AI-Powered Security Analysis Platform" width="100%" style="border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.12);">
 
 <div align="center">
-  <img src="https://img.shields.io/badge/Version-3.5.0-ff6b6b?style=for-the-badge&logo=rocket&logoColor=white" alt="Version"/>
+  <img src="https://img.shields.io/badge/Version-4.0.0-ff6b6b?style=for-the-badge&logo=rocket&logoColor=white" alt="Version"/>
   <img src="https://img.shields.io/badge/Status-Production%20Ready-00C851?style=for-the-badge&logo=checkmarx&logoColor=white" alt="Status"/>
-  <img src="https://img.shields.io/badge/AI%20Powered-GPT--4%20%7C%20Claude-9C27B0?style=for-the-badge&logo=openai&logoColor=white" alt="AI Powered"/>
-  <img src="https://img.shields.io/badge/npm-v3.5.0-CB3837?style=for-the-badge&logo=npm&logoColor=white" alt="NPM Version"/>
+  <img src="https://img.shields.io/badge/AI%20Powered-GPT--4%20%7C%20Claude%20%7C%20Gemini-9C27B0?style=for-the-badge&logo=openai&logoColor=white" alt="AI Powered"/>
+  <img src="https://img.shields.io/badge/npm-v4.0.0-CB3837?style=for-the-badge&logo=npm&logoColor=white" alt="NPM Version"/>
   <img src="https://img.shields.io/badge/Analytics-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Analytics"/>
   <img src="https://img.shields.io/badge/PWA-Ready-FF6F00?style=for-the-badge&logo=pwa&logoColor=white" alt="PWA Ready"/>
 </div>
@@ -198,6 +198,21 @@ Built with ❤️ by [Aditya Kumar Tiwari](https://github.com/Xenonesis)
 - 🔐 **Secret Detection Engine**
   - API key and token detection (AWS, GitHub, Stripe, etc.)
   - JWT token identification and validation
+- 🧠 **AI-Powered Fix Suggestions** ⭐ NEW
+  - Intelligent vulnerability remediation with multiple approaches
+  - Confidence scoring and effort estimation
+  - Automated code refactoring capabilities
+  - Framework-specific security optimizations
+- 🔍 **Secure Code Search Engine** ⭐ NEW
+  - Comprehensive database of secure coding patterns
+  - Language-specific secure implementations
+  - Vulnerability alternatives and best practices
+  - Interactive code examples with explanations
+- 🛡️ **Code Provenance & Tampering Detection** ⭐ NEW
+  - File integrity monitoring with SHA-256 checksums
+  - Real-time change detection and alerts
+  - Security-critical file identification
+  - Comprehensive audit trail and reporting
   - Database credential exposure detection
   - ML-powered entropy analysis for unknown secrets
   - Pattern matching with 95%+ accuracy
@@ -437,8 +452,11 @@ VITE_APP_VERSION="3.5.0"
 | 🔍 **Code Analysis** | Multi-language static analysis engine | `Python`, `JavaScript`, `TypeScript`, `Java`, `C++`, `Go`, `Rust` |
 | 🛡️ **Security Scan** | OWASP Top 10 vulnerability detection | `SQL Injection`, `XSS`, `CSRF`, `Auth Issues` |
 | 🔐 **Secret Detection** | AI-powered secret and credential detection | `API Keys`, `JWT Tokens`, `DB Credentials`, `Private Keys` |
+| 🧠 **AI Fix Suggestions** | Intelligent vulnerability remediation with code patches | `Multiple approaches`, `Confidence scoring`, `Risk assessment` |
+| 🔍 **Secure Code Search** | Comprehensive database of secure coding patterns | `Secure examples`, `Vulnerability alternatives`, `Best practices` |
+| 🛡️ **Code Provenance** | File integrity monitoring and tampering detection | `SHA-256 checksums`, `Change tracking`, `Alert system` |
 | 📊 **Quality Metrics** | Comprehensive code quality assessment | `Complexity`, `Maintainability`, `Technical Debt` |
-| 🤖 **AI Insights** | Intelligent recommendations and fixes | `GPT-4`, `Claude-3`, `Custom Models` |
+| 🤖 **AI Insights** | Intelligent recommendations and fixes | `GPT-4`, `Claude-3`, `Gemini`, `Custom Models` |
 | 📤 **Export Options** | Multiple export formats for reports | `JSON`, `CSV`, `PDF`, `HTML`, `XML` |
 
 </div>
