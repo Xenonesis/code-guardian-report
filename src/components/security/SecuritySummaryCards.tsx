@@ -14,34 +14,34 @@ export const SecuritySummaryCards: React.FC<SecuritySummaryCardsProps> = ({ resu
   const highSecrets = secretIssues.filter(s => s.severity === 'High').length;
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-      <Card className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-950/20 dark:to-purple-900/20 border-purple-200 dark:border-purple-800">
-        <CardContent className="p-4">
+    <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-4 md:gap-6">
+      <Card className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-950/20 dark:to-purple-900/20 border-purple-200 dark:border-purple-800 hover:shadow-md transition-shadow duration-200">
+        <CardContent className="p-4 sm:p-4">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-purple-500 rounded-lg">
+            <div className="p-2 bg-purple-500 rounded-lg flex-shrink-0">
               <Shield className="h-5 w-5 text-white" />
             </div>
-            <div>
-              <p className="text-2xl font-bold text-purple-800 dark:text-purple-200">
+            <div className="min-w-0">
+              <p className="text-2xl font-bold text-purple-800 dark:text-purple-200 truncate">
                 {results.summary.securityScore}
               </p>
-              <p className="text-sm text-purple-600 dark:text-purple-400">Security Score</p>
+              <p className="text-sm text-purple-600 dark:text-purple-400 truncate">Security Score</p>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      <Card className="bg-gradient-to-br from-red-50 to-red-100 dark:from-red-950/20 dark:to-red-900/20 border-red-200 dark:border-red-800">
-        <CardContent className="p-4">
+      <Card className="bg-gradient-to-br from-red-50 to-red-100 dark:from-red-950/20 dark:to-red-900/20 border-red-200 dark:border-red-800 hover:shadow-md transition-shadow duration-200">
+        <CardContent className="p-4 sm:p-4">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-red-500 rounded-lg">
+            <div className="p-2 bg-red-500 rounded-lg flex-shrink-0">
               <AlertTriangle className="h-5 w-5 text-white" />
             </div>
-            <div>
-              <p className="text-2xl font-bold text-red-800 dark:text-red-200">
+            <div className="min-w-0">
+              <p className="text-2xl font-bold text-red-800 dark:text-red-200 truncate">
                 {results.summary.criticalIssues + results.summary.highIssues}
               </p>
-              <p className="text-sm text-red-600 dark:text-red-400">Critical & High</p>
+              <p className="text-sm text-red-600 dark:text-red-400 truncate">Critical & High</p>
             </div>
           </div>
         </CardContent>

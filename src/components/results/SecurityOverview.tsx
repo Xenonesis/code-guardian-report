@@ -54,7 +54,7 @@ export const SecurityOverview: React.FC<SecurityOverviewProps> = ({ results }) =
   }));
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 px-4 sm:px-0">
       {/* Language Detection Summary */}
       {results.languageDetection && (
         <LanguageDetectionSummary
@@ -83,17 +83,17 @@ export const SecurityOverview: React.FC<SecurityOverviewProps> = ({ results }) =
         }}
       />
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
+      <Card className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm">
+        <CardHeader className="pb-4 px-4 sm:px-6">
+          <CardTitle className="flex items-center gap-2 text-lg">
             <Shield className="h-5 w-5" />
             Other Security Issues ({otherIssues.length})
           </CardTitle>
-          <CardDescription>
+          <CardDescription className="text-sm text-slate-600 dark:text-slate-400">
             Comprehensive security analysis with OWASP classifications and CVSS scoring
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pt-0 px-4 sm:px-6 pb-4 sm:pb-6">
           <div className="space-y-4">
             {otherIssues.map((issue) => (
               <SecurityIssueItem

@@ -6,6 +6,7 @@ import {
 import { SecretDetectionService, SecretMatch, SecretType } from '../secretDetectionService';
 import { LanguageDetectionService, DetectionResult, LanguageInfo, FrameworkInfo } from '../languageDetectionService';
 import { FrameworkDetectionEngine, DependencyInfo } from '../frameworkDetectionEngine';
+import { naturalLanguageDescriptionService } from '../naturalLanguageDescriptionService';
 
 type SupportedLanguage = 'javascript' | 'typescript' | 'python' | 'java' | 'php' | 'ruby' | 'golang' | 'csharp';
 type ToolsByLanguage = Record<SupportedLanguage, string[]>;
@@ -498,7 +499,7 @@ export class SecurityAnalyzer {
       const cweId = this.getSecretCWE(secret.type);
       const owaspCategory = 'A07:2021 – Identification and Authentication Failures';
 
-      return {
+      const issue: SecurityIssue = {
         id: this.generateUniqueId(),
         line: secret.line,
         column: secret.column,
@@ -521,6 +522,11 @@ export class SecurityAnalyzer {
         references: this.generateSecretReferences(secret.type),
         tags: this.generateSecretTags(secret.type)
       };
+
+      // Generate natural language description
+      issue.naturalLanguageDescription = naturalLanguageDescriptionService.generateDescription(issue);
+
+      return issue;
     });
   }
 
@@ -845,6 +851,9 @@ export class SecurityAnalyzer {
               tags: this.generateTags(rule.category, language)
             };
 
+            // Generate natural language description
+            issue.naturalLanguageDescription = naturalLanguageDescriptionService.generateDescription(issue);
+
             issues.push(issue);
           });
         }
@@ -930,6 +939,9 @@ export class SecurityAnalyzer {
             references: [`Framework: ${rule.frameworks?.join(', ') || 'Generic'}`],
             tags: [`framework-specific`, rule.category.toLowerCase().replace(/\s+/g, '-')]
           };
+
+          // Generate natural language description
+          issue.naturalLanguageDescription = naturalLanguageDescriptionService.generateDescription(issue);
 
           issues.push(issue);
         }

@@ -11,6 +11,7 @@ export interface SecurityIssue {
   type: string;
   category: string; // OWASP category
   message: string;
+  naturalLanguageDescription?: string; // Simplified natural language summary
   severity: 'Critical' | 'High' | 'Medium' | 'Low';
   confidence: number; // 0-100
   cvssScore?: number; // 0-10

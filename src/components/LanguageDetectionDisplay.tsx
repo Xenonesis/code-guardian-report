@@ -146,15 +146,29 @@ export const LanguageDetectionDisplay: React.FC<LanguageDetectionDisplayProps> =
 
   return (
     <div className={`space-y-6 ${className}`}>
-      {/* Header */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Zap className="h-5 w-5 text-yellow-500" />
-            Smart Language Detection Results
-          </CardTitle>
-          <CardDescription>
-            Analyzed {totalFiles} files in {analysisTime}ms using advanced pattern recognition
+      {/* Enhanced Header with Better Spacing */}
+      <Card className="border-2 border-yellow-200 dark:border-yellow-800 bg-gradient-to-r from-yellow-50 to-amber-50 dark:from-yellow-950/30 dark:to-amber-950/30">
+        <CardHeader className="space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <CardTitle className="flex items-center gap-3">
+              <div className="p-2 rounded-xl bg-yellow-500 text-white">
+                <Zap className="h-6 w-6" />
+              </div>
+              <span className="text-xl font-bold text-slate-900 dark:text-white">Language Detection Results</span>
+            </CardTitle>
+            <div className="flex items-center gap-4 text-sm font-semibold text-slate-600 dark:text-slate-400">
+              <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/60 dark:bg-slate-800/60">
+                <FileCode className="h-4 w-4" />
+                <span>{totalFiles} files</span>
+              </div>
+              <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/60 dark:bg-slate-800/60">
+                <Zap className="h-4 w-4" />
+                <span>{analysisTime}ms</span>
+              </div>
+            </div>
+          </div>
+          <CardDescription className="text-base text-slate-700 dark:text-slate-300">
+            Advanced pattern recognition and file analysis completed successfully
           </CardDescription>
         </CardHeader>
       </Card>

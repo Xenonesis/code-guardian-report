@@ -177,11 +177,19 @@ export const CodeProvenanceCard: React.FC<CodeProvenanceCardProps> = ({
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="overview" className="w-full">
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="alerts">Alerts ({alerts.length})</TabsTrigger>
-            <TabsTrigger value="monitoring">Monitoring</TabsTrigger>
-            <TabsTrigger value="reports">Reports</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 gap-1 sm:gap-0 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border shadow-lg rounded-xl p-1">
+            <TabsTrigger value="overview" className="flex items-center justify-center py-2 px-2 text-xs sm:text-sm font-medium data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-indigo-500 data-[state=active]:text-white transition-all duration-300 rounded-lg">
+              Overview
+            </TabsTrigger>
+            <TabsTrigger value="alerts" className="flex items-center justify-center py-2 px-2 text-xs sm:text-sm font-medium data-[state=active]:bg-gradient-to-r data-[state=active]:from-red-500 data-[state=active]:to-pink-500 data-[state=active]:text-white transition-all duration-300 rounded-lg">
+              Alerts ({alerts.length})
+            </TabsTrigger>
+            <TabsTrigger value="monitoring" className="flex items-center justify-center py-2 px-2 text-xs sm:text-sm font-medium data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-500 data-[state=active]:to-emerald-500 data-[state=active]:text-white transition-all duration-300 rounded-lg">
+              Monitoring
+            </TabsTrigger>
+            <TabsTrigger value="reports" className="flex items-center justify-center py-2 px-2 text-xs sm:text-sm font-medium data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-indigo-500 data-[state=active]:text-white transition-all duration-300 rounded-lg">
+              Reports
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview" className="space-y-4">

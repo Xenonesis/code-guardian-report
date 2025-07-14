@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -10,11 +10,13 @@ import {
   ExternalLink,
   Star,
   Brain,
-  Lightbulb
+  Lightbulb,
+  MessageSquare
 } from 'lucide-react';
 import { SecurityIssue } from '@/hooks/useAnalysis';
 import { AIFixSuggestionsCard } from './AIFixSuggestionsCard';
 import { FixSuggestion } from '@/services/aiFixSuggestionsService';
+import { naturalLanguageDescriptionService } from '@/services/naturalLanguageDescriptionService';
 import { toast } from 'sonner';
 
 interface SecurityIssueItemProps {
@@ -37,6 +39,14 @@ export const SecurityIssueItem: React.FC<SecurityIssueItemProps> = ({
   onApplyFix
 }) => {
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
+  const [naturalLanguageDescription, setNaturalLanguageDescription] = useState<string>('');
+  const [showNaturalLanguage, setShowNaturalLanguage] = useState<boolean>(false);
+
+  // Generate natural language description when component mounts or issue changes
+  useEffect(() => {
+    const description = naturalLanguageDescriptionService.generateDescription(issue);
+    setNaturalLanguageDescription(description);
+  }, [issue]);
 
   const copyToClipboard = async (text: string, type: string) => {
     try {
@@ -83,60 +93,165 @@ export const SecurityIssueItem: React.FC<SecurityIssueItemProps> = ({
   };
 
   return (
-    <div className="border rounded-lg overflow-hidden">
+    <div className="border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden bg-white dark:bg-slate-800 shadow-sm hover:shadow-md transition-shadow duration-200">
       <button
         type="button"
         onClick={onToggle}
-        className="w-full p-4 text-left hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+        className="w-full p-4 text-left hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors touch-target active:scale-[0.99]"
       >
-        <div className="flex items-start justify-between">
-          <div className="flex-1">
-            <div className="flex items-center gap-2 mb-2">
-              <Badge className={getSeverityColor(issue.severity)}>
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex-1 min-w-0">
+            <div className="flex flex-wrap items-center gap-2 mb-3">
+              <Badge className={`${getSeverityColor(issue.severity)} text-sm font-medium px-2 py-1`}>
                 {issue.severity}
               </Badge>
               {issue.cvssScore && (
-                <Badge variant="outline" className={getCVSSColor(issue.cvssScore)}>
+                <Badge variant="outline" className={`${getCVSSColor(issue.cvssScore)} text-xs hidden sm:inline-flex`}>
                   CVSS {issue.cvssScore.toFixed(1)}
                 </Badge>
               )}
               {issue.confidence && (
-                <Badge variant="outline" className={getConfidenceColor(issue.confidence)}>
+                <Badge variant="outline" className={`${getConfidenceColor(issue.confidence)} text-xs hidden md:inline-flex`}>
                   {issue.confidence}% confidence
                 </Badge>
               )}
-              <Badge variant="outline">{issue.tool}</Badge>
+              <Badge variant="outline" className="text-xs hidden lg:inline-flex">{issue.tool}</Badge>
             </div>
-            <h3 className="font-semibold text-slate-900 dark:text-white mb-1">
-              {issue.message}
-            </h3>
-            <p className="text-sm text-slate-600 dark:text-slate-400">
-              {issue.filename}:{issue.line}
-              {issue.category && ` • ${issue.category}`}
-            </p>
+            <div className="mb-3">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-2">
+                <h3 className="font-semibold text-slate-900 dark:text-white text-base">
+                  {showNaturalLanguage ? 'Plain English Summary' : 'Technical Details'}
+                </h3>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowNaturalLanguage(!showNaturalLanguage);
+                  }}
+                  className="h-8 px-3 text-xs self-start sm:self-auto touch-target rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700"
+                >
+                  <MessageSquare className="h-3 w-3 mr-1.5" />
+                  <span className="hidden sm:inline">{showNaturalLanguage ? 'Show Technical' : 'Plain English'}</span>
+                  <span className="sm:hidden">{showNaturalLanguage ? 'Technical' : 'Plain'}</span>
+                </Button>
+              </div>
+              <div className="text-sm leading-relaxed">
+                {showNaturalLanguage ? (
+                  <p className="text-slate-700 dark:text-slate-300">
+                    {naturalLanguageDescription}
+                  </p>
+                ) : (
+                  <p className="text-slate-900 dark:text-white font-medium">
+                    {issue.message}
+                  </p>
+                )}
+              </div>
+            </div>
+            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 text-sm text-slate-600 dark:text-slate-400">
+              <span className="font-mono text-xs bg-slate-100 dark:bg-slate-700 px-2 py-1 rounded">
+                {issue.filename}:{issue.line}
+              </span>
+              {issue.category && (
+                <span className="text-xs">{issue.category}</span>
+              )}
+            </div>
           </div>
-          <div className="ml-4">
+          <div className="ml-3 flex-shrink-0 flex items-center">
             {isExpanded ? (
-              <ChevronDown className="h-5 w-5" />
+              <ChevronDown className="h-5 w-5 text-slate-400 transition-transform duration-200" />
             ) : (
-              <ChevronRight className="h-5 w-5" />
+              <ChevronRight className="h-5 w-5 text-slate-400 transition-transform duration-200" />
             )}
           </div>
         </div>
       </button>
 
       {isExpanded && (
-        <div className="border-t bg-slate-50 dark:bg-slate-800/50 p-4">
-          <Tabs defaultValue="details" className="w-full">
-            <TabsList className="grid w-full grid-cols-4">
-              <TabsTrigger value="details">Issue Details</TabsTrigger>
-              <TabsTrigger value="remediation">Remediation</TabsTrigger>
-              <TabsTrigger value="ai-fixes" className="flex items-center gap-2">
+        <div className="border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 p-4">
+          <Tabs defaultValue="summary" className="w-full">
+            <TabsList className="grid w-full grid-cols-3 sm:grid-cols-5 h-auto bg-white dark:bg-slate-800 p-1 rounded-lg">
+              <TabsTrigger value="summary" className="flex items-center gap-1.5 text-sm py-2.5 px-3 rounded-md data-[state=active]:bg-blue-500 data-[state=active]:text-white">
+                <MessageSquare className="h-3 w-3" />
+                <span className="hidden sm:inline">Summary</span>
+                <span className="sm:hidden">Info</span>
+              </TabsTrigger>
+              <TabsTrigger value="details" className="text-sm py-2.5 px-3 rounded-md data-[state=active]:bg-blue-500 data-[state=active]:text-white">
+                <span className="hidden sm:inline">Technical</span>
+                <span className="sm:hidden">Tech</span>
+              </TabsTrigger>
+              <TabsTrigger value="remediation" className="text-sm py-2.5 px-3 rounded-md data-[state=active]:bg-blue-500 data-[state=active]:text-white">
+                <span className="hidden sm:inline">Fix Guide</span>
+                <span className="sm:hidden">Fix</span>
+              </TabsTrigger>
+              <TabsTrigger value="ai-fixes" className="hidden sm:flex items-center gap-1.5 text-sm py-2.5 px-3 rounded-md data-[state=active]:bg-blue-500 data-[state=active]:text-white">
                 <Brain className="h-3 w-3" />
                 AI Fixes
               </TabsTrigger>
-              <TabsTrigger value="references">References</TabsTrigger>
+              <TabsTrigger value="references" className="hidden sm:block text-sm py-2.5 px-3 rounded-md data-[state=active]:bg-blue-500 data-[state=active]:text-white">References</TabsTrigger>
             </TabsList>
+
+            <TabsContent value="summary" className="space-y-4 mt-4">
+              <div className="bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-xl p-4">
+                <div className="flex items-start gap-3">
+                  <div className="p-2 bg-blue-500 rounded-lg flex-shrink-0">
+                    <MessageSquare className="h-4 w-4 text-white" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-2 text-base">
+                      What does this mean?
+                    </h4>
+                    <p className="text-blue-800 dark:text-blue-200 leading-relaxed text-sm">
+                      {naturalLanguageDescription}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 rounded-lg p-3 sm:p-4">
+                  <h4 className="font-semibold text-amber-900 dark:text-amber-100 mb-1 sm:mb-2 flex items-center gap-1 sm:gap-2 text-sm sm:text-base">
+                    <span className="text-amber-600 text-sm">⚠️</span>
+                    Risk Level
+                  </h4>
+                  <p className="text-amber-800 dark:text-amber-200 text-xs sm:text-sm">
+                    This is a <strong>{issue.severity.toLowerCase()}</strong> severity issue that {issue.impact.toLowerCase()}.
+                  </p>
+                  {issue.cvssScore && (
+                    <p className="text-xs sm:text-sm text-amber-700 dark:text-amber-300 mt-1 sm:mt-2">
+                      CVSS Score: {issue.cvssScore.toFixed(1)}/10
+                    </p>
+                  )}
+                </div>
+
+                <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800 rounded-lg p-3 sm:p-4">
+                  <h4 className="font-semibold text-green-900 dark:text-green-100 mb-1 sm:mb-2 flex items-center gap-1 sm:gap-2 text-sm sm:text-base">
+                    <span className="text-green-600 text-sm">🛠️</span>
+                    What to do
+                  </h4>
+                  <p className="text-green-800 dark:text-green-200 text-xs sm:text-sm">
+                    {issue.remediation.description}
+                  </p>
+                  <p className="text-xs sm:text-sm text-green-700 dark:text-green-300 mt-1 sm:mt-2">
+                    Estimated effort: <strong>{issue.remediation.effort}</strong>
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4">
+                <h4 className="font-semibold text-slate-900 dark:text-slate-100 mb-2">
+                  Location
+                </h4>
+                <p className="text-slate-700 dark:text-slate-300">
+                  Found in <code className="bg-slate-200 dark:bg-slate-700 px-2 py-1 rounded text-sm">{issue.filename}</code> at line <strong>{issue.line}</strong>
+                </p>
+                {issue.confidence && (
+                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
+                    Detection confidence: {issue.confidence}%
+                  </p>
+                )}
+              </div>
+            </TabsContent>
 
             <TabsContent value="details" className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

@@ -404,22 +404,27 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
   if (!aiFeatureStatus.isSupported) {
     return (
       <Card className={className}>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Brain className="h-5 w-5 text-gray-400" />
-            AI Security Insights
-            <Badge variant="outline" className="text-gray-600 border-gray-300">
+        <CardHeader className="space-y-3">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <CardTitle className="flex items-center gap-3">
+              <Brain className="h-5 w-5 text-gray-400 flex-shrink-0" />
+              <span className="text-slate-900 dark:text-white font-bold">AI Security Insights</span>
+            </CardTitle>
+            <Badge
+              variant="outline"
+              className="text-gray-600 dark:text-gray-400 border-gray-400 dark:border-gray-600 bg-gray-50 dark:bg-gray-950/30 px-3 py-1 font-semibold text-sm w-fit"
+            >
               Not Supported
             </Badge>
-          </CardTitle>
-          <CardDescription>
+          </div>
+          <CardDescription className="text-slate-600 dark:text-slate-400 leading-relaxed">
             AI features are not supported in this environment
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Alert>
-            <XCircle className="h-4 w-4" />
-            <AlertDescription>
+          <Alert className="border-gray-200 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-950/20">
+            <XCircle className="h-4 w-4 text-gray-600" />
+            <AlertDescription className="text-slate-700 dark:text-slate-300 leading-relaxed">
               AI security insights require a modern browser with localStorage and fetch API support.
             </AlertDescription>
           </Alert>
@@ -431,22 +436,27 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
   if (!aiFeatureStatus.hasApiKeys) {
     return (
       <Card className={className}>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Brain className="h-5 w-5 text-purple-600" />
-            AI Security Insights
-            <Badge variant="outline" className="text-orange-600 border-orange-300">
+        <CardHeader className="space-y-3">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <CardTitle className="flex items-center gap-3">
+              <Brain className="h-5 w-5 text-purple-600 flex-shrink-0" />
+              <span className="text-slate-900 dark:text-white font-bold">AI Security Insights</span>
+            </CardTitle>
+            <Badge
+              variant="outline"
+              className="text-orange-700 dark:text-orange-300 border-orange-400 dark:border-orange-600 bg-orange-50 dark:bg-orange-950/30 px-3 py-1 font-semibold text-sm w-fit"
+            >
               API Keys Required
             </Badge>
-          </CardTitle>
-          <CardDescription>
+          </div>
+          <CardDescription className="text-slate-600 dark:text-slate-400 leading-relaxed">
             {aiFeatureStatus.message}
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Alert>
-            <Info className="h-4 w-4" />
-            <AlertDescription>
+          <Alert className="border-orange-200 dark:border-orange-800 bg-orange-50/50 dark:bg-orange-950/20">
+            <Info className="h-4 w-4 text-orange-600" />
+            <AlertDescription className="text-slate-700 dark:text-slate-300 leading-relaxed">
               Please configure your AI API keys in the AI Configuration tab to enable intelligent security analysis,
               OWASP explanations, and personalized remediation strategies.
             </AlertDescription>
@@ -459,26 +469,28 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
   return (
     <div className={`space-y-6 ${className}`}>
       <Card>
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <div>
-              <CardTitle className="flex items-center gap-2">
-                <Brain className="h-5 w-5 text-purple-600" />
-                AI Security Insights
-                <Badge className="bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300">
+        <CardHeader className="space-y-4">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            <div className="space-y-2">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                <CardTitle className="flex items-center gap-3">
+                  <Brain className="h-5 w-5 text-purple-600 flex-shrink-0" />
+                  <span className="text-slate-900 dark:text-white font-bold">AI Security Insights</span>
+                </CardTitle>
+                <Badge className="bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300 px-3 py-1 font-semibold text-sm w-fit">
                   {aiFeatureStatus.primaryProvider ? `${aiFeatureStatus.primaryProvider.toUpperCase()} Connected` : 'API Connected'}
                 </Badge>
-              </CardTitle>
-              <CardDescription>
+              </div>
+              <CardDescription className="text-slate-600 dark:text-slate-400 leading-relaxed">
                 {aiFeatureStatus.message}
               </CardDescription>
             </div>
-            <div className="flex items-center gap-4">
-              <div className="text-right">
-                <div className="text-sm font-medium text-slate-700 dark:text-slate-300">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="text-center sm:text-right p-4 rounded-2xl bg-gradient-to-r from-purple-50 to-indigo-50 dark:from-purple-950/30 dark:to-indigo-950/30 border border-purple-200 dark:border-purple-800">
+                <div className="text-sm font-semibold text-purple-700 dark:text-purple-300 mb-1">
                   Insights Generated
                 </div>
-                <div className="text-2xl font-bold text-purple-600">
+                <div className="text-3xl font-bold text-purple-600 dark:text-purple-400">
                   {(() => {
                     const summary = getInsightsSummary();
                     return `${summary.generated}/${summary.total}`;
@@ -488,9 +500,11 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
               {(() => {
                 const summary = getInsightsSummary();
                 return summary.loading > 0 && (
-                  <div className="flex items-center gap-2 text-sm text-slate-600">
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                    {summary.loading} generating...
+                  <div className="flex items-center justify-center gap-3 p-4 rounded-2xl bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/30 dark:to-indigo-950/30 border border-blue-200 dark:border-blue-800">
+                    <Loader2 className="h-5 w-5 animate-spin text-blue-600" />
+                    <span className="text-sm font-semibold text-blue-700 dark:text-blue-300">
+                      {summary.loading} generating...
+                    </span>
                   </div>
                 );
               })()}
@@ -499,30 +513,30 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="overview" className="w-full">
-            <TabsList className="grid w-full grid-cols-6 h-auto">
-              <TabsTrigger value="overview" className="flex items-center gap-2 text-xs">
-                <Shield className="h-3 w-3" />
-                Security Overview
+            <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 h-auto bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl border shadow-xl rounded-2xl p-2">
+              <TabsTrigger value="overview" className="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs sm:text-sm font-semibold py-3 px-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-indigo-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 rounded-xl hover:scale-105">
+                <Shield className="h-4 w-4 flex-shrink-0" />
+                <span className="text-center leading-tight whitespace-nowrap">Overview</span>
               </TabsTrigger>
-              <TabsTrigger value="remediation" className="flex items-center gap-2 text-xs">
-                <Target className="h-3 w-3" />
-                Remediation Plan
+              <TabsTrigger value="remediation" className="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs sm:text-sm font-semibold py-3 px-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 rounded-xl hover:scale-105">
+                <Target className="h-4 w-4 flex-shrink-0" />
+                <span className="text-center leading-tight whitespace-nowrap">Remediation</span>
               </TabsTrigger>
-              <TabsTrigger value="owasp" className="flex items-center gap-2 text-xs">
-                <BookOpen className="h-3 w-3" />
-                OWASP Analysis
+              <TabsTrigger value="owasp" className="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs sm:text-sm font-semibold py-3 px-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-orange-500 data-[state=active]:to-red-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 rounded-xl hover:scale-105">
+                <BookOpen className="h-4 w-4 flex-shrink-0" />
+                <span className="text-center leading-tight whitespace-nowrap">OWASP</span>
               </TabsTrigger>
-              <TabsTrigger value="threats" className="flex items-center gap-2 text-xs">
-                <Radar className="h-3 w-3" />
-                Threat Modeling
+              <TabsTrigger value="threats" className="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs sm:text-sm font-semibold py-3 px-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-emerald-500 data-[state=active]:to-teal-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 rounded-xl hover:scale-105">
+                <Radar className="h-4 w-4 flex-shrink-0" />
+                <span className="text-center leading-tight whitespace-nowrap">Threats</span>
               </TabsTrigger>
-              <TabsTrigger value="compliance" className="flex items-center gap-2 text-xs">
-                <Lock className="h-3 w-3" />
-                Compliance
+              <TabsTrigger value="compliance" className="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs sm:text-sm font-semibold py-3 px-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-yellow-500 data-[state=active]:to-orange-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 rounded-xl hover:scale-105">
+                <Lock className="h-4 w-4 flex-shrink-0" />
+                <span className="text-center leading-tight whitespace-nowrap">Compliance</span>
               </TabsTrigger>
-              <TabsTrigger value="advanced" className="flex items-center gap-2 text-xs">
-                <Sparkles className="h-3 w-3" />
-                Advanced
+              <TabsTrigger value="advanced" className="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs sm:text-sm font-semibold py-3 px-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-indigo-500 data-[state=active]:to-purple-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 rounded-xl hover:scale-105">
+                <Sparkles className="h-4 w-4 flex-shrink-0" />
+                <span className="text-center leading-tight whitespace-nowrap">Advanced</span>
               </TabsTrigger>
             </TabsList>
 

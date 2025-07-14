@@ -145,14 +145,23 @@ export const LanguageDetectionSummary: React.FC<LanguageDetectionSummaryProps> =
     <Card className={className}>
       <CardContent className="p-4">
         <div className="space-y-3">
-          {/* Header */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Zap className="h-4 w-4 text-yellow-500" />
-              <span className="font-medium">Language Detection</span>
+          {/* Enhanced Header with Better Spacing */}
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4">
+            <div className="flex items-center gap-3">
+              <div className="p-1.5 rounded-lg bg-yellow-100 dark:bg-yellow-900/30">
+                <Zap className="h-4 w-4 text-yellow-600 dark:text-yellow-400" />
+              </div>
+              <span className="font-semibold text-slate-900 dark:text-white">Language Detection</span>
             </div>
-            <div className="text-xs text-muted-foreground">
-              {totalFiles} files • {analysisTime}ms
+            <div className="flex items-center gap-3 text-xs font-medium text-slate-600 dark:text-slate-400">
+              <div className="flex items-center gap-1 px-2 py-1 rounded-md bg-slate-100 dark:bg-slate-800">
+                <Code2 className="h-3 w-3" />
+                <span>{totalFiles} files</span>
+              </div>
+              <div className="flex items-center gap-1 px-2 py-1 rounded-md bg-slate-100 dark:bg-slate-800">
+                <Zap className="h-3 w-3" />
+                <span>{analysisTime}ms</span>
+              </div>
             </div>
           </div>
 
