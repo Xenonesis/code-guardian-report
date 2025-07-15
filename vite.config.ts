@@ -16,7 +16,8 @@ export default defineConfig({
       '@hooks': path.resolve(__dirname, './src/hooks'),
       '@utils': path.resolve(__dirname, './src/utils'),
       '@styles': path.resolve(__dirname, './src/styles')
-    }
+    },
+    dedupe: ['react', 'react-dom']
   },
   // Development server optimizations
   server: {
@@ -46,38 +47,28 @@ export default defineConfig({
     rollupOptions: {
       output: {
         // Advanced chunk splitting strategy
-        manualChunks: {
-          // Core React libraries
-          'react-vendor': ['react', 'react-dom'],
-          'react-router': ['react-router-dom'],
-          // UI component libraries
-          'radix-ui': [
-            '@radix-ui/react-checkbox',
-            '@radix-ui/react-collapsible',
-            '@radix-ui/react-dialog',
-            '@radix-ui/react-label',
-            '@radix-ui/react-popover',
-            '@radix-ui/react-progress',
-            '@radix-ui/react-select',
-            '@radix-ui/react-slot',
-            '@radix-ui/react-tabs',
-            '@radix-ui/react-toast',
-            '@radix-ui/react-tooltip',
-            '@radix-ui/react-switch'
-          ],
-          // Data visualization
-          'charts': ['recharts'],
-          // Utility libraries
-          'utils': ['clsx', 'class-variance-authority', 'tailwind-merge'],
-          // Icons and animations
-          'icons-animations': ['lucide-react', 'framer-motion'],
-          // Theme and styling
-          'theme': ['next-themes', 'sonner'],
-          // File processing
-          'file-processing': ['jszip'],
-          // Analytics
-          'analytics': ['@vercel/analytics']
+        manualChunks: (id) => {
+          // Keep React and ReactDOM together to avoid version conflicts
+          if (id.includes('node_modules')) {
+            if (id.includes('react') || id.includes('react-dom')) {
+              return 'react-vendor';
+            }
+            if (id.includes('react-router')) {
+              return 'react-router';
+            }
+            if (id.includes('@radix-ui')) {
+              return 'radix-ui';
+            }
+            if (id.includes('recharts')) {
+              return 'charts';
+            }
+            if (id.includes('lucide-react') || id.includes('framer-motion')) {
+              return 'icons-animations';
+            }
+            return 'vendor';
+          }
         },
+
         // Professional file naming
         chunkFileNames: (chunkInfo) => {
           const facadeModuleId = chunkInfo.facadeModuleId

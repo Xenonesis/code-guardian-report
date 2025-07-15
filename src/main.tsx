@@ -1,7 +1,12 @@
-import { StrictMode } from 'react';
+import React, { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
+
+// Ensure React is available globally to prevent version conflicts
+if (typeof window !== 'undefined') {
+  (window as any).React = React;
+}
 
 // Performance monitoring
 if ('performance' in window && 'mark' in window.performance) {
