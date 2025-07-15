@@ -108,16 +108,15 @@ export default defineConfig({
         drop_debugger: true,
         pure_funcs: ['console.log', 'console.info', 'console.debug', 'console.warn'],
         passes: 2,
-        unsafe_arrows: true,
-        unsafe_methods: true,
-        unsafe_proto: true,
-        unsafe_regexp: true
+        unsafe_arrows: false,
+        unsafe_methods: false,
+        unsafe_proto: false,
+        unsafe_regexp: false
       },
       mangle: {
         safari10: true,
-        properties: {
-          regex: /^_/
-        }
+        keep_fnames: true,
+        reserved: ['n', 'e', 't', 'r', 'i', 'o', 'a', 's', 'u', 'c', 'l', 'f', 'd', 'h', 'p', 'g', 'y', 'm', 'v', 'b', 'w', 'k', 'x', 'z', 'j', 'q']
       },
       format: {
         comments: false,
