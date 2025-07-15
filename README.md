@@ -1,19 +1,19 @@
 <div align="center">
 
-# 🛡️ Code Guardian v4.0.0
+# 🛡️ Code Guardian v4.4.0
 ### 🚀 Next-Generation AI-Powered Security Analysis Platform
 Enhanced with AI Fix Suggestions, Secure Code Search, and Code Provenance Monitoring
 
-**Current Version: 4.0.0 - Developed by Aditya Kumar Tiwari**
+**Current Version: 4.4.0 - Developed by Aditya Kumar Tiwari**
 Now with Advanced AI-Powered Security Features
 
 <img src="./public/home.png" alt="Code Guardian - AI-Powered Security Analysis Platform" width="100%" style="border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.12);">
 
 <div align="center">
-  <img src="https://img.shields.io/badge/Version-4.0.0-ff6b6b?style=for-the-badge&logo=rocket&logoColor=white" alt="Version"/>
+  <img src="https://img.shields.io/badge/Version-4.4.0-ff6b6b?style=for-the-badge&logo=rocket&logoColor=white" alt="Version"/>
   <img src="https://img.shields.io/badge/Status-Production%20Ready-00C851?style=for-the-badge&logo=checkmarx&logoColor=white" alt="Status"/>
   <img src="https://img.shields.io/badge/AI%20Powered-GPT--4%20%7C%20Claude%20%7C%20Gemini-9C27B0?style=for-the-badge&logo=openai&logoColor=white" alt="AI Powered"/>
-  <img src="https://img.shields.io/badge/npm-v4.0.0-CB3837?style=for-the-badge&logo=npm&logoColor=white" alt="NPM Version"/>
+  <img src="https://img.shields.io/badge/npm-v4.4.0-CB3837?style=for-the-badge&logo=npm&logoColor=white" alt="NPM Version"/>
   <img src="https://img.shields.io/badge/Analytics-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Analytics"/>
   <img src="https://img.shields.io/badge/PWA-Ready-FF6F00?style=for-the-badge&logo=pwa&logoColor=white" alt="PWA Ready"/>
 </div>
@@ -92,18 +92,17 @@ Now with Advanced AI-Powered Security Features
 </tr>
 </table>
 
-### **✨ New in v4.0.0:**
+### **✨ New in v4.4.0:**
 
 <div align="center">
 
 | 🆕 Feature | 📝 Description | 🎯 Impact |
 |------------|-----------------|------------|
-| 📦 **Bundle Monitoring** | Implemented bundlesize configuration and scripts for performance tracking | Enhanced performance insights |
-| 🔧 **TypeScript Fixes** | Resolved linting errors with improved type definitions | Improved code quality and maintainability |
-| 🖼️ **Documentation** | Fixed broken README images and updated documentation | Improved project presentation and usability |
-| 📝 **License Update** | Updated copyright to June 2025 for legal compliance | Ensured current legal compliance |
-| 🧪 **Testing Suite** | Integrated comprehensive test coverage with Vitest for higher code reliability | Enhanced code reliability and stability |
-| ✨ **UI Enhancements** | Implemented modern UI enhancements and responsiveness | Improved user experience |
+| ⚡ **Performance & Bug Fixes** | Updates to main.tsx, vite.config.ts, StatsGrid, AI Security Insights, and more | Improved stability and speed |
+| 🛡️ **Security & Analysis** | Enhanced error handling, code improvements, and new dashboard metrics | More accurate and robust analysis |
+| � **Dependency Updates** | Updated dependencies for security and compatibility | Better reliability and future-proofing |
+| 🖼️ **UI & Accessibility** | UI alignment fixes, accessibility improvements, and documentation updates | Better user experience for all |
+| 📤 **Export & PWA** | Improved export formats and PWA manifest actions | Enhanced export and installability |
 
 </div>
 
@@ -756,40 +755,14 @@ We welcome contributions! Please follow these steps:
 
 ## 📈 Changelog
 
-### 🔄 Version 3.5.0 - Current Release ⭐
-- ⬆️ **Version Bump**: Updated all version references to 3.5.0 in code, documentation, and badges
-- 📝 **Changelog**: Synced documentation and changelog for 3.5.0 release
-- 📦 **Dependency Updates**: (If any, describe here)
-- ⚡ **Other Improvements**: (If any, describe here)
+### 🔄 Version 4.4.0 - Current Release ⭐
+- ⚡ **Performance & Bug Fixes**: Updates to main.tsx, vite.config.ts, StatsGrid, AI Security Insights, and more
+- 🛡️ **Security & Analysis**: Enhanced error handling, code improvements, and new dashboard metrics
+- 📦 **Dependency Updates**: Updated dependencies for security and compatibility
+- 🖼️ **UI & Accessibility**: UI alignment fixes, accessibility improvements, and documentation updates
+- 📤 **Export & PWA**: Improved export formats and PWA manifest actions
 
-### 🔄 Version 3.3.0
-- 📦 **Bundle Size Monitoring**: Implemented bundlesize configuration and scripts for performance tracking
-- 🔧 **TypeScript Fixes**: Resolved linting errors with improved type definitions
-- 🖼️ **Documentation**: Fixed broken image links and updated documentation for improved usability
-- 📝 **License Update**: Updated copyright to June 2025 for legal compliance
-- 🧪 **Testing Suite**: Integrated comprehensive test coverage with Vitest for higher code reliability
-- ✨ **UI Enhancements**: Implemented modern UI enhancements and responsiveness
-
-### 🔄 Version 2.5.0 - Previous Release
-- ✨ **Enhanced About Page**: Added version info and tech stack display
-- 🛡️ **Fixed StatsGrid**: Resolved temporal dead zone error in component
-- 🏠 **Home Page Cleanup**: Removed redundant features section
-- 📦 **Version Management**: Updated all version references across the project
-- 🚀 **GitHub Integration**: Proper version tagging and release management
-
-### 🔄 Version 2.4.0 - Previous Release
-- ✨ **Major Codebase Cleanup**: Removed unnecessary documentation files and build artifacts
-- 🚀 **Enhanced README**: Comprehensive documentation with modern design
-- 📦 **Package Management**: Resolved conflicting lock files (removed bun.lockb)
-- 🎯 **Performance**: Optimized project structure for better maintainability
-- 🔧 **Developer Experience**: Improved development workflow and documentation
-
-### 🎉 Version 0.10.0-beta - Legacy Release
-- 🤖 AI-powered security insights and recommendations
-- 📊 Advanced analytics dashboard with interactive charts
-- ♿ WCAG 2.1 AA accessibility compliance
-- 🎨 Modern UI/UX with dark/light theme support
-- 🔍 Comprehensive code analysis engine
+See [changelogs.md](./changelogs.md) for the full version history.
 
 ## 🔮 Roadmap
 
@@ -860,16 +833,30 @@ gantt
 </tr>
 </table>
 
-### **🚀 Future Releases (v3.9.0+) - Q2-Q3 2025**
+### **🚀 Future Releases (v4.4.0+) - 2025 and Beyond**
 
+- 🤖 **AI Model Marketplace**: Integrate and deploy custom AI models
 - 🎤 **Voice Commands**: Voice-controlled navigation and file upload
 - 🧠 **Custom ML Models**: Project-specific analysis with machine learning
 - 🏢 **Enterprise Suite**: SSO, audit logs, compliance reporting
 - 🔌 **Plugin Ecosystem**: Extensible architecture for third-party integrations
 - 📊 **Predictive Analytics**: Trend forecasting and risk prediction
 - 🔒 **Advanced Security**: Zero-trust architecture and enhanced encryption
+- 🌐 **Internationalization**: Support for more languages and locales
+- 📱 **Mobile App**: Native mobile companion app
 
 </details>
+
+## # Changelog
+
+See [changelogs.md](./changelogs.md) for a complete version history.
+
+**Recent Releases:**
+- **v4.4.0 (16/07/2025):** Updates to main.tsx and vite.config.ts, bug fixes
+- **v4.3.0–v4.3.3 (12–15/07/2025):** Manifest updates, UI improvements, dependency updates
+- **v4.2.0–v4.2.4 (06–10/07/2025):** AI Security Insights, StatsGrid, EnhancedAnalysis updates, bug fixes
+- **v4.1.0–v4.1.3 (27/06–03/07/2025):** Build, config, and performance improvements
+- **v4.0.0–v4.0.5 (01–20/06/2025):** Major release, AI features, documentation, PWA, export enhancements
 
 ## 📄 License
 
@@ -957,7 +944,7 @@ If you encounter any issues or have questions:
 
 <br/>
 
-**🎉 Join our growing community of 500+ developers worldwide!**
+
 
 <a href="https://github.com/Xenonesis/code-guardian-report">
   <img src="https://img.shields.io/badge/⭐%20Star%20this%20repository-FFD700?style=for-the-badge&logoColor=white" alt="Star Repository" height="50"/>
