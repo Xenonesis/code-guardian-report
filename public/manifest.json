@@ -1,16 +1,27 @@
 {
-  "name": "Code Guardian Enterprise",
+  "name": "Code Guardian Enterprise - AI-Powered Security Analysis Platform",
   "short_name": "Code Guardian",
-  "version": "3.9.0",
-  "description": "Enterprise-grade static code analysis platform powered by artificial intelligence",
-  "start_url": "/",
+  "version": "4.0.0",
+  "description": "Enterprise-grade static code analysis platform powered by artificial intelligence. Comprehensive security assessments, vulnerability detection, OWASP compliance, and automated remediation for mission-critical applications.",
+  "start_url": "/?utm_source=pwa&utm_medium=app&utm_campaign=launch",
   "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
   "background_color": "#f8fafc",
   "theme_color": "#1e293b",
-  "orientation": "portrait-primary",
+  "orientation": "any",
   "scope": "/",
-  "lang": "en",
-  "categories": ["productivity", "developer", "security"],
+  "lang": "en-US",
+  "dir": "ltr",
+  "categories": [
+    "productivity",
+    "developer",
+    "security",
+    "business",
+    "utilities",
+    "development",
+    "enterprise"
+  ],
+  "iarc_rating_id": "e84b072d-71b3-4d3e-86ae-31a8ce4e53b7",
   "icons": [
     {
       "src": "/favicon-16x16.svg",
@@ -45,19 +56,26 @@
   ],
   "screenshots": [
     {
-      "src": "/favicon-512x512.svg",
-      "sizes": "512x512",
-      "type": "image/svg+xml",
+      "src": "/home.png",
+      "sizes": "1280x720",
+      "type": "image/png",
       "form_factor": "wide",
-      "label": "Code Guardian Enterprise Platform"
+      "label": "Code Guardian Enterprise Dashboard - Security Analysis Overview"
+    },
+    {
+      "src": "/cc.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Advanced Security Analysis Results with AI Insights"
     }
   ],
   "shortcuts": [
     {
-      "name": "Security Analysis",
+      "name": "Start Security Analysis",
       "short_name": "Analyze",
-      "description": "Start security analysis",
-      "url": "/",
+      "description": "Begin comprehensive security analysis of your codebase",
+      "url": "/?action=analyze&utm_source=pwa&utm_medium=shortcut",
       "icons": [
         {
           "src": "/favicon-192x192.svg",
@@ -67,10 +85,36 @@
       ]
     },
     {
-      "name": "Platform Solutions",
+      "name": "View Reports",
+      "short_name": "Reports",
+      "description": "Access security reports and compliance dashboards",
+      "url": "/?tab=reports&utm_source=pwa&utm_medium=shortcut",
+      "icons": [
+        {
+          "src": "/favicon-192x192.svg",
+          "sizes": "192x192",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Enterprise Solutions",
       "short_name": "Solutions",
-      "description": "View enterprise solutions",
-      "url": "/about",
+      "description": "Explore enterprise security solutions and features",
+      "url": "/about?utm_source=pwa&utm_medium=shortcut",
+      "icons": [
+        {
+          "src": "/favicon-192x192.svg",
+          "sizes": "192x192",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "AI Security Insights",
+      "short_name": "AI Insights",
+      "description": "Access AI-powered security recommendations and fixes",
+      "url": "/?tab=ai-insights&utm_source=pwa&utm_medium=shortcut",
       "icons": [
         {
           "src": "/favicon-192x192.svg",
@@ -80,12 +124,71 @@
       ]
     }
   ],
-  "related_applications": [],
+  "related_applications": [
+    {
+      "platform": "webapp",
+      "url": "https://code-guardian-report.vercel.app/"
+    }
+  ],
   "prefer_related_applications": false,
   "edge_side_panel": {
-    "preferred_width": 400
+    "preferred_width": 420
   },
   "launch_handler": {
     "client_mode": "navigate-existing"
-  }
+  },
+  "file_handlers": [
+    {
+      "action": "/analyze",
+      "accept": {
+        "application/zip": [".zip"],
+        "application/x-tar": [".tar"],
+        "application/gzip": [".gz", ".tar.gz"],
+        "text/javascript": [".js"],
+        "text/typescript": [".ts"],
+        "text/x-python": [".py"],
+        "text/x-java-source": [".java"],
+        "text/x-c++src": [".cpp", ".cc", ".cxx"],
+        "text/x-go": [".go"],
+        "text/x-rust": [".rs"]
+      },
+      "launch_type": "single-client"
+    }
+  ],
+  "protocol_handlers": [
+    {
+      "protocol": "web+codeguardian",
+      "url": "/analyze?url=%s"
+    }
+  ],
+  "share_target": {
+    "action": "/share-analyze",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url",
+      "files": [
+        {
+          "name": "codeFiles",
+          "accept": [
+            "application/zip",
+            "text/javascript",
+            "text/typescript",
+            "text/x-python",
+            "text/x-java-source"
+          ]
+        }
+      ]
+    }
+  },
+  "handle_links": "preferred",
+  "capture_links": "existing-client-navigate",
+  "scope_extensions": [
+    {
+      "origin": "https://code-guardian-report.vercel.app"
+    }
+  ],
+  "id": "code-guardian-enterprise"
 }

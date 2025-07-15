@@ -800,13 +800,15 @@ export class SecurityAnalyzer {
 
     if (content) {
       // Real analysis with actual file content
-      console.log(`🔍 Analyzing ${filename} (${content.length} characters) with smart detection`);
+      console.log(`🔍 REAL SECURITY ANALYSIS: Analyzing ${filename} (${content.length} characters) with smart detection`);
+      console.log(`📝 REAL ANALYSIS: Language detected: ${language}, Rules available: ${rules.length}`);
 
       // Apply framework-specific rules if available
       if (this.analysisContext?.frameworkSpecificRules.length) {
-        console.log(`📋 Applying ${this.analysisContext.frameworkSpecificRules.length} framework-specific rules`);
+        console.log(`📋 REAL ANALYSIS: Applying ${this.analysisContext.frameworkSpecificRules.length} framework-specific rules`);
         const frameworkIssues = this.applyFrameworkSpecificRules(filename, content, this.analysisContext.frameworkSpecificRules);
         issues.push(...frameworkIssues);
+        console.log(`🎯 REAL ANALYSIS: Framework rules found ${frameworkIssues.length} issues`);
       }
 
       const lines = content.split('\n');
@@ -860,16 +862,26 @@ export class SecurityAnalyzer {
       });
 
       // Perform secret detection
-      console.log(`Running secret detection for ${filename}...`);
+      console.log(`🔐 REAL ANALYSIS: Running secret detection for ${filename}...`);
       const secretDetectionResult = this.secretDetectionService.detectSecrets(content);
       const secretIssues = this.convertSecretsToIssues(secretDetectionResult.secrets, filename);
       issues.push(...secretIssues);
 
       // Real analysis complete - only return actual issues found
-      console.log(`Real analysis complete for ${filename}: ${issues.length} issues found (${secretIssues.length} secrets detected)`);
+      console.log(`✅ REAL ANALYSIS COMPLETE for ${filename}: ${issues.length} total issues found`);
+      console.log(`🔐 REAL ANALYSIS: ${secretIssues.length} secrets detected`);
+      console.log(`🛡️ REAL ANALYSIS: ${issues.length - secretIssues.length} other security issues found`);
+
+      if (issues.length > 0) {
+        const severityCounts = issues.reduce((acc, issue) => {
+          acc[issue.severity] = (acc[issue.severity] || 0) + 1;
+          return acc;
+        }, {} as Record<string, number>);
+        console.log(`📊 REAL ANALYSIS: Severity breakdown: ${JSON.stringify(severityCounts)}`);
+      }
     } else {
       // Return empty analysis when no content is provided - no fake issues
-      console.log(`No content provided for ${filename} - returning empty analysis`);
+      console.log(`⚠️ REAL ANALYSIS: No content provided for ${filename} - returning empty analysis`);
     }
 
     return issues;

@@ -185,11 +185,11 @@ export const useEnhancedAnalysis = () => {
     setAnalysisResults(analysisData.results);
     setHasStoredData(true);
     
-    // Create a mock file object for the restored analysis
-    const mockFile = new File([''], analysisData.fileName, { 
+    // Create a file object for the restored analysis
+    const restoredFile = new File([''], analysisData.fileName, {
       type: 'application/zip'
     });
-    setSelectedFile(mockFile);
+    setSelectedFile(restoredFile);
     
     console.log('📋 Analysis restored from history:', analysisData.fileName);
   }, []);

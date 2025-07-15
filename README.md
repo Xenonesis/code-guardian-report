@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🛡️ Code Guardian v3.9.0
+# 🛡️ Code Guardian v4.0.0
 ### 🚀 Next-Generation AI-Powered Security Analysis Platform
 Enhanced with AI Fix Suggestions, Secure Code Search, and Code Provenance Monitoring
 
@@ -92,7 +92,7 @@ Now with Advanced AI-Powered Security Features
 </tr>
 </table>
 
-### **✨ New in v3.9.0:**
+### **✨ New in v4.0.0:**
 
 <div align="center">
 
@@ -154,7 +154,7 @@ Built with ❤️ by [Aditya Kumar Tiwari](https://github.com/Xenonesis)
   - [⚡ Installation](#-installation)
   - [📜 Available Scripts](#-available-scripts)
   - [🔧 Environment Setup](#-environment-setup)
-### 📝 Analysis Tracker Service (v3.9.0+)
+### 📝 Analysis Tracker Service (v4.0.0+)
 
 - **Persistence:** Uses an in-memory cache for all analysis tracking (no localStorage).
 - **API:**

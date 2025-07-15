@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+  <!-- Homepage -->
+  <url>
+    <loc>https://code-guardian-report.vercel.app/</loc>
+    <lastmod>2025-01-27</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://code-guardian-report.vercel.app/home.png</image:loc>
+      <image:title>Code Guardian Enterprise Dashboard</image:title>
+      <image:caption>Professional security analysis platform dashboard</image:caption>
+    </image:image>
+  </url>
+
+  <!-- About Page -->
+  <url>
+    <loc>https://code-guardian-report.vercel.app/about</loc>
+    <lastmod>2025-01-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://code-guardian-report.vercel.app/cc.png</image:loc>
+      <image:title>Code Guardian Security Analysis</image:title>
+      <image:caption>Advanced security analysis and vulnerability detection</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Privacy Policy -->
+  <url>
+    <loc>https://code-guardian-report.vercel.app/privacy</loc>
+    <lastmod>2025-01-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Terms of Service -->
+  <url>
+    <loc>https://code-guardian-report.vercel.app/terms</loc>
+    <lastmod>2025-01-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Security Analysis Tool -->
+  <url>
+    <loc>https://code-guardian-report.vercel.app/?tab=upload</loc>
+    <lastmod>2025-01-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- AI Security Insights -->
+  <url>
+    <loc>https://code-guardian-report.vercel.app/?tab=ai-insights</loc>
+    <lastmod>2025-01-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Security Reports -->
+  <url>
+    <loc>https://code-guardian-report.vercel.app/?tab=reports</loc>
+    <lastmod>2025-01-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Compliance Dashboard -->
+  <url>
+    <loc>https://code-guardian-report.vercel.app/?tab=compliance</loc>
+    <lastmod>2025-01-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+</urlset>

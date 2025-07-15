@@ -47,7 +47,7 @@ export const SecurityOverview: React.FC<SecurityOverviewProps> = ({ results }) =
   const secretIssues = results.issues.filter(issue => issue.category === 'Secret Detection' || issue.type === 'Secret');
   const otherIssues = results.issues.filter(issue => issue.category !== 'Secret Detection' && issue.type !== 'Secret');
 
-  // Prepare files for provenance monitoring (mock data for demo)
+  // Prepare files for provenance monitoring
   const filesForProvenance = otherIssues.map(issue => ({
     filename: issue.filename,
     content: issue.codeSnippet || `// File: ${issue.filename}\n// Issue: ${issue.message}`
