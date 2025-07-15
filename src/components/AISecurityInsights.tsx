@@ -50,7 +50,7 @@ interface InsightState {
 }
 
 export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results, className = '' }) => {
-  const [aiFeatureStatus, setAiFeatureStatus] = useState(getAIFeatureStatus());
+  const [aiFeatureStatus, setAiFeatureStatus] = useState(() => getAIFeatureStatus());
   const [aiService] = useState(() => new AIService());
 
 

@@ -29,7 +29,7 @@ export const useEnhancedAnalysis = () => {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [hasStoredData, setHasStoredData] = useState(false);
-  const [storageStats, setStorageStats] = useState(analysisStorage.getStorageStats());
+  const [storageStats, setStorageStats] = useState(() => analysisStorage.getStorageStats());
   const [isNewFile, setIsNewFile] = useState(true);
 
   const updateStorageStats = useCallback(() => {

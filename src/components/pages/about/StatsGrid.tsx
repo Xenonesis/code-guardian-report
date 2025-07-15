@@ -13,24 +13,32 @@ interface StatsGridProps {
 }
 
 export const StatsGrid: React.FC<StatsGridProps> = ({ className = '' }) => {
-  const [animatedValues, setAnimatedValues] = useState<string[]>([
-    '25000',
-    getTotalFilesAnalyzed().toString(),
-    '150000',
-    '20'
-  ]);
+  const [animatedValues, setAnimatedValues] = useState<string[]>(['0', '0', '0', '0']);
   const gridRef = useRef<HTMLDivElement>(null);
   
-  const stats: Stat[] = useMemo(() => [
-    { icon: <Users className="h-5 w-5" />, label: 'Enterprise Clients', value: '25,000+' },
-    {
-      icon: <FileCode className="h-5 w-5" />,
-      label: 'Code Files Analyzed',
-      value: getTotalFilesAnalyzed().toLocaleString()
-    },
-    { icon: <Shield className="h-5 w-5" />, label: 'Security Issues Detected', value: '150,000+' },
-    { icon: <Award className="h-5 w-5" />, label: 'Programming Languages', value: '20+' }
-  ], []);
+  const stats: Stat[] = useMemo(() => {
+    const totalFiles = getTotalFilesAnalyzed();
+    return [
+      { icon: <Users className="h-5 w-5" />, label: 'Enterprise Clients', value: '25,000+' },
+      {
+        icon: <FileCode className="h-5 w-5" />,
+        label: 'Code Files Analyzed',
+        value: totalFiles.toLocaleString()
+      },
+      { icon: <Shield className="h-5 w-5" />, label: 'Security Issues Detected', value: '150,000+' },
+      { icon: <Award className="h-5 w-5" />, label: 'Programming Languages', value: '20+' }
+    ];
+  }, []);
+
+  // Initialize animated values after component mounts
+  useEffect(() => {
+    setAnimatedValues([
+      '25000',
+      getTotalFilesAnalyzed().toString(),
+      '150000',
+      '20'
+    ]);
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
