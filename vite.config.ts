@@ -48,10 +48,13 @@ export default defineConfig({
       output: {
         // Advanced chunk splitting strategy
         manualChunks: (id) => {
-          // Keep React and ReactDOM together to avoid version conflicts
           if (id.includes('node_modules')) {
-            if (id.includes('react') || id.includes('react-dom')) {
-              return 'react-vendor';
+            // Keep React separate and load first
+            if (id.includes('react/') && !id.includes('react-dom') && !id.includes('react-router')) {
+              return 'react';
+            }
+            if (id.includes('react-dom')) {
+              return 'react-dom';
             }
             if (id.includes('react-router')) {
               return 'react-router';
