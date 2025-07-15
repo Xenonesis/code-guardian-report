@@ -57,7 +57,7 @@ const LANGUAGE_PATTERNS = {
       /\b(function|const|let|var|class|import|export|require)\b/,
       /\b(console\.log|document\.|window\.)/,
       /\b(async|await|Promise)\b/,
-      /\=\>\s*\{/,
+      /=>\s*\{/,
       /\$\{.*\}/
     ],
     keywords: ['function', 'const', 'let', 'var', 'class', 'import', 'export', 'async', 'await'],
@@ -69,7 +69,7 @@ const LANGUAGE_PATTERNS = {
     patterns: [
       /\b(interface|type|enum|namespace)\b/,
       /:\s*(string|number|boolean|any|void|unknown)/,
-      /\<.*\>/,
+      /<.*>/,
       /\b(public|private|protected|readonly)\b/,
       /\b(implements|extends)\b/
     ],
@@ -97,7 +97,7 @@ const LANGUAGE_PATTERNS = {
       /\b(class|interface|enum|package|import)\b/,
       /\b(System\.out\.println|String|int|boolean|void)\b/,
       /\b(extends|implements|throws)\b/,
-      /\@\w+/
+      /@\w+/
     ],
     keywords: ['public', 'private', 'protected', 'class', 'interface', 'package', 'import'],
     category: 'programming' as const,
@@ -119,11 +119,11 @@ const LANGUAGE_PATTERNS = {
   php: {
     extensions: ['.php', '.phtml', '.php3', '.php4', '.php5', '.phps'],
     patterns: [
-      /\<\?php/,
+      /<\?php/,
       /\$\w+/,
       /\b(function|class|interface|trait|namespace)\b/,
       /\b(echo|print|var_dump|isset|empty)\b/,
-      /\-\>/
+      /->/
     ],
     keywords: ['function', 'class', 'interface', 'namespace', 'echo', 'print'],
     category: 'programming' as const,
@@ -134,7 +134,7 @@ const LANGUAGE_PATTERNS = {
     patterns: [
       /\b(def|class|module|end|require|include)\b/,
       /\b(puts|print|p|gets)\b/,
-      /\@\w+/,
+      /@\w+/,
       /\b(if|unless|while|until|for|in)\b/,
       /#.*$/m
     ],
@@ -270,7 +270,7 @@ export class LanguageDetectionService {
    */
   private detectFileLanguage(filename: string, content: string): LanguageInfo {
     const extension = this.getFileExtension(filename);
-    const candidates: Array<{ name: string; confidence: number; info: any }> = [];
+    const candidates: Array<{ name: string; confidence: number; info: Record<string, unknown> }> = [];
 
     // Check each language pattern
     for (const [langName, langInfo] of Object.entries(LANGUAGE_PATTERNS)) {
@@ -312,9 +312,9 @@ export class LanguageDetectionService {
       return {
         name: best.name,
         confidence: best.confidence,
-        extensions: best.info.extensions,
-        category: best.info.category,
-        ecosystem: best.info.ecosystem
+        extensions: best.info.extensions as string[],
+        category: best.info.category as 'programming' | 'markup' | 'config' | 'data' | 'documentation',
+        ecosystem: best.info.ecosystem as string | undefined
       };
     }
 

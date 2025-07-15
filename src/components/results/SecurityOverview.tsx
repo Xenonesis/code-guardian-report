@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Shield } from 'lucide-react';
+import { Shield, ChevronDown } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { AnalysisResults } from '@/hooks/useAnalysis';
 import { SecuritySummaryCards } from '@/components/security/SecuritySummaryCards';
@@ -83,38 +83,44 @@ export const SecurityOverview: React.FC<SecurityOverviewProps> = ({ results }) =
         }}
       />
 
-      <Card className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm">
-        <CardHeader className="pb-4 px-4 sm:px-6">
-          <CardTitle className="flex items-center gap-2 text-lg">
-            <Shield className="h-5 w-5" />
-            Other Security Issues ({otherIssues.length})
-          </CardTitle>
-          <CardDescription className="text-sm text-slate-600 dark:text-slate-400">
-            Comprehensive security analysis with OWASP classifications and CVSS scoring
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="pt-0 px-4 sm:px-6 pb-4 sm:pb-6">
-          <div className="space-y-4">
-            {otherIssues.map((issue) => (
-              <SecurityIssueItem
-                key={issue.id}
-                issue={issue}
-                isExpanded={expandedIssues.has(issue.id)}
-                onToggle={() => toggleIssueExpansion(issue.id)}
-                codeContext={issue.codeSnippet || `// Code context for ${issue.filename}:${issue.line}\n// ${issue.message}`}
-                language={primaryLanguage}
-                framework={primaryFramework}
-                onApplyFix={handleApplyFix}
-              />
-            ))}
-            {otherIssues.length === 0 && (
-              <p className="text-slate-600 dark:text-slate-400 text-center py-4">
-                No other security issues detected.
+      <div className="bg-slate-900/50 border border-slate-700/50 rounded-lg">
+        {/* Header */}
+        <div className="p-6 border-b border-slate-700/50">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-xl font-semibold text-white mb-2 flex items-center gap-2">
+                <Shield className="h-5 w-5" />
+                Other Security Issues ({otherIssues.length})
+              </h2>
+              <p className="text-slate-400 text-sm">
+                Comprehensive security analysis with OWASP classifications and CVSS scoring
               </p>
-            )}
+            </div>
+            <ChevronDown className="h-5 w-5 text-slate-400" />
           </div>
-        </CardContent>
-      </Card>
+        </div>
+
+        {/* Issues List */}
+        <div className="p-6 space-y-4">
+          {otherIssues.map((issue) => (
+            <SecurityIssueItem
+              key={issue.id}
+              issue={issue}
+              isExpanded={expandedIssues.has(issue.id)}
+              onToggle={() => toggleIssueExpansion(issue.id)}
+              codeContext={issue.codeSnippet || `// Code context for ${issue.filename}:${issue.line}\n// ${issue.message}`}
+              language={primaryLanguage}
+              framework={primaryFramework}
+              onApplyFix={handleApplyFix}
+            />
+          ))}
+          {otherIssues.length === 0 && (
+            <p className="text-slate-400 text-center py-4">
+              No other security issues detected.
+            </p>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

@@ -571,7 +571,12 @@ export class CodeProvenanceService {
         alerts: this.alerts,
         monitoringEnabled: this.monitoringEnabled
       };
-      localStorage.setItem('codeProvenance', JSON.stringify(data));
+      localStorage.setItem('codeProvenance', JSON.stringify(data, (key, value) => {
+        if (value instanceof Date) {
+          return value.toISOString();
+        }
+        return value as unknown;
+      }));
     } catch (error) {
       console.error('Failed to save provenance data:', error);
     }
@@ -586,7 +591,7 @@ export class CodeProvenanceService {
       if (stored) {
         const data = JSON.parse(stored);
         this.fileRecords = new Map(data.fileRecords || []);
-        this.alerts = (data.alerts || []).map((alert: any) => ({
+        this.alerts = (data.alerts || []).map((alert: Record<string, unknown>) => ({
           ...alert,
           detectedAt: new Date(alert.detectedAt)
         }));

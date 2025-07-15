@@ -1,6 +1,7 @@
 {
   "name": "Code Guardian Enterprise",
   "short_name": "Code Guardian",
+  "version": "3.9.0",
   "description": "Enterprise-grade static code analysis platform powered by artificial intelligence",
   "start_url": "/",
   "display": "standalone",

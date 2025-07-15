@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -58,24 +58,14 @@ export const SecureCodeSearchCard: React.FC<SecureCodeSearchCardProps> = ({
   const [frameworks, setFrameworks] = useState<string[]>([]);
   const [tags, setTags] = useState<string[]>([]);
 
-  useEffect(() => {
-    initializeData();
-  }, []);
-
-  useEffect(() => {
-    if (vulnerabilityType) {
-      performSearch(vulnerabilityType);
-    }
-  }, [vulnerabilityType]);
-
-  const initializeData = async () => {
+  const initializeData = useCallback(async () => {
     setCategories(searchService.getCategories() || []);
     setLanguages(searchService.getLanguages() || []);
     setFrameworks(searchService.getFrameworks() || []);
     setTags(searchService.getTags() || []);
-  };
+  }, [searchService]);
 
-  const performSearch = async (query: string = searchQuery) => {
+  const performSearch = useCallback(async (query: string = searchQuery) => {
     if (!query.trim()) {
       setSearchResults([]);
       return;
@@ -91,7 +81,21 @@ export const SecureCodeSearchCard: React.FC<SecureCodeSearchCardProps> = ({
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [searchQuery, searchService, filters]);
+
+  useEffect(() => {
+    initializeData();
+  }, [initializeData]);
+
+  useEffect(() => {
+    if (vulnerabilityType) {
+      performSearch(vulnerabilityType);
+    }
+  }, [vulnerabilityType, performSearch]);
+
+
+
+
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -218,7 +222,7 @@ export const SecureCodeSearchCard: React.FC<SecureCodeSearchCardProps> = ({
                 </SelectContent>
               </Select>
 
-              <Select value={filters.securityLevel || 'all'} onValueChange={(value) => updateFilter('securityLevel', value as any)}>
+              <Select value={filters.securityLevel || 'all'} onValueChange={(value) => updateFilter('securityLevel', value as 'secure' | 'insecure' | 'improved' | undefined)}>
                 <SelectTrigger>
                   <SelectValue placeholder="Security Level" />
                 </SelectTrigger>

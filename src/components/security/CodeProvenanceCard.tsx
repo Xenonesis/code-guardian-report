@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -54,17 +54,7 @@ export const CodeProvenanceCard: React.FC<CodeProvenanceCardProps> = ({
     monitoringStatus: false
   });
 
-  useEffect(() => {
-    loadInitialData();
-  }, []);
-
-  useEffect(() => {
-    if (files.length > 0) {
-      performIntegrityScan();
-    }
-  }, [files]);
-
-  const loadInitialData = () => {
+  const loadInitialData = useCallback(() => {
     const stats = provenanceService.getMonitoringStatistics();
     setStatistics(stats || {
       totalFiles: 0,
@@ -76,29 +66,9 @@ export const CodeProvenanceCard: React.FC<CodeProvenanceCardProps> = ({
 
     const currentAlerts = provenanceService.getAlerts();
     setAlerts(currentAlerts || []);
-  };
+  }, [provenanceService]);
 
-  const initializeMonitoring = async () => {
-    if (files.length === 0) {
-      toast.error('No files available for monitoring');
-      return;
-    }
-
-    setIsScanning(true);
-    try {
-      await provenanceService.initializeMonitoring(files);
-      loadInitialData();
-      toast.success(`Monitoring initialized for ${files.length} files`);
-      onInitializeMonitoring?.();
-    } catch (error) {
-      toast.error('Failed to initialize monitoring');
-      console.error('Monitoring initialization error:', error);
-    } finally {
-      setIsScanning(false);
-    }
-  };
-
-  const performIntegrityScan = async () => {
+  const performIntegrityScan = useCallback(async () => {
     if (files.length === 0) return;
 
     setIsScanning(true);
@@ -122,7 +92,41 @@ export const CodeProvenanceCard: React.FC<CodeProvenanceCardProps> = ({
     } finally {
       setIsScanning(false);
     }
+  }, [files, provenanceService, loadInitialData]);
+
+  useEffect(() => {
+    loadInitialData();
+  }, [loadInitialData]);
+
+  useEffect(() => {
+    if (files.length > 0) {
+      performIntegrityScan();
+    }
+  }, [performIntegrityScan, files]);
+
+
+
+  const initializeMonitoring = async () => {
+    if (files.length === 0) {
+      toast.error('No files available for monitoring');
+      return;
+    }
+
+    setIsScanning(true);
+    try {
+      await provenanceService.initializeMonitoring(files);
+      loadInitialData();
+      toast.success(`Monitoring initialized for ${files.length} files`);
+      onInitializeMonitoring?.();
+    } catch (error) {
+      toast.error('Failed to initialize monitoring');
+      console.error('Monitoring initialization error:', error);
+    } finally {
+      setIsScanning(false);
+    }
   };
+
+
 
   const resolveAlert = async (alertId: string) => {
     const success = provenanceService.resolveAlert(alertId);

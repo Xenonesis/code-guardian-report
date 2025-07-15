@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -49,14 +49,7 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
   const [fixService] = useState(() => new AIFixSuggestionsService());
 
-  useEffect(() => {
-    // Only generate suggestions if we have code context
-    if (codeContext && codeContext.trim() !== '') {
-      generateFixSuggestions();
-    }
-  }, [issue.id, codeContext]);
-
-  const generateFixSuggestions = async () => {
+  const generateFixSuggestions = useCallback(async () => {
     // Don't generate if no code context
     if (!codeContext || codeContext.trim() === '') {
       return;
@@ -82,7 +75,16 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [issue, codeContext, language, framework, fixService]);
+
+  useEffect(() => {
+    // Only generate suggestions if we have code context
+    if (codeContext && codeContext.trim() !== '') {
+      generateFixSuggestions();
+    }
+  }, [generateFixSuggestions, codeContext]);
+
+
 
   const toggleSuggestionExpansion = (suggestionId: string) => {
     setExpandedSuggestion(

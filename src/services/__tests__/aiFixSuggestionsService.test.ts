@@ -112,7 +112,7 @@ describe('AIFixSuggestionsService', () => {
 
       const errorService = new AIFixSuggestionsService();
       // Replace the AI service with our mock
-      (errorService as any).aiService = mockAIService;
+      (errorService as { aiService: unknown }).aiService = mockAIService;
 
       await expect(errorService.generateFixSuggestions(mockRequest))
         .rejects.toThrow('Failed to generate fix suggestions');
@@ -228,7 +228,7 @@ describe('AIFixSuggestionsService', () => {
       };
 
       // Replace the AI service
-      (service as any).aiService = mockAIService;
+      (service as { aiService: unknown }).aiService = mockAIService;
 
       const results = await service.generateBatchFixSuggestions([mockRequest, invalidRequest]);
 
@@ -294,7 +294,7 @@ describe('AIFixSuggestionsService', () => {
       };
 
       const fallbackService = new AIFixSuggestionsService();
-      (fallbackService as any).aiService = mockAIService;
+      (fallbackService as { aiService: unknown }).aiService = mockAIService;
 
       const suggestions = await fallbackService.generateFixSuggestions(mockRequest);
 
@@ -323,7 +323,7 @@ describe('AIFixSuggestionsService', () => {
       };
 
       const validationService = new AIFixSuggestionsService();
-      (validationService as any).aiService = mockAIService;
+      (validationService as { aiService: unknown }).aiService = mockAIService;
 
       const suggestions = await validationService.generateFixSuggestions(mockRequest);
 

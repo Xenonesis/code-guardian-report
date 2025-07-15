@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 export interface CodeSnippet {
   id: string;
   title: string;
@@ -587,7 +588,8 @@ class SecureAuth {
 
   static isPasswordStrong(password) {
     // Minimum 8 characters, at least one uppercase, lowercase, number, and special char
-    const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    // eslint-disable-next-line no-useless-escape
+    const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*?&])[A-Za-z0-9@$!%*?&]{8,}$/;
     return strongPasswordRegex.test(password);
   }
 }`,

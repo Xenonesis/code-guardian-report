@@ -37,7 +37,7 @@ export interface FrameworkSpecificFix {
 
 export interface ConfigChange {
   file: string;
-  changes: Record<string, any>;
+  changes: Record<string, unknown>;
   reasoning: string;
 }
 
@@ -199,7 +199,7 @@ Format your response as a JSON array with this structure:
       const jsonMatch = response.match(/```json\s*([\s\S]*?)\s*```/) || response.match(/\[([\s\S]*)\]/);
       const jsonString = jsonMatch ? (jsonMatch[1] || jsonMatch[0]) : response;
       
-      const suggestions = JSON.parse(jsonString);
+      const suggestions = JSON.parse(jsonString) as unknown[];
       
       if (!Array.isArray(suggestions)) {
         throw new Error('Response is not an array');
@@ -217,34 +217,35 @@ Format your response as a JSON array with this structure:
    * Validate and enhance a single fix suggestion
    */
   private validateAndEnhanceSuggestion(
-    suggestion: any, 
+    suggestion: unknown, 
     request: FixSuggestionRequest, 
     index: number
   ): Omit<FixSuggestion, 'id' | 'issueId'> {
+    const suggestionObj = suggestion as Record<string, unknown>;
     return {
-      title: suggestion.title || `Fix Approach ${index + 1}`,
-      description: suggestion.description || 'AI-generated fix suggestion',
-      confidence: Math.min(100, Math.max(0, suggestion.confidence || 70)),
-      effort: this.validateEffort(suggestion.effort),
-      priority: Math.min(5, Math.max(1, suggestion.priority || 3)),
-      codeChanges: this.validateCodeChanges(suggestion.codeChanges || [], request),
-      explanation: suggestion.explanation || 'This fix addresses the security vulnerability by implementing secure coding practices.',
-      securityBenefit: suggestion.securityBenefit || 'Improves application security posture.',
-      riskAssessment: suggestion.riskAssessment || 'Low risk of breaking changes.',
-      testingRecommendations: Array.isArray(suggestion.testingRecommendations) 
-        ? suggestion.testingRecommendations 
+      title: (suggestionObj.title as string) || `Fix Approach ${index + 1}`,
+      description: (suggestionObj.description as string) || 'AI-generated fix suggestion',
+      confidence: Math.min(100, Math.max(0, (suggestionObj.confidence as number) || 70)),
+      effort: this.validateEffort(suggestionObj.effort),
+      priority: Math.min(5, Math.max(1, (suggestionObj.priority as number) || 3)),
+      codeChanges: this.validateCodeChanges((suggestionObj.codeChanges as unknown[]) || [], request),
+      explanation: (suggestionObj.explanation as string) || 'This fix addresses the security vulnerability by implementing secure coding practices.',
+      securityBenefit: (suggestionObj.securityBenefit as string) || 'Improves application security posture.',
+      riskAssessment: (suggestionObj.riskAssessment as string) || 'Low risk of breaking changes.',
+      testingRecommendations: Array.isArray(suggestionObj.testingRecommendations) 
+        ? suggestionObj.testingRecommendations as string[]
         : ['Test the fix thoroughly before deployment'],
-      relatedPatterns: Array.isArray(suggestion.relatedPatterns) 
-        ? suggestion.relatedPatterns 
+      relatedPatterns: Array.isArray(suggestionObj.relatedPatterns) 
+        ? suggestionObj.relatedPatterns as string[]
         : [],
-      frameworkSpecific: suggestion.frameworkSpecific
+      frameworkSpecific: suggestionObj.frameworkSpecific as FrameworkSpecificFix | undefined
     };
   }
 
   /**
    * Validate effort level
    */
-  private validateEffort(effort: any): 'Low' | 'Medium' | 'High' {
+  private validateEffort(effort: unknown): 'Low' | 'Medium' | 'High' {
     const validEfforts = ['Low', 'Medium', 'High'];
     return validEfforts.includes(effort) ? effort : 'Medium';
   }
@@ -252,26 +253,29 @@ Format your response as a JSON array with this structure:
   /**
    * Validate and enhance code changes
    */
-  private validateCodeChanges(changes: any[], request: FixSuggestionRequest): CodeChange[] {
+  private validateCodeChanges(changes: unknown[], request: FixSuggestionRequest): CodeChange[] {
     if (!Array.isArray(changes)) {
       return [];
     }
 
-    return changes.map(change => ({
-      type: this.validateChangeType(change.type),
-      filename: change.filename || request.issue.filename,
-      startLine: Math.max(1, change.startLine || request.issue.line),
-      endLine: Math.max(change.startLine || request.issue.line, change.endLine || request.issue.line),
-      originalCode: change.originalCode || '',
-      suggestedCode: change.suggestedCode || '',
-      reasoning: change.reasoning || 'Security improvement'
-    }));
+    return changes.map(change => {
+      const changeObj = change as Record<string, unknown>;
+      return {
+        type: this.validateChangeType(changeObj.type),
+        filename: (changeObj.filename as string) || request.issue.filename,
+        startLine: Math.max(1, (changeObj.startLine as number) || request.issue.line),
+        endLine: Math.max((changeObj.startLine as number) || request.issue.line, (changeObj.endLine as number) || request.issue.line),
+        originalCode: (changeObj.originalCode as string) || '',
+        suggestedCode: (changeObj.suggestedCode as string) || '',
+        reasoning: (changeObj.reasoning as string) || 'Security improvement'
+      };
+    });
   }
 
   /**
    * Validate change type
    */
-  private validateChangeType(type: any): 'replace' | 'insert' | 'delete' | 'refactor' {
+  private validateChangeType(type: unknown): 'replace' | 'insert' | 'delete' | 'refactor' {
     const validTypes = ['replace', 'insert', 'delete', 'refactor'];
     return validTypes.includes(type) ? type : 'replace';
   }
