@@ -38,7 +38,7 @@ export default defineConfig({
   // Professional build configuration
   build: {
     target: ['es2020', 'edge88', 'firefox78', 'chrome87', 'safari14'],
-    minify: 'terser',
+    minify: false,
     sourcemap: false,
     chunkSizeWarningLimit: 1000,
     cssCodeSplit: true,
