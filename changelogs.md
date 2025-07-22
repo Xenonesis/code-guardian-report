@@ -1,9 +1,20 @@
 # Changelog
 
 **Project Start Date:** 2025  
-**Last Update:** 17/07/2025
+**Last Update:** 19/12/2024
 
 ---
+
+## v4.6.0 (19/12/2024)
+- 🔄 **Auto-Version Synchronization System**: Implemented automatic version synchronization across all components
+  - Created `src/utils/version.ts` utility to centralize version management from package.json
+  - Updated `VersionInfo.tsx` to use dynamic version from package.json instead of hardcoded "3.3.0"
+  - Updated `Footer.tsx` to use dynamic version from package.json instead of hardcoded "v4.0.0"
+  - Updated `LegalPageLayout.tsx` to use dynamic version from package.json instead of hardcoded "v3.3.0"
+- 📄 **Legal Document Updates**: Updated Privacy Policy and Terms of Service last updated date to "July 17, 2025"
+- 🎯 **Version Consistency**: All version displays now automatically sync with package.json version
+- 🛠️ **Developer Experience**: Single source of truth for version management - update package.json and all UI components automatically reflect the new version
+- 📦 **Version Bump**: Updated from v4.5.0 to v4.6.0 with complete auto-sync functionality
 
 ## v4.5.0 (17/07/2025)
 - 🔄 **Version Synchronization**: Updated all version references across the entire project for consistency

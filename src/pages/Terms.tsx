@@ -9,7 +9,7 @@ export const Terms: React.FC = () => {
     <LegalPageLayout
       title="Terms of Service"
       subtitle="Please read these terms carefully before using Code Guardian."
-      lastUpdated="January 15, 2025"
+      lastUpdated="July 17, 2025"
       icon={<Scale className="h-8 w-8" />}
     >
       {/* Introduction */}

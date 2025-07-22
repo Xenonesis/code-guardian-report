@@ -1,5 +1,6 @@
 import React from 'react';
 import { Code2, Cpu, Layers, Zap } from 'lucide-react';
+import { APP_VERSION } from '@/utils/version';
 
 export const VersionInfo: React.FC = () => {
   const techStack = [
@@ -19,7 +20,7 @@ export const VersionInfo: React.FC = () => {
           </div>
           <div>
             <span className="text-sm font-medium text-slate-600 dark:text-slate-400 block">Version</span>
-            <span className="text-lg font-bold gradient-text-animated">3.3.0</span>
+            <span className="text-lg font-bold gradient-text-animated">{APP_VERSION}</span>
           </div>
         </div>
       </div>

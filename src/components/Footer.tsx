@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Shield, Heart, Mail, Github, Globe, Scale, FileText, Code, Building2, Brain, Star, Users, Twitter, Linkedin, ExternalLink } from 'lucide-react';
+import { APP_VERSION_WITH_PREFIX } from '@/utils/version';
 
 interface FooterProps {
   className?: string;
@@ -161,7 +162,7 @@ export const Footer: React.FC<FooterProps> = ({ className = '' }) => {
               </a>
               <div className="flex items-center gap-2 px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
                 <Code className="h-4 w-4 text-slate-600 dark:text-slate-400" />
-                <span className="text-sm text-slate-700 dark:text-slate-300">v4.0.0</span>
+                <span className="text-sm text-slate-700 dark:text-slate-300">{APP_VERSION_WITH_PREFIX}</span>
               </div>
             </div>
           </div>

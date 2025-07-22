@@ -3,6 +3,7 @@ import { PageLayout } from '@/components/layouts/PageLayout';
 import { HeroSection } from '@/components/layouts/HeroSection';
 import { useDarkMode } from '@/hooks/useDarkMode';
 import { Shield, Scale, FileText, Calendar, Mail, Globe } from 'lucide-react';
+import { APP_VERSION_WITH_PREFIX } from '@/utils/version';
 
 interface LegalPageLayoutProps {
   title: string;
@@ -61,7 +62,7 @@ export const LegalPageLayout: React.FC<LegalPageLayoutProps> = ({
                   <div className="flex flex-col sm:flex-row items-center gap-4">
                     <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
                       <Shield className="h-5 w-5 text-purple-500" />
-                      <span className="font-medium">Code Guardian v3.3.0</span>
+                      <span className="font-medium">Code Guardian {APP_VERSION_WITH_PREFIX}</span>
                     </div>
                     <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
                       <Mail className="h-5 w-5 text-orange-500" />
