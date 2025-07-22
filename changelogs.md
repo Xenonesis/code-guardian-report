@@ -1,9 +1,17 @@
 # Changelog
 
 **Project Start Date:** 2025  
-**Last Update:** 16/07/2025
+**Last Update:** 17/07/2025
 
 ---
+
+## v4.5.0 (17/07/2025)
+- 🔄 **Version Synchronization**: Updated all version references across the entire project for consistency
+- 📦 **Dependency Alignment**: Synchronized package.json, manifest, and service worker versions
+- 🛠️ **Build Optimization**: Enhanced Vite configuration with advanced chunk splitting strategies
+- 🎯 **TypeScript Updates**: Upgraded to TypeScript 5.8.3 with improved type checking
+- 📋 **Documentation**: Updated README.md with current accurate project details and dependencies
+- 🌐 **PWA Enhancements**: Updated manifest.json and service worker with latest version references
 
 ## v4.4.0 (16/07/2025)
 - Updates to `src/main.tsx` and `vite.config.ts`

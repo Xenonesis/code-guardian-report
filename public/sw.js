@@ -1,11 +1,11 @@
 // Code Guardian Enterprise - Service Worker
-// Version: 4.0.0
+// Version: 4.5.0
 // Professional PWA Service Worker with advanced caching strategies
 
-const CACHE_NAME = 'code-guardian-v4.0.0';
-const STATIC_CACHE = 'code-guardian-static-v4.0.0';
-const DYNAMIC_CACHE = 'code-guardian-dynamic-v4.0.0';
-const API_CACHE = 'code-guardian-api-v4.0.0';
+const CACHE_NAME = 'code-guardian-v4.5.0';
+const STATIC_CACHE = 'code-guardian-static-v4.5.0';
+const DYNAMIC_CACHE = 'code-guardian-dynamic-v4.5.0';
+const API_CACHE = 'code-guardian-api-v4.5.0';
 
 // Assets to cache immediately
 const STATIC_ASSETS = [

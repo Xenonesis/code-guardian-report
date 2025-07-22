@@ -1,7 +1,14 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
-import './index.css';
+// Import base styles first
+import './styles/base.css';
+// Then try importing other styles incrementally
+// import './styles/enhanced-ui.css';
+// import './styles/about-page-enhancements.css';
+// import './styles/sidebar-fix.css';
+// import './styles/sidebar-position-fix.css';
+// import './index.css';
 
 // Performance monitoring
 if ('performance' in window && 'mark' in window.performance) {

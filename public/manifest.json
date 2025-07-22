@@ -1,7 +1,7 @@
 {
   "name": "Code Guardian Enterprise - AI-Powered Security Analysis Platform",
   "short_name": "Code Guardian",
-  "version": "4.0.0",
+  "version": "4.5.0",
   "description": "Enterprise-grade static code analysis platform powered by artificial intelligence. Comprehensive security assessments, vulnerability detection, OWASP compliance, and automated remediation for mission-critical applications.",
   "start_url": "/?utm_source=pwa&utm_medium=app&utm_campaign=launch",
   "display": "standalone",
@@ -98,9 +98,9 @@
       ]
     },
     {
-      "name": "Enterprise Solutions",
-      "short_name": "Solutions",
-      "description": "Explore enterprise security solutions and features",
+      "name": "About",
+      "short_name": "About",
+      "description": "Learn about our enterprise security platform and features",
       "url": "/about?utm_source=pwa&utm_medium=shortcut",
       "icons": [
         {

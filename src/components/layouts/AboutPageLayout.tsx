@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Shield, Github, Twitter } from 'lucide-react';
 import { Navigation } from '@/components/Navigation';
 import { FeatureGrid } from '@/components/features/FeatureGrid';
-import { Footer } from '@/components/Footer';
 
 interface Feature {
   icon: React.ReactNode;
@@ -12,7 +11,7 @@ interface Feature {
   benefits?: string[];
 }
 
-interface PageLayoutProps {
+interface AboutPageLayoutProps {
   children: React.ReactNode;
   isDarkMode?: boolean;
   toggleDarkMode?: () => void;
@@ -22,7 +21,7 @@ interface PageLayoutProps {
   noContainer?: boolean;
 }
 
-export const PageLayout: React.FC<PageLayoutProps> = ({
+export const AboutPageLayout: React.FC<AboutPageLayoutProps> = ({
   children,
   isDarkMode = false,
   toggleDarkMode,
@@ -54,7 +53,7 @@ export const PageLayout: React.FC<PageLayoutProps> = ({
         )}
       </main>
 
-      {/* Features Section in Footer */}
+      {/* Features Section (if needed) */}
       {features && features.length > 0 && (
         <section className="bg-gradient-to-r from-slate-50 to-blue-50 dark:from-slate-900 dark:to-blue-950 py-16 lg:py-24">
           <FeatureGrid
@@ -66,11 +65,10 @@ export const PageLayout: React.FC<PageLayoutProps> = ({
           />
         </section>
       )}
-
-      {/* Enhanced Footer Component */}
-      <Footer />
+      
+      {/* No Footer Component */}
     </div>
   );
 };
 
-export default PageLayout;
+export default AboutPageLayout;

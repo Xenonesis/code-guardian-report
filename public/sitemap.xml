@@ -9,7 +9,7 @@
   <!-- Homepage -->
   <url>
     <loc>https://code-guardian-report.vercel.app/</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2025-07-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -22,7 +22,7 @@
   <!-- About Page -->
   <url>
     <loc>https://code-guardian-report.vercel.app/about</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2025-07-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>

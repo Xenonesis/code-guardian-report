@@ -127,7 +127,7 @@ export default defineConfig({
       }
     },
     // CSS optimization
-    cssMinify: 'lightningcss'
+    cssMinify: false // Temporarily disabled to troubleshoot CSS loading issues
   },
   // Dependency optimization
   optimizeDeps: {
@@ -146,7 +146,7 @@ export default defineConfig({
   },
   // Environment variables
   define: {
-    __APP_VERSION__: JSON.stringify(process.env.npm_package_version || '4.0.0'),
+    __APP_VERSION__: JSON.stringify(process.env.npm_package_version || '4.5.0'),
     __BUILD_TIME__: JSON.stringify(new Date().toISOString())
   },
   // ESBuild configuration
