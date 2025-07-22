@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="310" height="310">
+  <defs>
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2563eb;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4338ca;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="highlightGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.2" />
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0" />
+    </linearGradient>
+  </defs>
+  <!-- Main shield body with blue-to-indigo gradient matching navbar -->
+  <rect x="20" y="10" width="60" height="80" rx="10" fill="url(#shieldGrad)" />
+  
+  <!-- Shield icon (simplified) -->
+  <path d="M50 25 L30 35 L30 55 Q30 65 50 75 Q70 65 70 55 L70 35 Z" fill="white" />
+  
+  <!-- Highlight overlay for 3D effect -->
+  <rect x="20" y="10" width="60" height="80" rx="10" fill="url(#highlightGrad)" />
+</svg>

@@ -1,15 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="32" height="32">
   <defs>
-    <linearGradient id="professionalShieldGrad32" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#1e293b;stop-opacity:1" />
-      <stop offset="50%" style="stop-color:#475569;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#334155;stop-opacity:1" />
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2563eb;stop-opacity:1" /> <!-- blue-600 -->
+      <stop offset="100%" style="stop-color:#4f46e5;stop-opacity:1" /> <!-- indigo-600 -->
+    </linearGradient>
+    <linearGradient id="highlightGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.2" />
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0" />
     </linearGradient>
   </defs>
-  <!-- Medium detail shield -->
-  <path d="M16 4 L6 8 L6 18 Q6 24 16 28 Q26 24 26 18 L26 8 Z" fill="url(#professionalShieldGrad32)" stroke="#0f172a" stroke-width="1"/>
-  <!-- Checkmark -->
-  <path d="M11 16 L14 19 L21 12" stroke="#3b82f6" stroke-width="2" fill="none" stroke-linecap="round"/>
-  <!-- Small highlight -->
-  <path d="M16 6 L8 9 L8 11 L16 8 L24 11 L24 9 Z" fill="#3b82f6" opacity="0.3"/>
+  <!-- Rounded square background with gradient matching navbar -->
+  <rect x="15" y="15" width="70" height="70" rx="15" fill="url(#shieldGrad)" filter="drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1))" />
+  
+  <!-- Shield icon in white -->
+  <path d="M50 25 L30 35 L30 55 Q30 65 50 75 Q70 65 70 55 L70 35 Z" fill="white" />
+  
+  <!-- Highlight overlay for 3D effect -->
+  <rect x="15" y="15" width="70" height="70" rx="15" fill="url(#highlightGrad)" opacity="0" />
 </svg>

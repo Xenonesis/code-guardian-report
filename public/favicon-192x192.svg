@@ -1,28 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="192" height="192">
   <defs>
-    <linearGradient id="professionalShieldGrad192" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#1e293b;stop-opacity:1" />
-      <stop offset="25%" style="stop-color:#475569;stop-opacity:1" />
-      <stop offset="75%" style="stop-color:#334155;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#1e293b;stop-opacity:1" />
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2563eb;stop-opacity:1" /> <!-- blue-600 -->
+      <stop offset="100%" style="stop-color:#4f46e5;stop-opacity:1" /> <!-- indigo-600 -->
     </linearGradient>
-    <linearGradient id="accentGrad192" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#1d4ed8;stop-opacity:1" />
+    <linearGradient id="highlightGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.2" />
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0" />
     </linearGradient>
-    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
-      <feDropShadow dx="2" dy="4" stdDeviation="3" flood-color="#000000" flood-opacity="0.3"/>
-    </filter>
   </defs>
-  <!-- Background circle -->
-  <circle cx="96" cy="96" r="88" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
-  <!-- Main shield body with shadow -->
-  <path d="M96 32 L48 52 L48 112 Q48 142 96 162 Q144 142 144 112 L144 52 Z" fill="url(#professionalShieldGrad192)" stroke="#0f172a" stroke-width="3" filter="url(#shadow)"/>
-  <!-- Security checkmark -->
-  <path d="M72 96 L88 112 L120 80" stroke="url(#accentGrad192)" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-  <!-- Professional highlight -->
-  <path d="M96 40 L56 58 L56 72 L96 54 L136 72 L136 58 Z" fill="url(#accentGrad192)" opacity="0.4"/>
-  <!-- Enterprise badge -->
-  <rect x="76" y="130" width="40" height="12" rx="6" fill="url(#accentGrad192)" opacity="0.8"/>
-  <text x="96" y="139" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="white">SECURE</text>
+  <!-- Rounded square background with gradient matching navbar -->
+  <rect x="15" y="15" width="70" height="70" rx="15" fill="url(#shieldGrad)" filter="drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1))" />
+  
+  <!-- Shield icon in white -->
+  <path d="M50 25 L30 35 L30 55 Q30 65 50 75 Q70 65 70 55 L70 35 Z" fill="white" />
+  
+  <!-- Highlight overlay for 3D effect -->
+  <rect x="15" y="15" width="70" height="70" rx="15" fill="url(#highlightGrad)" opacity="0" />
 </svg>

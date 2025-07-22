@@ -1,19 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
   <defs>
-    <linearGradient id="professionalShieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#1e293b;stop-opacity:1" />
-      <stop offset="50%" style="stop-color:#475569;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#334155;stop-opacity:1" />
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2563eb;stop-opacity:1" /> <!-- blue-600 -->
+      <stop offset="100%" style="stop-color:#4f46e5;stop-opacity:1" /> <!-- indigo-600 -->
     </linearGradient>
-    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#1d4ed8;stop-opacity:1" />
+    <linearGradient id="highlightGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.2" />
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0" />
     </linearGradient>
   </defs>
-  <!-- Main shield body -->
-  <path d="M50 10 L20 25 L20 55 Q20 75 50 90 Q80 75 80 55 L80 25 Z" fill="url(#professionalShieldGrad)" stroke="#0f172a" stroke-width="2"/>
-  <!-- Security checkmark -->
-  <path d="M35 45 L45 55 L65 35" stroke="url(#accentGrad)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-  <!-- Professional highlight -->
-  <path d="M50 15 L25 28 L25 35 L50 22 L75 35 L75 28 Z" fill="url(#accentGrad)" opacity="0.3"/>
+  <!-- Rounded square background with gradient matching navbar -->
+  <rect x="15" y="15" width="70" height="70" rx="15" fill="url(#shieldGrad)" filter="drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1))" />
+  
+  <!-- Shield icon in white -->
+  <path d="M50 25 L30 35 L30 55 Q30 65 50 75 Q70 65 70 55 L70 35 Z" fill="white" />
+  
+  <!-- Highlight overlay for 3D effect -->
+  <rect x="15" y="15" width="70" height="70" rx="15" fill="url(#highlightGrad)" opacity="0" />
 </svg>

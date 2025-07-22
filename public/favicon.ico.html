@@ -1,0 +1,70 @@
+<!-- 
+This is a helper file to generate favicon.ico
+1. Open this file in a browser
+2. Right-click on the rendered icon and save it as favicon.ico
+3. Move the saved file to the public directory
+-->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Favicon Generator</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+      flex-direction: column;
+    }
+    .icon-container {
+      width: 32px;
+      height: 32px;
+      margin: 20px;
+    }
+    .instructions {
+      max-width: 600px;
+      margin: 20px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="instructions">
+    <h2>Favicon.ico Generator</h2>
+    <p>To create the favicon.ico file:</p>
+    <ol>
+      <li>Right-click on the icon below</li>
+      <li>Select "Save image as..."</li>
+      <li>Save it as "favicon.ico" in your public directory</li>
+    </ol>
+    <p>Note: Some browsers might save it as PNG. If that happens, you'll need to use an online converter to convert it to ICO format.</p>
+  </div>
+  
+  <div class="icon-container">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="32" height="32">
+      <defs>
+        <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#2563eb;stop-opacity:1" /> <!-- blue-600 -->
+          <stop offset="100%" style="stop-color:#4f46e5;stop-opacity:1" /> <!-- indigo-600 -->
+        </linearGradient>
+        <linearGradient id="highlightGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.2" />
+          <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0" />
+        </linearGradient>
+      </defs>
+      <!-- Rounded square background with gradient matching navbar -->
+      <rect x="15" y="15" width="70" height="70" rx="15" fill="url(#shieldGrad)" filter="drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1))" />
+      
+      <!-- Shield icon in white -->
+      <path d="M50 25 L30 35 L30 55 Q30 65 50 75 Q70 65 70 55 L70 35 Z" fill="white" />
+      
+      <!-- Highlight overlay for 3D effect -->
+      <rect x="15" y="15" width="70" height="70" rx="15" fill="url(#highlightGrad)" opacity="0" />
+    </svg>
+  </div>
+</body>
+</html>

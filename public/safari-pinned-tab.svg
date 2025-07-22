@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Safari pinned tab requires a single color silhouette -->
+  <path d="M30 15 h40 a15 15 0 0 1 15 15 v40 a15 15 0 0 1 -15 15 h-40 a15 15 0 0 1 -15 -15 v-40 a15 15 0 0 1 15 -15 z" />
+  <path d="M50 25 L30 35 L30 55 Q30 65 50 75 Q70 65 70 55 L70 35 Z" fill-rule="evenodd" />
+</svg>

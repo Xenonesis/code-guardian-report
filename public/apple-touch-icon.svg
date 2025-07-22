@@ -1,26 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="180" height="180">
   <defs>
-    <linearGradient id="professionalShieldGradApple" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#1e293b;stop-opacity:1" />
-      <stop offset="30%" style="stop-color:#475569;stop-opacity:1" />
-      <stop offset="70%" style="stop-color:#334155;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#1e293b;stop-opacity:1" />
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2563eb;stop-opacity:1" /> <!-- blue-600 -->
+      <stop offset="100%" style="stop-color:#4f46e5;stop-opacity:1" /> <!-- indigo-600 -->
     </linearGradient>
-    <linearGradient id="accentGradApple" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#1d4ed8;stop-opacity:1" />
+    <linearGradient id="highlightGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.2" />
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0" />
     </linearGradient>
   </defs>
-  <!-- Background rounded rectangle for iOS -->
-  <rect x="0" y="0" width="180" height="180" rx="40" ry="40" fill="#f8fafc"/>
-  <!-- Main shield body -->
-  <path d="M90 30 L45 50 L45 110 Q45 140 90 160 Q135 140 135 110 L135 50 Z" fill="url(#professionalShieldGradApple)" stroke="#0f172a" stroke-width="3"/>
-  <!-- Security checkmark -->
-  <path d="M70 90 L85 105 L115 75" stroke="url(#accentGradApple)" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-  <!-- Professional highlight -->
-  <path d="M90 38 L52 58 L52 70 L90 50 L128 70 L128 58 Z" fill="url(#accentGradApple)" opacity="0.4"/>
-  <!-- Additional security elements -->
-  <circle cx="90" cy="130" r="3" fill="url(#accentGradApple)" opacity="0.6"/>
-  <circle cx="80" cy="125" r="2" fill="url(#accentGradApple)" opacity="0.4"/>
-  <circle cx="100" cy="125" r="2" fill="url(#accentGradApple)" opacity="0.4"/>
+  <!-- Rounded square background with gradient matching navbar -->
+  <rect x="15" y="15" width="70" height="70" rx="15" fill="url(#shieldGrad)" filter="drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1))" />
+  
+  <!-- Shield icon in white -->
+  <path d="M50 25 L30 35 L30 55 Q30 65 50 75 Q70 65 70 55 L70 35 Z" fill="white" />
+  
+  <!-- Highlight overlay for 3D effect -->
+  <rect x="15" y="15" width="70" height="70" rx="15" fill="url(#highlightGrad)" opacity="0" />
 </svg>
