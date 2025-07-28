@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { Shield, Heart, Mail, Github, Globe, Scale, FileText, Code, Building2, Brain, Star, Users, Twitter, Linkedin, ExternalLink } from 'lucide-react';
+import { Shield, Heart, Mail, Github, Globe, Scale, FileText, Code, Building2, Brain, Star, Users, Youtube, Linkedin, ExternalLink } from 'lucide-react';
 import { APP_VERSION_WITH_PREFIX } from '@/utils/version';
 
 interface FooterProps {
@@ -28,9 +28,9 @@ export const Footer: React.FC<FooterProps> = ({ className = '' }) => {
   };
 
   const socialLinks = [
-    { name: 'GitHub', icon: Github, href: '#' },
-    { name: 'Twitter', icon: Twitter, href: '#' },
-    { name: 'LinkedIn', icon: Linkedin, href: '#' }
+    { name: 'GitHub', icon: Github, href: 'https://github.com/Xenonesis/code-guardian-report' },
+    { name: 'YouTube', icon: Youtube, href: 'https://youtube.com/@techiaddy?si=lPZBPOwHtnrFz-mk' },
+    { name: 'LinkedIn', icon: Linkedin, href: 'https://www.linkedin.com/in/itisaddy/' }
   ];
 
   return (
