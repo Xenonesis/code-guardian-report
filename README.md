@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🛡️ Code Guardian v4.5.0
+# 🛡️ Code Guardian v4.7.0
 ### 🚀 Next-Generation AI-Powered Security Analysis Platform
 Enhanced with AI Fix Suggestions, Secure Code Search, and Code Provenance Monitoring
 
