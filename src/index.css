@@ -27,28 +27,45 @@
         .shadow-3xl,
         .rounded-3xl,
         .rounded-4xl {
-            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.16s cubic-bezier(0.4, 0, 0.2, 1);
             will-change: transform, box-shadow, background, color, border;
         }
         button:focus,
         a:focus,
         .btn:focus {
             outline: none;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.25);
-            transition: box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.18);
+            transition: box-shadow 0.09s cubic-bezier(0.4, 0, 0.2, 1);
         }
         button:active,
         a:active,
         .btn:active {
-            transform: scale(0.97);
-            transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: scale(0.99);
+            transition: transform 0.07s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        /* Smoother hover for cards and interactive blocks */
+        /* Smoother and faster hover for cards and interactive blocks */
         .card,
         .shadow-3xl,
         .rounded-3xl,
         .rounded-4xl {
-            transition: box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1), transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: box-shadow 0.16s cubic-bezier(0.4, 0, 0.2, 1), transform 0.16s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        /* Accessibility: reduce motion for users who prefer it */
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+                transition: none !important;
+            }
+            body,
+            button,
+            a,
+            .btn,
+            .card,
+            .shadow-3xl,
+            .rounded-3xl,
+            .rounded-4xl {
+                transition: none !important;
+            }
         }
         /* Modern Color System */
         --background: 0 0% 100%;

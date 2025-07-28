@@ -22,10 +22,11 @@ const SmoothScroll = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const lenis = new Lenis({
-      lerp: 0.07, // slightly slower for more buttery smoothness
+      lerp: 0.18, // higher lerp for faster, still smooth
       smoothWheel: true,
       syncTouch: true,
       infinite: false,
+      easing: (t: number) => t < 0.5 ? 2*t*t : -1+(4-2*t)*t // easeInOutQuad for snappy yet smooth
     });
     lenisRef.current = lenis;
 
@@ -55,15 +56,19 @@ const ScrollToTop = () => {
   const lenis = useContext(LenisContext);
 
   useEffect(() => {
-    // Add a small delay to allow new page content to render before scrolling
-    const timeout = setTimeout(() => {
+    // Use requestIdleCallback for optimal scroll timing
+    const idle = (window as any).requestIdleCallback || ((cb: any) => setTimeout(cb, 1));
+    const handle = idle(() => {
       if (lenis) {
-        lenis.scrollTo(0, { immediate: false, duration: 1.2, easing: (t: number) => 1 - Math.pow(1 - t, 3) });
+        lenis.scrollTo(0, { immediate: false, duration: 0.7, easing: (t: number) => t < 0.5 ? 2*t*t : -1+(4-2*t)*t });
       } else {
         window.scrollTo({ top: 0, behavior: "smooth" });
       }
-    }, 80);
-    return () => clearTimeout(timeout);
+    });
+    return () => {
+      if ((window as any).cancelIdleCallback) (window as any).cancelIdleCallback(handle);
+      else clearTimeout(handle);
+    };
   }, [location, lenis]);
   return null;
 };
