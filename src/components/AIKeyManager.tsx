@@ -596,7 +596,7 @@ export const AIKeyManager: React.FC = () => {
                       >
                         <SelectValue placeholder="Select provider" />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent className="z-[9999] bg-slate-900 text-white border border-slate-700 shadow-lg ">
                         {aiProviders.map((provider) => (
                           <SelectItem key={provider.id} value={provider.id}>
                             <div className="flex items-center gap-2">
