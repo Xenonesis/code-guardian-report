@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+// src/components/AIKeyManager.tsx
+
+import React, { useState, useEffect, useCallback } from 'react';
 import { Key, Eye, EyeOff, Plus, Trash2, Bot, AlertTriangle } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -7,7 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { setLocalStorageItem } from '@/utils/storageEvents';
+import { setLocalStorageItem, removeLocalStorageItem } from '@/utils/storageEvents'; // Ensure both are imported
 
 interface AIProvider {
   id: string;
@@ -285,28 +287,46 @@ interface APIKey {
 }
 
 export const AIKeyManager: React.FC = () => {
-  const [apiKeys, setApiKeys] = useState<APIKey[]>([]);
+  // Initialize apiKeys state by reading from localStorage directly (Lazy Initialization)
+  // This function runs only once when the component mounts for the first time
+  const [apiKeys, setApiKeys] = useState<APIKey[]>(() => {
+    // console.log("AIKeyManager: Initializing apiKeys state from localStorage (lazy init)..."); // Debug log removed for PR
+    try {
+      const storedKeys = localStorage.getItem('aiApiKeys');
+      if (storedKeys) {
+        const parsedKeys = JSON.parse(storedKeys);
+        // console.log("AIKeyManager: Keys found in localStorage during lazy init:", parsedKeys); // Debug log removed for PR
+        return parsedKeys;
+      }
+    } catch (error) {
+      // console.error('AIKeyManager: Error parsing stored API keys during lazy init:', error); // Debug log removed for PR
+      localStorage.removeItem('aiApiKeys'); // Clear bad data if parsing fails
+    }
+    // console.log("AIKeyManager: No keys found or error during lazy init, returning empty array."); // Debug log removed for PR
+    return []; // Default to empty array if no keys are found or an error occurs
+  });
+
   const [newKey, setNewKey] = useState({ provider: '', model: '', key: '', name: '' });
   const [showKeys, setShowKeys] = useState<Record<string, boolean>>({});
   const [isAdding, setIsAdding] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Effect to save keys to localStorage whenever apiKeys state changes
+  // This effect is now responsible for ALL saves (add, remove)
   useEffect(() => {
-    const storedKeys = localStorage.getItem('aiApiKeys');
-    if (storedKeys) {
-      try {
-        const parsedKeys = JSON.parse(storedKeys);
-        setApiKeys(parsedKeys);
-      } catch (error) {
-        console.error('Error loading API keys:', error);
-      }
+    // This condition prevents saving an empty array on the very first render if no keys exist
+    // It will save when keys are added, or removed.
+    if (apiKeys.length > 0) {
+      const keysToSave = JSON.stringify(apiKeys);
+      // console.log("AIKeyManager: apiKeys state changed. Attempting to save to localStorage:", keysToSave); // Debug log removed for PR
+      setLocalStorageItem('aiApiKeys', keysToSave);
+    } else {
+      // If apiKeys array becomes empty (e.g., all keys removed), ensure localStorage is cleared
+      // console.log("AIKeyManager: apiKeys state is empty. Ensuring 'aiApiKeys' is removed from localStorage."); // Debug log removed for PR
+      removeLocalStorageItem('aiApiKeys'); // Using your utility function to clean up
     }
-  }, []);
-
-  useEffect(() => {
-    setLocalStorageItem('aiApiKeys', JSON.stringify(apiKeys));
-  }, [apiKeys]);
+  }, [apiKeys]); // Dependency on apiKeys state
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
@@ -355,22 +375,23 @@ export const AIKeyManager: React.FC = () => {
       }
 
       const key: APIKey = {
-        id: Date.now().toString(),
+        id: Date.now().toString(), // Using Date.now() for a unique ID
         provider: newKey.provider.trim(),
         model: newKey.model.trim(),
         key: newKey.key.trim(),
         name: newKey.name.trim(),
       };
 
-      console.log('Adding new API key:', { ...key, key: '***hidden***' });
+      // console.log('AIKeyManager: Adding new API key to state:', { ...key, key: '***hidden***' }); // Debug log removed for PR
+      setApiKeys(prevKeys => [...prevKeys, key]); // This will trigger the save useEffect automatically
+      // console.log("AIKeyManager: API key added to state, save useEffect should be triggered."); // Debug log removed for PR
 
-      setApiKeys(prevKeys => [...prevKeys, key]);
       setNewKey({ provider: '', model: '', key: '', name: '' });
       setIsAdding(false);
       setErrors({});
 
     } catch (error) {
-      console.error('Error adding API key:', error);
+      // console.error('AIKeyManager: Error adding API key:', error); // Debug log removed for PR
       setErrors({ general: 'Failed to add API key. Please try again.' });
     } finally {
       setIsSubmitting(false);
@@ -378,7 +399,10 @@ export const AIKeyManager: React.FC = () => {
   };
 
   const removeAPIKey = (id: string) => {
-    setApiKeys(apiKeys.filter(key => key.id !== id));
+    // console.log(`AIKeyManager: Attempting to remove API key with ID: ${id}`); // Debug log removed for PR
+    const updatedKeys = apiKeys.filter(key => key.id !== id);
+    setApiKeys(updatedKeys); // This will trigger the save useEffect (and clear localStorage if array becomes empty)
+    // console.log("AIKeyManager: API key removed from state, save useEffect should be triggered (clearing if empty)."); // Debug log removed for PR
   };
 
   const toggleKeyVisibility = (id: string) => {
@@ -415,6 +439,8 @@ export const AIKeyManager: React.FC = () => {
     const provider = aiProviders.find(p => p.id === providerId);
     return provider?.keyPlaceholder || 'Enter your API key';
   };
+
+  // console.log("AIKeyManager: Current apiKeys state during render:", apiKeys); // Debug log removed for PR
 
   return (
     <Card className="w-full max-w-4xl mx-auto card-hover animate-fade-in">
@@ -481,6 +507,7 @@ export const AIKeyManager: React.FC = () => {
             </Button>
           </div>
 
+          {/* Conditional rendering based on apiKeys.length is key here */}
           {apiKeys.length === 0 && !isAdding && (
             <Alert className="animate-fade-in">
               <Key className="h-4 w-4" />
@@ -496,7 +523,7 @@ export const AIKeyManager: React.FC = () => {
               const model = getModelInfo(key.provider, key.model);
               return (
                 <div
-                  key={key.id}
+                  key={key.id} // Ensure this key is truly unique for React list rendering
                   className={`flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 p-3 sm:p-4 border rounded-lg bg-gray-50 dark:bg-gray-800 hover:border-purple-300 dark:hover:border-purple-600 transition-colors duration-200 animate-fade-in animate-stagger-${Math.min(index + 1, 5)}`}
                 >
                   <div className="flex items-center gap-3 min-w-0 flex-1">
