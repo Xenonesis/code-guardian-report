@@ -17,33 +17,35 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ onStartAnalysis }) => {
       className="relative min-h-[90vh] sm:min-h-[85vh] flex items-center justify-center px-4 sm:px-6"
     >
       {/* Revolutionary Background Effects */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
         {/* Dynamic Animated Grid */}
         <div className="absolute inset-0 bg-grid-slate-100 dark:bg-grid-slate-800 opacity-40 animate-pulse-slow" />
 
         {/* Advanced Floating Tech Elements */}
-        <div className="absolute top-16 left-8 animate-float">
-          <div className="p-5 bg-gradient-to-r from-blue-500/30 to-indigo-500/30 rounded-3xl backdrop-blur-2xl border border-blue-500/40 shadow-3xl hover:scale-125 transition-all duration-700 group">
-            <Brain className="h-10 w-10 text-blue-400 group-hover:animate-pulse" />
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 to-indigo-400/20 rounded-3xl animate-pulse"></div>
+        <div className="hidden md:block">
+          <div className="absolute top-10 left-10 animate-float">
+            <div className="p-4 bg-gradient-to-r from-blue-500/30 to-indigo-500/30 rounded-3xl backdrop-blur-2xl border border-blue-500/40 shadow-3xl group">
+              <Brain className="h-8 w-8 text-blue-400 group-hover:animate-pulse" />
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 to-indigo-400/20 rounded-3xl animate-pulse"></div>
+            </div>
           </div>
-        </div>
-        <div className="absolute top-24 right-12 animate-float-delayed">
-          <div className="p-5 bg-gradient-to-r from-red-500/30 to-pink-500/30 rounded-3xl backdrop-blur-2xl border border-red-500/40 shadow-3xl hover:scale-125 transition-all duration-700 group">
-            <Lock className="h-10 w-10 text-red-400 group-hover:animate-pulse" />
-            <div className="absolute inset-0 bg-gradient-to-r from-red-400/20 to-pink-400/20 rounded-3xl animate-pulse"></div>
+          <div className="absolute top-20 right-10 animate-float-delayed">
+            <div className="p-4 bg-gradient-to-r from-red-500/30 to-pink-500/30 rounded-3xl backdrop-blur-2xl border border-red-500/40 shadow-3xl group">
+              <Lock className="h-8 w-8 text-red-400 group-hover:animate-pulse" />
+              <div className="absolute inset-0 bg-gradient-to-r from-red-400/20 to-pink-400/20 rounded-3xl animate-pulse"></div>
+            </div>
           </div>
-        </div>
-        <div className="absolute bottom-24 left-16 animate-bounce-slow">
-          <div className="p-5 bg-gradient-to-r from-emerald-500/30 to-teal-500/30 rounded-3xl backdrop-blur-2xl border border-emerald-500/40 shadow-3xl hover:scale-125 transition-all duration-700 group">
-            <Rocket className="h-10 w-10 text-emerald-400 group-hover:animate-pulse" />
-            <div className="absolute inset-0 bg-gradient-to-r from-emerald-400/20 to-teal-400/20 rounded-3xl animate-pulse"></div>
+          <div className="absolute bottom-16 left-16 animate-bounce-slow">
+            <div className="p-4 bg-gradient-to-r from-emerald-500/30 to-teal-500/30 rounded-3xl backdrop-blur-2xl border border-emerald-500/40 shadow-3xl group">
+              <Rocket className="h-8 w-8 text-emerald-400 group-hover:animate-pulse" />
+              <div className="absolute inset-0 bg-gradient-to-r from-emerald-400/20 to-teal-400/20 rounded-3xl animate-pulse"></div>
+            </div>
           </div>
-        </div>
-        <div className="absolute top-40 right-32 animate-float-slow">
-          <div className="p-5 bg-gradient-to-r from-purple-500/30 to-violet-500/30 rounded-3xl backdrop-blur-2xl border border-purple-500/40 shadow-3xl hover:scale-125 transition-all duration-700 group">
-            <Code className="h-10 w-10 text-purple-400 group-hover:animate-pulse" />
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-400/20 to-violet-400/20 rounded-3xl animate-pulse"></div>
+          <div className="absolute top-32 right-32 animate-float-slow">
+            <div className="p-4 bg-gradient-to-r from-purple-500/30 to-violet-500/30 rounded-3xl backdrop-blur-2xl border border-purple-500/40 shadow-3xl group">
+              <Code className="h-8 w-8 text-purple-400 group-hover:animate-pulse" />
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-400/20 to-violet-400/20 rounded-3xl animate-pulse"></div>
+            </div>
           </div>
         </div>
 
