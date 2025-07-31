@@ -23,7 +23,8 @@ export const Navigation: React.FC<NavigationProps> = ({ isDarkMode, toggleDarkMo
       
       // Update active section based on scroll position
       const sections = ['home', 'about', 'privacy', 'terms'];
-      const scrollPosition = window.scrollY + 100; // Offset for navbar height
+      const navbarHeight = 64; // h-16 = 64px
+      const scrollPosition = window.scrollY + navbarHeight + 20; // Add some buffer
       
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = document.getElementById(sections[i]);
@@ -38,13 +39,16 @@ export const Navigation: React.FC<NavigationProps> = ({ isDarkMode, toggleDarkMo
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Smooth scroll to section
+  // Smooth scroll to section with proper offset
   const scrollToSection = (sectionId: string) => {
     const section = document.getElementById(sectionId);
     if (section) {
-      section.scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start'
+      const navbarHeight = 64; // h-16 = 64px
+      const targetPosition = section.offsetTop - navbarHeight;
+      
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth'
       });
     }
     setIsMobileMenuOpen(false);
