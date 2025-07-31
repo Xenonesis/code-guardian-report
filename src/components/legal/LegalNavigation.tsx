@@ -1,21 +1,33 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
 import { Shield, Scale, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-export const LegalNavigation: React.FC = () => {
-  const location = useLocation();
+interface LegalNavigationProps {
+  currentSection?: string;
+}
+
+export const LegalNavigation: React.FC<LegalNavigationProps> = ({ currentSection = 'privacy' }) => {
+  // Smooth scroll to section
+  const scrollToSection = (sectionId: string) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
 
   const legalPages = [
     {
-      path: '/privacy',
+      id: 'privacy',
       title: 'Privacy Policy',
       description: 'How we protect and handle your data',
       icon: <Shield className="h-5 w-5" />,
       gradient: 'from-blue-500 to-indigo-500'
     },
     {
-      path: '/terms',
+      id: 'terms',
       title: 'Terms of Service',
       description: 'Rules and guidelines for using our service',
       icon: <Scale className="h-5 w-5" />,
@@ -23,8 +35,7 @@ export const LegalNavigation: React.FC = () => {
     }
   ];
 
-  const currentPage = legalPages.find(page => page.path === location.pathname);
-  const otherPage = legalPages.find(page => page.path !== location.pathname);
+  const otherPage = legalPages.find(page => page.id !== currentSection);
 
   if (!otherPage) return null;
 
@@ -39,9 +50,9 @@ export const LegalNavigation: React.FC = () => {
         </p>
       </div>
 
-      <Link
-        to={otherPage.path}
-        className="glass-card-ultra enhanced-card-hover glow-on-hover block p-6 rounded-2xl group"
+      <button
+        onClick={() => scrollToSection(otherPage.id)}
+        className="glass-card-ultra enhanced-card-hover glow-on-hover block p-6 rounded-2xl group w-full text-left"
       >
         <div className="flex items-center gap-4">
           <div className={`p-3 bg-gradient-to-r ${otherPage.gradient} rounded-xl text-white group-hover:scale-110 transition-transform duration-300`}>
@@ -59,7 +70,7 @@ export const LegalNavigation: React.FC = () => {
           
           <ArrowRight className="h-5 w-5 text-slate-400 group-hover:text-blue-500 group-hover:translate-x-1 transition-all duration-300" />
         </div>
-      </Link>
+      </button>
     </div>
   );
 };

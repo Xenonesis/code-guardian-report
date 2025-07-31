@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
-import { Shield, Heart, Mail, Github, Globe, Scale, FileText, Code, Building2, Brain, Star, Users, Youtube, Linkedin, ExternalLink } from 'lucide-react';
+import { Shield, Heart, Mail, Github, Globe, Scale, FileText, Code, Building2, Brain, Star, Users, Youtube, Linkedin, ExternalLink, ArrowUp } from 'lucide-react';
 import { APP_VERSION_WITH_PREFIX } from '@/utils/version';
+import { Button } from '@/components/ui/button';
 
 interface FooterProps {
   className?: string;
@@ -10,14 +10,30 @@ interface FooterProps {
 export const Footer: React.FC<FooterProps> = ({ className = '' }) => {
   const currentYear = new Date().getFullYear();
 
+  // Smooth scroll to section
+  const scrollToSection = (sectionId: string) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
+
+  // Scroll to top
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const footerLinks = {
     main: [
-      { path: '/', label: 'AI Platform', description: 'Next-gen security analysis' },
-      { path: '/about', label: 'About', description: 'Enterprise tools' }
+      { id: 'home', label: 'AI Platform', description: 'Next-gen security analysis' },
+      { id: 'about', label: 'About', description: 'Enterprise tools' }
     ],
     legal: [
-      { path: '/privacy', label: 'Privacy Policy', description: 'Data protection' },
-      { path: '/terms', label: 'Terms of Service', description: 'Usage terms' }
+      { id: 'privacy', label: 'Privacy Policy', description: 'Data protection' },
+      { id: 'terms', label: 'Terms of Service', description: 'Usage terms' }
     ],
     resources: [
       { path: '#', label: 'Documentation', description: 'User guides' },
@@ -34,40 +50,50 @@ export const Footer: React.FC<FooterProps> = ({ className = '' }) => {
   ];
 
   return (
-    <footer className={`bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 ${className}`}>
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <footer className={`relative overflow-hidden bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 dark:from-slate-950 dark:via-blue-950 dark:to-slate-950 border-t border-slate-200/10 dark:border-slate-700/30 ${className}`}>
+      {/* Enhanced Background Effects */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-64 h-64 bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-pink-500/5 rounded-full blur-3xl animate-float-slow"></div>
+        <div className="absolute bottom-0 right-1/4 w-48 h-48 bg-gradient-to-r from-emerald-500/5 via-teal-500/5 to-cyan-500/5 rounded-full blur-3xl animate-float-delayed"></div>
+        <div className="absolute top-1/2 left-0 w-32 h-32 bg-gradient-to-r from-orange-500/5 to-red-500/5 rounded-full blur-2xl animate-pulse-slow"></div>
+      </div>
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-12">
           {/* Brand Section */}
           <div className="lg:col-span-2">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg">
-                <Shield className="h-6 w-6 text-white" />
+            <div className="flex items-center gap-4 mb-6">
+              <div className="relative p-3 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-300">
+                <Shield className="h-7 w-7 text-white" />
+                <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
               <div>
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white">
+                <h3 className="text-2xl font-bold bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">
                   Code Guardian
                 </h3>
-                <p className="text-sm text-slate-600 dark:text-slate-400">AI-Powered Security Platform</p>
+                <p className="text-sm text-slate-300 font-medium">AI-Powered Security Platform</p>
               </div>
             </div>
             
-            <p className="text-slate-600 dark:text-slate-400 mb-6 max-w-md">
-              Revolutionizing code security with advanced AI analysis, real-time threat detection, and comprehensive vulnerability assessment.
+            <p className="text-slate-300 mb-8 max-w-md leading-relaxed">
+              Revolutionizing code security with advanced AI analysis, real-time threat detection, and comprehensive vulnerability assessment for modern development teams.
             </p>
 
-            {/* Social Links */}
-            <div className="flex items-center gap-3">
+            {/* Enhanced Social Links */}
+            <div className="flex items-center gap-4">
               {socialLinks.map((social) => {
                 const IconComponent = social.icon;
                 return (
                   <a
                     key={social.name}
                     href={social.href}
-                    className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white transition-all duration-200"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group p-3 rounded-xl bg-slate-800/50 hover:bg-slate-700/50 text-slate-300 hover:text-white transition-all duration-300 border border-slate-700/50 hover:border-slate-600/50 hover:scale-110"
                     aria-label={social.name}
                   >
-                    <IconComponent className="h-5 w-5" />
+                    <IconComponent className="h-5 w-5 group-hover:scale-110 transition-transform duration-300" />
                   </a>
                 );
               })}
@@ -76,19 +102,23 @@ export const Footer: React.FC<FooterProps> = ({ className = '' }) => {
 
           {/* Platform Links */}
           <div>
-            <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
-              <Brain className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+            <h4 className="text-sm font-semibold text-white mb-6 flex items-center gap-2">
+              <div className="p-1.5 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-lg">
+                <Brain className="h-3 w-3 text-white" />
+              </div>
               Platform
             </h4>
-            <ul className="space-y-3">
+            <ul className="space-y-4">
               {footerLinks.main.map((link) => (
-                <li key={link.path}>
-                  <Link
-                    to={link.path}
-                    className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-200"
+                <li key={link.id}>
+                  <button
+                    onClick={() => scrollToSection(link.id)}
+                    className="text-slate-300 hover:text-white transition-all duration-300 group flex items-center gap-2"
                   >
-                    {link.label}
-                  </Link>
+                    <span className="group-hover:translate-x-1 transition-transform duration-300">
+                      {link.label}
+                    </span>
+                  </button>
                 </li>
               ))}
             </ul>
@@ -96,19 +126,23 @@ export const Footer: React.FC<FooterProps> = ({ className = '' }) => {
 
           {/* Resources Links */}
           <div>
-            <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
-              <FileText className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+            <h4 className="text-sm font-semibold text-white mb-6 flex items-center gap-2">
+              <div className="p-1.5 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg">
+                <FileText className="h-3 w-3 text-white" />
+              </div>
               Resources
             </h4>
-            <ul className="space-y-3">
+            <ul className="space-y-4">
               {footerLinks.resources.map((link) => (
                 <li key={link.path}>
                   <a
                     href={link.path}
-                    className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-200 flex items-center gap-1"
+                    className="text-slate-300 hover:text-white transition-all duration-300 group flex items-center gap-2"
                   >
-                    {link.label}
-                    {link.path === '#' && <ExternalLink className="h-3 w-3" />}
+                    <span className="group-hover:translate-x-1 transition-transform duration-300">
+                      {link.label}
+                    </span>
+                    {link.path === '#' && <ExternalLink className="h-3 w-3 opacity-60 group-hover:opacity-100" />}
                   </a>
                 </li>
               ))}
@@ -117,37 +151,43 @@ export const Footer: React.FC<FooterProps> = ({ className = '' }) => {
 
           {/* Legal Links */}
           <div>
-            <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
-              <Scale className="h-4 w-4 text-purple-600 dark:text-purple-400" />
+            <h4 className="text-sm font-semibold text-white mb-6 flex items-center gap-2">
+              <div className="p-1.5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg">
+                <Scale className="h-3 w-3 text-white" />
+              </div>
               Legal
             </h4>
-            <ul className="space-y-3">
+            <ul className="space-y-4">
               {footerLinks.legal.map((link) => (
-                <li key={link.path}>
-                  <Link
-                    to={link.path}
-                    className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-200"
+                <li key={link.id}>
+                  <button
+                    onClick={() => scrollToSection(link.id)}
+                    className="text-slate-300 hover:text-white transition-all duration-300 group flex items-center gap-2"
                   >
-                    {link.label}
-                  </Link>
+                    <span className="group-hover:translate-x-1 transition-transform duration-300">
+                      {link.label}
+                    </span>
+                  </button>
                 </li>
               ))}
             </ul>
           </div>
         </div>
 
-        {/* Bottom Section */}
-        <div className="border-t border-slate-200 dark:border-slate-700 pt-8">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+        {/* Enhanced Bottom Section */}
+        <div className="border-t border-slate-700/50 pt-8">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
             {/* Copyright and Trust Badge */}
-            <div className="flex flex-col sm:flex-row items-center gap-4 text-sm text-slate-600 dark:text-slate-400">
-              <div className="flex items-center gap-2">
-                <Heart className="h-4 w-4 text-red-500" />
-                <span>© {currentYear} Code Guardian. Made with love for developers.</span>
+            <div className="flex flex-col sm:flex-row items-center gap-6 text-sm">
+              <div className="flex items-center gap-3 text-slate-300">
+                <div className="flex items-center gap-2">
+                  <Heart className="h-4 w-4 text-red-400 animate-pulse" />
+                  <span>© {currentYear} Code Guardian. Made with love for developers.</span>
+                </div>
               </div>
-              <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800">
-                <Star className="h-4 w-4 text-yellow-500" />
-                <span className="text-blue-900 dark:text-blue-100 font-medium">Trusted by 10K+ developers</span>
+              <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-500/20 to-indigo-500/20 border border-blue-400/30 backdrop-blur-sm">
+                <Star className="h-4 w-4 text-yellow-400" />
+                <span className="text-blue-100 font-medium">Trusted by 10K+ developers</span>
               </div>
             </div>
 
@@ -155,35 +195,54 @@ export const Footer: React.FC<FooterProps> = ({ className = '' }) => {
             <div className="flex items-center gap-4">
               <a
                 href="mailto:itisaddy7@gmail.com"
-                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 text-emerald-900 dark:text-emerald-100 hover:bg-emerald-100 dark:hover:bg-emerald-950/50 transition-colors duration-200"
+                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-emerald-500/20 to-teal-500/20 border border-emerald-400/30 text-emerald-100 hover:from-emerald-500/30 hover:to-teal-500/30 transition-all duration-300 backdrop-blur-sm"
               >
                 <Mail className="h-4 w-4" />
                 <span className="text-sm font-medium">Contact</span>
               </a>
-              <div className="flex items-center gap-2 px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
-                <Code className="h-4 w-4 text-slate-600 dark:text-slate-400" />
-                <span className="text-sm text-slate-700 dark:text-slate-300">{APP_VERSION_WITH_PREFIX}</span>
+              <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-800/50 border border-slate-700/50 backdrop-blur-sm">
+                <Code className="h-4 w-4 text-slate-400" />
+                <span className="text-sm text-slate-300">{APP_VERSION_WITH_PREFIX}</span>
               </div>
             </div>
           </div>
 
-          {/* Compliance Badges */}
-          <div className="mt-6 pt-4 border-t border-slate-200 dark:border-slate-700">
-            <div className="flex flex-wrap items-center justify-center gap-6 text-xs text-slate-500 dark:text-slate-500">
-              <div className="flex items-center gap-2">
-                <Globe className="h-4 w-4" />
-                <span>Global Security Platform</span>
+          {/* Enhanced Compliance Badges */}
+          <div className="mt-8 pt-6 border-t border-slate-700/50">
+            <div className="flex flex-wrap items-center justify-center gap-8 text-xs text-slate-400">
+              <div className="flex items-center gap-2 group">
+                <div className="p-1 bg-gradient-to-r from-blue-500/20 to-indigo-500/20 rounded-full">
+                  <Globe className="h-3 w-3 text-blue-300 group-hover:text-blue-200 transition-colors duration-300" />
+                </div>
+                <span className="group-hover:text-slate-300 transition-colors duration-300">Global Security Platform</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Shield className="h-4 w-4" />
-                <span>SOC 2 Type II Compliant</span>
+              <div className="flex items-center gap-2 group">
+                <div className="p-1 bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-full">
+                  <Shield className="h-3 w-3 text-green-300 group-hover:text-green-200 transition-colors duration-300" />
+                </div>
+                <span className="group-hover:text-slate-300 transition-colors duration-300">SOC 2 Type II Compliant</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Users className="h-4 w-4" />
-                <span>ISO 27001 Certified</span>
+              <div className="flex items-center gap-2 group">
+                <div className="p-1 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full">
+                  <Users className="h-3 w-3 text-purple-300 group-hover:text-purple-200 transition-colors duration-300" />
+                </div>
+                <span className="group-hover:text-slate-300 transition-colors duration-300">ISO 27001 Certified</span>
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Scroll to Top Button */}
+        <div className="mt-8 flex justify-center">
+          <Button
+            onClick={scrollToTop}
+            variant="ghost"
+            size="sm"
+            className="group p-3 rounded-full bg-slate-800/50 hover:bg-slate-700/50 text-slate-300 hover:text-white transition-all duration-300 border border-slate-700/50 hover:border-slate-600/50 hover:scale-110"
+            aria-label="Scroll to top"
+          >
+            <ArrowUp className="h-5 w-5 group-hover:-translate-y-1 transition-transform duration-300" />
+          </Button>
         </div>
       </div>
     </footer>

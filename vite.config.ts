@@ -56,9 +56,7 @@ export default defineConfig({
             if (id.includes('react-dom')) {
               return 'react-dom';
             }
-            if (id.includes('react-router')) {
-              return 'react-router';
-            }
+
             if (id.includes('@radix-ui')) {
               return 'radix-ui';
             }
@@ -134,7 +132,7 @@ export default defineConfig({
     include: [
       'react',
       'react-dom',
-      'react-router-dom',
+
       'lucide-react',
       'recharts',
       'framer-motion',

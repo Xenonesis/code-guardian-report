@@ -1,14 +1,9 @@
 
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react";
 import ErrorBoundary from "@/components/ErrorBoundary";
-import Index from "./pages/Index";
-import About from "./pages/About";
-import Privacy from "./pages/Privacy";
-import Terms from "./pages/Terms";
-import NotFound from "./pages/NotFound";
+import SinglePageApp from "./pages/SinglePageApp";
 import { useEffect, type ReactNode } from "react";
 import Lenis from '@studio-freight/lenis';
 
@@ -49,30 +44,6 @@ const SmoothScroll = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-// Scroll to top on route change using Lenis for smoothness
-import { useLocation } from "react-router-dom";
-const ScrollToTop = () => {
-  const location = useLocation();
-  const lenis = useContext(LenisContext);
-
-  useEffect(() => {
-    // Use requestIdleCallback for optimal scroll timing
-    const idle = (window as any).requestIdleCallback || ((cb: any) => setTimeout(cb, 1));
-    const handle = idle(() => {
-      if (lenis) {
-        lenis.scrollTo(0, { immediate: false, duration: 0.7, easing: (t: number) => t < 0.5 ? 2*t*t : -1+(4-2*t)*t });
-      } else {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
-    });
-    return () => {
-      if ((window as any).cancelIdleCallback) (window as any).cancelIdleCallback(handle);
-      else clearTimeout(handle);
-    };
-  }, [location, lenis]);
-  return null;
-};
-
 const App = () => (
   <ErrorBoundary>
     <TooltipProvider>
@@ -89,16 +60,7 @@ const App = () => (
             },
           }}
         />
-        <BrowserRouter>
-          <ScrollToTop />
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/privacy" element={<Privacy />} />
-            <Route path="/terms" element={<Terms />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
+        <SinglePageApp />
         <Analytics />
       </SmoothScroll>
     </TooltipProvider>
