@@ -42,7 +42,7 @@ export const UploadForm: React.FC<UploadFormProps> = ({ onFileSelect, onAnalysis
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6 sm:space-y-8 px-4 sm:px-6">
-        {!selectedFile ? (
+        {!selectedFile && !error && (
           <FileUploadArea
             isDragOver={isDragOver}
             onDragOver={handleDragOver}
@@ -50,7 +50,9 @@ export const UploadForm: React.FC<UploadFormProps> = ({ onFileSelect, onAnalysis
             onDrop={handleDrop}
             onFileInput={handleFileInput}
           />
-        ) : (
+        )}
+
+        {selectedFile && (
           <FileStatus
             selectedFile={selectedFile}
             isUploading={isUploading}
@@ -60,6 +62,15 @@ export const UploadForm: React.FC<UploadFormProps> = ({ onFileSelect, onAnalysis
             onRemoveFile={removeFile}
           />
         )}
+        
+        {error && (
+          <Alert className="border-l-4 border-l-red-500 bg-red-50 dark:bg-red-950/20 dark:border-l-red-400" role="alert">
+            <AlertTriangle className="h-5 w-5 text-red-600 dark:text-red-400" aria-hidden="true" />
+            <AlertDescription className="text-red-800 dark:text-red-200 text-sm sm:text-base">
+              <strong>Error:</strong> {error}
+            </AlertDescription>
+          </Alert>
+        )}
 
         <Alert className="border-l-4 border-l-amber-500 bg-amber-50 dark:bg-amber-950/20 dark:border-l-amber-400" role="note">
           <AlertTriangle className="h-5 w-5 text-amber-600 dark:text-amber-400" aria-hidden="true" />
@@ -67,14 +78,6 @@ export const UploadForm: React.FC<UploadFormProps> = ({ onFileSelect, onAnalysis
             <strong>Privacy & Security:</strong> Your code is analyzed locally and securely. Files are processed in-browser with persistent storage for your convenience. Analysis results are automatically saved until you upload a new file.
           </AlertDescription>
         </Alert>
-        {error && (
-          <Alert className="border-l-4 border-l-red-500 bg-red-50 dark:bg-red-950/20 dark:border-l-red-400" role="alert">
-            <AlertTriangle className="h-5 w-5 text-red-600 dark:text-red-400" aria-hidden="true" />
-            <AlertDescription className="text-red-800 dark:text-red-200 text-sm sm:text-base">
-              <strong>Invalid ZIP File:</strong> {error}
-            </AlertDescription>
-          </Alert>
-        )}
       </CardContent>
     </Card>
   );

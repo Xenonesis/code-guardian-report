@@ -119,6 +119,20 @@ export const useFileUpload = ({ onFileSelect, onAnalysisComplete }: UseFileUploa
     }, 150);
   }, [analyzeCode]);
 
+  const processFile = useCallback(async (file: File) => {
+    setError(null); // Clear previous errors
+    const validation = await validateZipFile(file);
+    if (!validation.isValid) {
+      setError(validation.message);
+      setSelectedFile(null);
+      return;
+    }
+    
+    setSelectedFile(file);
+    onFileSelect(file);
+    processZipFile(file);
+  }, [onFileSelect, processZipFile]);
+
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     setIsDragOver(true);
@@ -134,34 +148,19 @@ export const useFileUpload = ({ onFileSelect, onAnalysisComplete }: UseFileUploa
     setIsDragOver(false);
 
     const files = Array.from(e.dataTransfer.files);
-    const zipFile = files.find(file => file.name.endsWith('.zip') || file.type === 'application/zip');
-
-    if (zipFile) {
-      console.log('File dropped:', zipFile.name);
-      setSelectedFile(zipFile);
-      onFileSelect(zipFile);
-      processZipFile(zipFile);
-    } else {
-      console.log('No valid zip file found in dropped files');
+    if (files.length > 0) {
+      processFile(files[0]);
     }
-  }, [onFileSelect, processZipFile]);
+  }, [processFile]);
 
   const handleFileInput = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    console.log('File selected:', file?.name, 'Type:', file?.type);
-    
-    if (file && (file.name.endsWith('.zip') || file.type === 'application/zip' || file.type === 'application/x-zip-compressed')) {
-      console.log('Valid zip file selected via input:', file.name);
-      setSelectedFile(file);
-      onFileSelect(file);
-      processZipFile(file);
-    } else {
-      console.log('Invalid file type selected');
-      alert('Please select a valid .zip file');
+    if (file) {
+      processFile(file);
     }
     
     e.target.value = '';
-  }, [onFileSelect, processZipFile]);
+  }, [processFile]);
 
   const removeFile = () => {
     setSelectedFile(null);

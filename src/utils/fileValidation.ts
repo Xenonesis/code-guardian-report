@@ -1,4 +1,12 @@
 export const validateZipFile = async (file: File): Promise<{isValid: boolean, message: string}> => {
+  // Check for valid file type and extension
+  const allowedTypes = ['application/zip', 'application/x-zip-compressed'];
+  const isValidType = allowedTypes.includes(file.type);
+  const isValidExtension = file.name.toLowerCase().endsWith('.zip');
+
+  if (!isValidType && !isValidExtension) {
+    return {isValid: false, message: 'Invalid file format. Please upload a .zip file.'};
+  }
   try {
     const JSZip = (await import('jszip')).default;
     const zip = new JSZip();
