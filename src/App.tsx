@@ -45,7 +45,8 @@ const SmoothScroll = ({ children }: { children: React.ReactNode }) => {
 };
 
 const App = () => (
-  <ErrorBoundary>
+<AuthProvider>
+      <ErrorBoundary>
     <TooltipProvider>
       <SmoothScroll>
         <Sonner 
@@ -65,6 +66,7 @@ const App = () => (
       </SmoothScroll>
     </TooltipProvider>
   </ErrorBoundary>
+</AuthProvider>
 );
 
 export default App;
