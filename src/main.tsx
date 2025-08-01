@@ -69,7 +69,7 @@ const root = createRoot(container);
 // Render app with React StrictMode for development checks
 root.render(
   <StrictMode>
-    <App />
+      <App />
   </StrictMode>
 );
 

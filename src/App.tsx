@@ -11,9 +11,10 @@ import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
 import { useEffect, type ReactNode } from "react";
 import Lenis from '@studio-freight/lenis';
-
+import { AuthProvider } from "./lib/auth-context";
 // Lenis smooth scroll initialization with context for global access
 import { createContext, useContext, useRef as useReactRef } from "react";
+import  UserDashboard  from "./components/user-dashboard";
 
 const LenisContext = createContext<Lenis | null>(null);
 
@@ -74,7 +75,8 @@ const ScrollToTop = () => {
 };
 
 const App = () => (
-  <ErrorBoundary>
+<AuthProvider>
+      <ErrorBoundary>
     <TooltipProvider>
       <SmoothScroll>
         <Sonner 
@@ -97,12 +99,14 @@ const App = () => (
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="*" element={<NotFound />} />
+            <Route path='/dashboard' element={<UserDashboard/>} />
           </Routes>
         </BrowserRouter>
         <Analytics />
       </SmoothScroll>
     </TooltipProvider>
   </ErrorBoundary>
+</AuthProvider>
 );
 
 export default App;
