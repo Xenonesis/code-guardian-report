@@ -48,10 +48,9 @@ export const Footer: React.FC<FooterProps> = ({ className = '' }) => {
                 <h3 className="text-xl font-bold text-slate-900 dark:text-white">
                   Code Guardian
                 </h3>
-                <p className="text-sm text-slate-600 dark:text-slate-400">AI-Powered Security Platform</p>
-              </div>
-            </div>
-            
+                <p style={{ overflowWrap: 'break-word', whiteSpace: 'normal', wordBreak: 'break-word', maxWidth: '100%' }}>
+                AI-Powered Security Platform
+                </p>
             <p className="text-slate-600 dark:text-slate-400 mb-6 max-w-md">
               Revolutionizing code security with advanced AI analysis, real-time threat detection, and comprehensive vulnerability assessment.
             </p>
