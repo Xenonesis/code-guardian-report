@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Shield, Github, Twitter } from 'lucide-react';
 import { Navigation } from '@/components/Navigation';
 import { FeatureGrid } from '@/components/features/FeatureGrid';
-import { Footer } from '@/components/Footer';
 
 interface Feature {
   icon: React.ReactNode;
@@ -66,9 +65,6 @@ export const PageLayout: React.FC<PageLayoutProps> = ({
           />
         </section>
       )}
-
-      {/* Enhanced Footer Component */}
-      <Footer />
     </div>
   );
 };

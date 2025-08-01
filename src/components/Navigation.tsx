@@ -21,6 +21,11 @@ import { cn } from "@/lib/utils";
 import { useAuth } from "../lib/auth-context";
 import { AuthModal } from "./auth-modal";
 import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
+import { Shield, Home, Moon, Sun, Menu, X, Info, Lock, Award } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 interface NavigationProps {
   isDarkMode: boolean;
@@ -33,52 +38,52 @@ export const Navigation: React.FC<NavigationProps> = ({
 }) => {
   const location = useLocation();
   const { user, userProfile, logout } = useAuth();
+export const Navigation: React.FC<NavigationProps> = ({ isDarkMode, toggleDarkMode }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const navigate = useNavigate();
+  const [activeSection, setActiveSection] = useState('home');
 
   // Mount detection and scroll detection for navbar styling
   useEffect(() => {
     setMounted(true);
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
+      
+      // Update active section based on scroll position
+      const sections = ['home', 'about', 'privacy', 'terms'];
+      const navbarHeight = 64; // h-16 = 64px
+      const scrollPosition = window.scrollY + navbarHeight + 20; // Add some buffer
+      
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = document.getElementById(sections[i]);
+        if (section && section.offsetTop <= scrollPosition) {
+          setActiveSection(sections[i]);
+          break;
+        }
+      }
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu on route change
-  useEffect(() => {
+  // Smooth scroll to section with proper offset
+  const scrollToSection = (sectionId: string) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      const navbarHeight = 64; // h-16 = 64px
+      const targetPosition = section.offsetTop - navbarHeight;
+      
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth'
+      });
+    }
     setIsMobileMenuOpen(false);
-  }, [location.pathname]);
-
-  // Close dropdowns when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as Element;
-      if (isProfileDropdownOpen && !target.closest("[data-profile-dropdown]")) {
-        setIsProfileDropdownOpen(false);
-      }
-    };
-
-    if (isProfileDropdownOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [isProfileDropdownOpen]);
-
-  const handleLogout = async () => {
-    try {
-      await logout();
-      setIsProfileDropdownOpen(false);
-    } catch (error) {
-      console.error("Error signing out:", error);
-    }
   };
 
   const navItems = [
@@ -86,22 +91,35 @@ export const Navigation: React.FC<NavigationProps> = ({
       path: "/",
       label: "Home",
       icon: <Home className="h-4 w-4" />,
+      id: 'home',
+      label: 'Home',
+      icon: <Home className="h-4 w-4" />
     },
     {
       path: "/about",
       label: "About",
       icon: <Info className="h-4 w-4" />,
+      id: 'about',
+      label: 'About',
+      icon: <Info className="h-4 w-4" />
     },
     {
       path: "/privacy",
       label: "Privacy",
       icon: <Lock className="h-4 w-4" />,
+      id: 'privacy',
+      label: 'Privacy',
+      icon: <Lock className="h-4 w-4" />
     },
     {
       path: "/terms",
       label: "Terms",
       icon: <Award className="h-4 w-4" />,
     },
+      id: 'terms',
+      label: 'Terms',
+      icon: <Award className="h-4 w-4" />
+    }
   ];
 
   const isActive = (path: string) => {
@@ -109,6 +127,8 @@ export const Navigation: React.FC<NavigationProps> = ({
       return location.pathname === "/";
     }
     return location.pathname.startsWith(path);
+  const isActive = (sectionId: string) => {
+    return activeSection === sectionId;
   };
 
   if (!mounted) return null;
@@ -155,6 +175,45 @@ export const Navigation: React.FC<NavigationProps> = ({
                 </p>
               </div>
             </Link>
+    <nav 
+      className={cn(
+        "portal-navbar transition-all duration-300",
+        isScrolled
+          ? "bg-white/95 dark:bg-slate-900/95 backdrop-blur-lg shadow-lg border-b border-slate-200/50 dark:border-slate-700/50"
+          : "bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200/30 dark:border-slate-700/30"
+      )}
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 10000,
+        width: '100%'
+      }}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          {/* Code Guardian Logo */}
+          <button
+            onClick={() => scrollToSection('home')}
+            className="flex items-center gap-3 group transition-all duration-300 hover:scale-105"
+          >
+            {/* Shield Icon */}
+            <div className="relative p-2 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:rotate-3">
+              <Shield className="h-6 w-6 text-white" />
+              <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
+            
+            {/* Brand Text */}
+            <div className="flex flex-col">
+              <h1 className="text-xl font-bold bg-gradient-to-r from-slate-900 to-blue-900 dark:from-white dark:to-blue-100 bg-clip-text text-transparent leading-tight">
+                Code Guardian
+              </h1>
+              <p className="text-xs text-slate-600 dark:text-slate-400 font-medium leading-none hidden sm:block">
+                Security Analysis
+              </p>
+            </div>
+          </button>
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
@@ -181,6 +240,31 @@ export const Navigation: React.FC<NavigationProps> = ({
                 </Link>
               ))}
             </div>
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-8">
+            {navItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                className={cn(
+                  "relative flex items-center gap-2 px-3 py-2 rounded-lg font-medium transition-all duration-200 text-sm group",
+                  isActive(item.id)
+                    ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20"
+                    : "text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-50 dark:hover:bg-slate-800/50"
+                )}
+              >
+                <div className="flex-shrink-0 transition-transform duration-200 group-hover:scale-110">
+                  {item.icon}
+                </div>
+                <span>{item.label}</span>
+                
+                {/* Active indicator */}
+                {isActive(item.id) && (
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 dark:bg-blue-400 rounded-full"></div>
+                )}
+              </button>
+            ))}
+          </div>
 
             {/* Right side actions */}
             <div className="flex items-center gap-4">
@@ -396,6 +480,32 @@ export const Navigation: React.FC<NavigationProps> = ({
         onClose={() => setIsAuthModalOpen(false)}
       />
     </>
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
+            <div className="px-4 py-3 space-y-1">
+              {navItems.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  className={cn(
+                    "flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors duration-200 w-full text-left",
+                    isActive(item.id)
+                      ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20"
+                      : "text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-50 dark:hover:bg-slate-800/50"
+                  )}
+                >
+                  <div className="flex-shrink-0">
+                    {item.icon}
+                  </div>
+                  <span>{item.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </nav>
   );
   return createPortal(navContent, document.body);
 };

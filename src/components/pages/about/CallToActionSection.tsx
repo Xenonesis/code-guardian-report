@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -9,6 +8,17 @@ interface CallToActionSectionProps {
 }
 
 export const CallToActionSection: React.FC<CallToActionSectionProps> = ({ className = '' }) => {
+  // Smooth scroll to home section
+  const scrollToHome = () => {
+    const homeSection = document.getElementById('home');
+    if (homeSection) {
+      homeSection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
+
   return (
     <section className={`text-center relative py-16 sm:py-20 ${className}`}>
       {/* Enhanced Background Effects */}
@@ -52,14 +62,14 @@ export const CallToActionSection: React.FC<CallToActionSectionProps> = ({ classN
               {/* Enhanced CTA Button */}
               <div className="relative inline-block mb-12">
                 <Button
-                  asChild
+                  onClick={scrollToHome}
                   size="lg"
                   className="btn-enhanced-cta text-white font-bold px-12 py-6 text-xl rounded-3xl shadow-2xl hover:shadow-3xl hover:scale-110 transition-all duration-500 border-0 focus:ring-4 focus:ring-purple-300 dark:focus:ring-purple-600"
                 >
-                  <Link to="/" className="flex items-center gap-4 relative z-10">
-                    <span>Get Started Now</span>
+                  <span className="flex items-center gap-4 relative z-10">
+                    Get Started Now
                     <Download className="h-6 w-6 group-hover:animate-bounce transition-transform duration-300" />
-                  </Link>
+                  </span>
                 </Button>
               </div>
 
