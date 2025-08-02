@@ -861,7 +861,7 @@ See [changelogs.md](./changelogs.md) for a complete version history.
 
 ## 📄 License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+🛡️ This project is open-source under the MIT License — a simple and permissive license that lets you do almost anything you want with this code. For full details, check out the [LICENSE](LICENSE) file.
 
 ## 👤 Author
 
