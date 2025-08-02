@@ -1,0 +1,76 @@
+name: Update Contributors on PR Merge
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [main, master]
+
+jobs:
+  update-contributors-on-merge:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+      pull-requests: read
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Update contributors after PR merge
+        run: npm run update-contributors
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Check for changes
+        id: verify-changed-files
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Commit and push changes
+        if: steps.verify-changed-files.outputs.changed == 'true'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add README.md
+          git commit -m "🎉 Update contributors after PR #${{ github.event.pull_request.number }} merge
+          
+          - Added @${{ github.event.pull_request.user.login }} to contributors
+          - Updated repository statistics
+          - Refreshed contribution counts
+          
+          Thanks to @${{ github.event.pull_request.user.login }} for contributing to Code Guardian!"
+          git push
+      
+      - name: Comment on merged PR
+        if: steps.verify-changed-files.outputs.changed == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.payload.pull_request.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `🎉 **Thank you for your contribution!** 
+              
+              Your contribution has been automatically added to our contributors section in the README.md. 
+              
+              Welcome to the Code Guardian community! 🚀`
+            })

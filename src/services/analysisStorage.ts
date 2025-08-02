@@ -125,14 +125,12 @@ export class AnalysisStorageService {
 
       // Validate version compatibility
       if (!this.isVersionCompatible(data.version)) {
-        console.warn('⚠️ Analysis data version incompatible, clearing storage');
         this.clearCurrentAnalysis();
         return null;
       }
 
       return data;
     } catch (error) {
-      console.error('❌ Failed to retrieve analysis results:', error);
       this.clearCurrentAnalysis();
       return null;
     }
@@ -162,7 +160,6 @@ export class AnalysisStorageService {
   public clearCurrentAnalysis(): void {
     removeLocalStorageItem(AnalysisStorageService.STORAGE_KEY);
     this.notifyListeners(null);
-    console.log('🗑️ Current analysis cleared');
   }
 
   /**
@@ -181,7 +178,6 @@ export class AnalysisStorageService {
         currentAnalysis: this.getCurrentAnalysis(),
       };
     } catch (error) {
-      console.error('❌ Failed to retrieve analysis history:', error);
       return this.createEmptyHistory();
     }
   }
@@ -212,12 +208,10 @@ export class AnalysisStorageService {
       if (this.validateAnalysisData(parsedData)) {
         setLocalStorageItem(AnalysisStorageService.STORAGE_KEY, JSON.stringify(parsedData));
         this.notifyListeners(parsedData);
-        console.log('✅ Analysis results imported successfully');
       } else {
         throw new Error('Invalid analysis data format');
       }
     } catch (error) {
-      console.error('❌ Failed to import analysis results:', error);
       throw new Error('Failed to import analysis results');
     }
   }
@@ -282,8 +276,6 @@ export class AnalysisStorageService {
         ...history,
         previousAnalyses: optimizedHistory,
       });
-
-      console.log(`🧹 Storage optimized: removed ${toRemove} old entries`);
     }
   }
 
@@ -306,7 +298,7 @@ export class AnalysisStorageService {
             const data: StoredAnalysisData = JSON.parse(newValue);
             this.notifyListeners(data);
           } catch (error) {
-            console.error('Failed to parse storage change:', error);
+            // Silent error handling
           }
         } else {
           this.notifyListeners(null);
@@ -463,7 +455,7 @@ export class AnalysisStorageService {
       try {
         callback(data);
       } catch (error) {
-        console.error('Error in storage listener:', error);
+        // Silent error handling
       }
     });
   }

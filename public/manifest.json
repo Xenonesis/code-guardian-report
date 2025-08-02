@@ -1,7 +1,7 @@
 {
   "name": "Code Guardian Enterprise - AI-Powered Security Analysis Platform",
   "short_name": "Code Guardian",
-  "version": "4.5.0",
+  "version": "5.8.0",
   "description": "Enterprise-grade static code analysis platform powered by artificial intelligence. Comprehensive security assessments, vulnerability detection, OWASP compliance, and automated remediation for mission-critical applications.",
   "start_url": "/?utm_source=pwa&utm_medium=app&utm_campaign=launch",
   "display": "standalone",
@@ -190,5 +190,52 @@
       "origin": "https://code-guardian-report.vercel.app"
     }
   ],
-  "id": "code-guardian-enterprise"
+  "id": "code-guardian-enterprise",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui", "browser"],
+  "orientation": "any",
+  "categories": [
+    "productivity",
+    "developer",
+    "security",
+    "business",
+    "utilities",
+    "development",
+    "enterprise"
+  ],
+  "background_sync": ["file-upload", "analysis-data", "user-preferences", "offline-sync", "analytics-data"],
+  "offline_enabled": true,
+  "cache_strategy": "network-first-cache-fallback",
+  "permissions": [
+    "background-sync",
+    "push",
+    "notifications",
+    "storage",
+    "camera",
+    "microphone",
+    "persistent-storage"
+  ],
+  "features": [
+    "background-sync",
+    "push-notifications",
+    "offline-analytics",
+    "file-handling",
+    "share-target",
+    "protocol-handlers",
+    "shortcuts",
+    "window-controls-overlay"
+  ],
+  "performance": {
+    "cache_first_assets": [".js", ".css", ".woff2", ".png", ".jpg", ".svg"],
+    "network_first_routes": ["/api/", "/auth/"],
+    "preload_routes": ["/", "/analyze", "/reports"],
+    "max_cache_size": "100MB",
+    "cache_expiry": "30d"
+  },
+  "analytics": {
+    "track_installs": true,
+    "track_usage": true,
+    "track_performance": true,
+    "track_offline": true,
+    "privacy_compliant": true
+  }
 }

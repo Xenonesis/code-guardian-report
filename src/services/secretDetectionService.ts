@@ -542,19 +542,12 @@ export class SecretDetectionService {
    * Main method to detect secrets in content
    */
   public detectSecrets(content: string): SecretDetectionResult {
-    console.log(`🔐 REAL SECRET DETECTION: Analyzing ${content.length} characters for secrets...`);
-
     // Detect using both pattern matching and ML classifiers
     const patternSecrets = this.detectPatternBasedSecrets(content);
     const mlSecrets = this.detectMLBasedSecrets(content);
 
-    console.log(`🔍 REAL SECRET DETECTION: Pattern-based detection found ${patternSecrets.length} secrets`);
-    console.log(`🤖 REAL SECRET DETECTION: ML-based detection found ${mlSecrets.length} secrets`);
-
     // Combine and deduplicate results
     const allSecrets = this.deduplicateSecrets([...patternSecrets, ...mlSecrets]);
-
-    console.log(`✅ REAL SECRET DETECTION: Total unique secrets found: ${allSecrets.length}`);
 
     // Calculate statistics
     const highConfidenceSecrets = allSecrets.filter(s => s.confidence >= 80).length;
@@ -566,11 +559,7 @@ export class SecretDetectionService {
 
     const riskScore = this.calculateRiskScore(allSecrets);
 
-    if (allSecrets.length > 0) {
-      console.log(`🎯 REAL SECRET DETECTION: Secret types found: ${Object.keys(secretTypes).join(', ')}`);
-      console.log(`⚠️ REAL SECRET DETECTION: High confidence secrets: ${highConfidenceSecrets}/${allSecrets.length}`);
-      console.log(`📊 REAL SECRET DETECTION: Risk score: ${riskScore}/100`);
-    }
+
 
     return {
       secrets: allSecrets,

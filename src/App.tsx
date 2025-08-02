@@ -4,6 +4,14 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Analytics } from "@vercel/analytics/react";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import SinglePageApp from "./pages/SinglePageApp";
+import { AuthProvider } from "@/lib/auth-context";
+import { ConnectionStatus } from "@/components/ConnectionStatus";
+import { FirestoreStatus } from "@/components/FirestoreStatus";
+import { FirestoreHealthChecker } from "@/components/FirestoreHealthChecker";
+import { FirestoreErrorNotification } from "@/components/FirestoreErrorNotification";
+import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
+import { PWAUpdateNotification } from "@/components/PWAUpdateNotification";
+import { OfflineIndicator } from "@/components/OfflineIndicator";
 import { useEffect, type ReactNode } from "react";
 import Lenis from '@studio-freight/lenis';
 
@@ -45,6 +53,7 @@ const SmoothScroll = ({ children }: { children: React.ReactNode }) => {
 };
 
 const App = () => (
+<<<<<<< HEAD
   <AuthProvider>
     <ErrorBoundary>
       <TooltipProvider>
@@ -67,6 +76,37 @@ const App = () => (
       </TooltipProvider>
     </ErrorBoundary>
   </AuthProvider>
+=======
+<AuthProvider>
+      <ErrorBoundary>
+    <TooltipProvider>
+      <SmoothScroll>
+        <Sonner 
+          position="top-right"
+          toastOptions={{
+            className: 'rounded-lg',
+            duration: 3000,
+            style: {
+              background: 'hsl(var(--background))',
+              color: 'hsl(var(--foreground))',
+              border: '1px solid hsl(var(--border))',
+            },
+          }}
+        />
+        <ConnectionStatus />
+        <FirestoreStatus />
+        <FirestoreHealthChecker />
+        <FirestoreErrorNotification />
+        <PWAInstallPrompt />
+        <PWAUpdateNotification />
+        <OfflineIndicator />
+        <SinglePageApp />
+        <Analytics />
+      </SmoothScroll>
+    </TooltipProvider>
+  </ErrorBoundary>
+</AuthProvider>
+>>>>>>> 813eb09392560ce5ba31e6ed087e4501ed348410
 );
 
 export default App;

@@ -43,11 +43,6 @@ export const useEnhancedAnalysis = () => {
       setStoredAnalysis(stored);
       setAnalysisResults(stored.results);
       setHasStoredData(true);
-      console.log('📊 Restored analysis from storage:', {
-        fileName: stored.fileName,
-        timestamp: new Date(stored.timestamp).toLocaleString(),
-        issuesCount: stored.results.issues.length
-      });
     }
     
     updateStorageStats();
@@ -73,22 +68,15 @@ export const useEnhancedAnalysis = () => {
     setIsNewFile(isNewFileCheck);
     
     if (isNewFileCheck) {
-      console.log('🆕 New file selected, will clear previous results');
       // Clear previous results when new file is selected
       analysisStorage.clearCurrentAnalysis();
       setAnalysisResults(null);
       setStoredAnalysis(null);
       setHasStoredData(false);
-    } else {
-      console.log('🔄 Same file selected, keeping existing results');
     }
-    
-    console.log('📁 File selected:', file.name, 'Size:', file.size, 'bytes');
   }, []);
 
   const handleAnalysisComplete = useCallback(async (results: AnalysisResults) => {
-    console.log('✅ Analysis complete, storing results:', results);
-    
     setAnalysisResults(results);
     setIsAnalyzing(false);
     
@@ -98,10 +86,8 @@ export const useEnhancedAnalysis = () => {
         await analysisStorage.storeAnalysisResults(results, selectedFile);
         setHasStoredData(true);
         updateStorageStats();
-        
-        console.log('💾 Analysis results stored successfully');
       } catch (error) {
-        console.error('❌ Failed to store analysis results:', error);
+        // Silent error handling
       }
     }
   }, [selectedFile, updateStorageStats]);
@@ -119,7 +105,6 @@ export const useEnhancedAnalysis = () => {
     setHasStoredData(false);
     setIsNewFile(true);
     updateStorageStats();
-    console.log('🔄 Analysis reset');
   }, [updateStorageStats]);
 
   const clearStoredData = useCallback(() => {
@@ -127,7 +112,6 @@ export const useEnhancedAnalysis = () => {
     setStoredAnalysis(null);
     setHasStoredData(false);
     updateStorageStats();
-    console.log('🗑️ Stored data cleared');
   }, [updateStorageStats]);
 
   const exportAnalysis = useCallback((format: 'json' | 'compressed' = 'json') => {
@@ -146,10 +130,8 @@ export const useEnhancedAnalysis = () => {
       link.click();
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
-      
-      console.log('📤 Analysis exported successfully');
     } catch (error) {
-      console.error('❌ Failed to export analysis:', error);
+      // Silent error handling
       throw error;
     }
   }, []);
@@ -158,9 +140,7 @@ export const useEnhancedAnalysis = () => {
     try {
       analysisStorage.importAnalysis(data, compressed);
       updateStorageStats();
-      console.log('📥 Analysis imported successfully');
     } catch (error) {
-      console.error('❌ Failed to import analysis:', error);
       throw error;
     }
   }, [updateStorageStats]);
@@ -173,9 +153,7 @@ export const useEnhancedAnalysis = () => {
     try {
       await analysisStorage.optimizeStorage();
       updateStorageStats();
-      console.log('🧹 Storage optimized successfully');
     } catch (error) {
-      console.error('❌ Failed to optimize storage:', error);
       throw error;
     }
   }, [updateStorageStats]);
@@ -190,8 +168,6 @@ export const useEnhancedAnalysis = () => {
       type: 'application/zip'
     });
     setSelectedFile(restoredFile);
-    
-    console.log('📋 Analysis restored from history:', analysisData.fileName);
   }, []);
 
   // Advanced analysis state

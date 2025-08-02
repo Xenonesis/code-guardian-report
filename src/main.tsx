@@ -48,6 +48,12 @@ if ('serviceWorker' in navigator && import.meta.env.PROD) {
             if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
               // New content is available, notify user
               console.log('New content available, please refresh.');
+              // Send message to app about update
+              if (navigator.serviceWorker.controller) {
+                navigator.serviceWorker.controller.postMessage({
+                  type: 'SW_UPDATE_AVAILABLE'
+                });
+              }
             }
           });
         }

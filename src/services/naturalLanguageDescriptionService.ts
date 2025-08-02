@@ -25,7 +25,6 @@ export class NaturalLanguageDescriptionService {
       // Fill in the template with issue-specific details
       return this.populateTemplate(template, issue);
     } catch (error) {
-      console.error('Error generating natural language description:', error);
       // Fallback to original message if generation fails
       return this.createFallbackDescription(issue);
     }

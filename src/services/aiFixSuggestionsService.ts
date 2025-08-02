@@ -84,7 +84,6 @@ export class AIFixSuggestionsService {
       
       return suggestions;
     } catch (error) {
-      console.error('Error generating fix suggestions:', error);
       throw new Error(`Failed to generate fix suggestions: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
@@ -207,7 +206,6 @@ Format your response as a JSON array with this structure:
 
       return suggestions.map((suggestion, index) => this.validateAndEnhanceSuggestion(suggestion, request, index));
     } catch (error) {
-      console.error('Failed to parse AI response:', error);
       // Fallback to basic suggestion
       return [this.createFallbackSuggestion(request)];
     }
@@ -475,7 +473,6 @@ Format your response as a JSON array with this structure:
           const suggestions = await this.generateFixSuggestions(request);
           return { issueId: request.issue.id, suggestions };
         } catch (error) {
-          console.error(`Failed to generate suggestions for issue ${request.issue.id}:`, error);
           return { issueId: request.issue.id, suggestions: [] };
         }
       });
