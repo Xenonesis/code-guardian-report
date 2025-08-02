@@ -3,6 +3,7 @@ import { Tabs } from '@/components/ui/tabs';
 import { AnalysisResults } from '@/hooks/useAnalysis';
 import { TabNavigation } from './TabNavigation';
 import { TabContent } from './TabContent';
+import { useMobile } from '@/hooks/useMobile';
 
 interface AnalysisTabsProps {
   currentTab: string;
@@ -21,6 +22,8 @@ export const AnalysisTabs: React.FC<AnalysisTabsProps> = ({
   onAnalysisComplete,
   isRedirecting = false
 }) => {
+  const { isMobile, isSmallMobile } = useMobile();
+
   return (
     <section className="w-full px-4 sm:px-6 lg:px-8 mx-auto" role="main">
       <Tabs 
@@ -37,7 +40,7 @@ export const AnalysisTabs: React.FC<AnalysisTabsProps> = ({
           />
         </div>
         
-        <div className="w-full rounded-xl bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border shadow-sm p-4 sm:p-6">
+        <div className="w-full rounded-xl bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border shadow-sm p-4 sm:p-6 lg:p-8">
           <TabContent
             analysisResults={analysisResults}
             onFileSelect={onFileSelect}
