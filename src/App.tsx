@@ -45,28 +45,28 @@ const SmoothScroll = ({ children }: { children: React.ReactNode }) => {
 };
 
 const App = () => (
-<AuthProvider>
-      <ErrorBoundary>
-    <TooltipProvider>
-      <SmoothScroll>
-        <Sonner 
-          position="top-right"
-          toastOptions={{
-            className: 'rounded-lg',
-            duration: 3000,
-            style: {
-              background: 'hsl(var(--background))',
-              color: 'hsl(var(--foreground))',
-              border: '1px solid hsl(var(--border))',
-            },
-          }}
-        />
-        <SinglePageApp />
-        <Analytics />
-      </SmoothScroll>
-    </TooltipProvider>
-  </ErrorBoundary>
-</AuthProvider>
+  <AuthProvider>
+    <ErrorBoundary>
+      <TooltipProvider>
+        <SmoothScroll>
+          <Sonner 
+            position="top-right"
+            toastOptions={{
+              className: 'rounded-lg',
+              duration: 3000,
+              style: {
+                background: 'hsl(var(--background))',
+                color: 'hsl(var(--foreground))',
+                border: '1px solid hsl(var(--border))',
+              },
+            }}
+          />
+          <SinglePageApp />
+          <Analytics />
+        </SmoothScroll>
+      </TooltipProvider>
+    </ErrorBoundary>
+  </AuthProvider>
 );
 
 export default App;
