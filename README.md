@@ -34,6 +34,7 @@ Now with Revolutionary AI-Powered Security Features & Enterprise Analytics
 <div align="center">
   <img src="https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge&logo=opensourceinitiative&logoColor=white&labelColor=1a1a1a" alt="License"/>
   <img src="https://img.shields.io/badge/Build-Passing-brightgreen?style=for-the-badge&logo=github-actions&logoColor=white&labelColor=1a1a1a" alt="Build Status"/>
+  <img src="https://img.shields.io/badge/Contributors-Auto%20Updated-blue?style=for-the-badge&logo=github&logoColor=white&labelColor=1a1a1a" alt="Auto Contributors"/>
   <img src="https://img.shields.io/badge/Performance-100%2F100-orange?style=for-the-badge&logo=lighthouse&logoColor=white&labelColor=1a1a1a" alt="Performance"/>
   <img src="https://img.shields.io/badge/Security-Enterprise%20Grade-red?style=for-the-badge&logo=shield&logoColor=white&labelColor=1a1a1a" alt="Security"/>
   <img src="https://img.shields.io/badge/Uptime-99.9%25-success?style=for-the-badge&logo=statuspage&logoColor=white&labelColor=1a1a1a" alt="Uptime"/>
@@ -1500,6 +1501,7 @@ If you encounter any issues or have questions:
 
 ---
 
+
 ## 🌟 Community & Contributors
 
 <div align="center">
@@ -1507,246 +1509,172 @@ If you encounter any issues or have questions:
 ### **👥 Our Amazing Community**
 
 <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 20px; margin: 20px 0;">
-  <h3 style="color: white; margin-bottom: 20px;">🌟 **Stargazers Hall of Fame** 🌟</h3>
-  <p style="color: rgba(255,255,255,0.9); margin-bottom: 25px;">Thank you to all our amazing stargazers who believe in our mission!</p>
+  <h3 style="color: white; margin-bottom: 20px;">📊 **Repository Statistics** 📊</h3>
+  <p style="color: rgba(255,255,255,0.9); margin-bottom: 25px;">Thank you to our amazing community for making Code Guardian possible!</p>
   
   <table style="margin: 0 auto;">
     <tr>
       <td align="center" style="padding: 15px;">
-        <img src="https://github.com/Xenonesis.png" width="80" height="80" style="border-radius: 50%; border: 3px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.3);"/>
-        <br/><strong style="color: white;">Aditya Kumar Tiwari</strong>
-        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px;">@Xenonesis</span>
-        <br/><span style="background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 10px; font-size: 11px; color: white;">Creator & Lead Dev</span>
+        <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px;">
+          <h4 style="color: white; margin: 0; font-size: 24px;">⭐ 18</h4>
+          <p style="color: rgba(255,255,255,0.8); margin: 5px 0 0 0; font-size: 14px;">Stars</p>
+        </div>
       </td>
       <td align="center" style="padding: 15px;">
-        <img src="https://github.com/github.png" width="80" height="80" style="border-radius: 50%; border: 3px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.3);"/>
-        <br/><strong style="color: white;">GitHub Community</strong>
-        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px;">@github</span>
-        <br/><span style="background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 10px; font-size: 11px; color: white;">Platform Support</span>
+        <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px;">
+          <h4 style="color: white; margin: 0; font-size: 24px;">🍴 20</h4>
+          <p style="color: rgba(255,255,255,0.8); margin: 5px 0 0 0; font-size: 14px;">Forks</p>
+        </div>
       </td>
       <td align="center" style="padding: 15px;">
-        <img src="https://github.com/vercel.png" width="80" height="80" style="border-radius: 50%; border: 3px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.3);"/>
-        <br/><strong style="color: white;">Vercel Team</strong>
-        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px;">@vercel</span>
-        <br/><span style="background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 10px; font-size: 11px; color: white;">Hosting Partner</span>
+        <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px;">
+          <h4 style="color: white; margin: 0; font-size: 24px;">👥 8</h4>
+          <p style="color: rgba(255,255,255,0.8); margin: 5px 0 0 0; font-size: 14px;">Contributors</p>
+        </div>
       </td>
       <td align="center" style="padding: 15px;">
-        <img src="https://github.com/openai.png" width="80" height="80" style="border-radius: 50%; border: 3px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.3);"/>
-        <br/><strong style="color: white;">OpenAI</strong>
-        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px;">@openai</span>
-        <br/><span style="background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 10px; font-size: 11px; color: white;">AI Partner</span>
+        <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px;">
+          <h4 style="color: white; margin: 0; font-size: 24px;">👀 18</h4>
+          <p style="color: rgba(255,255,255,0.8); margin: 5px 0 0 0; font-size: 14px;">Watchers</p>
+        </div>
       </td>
     </tr>
   </table>
-  
-  <div style="margin-top: 25px;">
-    <img src="https://img.shields.io/badge/⭐%20Join%20Our%20Stargazers-Be%20Part%20of%20the%20Community-FFD700?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="Join Stargazers"/>
-  </div>
 </div>
 
 ### **🤝 Core Contributors**
 
 <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 30px; border-radius: 20px; margin: 20px 0;">
-  <h3 style="color: white; margin-bottom: 20px;">💻 **Development Team** 💻</h3>
+  <h3 style="color: white; margin-bottom: 20px;">💻 **Top Contributors** 💻</h3>
+  <p style="color: rgba(255,255,255,0.9); margin-bottom: 25px; text-align: center;">Meet the amazing developers who have contributed to Code Guardian</p>
   
   <table style="margin: 0 auto;">
     <tr>
       <td align="center" style="padding: 20px;">
-        <img src="https://github.com/Xenonesis.png" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
-        <br/><strong style="color: white; font-size: 18px;">Aditya Kumar Tiwari</strong>
+        <img src="https://avatars.githubusercontent.com/u/115968670?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
+        <br/><strong style="color: white; font-size: 16px;">_7adi;</strong>
         <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@Xenonesis</span>
-        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">🚀 Founder & Lead Developer</span>
-        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">BCA Cybersecurity | Full-Stack Developer</span>
+        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">🚀 Creator</span>
+        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Project Creator & Lead Developer</span>
         <div style="margin-top: 10px;">
-          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">React</span>
-          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">TypeScript</span>
-          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">AI/ML</span>
-          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">Cybersecurity</span>
+          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">47 commits</span>
         </div>
       </td>
       <td align="center" style="padding: 20px;">
-        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face&auto=format&q=80" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
-        <br/><strong style="color: white; font-size: 18px;">Dr. Sarah Chen</strong>
-        <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@sarahchen-sec</span>
-        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">🛡️ Chief Security Officer</span>
-        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">PhD Cybersecurity | CISSP | OWASP Board Member</span>
+        <img src="https://avatars.githubusercontent.com/u/186174121?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
+        <br/><strong style="color: white; font-size: 16px;">Muneer Ali</strong>
+        <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@Muneerali199</span>
+        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">👤 Contributor</span>
+        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
         <div style="margin-top: 10px;">
-          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">OWASP Top 10</span>
-          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">Penetration Testing</span>
-          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">CVE Research</span>
-          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">Zero-Day Analysis</span>
-        </div>
-        <div style="margin-top: 8px;">
-          <span style="color: rgba(255,255,255,0.7); font-size: 11px;">🏆 500+ CVEs Discovered | 🎓 Stanford PhD</span>
+          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">4 commits</span>
         </div>
       </td>
       <td align="center" style="padding: 20px;">
-        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b5bc?w=100&h=100&fit=crop&crop=face&auto=format&q=80" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
-        <br/><strong style="color: white; font-size: 18px;">Alex Rodriguez</strong>
-        <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@alexrod-ai</span>
-        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">🤖 AI Research Director</span>
-        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Ex-OpenAI | MIT PhD | NLP Research Lead</span>
+        <img src="https://avatars.githubusercontent.com/u/164482191?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
+        <br/><strong style="color: white; font-size: 16px;">Sudharshan Paul</strong>
+        <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@sudharshanpaul</span>
+        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">👤 Contributor</span>
+        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
         <div style="margin-top: 10px;">
-          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">GPT-4 Integration</span>
-          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">Claude API</span>
-          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">Transformer Models</span>
-          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">Code Analysis AI</span>
-        </div>
-        <div style="margin-top: 8px;">
-          <span style="color: rgba(255,255,255,0.7); font-size: 11px;">📚 50+ AI Papers Published | 🚀 Ex-OpenAI Senior Engineer</span>
+          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">4 commits</span>
         </div>
       </td>
       <td align="center" style="padding: 20px;">
-        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face&auto=format&q=80" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
-        <br/><strong style="color: white; font-size: 18px;">Marcus Thompson</strong>
-        <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@marcus-devops</span>
-        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">⚡ DevOps Architect</span>
-        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Ex-Google SRE | Kubernetes Expert | Cloud Native</span>
+        <img src="https://avatars.githubusercontent.com/u/176881379?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
+        <br/><strong style="color: white; font-size: 16px;">Jils Patel</strong>
+        <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@Jils31</span>
+        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">👤 Contributor</span>
+        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
         <div style="margin-top: 10px;">
-          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">Kubernetes</span>
-          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">Docker</span>
-          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">CI/CD</span>
-          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">Infrastructure</span>
-        </div>
-        <div style="margin-top: 8px;">
-          <span style="color: rgba(255,255,255,0.7); font-size: 11px;">🏗️ 99.99% Uptime Achievement | ☁️ Multi-Cloud Expert</span>
+          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">3 commits</span>
         </div>
       </td>
     </tr>
-  </table>
-</div>
-
-### **🌟 Extended Team & Advisors**
-
-<div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 30px; border-radius: 20px; margin: 20px 0;">
-  <h3 style="color: white; margin-bottom: 20px;">👨‍💼 **Advisory Board & Specialists** 👩‍💼</h3>
-  
-  <table style="margin: 0 auto;">
     <tr>
-      <td align="center" style="padding: 15px;">
-        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=80&h=80&fit=crop&crop=face&auto=format&q=80" width="80" height="80" style="border-radius: 50%; border: 3px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.3);"/>
-        <br/><strong style="color: white; font-size: 14px;">Dr. Emily Watson</strong>
-        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px;">@emily-watson</span>
-        <br/><span style="background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 10px; font-size: 11px; color: white;">🎓 Academic Advisor</span>
-        <br/><span style="color: rgba(255,255,255,0.7); font-size: 10px;">MIT Professor | Cryptography Expert</span>
+      <td align="center" style="padding: 20px;">
+        <img src="https://avatars.githubusercontent.com/u/180313267?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
+        <br/><strong style="color: white; font-size: 16px;">Baranidharan</strong>
+        <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@Baranidharanv06</span>
+        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">👤 Contributor</span>
+        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
+        <div style="margin-top: 10px;">
+          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">2 commits</span>
+        </div>
       </td>
-      <td align="center" style="padding: 15px;">
-        <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=80&h=80&fit=crop&crop=face&auto=format&q=80" width="80" height="80" style="border-radius: 50%; border: 3px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.3);"/>
-        <br/><strong style="color: white; font-size: 14px;">James Park</strong>
-        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px;">@james-ux</span>
-        <br/><span style="background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 10px; font-size: 11px; color: white;">🎨 UX Director</span>
-        <br/><span style="color: rgba(255,255,255,0.7); font-size: 10px;">Ex-Apple Design | HCI Specialist</span>
+      <td align="center" style="padding: 20px;">
+        <img src="https://avatars.githubusercontent.com/u/132596404?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
+        <br/><strong style="color: white; font-size: 16px;">Pathan Mo. Faizan Khan</strong>
+        <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@pathan-07</span>
+        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">👤 Contributor</span>
+        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
+        <div style="margin-top: 10px;">
+          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">1 commits</span>
+        </div>
       </td>
-      <td align="center" style="padding: 15px;">
-        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=80&h=80&fit=crop&crop=face&auto=format&q=80" width="80" height="80" style="border-radius: 50%; border: 3px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.3);"/>
-        <br/><strong style="color: white; font-size: 14px;">Lisa Kumar</strong>
-        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px;">@lisa-product</span>
-        <br/><span style="background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 10px; font-size: 11px; color: white;">📋 Product Manager</span>
-        <br/><span style="color: rgba(255,255,255,0.7); font-size: 10px;">Ex-Microsoft | Agile Expert</span>
+      <td align="center" style="padding: 20px;">
+        <img src="https://avatars.githubusercontent.com/u/180231504?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
+        <br/><strong style="color: white; font-size: 16px;">Shubhranshu Sahu</strong>
+        <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@shubhranshu-sahu</span>
+        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">👤 Contributor</span>
+        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
+        <div style="margin-top: 10px;">
+          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">1 commits</span>
+        </div>
       </td>
-      <td align="center" style="padding: 15px;">
-        <img src="https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=80&h=80&fit=crop&crop=face&auto=format&q=80" width="80" height="80" style="border-radius: 50%; border: 3px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.3);"/>
-        <br/><strong style="color: white; font-size: 14px;">David Chen</strong>
-        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px;">@david-qa</span>
-        <br/><span style="background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 10px; font-size: 11px; color: white;">🧪 QA Lead</span>
-        <br/><span style="color: rgba(255,255,255,0.7); font-size: 10px;">Test Automation | Quality Assurance</span>
-      </td>
-      <td align="center" style="padding: 15px;">
-        <img src="https://images.unsplash.com/photo-1551836022-deb4988cc6c0?w=80&h=80&fit=crop&crop=face&auto=format&q=80" width="80" height="80" style="border-radius: 50%; border: 3px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.3);"/>
-        <br/><strong style="color: white; font-size: 14px;">Maria Santos</strong>
-        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px;">@maria-docs</span>
-        <br/><span style="background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 10px; font-size: 11px; color: white;">📚 Tech Writer</span>
-        <br/><span style="color: rgba(255,255,255,0.7); font-size: 10px;">Documentation | Developer Relations</span>
+      <td align="center" style="padding: 20px;">
+        <img src="https://avatars.githubusercontent.com/u/200819625?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
+        <br/><strong style="color: white; font-size: 16px;">Bhuvaneshwari Mallesh</strong>
+        <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@bhuvnaaaaaa</span>
+        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">👤 Contributor</span>
+        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
+        <div style="margin-top: 10px;">
+          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">1 commits</span>
+        </div>
       </td>
     </tr>
   </table>
 </div>
 
-### **🏅 Community Champions**
+### **🏅 All Contributors**
 
 <div style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); padding: 25px; border-radius: 20px; margin: 20px 0;">
-  <h3 style="color: #333; margin-bottom: 20px;">🌟 **Top Contributors & Community Leaders** 🌟</h3>
+  <h3 style="color: #333; margin-bottom: 20px;">🌟 **Thank You to All Contributors** 🌟</h3>
   
-  <table style="margin: 0 auto;">
-    <tr>
-      <td align="center" style="padding: 12px;">
-        <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=60&h=60&fit=crop&crop=face&auto=format&q=80" width="60" height="60" style="border-radius: 50%; border: 2px solid #333;"/>
-        <br/><strong style="color: #333; font-size: 12px;">John Doe</strong>
-        <br/><span style="color: #666; font-size: 10px;">@johndoe</span>
-        <br/><span style="background: rgba(0,0,0,0.1); padding: 1px 6px; border-radius: 8px; font-size: 9px; color: #333;">⭐ 1,250 Stars</span>
-      </td>
-      <td align="center" style="padding: 12px;">
-        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face&auto=format&q=80" width="60" height="60" style="border-radius: 50%; border: 2px solid #333;"/>
-        <br/><strong style="color: #333; font-size: 12px;">Jane Smith</strong>
-        <br/><span style="color: #666; font-size: 10px;">@janesmith</span>
-        <br/><span style="background: rgba(0,0,0,0.1); padding: 1px 6px; border-radius: 8px; font-size: 9px; color: #333;">🍴 45 Forks</span>
-      </td>
-      <td align="center" style="padding: 12px;">
-        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=60&h=60&fit=crop&crop=face&auto=format&q=80" width="60" height="60" style="border-radius: 50%; border: 2px solid #333;"/>
-        <br/><strong style="color: #333; font-size: 12px;">Mike Johnson</strong>
-        <br/><span style="color: #666; font-size: 10px;">@mikej</span>
-        <br/><span style="background: rgba(0,0,0,0.1); padding: 1px 6px; border-radius: 8px; font-size: 9px; color: #333;">🐛 25 Issues</span>
-      </td>
-      <td align="center" style="padding: 12px;">
-        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b5bc?w=60&h=60&fit=crop&crop=face&auto=format&q=80" width="60" height="60" style="border-radius: 50%; border: 2px solid #333;"/>
-        <br/><strong style="color: #333; font-size: 12px;">Sarah Wilson</strong>
-        <br/><span style="color: #666; font-size: 10px;">@sarahw</span>
-        <br/><span style="background: rgba(0,0,0,0.1); padding: 1px 6px; border-radius: 8px; font-size: 9px; color: #333;">💡 15 PRs</span>
-      </td>
-      <td align="center" style="padding: 12px;">
-        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face&auto=format&q=80" width="60" height="60" style="border-radius: 50%; border: 2px solid #333;"/>
-        <br/><strong style="color: #333; font-size: 12px;">Alex Brown</strong>
-        <br/><span style="color: #666; font-size: 10px;">@alexb</span>
-        <br/><span style="background: rgba(0,0,0,0.1); padding: 1px 6px; border-radius: 8px; font-size: 9px; color: #333;">📖 Documentation</span>
-      </td>
-      <td align="center" style="padding: 12px;">
-        <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=60&h=60&fit=crop&crop=face&auto=format&q=80" width="60" height="60" style="border-radius: 50%; border: 2px solid #333;"/>
-        <br/><strong style="color: #333; font-size: 12px;">Chris Lee</strong>
-        <br/><span style="color: #666; font-size: 10px;">@chrisl</span>
-        <br/><span style="background: rgba(0,0,0,0.1); padding: 1px 6px; border-radius: 8px; font-size: 9px; color: #333;">🎨 UI/UX</span>
-      </td>
-    </tr>
-  </table>
+  <div style="text-align: center; margin-bottom: 20px;">
+    <p style="color: #666; font-size: 16px;">We appreciate every contribution, no matter how big or small!</p>
+  </div>
+  
+  <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 20px 0;">
+    <a href="https://github.com/Xenonesis" target="_blank" style="text-decoration: none;">
+      <img src="https://avatars.githubusercontent.com/u/115968670?v=4" width="50" height="50" style="border-radius: 50%; border: 2px solid #333; margin: 2px;" title="_7adi; (47 contributions)"/>
+    </a>
+    <a href="https://github.com/Muneerali199" target="_blank" style="text-decoration: none;">
+      <img src="https://avatars.githubusercontent.com/u/186174121?v=4" width="50" height="50" style="border-radius: 50%; border: 2px solid #333; margin: 2px;" title="Muneer Ali (4 contributions)"/>
+    </a>
+    <a href="https://github.com/sudharshanpaul" target="_blank" style="text-decoration: none;">
+      <img src="https://avatars.githubusercontent.com/u/164482191?v=4" width="50" height="50" style="border-radius: 50%; border: 2px solid #333; margin: 2px;" title="Sudharshan Paul (4 contributions)"/>
+    </a>
+    <a href="https://github.com/Jils31" target="_blank" style="text-decoration: none;">
+      <img src="https://avatars.githubusercontent.com/u/176881379?v=4" width="50" height="50" style="border-radius: 50%; border: 2px solid #333; margin: 2px;" title="Jils Patel (3 contributions)"/>
+    </a>
+    <a href="https://github.com/Baranidharanv06" target="_blank" style="text-decoration: none;">
+      <img src="https://avatars.githubusercontent.com/u/180313267?v=4" width="50" height="50" style="border-radius: 50%; border: 2px solid #333; margin: 2px;" title="Baranidharan (2 contributions)"/>
+    </a>
+    <a href="https://github.com/pathan-07" target="_blank" style="text-decoration: none;">
+      <img src="https://avatars.githubusercontent.com/u/132596404?v=4" width="50" height="50" style="border-radius: 50%; border: 2px solid #333; margin: 2px;" title="Pathan Mo. Faizan Khan (1 contributions)"/>
+    </a>
+    <a href="https://github.com/shubhranshu-sahu" target="_blank" style="text-decoration: none;">
+      <img src="https://avatars.githubusercontent.com/u/180231504?v=4" width="50" height="50" style="border-radius: 50%; border: 2px solid #333; margin: 2px;" title="Shubhranshu Sahu (1 contributions)"/>
+    </a>
+    <a href="https://github.com/bhuvnaaaaaa" target="_blank" style="text-decoration: none;">
+      <img src="https://avatars.githubusercontent.com/u/200819625?v=4" width="50" height="50" style="border-radius: 50%; border: 2px solid #333; margin: 2px;" title="Bhuvaneshwari Mallesh (1 contributions)"/>
+    </a>
+  </div>
   
   <div style="margin-top: 20px; text-align: center;">
-    <span style="color: #666; font-size: 14px;">🙏 <strong>Thank you to all 2,500+ contributors who make Code Guardian possible!</strong></span>
+    <span style="color: #666; font-size: 14px;">🙏 <strong>Thank you to all 8 contributors who make Code Guardian possible!</strong></span>
   </div>
-</div>
-
-### **🎨 Special Thanks**
-
-<div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 25px; border-radius: 20px; margin: 20px 0;">
-  <h3 style="color: white; margin-bottom: 15px;">🙏 **Community Heroes** 🙏</h3>
-  
-  <table style="margin: 0 auto;">
-    <tr>
-      <td align="center" style="padding: 15px;">
-        <img src="https://github.com/facebook.png" width="60" height="60" style="border-radius: 50%; border: 2px solid white;"/>
-        <br/><strong style="color: white; font-size: 14px;">React Team</strong>
-        <br/><span style="color: rgba(255,255,255,0.8); font-size: 11px;">Framework Foundation</span>
-      </td>
-      <td align="center" style="padding: 15px;">
-        <img src="https://github.com/vitejs.png" width="60" height="60" style="border-radius: 50%; border: 2px solid white;"/>
-        <br/><strong style="color: white; font-size: 14px;">Vite Team</strong>
-        <br/><span style="color: rgba(255,255,255,0.8); font-size: 11px;">Build Tool Excellence</span>
-      </td>
-      <td align="center" style="padding: 15px;">
-        <img src="https://github.com/tailwindlabs.png" width="60" height="60" style="border-radius: 50%; border: 2px solid white;"/>
-        <br/><strong style="color: white; font-size: 14px;">Tailwind Labs</strong>
-        <br/><span style="color: rgba(255,255,255,0.8); font-size: 11px;">CSS Framework</span>
-      </td>
-      <td align="center" style="padding: 15px;">
-        <img src="https://github.com/radix-ui.png" width="60" height="60" style="border-radius: 50%; border: 2px solid white;"/>
-        <br/><strong style="color: white; font-size: 14px;">Radix UI</strong>
-        <br/><span style="color: rgba(255,255,255,0.8); font-size: 11px;">Component Primitives</span>
-      </td>
-      <td align="center" style="padding: 15px;">
-        <img src="https://github.com/shadcn.png" width="60" height="60" style="border-radius: 50%; border: 2px solid white;"/>
-        <br/><strong style="color: white; font-size: 14px;">shadcn/ui</strong>
-        <br/><span style="color: rgba(255,255,255,0.8); font-size: 11px;">Component Library</span>
-      </td>
-    </tr>
-  </table>
 </div>
 
 ## 🌟 Show Your Support
@@ -1798,7 +1726,9 @@ If you encounter any issues or have questions:
 
 <br/>
 
-[![GitHub stars](https://img.shields.io/github/stars/Xenonesis/code-guardian-report?style=for-the-badge&logo=github&logoColor=white&color=FFD700&labelColor=1a1a1a)](https://github.com/Xenonesis/code-guardian-report/stargazers)
+</div>
+
+---(https://img.shields.io/github/stars/Xenonesis/code-guardian-report?style=for-the-badge&logo=github&logoColor=white&color=FFD700&labelColor=1a1a1a)](https://github.com/Xenonesis/code-guardian-report/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/Xenonesis/code-guardian-report?style=for-the-badge&logo=github&logoColor=white&color=32CD32&labelColor=1a1a1a)](https://github.com/Xenonesis/code-guardian-report/network/members)
 [![GitHub watchers](https://img.shields.io/github/watchers/Xenonesis/code-guardian-report?style=for-the-badge&logo=github&logoColor=white&color=1E90FF&labelColor=1a1a1a)](https://github.com/Xenonesis/code-guardian-report/watchers)
 [![GitHub issues](https://img.shields.io/github/issues/Xenonesis/code-guardian-report?style=for-the-badge&logo=github&logoColor=white&color=FF6B6B&labelColor=1a1a1a)](https://github.com/Xenonesis/code-guardian-report/issues)

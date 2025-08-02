@@ -10,7 +10,7 @@ import { CallToActionSection } from '@/components/pages/about/CallToActionSectio
 import { AboutFeatures } from '@/components/pages/about/AboutFeatures';
 import HowToUseSection from '@/components/pages/about/HowToUseSection';
 import HowItWorksSection from '@/components/pages/about/HowItWorksSection';
-import MeetDeveloperSection from '@/components/pages/about/MeetDeveloperSection';
+import GitHubContributorsSection from '@/components/pages/about/GitHubContributorsSection';
 import EnhancedFeatureShowcase from '@/components/pages/about/EnhancedFeatureShowcase';
 import { useDarkMode } from '@/hooks/useDarkMode';
 
@@ -74,7 +74,7 @@ const About = () => {
               </section>
 
               <section id="about-section">
-                <MeetDeveloperSection />
+                <GitHubContributorsSection />
               </section>
 
               <section id="faq">
