@@ -25,7 +25,6 @@ export function hasConfiguredApiKeys(): boolean {
     const parsedKeys: StoredAPIKey[] = keys ? JSON.parse(keys) : [];
     return parsedKeys.length > 0 && parsedKeys.some(key => key.key && key.key.trim().length > 0);
   } catch (error) {
-    console.error('Error checking API keys:', error);
     return false;
   }
 }
@@ -45,7 +44,6 @@ export function getConfiguredProviders(): AIProvider[] {
       apiKey: key.key
     }));
   } catch (error) {
-    console.error('Error parsing stored API keys:', error);
     return [];
   }
 }
@@ -67,7 +65,6 @@ export function isProviderConfigured(providerId: string): boolean {
     const storedKeys: StoredAPIKey[] = keys ? JSON.parse(keys) : [];
     return storedKeys.some(key => key.provider === providerId && key.key.trim().length > 0);
   } catch (error) {
-    console.error('Error checking provider configuration:', error);
     return false;
   }
 }

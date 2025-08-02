@@ -36,10 +36,10 @@ export const Footer: React.FC<FooterProps> = ({ className = '' }) => {
       { id: 'terms', label: 'Terms of Service', description: 'Usage terms' }
     ],
     resources: [
-      { path: '#', label: 'Documentation', description: 'User guides' },
-      { path: '#', label: 'API Reference', description: 'Developer docs' },
-      { path: '#', label: 'Community', description: 'Join developers' },
-      { path: '#', label: 'Support', description: 'Get help' }
+      { path: '#documentation', label: 'Documentation', description: 'User guides' },
+      { path: '#api-reference', label: 'API Reference', description: 'Developer docs' },
+      { path: '#community', label: 'Community', description: 'Join developers' },
+      { path: '#support', label: 'Support', description: 'Get help' }
     ]
   };
 

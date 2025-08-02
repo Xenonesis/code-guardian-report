@@ -4,6 +4,11 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Analytics } from "@vercel/analytics/react";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import SinglePageApp from "./pages/SinglePageApp";
+import { AuthProvider } from "@/lib/auth-context";
+import { ConnectionStatus } from "@/components/ConnectionStatus";
+import { FirestoreStatus } from "@/components/FirestoreStatus";
+import { FirestoreHealthChecker } from "@/components/FirestoreHealthChecker";
+import { FirestoreErrorNotification } from "@/components/FirestoreErrorNotification";
 import { useEffect, type ReactNode } from "react";
 import Lenis from '@studio-freight/lenis';
 
@@ -61,6 +66,10 @@ const App = () => (
             },
           }}
         />
+        <ConnectionStatus />
+        <FirestoreStatus />
+        <FirestoreHealthChecker />
+        <FirestoreErrorNotification />
         <SinglePageApp />
         <Analytics />
       </SmoothScroll>

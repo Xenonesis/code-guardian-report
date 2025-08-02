@@ -122,19 +122,26 @@ export const SecurityIssueItem: React.FC<SecurityIssueItemProps> = ({
                 <h3 className="font-semibold text-white text-base">
                   {showNaturalLanguage ? 'Plain English Summary' : 'Technical Details'}
                 </h3>
-                <Button
-                  size="sm"
-                  variant="ghost"
+                <div
+                  role="button"
+                  tabIndex={0}
                   onClick={(e) => {
                     e.stopPropagation();
                     setShowNaturalLanguage(!showNaturalLanguage);
                   }}
-                  className="h-8 px-3 text-xs self-start sm:self-auto touch-target rounded-lg hover:bg-slate-700 text-slate-300 hover:text-white"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setShowNaturalLanguage(!showNaturalLanguage);
+                    }
+                  }}
+                  className="h-8 px-3 text-xs self-start sm:self-auto touch-target rounded-lg hover:bg-slate-700 text-slate-300 hover:text-white cursor-pointer inline-flex items-center transition-colors"
                 >
                   <MessageSquare className="h-3 w-3 mr-1.5" />
                   <span className="hidden sm:inline">{showNaturalLanguage ? 'Show Technical' : 'Plain English'}</span>
                   <span className="sm:hidden">{showNaturalLanguage ? 'Technical' : 'Plain'}</span>
-                </Button>
+                </div>
               </div>
               <div className="text-sm leading-relaxed">
                 {showNaturalLanguage ? (
