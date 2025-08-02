@@ -9,6 +9,9 @@ import { ConnectionStatus } from "@/components/ConnectionStatus";
 import { FirestoreStatus } from "@/components/FirestoreStatus";
 import { FirestoreHealthChecker } from "@/components/FirestoreHealthChecker";
 import { FirestoreErrorNotification } from "@/components/FirestoreErrorNotification";
+import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
+import { PWAUpdateNotification } from "@/components/PWAUpdateNotification";
+import { OfflineIndicator } from "@/components/OfflineIndicator";
 import { useEffect, type ReactNode } from "react";
 import Lenis from '@studio-freight/lenis';
 
@@ -70,6 +73,9 @@ const App = () => (
         <FirestoreStatus />
         <FirestoreHealthChecker />
         <FirestoreErrorNotification />
+        <PWAInstallPrompt />
+        <PWAUpdateNotification />
+        <OfflineIndicator />
         <SinglePageApp />
         <Analytics />
       </SmoothScroll>

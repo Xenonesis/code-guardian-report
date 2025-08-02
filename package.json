@@ -1,7 +1,7 @@
 {
   "name": "code-guardian-report",
   "private": true,
-  "version": "5.8",
+  "version": "5.9",
   "type": "module",
   "scripts": {
     "dev": "vite --host",
