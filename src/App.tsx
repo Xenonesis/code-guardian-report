@@ -53,7 +53,6 @@ const SmoothScroll = ({ children }: { children: React.ReactNode }) => {
 };
 
 const App = () => (
-<<<<<<< HEAD
   <AuthProvider>
     <ErrorBoundary>
       <TooltipProvider>
@@ -70,43 +69,19 @@ const App = () => (
               },
             }}
           />
+          <ConnectionStatus />
+          <FirestoreStatus />
+          <FirestoreHealthChecker />
+          <FirestoreErrorNotification />
+          <PWAInstallPrompt />
+          <PWAUpdateNotification />
+          <OfflineIndicator />
           <SinglePageApp />
           <Analytics />
         </SmoothScroll>
       </TooltipProvider>
     </ErrorBoundary>
   </AuthProvider>
-=======
-<AuthProvider>
-      <ErrorBoundary>
-    <TooltipProvider>
-      <SmoothScroll>
-        <Sonner 
-          position="top-right"
-          toastOptions={{
-            className: 'rounded-lg',
-            duration: 3000,
-            style: {
-              background: 'hsl(var(--background))',
-              color: 'hsl(var(--foreground))',
-              border: '1px solid hsl(var(--border))',
-            },
-          }}
-        />
-        <ConnectionStatus />
-        <FirestoreStatus />
-        <FirestoreHealthChecker />
-        <FirestoreErrorNotification />
-        <PWAInstallPrompt />
-        <PWAUpdateNotification />
-        <OfflineIndicator />
-        <SinglePageApp />
-        <Analytics />
-      </SmoothScroll>
-    </TooltipProvider>
-  </ErrorBoundary>
-</AuthProvider>
->>>>>>> 813eb09392560ce5ba31e6ed087e4501ed348410
 );
 
 export default App;
