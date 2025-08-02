@@ -290,19 +290,15 @@ export const AIKeyManager: React.FC = () => {
   // Initialize apiKeys state by reading from localStorage directly (Lazy Initialization)
   // This function runs only once when the component mounts for the first time
   const [apiKeys, setApiKeys] = useState<APIKey[]>(() => {
-    // console.log("AIKeyManager: Initializing apiKeys state from localStorage (lazy init)..."); // Debug log removed for PR
     try {
       const storedKeys = localStorage.getItem('aiApiKeys');
       if (storedKeys) {
         const parsedKeys = JSON.parse(storedKeys);
-        // console.log("AIKeyManager: Keys found in localStorage during lazy init:", parsedKeys); // Debug log removed for PR
         return parsedKeys;
       }
     } catch (error) {
-      // console.error('AIKeyManager: Error parsing stored API keys during lazy init:', error); // Debug log removed for PR
       localStorage.removeItem('aiApiKeys'); // Clear bad data if parsing fails
     }
-    // console.log("AIKeyManager: No keys found or error during lazy init, returning empty array."); // Debug log removed for PR
     return []; // Default to empty array if no keys are found or an error occurs
   });
 
@@ -319,11 +315,9 @@ export const AIKeyManager: React.FC = () => {
     // It will save when keys are added, or removed.
     if (apiKeys.length > 0) {
       const keysToSave = JSON.stringify(apiKeys);
-      // console.log("AIKeyManager: apiKeys state changed. Attempting to save to localStorage:", keysToSave); // Debug log removed for PR
       setLocalStorageItem('aiApiKeys', keysToSave);
     } else {
       // If apiKeys array becomes empty (e.g., all keys removed), ensure localStorage is cleared
-      // console.log("AIKeyManager: apiKeys state is empty. Ensuring 'aiApiKeys' is removed from localStorage."); // Debug log removed for PR
       removeLocalStorageItem('aiApiKeys'); // Using your utility function to clean up
     }
   }, [apiKeys]); // Dependency on apiKeys state
@@ -381,8 +375,6 @@ export const AIKeyManager: React.FC = () => {
         key: newKey.key.trim(),
         name: newKey.name.trim(),
       };
-
-      // console.log('AIKeyManager: Adding new API key to state:', { ...key, key: '***hidden***' }); // Debug log removed for PR
       setApiKeys(prevKeys => [...prevKeys, key]); // This will trigger the save useEffect automatically
       // console.log("AIKeyManager: API key added to state, save useEffect should be triggered."); // Debug log removed for PR
 

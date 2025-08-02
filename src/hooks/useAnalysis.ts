@@ -71,11 +71,9 @@ export const useAnalysis = () => {
 
   const handleFileSelect = useCallback((file: File) => {
     setSelectedFile(file);
-    console.log('File selected:', file.name, 'Size:', file.size, 'bytes');
   }, []);
 
   const handleAnalysisComplete = useCallback((results: AnalysisResults) => {
-    console.log('Analysis complete, results:', results);
     setAnalysisResults(results);
     setIsAnalyzing(false);
   }, []);

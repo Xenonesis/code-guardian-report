@@ -38,7 +38,9 @@ const UserDashboard: React.FC = () => {
 
       setTasks(userTasks.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()));
     } catch (error) {
-      console.error('Error fetching tasks:', error);
+      console.warn('Firestore connection error - tasks feature unavailable:', error);
+      // You could show a message to the user here if needed
+      setTasks([]);
     }
   };
 
@@ -61,7 +63,8 @@ const UserDashboard: React.FC = () => {
       setNewTaskDescription('');
       await fetchTasks();
     } catch (error) {
-      console.error('Error adding task:', error);
+      console.warn('Firestore connection error - unable to add task:', error);
+      // You could show a toast notification here
     } finally {
       setLoading(false);
     }
@@ -73,7 +76,7 @@ const UserDashboard: React.FC = () => {
       await updateDoc(taskRef, { completed: !completed });
       await fetchTasks();
     } catch (error) {
-      console.error('Error updating task:', error);
+      console.warn('Firestore connection error - unable to update task:', error);
     }
   };
 
@@ -82,7 +85,7 @@ const UserDashboard: React.FC = () => {
       await deleteDoc(doc(db, 'tasks', taskId));
       await fetchTasks();
     } catch (error) {
-      console.error('Error deleting task:', error);
+      console.warn('Firestore connection error - unable to delete task:', error);
     }
   };
 

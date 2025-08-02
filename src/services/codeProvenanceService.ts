@@ -578,7 +578,7 @@ export class CodeProvenanceService {
         return value as unknown;
       }));
     } catch (error) {
-      console.error('Failed to save provenance data:', error);
+      // Silent error handling
     }
   }
 
@@ -598,7 +598,7 @@ export class CodeProvenanceService {
         this.monitoringEnabled = data.monitoringEnabled || false;
       }
     } catch (error) {
-      console.error('Failed to load provenance data:', error);
+      // Silent error handling
     }
   }
 }

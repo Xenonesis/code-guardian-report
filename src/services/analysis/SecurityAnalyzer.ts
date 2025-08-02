@@ -51,7 +51,6 @@ export class SecurityAnalyzer {
    * Initialize analysis context with smart language and framework detection
    */
   public async initializeAnalysisContext(files: { filename: string; content: string }[]): Promise<EnhancedAnalysisContext> {
-    console.log('🔍 Initializing smart language detection...');
 
     // Detect languages and frameworks
     const detectionResult = await this.languageDetectionService.analyzeCodebase(files);
@@ -68,12 +67,7 @@ export class SecurityAnalyzer {
       recommendedTools
     };
 
-    console.log('✅ Language detection complete:', {
-      primaryLanguage: detectionResult.primaryLanguage.name,
-      frameworks: detectionResult.frameworks.map(f => f.name),
-      projectType: detectionResult.projectStructure.type,
-      recommendedTools: recommendedTools.slice(0, 3)
-    });
+
 
     return this.analysisContext;
   }
@@ -800,15 +794,10 @@ export class SecurityAnalyzer {
 
     if (content) {
       // Real analysis with actual file content
-      console.log(`🔍 REAL SECURITY ANALYSIS: Analyzing ${filename} (${content.length} characters) with smart detection`);
-      console.log(`📝 REAL ANALYSIS: Language detected: ${language}, Rules available: ${rules.length}`);
-
       // Apply framework-specific rules if available
       if (this.analysisContext?.frameworkSpecificRules.length) {
-        console.log(`📋 REAL ANALYSIS: Applying ${this.analysisContext.frameworkSpecificRules.length} framework-specific rules`);
         const frameworkIssues = this.applyFrameworkSpecificRules(filename, content, this.analysisContext.frameworkSpecificRules);
         issues.push(...frameworkIssues);
-        console.log(`🎯 REAL ANALYSIS: Framework rules found ${frameworkIssues.length} issues`);
       }
 
       const lines = content.split('\n');
@@ -862,26 +851,9 @@ export class SecurityAnalyzer {
       });
 
       // Perform secret detection
-      console.log(`🔐 REAL ANALYSIS: Running secret detection for ${filename}...`);
       const secretDetectionResult = this.secretDetectionService.detectSecrets(content);
       const secretIssues = this.convertSecretsToIssues(secretDetectionResult.secrets, filename);
       issues.push(...secretIssues);
-
-      // Real analysis complete - only return actual issues found
-      console.log(`✅ REAL ANALYSIS COMPLETE for ${filename}: ${issues.length} total issues found`);
-      console.log(`🔐 REAL ANALYSIS: ${secretIssues.length} secrets detected`);
-      console.log(`🛡️ REAL ANALYSIS: ${issues.length - secretIssues.length} other security issues found`);
-
-      if (issues.length > 0) {
-        const severityCounts = issues.reduce((acc, issue) => {
-          acc[issue.severity] = (acc[issue.severity] || 0) + 1;
-          return acc;
-        }, {} as Record<string, number>);
-        console.log(`📊 REAL ANALYSIS: Severity breakdown: ${JSON.stringify(severityCounts)}`);
-      }
-    } else {
-      // Return empty analysis when no content is provided - no fake issues
-      console.log(`⚠️ REAL ANALYSIS: No content provided for ${filename} - returning empty analysis`);
     }
 
     return issues;

@@ -1,7 +1,7 @@
 {
   "name": "code-guardian-report",
   "private": true,
-  "version": "4.7.0",
+  "version": "5.5",
   "type": "module",
   "scripts": {
     "dev": "vite --host",
@@ -30,7 +30,7 @@
     "@vercel/analytics": "^1.5.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "firebase": "^12.0.0",
+    "firebase": "^10.12.5",
     "framer-motion": "^12.23.0",
     "jszip": "^3.10.1",
     "lucide-react": "^0.462.0",

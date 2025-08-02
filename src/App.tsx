@@ -4,6 +4,11 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Analytics } from "@vercel/analytics/react";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import SinglePageApp from "./pages/SinglePageApp";
+import { AuthProvider } from "@/lib/auth-context";
+import { ConnectionStatus } from "@/components/ConnectionStatus";
+import { FirestoreStatus } from "@/components/FirestoreStatus";
+import { FirestoreHealthChecker } from "@/components/FirestoreHealthChecker";
+import { FirestoreErrorNotification } from "@/components/FirestoreErrorNotification";
 import { useEffect, type ReactNode } from "react";
 import Lenis from '@studio-freight/lenis';
 
@@ -45,6 +50,7 @@ const SmoothScroll = ({ children }: { children: React.ReactNode }) => {
 };
 
 const App = () => (
+main
   <AuthProvider>
     <ErrorBoundary>
       <TooltipProvider>
@@ -67,6 +73,33 @@ const App = () => (
       </TooltipProvider>
     </ErrorBoundary>
   </AuthProvider>
+<AuthProvider>
+      <ErrorBoundary>
+    <TooltipProvider>
+      <SmoothScroll>
+        <Sonner 
+          position="top-right"
+          toastOptions={{
+            className: 'rounded-lg',
+            duration: 3000,
+            style: {
+              background: 'hsl(var(--background))',
+              color: 'hsl(var(--foreground))',
+              border: '1px solid hsl(var(--border))',
+            },
+          }}
+        />
+        <ConnectionStatus />
+        <FirestoreStatus />
+        <FirestoreHealthChecker />
+        <FirestoreErrorNotification />
+        <SinglePageApp />
+        <Analytics />
+      </SmoothScroll>
+    </TooltipProvider>
+  </ErrorBoundary>
+</AuthProvider>
+ main
 );
 
 export default App;

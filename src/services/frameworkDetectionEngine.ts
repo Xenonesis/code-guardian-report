@@ -514,7 +514,6 @@ export class FrameworkDetectionEngine {
 
       return dependencies;
     } catch (error) {
-      console.warn('Failed to parse package.json:', error);
       return [];
     }
   }
