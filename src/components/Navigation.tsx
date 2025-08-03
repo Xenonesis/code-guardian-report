@@ -4,6 +4,7 @@ import { Shield, Home, Moon, Sun, Menu, X, Info, Lock, Award, User, LogOut } fro
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/lib/auth-context';
+import { useNavigation } from '@/lib/navigation-context';
 import { AuthModal } from './auth-modal';
 
 interface NavigationProps {
@@ -15,47 +16,25 @@ export const Navigation: React.FC<NavigationProps> = ({ isDarkMode, toggleDarkMo
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
   const [showAuthModal, setShowAuthModal] = useState(false);
   
   const { user, userProfile, logout } = useAuth();
+  const { currentSection, navigateTo } = useNavigation();
 
   // Mount detection and scroll detection for navbar styling
   useEffect(() => {
     setMounted(true);
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
-      
-      // Update active section based on scroll position
-      const sections = ['home', 'about', 'privacy', 'terms'];
-      const navbarHeight = 64; // h-16 = 64px
-      const scrollPosition = window.scrollY + navbarHeight + 20; // Add some buffer
-      
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const section = document.getElementById(sections[i]);
-        if (section && section.offsetTop <= scrollPosition) {
-          setActiveSection(sections[i]);
-          break;
-        }
-      }
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Smooth scroll to section with proper offset
-  const scrollToSection = (sectionId: string) => {
-    const section = document.getElementById(sectionId);
-    if (section) {
-      const navbarHeight = 64; // h-16 = 64px
-      const targetPosition = section.offsetTop - navbarHeight;
-      
-      window.scrollTo({
-        top: targetPosition,
-        behavior: 'smooth'
-      });
-    }
+  // Navigate to section
+  const handleNavigate = (sectionId: string) => {
+    navigateTo(sectionId);
     setIsMobileMenuOpen(false);
   };
 
@@ -83,7 +62,7 @@ export const Navigation: React.FC<NavigationProps> = ({ isDarkMode, toggleDarkMo
   ];
 
   const isActive = (sectionId: string) => {
-    return activeSection === sectionId;
+    return currentSection === sectionId;
   };
 
   if (!mounted) return null;
@@ -109,7 +88,7 @@ export const Navigation: React.FC<NavigationProps> = ({ isDarkMode, toggleDarkMo
         <div className="flex items-center justify-between h-16">
           {/* Code Guardian Logo */}
           <button
-            onClick={() => scrollToSection('home')}
+            onClick={() => handleNavigate('home')}
             className="flex items-center gap-3 group transition-all duration-300 hover:scale-105"
           >
             {/* Shield Icon */}
@@ -134,7 +113,7 @@ export const Navigation: React.FC<NavigationProps> = ({ isDarkMode, toggleDarkMo
             {navItems.map((item) => (
               <button
                 key={item.id}
-                onClick={() => scrollToSection(item.id)}
+                onClick={() => handleNavigate(item.id)}
                 className={cn(
                   "relative flex items-center gap-2 px-3 py-2 rounded-lg font-medium transition-all duration-200 text-sm group",
                   isActive(item.id)
@@ -238,7 +217,7 @@ export const Navigation: React.FC<NavigationProps> = ({ isDarkMode, toggleDarkMo
               {navItems.map((item) => (
                 <button
                   key={item.id}
-                  onClick={() => scrollToSection(item.id)}
+                  onClick={() => handleNavigate(item.id)}
                   className={cn(
                     "flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-colors duration-200 w-full text-left",
                     isActive(item.id)
