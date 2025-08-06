@@ -1,61 +1,8 @@
+// src/services/aiFixSuggestionsService.ts
+
 import { SecurityIssue } from '@/hooks/useAnalysis';
 import { AIService } from './aiService';
-
-export interface FixSuggestion {
-  id: string;
-  issueId: string;
-  title: string;
-  description: string;
-  confidence: number; // 0-100
-  effort: 'Low' | 'Medium' | 'High';
-  priority: number; // 1-5
-  codeChanges: CodeChange[];
-  explanation: string;
-  securityBenefit: string;
-  riskAssessment: string;
-  testingRecommendations: string[];
-  relatedPatterns: string[];
-  frameworkSpecific?: FrameworkSpecificFix;
-}
-
-export interface CodeChange {
-  type: 'replace' | 'insert' | 'delete' | 'refactor';
-  filename: string;
-  startLine: number;
-  endLine: number;
-  originalCode: string;
-  suggestedCode: string;
-  reasoning: string;
-}
-
-export interface FrameworkSpecificFix {
-  framework: string;
-  version?: string;
-  dependencies?: string[];
-  configChanges?: ConfigChange[];
-}
-
-export interface ConfigChange {
-  file: string;
-  changes: Record<string, unknown>;
-  reasoning: string;
-}
-
-export interface AutoRefactorResult {
-  success: boolean;
-  appliedChanges: CodeChange[];
-  warnings: string[];
-  errors: string[];
-  testSuggestions: string[];
-}
-
-export interface FixSuggestionRequest {
-  issue: SecurityIssue;
-  codeContext: string;
-  language: string;
-  framework?: string;
-  projectStructure?: string[];
-}
+import { FixSuggestion, CodeChange, FrameworkSpecificFix, ConfigChange, AutoRefactorResult, FixSuggestionRequest } from './types';
 
 export class AIFixSuggestionsService {
   private aiService: AIService;
@@ -77,6 +24,7 @@ export class AIFixSuggestionsService {
     }
 
     try {
+      // NOTE: This call is now a local mock implementation as per the maintainer's request.
       const suggestions = await this.generateAIFixSuggestions(request);
       
       // Cache the results
@@ -84,109 +32,117 @@ export class AIFixSuggestionsService {
       
       return suggestions;
     } catch (error) {
+      console.error('Error generating fix suggestions:', error);
       throw new Error(`Failed to generate fix suggestions: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 
   /**
-   * Generate multiple fix approaches using AI
+   * Generate multiple fix approaches using AI (NOW MOCKED)
    */
   private async generateAIFixSuggestions(request: FixSuggestionRequest): Promise<FixSuggestion[]> {
-    const { issue, codeContext, language, framework } = request;
+    console.log("AIFixSuggestionsService: Returning MOCK fix suggestions for UI testing based on maintainer's feedback.");
 
-    const systemPrompt = {
-      role: 'system' as const,
-      content: `You are an expert security engineer and code reviewer specializing in automated vulnerability remediation. 
+    // Simulate network delay to make it feel real
+    await new Promise(resolve => setTimeout(resolve, 1500));
 
-Your task is to analyze security vulnerabilities and provide multiple, practical fix suggestions with detailed implementation guidance.
+    // Original problematic code from app.py:
+    const originalVulnerableCode = `
+@app.route('/user', methods=['GET'])
+def get_user():
+    user_id = request.args.get('id')
+    if not user_id:
+        return jsonify({"error": "User ID is required"}), 400
 
-For each fix suggestion, provide:
-1. **Multiple Approaches**: Offer 2-3 different fix strategies (quick fix, comprehensive fix, architectural improvement)
-2. **Confidence Assessment**: Rate your confidence in each fix (0-100)
-3. **Effort Estimation**: Categorize implementation effort (Low/Medium/High)
-4. **Priority Ranking**: Rate urgency and importance (1-5)
-5. **Detailed Code Changes**: Specific line-by-line modifications
-6. **Security Benefits**: Explain how the fix improves security
-7. **Risk Assessment**: Identify potential side effects or breaking changes
-8. **Testing Strategy**: Recommend specific tests to validate the fix
-9. **Framework Integration**: Leverage framework-specific security features when applicable
+    # This is the vulnerable line: Directly embedding user input into a SQL query
+    query = f"SELECT * FROM users WHERE id = {user_id}"
 
-Focus on:
-- Practical, implementable solutions
-- Security best practices for ${language}${framework ? ` and ${framework}` : ''}
-- Minimal breaking changes
-- Performance considerations
-- Maintainability improvements
+    # For demonstration, we'll just print the query.
+    print(f"Executing query: {query}")
+`;
 
-Return your response as a JSON array of fix suggestions.`
-    };
+    const suggestedFixedCode = `
+@app.route('/user', methods=['GET'])
+def get_user():
+    user_id = request.args.get('id')
+    if not user_id:
+        return jsonify({"error": "User ID is required"}), 400
 
-    const userPrompt = {
-      role: 'user' as const,
-      content: `Analyze this security vulnerability and provide fix suggestions:
+    # Vulnerability fixed: Using parameterized queries with a placeholder
+    # This prevents SQL Injection by separating data from the query structure.
+    query = "SELECT * FROM users WHERE id = %s" # Use placeholder
+    # In a real app, you'd use a DB API that supports parameters
+    # For example: cursor.execute(query, (user_id,))
 
-**Security Issue:**
-- Type: ${issue.type}
-- Severity: ${issue.severity}
-- Category: ${issue.category}
-- Message: ${issue.message}
-- File: ${issue.filename}:${issue.line}
-- CWE: ${issue.cweId || 'Not specified'}
-- OWASP: ${issue.owaspCategory || 'Not specified'}
-- CVSS Score: ${issue.cvssScore || 'Not specified'}
+    # For demonstration, we'll just print the query.
+    print(f"Executing secure query: {query} with ID: {user_id}")
+`;
 
-**Code Context:**
-\`\`\`${language}
-${codeContext}
-\`\`\`
-
-**Environment:**
-- Language: ${language}
-- Framework: ${framework || 'None specified'}
-- Current Remediation: ${issue.remediation?.description || 'None provided'}
-
-Please provide 2-3 different fix approaches with varying complexity and thoroughness. Include specific code changes, security explanations, and implementation guidance.
-
-Format your response as a JSON array with this structure:
-[
-  {
-    "title": "Fix approach title",
-    "description": "Detailed description",
-    "confidence": 85,
-    "effort": "Medium",
-    "priority": 4,
-    "codeChanges": [
+    const mockSuggestions: FixSuggestion[] = [
       {
-        "type": "replace",
-        "filename": "example.js",
-        "startLine": 10,
-        "endLine": 12,
-        "originalCode": "vulnerable code",
-        "suggestedCode": "secure code",
-        "reasoning": "explanation"
-      }
-    ],
-    "explanation": "Why this fix works",
-    "securityBenefit": "Security improvements",
-    "riskAssessment": "Potential risks",
-    "testingRecommendations": ["test suggestions"],
-    "relatedPatterns": ["related security patterns"]
-  }
-]`
-    };
+        id: 'mock-sql-fix-1',
+        issueId: request.issue.id,
+        title: 'Implement Parameterized Query',
+        description: 'Refactor SQL query to use parameterized statements to prevent injection.',
+        explanation: 'Directly concatenating user input into SQL queries creates SQL Injection vulnerabilities. Parameterized queries separate the SQL logic from user-provided data, ensuring that input is treated as data, not executable code.',
+        codeChanges: [
+          {
+            filename: 'app.py',
+            originalCode: originalVulnerableCode,
+            suggestedCode: suggestedFixedCode,
+            type: 'replace',
+            reasoning: 'The original code directly inserts user_id into the SQL string. The fix replaces this with a parameter placeholder and explains how to use it securely.',
+            startLine: 30, // Approximate line numbers from your test file
+            endLine: 34,
+          },
+        ],
+        confidence: 95,
+        effort: 'Low',
+        priority: 5,
+        securityBenefit: 'Completely eliminates SQL Injection risk for this query.',
+        riskAssessment: 'Very low risk of breaking existing functionality if database client supports parameterized queries correctly.',
+        testingRecommendations: [
+          'Verify application functionality with valid user IDs.',
+          'Attempt SQL injection payloads (e.g., "1 OR 1=1") to confirm they are correctly escaped and do not alter query logic.',
+        ],
+        relatedPatterns: ['OWASP A03:2021-Injection', 'CWE-89: Improper Neutralization of Special Elements in SQL Command'],
+        frameworkSpecific: {
+          framework: 'Flask',
+          version: '2.x',
+          dependencies: ['Flask', 'YourDatabaseConnector'],
+        },
+      },
+      {
+        id: 'mock-debug-fix-2',
+        issueId: request.issue.id,
+        title: 'Disable Flask Debug Mode in Production',
+        description: 'Ensure Flask debug mode is explicitly set to False for production deployments.',
+        explanation: 'Running Flask with debug=True in a production environment exposes sensitive information (e.g., stack traces, interactive debugger) which can be exploited by attackers to gain control or access data.',
+        codeChanges: [
+          {
+            filename: 'app.py',
+            originalCode: `if __name__ == '__main__':\n    app.run(debug=True)`,
+            suggestedCode: `if __name__ == '__main__':\n    app.run(debug=False, host='0.0.0.0') # Set debug=False for production`,
+            type: 'replace',
+            reasoning: 'The debug parameter should always be false in production environments for security.',
+            startLine: 37,
+            endLine: 37,
+          },
+        ],
+        confidence: 99,
+        effort: 'Low',
+        priority: 5,
+        securityBenefit: 'Prevents information disclosure and remote code execution vulnerabilities.',
+        riskAssessment: 'No functional risk; improves security posture significantly.',
+        testingRecommendations: [
+          'Verify application runs without debugger in production mode.',
+          'Check logs for any errors that would normally appear in debug mode.',
+        ],
+        relatedPatterns: ['OWASP A06:2021-Vulnerable and Outdated Components', 'CWE-489: Leftover Debug Code'],
+      },
+    ];
 
-    try {
-      const response = await this.aiService.generateResponse([systemPrompt, userPrompt]);
-      const suggestions = this.parseAIResponse(response, request);
-      
-      return suggestions.map((suggestion, index) => ({
-        ...suggestion,
-        id: this.generateFixId(request.issue.id, index),
-        issueId: request.issue.id
-      }));
-    } catch (error) {
-      throw new Error(`AI fix generation failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
-    }
+    return mockSuggestions;
   }
 
   /**
@@ -206,6 +162,7 @@ Format your response as a JSON array with this structure:
 
       return suggestions.map((suggestion, index) => this.validateAndEnhanceSuggestion(suggestion, request, index));
     } catch (error) {
+      console.error('Failed to parse AI response:', error);
       // Fallback to basic suggestion
       return [this.createFallbackSuggestion(request)];
     }

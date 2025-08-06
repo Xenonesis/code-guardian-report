@@ -26,6 +26,8 @@ import {
 import { SecurityIssue } from '@/hooks/useAnalysis';
 import { FixSuggestion, AIFixSuggestionsService, FixSuggestionRequest } from '@/services/aiFixSuggestionsService';
 import { toast } from 'sonner';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'; // Make sure this path is correct for your Tooltip component
+import { CodeDiffViewer } from '@/components/ui/CodeDiffViewer';
 
 interface AIFixSuggestionsCardProps {
   issue: SecurityIssue;
@@ -341,7 +343,7 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
                         )}
                       </TabsContent>
 
-                      <TabsContent value="code" className="space-y-4">
+<TabsContent value="code" className="space-y-4">
                         {suggestion.codeChanges.map((change, index) => (
                           <div key={index} className="space-y-2">
                             <div className="flex items-center justify-between">
@@ -352,7 +354,8 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
                                 Lines {change.startLine}-{change.endLine}
                               </Badge>
                             </div>
-                            
+
+                            {/* ORIGINAL CODE BLOCK with Tooltip for Diff */}
                             {change.originalCode && (
                               <div>
                                 <div className="flex items-center justify-between mb-2">
@@ -369,12 +372,26 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
                                     )}
                                   </Button>
                                 </div>
-                                <pre className="bg-red-50 dark:bg-red-950/20 p-3 rounded border text-sm overflow-x-auto">
-                                  <code>{change.originalCode}</code>
-                                </pre>
+                                <TooltipProvider> {/* Wrap with TooltipProvider */}
+                                  <Tooltip delayDuration={300}> {/* Add Tooltip */}
+                                    <TooltipTrigger asChild>
+                                      <pre className="bg-red-50 dark:bg-red-950/20 p-3 rounded border text-sm overflow-x-auto cursor-help">
+                                        <code>{change.originalCode}</code>
+                                      </pre>
+                                    </TooltipTrigger>
+                                    <TooltipContent side="right" className="p-0 border-none bg-transparent shadow-none">
+                                      {/* Content for the Tooltip: the CodeDiffViewer */}
+                                      <CodeDiffViewer
+                                        originalCode={change.originalCode}
+                                        suggestedCode={change.suggestedCode}
+                                      />
+                                    </TooltipContent>
+                                  </Tooltip>
+                                </TooltipProvider>
                               </div>
                             )}
 
+                            {/* SUGGESTED CODE BLOCK with Tooltip for Diff */}
                             <div>
                               <div className="flex items-center justify-between mb-2">
                                 <span className="text-sm font-medium text-green-600">After:</span>
@@ -390,9 +407,22 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
                                   )}
                                 </Button>
                               </div>
-                              <pre className="bg-green-50 dark:bg-green-950/20 p-3 rounded border text-sm overflow-x-auto">
-                                <code>{change.suggestedCode}</code>
-                              </pre>
+                              <TooltipProvider> {/* Wrap with TooltipProvider */}
+                                <Tooltip delayDuration={300}> {/* Add Tooltip */}
+                                  <TooltipTrigger asChild>
+                                    <pre className="bg-green-50 dark:bg-green-950/20 p-3 rounded border text-sm overflow-x-auto cursor-help">
+                                      <code>{change.suggestedCode}</code>
+                                    </pre>
+                                  </TooltipTrigger>
+                                  <TooltipContent side="right" className="p-0 border-none bg-transparent shadow-none">
+                                    {/* Content for the Tooltip: the CodeDiffViewer */}
+                                    <CodeDiffViewer
+                                      originalCode={change.originalCode || ''} // Provide fallback in case originalCode is missing (though it shouldn't be for a diff)
+                                      suggestedCode={change.suggestedCode}
+                                    />
+                                  </TooltipContent>
+                                </Tooltip>
+                              </TooltipProvider>
                             </div>
 
                             <p className="text-xs text-slate-600 dark:text-slate-400 italic">
