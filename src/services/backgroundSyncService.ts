@@ -122,6 +122,13 @@ class BackgroundSyncService {
       formData.append('options', JSON.stringify(analysisOptions));
     }
 
+    // Skip API calls in development mode
+    if (import.meta.env.DEV) {
+      console.log('File Upload (dev mode):', { formData: Array.from(formData.entries()) });
+      this.notifyUser('File upload completed (dev mode)', 'Your files would be analyzed in production');
+      return;
+    }
+
     const response = await fetch('/api/analyze', {
       method: 'POST',
       body: formData
@@ -138,6 +145,13 @@ class BackgroundSyncService {
   // Process analysis request task
   private async processAnalysisRequest(task: SyncTask): Promise<void> {
     const { analysisId, options } = task.data;
+    
+    // Skip API calls in development mode
+    if (import.meta.env.DEV) {
+      console.log('Analysis Request (dev mode):', { analysisId, options });
+      this.notifyUser('Analysis completed (dev mode)', 'Your security analysis would be updated in production');
+      return;
+    }
     
     const response = await fetch(`/api/analysis/${analysisId}/rerun`, {
       method: 'POST',
@@ -157,6 +171,12 @@ class BackgroundSyncService {
   // Process user action task
   private async processUserAction(task: SyncTask): Promise<void> {
     const { action, payload } = task.data;
+    
+    // Skip API calls in development mode
+    if (import.meta.env.DEV) {
+      console.log('User Action Sync (dev mode):', { action, payload, timestamp: task.timestamp });
+      return;
+    }
     
     const response = await fetch('/api/user-actions', {
       method: 'POST',

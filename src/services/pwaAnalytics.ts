@@ -322,6 +322,12 @@ class PWAAnalyticsService {
   }
 
   private async sendAnalytics(event: string, data?: any): Promise<void> {
+    // Skip API calls in development mode
+    if (import.meta.env.DEV) {
+      console.log('PWA Analytics (dev mode):', { event, data, timestamp: Date.now(), session: this.getSessionId() });
+      return;
+    }
+
     try {
       await fetch(PWA_CONFIG.analytics.endpoint, {
         method: 'POST',

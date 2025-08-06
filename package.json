@@ -1,7 +1,7 @@
 {
   "name": "code-guardian-report",
   "private": true,
-  "version": "5.9",
+  "version": "6.0",
   "type": "module",
   "scripts": {
     "dev": "vite --host",
@@ -36,7 +36,7 @@
     "firebase": "^10.12.5",
     "framer-motion": "^12.23.0",
     "html2canvas": "^1.4.1",
-    "jspdf": "^2.5.1",
+    "jspdf": "^2.5.2",
     "jszip": "^3.10.1",
     "lucide-react": "^0.462.0",
     "next-themes": "^0.3.0",

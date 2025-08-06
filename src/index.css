@@ -2172,3 +2172,57 @@
         }
     }
 }
+/*
+ Enhanced Navigation Scrolling */
+.navigation-scroll {
+  /* Better scrollbar for navigation */
+  scrollbar-width: thin;
+  scrollbar-color: rgb(148 163 184) transparent;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.navigation-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.navigation-scroll::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 4px;
+}
+
+.navigation-scroll::-webkit-scrollbar-thumb {
+  background: rgb(148 163 184);
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.navigation-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgb(100 116 139);
+}
+
+.dark .navigation-scroll::-webkit-scrollbar-thumb {
+  background: rgb(100 116 139);
+}
+
+.dark .navigation-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgb(148 163 184);
+}
+
+/* Mobile touch scrolling improvements */
+@media (max-width: 768px) {
+  .navigation-scroll {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    scroll-padding: 1rem;
+  }
+  
+  .navigation-scroll::-webkit-scrollbar {
+    width: 6px;
+  }
+}
+
+/* Smooth scrolling for navigation items */
+.navigation-scroll > * {
+  scroll-margin-top: 1rem;
+}

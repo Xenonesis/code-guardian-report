@@ -899,7 +899,7 @@ VITE_ANTHROPIC_API_URL=https://api.anthropic.com/v1
 
 # Application Settings
 VITE_APP_NAME="Code Guardian Report"
-VITE_APP_VERSION="5.6"
+VITE_APP_VERSION="6.0"
 ```
 
 ## 📱 Usage Guide

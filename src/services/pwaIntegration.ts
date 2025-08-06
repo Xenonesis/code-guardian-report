@@ -166,6 +166,12 @@ class PWAIntegrationService {
     try {
       const report = await pwaAnalyticsService.generateReport();
       
+      // Skip API calls in development mode
+      if (import.meta.env.DEV) {
+        console.log('PWA Analytics Sync (dev mode):', report);
+        return;
+      }
+      
       await fetch('/api/analytics/pwa', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

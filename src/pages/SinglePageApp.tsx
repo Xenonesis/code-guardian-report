@@ -106,7 +106,7 @@ const SinglePageApp = () => {
       
       {/* Home Section */}
       {currentSection === 'home' && (
-        <section id="home" className={`min-h-screen ${isSidebarCollapsed ? 'md:ml-16' : 'md:ml-64'}`}>
+        <section id="home" className="min-h-screen">
           <PageLayout
             isDarkMode={isDarkMode}
             toggleDarkMode={toggleDarkMode}
@@ -170,7 +170,7 @@ const SinglePageApp = () => {
 
       {/* About Section */}
       {currentSection === 'about' && (
-        <section id="about" className={`min-h-screen relative overflow-hidden ${isSidebarCollapsed ? 'md:ml-16' : 'md:ml-64'}`}>
+        <section id="about" className="min-h-screen relative overflow-hidden">
           <AnimatedBackground />
           
           <div className="pt-16">
@@ -237,7 +237,7 @@ const SinglePageApp = () => {
 
       {/* Privacy Section */}
       {currentSection === 'privacy' && (
-        <section id="privacy" className={`min-h-screen bg-slate-50 dark:bg-slate-900/50 ${isSidebarCollapsed ? 'md:ml-16' : 'md:ml-64'}`}>
+        <section id="privacy" className="min-h-screen bg-slate-50 dark:bg-slate-900/50">
           <div className="pt-16">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
               <div className="max-w-4xl mx-auto">
@@ -320,7 +320,7 @@ const SinglePageApp = () => {
 
       {/* Terms Section */}
       {currentSection === 'terms' && (
-        <section id="terms" className={`min-h-screen bg-white dark:bg-slate-900 ${isSidebarCollapsed ? 'md:ml-16' : 'md:ml-64'}`}>
+        <section id="terms" className="min-h-screen bg-white dark:bg-slate-900">
           <div className="pt-16">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
               <div className="max-w-4xl mx-auto">
@@ -426,13 +426,13 @@ const SinglePageApp = () => {
 
       {/* Help Section */}
       {currentSection === 'help' && (
-        <div className={`${isSidebarCollapsed ? 'md:ml-16' : 'md:ml-64'}`}>
+        <div>
           <HelpPage />
         </div>
       )}
 
       {/* Footer */}
-      <div className={isSidebarCollapsed ? 'md:ml-16' : 'md:ml-64'}>
+      <div>
         <Footer />
       </div>
     </div>
