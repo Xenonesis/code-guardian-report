@@ -322,8 +322,8 @@ class PWAAnalyticsService {
   }
 
   private async sendAnalytics(event: string, data?: any): Promise<void> {
-    // Skip API calls in development mode
-    if (import.meta.env.DEV) {
+    // Skip API calls in development mode or when no backend is available
+    if (import.meta.env.DEV || window.location.hostname === 'localhost') {
       console.log('PWA Analytics (dev mode):', { event, data, timestamp: Date.now(), session: this.getSessionId() });
       return;
     }

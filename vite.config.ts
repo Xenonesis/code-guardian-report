@@ -17,7 +17,7 @@ export default defineConfig({
       '@utils': path.resolve(__dirname, './src/utils'),
       '@styles': path.resolve(__dirname, './src/styles')
     },
-    dedupe: ['react', 'react-dom']
+    dedupe: ['react', 'react-dom', 'scheduler']
   },
   // Development server optimizations
   server: {
@@ -38,7 +38,7 @@ export default defineConfig({
   // Professional build configuration
   build: {
     target: ['es2020', 'edge88', 'firefox78', 'chrome87', 'safari14'],
-    minify: 'esbuild',
+    minify: false,
     sourcemap: false,
     chunkSizeWarningLimit: 1000,
     cssCodeSplit: true,
@@ -49,6 +49,10 @@ export default defineConfig({
         // Advanced chunk splitting strategy
         manualChunks: (id) => {
           if (id.includes('node_modules')) {
+            // Keep scheduler separate to avoid __name issues
+            if (id.includes('scheduler')) {
+              return 'scheduler';
+            }
             // Keep React separate and load first
             if (id.includes('react/') && !id.includes('react-dom') && !id.includes('react-router')) {
               return 'react';

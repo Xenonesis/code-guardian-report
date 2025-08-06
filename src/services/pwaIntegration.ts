@@ -166,8 +166,8 @@ class PWAIntegrationService {
     try {
       const report = await pwaAnalyticsService.generateReport();
       
-      // Skip API calls in development mode
-      if (import.meta.env.DEV) {
+      // Skip API calls in development mode or when no backend is available
+      if (import.meta.env.DEV || window.location.hostname === 'localhost') {
         console.log('PWA Analytics Sync (dev mode):', report);
         return;
       }
