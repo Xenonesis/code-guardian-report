@@ -84,6 +84,7 @@ export const TabContent: React.FC<TabContentProps> = ({
                 issues={analysisResults.issues}
                 totalFiles={analysisResults.totalFiles}
                 analysisTime={analysisResults.analysisTime}
+                results={analysisResults}
               />
             )}
           </Suspense>

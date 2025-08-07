@@ -108,6 +108,57 @@
     <!-- RSS Feed -->
     <link rel="alternate" type="application/rss+xml" title="Code Guardian Enterprise Updates" href="/feed.xml" />
     
+    <!-- React Scheduler Polyfill - Must load before any React code -->
+    <script>
+      // Comprehensive fix for React scheduler __name function error
+      (function() {
+        // Define __name function globally
+        if (typeof globalThis.__name === 'undefined') {
+          globalThis.__name = function(fn, name) {
+            if (typeof fn === 'function') {
+              try {
+                Object.defineProperty(fn, 'name', { value: name, configurable: true });
+              } catch (e) {
+                // Ignore if name property can't be set
+              }
+            }
+            return fn;
+          };
+        }
+        
+        // Also define it on window for compatibility
+        if (typeof window !== 'undefined' && typeof window.__name === 'undefined') {
+          window.__name = globalThis.__name;
+        }
+        
+        // Define it on self for web workers
+        if (typeof self !== 'undefined' && typeof self.__name === 'undefined') {
+          self.__name = globalThis.__name;
+        }
+        
+        // Additional performance polyfill
+        if (typeof globalThis.performance === 'undefined') {
+          globalThis.performance = {
+            now: function() { return Date.now(); },
+            mark: function() {},
+            measure: function() {},
+            getEntriesByName: function() { return []; },
+            getEntriesByType: function() { return []; }
+          };
+        }
+        
+        // Ensure scheduler timing functions exist
+        if (typeof globalThis.MessageChannel === 'undefined') {
+          globalThis.MessageChannel = function() {
+            var port1 = { postMessage: function() {} };
+            var port2 = { onmessage: null };
+            this.port1 = port1;
+            this.port2 = port2;
+          };
+        }
+      })();
+    </script>
+    
     <!-- Structured Data Preload -->
     <script type="application/ld+json">
     {

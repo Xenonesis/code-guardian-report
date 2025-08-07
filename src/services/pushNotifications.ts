@@ -88,6 +88,16 @@ class PushNotificationService {
   }
 
   private async sendSubscriptionToServer(subscription: PushSubscription): Promise<void> {
+    // Skip API calls in development mode or when no backend is available
+    if (import.meta.env.DEV || window.location.hostname === 'localhost') {
+      console.log('Push Subscription (dev mode):', {
+        subscription: subscription.toJSON(),
+        userAgent: navigator.userAgent,
+        timestamp: Date.now()
+      });
+      return;
+    }
+
     const response = await fetch('/api/push/subscribe', {
       method: 'POST',
       headers: {
@@ -107,6 +117,12 @@ class PushNotificationService {
 
   private async removeSubscriptionFromServer(): Promise<void> {
     if (!this.subscription) return;
+
+    // Skip API calls in development mode or when no backend is available
+    if (import.meta.env.DEV || window.location.hostname === 'localhost') {
+      console.log('Push Unsubscribe (dev mode):', { endpoint: this.subscription.endpoint });
+      return;
+    }
 
     const response = await fetch('/api/push/unsubscribe', {
       method: 'POST',
@@ -140,6 +156,15 @@ class PushNotificationService {
       ]
     };
 
+    // Skip API calls in development mode or when no backend is available
+    if (import.meta.env.DEV || window.location.hostname === 'localhost') {
+      console.log('Test Notification (dev mode):', {
+        subscription: this.subscription.toJSON(),
+        payload
+      });
+      return;
+    }
+
     const response = await fetch('/api/push/send', {
       method: 'POST',
       headers: {
@@ -157,6 +182,16 @@ class PushNotificationService {
   }
 
   async scheduleNotification(payload: NotificationPayload, delay: number): Promise<void> {
+    // Skip API calls in development mode or when no backend is available
+    if (import.meta.env.DEV || window.location.hostname === 'localhost') {
+      console.log('Schedule Notification (dev mode):', {
+        subscription: this.subscription?.toJSON(),
+        payload,
+        delay
+      });
+      return;
+    }
+
     const response = await fetch('/api/push/schedule', {
       method: 'POST',
       headers: {

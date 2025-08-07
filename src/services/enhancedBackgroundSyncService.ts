@@ -317,6 +317,12 @@ class EnhancedBackgroundSyncService {
 
   // API calls for actual sync operations
   private async uploadChunk(chunk: any, index: number, taskId: string): Promise<void> {
+    // Skip API calls in development mode
+    if (import.meta.env.DEV) {
+      console.log('Upload Chunk (dev mode):', { chunk, index, taskId });
+      return;
+    }
+
     const response = await fetch('/api/upload/chunk', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -329,6 +335,12 @@ class EnhancedBackgroundSyncService {
   }
 
   private async finalizeFileUpload(taskId: string, metadata: any): Promise<void> {
+    // Skip API calls in development mode
+    if (import.meta.env.DEV) {
+      console.log('Finalize File Upload (dev mode):', { taskId, metadata });
+      return;
+    }
+
     const response = await fetch('/api/upload/finalize', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -341,6 +353,12 @@ class EnhancedBackgroundSyncService {
   }
 
   private async uploadAnalysisData(data: any): Promise<void> {
+    // Skip API calls in development mode
+    if (import.meta.env.DEV) {
+      console.log('Upload Analysis Data (dev mode):', data);
+      return;
+    }
+
     const response = await fetch('/api/analysis/sync', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -353,6 +371,12 @@ class EnhancedBackgroundSyncService {
   }
 
   private async uploadUserPreferences(preferences: any, deviceId: string): Promise<void> {
+    // Skip API calls in development mode
+    if (import.meta.env.DEV) {
+      console.log('Upload User Preferences (dev mode):', { preferences, deviceId });
+      return;
+    }
+
     const response = await fetch('/api/user/preferences', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -365,6 +389,12 @@ class EnhancedBackgroundSyncService {
   }
 
   private async fetchServerData(id: string): Promise<any> {
+    // Skip API calls in development mode
+    if (import.meta.env.DEV) {
+      console.log('Fetch Server Data (dev mode):', { id });
+      return null;
+    }
+
     const response = await fetch(`/api/analysis/${id}`);
     return response.ok ? response.json() : null;
   }

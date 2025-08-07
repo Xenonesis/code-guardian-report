@@ -1,3 +1,5 @@
+// Import polyfills first to fix React scheduler issues
+import './polyfills';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App.tsx';

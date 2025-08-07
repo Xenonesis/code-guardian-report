@@ -8,6 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { AIService } from '@/services/aiService';
 import EnhancedAnalyticsDashboard from '@/components/EnhancedAnalyticsDashboard';
+import { PDFDownloadButton } from '@/components/PDFDownloadButton';
 import { toast } from 'sonner';
 import { SecurityIssue } from '@/hooks/useAnalysis';
 
@@ -26,12 +27,14 @@ interface ResultsTableProps {
   issues: SecurityIssue[];
   totalFiles: number;
   analysisTime: string;
+  results?: any; // For PDF download compatibility
 }
 
 export const ResultsTable: React.FC<ResultsTableProps> = ({ 
   issues, 
   totalFiles, 
-  analysisTime 
+  analysisTime,
+  results
 }) => {
   const [expandedIssues, setExpandedIssues] = useState<Set<number>>(new Set());
   const [aiSummary, setAiSummary] = useState<string>('');
@@ -181,6 +184,18 @@ Please configure your AI API keys to get detailed insights and recommendations.`
 
   return (
     <div className="space-y-4 sm:space-y-6 animate-fade-in">
+      {/* PDF Download Button */}
+      {results && (
+        <div className="flex justify-end">
+          <PDFDownloadButton 
+            results={results} 
+            variant="outline"
+            size="sm"
+            className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm border-slate-200 dark:border-slate-700 hover:bg-white dark:hover:bg-slate-800"
+          />
+        </div>
+      )}
+      
       {/* Enhanced Summary Cards */}
       <section aria-labelledby="summary-title">
         <h2 id="summary-title" className="sr-only">Analysis Summary</h2>

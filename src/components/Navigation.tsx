@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
+ gssoc-2025
 import { Link, useLocation } from "react-router-dom";
 import {
   Shield,
@@ -23,6 +24,14 @@ import { AuthModal } from "./auth-modal";
 import { useNavigate } from "react-router-dom";
 import { useMobile } from "@/hooks/useMobile";
 
+import { Shield, Home, Moon, Sun, Menu, X, Info, Lock, Award, User, LogOut } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import { useAuth } from '@/lib/auth-context';
+import { useNavigation } from '@/lib/navigation-context';
+import { AuthModal } from './auth-modal';
+ main
+
 interface NavigationProps {
   isDarkMode: boolean;
   toggleDarkMode: () => void;
@@ -38,35 +47,30 @@ export const Navigation: React.FC<NavigationProps> = ({
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
+ gssoc-2025
   const [activeSection, setActiveSection] = useState('home');
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const { isMobile, isSmallMobile } = useMobile();
+
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  
+  const { user, userProfile, logout } = useAuth();
+  const { currentSection, navigateTo } = useNavigation();
+ main
 
   // Mount detection and scroll detection for navbar styling
   useEffect(() => {
     setMounted(true);
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
-      
-      // Update active section based on scroll position
-      const sections = ['home', 'about', 'privacy', 'terms'];
-      const navbarHeight = 64; // h-16 = 64px
-      const scrollPosition = window.scrollY + navbarHeight + 20; // Add some buffer
-      
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const section = document.getElementById(sections[i]);
-        if (section && section.offsetTop <= scrollPosition) {
-          setActiveSection(sections[i]);
-          break;
-        }
-      }
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+ gssoc-2025
   // Close mobile menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -101,6 +105,11 @@ export const Navigation: React.FC<NavigationProps> = ({
         behavior: 'smooth'
       });
     }
+
+  // Navigate to section
+  const handleNavigate = (sectionId: string) => {
+    navigateTo(sectionId);
+ main
     setIsMobileMenuOpen(false);
   };
 
@@ -128,7 +137,7 @@ export const Navigation: React.FC<NavigationProps> = ({
   ];
 
   const isActive = (sectionId: string) => {
-    return activeSection === sectionId;
+    return currentSection === sectionId;
   };
 
   const handleLogout = async () => {
@@ -144,6 +153,7 @@ export const Navigation: React.FC<NavigationProps> = ({
   if (!mounted) return null;
 
   const navContent = (
+ gssoc-2025
     <>
       <nav
         className={cn(
@@ -172,6 +182,94 @@ export const Navigation: React.FC<NavigationProps> = ({
               <div className="relative p-1.5 sm:p-2 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:rotate-3">
                 <Shield className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
                 <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+    <nav 
+      className={cn(
+        "portal-navbar transition-all duration-300",
+        isScrolled
+          ? "bg-white/95 dark:bg-slate-900/95 backdrop-blur-lg shadow-lg border-b border-slate-200/50 dark:border-slate-700/50"
+          : "bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200/30 dark:border-slate-700/30"
+      )}
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 10000,
+        width: '100%'
+      }}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          {/* Code Guardian Logo */}
+          <button
+            onClick={() => handleNavigate('home')}
+            className="flex items-center gap-3 group transition-all duration-300 hover:scale-105"
+          >
+            {/* Shield Icon */}
+            <div className="relative p-2 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:rotate-3">
+              <Shield className="h-6 w-6 text-white" />
+              <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
+            
+            {/* Brand Text */}
+            <div className="flex flex-col">
+              <h1 className="text-xl font-bold bg-gradient-to-r from-slate-900 to-blue-900 dark:from-white dark:to-blue-100 bg-clip-text text-transparent leading-tight">
+                Code Guardian
+              </h1>
+              <p className="text-xs text-slate-600 dark:text-slate-400 font-medium leading-none hidden sm:block">
+                Security Analysis
+              </p>
+            </div>
+          </button>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-8">
+            {navItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => handleNavigate(item.id)}
+                className={cn(
+                  "relative flex items-center gap-2 px-3 py-2 rounded-lg font-medium transition-all duration-200 text-sm group",
+                  isActive(item.id)
+                    ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20"
+                    : "text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-50 dark:hover:bg-slate-800/50"
+                )}
+              >
+                <div className="flex-shrink-0 transition-transform duration-200 group-hover:scale-110">
+                  {item.icon}
+                </div>
+                <span>{item.label}</span>
+                
+                {/* Active indicator */}
+                {isActive(item.id) && (
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 dark:bg-blue-400 rounded-full"></div>
+                )}
+              </button>
+            ))}
+          </div>
+
+          {/* Right side actions */}
+          <div className="flex items-center gap-4">
+            {/* Authentication Section */}
+            {user ? (
+              <div className="hidden md:flex items-center gap-3">
+                <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800/50">
+                  <User className="h-4 w-4 text-slate-600 dark:text-slate-400" />
+                  <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                    {userProfile?.displayName || 'User'}
+                  </span>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={logout}
+                  className="p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors duration-200 text-red-600 dark:text-red-400"
+                  aria-label="Sign out"
+                >
+                  <LogOut className="h-4 w-4" />
+                </Button>
+ main
               </div>
               
               {/* Brand Text */}
@@ -190,7 +288,7 @@ export const Navigation: React.FC<NavigationProps> = ({
               {navItems.map((item) => (
                 <button
                   key={item.id}
-                  onClick={() => scrollToSection(item.id)}
+                  onClick={() => handleNavigate(item.id)}
                   className={cn(
                     "relative flex items-center gap-2 px-3 py-2 rounded-lg font-medium transition-all duration-200 text-sm group touch-manipulation",
                     isActive(item.id)

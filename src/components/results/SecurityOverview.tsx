@@ -8,6 +8,7 @@ import { SecretDetectionCard } from '@/components/security/SecretDetectionCard';
 import { SecureCodeSearchCard } from '@/components/security/SecureCodeSearchCard';
 import { CodeProvenanceCard } from '@/components/security/CodeProvenanceCard';
 import { LanguageDetectionSummary } from '@/components/LanguageDetectionSummary';
+import { PDFDownloadButton } from '@/components/PDFDownloadButton';
 import { FixSuggestion } from '@/services/aiFixSuggestionsService';
 import { toast } from 'sonner';
 
@@ -62,6 +63,16 @@ export const SecurityOverview: React.FC<SecurityOverviewProps> = ({ results }) =
           className="mb-6"
         />
       )}
+
+      {/* PDF Download Section */}
+      <div className="flex justify-end mb-4">
+        <PDFDownloadButton 
+          results={results} 
+          variant="default"
+          size="sm"
+          className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg"
+        />
+      </div>
 
       <SecuritySummaryCards results={results} />
 

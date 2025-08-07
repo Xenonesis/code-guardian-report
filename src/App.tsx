@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/react";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import SinglePageApp from "./pages/SinglePageApp";
 import { AuthProvider } from "@/lib/auth-context";
+import { NavigationProvider } from "@/lib/navigation-context";
 import { ConnectionStatus } from "@/components/ConnectionStatus";
 import { FirestoreStatus } from "@/components/FirestoreStatus";
 import { FirestoreHealthChecker } from "@/components/FirestoreHealthChecker";
@@ -53,7 +54,12 @@ const SmoothScroll = ({ children }: { children: React.ReactNode }) => {
 };
 
 const App = () => (
+ gssoc-2025
   <AuthProvider>
+
+<AuthProvider>
+  <NavigationProvider>
+main
     <ErrorBoundary>
       <TooltipProvider>
         <SmoothScroll>
@@ -81,7 +87,12 @@ const App = () => (
         </SmoothScroll>
       </TooltipProvider>
     </ErrorBoundary>
+ gssoc-2025
   </AuthProvider>
+
+  </NavigationProvider>
+</AuthProvider>
+ main
 );
 
 export default App;

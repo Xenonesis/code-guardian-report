@@ -17,7 +17,7 @@ export default defineConfig({
       '@utils': path.resolve(__dirname, './src/utils'),
       '@styles': path.resolve(__dirname, './src/styles')
     },
-    dedupe: ['react', 'react-dom']
+    dedupe: ['react', 'react-dom', 'scheduler']
   },
   // Development server optimizations
   server: {
@@ -49,6 +49,10 @@ export default defineConfig({
         // Advanced chunk splitting strategy
         manualChunks: (id) => {
           if (id.includes('node_modules')) {
+            // Keep scheduler separate to avoid __name issues
+            if (id.includes('scheduler')) {
+              return 'scheduler';
+            }
             // Keep React separate and load first
             if (id.includes('react/') && !id.includes('react-dom') && !id.includes('react-router')) {
               return 'react';
@@ -102,28 +106,6 @@ export default defineConfig({
         unknownGlobalSideEffects: false
       }
     },
-    // Advanced Terser configuration for production
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true,
-        pure_funcs: ['console.log', 'console.info', 'console.debug', 'console.warn'],
-        passes: 2,
-        unsafe_arrows: false,
-        unsafe_methods: false,
-        unsafe_proto: false,
-        unsafe_regexp: false
-      },
-      mangle: {
-        safari10: true,
-        keep_fnames: true,
-        reserved: ['n', 'e', 't', 'r', 'i', 'o', 'a', 's', 'u', 'c', 'l', 'f', 'd', 'h', 'p', 'g', 'y', 'm', 'v', 'b', 'w', 'k', 'x', 'z', 'j', 'q']
-      },
-      format: {
-        comments: false,
-        ascii_only: true
-      }
-    },
     // CSS optimization
     cssMinify: false // Temporarily disabled to troubleshoot CSS loading issues
   },
@@ -132,7 +114,8 @@ export default defineConfig({
     include: [
       'react',
       'react-dom',
-
+      'react/jsx-runtime',
+      'scheduler',
       'lucide-react',
       'recharts',
       'framer-motion',
@@ -151,8 +134,9 @@ export default defineConfig({
   esbuild: {
     target: 'es2020',
     legalComments: 'none',
-    minifyIdentifiers: true,
+    minifyIdentifiers: false, // Prevent React scheduler mangling
     minifySyntax: true,
-    minifyWhitespace: true
+    minifyWhitespace: true,
+    keepNames: true // Preserve function names for React
   }
 });
