@@ -72,7 +72,7 @@ export const Footer: React.FC<FooterProps> = ({ className = '' }) => {
                 <h3 className="text-2xl font-bold bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">
                   Code Guardian
                 </h3>
-                <p className="text-sm text-slate-300 font-medium">AI-Powered Security Platform</p>
+                <p style={{ overflowWrap: 'break-word', whiteSpace: 'normal', wordBreak: 'break-word', maxWidth: '100%' }}>AI-Powered Security Platform</p>
               </div>
             </div>
             
