@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { Shield, Heart, Mail, Github, Globe, Scale, FileText, Code, Building2, Brain, Star, Users, Youtube, Linkedin, ExternalLink, ArrowUp } from 'lucide-react';
+import { Shield, Heart, Mail, Github, Globe, Scale, FileText, Code, Building2, Brain, Star, Users, Youtube, Linkedin, ExternalLink } from 'lucide-react';
 import { APP_VERSION_WITH_PREFIX } from '@/utils/version';
-import { Button } from '@/components/ui/button';
 
 interface FooterProps {
   className?: string;
@@ -19,11 +18,6 @@ export const Footer: React.FC<FooterProps> = ({ className = '' }) => {
         block: 'start'
       });
     }
-  };
-
-  // Scroll to top
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const footerLinks = {
@@ -230,19 +224,6 @@ export const Footer: React.FC<FooterProps> = ({ className = '' }) => {
               </div>
             </div>
           </div>
-        </div>
-
-        {/* Scroll to Top Button */}
-        <div className="mt-8 flex justify-center">
-          <Button
-            onClick={scrollToTop}
-            variant="ghost"
-            size="sm"
-            className="group p-3 rounded-full bg-slate-800/50 hover:bg-slate-700/50 text-slate-300 hover:text-white transition-all duration-300 border border-slate-700/50 hover:border-slate-600/50 hover:scale-110"
-            aria-label="Scroll to top"
-          >
-            <ArrowUp className="h-5 w-5 group-hover:-translate-y-1 transition-transform duration-300" />
-          </Button>
         </div>
       </div>
     </footer>
