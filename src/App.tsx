@@ -2,6 +2,7 @@
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import SinglePageApp from "./pages/SinglePageApp";
 import { AuthProvider } from "@/lib/auth-context";
@@ -82,6 +83,7 @@ const App = () => (
           <SinglePageApp />
           <ScrollToTop/>
           <Analytics />
+          <SpeedInsights />
         </SmoothScroll>
       </TooltipProvider>
     </ErrorBoundary>
