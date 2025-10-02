@@ -1,9 +1,26 @@
 # Changelog
 
 **Project Start Date:** 2025  
-**Last Update:** 22/7/2025
+**Last Update:** 02/10/2025
 
 ---
+
+## v6.1.0 (02/10/2025)
+- 🔗 **GitHub Repository Analysis**: Added direct GitHub repository analysis feature
+  - Created `githubRepositoryService.ts` for fetching and processing GitHub repositories
+  - Built `GitHubRepoInput.tsx` component for URL input and repository validation
+  - Integrated GitHub analysis into existing upload workflow with tabbed interface
+  - Support for multiple GitHub URL formats (main repo, specific branches)
+  - Real-time repository information display (stats, file count, size)
+  - Smart file filtering to analyze only relevant code files
+  - Automatic exclusion of common build directories and dependencies
+  - Progress tracking during repository download and packaging
+  - Support for 30+ programming languages
+  - Rate limiting handling for GitHub API
+- 📖 **Documentation**: Created comprehensive `GITHUB_ANALYSIS_FEATURE.md` guide
+- 🎨 **UI Enhancement**: Updated upload form with tabs for "Upload ZIP" and "GitHub Repository"
+- ✨ **Feature Integration**: Seamlessly integrated GitHub analysis with existing analysis engine
+- 📦 **Package Update**: No new dependencies required, uses existing JSZip library
 
 ## v4.7.0 (22/7/2025)
 - 📦 **Version Update**: Updated from v4.6.0 to v4.7.0

@@ -76,6 +76,17 @@ Now with Revolutionary AI-Powered Security Features & Enterprise Analytics
 <table>
 <tr>
 <td width="50%" align="center">
+  <img src="https://img.icons8.com/fluency/96/github.png" alt="GitHub Analysis" width="64"/>
+  <h4>🔗 Direct GitHub Repository Analysis</h4>
+  <p><strong>Analyze any public GitHub repo instantly</strong></p>
+  <ul align="left">
+    <li>🚀 No download/upload required</li>
+    <li>🌿 Support for any branch</li>
+    <li>📊 Real-time repository stats</li>
+    <li>⚡ Smart file filtering</li>
+  </ul>
+</td>
+<td width="50%" align="center">
   <img src="https://img.icons8.com/fluency/96/artificial-intelligence.png" alt="AI Fix" width="64"/>
   <h4>🔧 AI Fix Suggestions</h4>
   <p><strong>Intelligent code remediation powered by GPT-4 & Claude</strong></p>
@@ -86,6 +97,8 @@ Now with Revolutionary AI-Powered Security Features & Enterprise Analytics
     <li>⚡ Real-time code improvements</li>
   </ul>
 </td>
+</tr>
+<tr>
 <td width="50%" align="center">
   <img src="https://img.icons8.com/fluency/96/search.png" alt="Secure Search" width="64"/>
   <h4>🔍 Secure Code Search</h4>
@@ -97,8 +110,6 @@ Now with Revolutionary AI-Powered Security Features & Enterprise Analytics
     <li>🎨 Interactive search interface</li>
   </ul>
 </td>
-</tr>
-<tr>
 <td width="50%" align="center">
   <img src="https://img.icons8.com/fluency/96/blockchain-technology.png" alt="Provenance" width="64"/>
   <h4>🔗 Code Provenance Tracking</h4>
@@ -110,15 +121,28 @@ Now with Revolutionary AI-Powered Security Features & Enterprise Analytics
     <li>📈 Compliance reporting</li>
   </ul>
 </td>
+</tr>
+<tr>
 <td width="50%" align="center">
   <img src="https://img.icons8.com/fluency/96/spy.png" alt="Secret Detection" width="64"/>
-  <h4>🕵️ Advanced Secret Detection</h4>
+  <h4>�️ Advanced Secret Detection</h4>
   <p><strong>Enterprise-grade credential & secret scanning</strong></p>
   <ul align="left">
-    <li>🔑 API key detection</li>
-    <li>🗝️ Password & token scanning</li>
-    <li>🚨 Real-time alerts</li>
-    <li>📊 Security metrics dashboard</li>
+    <li>� API key detection</li>
+    <li>�️ Password & token scanning</li>
+    <li>� Real-time alerts</li>
+    <li>� Security metrics dashboard</li>
+  </ul>
+</td>
+<td width="50%" align="center">
+  <img src="https://img.icons8.com/fluency/96/code.png" alt="Multi-Language" width="64"/>
+  <h4>🌐 Multi-Language Support</h4>
+  <p><strong>Comprehensive analysis for 30+ languages</strong></p>
+  <ul align="left">
+    <li>� JavaScript, TypeScript, Python, Java</li>
+    <li>🦀 Rust, Go, C/C++, C#</li>
+    <li>� Ruby, PHP, Swift, Kotlin</li>
+    <li>� And many more...</li>
   </ul>
 </td>
 </tr>
@@ -913,8 +937,8 @@ VITE_APP_VERSION="6.0"
 <td width="33%" align="center">
   <img src="https://img.icons8.com/fluency/96/upload-to-cloud.png" alt="Upload" width="64"/>
   <h4>1️⃣ Upload Code</h4>
-  <p>Drag & drop ZIP files or select from your device</p>
-  <code>Supports 15+ languages</code>
+  <p>Drag & drop ZIP files or analyze GitHub repos directly</p>
+  <code>ZIP Upload | GitHub URL</code>
 </td>
 <td width="33%" align="center">
   <img src="https://img.icons8.com/fluency/96/artificial-intelligence.png" alt="Analyze" width="64"/>
@@ -933,13 +957,62 @@ VITE_APP_VERSION="6.0"
 
 </div>
 
+### **🔗 New: Direct GitHub Repository Analysis**
+
+<div align="center">
+  <img src="https://img.shields.io/badge/🆕%20NEW-Direct%20GitHub%20Analysis-00C851?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="New Feature"/>
+</div>
+
+<table>
+<tr>
+<td width="50%">
+
+#### **📋 How It Works**
+1. **Paste GitHub URL** - Enter any public repository URL
+2. **Auto-Validation** - System verifies repository access
+3. **Smart Download** - Fetches only code files
+4. **Instant Analysis** - Same powerful analysis engine
+5. **View Results** - Comprehensive security report
+
+#### **✨ Supported URL Formats**
+```
+https://github.com/owner/repo
+https://github.com/owner/repo/tree/branch
+https://github.com/owner/repo.git
+```
+
+</td>
+<td width="50%">
+
+#### **🎯 Key Benefits**
+- ✅ **No Manual Download** - Skip the download/upload steps
+- ✅ **Any Branch** - Analyze any branch in the repository
+- ✅ **Real-time Info** - See repo stats before analysis
+- ✅ **Smart Filtering** - Only analyzes relevant code files
+- ✅ **Progress Tracking** - Visual feedback during download
+
+#### **📊 What's Analyzed**
+Code files from 30+ languages including:
+- JavaScript/TypeScript, Python, Java
+- C/C++, Go, Rust, Ruby, PHP
+- And many more...
+
+</td>
+</tr>
+</table>
+
+<div align="center">
+  <p><strong>📖 For detailed documentation, see <a href="./GITHUB_ANALYSIS_FEATURE.md">GitHub Analysis Guide</a></strong></p>
+</div>
+
 ### **🎯 Key Features Overview**
 
 <div align="center">
 
 | Feature | Description | Supported Formats |
 |---------|-------------|-------------------|
-| 📁 **File Upload** | Drag & drop ZIP files with intelligent parsing | `.zip`, `.tar.gz`, `.rar` |
+| � **GitHub Analysis** | Direct repository analysis without downloads | Any public GitHub repo, all branches |
+| �📁 **File Upload** | Drag & drop ZIP files with intelligent parsing | `.zip`, `.tar.gz`, `.rar` |
 | 🔍 **Code Analysis** | Multi-language static analysis engine | `Python`, `JavaScript`, `TypeScript`, `Java`, `C++`, `Go`, `Rust` |
 | 🛡️ **Security Scan** | OWASP Top 10 vulnerability detection | `SQL Injection`, `XSS`, `CSRF`, `Auth Issues` |
 | 🔐 **Secret Detection** | AI-powered secret and credential detection | `API Keys`, `JWT Tokens`, `DB Credentials`, `Private Keys` |

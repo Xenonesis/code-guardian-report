@@ -153,13 +153,16 @@ export const useFileUpload = ({ onFileSelect, onAnalysisComplete }: UseFileUploa
     }
   }, [processFile]);
 
-  const handleFileInput = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileInput = useCallback((e: React.ChangeEvent<HTMLInputElement> | { target: { files: File[] } }) => {
     const file = e.target.files?.[0];
     if (file) {
       processFile(file);
     }
     
-    e.target.value = '';
+    // Clear input value if it's a real input element
+    if ('value' in e.target) {
+      e.target.value = '';
+    }
   }, [processFile]);
 
   const removeFile = () => {
@@ -170,6 +173,11 @@ export const useFileUpload = ({ onFileSelect, onAnalysisComplete }: UseFileUploa
     setUploadComplete(false);
     setError(null);
   };
+
+  // Direct file processing method for programmatically created files (e.g., from GitHub)
+  const processFileDirectly = useCallback((file: File) => {
+    processFile(file);
+  }, [processFile]);
 
   return {
     isDragOver,
@@ -183,6 +191,7 @@ export const useFileUpload = ({ onFileSelect, onAnalysisComplete }: UseFileUploa
     handleDragLeave,
     handleDrop,
     handleFileInput,
-    removeFile
+    removeFile,
+    processFileDirectly
   };
 };
