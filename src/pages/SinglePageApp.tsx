@@ -83,6 +83,13 @@ const SinglePageApp = () => {
 
   const handleStartAnalysis = () => {
     navigateTo('home', 'upload');
+    // Scroll to the upload section after navigation
+    setTimeout(() => {
+      const analysisTabs = document.querySelector('section[role="main"]');
+      if (analysisTabs) {
+        analysisTabs.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
   };
 
   return (
