@@ -1,17 +1,38 @@
 // eslint.config.js
 import markdown from 'eslint-plugin-markdown';
+import js from '@eslint/js';
+import tsParser from '@typescript-eslint/parser';
+import tsPlugin from '@typescript-eslint/eslint-plugin';
+import reactPlugin from 'eslint-plugin-react';
 
 export default [
+  js.configs.recommended,
   {
     files: ['**/*.{js,mjs,cjs,jsx,ts,tsx}'],
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',
+      parser: tsParser, // Use TypeScript parser
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true, // Enable JSX parsing
+        },
+      },
+    },
+    plugins: {
+      '@typescript-eslint': tsPlugin, // Use TypeScript plugin
+      'react': reactPlugin, // Use React plugin
     },
     rules: {
       // Add your rules here
       'semi': ['error', 'always'],
       'quotes': ['error', 'single'],
+      // TypeScript-specific rules
+      '@typescript-eslint/no-unused-vars': 'warn',
+      '@typescript-eslint/no-explicit-any': 'warn',
+      // React-specific rules
+      'react/react-in-jsx-scope': 'off', // Not needed in React 17+
+      'react/jsx-uses-vars': 'error', // Report variables used in JSX as unused
     },
   },
   {

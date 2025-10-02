@@ -1,3 +1,4 @@
+/* @jsxImportSource react */
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -289,37 +290,12 @@ const PromptGenerator: React.FC<PromptGeneratorProps> = ({ analysisResults }) =>
   const [showAllPrompts, setShowAllPrompts] = useState<boolean>(false);
 
   const generateCodebasePrompt = () => {
-    if (!analysisResults) {
-      const basicPrompt = `You are a code security expert. Analyze this code and find all security vulnerabilities and quality issues.
-
-For each issue found:
-1. Show the exact problematic code
-2. Explain why it's dangerous or bad
-3. Provide the fixed code
-4. Rate severity: Critical/High/Medium/Low
-
-Format like this:
-
-**ISSUE FOUND:**
-Severity: [level]
-File: [filename:line]
-Problem: [description]
-
-Bad code:
-\`\`\`
-[current code]
-\`\`\`
-
-Fixed code:
-\`\`\`
-[secure/better code]
-\`\`\`
-
-Why fix needed: [explanation]
-
-Give me copy-paste ready fixes for my code.`;
-      
-      setGeneratedPrompt(basicPrompt);
+    if (!analysisResults || !analysisResults.issues || analysisResults.issues.length === 0) {
+      toast({
+        title: "No File Uploaded",
+        description: "Please upload and analyze a file first.",
+        variant: "destructive",
+      });
       return;
     }
 
@@ -495,7 +471,11 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
                       </p>
                     </div>
                   </div>
-                  <Button onClick={generateCodebasePrompt} className="bg-blue-600 hover:bg-blue-700">
+                  <Button
+                    onClick={generateCodebasePrompt}
+                    className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                    disabled={!analysisResults || !analysisResults.issues || analysisResults.issues.length === 0}
+                  >
                     <Wand2 className="w-4 h-4 mr-2" />
                     Generate Prompt
                   </Button>
