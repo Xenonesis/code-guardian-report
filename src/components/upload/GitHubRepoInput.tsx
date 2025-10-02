@@ -28,8 +28,9 @@ export const GitHubRepoInput: React.FC<GitHubRepoInputProps> = ({ onFileReady })
     setRepoInfo(null);
     setEstimatedSize(null);
 
-    // Try to parse and fetch info when URL looks complete
-    if (url.includes('github.com/') && url.split('/').length >= 5) {
+    // Security: Validate URL format before making any requests
+    // Only fetch info if URL starts with https://github.com/ (not just contains it)
+    if (url.startsWith('https://github.com/') && url.split('/').length >= 5) {
       await fetchRepositoryInfo(url);
     }
   };
@@ -66,13 +67,19 @@ export const GitHubRepoInput: React.FC<GitHubRepoInputProps> = ({ onFileReady })
       return;
     }
 
+    // Security: Additional URL validation before processing
+    if (!repoUrl.startsWith('https://github.com/')) {
+      setError('Invalid URL. Please use a valid GitHub URL starting with https://github.com/');
+      return;
+    }
+
     setIsLoading(true);
     setError(null);
     setProgress(0);
     setProgressMessage('Initializing...');
 
     try {
-      // Parse GitHub URL
+      // Parse GitHub URL with security validation
       const parsedRepo = githubRepositoryService.parseGitHubUrl(repoUrl);
       
       if (!parsedRepo) {
@@ -140,12 +147,14 @@ export const GitHubRepoInput: React.FC<GitHubRepoInputProps> = ({ onFileReady })
         <div className="relative flex-1">
           <Github className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400" />
           <Input
-            type="text"
+            type="url"
             placeholder="https://github.com/owner/repository"
             value={repoUrl}
             onChange={handleUrlChange}
             onKeyPress={handleKeyPress}
             disabled={isLoading}
+            pattern="https://github\.com/[^/]+/[^/]+(/.*)?"
+            title="Enter a valid GitHub repository URL"
             className="pl-10 h-12 text-base border-2 focus:border-blue-500 transition-all"
           />
           {isFetchingInfo && (

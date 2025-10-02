@@ -19,23 +19,60 @@ class GitHubRepositoryService {
 
   /**
    * Parse GitHub URL to extract owner, repo, and branch
+   * Security: Validates that URL is actually from github.com domain
    */
   parseGitHubUrl(url: string): GitHubRepoInfo | null {
     try {
+      // Sanitize and validate URL
+      const trimmedUrl = url.trim();
+      
+      // Parse URL to ensure it's a valid URL and from github.com
+      let parsedUrl: URL;
+      try {
+        parsedUrl = new URL(trimmedUrl);
+      } catch {
+        return null;
+      }
+
+      // Security: Ensure the hostname is exactly github.com (case-insensitive)
+      // This prevents attacks like: https://evil.com/github.com/fake/repo
+      if (parsedUrl.hostname.toLowerCase() !== 'github.com') {
+        return null;
+      }
+
+      // Security: Ensure protocol is https
+      if (parsedUrl.protocol !== 'https:') {
+        return null;
+      }
+
+      // Extract pathname and parse it
+      const pathname = parsedUrl.pathname;
+      
       // Support multiple GitHub URL formats
       const patterns = [
-        /github\.com\/([^\/]+)\/([^\/]+?)(?:\/tree\/([^\/]+))?(?:\.git)?$/,
-        /github\.com\/([^\/]+)\/([^\/]+)$/,
-        /github\.com\/([^\/]+)\/([^\/]+)\/tree\/([^\/]+)/,
+        /^\/([^\/]+)\/([^\/]+?)(?:\/tree\/([^\/]+))?(?:\.git)?$/,
+        /^\/([^\/]+)\/([^\/]+)$/,
+        /^\/([^\/]+)\/([^\/]+)\/tree\/([^\/]+)/,
       ];
 
       for (const pattern of patterns) {
-        const match = url.match(pattern);
+        const match = pathname.match(pattern);
         if (match) {
+          // Validate owner and repo names (GitHub restrictions)
+          const owner = match[1];
+          const repo = match[2].replace(/\.git$/, '');
+          const branch = match[3] || 'main';
+
+          // Security: Validate owner and repo names contain only allowed characters
+          const validNamePattern = /^[a-zA-Z0-9._-]+$/;
+          if (!validNamePattern.test(owner) || !validNamePattern.test(repo)) {
+            return null;
+          }
+
           return {
-            owner: match[1],
-            repo: match[2].replace(/\.git$/, ''),
-            branch: match[3] || 'main',
+            owner,
+            repo,
+            branch,
           };
         }
       }
