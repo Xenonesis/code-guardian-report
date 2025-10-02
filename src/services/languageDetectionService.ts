@@ -47,152 +47,351 @@ export interface FileAnalysis {
 }
 
 /**
- * Comprehensive language patterns and signatures
+ * Comprehensive language patterns and signatures - ULTRA ACCURATE
  */
 const LANGUAGE_PATTERNS = {
-  // Programming Languages
-  javascript: {
-    extensions: ['.js', '.mjs', '.cjs', '.jsx'],
-    patterns: [
-      /\b(function|const|let|var|class|import|export|require)\b/,
-      /\b(console\.log|document\.|window\.)/,
-      /\b(async|await|Promise)\b/,
-      /=>\s*\{/,
-      /\$\{.*\}/
-    ],
-    keywords: ['function', 'const', 'let', 'var', 'class', 'import', 'export', 'async', 'await'],
-    category: 'programming' as const,
-    ecosystem: 'web'
-  },
+  // Programming Languages with enhanced detection
   typescript: {
     extensions: ['.ts', '.tsx', '.d.ts'],
     patterns: [
-      /\b(interface|type|enum|namespace)\b/,
-      /:\s*(string|number|boolean|any|void|unknown)/,
-      /<.*>/,
-      /\b(public|private|protected|readonly)\b/,
-      /\b(implements|extends)\b/
+      /\b(interface|type|enum|namespace)\b/g,
+      /:\s*(string|number|boolean|any|void|unknown|never)/g,
+      /<[A-Z]\w*>/g,
+      /\b(public|private|protected|readonly)\b/g,
+      /\b(implements|extends)\b/g,
+      /\b(as\s+const|as\s+\w+)/g,
+      /\bexport\s+(type|interface|enum|namespace)\b/g,
+      /\bgeneric\s*<\w+>/g,
+      /\?\s*:/g, // optional chaining
+      /!\./g // non-null assertion
     ],
-    keywords: ['interface', 'type', 'enum', 'namespace', 'implements', 'extends'],
+    keywords: ['interface', 'type', 'enum', 'namespace', 'implements', 'extends', 'readonly', 'private', 'public', 'protected', 'abstract', 'as'],
+    uniquePatterns: [
+      /:\s*(string|number|boolean|any)/g, // Type annotations
+      /\b(interface|type)\s+\w+/g, // Type definitions
+      /\bexport\s+type\b/g,
+      /@types\//g
+    ],
     category: 'programming' as const,
-    ecosystem: 'web'
+    ecosystem: 'web',
+    priority: 10 // Higher priority than JS
+  },
+  javascript: {
+    extensions: ['.js', '.mjs', '.cjs', '.jsx'],
+    patterns: [
+      /\b(function|const|let|var|class|import|export|require)\b/g,
+      /\b(console\.log|document\.|window\.)/g,
+      /\b(async|await|Promise)\b/g,
+      /=>\s*[{(]/g,
+      /\$\{[^}]+\}/g,
+      /\b(module\.exports|exports\.)/g,
+      /\brequire\s*\(/g,
+      /\b(\.then|\.catch|\.finally)\(/g
+    ],
+    keywords: ['function', 'const', 'let', 'var', 'class', 'import', 'export', 'async', 'await', 'require', 'module'],
+    uniquePatterns: [
+      /\bvar\s+\w+/g, // var declarations (JS specific)
+      /\brequire\s*\(['"][^'"]+['"]\)/g,
+      /module\.exports\s*=/g
+    ],
+    category: 'programming' as const,
+    ecosystem: 'web',
+    priority: 5
   },
   python: {
     extensions: ['.py', '.pyw', '.pyi', '.pyx'],
     patterns: [
-      /\b(def|class|import|from|if __name__ == "__main__")\b/,
-      /\b(print|len|range|enumerate)\b/,
-      /\bself\./,
-      /\b(try|except|finally|with|as)\b/,
-      /#.*$/m
+      /\b(def|class|import|from|if\s+__name__\s*==\s*["']__main__["'])\b/g,
+      /\b(print|len|range|enumerate|str|int|float|list|dict|tuple)\b/g,
+      /\bself\.\w+/g,
+      /\b(try|except|finally|with|as|raise)\b/g,
+      /^#.*$/gm,
+      /\b(lambda|yield|return)\b/g,
+      /@\w+\s*$/gm, // decorators
+      /(?:^\s{4}|\t)/gm, // indentation
+      /:\s*$/gm // colon at line end
     ],
-    keywords: ['def', 'class', 'import', 'from', 'if', 'elif', 'else', 'try', 'except'],
+    keywords: ['def', 'class', 'import', 'from', 'if', 'elif', 'else', 'try', 'except', 'finally', 'with', 'lambda', 'yield', 'self'],
+    uniquePatterns: [
+      /\bdef\s+\w+\s*\(/g,
+      /\bself\./g,
+      /__init__/g,
+      /\bimport\s+\w+/g,
+      /\bfrom\s+\w+\s+import/g
+    ],
     category: 'programming' as const,
-    ecosystem: 'backend'
+    ecosystem: 'backend',
+    priority: 8
   },
   java: {
     extensions: ['.java'],
     patterns: [
-      /\b(public|private|protected|static|final|abstract)\b/,
-      /\b(class|interface|enum|package|import)\b/,
-      /\b(System\.out\.println|String|int|boolean|void)\b/,
-      /\b(extends|implements|throws)\b/,
-      /@\w+/
+      /\b(public|private|protected|static|final|abstract|synchronized)\b/g,
+      /\b(class|interface|enum|package|import)\b/g,
+      /\b(System\.out\.println|System\.err|String|Integer|Boolean|void)\b/g,
+      /\b(extends|implements|throws|throw)\b/g,
+      /@(Override|Deprecated|SuppressWarnings|FunctionalInterface)\b/g,
+      /\bnew\s+\w+\s*\(/g,
+      /\bthis\./g,
+      /\bsuper\./g
     ],
-    keywords: ['public', 'private', 'protected', 'class', 'interface', 'package', 'import'],
+    keywords: ['public', 'private', 'protected', 'class', 'interface', 'package', 'import', 'static', 'final', 'void', 'extends', 'implements'],
+    uniquePatterns: [
+      /\bpublic\s+class\s+\w+/g,
+      /\bpublic\s+static\s+void\s+main/g,
+      /\bSystem\.out\./g,
+      /@\w+/g
+    ],
     category: 'programming' as const,
-    ecosystem: 'backend'
+    ecosystem: 'backend',
+    priority: 8
   },
   csharp: {
     extensions: ['.cs', '.csx'],
     patterns: [
-      /\b(using|namespace|class|interface|struct|enum)\b/,
-      /\b(public|private|protected|internal|static|readonly)\b/,
-      /\b(string|int|bool|void|var|object)\b/,
-      /\b(Console\.WriteLine|System\.)\b/,
-      /\[.*\]/
+      /\b(using|namespace|class|interface|struct|enum|record)\b/g,
+      /\b(public|private|protected|internal|static|readonly|const)\b/g,
+      /\b(string|int|bool|void|var|object|decimal|double|float)\b/g,
+      /\b(Console\.WriteLine|Console\.Write|System\.)/g,
+      /\[\w+\]/g,
+      /\b(async|await|Task)\b/g,
+      /\bnew\s+\w+\s*\(/g,
+      /=>/g
     ],
-    keywords: ['using', 'namespace', 'class', 'interface', 'public', 'private', 'static'],
+    keywords: ['using', 'namespace', 'class', 'interface', 'public', 'private', 'static', 'void', 'string', 'int', 'bool', 'var'],
+    uniquePatterns: [
+      /\busing\s+System\b/g,
+      /\bnamespace\s+\w+/g,
+      /\bConsole\./g,
+      /\[assembly:/g
+    ],
     category: 'programming' as const,
-    ecosystem: 'backend'
+    ecosystem: 'backend',
+    priority: 8
   },
   php: {
     extensions: ['.php', '.phtml', '.php3', '.php4', '.php5', '.phps'],
     patterns: [
-      /<\?php/,
-      /\$\w+/,
-      /\b(function|class|interface|trait|namespace)\b/,
-      /\b(echo|print|var_dump|isset|empty)\b/,
-      /->/
+      /<\?php/g,
+      /\$\w+/g,
+      /\b(function|class|interface|trait|namespace|use)\b/g,
+      /\b(echo|print|var_dump|print_r|isset|empty|die|exit)\b/g,
+      /->/g,
+      /::/g,
+      /\bpublic\s+function/g,
+      /\bprivate\s+function/g
     ],
-    keywords: ['function', 'class', 'interface', 'namespace', 'echo', 'print'],
+    keywords: ['function', 'class', 'interface', 'namespace', 'echo', 'print', 'use', 'trait', 'extends', 'implements'],
+    uniquePatterns: [
+      /<\?php/g,
+      /\$\w+\s*=/g,
+      /->\w+/g,
+      /::\w+/g
+    ],
     category: 'programming' as const,
-    ecosystem: 'web'
+    ecosystem: 'web',
+    priority: 9
   },
   ruby: {
     extensions: ['.rb', '.rbw', '.rake', '.gemspec'],
     patterns: [
-      /\b(def|class|module|end|require|include)\b/,
-      /\b(puts|print|p|gets)\b/,
-      /@\w+/,
-      /\b(if|unless|while|until|for|in)\b/,
-      /#.*$/m
+      /\b(def|class|module|end|require|include|extend)\b/g,
+      /\b(puts|print|p|gets|attr_accessor|attr_reader|attr_writer)\b/g,
+      /@\w+/g,
+      /\b(if|unless|while|until|for|in|case|when)\b/g,
+      /^#.*$/gm,
+      /\bdo\s*\|/g,
+      /\.each\b/g,
+      /:\w+/g // symbols
     ],
-    keywords: ['def', 'class', 'module', 'end', 'require', 'include'],
+    keywords: ['def', 'class', 'module', 'end', 'require', 'include', 'puts', 'attr_accessor'],
+    uniquePatterns: [
+      /\bdef\s+\w+/g,
+      /\bend\b/g,
+      /\battr_accessor\b/g,
+      /\.each\s+do/g
+    ],
     category: 'programming' as const,
-    ecosystem: 'backend'
+    ecosystem: 'backend',
+    priority: 7
   },
   go: {
     extensions: ['.go'],
     patterns: [
-      /\b(package|import|func|var|const|type)\b/,
-      /\b(fmt\.Print|fmt\.Sprintf)\b/,
-      /\b(if|for|switch|select|go|defer)\b/,
-      /\b(struct|interface|map|chan)\b/,
-      /\/\/.*$/m
+      /\b(package|import|func|var|const|type)\b/g,
+      /\b(fmt\.Print|fmt\.Sprintf|fmt\.Errorf)\b/g,
+      /\b(if|for|switch|select|go|defer|return)\b/g,
+      /\b(struct|interface|map|chan|make|new)\b/g,
+      /\/\/.*$/gm,
+      /:=/g,
+      /\bfunc\s+\w+\s*\(/g,
+      /\bfunc\s*\(/g // anonymous functions
     ],
-    keywords: ['package', 'import', 'func', 'var', 'const', 'type', 'struct', 'interface'],
+    keywords: ['package', 'import', 'func', 'var', 'const', 'type', 'struct', 'interface', 'go', 'defer', 'chan'],
+    uniquePatterns: [
+      /\bpackage\s+main\b/g,
+      /\bfunc\s+main\(\)/g,
+      /:=/g,
+      /\bfmt\./g
+    ],
     category: 'programming' as const,
-    ecosystem: 'backend'
+    ecosystem: 'backend',
+    priority: 9
   },
   rust: {
     extensions: ['.rs'],
     patterns: [
-      /\b(fn|let|mut|const|static|struct|enum|impl|trait)\b/,
-      /\b(println!|print!|panic!)\b/,
-      /\b(match|if|while|for|loop)\b/,
-      /\b(pub|use|mod|crate)\b/,
-      /\/\/.*$/m
+      /\b(fn|let|mut|const|static|struct|enum|impl|trait|mod)\b/g,
+      /\b(println!|print!|panic!|assert!|vec!)\b/g,
+      /\b(match|if|while|for|loop|break|continue)\b/g,
+      /\b(pub|use|mod|crate|self|super)\b/g,
+      /\/\/.*$/gm,
+      /\bSome\(|None\b/g,
+      /\bOk\(|Err\(/g,
+      /&\w+/g, // references
+      /&mut\s+/g
     ],
-    keywords: ['fn', 'let', 'mut', 'struct', 'enum', 'impl', 'trait', 'match'],
+    keywords: ['fn', 'let', 'mut', 'struct', 'enum', 'impl', 'trait', 'match', 'pub', 'mod', 'use'],
+    uniquePatterns: [
+      /\bfn\s+\w+/g,
+      /\blet\s+mut\b/g,
+      /\bimpl\s+\w+/g,
+      /println!\(/g
+    ],
     category: 'programming' as const,
-    ecosystem: 'backend'
+    ecosystem: 'backend',
+    priority: 9
   },
   cpp: {
     extensions: ['.cpp', '.cxx', '.cc', '.c++', '.hpp', '.hxx', '.h++'],
     patterns: [
-      /\b(#include|#define|#ifdef|#ifndef)\b/,
-      /\b(class|struct|namespace|template|typename)\b/,
-      /\b(std::|cout|cin|endl)\b/,
-      /\b(public|private|protected|virtual)\b/,
-      /\/\/.*$/m
+      /\b(#include|#define|#ifdef|#ifndef|#pragma)\b/g,
+      /\b(class|struct|namespace|template|typename)\b/g,
+      /\b(std::|cout|cin|endl|vector|string)\b/g,
+      /\b(public|private|protected|virtual|override)\b/g,
+      /\/\/.*$/gm,
+      /::/g,
+      /\btemplate\s*</g,
+      /\busing\s+namespace\b/g
     ],
-    keywords: ['class', 'struct', 'namespace', 'template', 'public', 'private', 'virtual'],
+    keywords: ['class', 'struct', 'namespace', 'template', 'public', 'private', 'virtual', 'typename', 'using'],
+    uniquePatterns: [
+      /\bstd::/g,
+      /\btemplate\s*</g,
+      /\busing\s+namespace\s+std/g,
+      /#include\s*<\w+>/g
+    ],
     category: 'programming' as const,
-    ecosystem: 'backend'
+    ecosystem: 'backend',
+    priority: 8
   },
   c: {
     extensions: ['.c', '.h'],
     patterns: [
-      /\b(#include|#define|#ifdef|#ifndef)\b/,
-      /\b(int|char|float|double|void|struct|enum)\b/,
-      /\b(printf|scanf|malloc|free)\b/,
-      /\b(if|else|while|for|switch|case)\b/,
-      /\/\*[\s\S]*?\*\//
+      /\b(#include|#define|#ifdef|#ifndef|#pragma)\b/g,
+      /\b(int|char|float|double|void|struct|enum|union|typedef)\b/g,
+      /\b(printf|scanf|malloc|calloc|realloc|free|sizeof)\b/g,
+      /\b(if|else|while|for|switch|case|break|continue|return)\b/g,
+      /\/\*[\s\S]*?\*\//g,
+      /\bmain\s*\(\s*(void|int\s+argc)/g
     ],
-    keywords: ['int', 'char', 'float', 'double', 'void', 'struct', 'enum'],
+    keywords: ['int', 'char', 'float', 'double', 'void', 'struct', 'enum', 'typedef', 'sizeof'],
+    uniquePatterns: [
+      /\bprintf\s*\(/g,
+      /\bscanf\s*\(/g,
+      /\bmalloc\s*\(/g,
+      /#include\s*<\w+\.h>/g
+    ],
     category: 'programming' as const,
-    ecosystem: 'backend'
+    ecosystem: 'backend',
+    priority: 7
+  },
+  kotlin: {
+    extensions: ['.kt', '.kts'],
+    patterns: [
+      /\b(fun|val|var|class|interface|object|companion)\b/g,
+      /\b(private|public|protected|internal|open|abstract)\b/g,
+      /\b(if|when|for|while|return|break|continue)\b/g,
+      /\b(println|print|require|check)\b/g,
+      /\?:/g, // elvis operator
+      /\?\./g, // safe call
+      /\b(suspend|async|coroutine)\b/g
+    ],
+    keywords: ['fun', 'val', 'var', 'class', 'interface', 'object', 'when', 'companion'],
+    uniquePatterns: [
+      /\bfun\s+\w+/g,
+      /\bval\s+\w+/g,
+      /\?\./g,
+      /\?:/g
+    ],
+    category: 'programming' as const,
+    ecosystem: 'backend',
+    priority: 8
+  },
+  swift: {
+    extensions: ['.swift'],
+    patterns: [
+      /\b(func|var|let|class|struct|enum|protocol|extension)\b/g,
+      /\b(import|public|private|internal|fileprivate|open)\b/g,
+      /\b(if|guard|for|while|switch|case|return)\b/g,
+      /\b(print|String|Int|Bool|Array|Dictionary)\b/g,
+      /->/g,
+      /\?/g,
+      /!/g // force unwrap
+    ],
+    keywords: ['func', 'var', 'let', 'class', 'struct', 'enum', 'protocol', 'guard'],
+    uniquePatterns: [
+      /\bfunc\s+\w+/g,
+      /\blet\s+\w+/g,
+      /\bguard\s+let/g,
+      /\bimport\s+Foundation\b/g
+    ],
+    category: 'programming' as const,
+    ecosystem: 'mobile',
+    priority: 8
+  },
+  dart: {
+    extensions: ['.dart'],
+    patterns: [
+      /\b(void|class|abstract|extends|implements|with|mixin)\b/g,
+      /\b(var|final|const|static|dynamic)\b/g,
+      /\b(if|else|for|while|switch|case|return)\b/g,
+      /\b(print|String|int|bool|List|Map)\b/g,
+      /\b(async|await|Future|Stream)\b/g,
+      /@override/g
+    ],
+    keywords: ['void', 'class', 'var', 'final', 'const', 'async', 'await', 'Future'],
+    uniquePatterns: [
+      /\bFuture\s*</g,
+      /\bStream\s*</g,
+      /\bWidget\b/g,
+      /@override/g
+    ],
+    category: 'programming' as const,
+    ecosystem: 'mobile',
+    priority: 8
+  },
+  scala: {
+    extensions: ['.scala'],
+    patterns: [
+      /\b(def|val|var|class|object|trait|case|match)\b/g,
+      /\b(implicit|override|sealed|abstract|final)\b/g,
+      /\b(if|else|for|while|yield|return)\b/g,
+      /\b(println|print|String|Int|Boolean)\b/g,
+      /=>/g,
+      /::/g,
+      /<-/g
+    ],
+    keywords: ['def', 'val', 'var', 'class', 'object', 'trait', 'case', 'match', 'implicit'],
+    uniquePatterns: [
+      /\bdef\s+\w+/g,
+      /\bcase\s+class/g,
+      /\bcase\s+object/g,
+      /<-/g
+    ],
+    category: 'programming' as const,
+    ecosystem: 'backend',
+    priority: 7
   }
 };
 
@@ -233,7 +432,10 @@ export class LanguageDetectionService {
 
     const analysisTime = Date.now() - this.startTime;
 
-    console.log('✅ REAL LANGUAGE DETECTION COMPLETED:', {
+    // Log detection completion for debugging
+    // @ts-ignore - console is available in browser/node
+    // eslint-disable-next-line
+    console?.log?.('✅ REAL LANGUAGE DETECTION COMPLETED:', {
       primaryLanguage: primaryLanguage.name,
       totalLanguages: allLanguages.length,
       frameworks: frameworks.length,
@@ -278,56 +480,168 @@ export class LanguageDetectionService {
   }
 
   /**
-   * REAL language detection for a single file based on actual content analysis
-   * NO FAKE DATA - Uses actual file patterns, keywords, and syntax
+   * ULTRA-ACCURATE language detection with multi-layer analysis
+   * Uses extension, content patterns, unique signatures, and disambiguation
    */
   private detectFileLanguage(filename: string, content: string): LanguageInfo {
     const extension = this.getFileExtension(filename);
-    const candidates: Array<{ name: string; confidence: number; info: Record<string, unknown> }> = [];
+    const candidates: Array<{ 
+      name: string; 
+      confidence: number; 
+      info: typeof LANGUAGE_PATTERNS[keyof typeof LANGUAGE_PATTERNS];
+      scores: {
+        extension: number;
+        patterns: number;
+        keywords: number;
+        unique: number;
+        priority: number;
+      }
+    }> = [];
 
-    // REAL ANALYSIS: Check each language pattern against actual file content
+    // LAYER 1: Multi-dimensional scoring for each language
     for (const [langName, langInfo] of Object.entries(LANGUAGE_PATTERNS)) {
-      let confidence = 0;
+      const scores = {
+        extension: 0,
+        patterns: 0,
+        keywords: 0,
+        unique: 0,
+        priority: 0
+      };
 
-      // REAL EXTENSION MATCH: Strong indicator based on file extension
+      // SCORE 1: Extension match (strong indicator)
       if (langInfo.extensions.includes(extension)) {
-        confidence += 60;
+        scores.extension = 40;
+        
+        // Boost for exact primary extension match
+        if (langInfo.extensions[0] === extension) {
+          scores.extension += 10;
+        }
       }
 
-      // REAL CONTENT PATTERN MATCHING: Analyze actual code patterns
+      // SCORE 2: Pattern matching (syntax analysis)
       if (content && content.length > 0) {
-        const patternMatches = langInfo.patterns.filter(pattern => pattern.test(content)).length;
-        const patternConfidence = (patternMatches / langInfo.patterns.length) * 30;
-        confidence += patternConfidence;
+        const contentSample = content.substring(0, Math.min(5000, content.length));
+        
+        // Count pattern matches with weighted scoring
+        let patternMatchCount = 0;
+        for (const pattern of langInfo.patterns) {
+          const matches = contentSample.match(pattern);
+          if (matches && matches.length > 0) {
+            patternMatchCount += Math.min(matches.length, 5); // Cap at 5 per pattern
+          }
+        }
+        scores.patterns = Math.min(25, (patternMatchCount / langInfo.patterns.length) * 25);
 
-        // REAL KEYWORD FREQUENCY ANALYSIS: Count actual language keywords
-        const keywordMatches = langInfo.keywords.filter(keyword =>
-          new RegExp(`\\b${keyword}\\b`, 'g').test(content)
-        ).length;
-        const keywordConfidence = (keywordMatches / langInfo.keywords.length) * 10;
-        confidence += keywordConfidence;
+        // SCORE 3: Keyword frequency (language-specific identifiers)
+        let keywordCount = 0;
+        for (const keyword of langInfo.keywords) {
+          const regex = new RegExp(`\\b${this.escapeRegex(keyword)}\\b`, 'g');
+          const matches = contentSample.match(regex);
+          if (matches) {
+            keywordCount += matches.length;
+          }
+        }
+        scores.keywords = Math.min(15, (keywordCount / 10) * 15);
+
+        // SCORE 4: Unique signatures (language-specific patterns)
+        if ('uniquePatterns' in langInfo && langInfo.uniquePatterns) {
+          let uniqueMatchCount = 0;
+          for (const pattern of langInfo.uniquePatterns) {
+            const matches = contentSample.match(pattern);
+            if (matches && matches.length > 0) {
+              uniqueMatchCount += matches.length;
+            }
+          }
+          scores.unique = Math.min(20, (uniqueMatchCount / langInfo.uniquePatterns.length) * 20);
+        }
+
+        // SCORE 5: Priority bonus (for disambiguation)
+        if ('priority' in langInfo) {
+          scores.priority = (langInfo.priority || 0) * 0.5;
+        }
       }
 
-      if (confidence > 0) {
+      // Calculate total confidence
+      const totalConfidence = 
+        scores.extension + 
+        scores.patterns + 
+        scores.keywords + 
+        scores.unique + 
+        scores.priority;
+
+      if (totalConfidence > 0) {
         candidates.push({
           name: langName,
-          confidence: Math.min(100, Math.round(confidence)),
-          info: langInfo
+          confidence: Math.min(100, Math.round(totalConfidence)),
+          info: langInfo,
+          scores
         });
       }
     }
 
-    // Sort by confidence and return the best match
-    candidates.sort((a, b) => b.confidence - a.confidence);
+    // LAYER 2: Advanced disambiguation
+    if (candidates.length > 1) {
+      candidates.sort((a, b) => {
+        // First sort by total confidence
+        if (Math.abs(a.confidence - b.confidence) > 5) {
+          return b.confidence - a.confidence;
+        }
+        
+        // If close, prioritize unique pattern matches
+        if (Math.abs(a.scores.unique - b.scores.unique) > 3) {
+          return b.scores.unique - a.scores.unique;
+        }
+        
+        // Then by priority
+        return b.scores.priority - a.scores.priority;
+      });
 
+      // Special disambiguation rules
+      const top = candidates[0];
+      const second = candidates[1];
+
+      // TypeScript vs JavaScript: TypeScript wins with type annotations
+      if ((top.name === 'javascript' && second.name === 'typescript') ||
+          (top.name === 'typescript' && second.name === 'javascript')) {
+        const tsCandidate = candidates.find(c => c.name === 'typescript');
+        if (tsCandidate && tsCandidate.scores.unique > 5) {
+          candidates.sort((a, b) => 
+            (b.name === 'typescript' ? 1 : 0) - (a.name === 'typescript' ? 1 : 0)
+          );
+        }
+      }
+
+      // C vs C++: C++ wins with std:: or class
+      if ((top.name === 'c' && second.name === 'cpp') ||
+          (top.name === 'cpp' && second.name === 'c')) {
+        const cppCandidate = candidates.find(c => c.name === 'cpp');
+        if (cppCandidate && cppCandidate.scores.unique > 3) {
+          candidates.sort((a, b) => 
+            (b.name === 'cpp' ? 1 : 0) - (a.name === 'cpp' ? 1 : 0)
+          );
+        }
+      }
+    } else if (candidates.length === 1) {
+      // Single candidate, but verify it's a good match
+      candidates.sort((a, b) => b.confidence - a.confidence);
+    }
+
+    // LAYER 3: Return best match with validated confidence
     if (candidates.length > 0) {
       const best = candidates[0];
+      
+      // Adjust confidence for very short files
+      let finalConfidence = best.confidence;
+      if (content.length < 100 && best.scores.extension > 0) {
+        finalConfidence = Math.max(finalConfidence, 70); // Trust extension for tiny files
+      }
+      
       return {
         name: best.name,
-        confidence: Math.round(best.confidence),
-        extensions: best.info.extensions as string[],
-        category: best.info.category as 'programming' | 'markup' | 'config' | 'data' | 'documentation',
-        ecosystem: best.info.ecosystem as string | undefined
+        confidence: Math.round(finalConfidence),
+        extensions: best.info.extensions,
+        category: best.info.category,
+        ecosystem: best.info.ecosystem
       };
     }
 
@@ -338,6 +652,13 @@ export class LanguageDetectionService {
       extensions: [extension],
       category: 'data'
     };
+  }
+
+  /**
+   * Escape regex special characters
+   */
+  private escapeRegex(str: string): string {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   }
 
   /**
@@ -366,23 +687,33 @@ export class LanguageDetectionService {
       }
     }
 
-    // Calculate final confidence scores
+    // Calculate final confidence scores with enhanced weighting
     const totalFiles = this.fileAnalyses.length;
     const totalSize = this.fileAnalyses.reduce((sum, analysis) => sum + analysis.size, 0);
 
     const languages: LanguageInfo[] = [];
-    for (const [name, stats] of languageMap.entries()) {
+    for (const [langName, stats] of languageMap.entries()) {
       const fileRatio = stats.fileCount / totalFiles;
       const sizeRatio = stats.totalSize / totalSize;
+      
+      // Enhanced scoring algorithm
+      // - Base confidence from pattern matching (40%)
+      // - File count ratio (30%)
+      // - Code size ratio (20%)
+      // - Bonus for dominant language (10%)
+      const baseScore = stats.maxConfidence * 0.4;
+      const fileScore = fileRatio * 100 * 0.3;
+      const sizeScore = sizeRatio * 100 * 0.2;
+      const dominanceBonus = (fileRatio > 0.5 || sizeRatio > 0.6) ? 10 : 0;
+      
       const finalConfidence = Math.round(
-        (stats.maxConfidence * 0.4) +
-        (fileRatio * 100 * 0.3) +
-        (sizeRatio * 100 * 0.3)
+        baseScore + fileScore + sizeScore + dominanceBonus
       );
 
       languages.push({
         ...stats.info,
-        confidence: Math.min(100, finalConfidence)
+        name: langName,
+        confidence: Math.min(100, Math.max(finalConfidence, stats.maxConfidence))
       });
     }
 
@@ -862,7 +1193,7 @@ export class LanguageDetectionService {
     );
   }
 
-  private hasLibraryStructure(filenames: string[], directories: Set<string>): boolean {
+  private hasLibraryStructure(filenames: string[], _directories: Set<string>): boolean {
     const libraryIndicators = [
       'lib/', 'dist/', 'build/',
       'index.js', 'index.ts',
@@ -903,13 +1234,6 @@ export class LanguageDetectionService {
   }
 
   private hasMonorepoStructure(filenames: string[], directories: Set<string>): boolean {
-    const monorepoIndicators = [
-      'packages/', 'apps/', 'libs/',
-      'lerna.json', 'nx.json',
-      'workspace.json', 'rush.json',
-      'pnpm-workspace.yaml'
-    ];
-
     const hasWorkspaceConfig = filenames.some(f =>
       f.includes('lerna.json') || f.includes('nx.json') ||
       f.includes('workspace.json') || f.includes('pnpm-workspace.yaml')
