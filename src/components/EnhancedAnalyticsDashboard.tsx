@@ -3,11 +3,10 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Shield, Download, Activity, Target, Zap, TrendingUp, FileText } from 'lucide-react';
+import { Shield, Download, Activity, Target, Zap, FileText } from 'lucide-react';
 import { MetricsCards } from '@/components/dashboard/MetricsCards';
 import { SeverityChart } from '@/components/dashboard/charts/SeverityChart';
 import { TypeChart } from '@/components/dashboard/charts/TypeChart';
-import { TrendChart } from '@/components/dashboard/charts/TrendChart';
 import { FileComplexityChart } from '@/components/dashboard/charts/FileComplexityChart';
 import { RiskAssessment } from '@/components/dashboard/RiskAssessment';
 import { PerformanceMetrics } from '@/components/dashboard/PerformanceMetrics';
@@ -41,7 +40,6 @@ const EnhancedAnalyticsDashboard: React.FC<EnhancedAnalyticsDashboardProps> = ({
     severityData,
     typeData,
     fileComplexityData,
-    trendData,
     riskMetrics,
     performanceData
   } = useAnalyticsData(issues, totalFiles);
@@ -107,16 +105,11 @@ const EnhancedAnalyticsDashboard: React.FC<EnhancedAnalyticsDashboardProps> = ({
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-2 sm:grid-cols-5 mb-6">
+        <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 mb-6">
           <TabsTrigger value="overview" className="text-xs sm:text-sm">
             <Activity className="h-4 w-4 mr-1 sm:mr-2" />
             <span className="hidden sm:inline">Overview</span>
             <span className="sm:hidden">Stats</span>
-          </TabsTrigger>
-          <TabsTrigger value="trends" className="text-xs sm:text-sm">
-            <TrendingUp className="h-4 w-4 mr-1 sm:mr-2" />
-            <span className="hidden sm:inline">Trends</span>
-            <span className="sm:hidden">Trend</span>
           </TabsTrigger>
           <TabsTrigger value="files" className="text-xs sm:text-sm">
             <FileText className="h-4 w-4 mr-1 sm:mr-2" />
@@ -145,10 +138,6 @@ const EnhancedAnalyticsDashboard: React.FC<EnhancedAnalyticsDashboardProps> = ({
             <SeverityChart data={severityData} />
             <TypeChart data={typeData} />
           </div>
-        </TabsContent>
-
-        <TabsContent value="trends" className="space-y-6">
-          <TrendChart data={trendData} />
         </TabsContent>
 
         <TabsContent value="files" className="space-y-6">

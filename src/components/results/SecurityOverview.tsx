@@ -30,14 +30,73 @@ export const SecurityOverview: React.FC<SecurityOverviewProps> = ({ results }) =
   };
 
   const handleApplyFix = (suggestion: FixSuggestion) => {
-    // For now, just show a toast with the fix information
-    // In a real implementation, this would apply the fix to the actual code
-    toast.success(`Fix suggestion "${suggestion.title}" would be applied`, {
-      description: `This would apply ${suggestion.codeChanges.length} code changes with ${suggestion.confidence}% confidence.`
-    });
+    try {
+      // Generate a patch file with the suggested changes
+      const patchContent = suggestion.codeChanges.map((change) => {
+        return `
+========================================
+File: ${change.filename}
+Lines: ${change.startLine}-${change.endLine}
+Type: ${change.type}
+========================================
 
-    // TODO: Implement actual fix application logic
-    console.log('Applying fix suggestion:', suggestion);
+--- Original Code
+${change.originalCode}
+
++++ Suggested Fix
+${change.suggestedCode}
+
+Reasoning: ${change.reasoning}
+Confidence: ${suggestion.confidence}%
+`;
+      }).join('\n');
+
+      const fullPatch = `# Security Fix Suggestion
+# Title: ${suggestion.title}
+# Description: ${suggestion.description}
+# Confidence: ${suggestion.confidence}%
+# Estimated Effort: ${suggestion.effort}
+# Priority: ${suggestion.priority}
+
+${patchContent}
+
+# Security Benefit:
+${suggestion.securityBenefit}
+
+# Risk Assessment:
+${suggestion.riskAssessment}
+
+# Testing Recommendations:
+${suggestion.testingRecommendations.map((rec, i) => `${i + 1}. ${rec}`).join('\n')}
+
+# How to Apply:
+# 1. Review each change carefully
+# 2. Manually apply the changes to your source files
+# 3. Test thoroughly before committing
+# 4. Run your security analysis again to verify the fix
+`;
+
+      // Create a downloadable patch file using browser APIs
+      /* eslint-disable no-undef */
+      const blob = new Blob([fullPatch], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `security-fix-${suggestion.issueId}-${Date.now()}.patch`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      /* eslint-enable no-undef */
+
+      toast.success(`Downloaded fix patch: "${suggestion.title}"`, {
+        description: `${suggestion.codeChanges.length} changes with ${suggestion.confidence}% confidence. Review and apply manually.`
+      });
+    } catch (err) {
+      toast.error('Failed to generate fix patch', {
+        description: err instanceof Error ? err.message : 'Unknown error occurred'
+      });
+    }
   };
 
   // Extract language and framework information from detection results

@@ -88,34 +88,6 @@ export const useAnalyticsData = (issues: Issue[], totalFiles: number) => {
       .slice(0, 10);
   }, [issues]);
 
-  const trendData = useMemo(() => {
-    // Generate more realistic trend data based on actual issues
-    const today = new Date();
-    const trends = [];
-    
-    for (let i = 6; i >= 0; i--) {
-      const date = new Date(today);
-      date.setDate(date.getDate() - i);
-      
-      // Calculate realistic issue distribution for each day
-      const dayFactor = 1 - (i * 0.1); // More recent days have more issues
-      const baseIssues = Math.floor(issues.length * dayFactor * 0.3);
-      const resolved = Math.floor(baseIssues * 0.7); // 70% resolution rate
-      
-      trends.push({
-        date: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
-        issues: Math.max(1, baseIssues),
-        resolved: Math.max(0, resolved),
-        critical: Math.floor(issues.filter(i => i.severity === 'Critical').length * dayFactor * 0.4),
-        high: Math.floor(issues.filter(i => i.severity === 'High').length * dayFactor * 0.4),
-        medium: Math.floor(issues.filter(i => i.severity === 'Medium').length * dayFactor * 0.4),
-        low: Math.floor(issues.filter(i => i.severity === 'Low').length * dayFactor * 0.4)
-      });
-    }
-    
-    return trends;
-  }, [issues]);
-
   const riskMetrics = useMemo(() => {
     const criticalIssues = issues.filter(i => i.severity === 'Critical').length;
     const securityIssues = issues.filter(i => i.type === 'Security').length;
@@ -147,7 +119,6 @@ export const useAnalyticsData = (issues: Issue[], totalFiles: number) => {
     severityData,
     typeData,
     fileComplexityData,
-    trendData,
     riskMetrics,
     performanceData
   };

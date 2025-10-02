@@ -371,13 +371,41 @@ export class MetricsCalculator {
     return Math.max(20, Math.min(100, baseScore - architecturalPenalty - concentrationPenalty - codebaseComplexity));
   }
 
-  public analyzeDependencies() {
-    // Return empty dependencies for real analysis - no fake data
-    return {
-      total: 0,
-      vulnerable: 0,
-      outdated: 0,
-      licenses: ['MIT', 'Apache-2.0', 'BSD-3-Clause', 'ISC', 'GPL-3.0']
-    };
+  public analyzeDependencies(packageJsonContent?: string) {
+    // Parse real package.json if provided
+    if (!packageJsonContent) {
+      return {
+        total: 0,
+        vulnerable: 0,
+        outdated: 0,
+        licenses: [] as string[]
+      };
+    }
+
+    try {
+      const packageData = JSON.parse(packageJsonContent);
+      const dependencies = { ...packageData.dependencies, ...packageData.devDependencies };
+      const depCount = Object.keys(dependencies).length;
+
+      // Extract licenses if available
+      const licenses = packageData.license ? [packageData.license] : [];
+
+      // Note: Vulnerability scanning requires external API calls
+      // For now, return counts based on actual dependencies found
+      return {
+        total: depCount,
+        vulnerable: 0, // Real vulnerability scanning would require npm audit API
+        outdated: 0,   // Real version checking would require npm registry API
+        licenses
+      };
+    } catch {
+      // Invalid JSON parse, return empty
+      return {
+        total: 0,
+        vulnerable: 0,
+        outdated: 0,
+        licenses: [] as string[]
+      };
+    }
   }
 }

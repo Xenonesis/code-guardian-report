@@ -97,6 +97,7 @@ export class EnhancedAnalysisEngine {
     let allIssues: SecurityIssue[] = [];
     let linesAnalyzed = 0;
     let totalFiles = 0;
+    let packageJsonContent: string | undefined;
 
     if (zipFile) {
       try {
@@ -105,6 +106,12 @@ export class EnhancedAnalysisEngine {
 
         if (totalFiles === 0) {
           throw new Error('This ZIP file does not contain any code files. Please upload a ZIP file with source code (.js, .py, .java, .ts, etc.)');
+        }
+
+        // Extract package.json for dependency analysis
+        const packageJsonFile = fileContents.find(f => f.filename.endsWith('package.json'));
+        if (packageJsonFile) {
+          packageJsonContent = packageJsonFile.content;
         }
 
         // Initialize smart language detection
@@ -127,7 +134,7 @@ export class EnhancedAnalysisEngine {
           analysisTime: '0.1s',
           summary: this.metricsCalculator.calculateSummaryMetrics([], 0),
           metrics: this.metricsCalculator.calculateDetailedMetrics([], 0),
-          dependencies: this.metricsCalculator.analyzeDependencies()
+          dependencies: this.metricsCalculator.analyzeDependencies(undefined)
         };
       }
     } else {
@@ -138,7 +145,7 @@ export class EnhancedAnalysisEngine {
         analysisTime: '0.1s',
         summary: this.metricsCalculator.calculateSummaryMetrics([], 0),
         metrics: this.metricsCalculator.calculateDetailedMetrics([], 0),
-        dependencies: this.metricsCalculator.analyzeDependencies()
+        dependencies: this.metricsCalculator.analyzeDependencies(undefined)
       };
     }
 
@@ -152,7 +159,7 @@ export class EnhancedAnalysisEngine {
       summary: this.metricsCalculator.calculateSummaryMetrics(allIssues, linesAnalyzed),
       languageDetection: this.securityAnalyzer.getAnalysisContext()?.detectionResult,
       metrics: this.metricsCalculator.calculateDetailedMetrics(allIssues, linesAnalyzed),
-      dependencies: this.metricsCalculator.analyzeDependencies()
+      dependencies: this.metricsCalculator.analyzeDependencies(packageJsonContent)
     };
 
     // Verify we have real analysis results
