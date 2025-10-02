@@ -36,6 +36,11 @@ export const Navigation: React.FC<NavigationProps> = ({ isDarkMode, toggleDarkMo
   const handleNavigate = (sectionId: string) => {
     navigateTo(sectionId);
     setIsMobileMenuOpen(false);
+
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   };
 
   const navItems = [

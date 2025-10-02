@@ -18,6 +18,7 @@ import Lenis from '@studio-freight/lenis';
 
 // Lenis smooth scroll initialization with context for global access
 import { createContext, useContext, useRef as useReactRef } from "react";
+import { ScrollToTop } from "./components/scrollToTop";
 
 const LenisContext = createContext<Lenis | null>(null);
 
@@ -79,6 +80,7 @@ const App = () => (
           <PWAUpdateNotification />
           <OfflineIndicator />
           <SinglePageApp />
+          <ScrollToTop/>
           <Analytics />
         </SmoothScroll>
       </TooltipProvider>

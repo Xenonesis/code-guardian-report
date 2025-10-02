@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
 interface NavigationContextType {
   currentSection: string;
@@ -21,6 +21,13 @@ export const NavigationProvider: React.FC<NavigationProviderProps> = ({ children
   const [currentSection, setCurrentSection] = useState('home');
   const [currentTab, setCurrentTab] = useState('upload');
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }, [currentSection]);
 
   const navigateTo = (section: string, tab?: string) => {
     setCurrentSection(section);
