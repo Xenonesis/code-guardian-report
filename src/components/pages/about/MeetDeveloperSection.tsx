@@ -2,12 +2,12 @@ import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { 
-  Users, 
-  ExternalLink, 
-  Trophy, 
-  Code, 
-  Shield, 
+import {
+  Users,
+  ExternalLink,
+  Trophy,
+  Code,
+  Shield,
   Crown,
   User,
   Zap,
@@ -78,7 +78,7 @@ const MeetDeveloperSection = () => {
   ];
 
   const technologies = [
-    "React 18.3.1", "TypeScript 5.5.3", "Vite 6.3.5", "Tailwind CSS 3.4.11", 
+    "React 18.3.1", "TypeScript 5.5.3", "Vite 6.3.5", "Tailwind CSS 3.4.11",
     "AI Services (GPT-4, Claude)", "Recharts 2.15.3", "Radix UI", "shadcn/ui",
     "Node.js", "Static Analysis Tools", "Security Frameworks", "Persistent Storage API",
     "Web Crypto API", "IndexedDB", "Service Workers", "Bundle Analysis"
@@ -94,10 +94,10 @@ const MeetDeveloperSection = () => {
               Meet the Development Team
             </h2>
             <p className="text-lg text-slate-600 dark:text-slate-400 max-w-3xl mx-auto mb-6">
-              Code Guardian is proudly developed by Team Blitz - a passionate group of developers and security experts 
+              Code Guardian is proudly developed by Team Blitz - a passionate group of developers and security experts
               committed to making code security accessible to everyone.
             </p>
-            
+
             {/* Team Blitz Card */}
             <Card className="max-w-2xl mx-auto mb-8 bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0">
               <CardHeader>
@@ -111,8 +111,8 @@ const MeetDeveloperSection = () => {
               </CardHeader>
               <CardContent>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                  <Button 
-                    variant="secondary" 
+                  <Button
+                    variant="secondary"
                     className="bg-white/20 hover:bg-white/30 text-white border-white/30"
                     onClick={() => window.open('https://teamblitz.netlify.app/', '_blank')}
                   >
@@ -196,8 +196,8 @@ const MeetDeveloperSection = () => {
                 <Code className="w-5 h-5" />
                 Project Details
               </CardTitle>            <CardDescription>
-              Code Guardian v3.3.0 - Revolutionary AI-powered security analysis platform with persistent storage, enhanced analytics, and intelligent AI integration
-            </CardDescription>
+                Code Guardian v3.3.0 - Revolutionary AI-powered security analysis platform with persistent storage, enhanced analytics, and intelligent AI integration
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               {/* USP */}
@@ -285,11 +285,11 @@ const MeetDeveloperSection = () => {
               <CardContent className="p-8">
                 <h3 className="text-2xl font-bold mb-4">Join Our Mission</h3>
                 <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
-                  Help us make code security accessible to developers worldwide. 
+                  Help us make code security accessible to developers worldwide.
                   Visit our team website to learn more about our projects and initiatives.
                 </p>
-                <Button 
-                  variant="secondary" 
+                <Button
+                  variant="secondary"
                   size="lg"
                   className="bg-white text-blue-600 hover:bg-blue-50"
                   onClick={() => window.open('https://teamblitz.netlify.app/', '_blank')}
