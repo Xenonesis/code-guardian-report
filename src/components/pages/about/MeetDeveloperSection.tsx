@@ -155,35 +155,37 @@ const MeetDeveloperSection = () => {
               Our Team Members
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {teamMembers.map((member, index) => (
-                <Card key={index} className="hover:shadow-lg transition-shadow">
-                  <CardHeader>
-                    <div className="flex items-start gap-4">
-                      <div className="p-3 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg text-white">
-                        {member.icon}
+              {teamMembers
+                .filter(member => member.name === "Aditya Kumar Tiwari")
+                .map((member, index) => (
+                  <Card key={index} className="hover:shadow-lg transition-shadow">
+                    <CardHeader>
+                      <div className="flex items-start gap-4">
+                        <div className="p-3 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg text-white">
+                          {member.icon}
+                        </div>
+                        <div className="flex-1">
+                          <CardTitle className="text-lg">{member.name}</CardTitle>
+                          <CardDescription className="text-blue-600 dark:text-blue-400 font-medium">
+                            {member.role}
+                          </CardDescription>
+                        </div>
                       </div>
-                      <div className="flex-1">
-                        <CardTitle className="text-lg">{member.name}</CardTitle>
-                        <CardDescription className="text-blue-600 dark:text-blue-400 font-medium">
-                          {member.role}
-                        </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-slate-600 dark:text-slate-400 mb-4">
+                        {member.description}
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {member.expertise.map((skill, skillIndex) => (
+                          <Badge key={skillIndex} variant="outline" className="text-xs">
+                            {skill}
+                          </Badge>
+                        ))}
                       </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-slate-600 dark:text-slate-400 mb-4">
-                      {member.description}
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {member.expertise.map((skill, skillIndex) => (
-                        <Badge key={skillIndex} variant="outline" className="text-xs">
-                          {skill}
-                        </Badge>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+                    </CardContent>
+                  </Card>
+                ))}
             </div>
           </div>
 
