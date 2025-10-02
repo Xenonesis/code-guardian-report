@@ -1,9 +1,15 @@
 # Changelog
 
-**Project Start Date:** 2025  
-**Last Update:** 22/7/2025
+**Project Start Date:** 2025
+**Last Update:** 02/10/2025
 
 ---
+
+## v7.2.0 (02/10/2025)
+- 📦 **Version Update**: Updated from v4.7.0 to v7.2.0
+- 🔧 **General Improvements**: Various enhancements and optimizations
+- 🐛 **Bug Fixes**: Resolved several minor issues and improved stability
+- 📋 **Changelog Maintenance**: Updated changelog with latest version information
 
 ## v4.7.0 (22/7/2025)
 - 📦 **Version Update**: Updated from v4.6.0 to v4.7.0
