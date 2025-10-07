@@ -67,14 +67,6 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
     return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
 
-  // Auto-generate summary when component mounts if we have API keys and issues
-  useEffect(() => {
-    if (hasApiKeys && issues.length > 0 && !aiSummary && !isGeneratingSummary) {
-      console.log('Auto-generating AI summary...');
-      generateAISummary();
-    }
-  }, [hasApiKeys, issues.length, aiSummary, isGeneratingSummary, generateAISummary]);
-
   const generateAISummary = useCallback(async () => {
     console.log('Starting AI summary generation...');
     setIsGeneratingSummary(true);
@@ -120,21 +112,29 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
       // Set a fallback summary if API fails
       setAiSummary(`Unable to generate AI summary. Manual analysis shows:
       
-📊 **Analysis Overview:**
-- Total Issues: ${issues.length}
-- High Severity: ${issues.filter(i => i.severity === 'High').length}
-- Medium Severity: ${issues.filter(i => i.severity === 'Medium').length}
-- Low Severity: ${issues.filter(i => i.severity === 'Low').length}
-
-🔒 **Security Issues:** ${issues.filter(i => i.type?.toLowerCase() === 'security').length}
-🐛 **Bug Issues:** ${issues.filter(i => i.type?.toLowerCase() === 'bug').length}
-📝 **Code Quality Issues:** ${issues.filter(i => i.type?.toLowerCase() === 'code smell').length}
-
-Please configure your AI API keys to get detailed insights and recommendations.`);
+      📊 **Analysis Overview:**
+      - Total Issues: ${issues.length}
+      - High Severity: ${issues.filter(i => i.severity === 'High').length}
+      - Medium Severity: ${issues.filter(i => i.severity === 'Medium').length}
+      - Low Severity: ${issues.filter(i => i.severity === 'Low').length}
+      
+      🔒 **Security Issues:** ${issues.filter(i => i.type?.toLowerCase() === 'security').length}
+      🐛 **Bug Issues:** ${issues.filter(i => i.type?.toLowerCase() === 'bug').length}
+      📝 **Code Quality Issues:** ${issues.filter(i => i.type?.toLowerCase() === 'code smell').length}
+      
+      Please configure your AI API keys to get detailed insights and recommendations.`);
     } finally {
       setIsGeneratingSummary(false);
     }
   }, [hasApiKeys, issues, aiService]);
+
+  // Auto-generate summary when component mounts if we have API keys and issues
+  useEffect(() => {
+    if (hasApiKeys && issues.length > 0 && !aiSummary && !isGeneratingSummary) {
+      console.log('Auto-generating AI summary...');
+      generateAISummary();
+    }
+  }, [hasApiKeys, issues.length, aiSummary, isGeneratingSummary, generateAISummary]);
 
   const toggleIssueExpansion = (index: number) => {
     const newExpanded = new Set(expandedIssues);

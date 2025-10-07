@@ -1,17 +1,18 @@
 /**
- * Firebase Analysis Hook
- * Integrates Firebase storage with the existing analysis system
- * Provides seamless cloud storage with fallback to local storage
- */
-
+  * Firebase Analysis Hook
+  * Integrates Firebase storage with the existing analysis system
+  * Provides seamless cloud storage with fallback to local storage
+  */
+ 
 import { useState, useCallback, useEffect } from 'react';
 import { AnalysisResults } from '@/hooks/useAnalysis';
-import { 
-  firebaseAnalysisStorage, 
-  FirebaseAnalysisData, 
-  AnalysisHistoryQuery 
+import {
+  firebaseAnalysisStorage,
+  FirebaseAnalysisData,
+  AnalysisHistoryQuery
 } from '@/services/firebaseAnalysisStorage';
 import { analysisStorage } from '@/services/analysisStorage';
+import { useAuth } from '@/lib/auth-context';
 
 export interface FirebaseAnalysisState {
   analysisResults: AnalysisResults | null;
@@ -28,7 +29,8 @@ export interface FirebaseAnalysisState {
 }
 
 export const useFirebaseAnalysis = () => {
-  const { user, isAuthenticated } = useAuthContext();
+  const { user, loading } = useAuth();
+  const isAuthenticated = !loading && !!user;
   
   // State management
   const [analysisResults, setAnalysisResults] = useState<AnalysisResults | null>(null);
@@ -53,7 +55,7 @@ export const useFirebaseAnalysis = () => {
       // Fallback to local storage when not authenticated
       loadLocalData();
     }
-  }, [user?.uid]);
+  }, [user?.uid, isAuthenticated]);
 
   // Monitor online status
   useEffect(() => {
@@ -77,7 +79,7 @@ export const useFirebaseAnalysis = () => {
       window.removeEventListener('online', handleOnline);
       window.removeEventListener('offline', handleOffline);
     };
-  }, [user?.uid]);
+  }, [user?.uid, isAuthenticated]);
 
   // Subscribe to real-time updates when authenticated
   useEffect(() => {

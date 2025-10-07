@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
-import { Shield, Home, Moon, Sun, Menu, X, Info, Lock, Award, User, LogOut } from 'lucide-react';
+import { Shield, Home, Moon, Sun, Menu, X, Info, Lock, Award, User, LogOut, History } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/lib/auth-context';
@@ -54,6 +54,12 @@ export const Navigation: React.FC<NavigationProps> = ({ isDarkMode, toggleDarkMo
       label: 'About',
       icon: <Info className="h-4 w-4" />
     },
+    // Show History only for authenticated users
+    ...(user ? [{
+      id: 'history',
+      label: 'History',
+      icon: <History className="h-4 w-4" />
+    }] : []),
     {
       id: 'privacy',
       label: 'Privacy',

@@ -19,7 +19,6 @@ import {
   getDoc,
   query, 
   where, 
-  orderBy, 
   limit,
   serverTimestamp,
   onSnapshot,
@@ -209,11 +208,10 @@ export class FirebaseAnalysisStorageService {
     }
 
     try {
+      // Primary query with orderBy (may require a composite index)
       let q = query(
         collection(db, FirebaseAnalysisStorageService.COLLECTION_NAME),
-        where('userId', '==', targetUserId),
-        orderBy('createdAt', 'desc'),
-        limit(queryOptions.limit || FirebaseAnalysisStorageService.MAX_HISTORY_SIZE)
+        where('userId', '==', targetUserId)
       );
 
       // Add additional filters
@@ -225,7 +223,27 @@ export class FirebaseAnalysisStorageService {
         q = query(q, where('tags', 'array-contains-any', queryOptions.tags));
       }
 
-      const querySnapshot = await getDocs(q);
+      let querySnapshot;
+      try {
+        querySnapshot = await getDocs(q);
+      } catch (err: any) {
+        // Fallback when composite index is missing or other precondition fails
+        console.warn('Primary history query failed, falling back to basic query:', err?.code || err);
+        let fallback = query(
+          collection(db, FirebaseAnalysisStorageService.COLLECTION_NAME),
+          where('userId', '==', targetUserId),
+          limit(queryOptions.limit || FirebaseAnalysisStorageService.MAX_HISTORY_SIZE)
+        );
+        // Note: we intentionally skip orderBy here to avoid composite index requirement
+        if (queryOptions.fileName) {
+          fallback = query(fallback, where('fileName', '==', queryOptions.fileName));
+        }
+        if (queryOptions.tags && queryOptions.tags.length > 0) {
+          fallback = query(fallback, where('tags', 'array-contains-any', queryOptions.tags));
+        }
+        querySnapshot = await getDocs(fallback);
+      }
+
       const results: FirebaseAnalysisData[] = [];
 
       querySnapshot.forEach((doc) => {
@@ -252,10 +270,130 @@ export class FirebaseAnalysisStorageService {
         results.push(analysisData);
       });
 
-      return results;
+      // Ensure results are sorted by createdAt desc if we used the fallback (no orderBy)
+      results.sort((a, b) => {
+        const ad = (a.createdAt as any)?.toDate ? (a.createdAt as any).toDate() : new Date(a.createdAt as any);
+        const bd = (b.createdAt as any)?.toDate ? (b.createdAt as any).toDate() : new Date(b.createdAt as any);
+        return bd.getTime() - ad.getTime();
+      });
+
+      const limitAmount = queryOptions.limit || FirebaseAnalysisStorageService.MAX_HISTORY_SIZE;
+      return results.slice(0, limitAmount);
+
     } catch (error) {
       console.error('Error getting user analysis history:', error);
       throw error;
+    }
+  }
+
+  /**
+   * Get user statistics
+   */
+  public async getUserStats(userId?: string): Promise<any> {
+    const targetUserId = userId || this.userId;
+    if (!targetUserId) {
+      throw new Error('User ID is required');
+    }
+
+    try {
+      const userStatsRef = doc(db, FirebaseAnalysisStorageService.USER_STATS_COLLECTION, targetUserId);
+      const userStatsDoc = await getDoc(userStatsRef);
+      
+      if (userStatsDoc.exists()) {
+        const data = userStatsDoc.data();
+        
+        // Calculate average security score from analysis history if not stored
+        if (!data.averageSecurityScore) {
+          const history = await this.getUserAnalysisHistory(targetUserId, { limit: 100 });
+          if (history.length > 0) {
+            const totalScore = history.reduce((sum, analysis) => {
+              return sum + (analysis.results.summary?.securityScore || 0);
+            }, 0);
+            data.averageSecurityScore = Math.round(totalScore / history.length);
+          }
+        }
+        
+        return data;
+      }
+      
+      // Return default stats if no document exists
+      return {
+        totalAnalyses: 0,
+        totalFilesAnalyzed: 0,
+        totalIssuesFound: 0,
+        totalBytesAnalyzed: 0,
+        averageSecurityScore: 0,
+        lastAnalysis: null,
+      };
+    } catch (error) {
+      console.error('Error getting user stats:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Delete analysis results
+   */
+  public async deleteAnalysisResults(analysisId: string): Promise<void> {
+    if (!this.userId) {
+      throw new Error('User must be authenticated to delete analysis');
+    }
+
+    try {
+      const analysisRef = doc(db, FirebaseAnalysisStorageService.COLLECTION_NAME, analysisId);
+      
+      // Verify ownership before deletion
+      const analysisDoc = await getDoc(analysisRef);
+      if (!analysisDoc.exists()) {
+        throw new Error('Analysis not found');
+      }
+      
+      const analysisData = analysisDoc.data();
+      if (analysisData.userId !== this.userId) {
+        throw new Error('Unauthorized: Cannot delete analysis belonging to another user');
+      }
+      
+      // Delete the analysis document
+      await deleteDoc(analysisRef);
+      
+      // Update user stats (decrease counters)
+      await this.decrementUserStats(
+        analysisData.fileSize || 0,
+        analysisData.results?.issues?.length || 0
+      );
+      
+    } catch (error) {
+      console.error('Error deleting analysis results:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Decrement user stats when deleting an analysis
+   */
+  private async decrementUserStats(fileSize: number, issuesFound: number): Promise<void> {
+    if (!this.userId) return;
+
+    try {
+      const userStatsRef = doc(db, FirebaseAnalysisStorageService.USER_STATS_COLLECTION, this.userId);
+      const userStats = await safeGetDoc(userStatsRef, {
+        totalAnalyses: 0,
+        totalFilesAnalyzed: 0,
+        totalIssuesFound: 0,
+        totalBytesAnalyzed: 0,
+      });
+
+      const updateData = {
+        totalAnalyses: Math.max(0, (userStats.data?.totalAnalyses || 0) - 1),
+        totalFilesAnalyzed: Math.max(0, (userStats.data?.totalFilesAnalyzed || 0) - 1),
+        totalIssuesFound: Math.max(0, (userStats.data?.totalIssuesFound || 0) - issuesFound),
+        totalBytesAnalyzed: Math.max(0, (userStats.data?.totalBytesAnalyzed || 0) - fileSize),
+        updatedAt: serverTimestamp(),
+      };
+
+      await safeSetDoc(userStatsRef, updateData, { merge: true });
+    } catch (error) {
+      console.error('Error updating user stats after deletion:', error);
     }
   }
 
@@ -266,9 +404,13 @@ export class FirebaseAnalysisStorageService {
     analysisId: string,
     results: AnalysisResults,
     tags?: string[]
-  ): Promise<void> {
+  ): Promise<string> {
     if (!this.userId) {
       throw new Error('User must be authenticated');
+    }
+    
+    if (!analysisId) {
+      throw new Error('Analysis ID is required to update results');
     }
 
     try {
@@ -302,41 +444,13 @@ export class FirebaseAnalysisStorageService {
       await updateDoc(docRef, updateData);
 
       console.log('✅ Analysis results updated in Firebase:', analysisId);
+      return analysisId;
     } catch (error) {
       console.error('❌ Failed to update analysis results:', error);
       throw error;
     }
   }
 
-  /**
-   * Delete analysis results
-   */
-  public async deleteAnalysisResults(analysisId: string): Promise<void> {
-    if (!this.userId) {
-      throw new Error('User must be authenticated');
-    }
-
-    try {
-      const docRef = doc(db, FirebaseAnalysisStorageService.COLLECTION_NAME, analysisId);
-      
-      // Verify ownership
-      const existingDoc = await getDoc(docRef);
-      if (!existingDoc.exists()) {
-        throw new Error('Analysis not found');
-      }
-      
-      const existingData = existingDoc.data() as FirebaseAnalysisData;
-      if (existingData.userId !== this.userId) {
-        throw new Error('Not authorized to delete this analysis');
-      }
-
-      await deleteDoc(docRef);
-      console.log('✅ Analysis deleted from Firebase:', analysisId);
-    } catch (error) {
-      console.error('❌ Failed to delete analysis:', error);
-      throw error;
-    }
-  }
 
   /**
    * Search analysis results
@@ -386,9 +500,7 @@ export class FirebaseAnalysisStorageService {
 
     const q = query(
       collection(db, FirebaseAnalysisStorageService.COLLECTION_NAME),
-      where('userId', '==', this.userId),
-      orderBy('createdAt', 'desc'),
-      limit(FirebaseAnalysisStorageService.MAX_HISTORY_SIZE)
+      where('userId', '==', this.userId)
     );
 
     this.unsubscribeSnapshot = onSnapshot(q, (querySnapshot) => {
@@ -410,7 +522,14 @@ export class FirebaseAnalysisStorageService {
       });
 
       // Notify listeners
-      this.notifyListeners(results);
+      results.sort((a, b) => {
+        const ad = (a.createdAt as any)?.toDate ? (a.createdAt as any).toDate() : new Date(a.createdAt as any);
+        const bd = (b.createdAt as any)?.toDate ? (b.createdAt as any).toDate() : new Date(b.createdAt as any);
+        return bd.getTime() - ad.getTime();
+      });
+
+      const limitAmount = FirebaseAnalysisStorageService.MAX_HISTORY_SIZE;
+      this.notifyListeners(results.slice(0, limitAmount));
     }, (error) => {
       console.error('Real-time listener error:', error);
     });

@@ -20,7 +20,6 @@ import { VersionInfo } from '@/components/pages/about/VersionInfo';
 import { DetailedInfo } from '@/components/pages/about/DetailedInfo';
 import { SupportedToolsSection } from '@/components/pages/about/SupportedToolsSection';
 import { CallToActionSection } from '@/components/pages/about/CallToActionSection';
-import { AboutFeatures } from '@/components/pages/about/AboutFeatures';
 import HowToUseSection from '@/components/pages/about/HowToUseSection';
 import HowItWorksSection from '@/components/pages/about/HowItWorksSection';
 import MeetDeveloperSection from '@/components/pages/about/MeetDeveloperSection';
@@ -29,6 +28,7 @@ import EnhancedFeatureShowcase from '@/components/pages/about/EnhancedFeatureSho
 // Import Legal page components
 import { LegalSection, LegalSubsection, LegalList } from '@/components/legal/LegalSection';
 import { HelpPage } from '@/components/HelpPage';
+import { HistoryPage } from './HistoryPage';
 import { Shield, Eye, Database, Lock, Users, Globe, Mail, FileText, Scale, AlertTriangle, Gavel } from 'lucide-react';
 
 // Lazy load heavy components for better performance
@@ -438,6 +438,18 @@ const SinglePageApp = () => {
         </div>
       )}
 
+      {/* History Section */}
+      {currentSection === 'history' && (
+        <div>
+          <HistoryPage 
+            onAnalysisSelect={(analysis) => {
+              navigateTo('home', 'results');
+            }}
+            onNavigateBack={() => navigateTo('home')}
+          />
+        </div>
+      )}
+
       {/* Footer */}
       <div>
         <Footer />
@@ -446,4 +458,4 @@ const SinglePageApp = () => {
   );
 };
 
-export default SinglePageApp; 
+export default SinglePageApp;
