@@ -65,14 +65,25 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
       console.log('📈 Retrieved history:', history.length, 'analyses');
       console.log('📋 History data:', history);
       
-      setAnalysisHistory(history);
+      // Deduplicate history entries based on fileName and fileHash
+      const deduplicatedHistory = history.filter((analysis, index, array) => {
+        const firstOccurrence = array.findIndex(item => 
+          item.fileName === analysis.fileName && 
+          item.fileHash === analysis.fileHash
+        );
+        return index === firstOccurrence;
+      });
+      
+      console.log('🔄 Deduplicated history:', deduplicatedHistory.length, 'unique analyses');
+      
+      setAnalysisHistory(deduplicatedHistory);
       
       toast({
         title: '📊 History Loaded',
-        description: `Found ${history.length} analysis results.`,
+        description: `Found ${deduplicatedHistory.length} unique analysis results.`,
       });
       
-      if (history.length === 0) {
+      if (deduplicatedHistory.length === 0) {
         console.log('ℹ️ No analysis history found for this user');
         toast({
           title: '📝 No History Yet',

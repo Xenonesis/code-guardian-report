@@ -17,9 +17,17 @@ export const useFileUpload = ({ onFileSelect, onAnalysisComplete }: UseFileUploa
   const [uploadComplete, setUploadComplete] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [analysisEngine] = useState(() => new EnhancedAnalysisEngine());
+  const [currentAnalysisFile, setCurrentAnalysisFile] = useState<string | null>(null);
 
   const analyzeCode = useCallback(async (file: File) => {
+    // Prevent duplicate analysis for the same file
+    if (currentAnalysisFile === file.name && isAnalyzing) {
+      console.log('⚠️ Analysis already in progress for:', file.name);
+      return;
+    }
+    
     console.log('Starting enhanced security analysis for:', file.name);
+    setCurrentAnalysisFile(file.name);
     setIsAnalyzing(true);
 
     try {
@@ -40,10 +48,12 @@ export const useFileUpload = ({ onFileSelect, onAnalysisComplete }: UseFileUploa
           });
 
           setIsAnalyzing(false);
+          setCurrentAnalysisFile(null);
           onAnalysisComplete(analysisResults, file);
         } catch (analysisError) {
           console.error('Analysis engine error:', analysisError);
           setIsAnalyzing(false);
+          setCurrentAnalysisFile(null);
           
           if (analysisError instanceof Error && analysisError.message.includes('does not contain any code files')) {
             setError(analysisError.message);
