@@ -1,4 +1,4 @@
-import { useState, Suspense, lazy, useEffect } from 'react';
+import { useState, Suspense, lazy } from 'react';
 import { PageLayout } from '@/components/layouts/PageLayout';
 import { HomeHero } from '@/components/pages/home/HomeHero';
 import { AnalysisTabs } from '@/components/pages/home/AnalysisTabs';
@@ -24,12 +24,13 @@ import HowToUseSection from '@/components/pages/about/HowToUseSection';
 import HowItWorksSection from '@/components/pages/about/HowItWorksSection';
 import MeetDeveloperSection from '@/components/pages/about/MeetDeveloperSection';
 import EnhancedFeatureShowcase from '@/components/pages/about/EnhancedFeatureShowcase';
-
-// Import Legal page components
+import { AboutFeatures } from '@/components/pages/about/AboutFeatures';
+ 
+ // Import Legal page components
 import { LegalSection, LegalSubsection, LegalList } from '@/components/legal/LegalSection';
 import { HelpPage } from '@/components/HelpPage';
 import { HistoryPage } from './HistoryPage';
-import { Shield, Eye, Database, Lock, Users, Globe, Mail, FileText, Scale, AlertTriangle, Gavel } from 'lucide-react';
+import { Shield, Eye, Database, Lock, Users, Globe, Mail, FileText, Scale, AlertTriangle } from 'lucide-react';
 
 // Lazy load heavy components for better performance
 const FloatingChatBot = lazy(() => import('@/components/FloatingChatBot'));
@@ -84,12 +85,7 @@ const SinglePageApp = () => {
   const handleStartAnalysis = () => {
     navigateTo('home', 'upload');
     // Scroll to the upload section after navigation
-    setTimeout(() => {
-      const analysisTabs = document.querySelector('section[role="main"]');
-      if (analysisTabs) {
-        analysisTabs.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }, 100);
+    
   };
 
   return (
@@ -107,7 +103,7 @@ const SinglePageApp = () => {
       />
       
       {/* Breadcrumb Container - Only show when not on home, when there are results, or when on help */}
-      {(currentSection !== 'home' || analysisResults || currentSection === 'help') && (
+      {analysisResults && (
         <BreadcrumbContainer analysisResults={analysisResults} />
       )}
       
@@ -279,10 +275,10 @@ const SinglePageApp = () => {
                     <LegalSubsection title="Code Analysis Data">
                       <p>When you use our code analysis features, we may temporarily process:</p>
                       <LegalList items={[
-                        "Source code files you upload for analysis",
-                        "Analysis results and security findings",
-                        "File metadata (names, sizes, types)",
-                        "Analysis preferences and settings"
+                        'Source code files you upload for analysis',
+                        'Analysis results and security findings',
+                        'File metadata (names, sizes, types)',
+                        'Analysis preferences and settings'
                       ]} />
                       <p className="mt-3 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
                         <strong>Important:</strong> Your source code is processed locally in your browser whenever possible. We do not permanently store your source code on our servers.
@@ -294,11 +290,11 @@ const SinglePageApp = () => {
                     <LegalSubsection title="Security Measures">
                       <p>We implement industry-standard security measures to protect your data:</p>
                       <LegalList items={[
-                        "End-to-end encryption for data transmission",
-                        "Secure browser-based processing when possible",
-                        "Regular security audits and vulnerability assessments",
-                        "Access controls and authentication mechanisms",
-                        "Secure data storage with encryption at rest"
+                        'End-to-end encryption for data transmission',
+                        'Secure browser-based processing when possible',
+                        'Regular security audits and vulnerability assessments',
+                        'Access controls and authentication mechanisms',
+                        'Secure data storage with encryption at rest'
                       ]} />
                     </LegalSubsection>
                   </LegalSection>
@@ -368,12 +364,12 @@ const SinglePageApp = () => {
                     <LegalSubsection title="What We Provide">
                       <p>Code Guardian offers the following services:</p>
                       <LegalList items={[
-                        "AI-powered code security analysis and vulnerability detection",
-                        "Static code analysis for multiple programming languages",
-                        "Integration with popular AI services (OpenAI, Anthropic)",
-                        "Real-time analysis results and recommendations",
-                        "Export capabilities for analysis reports",
-                        "Educational resources and security best practices"
+                        'AI-powered code security analysis and vulnerability detection',
+                        'Static code analysis for multiple programming languages',
+                        'Integration with popular AI services (OpenAI, Anthropic)',
+                        'Real-time analysis results and recommendations',
+                        'Export capabilities for analysis reports',
+                        'Educational resources and security best practices'
                       ]} />
                     </LegalSubsection>
                   </LegalSection>
@@ -382,12 +378,12 @@ const SinglePageApp = () => {
                     <LegalSubsection title="Acceptable Use">
                       <p>When using Code Guardian, you agree to:</p>
                       <LegalList items={[
-                        "Use the service only for lawful purposes",
-                        "Respect intellectual property rights",
-                        "Not attempt to reverse engineer or hack the platform",
-                        "Not upload malicious code or content",
-                        "Comply with all applicable laws and regulations",
-                        "Use your own API keys for third-party AI services"
+                        'Use the service only for lawful purposes',
+                        'Respect intellectual property rights',
+                        'Not attempt to reverse engineer or hack the platform',
+                        'Not upload malicious code or content',
+                        'Comply with all applicable laws and regulations',
+                        'Use your own API keys for third-party AI services'
                       ]} />
                     </LegalSubsection>
                   </LegalSection>
@@ -400,11 +396,11 @@ const SinglePageApp = () => {
                         </p>
                       </div>
                       <LegalList items={[
-                        "We do not guarantee the accuracy of security analysis results",
-                        "Analysis results should not be the sole basis for security decisions",
-                        "We are not responsible for decisions made based on our analysis",
-                        "Third-party AI services have their own limitations and terms",
-                        "No warranty of merchantability or fitness for a particular purpose"
+                        'We do not guarantee the accuracy of security analysis results',
+                        'Analysis results should not be the sole basis for security decisions',
+                        'We are not responsible for decisions made based on our analysis',
+                        'Third-party AI services have their own limitations and terms',
+                        'No warranty of merchantability or fitness for a particular purpose'
                       ]} />
                     </LegalSubsection>
                   </LegalSection>
@@ -443,7 +439,21 @@ const SinglePageApp = () => {
         <div>
           <HistoryPage 
             onAnalysisSelect={(analysis) => {
-              navigateTo('home', 'results');
+              if (analysis) {
+                const storedData = {
+                  ...analysis,
+                  timestamp: analysis.timestamp.toMillis(),
+                  version: '2',
+                  metadata: {
+                    userAgent: '',
+                    analysisEngine: '',
+                    engineVersion: '',
+                    sessionId: '',
+                  },
+                };
+                restoreFromHistory(storedData);
+                navigateTo('home', 'results');
+              }
             }}
             onNavigateBack={() => navigateTo('home')}
           />

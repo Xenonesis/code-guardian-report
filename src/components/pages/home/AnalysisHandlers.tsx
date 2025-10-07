@@ -7,6 +7,7 @@ interface AnalysisHandlersProps {
   hasStoredData: boolean;
   onAnalysisComplete: (results: AnalysisResults) => void;
   onSetCurrentTab: (tab: string) => void;
+  onSetIsRedirecting: (isRedirecting: boolean) => void;
   onClearStoredData: () => void;
   onExportAnalysis: (format: 'json' | 'compressed') => void;
   onImportAnalysis: (data: string, compressed: boolean) => void;
