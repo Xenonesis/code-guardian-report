@@ -7,7 +7,8 @@ import { useState, useCallback, useEffect } from 'react';
 import { AnalysisResults } from '@/hooks/useAnalysis';
 import { analysisStorage, type StoredAnalysisData } from '@/services/analysisStorage';
 import { analysisIntegrationService } from '@/services/analysisIntegrationService';
-import { auth } from '@/lib/firebase';
+import { firebaseAnalysisStorage } from '@/services/firebaseAnalysisStorage';
+import { useAuth } from '@/lib/auth-context';
 
 export interface EnhancedAnalysisState {
   analysisResults: AnalysisResults | null;
@@ -26,6 +27,7 @@ export interface EnhancedAnalysisState {
 }
 
 export const useEnhancedAnalysis = () => {
+  const { user } = useAuth();
   const [analysisResults, setAnalysisResults] = useState<AnalysisResults | null>(null);
   const [storedAnalysis, setStoredAnalysis] = useState<StoredAnalysisData | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -37,6 +39,22 @@ export const useEnhancedAnalysis = () => {
   const updateStorageStats = useCallback(() => {
     setStorageStats(analysisStorage.getStorageStats());
   }, []);
+
+  // Sync userId with Firebase storage whenever user changes
+  useEffect(() => {
+    if (user?.uid) {
+      // Small delay to ensure auth is fully ready before setting up listeners
+      const timeoutId = setTimeout(() => {
+        firebaseAnalysisStorage.setUserId(user.uid);
+        console.log('✅ Firebase storage userId synced:', user.uid);
+      }, 300);
+      
+      return () => clearTimeout(timeoutId);
+    } else {
+      firebaseAnalysisStorage.setUserId(null);
+      console.log('ℹ️ Firebase storage userId cleared (user logged out)');
+    }
+  }, [user?.uid]);
 
   // Initialize from storage on mount
   useEffect(() => {
@@ -78,26 +96,37 @@ export const useEnhancedAnalysis = () => {
     }
   }, []);
 
-  const handleAnalysisComplete = useCallback(async (results: AnalysisResults, userId?: string) => {
+  const handleAnalysisComplete = useCallback(async (results: AnalysisResults, userId?: string, fileOverride?: File) => {
     setAnalysisResults(results);
     setIsAnalyzing(false);
     
+    // Use fileOverride if provided, otherwise use selectedFile
+    const fileToUse = fileOverride || selectedFile;
+    
     // Store results using the integration service (both local and Firebase)
-    if (selectedFile) {
+    if (fileToUse) {
       try {
         // Get current user ID from Firebase Auth if not provided
-        const currentUserId = userId || auth.currentUser?.uid;
+        // CRITICAL: Always use the latest user.uid from auth context
+        const currentUserId = userId || user?.uid;
         
         console.log('🔄 Analysis Complete - User Info:', {
           providedUserId: userId,
           currentUserId: currentUserId,
-          hasCurrentUser: !!auth.currentUser,
-          fileName: selectedFile.name
+          hasCurrentUser: !!user,
+          userObject: user ? { uid: user.uid, email: user.email } : null,
+          fileName: fileToUse.name,
+          willStoreInFirebase: !!currentUserId
         });
+        
+        if (!currentUserId) {
+          console.warn('⚠️ WARNING: No user ID available - Firebase storage will be skipped');
+          console.warn('User auth state:', { user, hasUser: !!user, uid: user?.uid });
+        }
         
         const storageResult = await analysisIntegrationService.handleAnalysisComplete(
           results,
-          selectedFile,
+          fileToUse,
           currentUserId // Pass the actual user ID
         );
         
@@ -107,13 +136,36 @@ export const useEnhancedAnalysis = () => {
           updateStorageStats();
         }
         
-        // Log storage status for debugging
-        console.log('📊 Final Storage Result:', storageResult);
+        // Enhanced logging for debugging
+        console.log('📊 Final Storage Result:', {
+          ...storageResult,
+          localSuccess: storageResult.local.success,
+          firebaseSuccess: storageResult.firebase.success,
+          firebaseId: storageResult.firebase.analysisId,
+          localError: storageResult.local.error,
+          firebaseError: storageResult.firebase.error
+        });
+        
+        // Alert user if Firebase storage failed
+        if (!storageResult.firebase.success && currentUserId) {
+          console.error('❌ Firebase storage failed despite having userId:', {
+            userId: currentUserId,
+            error: storageResult.firebase.error
+          });
+        }
       } catch (error) {
         console.error('❌ Error storing analysis results:', error);
+        console.error('Error details:', {
+          message: error instanceof Error ? error.message : 'Unknown error',
+          stack: error instanceof Error ? error.stack : undefined,
+          selectedFile: fileToUse?.name,
+          userId: user?.uid
+        });
       }
+    } else {
+      console.error('❌ No selected file - cannot store analysis results');
     }
-  }, [selectedFile, updateStorageStats]);
+  }, [selectedFile, updateStorageStats, user]);
 
   const startAnalysis = useCallback(() => {
     setIsAnalyzing(true);

@@ -1,4 +1,4 @@
-import { useState, Suspense, lazy } from 'react';
+import { useState, Suspense, lazy, useCallback } from 'react';
 import { PageLayout } from '@/components/layouts/PageLayout';
 import { HomeHero } from '@/components/pages/home/HomeHero';
 import { AnalysisTabs } from '@/components/pages/home/AnalysisTabs';
@@ -6,6 +6,7 @@ import { StorageBanner } from '@/components/pages/home/StorageBanner';
 import { useAnalysisHandlers } from '@/components/pages/home/AnalysisHandlers';
 import { useDarkMode } from '@/hooks/useDarkMode';
 import { useEnhancedAnalysis } from '@/hooks/useEnhancedAnalysis';
+import { AnalysisResults } from '@/hooks/useAnalysis';
 import { Navigation } from '@/components/Navigation';
 import { SidebarNavigation } from '@/components/SidebarNavigation';
 import { BreadcrumbContainer } from '@/components/BreadcrumbContainer';
@@ -50,6 +51,7 @@ const SinglePageApp = () => {
     isNewFile,
     storedAnalysis,
     storageStats,
+    selectedFile,
     handleFileSelect,
     handleAnalysisComplete,
     clearStoredData,
@@ -60,6 +62,36 @@ const SinglePageApp = () => {
     restoreFromHistory,
   } = useEnhancedAnalysis();
 
+  // Create a wrapper that ensures file reference is available
+  const [currentAnalysisFile, setCurrentAnalysisFile] = useState<File | null>(null);
+  
+  const handleFileSelectWithTracking = useCallback((file: File) => {
+    console.log('🔄 File selected with tracking:', file.name);
+    setCurrentAnalysisFile(file);
+    handleFileSelect(file);
+  }, [handleFileSelect]);
+  
+  const handleAnalysisCompleteWithFile = useCallback(async (results: AnalysisResults, file?: File) => {
+    console.log('🔄 Analysis complete with file:', { 
+      hasFile: !!file, 
+      fileName: file?.name,
+      hasCurrentAnalysisFile: !!currentAnalysisFile,
+      hasSelectedFile: !!selectedFile 
+    });
+    
+    // Use the file parameter from useFileUpload if available, otherwise use currentAnalysisFile
+    const fileToUse = file || currentAnalysisFile;
+    
+    if (fileToUse) {
+      console.log('🔄 Storing analysis results with file:', fileToUse.name);
+      // Pass the file directly to handleAnalysisComplete to bypass state synchronization issues
+      handleAnalysisComplete(results, undefined, fileToUse);
+    } else {
+      console.error('❌ No file available for analysis storage');
+      handleAnalysisComplete(results);
+    }
+  }, [currentAnalysisFile, selectedFile, handleFileSelect, handleAnalysisComplete]);
+
   const {
     handleAnalysisCompleteWithRedirect,
     handleClearStoredData,
@@ -69,7 +101,7 @@ const SinglePageApp = () => {
     handleRestoreFromHistory
   } = useAnalysisHandlers({
     hasStoredData,
-    onAnalysisComplete: handleAnalysisComplete,
+    onAnalysisComplete: handleAnalysisCompleteWithFile,
     onSetCurrentTab: setCurrentTab,
     onSetIsRedirecting: setIsRedirecting,
     onClearStoredData: clearStoredData,
@@ -148,7 +180,7 @@ const SinglePageApp = () => {
               currentTab={currentTab}
               onTabChange={setCurrentTab}
               analysisResults={analysisResults}
-              onFileSelect={handleFileSelect}
+              onFileSelect={handleFileSelectWithTracking}
               onAnalysisComplete={handleAnalysisCompleteWithRedirect}
               isRedirecting={isRedirecting}
             />

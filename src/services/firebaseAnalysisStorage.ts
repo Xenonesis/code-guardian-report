@@ -22,13 +22,11 @@ import {
   limit,
   serverTimestamp,
   onSnapshot,
-  Timestamp,
-  writeBatch
+  Timestamp
 } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { AnalysisResults } from '@/hooks/useAnalysis';
 import { safeGetDoc, safeSetDoc } from '@/lib/firestore-utils';
-import { useAuthContext } from '@/lib/auth-context';
 
 export interface FirebaseAnalysisData {
   id: string;
@@ -90,9 +88,21 @@ export class FirebaseAnalysisStorageService {
    */
   public setUserId(userId: string | null): void {
     if (this.userId !== userId) {
+      console.log('🔑 Firebase Storage: Setting user ID:', {
+        oldUserId: this.userId,
+        newUserId: userId,
+        timestamp: new Date().toISOString()
+      });
       this.userId = userId;
       this.setupRealtimeListener();
     }
+  }
+
+  /**
+   * Get current user ID
+   */
+  public getUserId(): string | null {
+    return this.userId;
   }
 
   /**
@@ -113,11 +123,6 @@ export class FirebaseAnalysisStorageService {
       const sessionId = this.generateSessionId();
 
       // Check if analysis with same hash already exists
-      const existingAnalysis = await this.getAnalysisByHash(fileHash);
-      if (existingAnalysis && existingAnalysis.fileName === file.name) {
-        // Update existing analysis
-        return await this.updateAnalysisResults(existingAnalysis.id, results, tags);
-      }
 
       // Compress results if they're large
       const shouldCompress = this.getDataSize(results) > FirebaseAnalysisStorageService.COMPRESSION_THRESHOLD;
@@ -145,13 +150,14 @@ export class FirebaseAnalysisStorageService {
         updatedAt: serverTimestamp() as Timestamp,
       };
 
+      // Sanitize data before storing
+      const sanitizedData = this.sanitizeObject(analysisData);
+
       // Store in Firestore
-      const docRef = await addDoc(collection(db, FirebaseAnalysisStorageService.COLLECTION_NAME), analysisData);
+      const docRef = await addDoc(collection(db, FirebaseAnalysisStorageService.COLLECTION_NAME), sanitizedData);
 
       // Update sync status
       await updateDoc(docRef, { syncStatus: 'synced' });
-
-      // Update user statistics
       await this.updateUserStats(file.size, results.issues?.length || 0);
 
       console.log('✅ Analysis results stored to Firebase:', {
@@ -231,8 +237,7 @@ export class FirebaseAnalysisStorageService {
         console.warn('Primary history query failed, falling back to basic query:', err?.code || err);
         let fallback = query(
           collection(db, FirebaseAnalysisStorageService.COLLECTION_NAME),
-          where('userId', '==', targetUserId),
-          limit(queryOptions.limit || FirebaseAnalysisStorageService.MAX_HISTORY_SIZE)
+          where('userId', '==', targetUserId)
         );
         // Note: we intentionally skip orderBy here to avoid composite index requirement
         if (queryOptions.fileName) {
@@ -441,7 +446,7 @@ export class FirebaseAnalysisStorageService {
         updateData.tags = tags;
       }
 
-      await updateDoc(docRef, updateData);
+      await updateDoc(docRef, this.sanitizeObject(updateData));
 
       console.log('✅ Analysis results updated in Firebase:', analysisId);
       return analysisId;
@@ -473,8 +478,8 @@ export class FirebaseAnalysisStorageService {
         return (
           analysis.fileName.toLowerCase().includes(searchLower) ||
           analysis.tags.some(tag => tag.toLowerCase().includes(searchLower)) ||
-          analysis.results.issues?.some(issue => 
-            issue.description.toLowerCase().includes(searchLower) ||
+          analysis.results.issues?.some(issue =>
+            (issue.message || '').toLowerCase().includes(searchLower) ||
             issue.type.toLowerCase().includes(searchLower)
           )
         );
@@ -491,48 +496,74 @@ export class FirebaseAnalysisStorageService {
    * Setup real-time listener for user's analysis results
    */
   public setupRealtimeListener(): void {
-    if (!this.userId) return;
+    if (!this.userId) {
+      // Clean up any existing listener if no userId
+      if (this.unsubscribeSnapshot) {
+        this.unsubscribeSnapshot();
+        this.unsubscribeSnapshot = null;
+      }
+      return;
+    }
 
     // Unsubscribe from previous listener
     if (this.unsubscribeSnapshot) {
       this.unsubscribeSnapshot();
+      this.unsubscribeSnapshot = null;
     }
 
-    const q = query(
-      collection(db, FirebaseAnalysisStorageService.COLLECTION_NAME),
-      where('userId', '==', this.userId)
-    );
+    try {
+      const q = query(
+        collection(db, FirebaseAnalysisStorageService.COLLECTION_NAME),
+        where('userId', '==', this.userId)
+      );
 
-    this.unsubscribeSnapshot = onSnapshot(q, (querySnapshot) => {
-      const results: FirebaseAnalysisData[] = [];
-      
-      querySnapshot.forEach((doc) => {
-        const data = doc.data() as Omit<FirebaseAnalysisData, 'id'>;
-        const analysisData: FirebaseAnalysisData = {
-          ...data,
-          id: doc.id,
-        };
+      this.unsubscribeSnapshot = onSnapshot(
+        q, 
+        (querySnapshot) => {
+          const results: FirebaseAnalysisData[] = [];
+          
+          querySnapshot.forEach((doc) => {
+            const data = doc.data() as Omit<FirebaseAnalysisData, 'id'>;
+            const analysisData: FirebaseAnalysisData = {
+              ...data,
+              id: doc.id,
+            };
 
-        // Decompress if needed
-        if (analysisData.compressed) {
-          analysisData.results = this.decompressResults(analysisData.results);
+            // Decompress if needed
+            if (analysisData.compressed) {
+              analysisData.results = this.decompressResults(analysisData.results);
+            }
+
+            results.push(analysisData);
+          });
+
+          // Notify listeners
+          results.sort((a, b) => {
+            const ad = (a.createdAt as any)?.toDate ? (a.createdAt as any).toDate() : new Date(a.createdAt as any);
+            const bd = (b.createdAt as any)?.toDate ? (b.createdAt as any).toDate() : new Date(b.createdAt as any);
+            return bd.getTime() - ad.getTime();
+          });
+
+          const limitAmount = FirebaseAnalysisStorageService.MAX_HISTORY_SIZE;
+          this.notifyListeners(results.slice(0, limitAmount));
+        }, 
+        (error: any) => {
+          // Handle permission errors gracefully
+          if (error?.code === 'permission-denied') {
+            console.warn('⚠️ Firebase real-time listener: Permission denied. User may not be authenticated or lacks access rights.');
+            // Clean up the listener
+            if (this.unsubscribeSnapshot) {
+              this.unsubscribeSnapshot();
+              this.unsubscribeSnapshot = null;
+            }
+          } else {
+            console.error('❌ Real-time listener error:', error);
+          }
         }
-
-        results.push(analysisData);
-      });
-
-      // Notify listeners
-      results.sort((a, b) => {
-        const ad = (a.createdAt as any)?.toDate ? (a.createdAt as any).toDate() : new Date(a.createdAt as any);
-        const bd = (b.createdAt as any)?.toDate ? (b.createdAt as any).toDate() : new Date(b.createdAt as any);
-        return bd.getTime() - ad.getTime();
-      });
-
-      const limitAmount = FirebaseAnalysisStorageService.MAX_HISTORY_SIZE;
-      this.notifyListeners(results.slice(0, limitAmount));
-    }, (error) => {
-      console.error('Real-time listener error:', error);
-    });
+      );
+    } catch (error) {
+      console.error('❌ Failed to setup real-time listener:', error);
+    }
   }
 
   /**
@@ -556,7 +587,7 @@ export class FirebaseAnalysisStorageService {
 
   // Private helper methods
 
-  private async getAnalysisByHash(fileHash: string): Promise<FirebaseAnalysisData | null> {
+  private async getAnalysisByHash(fileHash: string, file: File): Promise<FirebaseAnalysisData | null> {
     if (!this.userId) return null;
 
     try {
@@ -564,6 +595,7 @@ export class FirebaseAnalysisStorageService {
         collection(db, FirebaseAnalysisStorageService.COLLECTION_NAME),
         where('userId', '==', this.userId),
         where('fileHash', '==', fileHash),
+        where('fileName', '==', file.name),
         limit(1)
       );
 
@@ -604,7 +636,7 @@ export class FirebaseAnalysisStorageService {
         updatedAt: serverTimestamp(),
       };
 
-      await safeSetDoc(userStatsRef, updateData, { merge: true });
+      await safeSetDoc(userStatsRef, this.sanitizeObject(updateData), { merge: true });
     } catch (error) {
       console.error('Error updating user stats:', error);
     }
@@ -647,7 +679,7 @@ export class FirebaseAnalysisStorageService {
 
   private compressString(str: string): string {
     try {
-      return btoa(str);
+      return btoa(encodeURIComponent(str));
     } catch {
       return str;
     }
@@ -655,7 +687,7 @@ export class FirebaseAnalysisStorageService {
 
   private decompressString(str: string): string {
     try {
-      return atob(str);
+      return decodeURIComponent(atob(str));
     } catch {
       return str;
     }
@@ -673,6 +705,28 @@ export class FirebaseAnalysisStorageService {
         console.error('Error in listener callback:', error);
       }
     });
+  }
+
+  private sanitizeObject(obj: any): any {
+    if (obj === null || obj === undefined) {
+      return null;
+    }
+
+    if (Array.isArray(obj)) {
+      return obj.map(item => this.sanitizeObject(item));
+    }
+
+    if (typeof obj === 'object' && obj.constructor === Object) {
+      const newObj: { [key: string]: any } = {};
+      for (const key in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, key) && obj[key] !== undefined) {
+          newObj[key] = this.sanitizeObject(obj[key]);
+        }
+      }
+      return newObj;
+    }
+
+    return obj;
   }
 }
 

@@ -370,13 +370,13 @@ export class AnalysisStorageService {
   }
 
   private compressString(str: string): string {
-    // Simple compression simulation (in real implementation, use LZ-string or similar)
-    return btoa(str);
+    // Handle Unicode characters correctly
+    return btoa(encodeURIComponent(str));
   }
 
   private decompressString(str: string): string {
     try {
-      return atob(str);
+      return decodeURIComponent(atob(str));
     } catch {
       return str; // Return as-is if decompression fails
     }

@@ -1,9 +1,38 @@
 # Changelog
 
 **Project Start Date:** 2025
-**Last Update:** 02/10/2025
+**Last Update:** 08/10/2025
 
 ---
+
+## v7.4.1 (08/10/2025)
+- 🐛 **Critical Bug Fix**: Fixed database not updating with new scan results
+  - Resolved Firebase storage userId synchronization issue
+  - Added automatic userId sync when user authentication state changes
+  - Enhanced error logging for better debugging
+  - Fixed stale closure problem in analysis completion callback
+- 🔒 **Permission Error Fix**: Fixed Firebase real-time listener permission errors
+  - Added graceful handling for permission-denied errors
+  - Properly cleans up listener when user is not authenticated
+  - Added 300ms delay to ensure auth is ready before listener setup
+  - Prevents console spam from permission errors
+- 📝 **Documentation**: Added DATABASE_UPDATE_FIX.md with detailed explanation of the fix
+- 🔍 **Developer Experience**: Improved console logging for storage operations
+
+## v7.4.0 (08/10/2025)
+- 📦 **Version Update**: Updated from v7.3.0 to v7.4.0
+- 💾 **Storage Improvements**: Implemented new updates about storage functionality
+- 🚀 **Analysis History Feature**: Added comprehensive analysis history with Firestore indexing and navigation
+- ⚡ **SPA Navigation Improvements**: Enhanced single-page application navigation with redirect state management for better user experience
+- 🔧 **General Improvements**: Various enhancements and optimizations
+- 📋 **Changelog Maintenance**: Updated changelog with latest version information
+
+## v7.3.0 (08/10/2025)
+- 📦 **Version Update**: Updated from v7.2.0 to v7.3.0
+- 🚀 **Analysis History Feature**: Added comprehensive analysis history with Firestore indexing and navigation
+- ⚡ **SPA Navigation Improvements**: Enhanced single-page application navigation with redirect state management for better user experience
+- 🔧 **General Improvements**: Various enhancements and optimizations
+- 📋 **Changelog Maintenance**: Updated changelog with latest version information
 
 ## v7.2.0 (02/10/2025)
 - 📦 **Version Update**: Updated from v4.7.0 to v7.2.0

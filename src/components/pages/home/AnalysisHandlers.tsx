@@ -5,7 +5,7 @@ import { type FirebaseAnalysisData } from '@/services/firebaseAnalysisStorage';
 
 interface AnalysisHandlersProps {
   hasStoredData: boolean;
-  onAnalysisComplete: (results: AnalysisResults) => void;
+  onAnalysisComplete: (results: AnalysisResults, file?: File) => void;
   onSetCurrentTab: (tab: string) => void;
   onSetIsRedirecting: (isRedirecting: boolean) => void;
   onClearStoredData: () => void;
@@ -28,8 +28,8 @@ export const useAnalysisHandlers = ({
 }: AnalysisHandlersProps) => {
   const { toast } = useToast();
 
-  const handleAnalysisCompleteWithRedirect = (results: AnalysisResults) => {
-    onAnalysisComplete(results);
+  const handleAnalysisCompleteWithRedirect = (results: AnalysisResults, file?: File) => {
+    onAnalysisComplete(results, file);
     onSetIsRedirecting(true);
 
     toast({

@@ -5,7 +5,7 @@ import { validateZipFile } from '@/utils/fileValidation';
 
 interface UseFileUploadProps {
   onFileSelect: (file: File) => void;
-  onAnalysisComplete: (results: AnalysisResults) => void;
+  onAnalysisComplete: (results: AnalysisResults, file?: File) => void;
 }
 
 export const useFileUpload = ({ onFileSelect, onAnalysisComplete }: UseFileUploadProps) => {
@@ -40,7 +40,7 @@ export const useFileUpload = ({ onFileSelect, onAnalysisComplete }: UseFileUploa
           });
 
           setIsAnalyzing(false);
-          onAnalysisComplete(analysisResults);
+          onAnalysisComplete(analysisResults, file);
         } catch (analysisError) {
           console.error('Analysis engine error:', analysisError);
           setIsAnalyzing(false);
@@ -79,7 +79,7 @@ export const useFileUpload = ({ onFileSelect, onAnalysisComplete }: UseFileUploa
               licenses: []
             }
           };
-          onAnalysisComplete(emptyResults);
+          onAnalysisComplete(emptyResults, file);
         }
       }, 4000);
 
