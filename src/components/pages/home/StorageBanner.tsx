@@ -1,4 +1,4 @@
-import { type StoredAnalysisData, type StorageStats } from '@/services/analysisStorage';
+import { type StoredAnalysisData, type StorageStats } from '../../../services/storage/analysisStorage';
 
 interface StorageBannerProps {
   hasStoredData: boolean;

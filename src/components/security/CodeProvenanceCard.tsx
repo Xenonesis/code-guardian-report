@@ -28,7 +28,7 @@ import {
   TamperingAlert, 
   ProvenanceReport,
   FileIntegrityRecord 
-} from '@/services/codeProvenanceService';
+} from '../../services/detection/codeProvenanceService';
 import { toast } from 'sonner';
 
 interface CodeProvenanceCardProps {

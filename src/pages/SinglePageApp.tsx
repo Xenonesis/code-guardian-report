@@ -1,5 +1,5 @@
 import { useState, Suspense, lazy, useCallback } from 'react';
-import { PageLayout } from '@/components/layouts/PageLayout';
+import { PageLayout } from '@/components/layout/PageLayout';
 import { HomeHero } from '@/components/pages/home/HomeHero';
 import { AnalysisTabs } from '@/components/pages/home/AnalysisTabs';
 import { StorageBanner } from '@/components/pages/home/StorageBanner';
@@ -7,14 +7,14 @@ import { useAnalysisHandlers } from '@/components/pages/home/AnalysisHandlers';
 import { useDarkMode } from '@/hooks/useDarkMode';
 import { useEnhancedAnalysis } from '@/hooks/useEnhancedAnalysis';
 import { AnalysisResults } from '@/hooks/useAnalysis';
-import { Navigation } from '@/components/Navigation';
+import { Navigation } from '@/components/layout/Navigation';
 import { SidebarNavigation } from '@/components/SidebarNavigation';
 import { BreadcrumbContainer } from '@/components/BreadcrumbContainer';
 import { useNavigation } from '@/lib/navigation-context';
-import { Footer } from '@/components/Footer';
+import { Footer } from '@/components/layout/Footer';
 
 // Import About page components
-import { HeroSection } from '@/components/layouts/HeroSection';
+import { HeroSection } from '@/components/layout/HeroSection';
 import { AnimatedBackground } from '@/components/pages/about/AnimatedBackground';
 import { StatsGrid } from '@/components/pages/about/StatsGrid';
 import { VersionInfo } from '@/components/pages/about/VersionInfo';
@@ -34,9 +34,9 @@ import { HistoryPage } from './HistoryPage';
 import { Shield, Eye, Database, Lock, Users, Globe, Mail, FileText, Scale, AlertTriangle } from 'lucide-react';
 
 // Lazy load heavy components for better performance
-const FloatingChatBot = lazy(() => import('@/components/FloatingChatBot'));
-const StorageStatus = lazy(() => import('@/components/StorageStatus'));
-const AnalysisHistoryModal = lazy(() => import('@/components/AnalysisHistoryModal'));
+const FloatingChatBot = lazy(() => import('@/components/ai/FloatingChatBot'));
+const StorageStatus = lazy(() => import('@/components/firebase/StorageStatus'));
+const AnalysisHistoryModal = lazy(() => import('@/components/analysis/AnalysisHistoryModal'));
 
 const SinglePageApp = () => {
   const [isRedirecting, setIsRedirecting] = useState(false);

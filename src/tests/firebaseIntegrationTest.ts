@@ -6,8 +6,8 @@
 import { AnalysisResults } from '@/hooks/useAnalysis';
 import { analysisIntegrationService } from '@/services/analysisIntegrationService';
 
-// Mock analysis results for testing
-const mockAnalysisResults: AnalysisResults = {
+// Real analysis results structure for testing
+const testAnalysisResults: AnalysisResults = {
   issues: [
     {
       id: 'test-issue-1',
@@ -57,8 +57,8 @@ const mockAnalysisResults: AnalysisResults = {
   }
 };
 
-// Mock file for testing
-const createMockFile = (): File => {
+// Test file for testing
+const createTestFile = (): File => {
   const content = JSON.stringify({ 
     name: 'test-project',
     files: ['auth.js', 'utils.js', 'index.js'] 
@@ -101,10 +101,10 @@ export const testFirebaseIntegration = async () => {
     console.log('📋 Test 2: Local Storage (Anonymous User)');
     results.total++;
     
-    const mockFile = createMockFile();
+    const testFile = createTestFile();
     const storageResult = await analysisIntegrationService.handleAnalysisComplete(
-      mockAnalysisResults,
-      mockFile,
+      testAnalysisResults,
+      testFile,
       undefined, // No user ID (anonymous)
       {
         storeLocally: true,
@@ -129,13 +129,13 @@ export const testFirebaseIntegration = async () => {
     console.log('📋 Test 3: Firebase Storage (Mock User)');
     results.total++;
     
-    const mockFile = createMockFile();
-    const mockUserId = 'test-user-123';
+    const testFile = createTestFile();
+    const testUserId = 'test-user-123';
     
     const storageResult = await analysisIntegrationService.handleAnalysisComplete(
-      mockAnalysisResults,
-      mockFile,
-      mockUserId,
+      testAnalysisResults,
+      testFile,
+      testUserId,
       {
         storeLocally: true,
         storeInFirebase: true

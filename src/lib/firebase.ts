@@ -59,7 +59,7 @@ googleProvider.addScope('profile');
 googleProvider.setCustomParameters({
   prompt: 'select_account',
   // Remove hosted domain restriction to avoid COOP issues
-  hd: undefined,
+  hd: '',
   // Add parameters to help with COOP issues
   access_type: 'online',
   include_granted_scopes: 'true'

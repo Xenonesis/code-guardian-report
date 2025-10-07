@@ -7,9 +7,9 @@ import { SecurityIssueItem } from '@/components/security/SecurityIssueItem';
 import { SecretDetectionCard } from '@/components/security/SecretDetectionCard';
 import { SecureCodeSearchCard } from '@/components/security/SecureCodeSearchCard';
 import { CodeProvenanceCard } from '@/components/security/CodeProvenanceCard';
-import { LanguageDetectionSummary } from '@/components/LanguageDetectionSummary';
-import { PDFDownloadButton } from '@/components/PDFDownloadButton';
-import { FixSuggestion } from '@/services/aiFixSuggestionsService';
+import { LanguageDetectionSummary } from '../language/LanguageDetectionSummary';
+import { PDFDownloadButton } from '../export/PDFDownloadButton';
+import { FixSuggestion } from '@/services/ai/aiFixSuggestionsService';
 import { toast } from 'sonner';
 
 interface SecurityOverviewProps {

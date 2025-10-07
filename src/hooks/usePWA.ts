@@ -1,7 +1,7 @@
 // React hooks for PWA functionality
 
 import { useState, useEffect, useCallback } from 'react';
-import { pwaIntegrationService, PWAStatus } from '../services/pwaIntegration';
+import { pwaIntegrationService, PWAStatus } from '../services/pwa/pwaIntegration';
 
 export function usePWA() {
   const [status, setStatus] = useState<PWAStatus>({

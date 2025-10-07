@@ -2,11 +2,11 @@ import { SecurityIssue } from '@/hooks/useAnalysis';
 import {
   SECURITY_RULES,
   calculateCVSSScore
-} from '../securityAnalysisEngine';
-import { SecretDetectionService, SecretMatch, SecretType } from '../secretDetectionService';
-import { LanguageDetectionService, DetectionResult, LanguageInfo, FrameworkInfo } from '../languageDetectionService';
-import { FrameworkDetectionEngine, DependencyInfo } from '../frameworkDetectionEngine';
-import { naturalLanguageDescriptionService } from '../naturalLanguageDescriptionService';
+} from '../security/securityAnalysisEngine';
+import { SecretDetectionService, SecretMatch, SecretType } from '../security/secretDetectionService';
+import { LanguageDetectionService, DetectionResult, LanguageInfo, FrameworkInfo } from '../detection/languageDetectionService';
+import { FrameworkDetectionEngine, DependencyInfo } from '../detection/frameworkDetectionEngine';
+import { naturalLanguageDescriptionService } from '../ai/naturalLanguageDescriptionService';
 
 type SupportedLanguage = 'javascript' | 'typescript' | 'python' | 'java' | 'php' | 'ruby' | 'golang' | 'csharp';
 type ToolsByLanguage = Record<SupportedLanguage, string[]>;
@@ -912,8 +912,10 @@ export class SecurityAnalyzer {
             recommendation: rule.remediation.description,
             remediation: {
               description: rule.remediation.description,
-              example: rule.remediation.example || '',
-              references: []
+              codeExample: rule.remediation.codeExample,
+              fixExample: rule.remediation.fixExample,
+              effort: rule.remediation.effort,
+              priority: rule.remediation.priority
             },
             filename,
             codeSnippet: this.extractCodeSnippet(lines, lineNumber),

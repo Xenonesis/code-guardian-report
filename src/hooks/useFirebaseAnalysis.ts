@@ -10,8 +10,8 @@ import {
   firebaseAnalysisStorage,
   FirebaseAnalysisData,
   AnalysisHistoryQuery
-} from '@/services/firebaseAnalysisStorage';
-import { analysisStorage } from '@/services/analysisStorage';
+} from '../services/storage/firebaseAnalysisStorage';
+import { analysisStorage } from '../services/storage/analysisStorage';
 import { useAuth } from '@/lib/auth-context';
 
 export interface FirebaseAnalysisState {
@@ -256,11 +256,11 @@ export const useFirebaseAnalysis = () => {
         setCloudAnalysis(analysis);
         setAnalysisResults(analysis.results);
         
-        // Create a mock file object for the loaded analysis
-        const mockFile = new File([''], analysis.fileName, {
+        // Create a file object for the loaded analysis
+        const analysisFile = new File([''], analysis.fileName, {
           type: 'application/zip'
         });
-        setSelectedFile(mockFile);
+        setSelectedFile(analysisFile);
       }
     } catch (error) {
       console.error('Error loading analysis from history:', error);

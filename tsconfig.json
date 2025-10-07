@@ -17,11 +17,16 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
+      "@app/*": ["./src/app/*"],
       "@components/*": ["./src/components/*"],
       "@services/*": ["./src/services/*"],
       "@hooks/*": ["./src/hooks/*"],
       "@utils/*": ["./src/utils/*"],
-      "@styles/*": ["./src/styles/*"]
+      "@styles/*": ["./src/styles/*"],
+      "@lib/*": ["./src/lib/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@types/*": ["./src/types/*"],
+      "@config/*": ["./src/config/*"]
     },
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,

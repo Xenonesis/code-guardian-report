@@ -1,5 +1,5 @@
 import { SecurityIssue } from '@/hooks/useAnalysis';
-import { calculateSecurityScore } from '../securityAnalysisEngine';
+import { calculateSecurityScore } from '../security/securityAnalysisEngine';
 
 export class MetricsCalculator {
   public calculateQualityScore(issues: SecurityIssue[], linesAnalyzed: number): number {

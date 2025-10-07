@@ -1,6 +1,6 @@
 import React from 'react';
-import { AboutPageLayout } from '@/components/layouts/AboutPageLayout';
-import { HeroSection } from '@/components/layouts/HeroSection';
+import { AboutPageLayout } from '@/components/layout/AboutPageLayout';
+import { HeroSection } from '@/components/layout/HeroSection';
 import { AnimatedBackground } from '@/components/pages/about/AnimatedBackground';
 import { StatsGrid } from '@/components/pages/about/StatsGrid';
 import { VersionInfo } from '@/components/pages/about/VersionInfo';

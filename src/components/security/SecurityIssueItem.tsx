@@ -15,8 +15,8 @@ import {
 } from 'lucide-react';
 import { SecurityIssue } from '@/hooks/useAnalysis';
 import { AIFixSuggestionsCard } from './AIFixSuggestionsCard';
-import { FixSuggestion } from '@/services/aiFixSuggestionsService';
-import { naturalLanguageDescriptionService } from '@/services/naturalLanguageDescriptionService';
+import { FixSuggestion } from '@/services/ai/aiFixSuggestionsService';
+import { naturalLanguageDescriptionService } from '@/services/ai/naturalLanguageDescriptionService';
 import { toast } from 'sonner';
 
 interface SecurityIssueItemProps {
@@ -320,7 +320,7 @@ export const SecurityIssueItem: React.FC<SecurityIssueItemProps> = ({
                     {issue.tool && (
                       <div className="flex items-center gap-2">
                         <span className="font-medium text-slate-400">Detected by:</span>
-                        <Badge variant="outline" size="sm" className="text-slate-300 border-slate-600">
+                        <Badge variant="outline" className="text-slate-300 border-slate-600">
                           {issue.tool}
                         </Badge>
                       </div>
@@ -339,7 +339,7 @@ export const SecurityIssueItem: React.FC<SecurityIssueItemProps> = ({
                   </p>
                   <div className="flex items-center gap-2">
                     <span className="font-medium text-slate-400">Effort:</span>
-                    <Badge variant="outline" size="sm" className="text-slate-300 border-slate-600">
+                    <Badge variant="outline" className="text-slate-300 border-slate-600">
                       {issue.remediation.effort}
                     </Badge>
                     <span className="font-medium text-slate-400">Priority:</span>

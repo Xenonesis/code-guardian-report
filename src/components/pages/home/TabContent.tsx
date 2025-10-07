@@ -3,14 +3,14 @@ import { FileCode } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { TabsContent } from '@/components/ui/tabs';
 import { UploadForm } from '@/components/UploadForm';
-import { LoadingSpinner } from '@/components/LoadingSpinner';
+import { LoadingSpinner } from '../../common/LoadingSpinner';
 import { AnalysisResults } from '@/hooks/useAnalysis';
-import { EnhancedSecurityResults } from '@/components/EnhancedSecurityResults';
-import PromptGenerator from '@/components/PromptGenerator';
+import { EnhancedSecurityResults } from '../../analysis/EnhancedSecurityResults';
+import PromptGenerator from '../../ai/PromptGenerator';
 
 // Lazy load heavy components
-const ResultsTable = React.lazy(() => import('@/components/ResultsTable').then(module => ({ default: module.ResultsTable })));
-const AIKeyManager = React.lazy(() => import('@/components/AIKeyManager').then(module => ({ default: module.AIKeyManager })));
+const ResultsTable = React.lazy(() => import('../../analysis/ResultsTable').then(module => ({ default: module.ResultsTable })));
+const AIKeyManager = React.lazy(() => import('../../ai/AIKeyManager').then(module => ({ default: module.AIKeyManager })));
 
 interface TabContentProps {
   analysisResults: AnalysisResults | null;
@@ -47,7 +47,7 @@ export const TabContent: React.FC<TabContentProps> = ({
       >
         <Suspense fallback={
           <div className="flex justify-center p-8" role="status" aria-label="Loading AI configuration">
-            <LoadingSpinner size="lg" text="Loading AI Configuration..." />
+            <LoadingSpinner size="lg" message="Loading AI Configuration..." />
           </div>
         }>
           <AIKeyManager />
@@ -74,7 +74,7 @@ export const TabContent: React.FC<TabContentProps> = ({
         {analysisResults ? (
           <Suspense fallback={
             <div className="flex justify-center p-8" role="status" aria-label="Loading analysis results">
-              <LoadingSpinner size="lg" text="Loading Results..." />
+              <LoadingSpinner size="lg" message="Loading Results..." />
             </div>
           }>
             {analysisResults.summary ? (

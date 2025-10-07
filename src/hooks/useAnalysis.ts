@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { DetectionResult } from '@/services/languageDetectionService';
+import { DetectionResult } from '@/services/detection/languageDetectionService';
 
 export interface SecurityIssue {
   id: string;

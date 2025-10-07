@@ -5,8 +5,8 @@
  */
 
 import { AnalysisResults } from '@/hooks/useAnalysis';
-import { analysisStorage } from './analysisStorage';
-import { firebaseAnalysisStorage } from './firebaseAnalysisStorage';
+import { analysisStorage } from './storage/analysisStorage';
+import { firebaseAnalysisStorage } from './storage/firebaseAnalysisStorage';
 
 export interface AnalysisStorageOptions {
   storeLocally?: boolean;

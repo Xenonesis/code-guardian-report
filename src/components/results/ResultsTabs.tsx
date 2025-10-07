@@ -2,9 +2,9 @@ import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { AnalysisResults } from '@/hooks/useAnalysis';
 import { SecurityOverview } from './SecurityOverview';
-import { AISecurityInsights } from '@/components/AISecurityInsights';
+import { AISecurityInsights } from '../ai/AISecurityInsights';
 import { SecurityMetricsDashboard } from '@/components/SecurityMetricsDashboard';
-import { LanguageDetectionDisplay } from '@/components/LanguageDetectionDisplay';
+import { LanguageDetectionDisplay } from '../language/LanguageDetectionDisplay';
 
 interface ResultsTabsProps {
   results: AnalysisResults;

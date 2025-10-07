@@ -1,5 +1,5 @@
 import { useState, useCallback, useMemo } from 'react';
-import { AIService } from '@/services/aiService';
+import { AIService } from '../services/ai/aiService';
 import { toast } from 'sonner';
 
 interface ChatMessage {

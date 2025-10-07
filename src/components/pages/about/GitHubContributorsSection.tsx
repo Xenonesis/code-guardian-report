@@ -14,7 +14,7 @@ import {
   Github,
   Loader2
 } from 'lucide-react';
-import { githubService, ContributorWithDetails } from '@/services/githubService';
+import { githubService, ContributorWithDetails } from '@/services/api/githubService';
 
 const GitHubContributorsSection = () => {
   const [contributors, setContributors] = useState<ContributorWithDetails[]>([]);

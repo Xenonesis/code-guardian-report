@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { HeroSection } from '@/components/layouts/HeroSection';
+import { HeroSection } from '@/components/layout/HeroSection';
 import { Shield, Zap, Star, ArrowRight, Sparkles, Code, Bug, Search, Brain, Lock, Rocket, Globe, Award, Users, ChevronDown, ChevronUp } from 'lucide-react';
 
 

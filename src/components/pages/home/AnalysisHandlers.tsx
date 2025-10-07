@@ -1,7 +1,7 @@
 import { useToast } from '@/hooks/use-toast';
 import { AnalysisResults } from '@/hooks/useAnalysis';
-import { type StoredAnalysisData } from '@/services/analysisStorage';
-import { type FirebaseAnalysisData } from '@/services/firebaseAnalysisStorage';
+import { type StoredAnalysisData } from '../../../services/storage/analysisStorage';
+import { type FirebaseAnalysisData } from '../../../services/storage/firebaseAnalysisStorage';
 
 interface AnalysisHandlersProps {
   hasStoredData: boolean;

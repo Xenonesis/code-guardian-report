@@ -24,7 +24,7 @@ import {
   Info
 } from 'lucide-react';
 import { SecurityIssue } from '@/hooks/useAnalysis';
-import { FixSuggestion, AIFixSuggestionsService, FixSuggestionRequest } from '@/services/aiFixSuggestionsService';
+import { FixSuggestion, AIFixSuggestionsService, FixSuggestionRequest } from '@/services/ai/aiFixSuggestionsService';
 import { toast } from 'sonner';
 
 interface AIFixSuggestionsCardProps {

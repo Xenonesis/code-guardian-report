@@ -5,9 +5,9 @@
 
 import { useState, useCallback, useEffect } from 'react';
 import { AnalysisResults } from '@/hooks/useAnalysis';
-import { analysisStorage, type StoredAnalysisData } from '@/services/analysisStorage';
+import { analysisStorage, type StoredAnalysisData } from '../services/storage/analysisStorage';
 import { analysisIntegrationService } from '@/services/analysisIntegrationService';
-import { firebaseAnalysisStorage } from '@/services/firebaseAnalysisStorage';
+import { firebaseAnalysisStorage } from '../services/storage/firebaseAnalysisStorage';
 import { useAuth } from '@/lib/auth-context';
 
 export interface EnhancedAnalysisState {

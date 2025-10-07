@@ -26,7 +26,7 @@ import {
   SearchResult, 
   SearchFilters, 
   CodeSnippet 
-} from '@/services/secureCodeSearchService';
+} from '@/services/security/secureCodeSearchService';
 import { toast } from 'sonner';
 
 interface SecureCodeSearchCardProps {

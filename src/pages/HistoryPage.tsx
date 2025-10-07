@@ -25,7 +25,7 @@ import {
   User,
   Database
 } from 'lucide-react';
-import { firebaseAnalysisStorage, type FirebaseAnalysisData } from '@/services/firebaseAnalysisStorage';
+import { firebaseAnalysisStorage, type FirebaseAnalysisData } from '../services/storage/firebaseAnalysisStorage';
 import { useAuth } from '@/lib/auth-context';
 import { useToast } from '@/hooks/use-toast';
 import { AnalysisResults } from '@/hooks/useAnalysis';
