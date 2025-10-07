@@ -1,19 +1,19 @@
 <div align="center">
 
-# 🛡️ Code Guardian v5.9
+# 🛡️ Code Guardian v7.3.0
 ### 🚀 Next-Generation AI-Powered Security Analysis Platform
 Enhanced with AI Fix Suggestions, Secure Code Search, Code Provenance Monitoring & Advanced Analytics
 
-**Current Version: 5.9 - Developed by Aditya Kumar Tiwari**
+**Current Version: 7.3.0 - Developed by Aditya Kumar Tiwari**
 Now with Revolutionary AI-Powered Security Features & Enterprise Analytics
 
 <img src="./public/home.png" alt="Code Guardian - AI-Powered Security Analysis Platform" width="100%" style="border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.15); border: 2px solid rgba(255,255,255,0.1);">
 
 <div align="center">
-  <img src="https://img.shields.io/badge/Version-5.6-ff6b6b?style=for-the-badge&logo=rocket&logoColor=white&labelColor=1a1a1a" alt="Version"/>
+  <img src="https://img.shields.io/badge/Version-7.3.0-ff6b6b?style=for-the-badge&logo=rocket&logoColor=white&labelColor=1a1a1a" alt="Version"/>
   <img src="https://img.shields.io/badge/Status-Production%20Ready-00C851?style=for-the-badge&logo=checkmarx&logoColor=white&labelColor=1a1a1a" alt="Status"/>
   <img src="https://img.shields.io/badge/AI%20Powered-GPT--4%20%7C%20Claude%20%7C%20Gemini-9C27B0?style=for-the-badge&logo=openai&logoColor=white&labelColor=1a1a1a" alt="AI Powered"/>
-  <img src="https://img.shields.io/badge/npm-v5.6-CB3837?style=for-the-badge&logo=npm&logoColor=white&labelColor=1a1a1a" alt="NPM Version"/>
+  <img src="https://img.shields.io/badge/npm-v7.3.0-CB3837?style=for-the-badge&logo=npm&logoColor=white&labelColor=1a1a1a" alt="NPM Version"/>
   <img src="https://img.shields.io/badge/Analytics-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white&labelColor=1a1a1a" alt="Analytics"/>
   <img src="https://img.shields.io/badge/PWA-Ready-FF6F00?style=for-the-badge&logo=pwa&logoColor=white&labelColor=1a1a1a" alt="PWA Ready"/>
 </div>
@@ -57,7 +57,7 @@ Now with Revolutionary AI-Powered Security Features & Enterprise Analytics
     <a href="#-screenshots--demo">
       <img src="https://img.shields.io/badge/📸%20View%20Screenshots-F59E0B?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="Screenshots" height="50"/>
     </a>
-    <a href="#-new-features-v56">
+    <a href="#-new-features-v73">
       <img src="https://img.shields.io/badge/✨%20What's%20New-FF6B6B?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="What's New" height="50"/>
     </a>
   </div>
@@ -65,7 +65,7 @@ Now with Revolutionary AI-Powered Security Features & Enterprise Analytics
 
 ---
 
-## 🌟 New Features in v5.6
+## 🌟 New Features in v7.3
 
 <div align="center">
   <img src="https://img.shields.io/badge/🎉%20Major%20Update-Revolutionary%20AI%20Features-FF6B6B?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="Major Update"/>
@@ -272,7 +272,7 @@ Now with Revolutionary AI-Powered Security Features & Enterprise Analytics
 
 ---
 
-## 🎉 **What Makes Code Guardian v5.6 Special?**
+## 🎉 **What Makes Code Guardian v7.3 Special?**
 
 <div align="center">
   <img src="https://img.shields.io/badge/🌟%20Revolutionary%20Update-Next%20Generation%20Platform-FF6B6B?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="Revolutionary Update"/>
@@ -301,7 +301,7 @@ Now with Revolutionary AI-Powered Security Features & Enterprise Analytics
 </tr>
 </table>
 
-### **✨ Latest Features in v5.6:**
+### **✨ Latest Features in v7.3:**
 
 <div align="center">
 
@@ -381,6 +381,7 @@ Built with ❤️ by [Aditya Kumar Tiwari](https://github.com/Xenonesis)
 - [🔧 Troubleshooting](#-troubleshooting)
 - [🤝 Contributing](#-contributing)
 - [📊 Performance Metrics](#-performance-metrics)
+- [📊 Project Activity & Health](#-project-activity--health)
 - [📈 Changelog](#-changelog)
 - [🔮 Roadmap](#-roadmap)
 - [📄 License](#-license)
@@ -781,7 +782,7 @@ Built with ❤️ by [Aditya Kumar Tiwari](https://github.com/Xenonesis)
 |----------|------------|---------|---------|
 | **Frontend** | React | 18.3.1 | Component-based UI library |
 | **Language** | TypeScript | 5.9 | Type-safe development |
-| **Build Tool** | Vite | 6.3.5 | Lightning-fast bundling |
+| **Build Tool** | Vite | 7.0.5 | Lightning-fast bundling |
 | **Styling** | Tailwind CSS | 3.4.11 | Utility-first CSS framework |
 
 </div>
@@ -810,7 +811,7 @@ Built with ❤️ by [Aditya Kumar Tiwari](https://github.com/Xenonesis)
 - 🔧 **Path Aliases**: Clean imports with @ syntax
 
 ### 🔧 **Build & Optimization**
-- **⚡ Lightning Fast Builds**: Vite 6.3.5 with SWC for sub-second rebuilds
+- **⚡ Lightning Fast Builds**: Vite 7.0.5 with SWC for sub-second rebuilds
 - **📦 Smart Bundling**: Advanced manual chunk splitting for React, Radix UI, and vendor libraries
 - **🎯 Performance**: Optimized asset handling with intelligent file naming
 - **🔄 Hot Reload**: Instant feedback with HMR overlay during development
@@ -1360,7 +1361,7 @@ We welcome contributions! Please follow these steps:
 
 ## 📈 Changelog
 
-### 🔄 Version 5.6 - Current Release ⭐
+### 🔄 Version 7.3.0 - Current Release ⭐
 - 🔄 **Version Synchronization**: Updated all version references across the entire project for consistency
 - 📦 **Dependency Alignment**: Synchronized package.json, manifest, and service worker versions
 - 🛠️ **Build Optimization**: Enhanced Vite configuration with advanced chunk splitting strategies
@@ -1501,6 +1502,23 @@ If you encounter any issues or have questions:
 
 ---
 
+
+## 📊 Project Activity & Health
+
+<div align="center">
+  <img src="https://img.shields.io/github/commit-activity/m/Xenonesis/code-guardian-report?style=for-the-badge&labelColor=1a1a1a" alt="Commit activity (monthly)"/>
+  <img src="https://img.shields.io/github/last-commit/Xenonesis/code-guardian-report?style=for-the-badge&labelColor=1a1a1a" alt="Last commit"/>
+  <img src="https://img.shields.io/github/issues/Xenonesis/code-guardian-report?style=for-the-badge&labelColor=1a1a1a" alt="Open issues"/>
+  <img src="https://img.shields.io/github/issues-pr/Xenonesis/code-guardian-report?style=for-the-badge&labelColor=1a1a1a" alt="Open PRs"/>
+  <img src="https://img.shields.io/github/languages/top/Xenonesis/code-guardian-report?style=for-the-badge&labelColor=1a1a1a" alt="Top language"/>
+  <img src="https://img.shields.io/github/languages/code-size/Xenonesis/code-guardian-report?style=for-the-badge&labelColor=1a1a1a" alt="Code size"/>
+</div>
+
+<div align="center">
+  <img src="https://repobeats.axiom.co/api/embed/Xenonesis/code-guardian-report.svg" alt="Repobeats analytics graph" width="100%"/>
+</div>
+
+<!-- CONTRIBUTORS:START -->
 
 ## 🌟 Community & Contributors
 
@@ -1676,6 +1694,8 @@ If you encounter any issues or have questions:
     <span style="color: #666; font-size: 14px;">🙏 <strong>Thank you to all 8 contributors who make Code Guardian possible!</strong></span>
   </div>
 </div>
+
+<!-- CONTRIBUTORS:END -->
 
 ## 🌟 Show Your Support
 

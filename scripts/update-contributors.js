@@ -123,9 +123,13 @@ function getContributorBadge(contributions, index) {
 
 // Generate the new contributors section
 function generateContributorsSection(contributors, repoStats) {
+  const START_MARKER = '<!-- CONTRIBUTORS:START -->';
+  const END_MARKER = '<!-- CONTRIBUTORS:END -->';
   const topContributors = contributors.slice(0, 8); // Show top 8 contributors
   
   let contributorsHtml = `
+${START_MARKER}
+
 ## 🌟 Community & Contributors
 
 <div align="center">
@@ -172,7 +176,7 @@ function generateContributorsSection(contributors, repoStats) {
   <h3 style="color: white; margin-bottom: 20px;">💻 **Top Contributors** 💻</h3>
   <p style="color: rgba(255,255,255,0.9); margin-bottom: 25px; text-align: center;">Meet the amazing developers who have contributed to Code Guardian</p>
   
-  <table style="margin: 0 auto;">`;
+  <table style="margin: 0 auto;">`}}]}>>{
 
   // Generate rows for top contributors (4 per row)
   for (let i = 0; i < topContributors.length; i += 4) {
@@ -229,6 +233,8 @@ function generateContributorsSection(contributors, repoStats) {
     <span style="color: #666; font-size: 14px;">🙏 <strong>Thank you to all ${contributors.length} contributors who make Code Guardian possible!</strong></span>
   </div>
 </div>
+
+${END_MARKER}
 
 ## 🌟 Show Your Support
 
@@ -330,33 +336,37 @@ async function updateReadmeContributors() {
     let readmeContent = fs.readFileSync(readmePath, 'utf8');
     
     // Find the contributors section and replace it
-    const startMarker = '## 🌟 Community & Contributors';
-    const endMarker = '</table>\r\n\r\n<br/>\r\n\r\n[![GitHub stars]';
-    
-    const startIndex = readmeContent.indexOf(startMarker);
-    const endIndex = readmeContent.indexOf(endMarker, startIndex);
-    
-    console.log('Start marker found at index:', startIndex);
-    console.log('End marker found at index:', endIndex);
-    console.log('Looking for end marker:', JSON.stringify(endMarker));
-    
-    if (startIndex === -1) {
-      console.error('Could not find contributors section start marker in README.md');
-      return;
+    const START_MARKER = '<!-- CONTRIBUTORS:START -->';
+    const END_MARKER = '<!-- CONTRIBUTORS:END -->';
+
+    let beforeSection = '';
+    let afterSection = '';
+
+    const markerStartIndex = readmeContent.indexOf(START_MARKER);
+    const markerEndIndex = readmeContent.indexOf(END_MARKER);
+
+    if (markerStartIndex !== -1 && markerEndIndex !== -1 && markerEndIndex > markerStartIndex) {
+      beforeSection = readmeContent.substring(0, markerStartIndex);
+      afterSection = readmeContent.substring(markerEndIndex + END_MARKER.length);
+    } else {
+      // Fallback: find by headings
+      const headingStart = '## 🌟 Community & Contributors';
+      const headingEnd = '## 🌟 Show Your Support';
+      const startIndex = readmeContent.indexOf(headingStart);
+      const endIndex = readmeContent.indexOf(headingEnd, startIndex);
+
+      console.log('Fallback heading start index:', startIndex);
+      console.log('Fallback heading end index:', endIndex);
+
+      if (startIndex === -1 || endIndex === -1) {
+        console.error('Could not find contributors section using markers or headings in README.md');
+        return;
+      }
+
+      beforeSection = readmeContent.substring(0, startIndex);
+      afterSection = readmeContent.substring(endIndex);
     }
-    
-    if (endIndex === -1) {
-      console.error('Could not find contributors section end marker in README.md');
-      // Let's see what's actually around that area
-      const searchArea = readmeContent.substring(startIndex + 1000, startIndex + 2000);
-      console.log('Content around expected end area:', JSON.stringify(searchArea));
-      return;
-    }
-    
-    // Replace the contributors section
-    const beforeSection = readmeContent.substring(0, startIndex);
-    const afterSection = readmeContent.substring(endIndex + endMarker.length);
-    
+
     const updatedReadme = beforeSection + newContributorsSection + '\n\n---' + afterSection;
     
     // Write updated README

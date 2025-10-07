@@ -6,6 +6,8 @@
 import { useState, useCallback, useEffect } from 'react';
 import { AnalysisResults } from '@/hooks/useAnalysis';
 import { analysisStorage, type StoredAnalysisData } from '@/services/analysisStorage';
+import { analysisIntegrationService } from '@/services/analysisIntegrationService';
+import { auth } from '@/lib/firebase';
 
 export interface EnhancedAnalysisState {
   analysisResults: AnalysisResults | null;
@@ -76,18 +78,39 @@ export const useEnhancedAnalysis = () => {
     }
   }, []);
 
-  const handleAnalysisComplete = useCallback(async (results: AnalysisResults) => {
+  const handleAnalysisComplete = useCallback(async (results: AnalysisResults, userId?: string) => {
     setAnalysisResults(results);
     setIsAnalyzing(false);
     
-    // Store results with the selected file
+    // Store results using the integration service (both local and Firebase)
     if (selectedFile) {
       try {
-        await analysisStorage.storeAnalysisResults(results, selectedFile);
-        setHasStoredData(true);
-        updateStorageStats();
+        // Get current user ID from Firebase Auth if not provided
+        const currentUserId = userId || auth.currentUser?.uid;
+        
+        console.log('🔄 Analysis Complete - User Info:', {
+          providedUserId: userId,
+          currentUserId: currentUserId,
+          hasCurrentUser: !!auth.currentUser,
+          fileName: selectedFile.name
+        });
+        
+        const storageResult = await analysisIntegrationService.handleAnalysisComplete(
+          results,
+          selectedFile,
+          currentUserId // Pass the actual user ID
+        );
+        
+        // Update state based on storage results
+        if (storageResult.local.success || storageResult.firebase.success) {
+          setHasStoredData(true);
+          updateStorageStats();
+        }
+        
+        // Log storage status for debugging
+        console.log('📊 Final Storage Result:', storageResult);
       } catch (error) {
-        // Silent error handling
+        console.error('❌ Error storing analysis results:', error);
       }
     }
   }, [selectedFile, updateStorageStats]);

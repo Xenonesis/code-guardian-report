@@ -1,12 +1,12 @@
 import { useToast } from '@/hooks/use-toast';
 import { AnalysisResults } from '@/hooks/useAnalysis';
 import { type StoredAnalysisData } from '@/services/analysisStorage';
+import { type FirebaseAnalysisData } from '@/services/firebaseAnalysisStorage';
 
 interface AnalysisHandlersProps {
   hasStoredData: boolean;
   onAnalysisComplete: (results: AnalysisResults) => void;
   onSetCurrentTab: (tab: string) => void;
-  onSetIsRedirecting: (isRedirecting: boolean) => void;
   onClearStoredData: () => void;
   onExportAnalysis: (format: 'json' | 'compressed') => void;
   onImportAnalysis: (data: string, compressed: boolean) => void;
