@@ -3,6 +3,7 @@ import { FileCode } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { TabsContent } from '@/components/ui/tabs';
 import { UploadForm } from '@/components/UploadForm';
+import ZipSecurityAnalyzer from '@/components/security/ZipSecurityAnalyzer';
 import { LoadingSpinner } from '../../common/LoadingSpinner';
 import { AnalysisResults } from '@/hooks/useAnalysis';
 import { EnhancedSecurityResults } from '../../analysis/EnhancedSecurityResults';
@@ -35,6 +36,21 @@ export const TabContent: React.FC<TabContentProps> = ({
         <UploadForm
           onFileSelect={onFileSelect}
           onAnalysisComplete={onAnalysisComplete}
+        />
+      </TabsContent>
+
+      <TabsContent
+        value="zip-analysis"
+        className="space-y-6 sm:space-y-8 animate-fade-in"
+        role="tabpanel"
+        id="zip-analysis-panel"
+        aria-labelledby="zip-analysis-tab"
+      >
+        <ZipSecurityAnalyzer
+          onAnalysisComplete={(results) => {
+            // Convert ZIP analysis results to AnalysisResults format if needed
+            console.log('ZIP Analysis completed:', results);
+          }}
         />
       </TabsContent>
 
