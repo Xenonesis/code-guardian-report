@@ -7,10 +7,8 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import {
   Brain,
   Lightbulb,
-  Code,
   CheckCircle,
   AlertTriangle,
-  Clock,
   Star,
   Copy,
   Download,
@@ -98,7 +96,7 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
       setCopiedCode(label);
       toast.success(`${label} copied to clipboard`);
       setTimeout(() => setCopiedCode(null), 2000);
-    } catch (err) {
+    } catch {
       toast.error('Failed to copy to clipboard');
     }
   };
@@ -289,7 +287,7 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
                 {expandedSuggestion === suggestion.id && (
                   <div className="border-t bg-slate-50 dark:bg-slate-800/50 p-4">
                     <Tabs defaultValue="overview" className="w-full">
-                      <TabsList className="grid w-full grid-cols-4">
+                      <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 gap-1">
                         <TabsTrigger value="overview">Overview</TabsTrigger>
                         <TabsTrigger value="code">Code Changes</TabsTrigger>
                         <TabsTrigger value="testing">Testing</TabsTrigger>

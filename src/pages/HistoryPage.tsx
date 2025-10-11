@@ -8,10 +8,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { 
   History, 
-  Search, 
   Filter, 
   Download, 
   Trash2, 
@@ -20,15 +18,13 @@ import {
   FileText,
   Bug,
   Shield,
-  TrendingUp,
-  Clock,
   User,
   Database
 } from 'lucide-react';
 import { firebaseAnalysisStorage, type FirebaseAnalysisData } from '../services/storage/firebaseAnalysisStorage';
 import { useAuth } from '@/lib/auth-context';
 import { useToast } from '@/hooks/use-toast';
-import { AnalysisResults } from '@/hooks/useAnalysis';
+ 
 
 interface HistoryPageProps {
   onAnalysisSelect?: (analysis: FirebaseAnalysisData) => void;
@@ -44,7 +40,13 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedTimeRange, setSelectedTimeRange] = useState<'all' | 'week' | 'month' | 'year'>('all');
   const [selectedSeverity, setSelectedSeverity] = useState<'all' | 'critical' | 'high' | 'medium' | 'low'>('all');
-  const [userStats, setUserStats] = useState<any>(null);
+  type UserStats = {
+    totalAnalyses?: number;
+    totalIssuesFound?: number;
+    totalFilesAnalyzed?: number;
+    averageSecurityScore?: number;
+  };
+  const [userStats, setUserStats] = useState<UserStats | null>(null);
 
   const { user: currentUser } = useAuth();
 
@@ -91,12 +93,12 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
         });
       }
       
-    } catch (error) {
-      console.error('❌ Error loading analysis history:', error);
+    } catch (err) {
+      console.error('❌ Error loading analysis history:', err);
       
       toast({
         title: '❌ Failed to Load History',
-        description: `Could not load your analysis history: ${error.message}`,
+        description: `Could not load your analysis history: ${err instanceof Error ? err.message : String(err)}`,
         variant: 'destructive',
       });
     } finally {
@@ -162,11 +164,24 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
         week: 7 * 24 * 60 * 60 * 1000,
         month: 30 * 24 * 60 * 60 * 1000,
         year: 365 * 24 * 60 * 60 * 1000
-      };
+      } as const;
       
       const cutoff = new Date(now.getTime() - timeRanges[selectedTimeRange]);
       filtered = filtered.filter(analysis => {
-        const analysisDate = analysis.createdAt?.toDate ? analysis.createdAt.toDate() : new Date(analysis.createdAt);
+        type FireTimestamp = { toDate?: () => Date; seconds?: number };
+        const t = analysis.createdAt as FireTimestamp | Date | string | number | null | undefined;
+        let analysisDate: Date;
+        if (t && typeof (t as FireTimestamp).toDate === 'function') {
+          analysisDate = (t as FireTimestamp).toDate!();
+        } else if (t && typeof (t as FireTimestamp).seconds === 'number') {
+          analysisDate = new Date((t as FireTimestamp).seconds! * 1000);
+        } else if (t instanceof Date) {
+          analysisDate = t as Date;
+        } else if (typeof t === 'string' || typeof t === 'number') {
+          analysisDate = new Date(t);
+        } else {
+          analysisDate = new Date();
+        }
         return analysisDate >= cutoff;
       });
     }
@@ -246,7 +261,7 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
         title: '📤 Export Complete',
         description: 'Your analysis history has been exported.',
       });
-    } catch (error) {
+    } catch {
       toast({
         title: '❌ Export Failed',
         description: 'Could not export analysis history.',
@@ -255,25 +270,27 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
     }
   };
 
-  const formatDate = (timestamp: any) => {
+  const formatDate = (timestamp: unknown) => {
     try {
       let date: Date;
       
-      if (timestamp?.toDate && typeof timestamp.toDate === 'function') {
+      type FireTimestamp = { toDate?: () => Date; seconds?: number };
+      const t = timestamp as FireTimestamp | Date | string | number | null | undefined;
+      if (t && typeof (t as FireTimestamp).toDate === 'function') {
         // Firebase Timestamp
-        date = timestamp.toDate();
-      } else if (timestamp?.seconds) {
+        date = (t as FireTimestamp).toDate!();
+      } else if (t && typeof (t as FireTimestamp).seconds === 'number') {
         // Firebase Timestamp object with seconds
-        date = new Date(timestamp.seconds * 1000);
+        date = new Date((t as FireTimestamp).seconds! * 1000);
       } else if (timestamp instanceof Date) {
         // Already a Date object
         date = timestamp;
-      } else if (typeof timestamp === 'string' || typeof timestamp === 'number') {
+      } else if (typeof t === 'string' || typeof t === 'number') {
         // String or number timestamp
-        date = new Date(timestamp);
+        date = new Date(t);
       } else {
         // Fallback to current date
-        console.warn('Unable to parse timestamp:', timestamp);
+        console.warn('Unable to parse timestamp:', t);
         date = new Date();
       }
       
@@ -320,7 +337,7 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
   return (
     <div className="container mx-auto py-8 space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
           <div className="flex items-center gap-2 mb-2">
             <History className="h-6 w-6" />
@@ -345,7 +362,7 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
 
       {/* User Stats */}
       {userStats && (
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
@@ -398,8 +415,8 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
       {/* Filters */}
       <Card>
         <CardContent className="pt-6">
-          <div className="flex flex-wrap gap-4">
-            <div className="flex-1 min-w-64">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="sm:col-span-2 lg:col-span-2">
               <Input
                 placeholder="Search by filename, tags, or issue type..."
                 value={searchTerm}
@@ -409,8 +426,12 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
             </div>
             <select
               value={selectedTimeRange}
-              onChange={(e) => setSelectedTimeRange(e.target.value as any)}
-              className="px-3 py-2 border rounded-md"
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                setSelectedTimeRange(e.target.value as 'all' | 'week' | 'month' | 'year')
+              }
+              className="w-full px-3 py-2 border rounded-md"
+              aria-label="Time Range"
+              title="Time Range"
             >
               <option value="all">All Time</option>
               <option value="week">Past Week</option>
@@ -419,8 +440,14 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
             </select>
             <select
               value={selectedSeverity}
-              onChange={(e) => setSelectedSeverity(e.target.value as any)}
-              className="px-3 py-2 border rounded-md"
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                setSelectedSeverity(
+                  e.target.value as 'all' | 'critical' | 'high' | 'medium' | 'low'
+                )
+              }
+              className="w-full px-3 py-2 border rounded-md"
+              aria-label="Severity"
+              title="Severity"
             >
               <option value="all">All Severities</option>
               <option value="critical">Critical</option>
@@ -428,7 +455,7 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
               <option value="medium">Medium</option>
               <option value="low">Low</option>
             </select>
-            <Button onClick={loadAnalysisHistory} variant="outline">
+            <Button onClick={loadAnalysisHistory} variant="outline" className="w-full sm:w-auto justify-center">
               <Filter className="h-4 w-4 mr-2" />
               Refresh
             </Button>
@@ -468,7 +495,7 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
               {filteredHistory.map((analysis) => (
                 <Card key={analysis.id} className="border-l-4 border-l-primary">
                   <CardContent className="pt-6">
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-2">
                           <h3 className="font-semibold text-lg">{analysis.fileName}</h3>
@@ -486,7 +513,7 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
                           )}
                         </div>
                         
-                        <div className="grid grid-cols-4 gap-4 text-sm text-muted-foreground mb-3">
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-muted-foreground mb-3">
                           <div className="flex items-center gap-1">
                             <Calendar className="h-4 w-4" />
                             {formatDate(analysis.createdAt)}
