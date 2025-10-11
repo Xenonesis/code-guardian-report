@@ -1,9 +1,8 @@
 import React, { Suspense } from 'react';
-import { FileCode } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
+import { FileCode, Shield, FileText, AlertTriangle, Zap } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { TabsContent } from '@/components/ui/tabs';
 import { UploadForm } from '@/components/UploadForm';
-import ZipSecurityAnalyzer from '@/components/security/ZipSecurityAnalyzer';
 import { LoadingSpinner } from '../../common/LoadingSpinner';
 import { AnalysisResults } from '@/hooks/useAnalysis';
 import { EnhancedSecurityResults } from '../../analysis/EnhancedSecurityResults';
@@ -36,21 +35,6 @@ export const TabContent: React.FC<TabContentProps> = ({
         <UploadForm
           onFileSelect={onFileSelect}
           onAnalysisComplete={onAnalysisComplete}
-        />
-      </TabsContent>
-
-      <TabsContent
-        value="zip-analysis"
-        className="space-y-6 sm:space-y-8 animate-fade-in"
-        role="tabpanel"
-        id="zip-analysis-panel"
-        aria-labelledby="zip-analysis-tab"
-      >
-        <ZipSecurityAnalyzer
-          onAnalysisComplete={(results) => {
-            // Convert ZIP analysis results to AnalysisResults format if needed
-            console.log('ZIP Analysis completed:', results);
-          }}
         />
       </TabsContent>
 
@@ -93,6 +77,106 @@ export const TabContent: React.FC<TabContentProps> = ({
               <LoadingSpinner size="lg" message="Loading Results..." />
             </div>
           }>
+            {/* ZIP Overview (if available) */}
+            {analysisResults.zipAnalysis && (
+              <div className="space-y-6 mb-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <Card>
+                    <CardContent className="p-4">
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 bg-blue-500 rounded-lg">
+                          <Shield className="h-5 w-5 text-white" />
+                        </div>
+                        <div>
+                          <p className="text-2xl font-bold text-blue-800 dark:text-blue-200">
+                            {100 - (analysisResults.zipAnalysis.securityThreats.length * 10)}
+                          </p>
+                          <p className="text-sm text-blue-600 dark:text-blue-300">Security Score</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardContent className="p-4">
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 bg-green-500 rounded-lg">
+                          <FileText className="h-5 w-5 text-white" />
+                        </div>
+                        <div>
+                          <p className="text-2xl font-bold text-green-800 dark:text-green-200">
+                            {analysisResults.zipAnalysis.fileStructure.totalFiles}
+                          </p>
+                          <p className="text-sm text-green-600 dark:text-green-300">Total Files</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardContent className="p-4">
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 bg-red-500 rounded-lg">
+                          <AlertTriangle className="h-5 w-5 text-white" />
+                        </div>
+                        <div>
+                          <p className="text-2xl font-bold text-red-800 dark:text-red-200">
+                            {analysisResults.zipAnalysis.securityThreats.length}
+                          </p>
+                          <p className="text-sm text-red-600 dark:text-red-300">Security Threats</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardContent className="p-4">
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 bg-orange-500 rounded-lg">
+                          <Zap className="h-5 w-5 text-white" />
+                        </div>
+                        <div>
+                          <p className="text-2xl font-bold text-orange-800 dark:text-orange-200">
+                            {analysisResults.dependencyAnalysis?.summary.criticalVulnerabilities || 0}
+                          </p>
+                          <p className="text-sm text-orange-600 dark:text-orange-300">Critical Vulns</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                {/* Suspicious files (compact) */}
+                {analysisResults.zipAnalysis.fileStructure.suspiciousFiles.length > 0 && (
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Suspicious Files</CardTitle>
+                      <CardDescription>
+                        Files flagged due to risky extensions or patterns
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-2">
+                        {analysisResults.zipAnalysis.fileStructure.suspiciousFiles.slice(0, 8).map((file, i) => (
+                          <div
+                            key={i}
+                            className="flex items-center gap-2 p-2 rounded border border-yellow-200 dark:border-yellow-700/40 bg-yellow-50 dark:bg-yellow-900/30"
+                          >
+                            <AlertTriangle className="h-4 w-4 text-yellow-600 dark:text-yellow-400" />
+                            <span className="text-sm truncate text-slate-800 dark:text-slate-100">{file}</span>
+                          </div>
+                        ))}
+                        {analysisResults.zipAnalysis.fileStructure.suspiciousFiles.length > 8 && (
+                          <p className="text-xs text-slate-500 dark:text-slate-400">+ more files omitted</p>
+                        )}
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
+              </div>
+            )}
+
+            {/* Existing results rendering */}
             {analysisResults.summary ? (
               <EnhancedSecurityResults results={analysisResults} />
             ) : (

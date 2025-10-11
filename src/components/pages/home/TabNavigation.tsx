@@ -33,15 +33,6 @@ export const TabNavigation: React.FC<TabNavigationProps> = ({
         <span className="text-center whitespace-nowrap">Upload Code</span>
       </TabsTrigger>
 
-      <TabsTrigger
-        value="zip-analysis"
-        className="relative flex items-center justify-center py-2 px-4 text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300 data-[state=active]:text-white data-[state=active]:bg-gradient-to-r data-[state=active]:from-cyan-500 data-[state=active]:to-blue-500 data-[state=active]:shadow-lg transition-all duration-300 focus-ring hover-lift z-10 rounded-full min-w-[92px] sm:min-w-[110px] flex-shrink-0 snap-start"
-        role="tab"
-        aria-controls="zip-analysis-panel"
-        aria-selected={currentTab === 'zip-analysis'}
-      >
-        <span className="text-center whitespace-nowrap">ZIP Analysis</span>
-      </TabsTrigger>
 
       <TabsTrigger
         value="ai-config"

@@ -2,6 +2,9 @@ import { useState, useCallback } from 'react';
 import { EnhancedAnalysisEngine } from '@/services/enhancedAnalysisEngine';
 import { AnalysisResults } from '@/hooks/useAnalysis';
 import { validateZipFile } from '@/utils/fileValidation';
+import { ZipAnalysisService } from '@/services/security/zipAnalysisService';
+import { DependencyVulnerabilityScanner } from '@/services/security/dependencyVulnerabilityScanner';
+import JSZip from 'jszip';
 
 interface UseFileUploadProps {
   onFileSelect: (file: File) => void;
@@ -17,6 +20,8 @@ export const useFileUpload = ({ onFileSelect, onAnalysisComplete }: UseFileUploa
   const [uploadComplete, setUploadComplete] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [analysisEngine] = useState(() => new EnhancedAnalysisEngine());
+  const [zipAnalysisService] = useState(() => new ZipAnalysisService());
+  const [dependencyScanner] = useState(() => new DependencyVulnerabilityScanner());
   const [currentAnalysisFile, setCurrentAnalysisFile] = useState<string | null>(null);
 
   const analyzeCode = useCallback(async (file: File) => {
@@ -47,9 +52,42 @@ export const useFileUpload = ({ onFileSelect, onAnalysisComplete }: UseFileUploa
             fullSummary: analysisResults.summary
           });
 
+          let finalResults: AnalysisResults = analysisResults;
+
+          // If a ZIP is uploaded, run ZIP analysis + dependency scan and merge into results
+          if (file.name.toLowerCase().endsWith('.zip')) {
+            try {
+              const zipAnalysis = await zipAnalysisService.analyzeZipFile(file as unknown as { name: string; size: number; lastModified: number; arrayBuffer: () => Promise<ArrayBuffer> });
+
+              const zip = await JSZip.loadAsync(arrayBuffer);
+              const manifestNames = new Set([
+                'package.json', 'yarn.lock', 'pnpm-lock.yaml', 'requirements.txt', 'Pipfile', 'poetry.lock',
+                'composer.json', 'composer.lock', 'Gemfile', 'Gemfile.lock', 'pom.xml', 'build.gradle',
+                'Cargo.toml', 'Cargo.lock'
+              ]);
+              const filesForScan: Array<{ name: string; content: string }> = [];
+              await Promise.all(
+                Object.keys(zip.files).map(async (p) => {
+                  const f = zip.files[p];
+                  if (f.dir) return;
+                  const base = p.split('/').pop() || p;
+                  if (manifestNames.has(base)) {
+                    const content = await f.async('string');
+                    filesForScan.push({ name: base, content });
+                  }
+                })
+              );
+              const dependencyAnalysis = await dependencyScanner.scanDependencies(filesForScan);
+
+              finalResults = { ...analysisResults, zipAnalysis, dependencyAnalysis };
+            } catch (zipErr) {
+              console.warn('ZIP/dependency analysis failed, continuing with core results:', zipErr);
+            }
+          }
+
           setIsAnalyzing(false);
           setCurrentAnalysisFile(null);
-          onAnalysisComplete(analysisResults, file);
+          onAnalysisComplete(finalResults, file);
         } catch (analysisError) {
           console.error('Analysis engine error:', analysisError);
           setIsAnalyzing(false);

@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react';
 import { DetectionResult } from '@/services/detection/languageDetectionService';
+import type { ZipAnalysisResult } from '@/services/security/zipAnalysisService';
+import type { DependencyScanResult } from '@/services/security/dependencyVulnerabilityScanner';
 
 export interface SecurityIssue {
   id: string;
@@ -62,6 +64,8 @@ export interface AnalysisResults {
     outdated: number;
     licenses: string[];
   };
+  zipAnalysis?: ZipAnalysisResult;
+  dependencyAnalysis?: DependencyScanResult;
 }
 
 export const useAnalysis = () => {
