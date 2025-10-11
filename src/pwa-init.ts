@@ -1,7 +1,7 @@
 // PWA Initialization
 // Initialize all PWA services when the app starts
 
-import { pwaIntegrationService } from './services/pwaIntegration';
+import { pwaIntegrationService } from './services/pwa/pwaIntegration';
 
 export async function initializePWA() {
   try {
@@ -20,13 +20,13 @@ export async function initializePWA() {
     await pwaIntegrationService.preloadRoutes(criticalRoutes);
     
     return true;
-  } catch (error) {
+  } catch {
     return false;
   }
 }
 
-// Auto-initialize when this module is imported
-if (typeof window !== 'undefined') {
+// Auto-initialize when this module is imported (production only)
+if (typeof window !== 'undefined' && import.meta.env.PROD) {
   // Wait for DOM to be ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initializePWA);

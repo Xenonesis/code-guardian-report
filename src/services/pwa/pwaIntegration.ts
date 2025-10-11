@@ -44,10 +44,10 @@ class PWAIntegrationService {
   private async initServiceWorker(): Promise<void> {
     if ('serviceWorker' in navigator) {
       try {
-        const registration = await navigator.serviceWorker.register('/sw.js', PWA_CONFIG.serviceWorker);
+        // Reuse existing registration if available to avoid duplicate listeners/registration
+        const existing = await navigator.serviceWorker.getRegistration('/sw.js');
+        const registration = existing || await navigator.serviceWorker.register('/sw.js', PWA_CONFIG.serviceWorker);
 
-
-        
         // Handle updates
         registration.addEventListener('updatefound', () => {
           const newWorker = registration.installing;
@@ -63,7 +63,7 @@ class PWAIntegrationService {
         this.status.serviceWorkerReady = true;
         this.status.backgroundSyncSupported = 'sync' in registration;
         
-      } catch (error) {
+      } catch {
         // Service worker registration failed - continue without PWA features
       }
     }
@@ -177,7 +177,7 @@ class PWAIntegrationService {
         headers: { 'Content-Type': 'application/json' },
         body: report
       });
-    } catch (error) {
+    } catch {
       // Silently fail to avoid disrupting user experience
     }
   }
@@ -197,7 +197,7 @@ class PWAIntegrationService {
       
       this.dispatchStatusUpdate();
       return accepted;
-    } catch (error) {
+    } catch {
       return false;
     }
   }
@@ -240,7 +240,7 @@ class PWAIntegrationService {
         await navigator.share(data);
         pwaAnalyticsService.trackShareAction();
         return true;
-      } catch (error) {
+      } catch {
         return false;
       }
     }

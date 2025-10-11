@@ -1,5 +1,6 @@
 // Import polyfills first to fix React scheduler issues
 import '../polyfills';
+import '../pwa-init';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
@@ -35,36 +36,7 @@ window.addEventListener('unhandledrejection', (event) => {
   }
 });
 
-// Service Worker registration for PWA capabilities
-if ('serviceWorker' in navigator && import.meta.env.PROD) {
-  window.addEventListener('load', async () => {
-    try {
-      const registration = await navigator.serviceWorker.register('/sw.js');
-      console.log('SW registered: ', registration);
-      
-      // Handle service worker updates
-      registration.addEventListener('updatefound', () => {
-        const newWorker = registration.installing;
-        if (newWorker) {
-          newWorker.addEventListener('statechange', () => {
-            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-              // New content is available, notify user
-              console.log('New content available, please refresh.');
-              // Send message to app about update
-              if (navigator.serviceWorker.controller) {
-                navigator.serviceWorker.controller.postMessage({
-                  type: 'SW_UPDATE_AVAILABLE'
-                });
-              }
-            }
-          });
-        }
-      });
-    } catch (error) {
-      console.log('SW registration failed: ', error);
-    }
-  });
-}
+// Service Worker registration is handled by PWA integration (src/pwa-init.ts)
 
 // Initialize app with error boundary and performance monitoring
 const container = document.getElementById('root');

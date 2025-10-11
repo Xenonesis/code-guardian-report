@@ -1,12 +1,12 @@
 // Code Guardian Enterprise - Enhanced Service Worker
-// Version: 5.8.0
+// Version: 7.3.0
 // Professional PWA Service Worker with advanced caching strategies and enhanced features
 
-const CACHE_NAME = 'code-guardian-v5.8.0';
-const STATIC_CACHE = 'code-guardian-static-v5.8.0';
-const DYNAMIC_CACHE = 'code-guardian-dynamic-v5.8.0';
-const API_CACHE = 'code-guardian-api-v5.8.0';
-const UPLOAD_CACHE = 'code-guardian-uploads-v5.8.0';
+const CACHE_NAME = 'code-guardian-v7.3.0';
+const STATIC_CACHE = 'code-guardian-static-v7.3.0';
+const DYNAMIC_CACHE = 'code-guardian-dynamic-v7.3.0';
+const API_CACHE = 'code-guardian-api-v7.3.0';
+const UPLOAD_CACHE = 'code-guardian-uploads-v7.3.0';
 
 // Assets to cache immediately
 const STATIC_ASSETS = [
@@ -445,7 +445,7 @@ self.addEventListener('message', (event) => {
       break;
       
     case 'GET_VERSION':
-      event.ports[0].postMessage({ version: '5.8.0' });
+      event.ports[0].postMessage({ version: '7.3.0' });
       break;
       
     case 'CLEAR_CACHE':
@@ -483,7 +483,7 @@ async function preloadRoutes(routes) {
 self.addEventListener('quotaexceeded', async () => {
   try {
     const cacheNames = await caches.keys();
-    const oldCaches = cacheNames.filter(name => !name.includes('v5.8.0'));
+    const oldCaches = cacheNames.filter(name => !name.includes('v7.3.0'));
     
     await Promise.all(oldCaches.map(name => caches.delete(name)));
     
@@ -509,8 +509,8 @@ function getAnalyticsData() {
     ...analyticsData,
     timestamp: Date.now(),
     cacheNames: [CACHE_NAME, STATIC_CACHE, DYNAMIC_CACHE, API_CACHE, UPLOAD_CACHE],
-    version: '5.8.0'
+    version: '7.3.0'
   };
 }
 
-// Enhanced Service Worker v5.8.0 loaded successfully"}
+// Enhanced Service Worker v7.3.0 loaded successfully"}

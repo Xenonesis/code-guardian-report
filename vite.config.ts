@@ -43,7 +43,7 @@ export default defineConfig({
   // Professional build configuration
   build: {
     target: ['es2020', 'edge88', 'firefox78', 'chrome87', 'safari14'],
-    minify: false,
+    minify: 'terser',
     sourcemap: false,
     chunkSizeWarningLimit: 1000,
     cssCodeSplit: true,
@@ -112,7 +112,7 @@ export default defineConfig({
       }
     },
     // CSS optimization
-    cssMinify: false // Temporarily disabled to troubleshoot CSS loading issues
+    cssMinify: 'lightningcss'
   },
   // Dependency optimization
   optimizeDeps: {
