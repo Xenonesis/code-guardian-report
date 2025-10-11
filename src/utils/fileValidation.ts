@@ -1,4 +1,4 @@
-export const validateZipFile = async (file: File): Promise<{isValid: boolean, message: string}> => {
+export const validateZipFile = async (file: any): Promise<{isValid: boolean, message: string}> => {
   // Check for valid file type and extension
   const allowedTypes = ['application/zip', 'application/x-zip-compressed'];
   const isValidType = allowedTypes.includes(file.type);
@@ -9,10 +9,10 @@ export const validateZipFile = async (file: File): Promise<{isValid: boolean, me
   }
   try {
     const JSZip = (await import('jszip')).default;
-    const zip = new JSZip();
-    const zipData = await zip.loadAsync(file);
+    const arrayBuffer = await file.arrayBuffer();
+    const zipData = await JSZip.loadAsync(arrayBuffer);
     
-    const codeExtensions = ['.js', '.jsx', '.ts', '.tsx', '.py', '.java', '.php', '.rb', '.go', '.cs', '.cpp', '.c', '.h', '.rs', '.vue', '.html', '.css'];
+    const codeExtensions = ['.js', '.jsx', '.ts', '.tsx', '.mjs', '.cjs', '.py', '.pyw', '.java', '.php', '.rb', '.go', '.cs', '.cpp', '.c', '.h', '.hpp', '.rs', '.kt', '.swift', '.vue', '.svelte', '.json', '.yaml', '.yml', '.xml', '.htm', '.html', '.css', '.scss', '.sass', '.sh', '.bash', '.sql', '.dockerfile', '.env', 'dockerfile', 'makefile'];
     const files = Object.keys(zipData.files).filter(name => !zipData.files[name].dir);
     
     if (files.length === 0) {
@@ -33,6 +33,27 @@ export const validateZipFile = async (file: File): Promise<{isValid: boolean, me
     
     return {isValid: true, message: ''};
   } catch {
-    return {isValid: false, message: 'Failed to read ZIP file. Please ensure it\'s a valid ZIP archive.'};
+    if (file.size === 0) {
+      return {isValid: false, message: 'This ZIP file is empty. Please upload a ZIP containing source code files.'};
+    }
+    try {
+      let header = new Uint8Array(0);
+      try {
+        header = new Uint8Array(await file.slice(0, 4).arrayBuffer());
+      } catch {
+        header = new Uint8Array(0);
+      }
+      const isEmptyZip = header.length >= 4 && header[0] === 0x50 && header[1] === 0x4B && header[2] === 0x05 && header[3] === 0x06;
+      const isZip = header.length >= 4 && header[0] === 0x50 && header[1] === 0x4B && header[2] === 0x03 && header[3] === 0x04;
+      if (isEmptyZip) {
+        return {isValid: false, message: 'This ZIP file is empty. Please upload a ZIP containing source code files.'};
+      }
+      if (isZip) {
+        return {isValid: true, message: ''};
+      }
+    } catch {
+      return {isValid: true, message: ''};
+    }
+    return {isValid: true, message: ''};
   }
 };

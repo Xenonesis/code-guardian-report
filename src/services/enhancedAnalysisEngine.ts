@@ -18,12 +18,12 @@ export class EnhancedAnalysisEngine {
     this.metricsCalculator = new MetricsCalculator();
   }
 
-  private async extractZipContents(zipFile: File): Promise<FileContent[]> {
-    const zip = new JSZip();
+  private async extractZipContents(zipFile: { arrayBuffer: () => Promise<ArrayBuffer> }): Promise<FileContent[]> {
     const fileContents: FileContent[] = [];
 
     try {
-      const zipData = await zip.loadAsync(zipFile);
+      const buffer = await zipFile.arrayBuffer();
+      const zipData = await JSZip.loadAsync(buffer);
       
       for (const [filename, file] of Object.entries(zipData.files)) {
         if (!file.dir && this.isAnalyzableFile(filename)) {
@@ -35,7 +35,7 @@ export class EnhancedAnalysisEngine {
           });
         }
       }
-    } catch (error) {
+    } catch {
       throw new Error('Failed to extract zip file contents');
     }
 
@@ -92,7 +92,7 @@ export class EnhancedAnalysisEngine {
     return hasValidExtension || isConfigFile;
   }
 
-  public async analyzeCodebase(zipFile: File): Promise<AnalysisResults> {
+  public async analyzeCodebase(zipFile: { arrayBuffer: () => Promise<ArrayBuffer> }): Promise<AnalysisResults> {
     const startTime = Date.now();
     let allIssues: SecurityIssue[] = [];
     let linesAnalyzed = 0;
@@ -115,7 +115,7 @@ export class EnhancedAnalysisEngine {
         }
 
         // Initialize smart language detection
-        const analysisContext = await this.securityAnalyzer.initializeAnalysisContext(fileContents);
+        await this.securityAnalyzer.initializeAnalysisContext(fileContents);
 
         // Analyze files with enhanced context
         for (let i = 0; i < fileContents.length; i++) {
@@ -124,9 +124,8 @@ export class EnhancedAnalysisEngine {
           allIssues = [...allIssues, ...fileIssues];
           linesAnalyzed += fileContent.content.split('\n').length;
         }
-      } catch (error) {
+      } catch {
         // Return error-based analysis for failed ZIP processing
-        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
         
         return {
           issues: [],
@@ -163,7 +162,7 @@ export class EnhancedAnalysisEngine {
     };
 
     // Verify we have real analysis results
-    this.verifyRealAnalysisResults(allIssues, totalFiles, linesAnalyzed);
+    this.verifyRealAnalysisResults(allIssues, totalFiles);
 
     return analysisResults;
   }
@@ -171,26 +170,9 @@ export class EnhancedAnalysisEngine {
   /**
    * Verify that we're getting real analysis results, not mock data
    */
-  private verifyRealAnalysisResults(issues: SecurityIssue[], totalFiles: number, linesAnalyzed: number): void {
-    // Verification logic without console output
+  private verifyRealAnalysisResults(_issues: SecurityIssue[], totalFiles: number): void {
     if (totalFiles === 0) {
       return;
     }
-
-    // Check if we found issues with real file references
-    const filesWithIssues = new Set(issues.map(issue => issue.filename));
-    
-    // Check for different types of real security issues
-    const categories = [...new Set(issues.map(issue => issue.category))];
-    const severities = [...new Set(issues.map(issue => issue.severity))];
-
-    // Check for secret detection specifically
-    const secretIssues = issues.filter(issue =>
-      issue.category === 'Secret Detection' || issue.type === 'Secret'
-    );
-
-    // Verify issues have real line numbers and code snippets
-    const issuesWithLineNumbers = issues.filter(issue => issue.line > 0);
-    const issuesWithCodeSnippets = issues.filter(issue => issue.codeSnippet && issue.codeSnippet.trim().length > 0);
   }
 }
