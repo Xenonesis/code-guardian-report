@@ -26,9 +26,11 @@ export default [
     rules: {
       // Add your rules here
       'semi': ['error', 'always'],
-      'quotes': ['error', 'single'],
+      'quotes': ['error', 'single', { allowTemplateLiterals: true }],
+      'no-undef': 'off', // TypeScript provides undefined checks
+      'no-unused-vars': 'off', // Use @typescript-eslint/no-unused-vars instead
       // TypeScript-specific rules
-      '@typescript-eslint/no-unused-vars': 'warn',
+      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
       '@typescript-eslint/no-explicit-any': 'warn',
       // React-specific rules
       'react/react-in-jsx-scope': 'off', // Not needed in React 17+

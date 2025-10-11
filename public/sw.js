@@ -190,8 +190,25 @@ async function handleRequest(request) {
     }
     
     return await executeStrategy(request, strategy, cacheName, maxAge);
-  } catch (error) {
+  } catch (_cacheError) {
+    globalThis.console?.debug?.('Falling back to offline handler due to fetch failure', _cacheError);
     return await handleOfflineRequest(request);
+  }
+}
+
+function isCacheableResponse(request, response) {
+  if (!response) return false;
+  if (request.method !== 'GET') return false;
+  if (!response.ok) return false;
+  return response.type === 'basic' || response.type === 'cors';
+}
+
+async function safeCachePut(cache, request, response) {
+  if (!isCacheableResponse(request, response)) return;
+  try {
+    await cache.put(request, response.clone());
+  } catch (error) {
+    globalThis.console?.warn?.('Cache.put skipped', error);
   }
 }
 
@@ -224,34 +241,28 @@ async function cacheFirst(request, cache, maxAge) {
     const networkResponse = await fetch(request);
     analyticsData.networkRequests++;
     
-    if (networkResponse.ok) {
-      const responseToCache = networkResponse.clone();
-      await cache.put(request, responseToCache);
-    }
+    await safeCachePut(cache, request, networkResponse);
     
     return networkResponse;
-  } catch (error) {
+  } catch (_networkError) {
     analyticsData.offlineRequests++;
     if (cachedResponse) {
       return cachedResponse;
     }
-    throw error;
+    throw _networkError;
   }
 }
 
 // Network First strategy
-async function networkFirst(request, cache, maxAge) {
+async function networkFirst(request, cache, _maxAge) {
   try {
     const networkResponse = await fetch(request);
     analyticsData.networkRequests++;
     
-    if (networkResponse.ok) {
-      const responseToCache = networkResponse.clone();
-      await cache.put(request, responseToCache);
-    }
-    
+    await safeCachePut(cache, request, networkResponse);
+
     return networkResponse;
-  } catch (error) {
+  } catch (_networkErr) {
     analyticsData.offlineRequests++;
     const cachedResponse = await cache.match(request);
     
@@ -261,20 +272,18 @@ async function networkFirst(request, cache, maxAge) {
     }
     
     analyticsData.cacheMisses++;
+    globalThis.console?.debug?.('Network-first strategy falling back to offline', _networkErr);
     return await handleOfflineRequest(request);
   }
 }
 
 // Stale While Revalidate strategy
-async function staleWhileRevalidate(request, cache, maxAge) {
+async function staleWhileRevalidate(request, cache, _maxAge) {
   const cachedResponse = await cache.match(request);
   
   const fetchPromise = fetch(request).then(networkResponse => {
     analyticsData.networkRequests++;
-    if (networkResponse.ok) {
-      cache.put(request, networkResponse.clone());
-    }
-    return networkResponse;
+    return safeCachePut(cache, request, networkResponse).then(() => networkResponse);
   }).catch(() => {
     analyticsData.offlineRequests++;
     return null;
@@ -286,13 +295,15 @@ async function staleWhileRevalidate(request, cache, maxAge) {
   }
   
   analyticsData.cacheMisses++;
-  return await fetchPromise || await handleOfflineRequest(request);
+  const networkResult = await fetchPromise;
+  if (networkResult) {
+    return networkResult;
+  }
+  return await handleOfflineRequest(request);
 }
 
 // Handle offline requests
 async function handleOfflineRequest(request) {
-  const url = new URL(request.url);
-  
   // Return offline page for navigation requests
   if (request.mode === 'navigate') {
     const cache = await caches.open(STATIC_CACHE);
@@ -322,37 +333,11 @@ function isExpired(response, maxAge) {
 // Handle background sync
 async function handleBackgroundSync(tag) {
   analyticsData.backgroundSyncs++;
-  
-  try {
-    // Notify main thread about background sync
-    const clients = await self.clients.matchAll();
-    clients.forEach(client => {
-      client.postMessage({ type: 'BACKGROUND_SYNC', tag });
-    });
-    
-  } catch (error) {
-    throw error;
-  }
-}
-
-// Show push notification
-async function showNotification(payload) {
-  analyticsData.pushNotifications++;
-  
-  const options = {
-    body: payload.body,
-    icon: payload.icon || '/favicon-192x192.svg',
-    badge: payload.badge || '/favicon-192x192.svg',
-    image: payload.image,
-    data: payload.data,
-    actions: payload.actions || [],
-    tag: payload.tag,
-    requireInteraction: payload.requireInteraction || false,
-    vibrate: [200, 100, 200],
-    timestamp: Date.now()
-  };
-  
-  return self.registration.showNotification(payload.title, options);
+  // Notify main thread about background sync
+  const clients = await self.clients.matchAll();
+  clients.forEach(client => {
+    client.postMessage({ type: 'BACKGROUND_SYNC', tag });
+  });
 }
 
 // Enhanced background sync handlers
@@ -362,8 +347,8 @@ async function handleFileUploadSync() {
     clients.forEach(client => {
       client.postMessage({ type: 'PROCESS_UPLOAD_QUEUE' });
     });
-  } catch (error) {
-    // Silently handle sync errors
+  } catch (_syncError) {
+    globalThis.console?.debug?.('Background file upload sync failed', _syncError);
   }
 }
 
@@ -373,8 +358,8 @@ async function handleOfflineSync() {
     clients.forEach(client => {
       client.postMessage({ type: 'SYNC_OFFLINE_DATA' });
     });
-  } catch (error) {
-    // Silently handle sync errors
+  } catch (_syncError) {
+    globalThis.console?.debug?.('Offline sync failed', _syncError);
   }
 }
 
@@ -384,8 +369,8 @@ async function handleAnalyticsSync() {
     clients.forEach(client => {
       client.postMessage({ type: 'SYNC_ANALYTICS' });
     });
-  } catch (error) {
-    // Silently handle sync errors
+  } catch (_syncError) {
+    globalThis.console?.debug?.('Analytics sync failed', _syncError);
   }
 }
 
@@ -481,7 +466,7 @@ async function clearSpecificCache(cacheName) {
   try {
     await caches.delete(cacheName);
   } catch (error) {
-    // Silently handle cache clear errors
+    globalThis.console?.debug?.('Failed to clear cache', cacheName, error);
   }
 }
 
@@ -490,7 +475,7 @@ async function preloadRoutes(routes) {
     const cache = await caches.open(DYNAMIC_CACHE);
     await cache.addAll(routes);
   } catch (error) {
-    // Silently handle preload errors
+    globalThis.console?.debug?.('Failed to preload routes', routes, error);
   }
 }
 
@@ -514,7 +499,7 @@ self.addEventListener('quotaexceeded', async () => {
       }
     }
   } catch (error) {
-    // Silently handle quota exceeded errors
+    globalThis.console?.debug?.('Quota exceeded handling failed', error);
   }
 });
 

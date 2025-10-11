@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -23,7 +24,7 @@ import { toast } from 'sonner';
 import JSZip from 'jszip';
 
 interface ZipSecurityAnalyzerProps {
-  onAnalysisComplete?: (results: {
+  onAnalysisComplete?: (_results: {
     zipAnalysis: ZipAnalysisResult;
     fileAnalysis: EnhancedFileAnalysisResult[];
     dependencyAnalysis: DependencyScanResult;
@@ -33,11 +34,12 @@ interface ZipSecurityAnalyzerProps {
 
 export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
   onAnalysisComplete,
-  className
+  className = ''
 }) => {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysisProgress, setAnalysisProgress] = useState(0);
   const [analysisStage, setAnalysisStage] = useState('');
+  const [isDragging, setIsDragging] = useState(false);
   const [results, setResults] = useState<{
     zipAnalysis: ZipAnalysisResult | null;
     fileAnalysis: EnhancedFileAnalysisResult[];
@@ -52,10 +54,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
   // Removed unused fileAnalysisService to satisfy lints
   const dependencyScanner = new DependencyVulnerabilityScanner();
 
-  const handleFileUpload = useCallback(async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
+  const analyzeFile = useCallback(async (file: File) => {
     if (!file.name.toLowerCase().endsWith('.zip')) {
       toast.error('Please select a ZIP file');
       return;
@@ -66,16 +65,12 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
     setAnalysisStage('Preparing analysis...');
 
     try {
-      // Stage 1: ZIP Structure Analysis
       setAnalysisStage('Analyzing ZIP file structure...');
       setAnalysisProgress(10);
-      
       const zipAnalysis = await zipAnalysisService.analyzeZipFile(file);
-      
+
       setAnalysisProgress(30);
       setAnalysisStage('Extracting manifests for dependency scan...');
-
-      // Stage 2: Extract manifests from ZIP
       const ab = await file.arrayBuffer();
       const zip = await JSZip.loadAsync(ab);
       const manifestNames = new Set([
@@ -83,7 +78,6 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
         'composer.json', 'composer.lock', 'Gemfile', 'Gemfile.lock', 'pom.xml', 'build.gradle',
         'Cargo.toml', 'Cargo.lock'
       ]);
-
       const filesForScan: Array<{ name: string; content: string }> = [];
       await Promise.all(
         Object.keys(zip.files).map(async (p) => {
@@ -99,42 +93,52 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
 
       setAnalysisProgress(55);
       setAnalysisStage('Performing enhanced file analysis...');
-
-      // Stage 3: Enhanced File Analysis (optional deep analysis for key files)
       const fileAnalysisResults: EnhancedFileAnalysisResult[] = [];
 
       setAnalysisProgress(70);
       setAnalysisStage('Scanning dependencies for vulnerabilities (live OSV)...');
-
-      // Stage 4: Dependency Vulnerability Scanning using real manifests
       const dependencyAnalysis = await dependencyScanner.scanDependencies(filesForScan);
-      
+
       setAnalysisProgress(90);
       setAnalysisStage('Finalizing analysis...');
-      
       const finalResults = {
         zipAnalysis,
         fileAnalysis: fileAnalysisResults,
         dependencyAnalysis
       };
-      
       setResults(finalResults);
       setAnalysisProgress(100);
       setAnalysisStage('Analysis complete!');
-      
-      if (onAnalysisComplete) {
-        onAnalysisComplete(finalResults);
-      }
-      
+      if (onAnalysisComplete) onAnalysisComplete(finalResults);
       toast.success('ZIP file analysis completed successfully');
-      
     } catch (error) {
       globalThis.console?.error?.('Analysis failed:', error);
       toast.error(`Analysis failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
     } finally {
       setIsAnalyzing(false);
     }
-  }, [onAnalysisComplete]);
+  }, [dependencyScanner, onAnalysisComplete, zipAnalysisService]);
+
+  const handleFileUpload = useCallback(async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    await analyzeFile(file);
+  }, [analyzeFile]);
+
+  const handleDrop = useCallback(async (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+    const file = e.dataTransfer.files?.[0];
+    if (file) await analyzeFile(file);
+  }, [analyzeFile]);
+
+  const handleReset = useCallback(() => {
+    setResults({ zipAnalysis: null, fileAnalysis: [], dependencyAnalysis: null });
+    setAnalysisProgress(0);
+    setAnalysisStage('');
+    setIsAnalyzing(false);
+  }, []);
 
   const getSeverityColor = (severity: string) => {
     switch (severity.toLowerCase()) {
@@ -152,7 +156,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
     <div className={`space-y-6 ${className}`}>
       {/* Upload Section */}
       <Card>
-        <CardHeader>
+        <CardHeader className="flex flex-row items-center justify-between gap-4">
           <CardTitle className="flex items-center gap-2">
             <Archive className="h-5 w-5" />
             ZIP File Security Analyzer
@@ -160,10 +164,18 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
           <CardDescription>
             Comprehensive security analysis of ZIP archives including file structure, vulnerabilities, and dependencies
           </CardDescription>
+          <Button onClick={handleReset} variant="outline" size="sm" disabled={isAnalyzing}>
+            Reset
+          </Button>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+            <div
+              className={`border-2 border-dashed rounded-lg p-6 text-center transition-colors ${isDragging ? 'border-blue-400 bg-blue-50' : 'border-gray-300'}`}
+              onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
+              onDragLeave={() => setIsDragging(false)}
+              onDrop={handleDrop}
+            >
               <Archive className="mx-auto h-12 w-12 text-gray-400 mb-4" />
               <div className="space-y-2">
                 <h3 className="text-lg font-medium">Upload ZIP File</h3>
@@ -180,6 +192,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
                   className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                 />
               </div>
+              <div className="sr-only" aria-live="polite">{analysisStage}</div>
             </div>
 
             {isAnalyzing && (
@@ -198,13 +211,28 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
       {/* Analysis Results */}
       {results.zipAnalysis && (
         <Tabs defaultValue="overview" className="w-full">
-          <TabsList className="grid w-full grid-cols-6">
+          <TabsList className="grid w-full grid-cols-6 sticky top-0 z-10 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60 rounded-md shadow-sm">
             <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="threats">Threats</TabsTrigger>
-            <TabsTrigger value="structure">Structure</TabsTrigger>
-            <TabsTrigger value="dependencies">Dependencies</TabsTrigger>
-            <TabsTrigger value="quality">Quality</TabsTrigger>
-            <TabsTrigger value="compliance">Compliance</TabsTrigger>
+            <TabsTrigger value="threats" className="flex items-center gap-2">
+              Threats
+              <Badge variant="destructive">{results.zipAnalysis?.securityThreats.length ?? 0}</Badge>
+            </TabsTrigger>
+            <TabsTrigger value="structure" className="flex items-center gap-2">
+              Structure
+              <Badge variant="secondary">{results.zipAnalysis?.fileStructure.suspiciousFiles.length ?? 0}</Badge>
+            </TabsTrigger>
+            <TabsTrigger value="dependencies" className="flex items-center gap-2">
+              Dependencies
+              <Badge variant="secondary">{results.dependencyAnalysis?.vulnerabilities.length || 0}</Badge>
+            </TabsTrigger>
+            <TabsTrigger value="quality" className="flex items-center gap-2">
+              Quality
+              <Badge variant="secondary">{results.zipAnalysis?.codeQuality.linesOfCode ?? 0}</Badge>
+            </TabsTrigger>
+            <TabsTrigger value="compliance" className="flex items-center gap-2">
+              Compliance
+              <Badge variant="secondary">{results.zipAnalysis?.complianceIssues.length ?? 0}</Badge>
+            </TabsTrigger>
           </TabsList>
 
           {/* Overview Tab */}
@@ -219,7 +247,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
                     </div>
                     <div>
                       <p className="text-2xl font-bold text-blue-800">
-                        {100 - (results.zipAnalysis.securityThreats.length * 10)}
+                        {100 - (results.zipAnalysis!.securityThreats.length * 10)}
                       </p>
                       <p className="text-sm text-blue-600">Security Score</p>
                     </div>
@@ -236,7 +264,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
                     </div>
                     <div>
                       <p className="text-2xl font-bold text-green-800">
-                        {results.zipAnalysis.fileStructure.totalFiles}
+                        {results.zipAnalysis!.fileStructure.totalFiles}
                       </p>
                       <p className="text-sm text-green-600">Total Files</p>
                     </div>
@@ -253,7 +281,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
                     </div>
                     <div>
                       <p className="text-2xl font-bold text-red-800">
-                        {results.zipAnalysis.securityThreats.length}
+                        {results.zipAnalysis!.securityThreats.length}
                       </p>
                       <p className="text-sm text-red-600">Security Threats</p>
                     </div>
@@ -291,15 +319,15 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
                     <div className="space-y-2">
                       <div className="flex justify-between">
                         <span>Total Size:</span>
-                        <span>{(results.zipAnalysis.fileStructure.totalSize / 1024 / 1024).toFixed(2)} MB</span>
+                        <span>{(results.zipAnalysis!.fileStructure.totalSize / 1024 / 1024).toFixed(2)} MB</span>
                       </div>
                       <div className="flex justify-between">
                         <span>Compression Ratio:</span>
-                        <span>{(results.zipAnalysis.fileStructure.compressionRatio * 100).toFixed(1)}%</span>
+                        <span>{(results.zipAnalysis!.fileStructure.compressionRatio * 100).toFixed(1)}%</span>
                       </div>
                       <div className="flex justify-between">
                         <span>Deepest Path:</span>
-                        <span>{results.zipAnalysis.fileStructure.deepestPath} levels</span>
+                        <span>{results.zipAnalysis!.fileStructure.deepestPath} levels</span>
                       </div>
                     </div>
                   </div>
@@ -307,7 +335,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
                   <div>
                     <h4 className="font-semibold mb-3">Security Status</h4>
                     <div className="space-y-2">
-                      {results.zipAnalysis.securityThreats.length === 0 ? (
+                      {results.zipAnalysis!.securityThreats.length === 0 ? (
                         <div className="flex items-center gap-2 text-green-600">
                           <CheckCircle className="h-4 w-4" />
                           <span>No security threats detected</span>
@@ -315,14 +343,14 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
                       ) : (
                         <div className="flex items-center gap-2 text-red-600">
                           <XCircle className="h-4 w-4" />
-                          <span>{results.zipAnalysis.securityThreats.length} threats found</span>
+                          <span>{results.zipAnalysis!.securityThreats.length} threats found</span>
                         </div>
                       )}
                       
                       <div className="flex justify-between">
                         <span>License Issues:</span>
-                        <span className={results.zipAnalysis.licenses.length > 0 ? 'text-yellow-600' : 'text-green-600'}>
-                          {results.zipAnalysis.licenses.length}
+                        <span className={results.zipAnalysis!.licenses.length > 0 ? 'text-yellow-600' : 'text-green-600'}>
+                          {results.zipAnalysis!.licenses.length}
                         </span>
                       </div>
                     </div>
@@ -342,7 +370,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                {results.zipAnalysis.securityThreats.length === 0 ? (
+                {results.zipAnalysis!.securityThreats.length === 0 ? (
                   <div className="text-center py-8">
                     <CheckCircle className="h-12 w-12 text-green-500 mx-auto mb-4" />
                     <h3 className="text-lg font-medium text-green-700">No Security Threats Detected</h3>
@@ -350,7 +378,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
                   </div>
                 ) : (
                   <div className="space-y-4">
-                    {results.zipAnalysis.securityThreats.map((threat, index) => (
+                    {results.zipAnalysis!.securityThreats.map((threat, index) => (
                       <Alert key={index} className="border-l-4 border-l-red-500">
                         <AlertTriangle className="h-4 w-4" />
                         <div className="ml-4">
@@ -396,18 +424,11 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
-                    {Object.entries(results.zipAnalysis.fileStructure.fileTypes).map(([type, count]) => (
+                    {Object.entries(results.zipAnalysis!.fileStructure.fileTypes).map(([type, count]) => (
                       <div key={type} className="flex justify-between items-center">
                         <span className="text-sm">{type || 'No extension'}</span>
                         <div className="flex items-center gap-2">
-                          <div className="w-20 bg-gray-200 rounded-full h-2">
-                            <div 
-                              className="bg-blue-500 h-2 rounded-full" 
-                              style={{ 
-                                width: `${(count / results.zipAnalysis!.fileStructure.totalFiles) * 100}%` 
-                              }}
-                            />
-                          </div>
+                          <Progress value={Math.round((count / results.zipAnalysis!.fileStructure.totalFiles) * 100)} className="w-20" />
                           <span className="text-sm font-medium w-8">{count}</span>
                         </div>
                       </div>
@@ -422,14 +443,14 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
                   <CardTitle>Suspicious Files</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  {results.zipAnalysis.fileStructure.suspiciousFiles.length === 0 ? (
+                  {results.zipAnalysis!.fileStructure.suspiciousFiles.length === 0 ? (
                     <div className="text-center py-4">
                       <CheckCircle className="h-8 w-8 text-green-500 mx-auto mb-2" />
                       <p className="text-sm text-green-600">No suspicious files detected</p>
                     </div>
                   ) : (
                     <div className="space-y-2">
-                      {results.zipAnalysis.fileStructure.suspiciousFiles.map((file, index) => (
+                      {results.zipAnalysis!.fileStructure.suspiciousFiles.map((file, index) => (
                         <div key={index} className="flex items-center gap-2 p-2 bg-yellow-50 rounded">
                           <AlertTriangle className="h-4 w-4 text-yellow-600" />
                           <span className="text-sm">{file}</span>
@@ -571,20 +592,20 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   <div className="text-center">
-                    <p className="text-2xl font-bold">{results.zipAnalysis.codeQuality.codeFiles}</p>
+                    <p className="text-2xl font-bold">{results.zipAnalysis!.codeQuality.codeFiles}</p>
                     <p className="text-sm text-gray-600">Code Files</p>
                   </div>
                   <div className="text-center">
-                    <p className="text-2xl font-bold">{results.zipAnalysis.codeQuality.testFiles}</p>
+                    <p className="text-2xl font-bold">{results.zipAnalysis!.codeQuality.testFiles}</p>
                     <p className="text-sm text-gray-600">Test Files</p>
                   </div>
                   <div className="text-center">
-                    <p className="text-2xl font-bold">{results.zipAnalysis.codeQuality.linesOfCode}</p>
+                    <p className="text-2xl font-bold">{results.zipAnalysis!.codeQuality.linesOfCode}</p>
                     <p className="text-sm text-gray-600">Lines of Code</p>
                   </div>
                   <div className="text-center">
                     <p className="text-2xl font-bold">
-                      {(results.zipAnalysis.codeQuality.averageFileSize / 1024).toFixed(1)}KB
+                      {(results.zipAnalysis!.codeQuality.averageFileSize / 1024).toFixed(1)}KB
                     </p>
                     <p className="text-sm text-gray-600">Avg File Size</p>
                   </div>
@@ -593,14 +614,14 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
             </Card>
 
             {/* Largest Files */}
-            {results.zipAnalysis.codeQuality.largestFiles.length > 0 && (
+            {results.zipAnalysis!.codeQuality.largestFiles.length > 0 && (
               <Card>
                 <CardHeader>
                   <CardTitle>Largest Files</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-2">
-                    {results.zipAnalysis.codeQuality.largestFiles.map((file, index) => (
+                    {results.zipAnalysis!.codeQuality.largestFiles.map((file, index) => (
                       <div key={index} className="flex justify-between items-center p-2 bg-gray-50 rounded">
                         <span className="text-sm truncate">{file.file}</span>
                         <span className="text-sm font-medium">
@@ -621,7 +642,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
                 <CardTitle>Compliance Issues</CardTitle>
               </CardHeader>
               <CardContent>
-                {results.zipAnalysis.complianceIssues.length === 0 ? (
+                {results.zipAnalysis!.complianceIssues.length === 0 ? (
                   <div className="text-center py-8">
                     <CheckCircle className="h-12 w-12 text-green-500 mx-auto mb-4" />
                     <h3 className="text-lg font-medium text-green-700">No Compliance Issues</h3>
@@ -629,7 +650,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
                   </div>
                 ) : (
                   <div className="space-y-4">
-                    {results.zipAnalysis.complianceIssues.map((issue, index) => (
+                    {results.zipAnalysis!.complianceIssues.map((issue, index) => (
                       <Alert key={index}>
                         <Scale className="h-4 w-4" />
                         <AlertDescription>
