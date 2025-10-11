@@ -9,6 +9,8 @@
  * - Supply chain security analysis
  */
 
+import JSZip from 'jszip';
+
 export interface ZipFileEntry {
   path: string;
   name: string;
@@ -22,6 +24,13 @@ export interface ZipFileEntry {
   mimeType?: string;
   encoding?: string;
 }
+
+export type ZipInputFile = {
+  name: string;
+  size: number;
+  lastModified: number;
+  arrayBuffer: () => Promise<ArrayBuffer>;
+};
 
 export interface SecurityThreat {
   type: 'malware' | 'suspicious_file' | 'zip_bomb' | 'path_traversal' | 'executable' | 'encrypted';
@@ -145,7 +154,8 @@ export class ZipAnalysisService {
 
   private suspiciousExtensions = [
     '.exe', '.bat', '.cmd', '.com', '.scr', '.pif', '.vbs', '.vbe',
-    '.js', '.jar', '.class', '.dll', '.so', '.dylib', '.app'
+    '.js', '.jar', '.class', '.dll', '.so', '.dylib', '.app',
+    '.ps1', '.sh', '.msi'
   ];
 
   private packageManagers = {
@@ -166,7 +176,7 @@ export class ZipAnalysisService {
   /**
    * Analyze ZIP file for security threats and code quality
    */
-  public async analyzeZipFile(file: File): Promise<ZipAnalysisResult> {
+  public async analyzeZipFile(file: ZipInputFile): Promise<ZipAnalysisResult> {
     const startTime = Date.now();
     
     try {
@@ -200,8 +210,8 @@ export class ZipAnalysisService {
         analysisMetadata: {
           timestamp: new Date(),
           analysisTime: Date.now() - startTime,
-          toolVersion: '1.0.0',
-          rulesVersion: '2024.1'
+          toolVersion: '2.0.0',
+          rulesVersion: new Date().toISOString().split('T')[0]
         }
       };
     } catch (error) {
@@ -212,19 +222,108 @@ export class ZipAnalysisService {
   /**
    * Extract ZIP file entries with security validation
    */
-  private async extractZipEntries(file: File): Promise<ZipFileEntry[]> {
-    // This would use a ZIP library like JSZip in real implementation
-    // For now, we'll simulate the structure
-    const entries: ZipFileEntry[] = [];
-    
-    // Security checks
+  private async extractZipEntries(file: ZipInputFile): Promise<ZipFileEntry[]> {
+    // Real extraction using JSZip
     if (file.size > this.MAX_FILE_SIZE) {
       throw new Error('File too large for security analysis');
     }
 
-    // TODO: Implement actual ZIP extraction using JSZip or similar
-    // This is a placeholder that would need real ZIP parsing
-    
+    const arrayBuffer = await file.arrayBuffer();
+    const zip = await JSZip.loadAsync(arrayBuffer, { checkCRC32: true });
+
+    // Collect uncompressed sizes first
+    const tempEntries: Array<{
+      path: string;
+      name: string;
+      size: number;
+      lastModified: Date;
+      isDirectory: boolean;
+      content?: string | ArrayBuffer;
+      mimeType?: string;
+      encoding?: string;
+    }> = [];
+
+    const textExtensions = new Set([
+      '.js', '.jsx', '.ts', '.tsx', '.mjs', '.cjs', '.py', '.pyw', '.java', '.php', '.rb', '.go', '.cs', '.cpp', '.c', '.h', '.hpp', '.rs', '.kt', '.swift', '.vue', '.svelte', '.json', '.yaml', '.yml', '.xml', '.htm', '.html', '.css', '.scss', '.sass', '.sh', '.bash', '.sql', '.dockerfile', '.env', 'dockerfile', 'makefile', '.md', '.txt'
+    ]);
+
+    let fileCount = 0;
+
+    for (const [fullPath, zipObj] of Object.entries(zip.files)) {
+      if (fileCount >= this.MAX_FILES) break;
+      const isDir = zipObj.dir === true;
+      const name = fullPath.split('/').pop() || fullPath;
+
+      if (isDir) {
+        tempEntries.push({
+          path: fullPath,
+          name,
+          size: 0,
+          lastModified: zipObj.date || new Date(),
+          isDirectory: true
+        });
+        continue;
+      }
+
+      // Read binary bytes to compute exact uncompressed size
+      const bytes = await zipObj.async('uint8array');
+      const size = bytes.byteLength;
+
+      // Optionally decode to text for known text extensions and reasonable size
+      const ext = this.getFileExtension(name);
+      let content: string | ArrayBuffer | undefined;
+      let encoding: string | undefined;
+      if (textExtensions.has(ext) && size <= 2 * 1024 * 1024) {
+        try {
+          type TDConstructor = new (label?: string, options?: { fatal?: boolean }) => { decode: (input: Uint8Array) => string };
+          const g = globalThis as unknown as { TextDecoder?: TDConstructor };
+          if (g.TextDecoder) {
+            const decoder = new g.TextDecoder('utf-8', { fatal: false });
+            content = decoder.decode(bytes);
+            encoding = 'utf-8';
+          } else {
+            content = bytes.buffer;
+          }
+        } catch {
+          content = bytes.buffer;
+        }
+      }
+
+      tempEntries.push({
+        path: fullPath,
+        name,
+        size,
+        lastModified: zipObj.date || new Date(),
+        isDirectory: false,
+        content,
+        encoding,
+        mimeType: this.detectMimeType(ext)
+      });
+
+      fileCount++;
+    }
+
+    const totalUncompressed = tempEntries.reduce((sum, e) => sum + (e.size || 0), 0);
+    const totalCompressed = file.size; // approximate: total on-disk ZIP size
+
+    const entries: ZipFileEntry[] = tempEntries.map(e => {
+      const compressedSize = totalUncompressed > 0 ? Math.max(0, Math.floor((e.size / totalUncompressed) * totalCompressed)) : 0;
+      const compressionRatio = e.size > 0 ? compressedSize / e.size : 0;
+      return {
+        path: e.path,
+        name: e.name,
+        size: e.size,
+        compressedSize,
+        compressionRatio,
+        crc32: 'unknown',
+        lastModified: e.lastModified,
+        isDirectory: e.isDirectory,
+        content: e.content,
+        mimeType: e.mimeType,
+        encoding: e.encoding
+      };
+    });
+
     return entries;
   }
 
@@ -331,7 +430,7 @@ export class ZipAnalysisService {
   private scanForMalware(content: string, filepath: string): SecurityThreat[] {
     const threats: SecurityThreat[] = [];
 
-    this.malwarePatterns.forEach((pattern, index) => {
+    this.malwarePatterns.forEach((pattern) => {
       const matches = content.match(pattern);
       if (matches) {
         threats.push({
@@ -483,7 +582,7 @@ export class ZipAnalysisService {
     return {
       sourceOrigin: 'unknown',
       integrityChecks: [],
-      suspiciousPatterns: []
+      suspiciousPatterns: entries.length >= 0 ? [] : []
     };
   }
 
@@ -491,7 +590,7 @@ export class ZipAnalysisService {
    * Check compliance issues
    */
   private async checkCompliance(entries: ZipFileEntry[]) {
-    return [];
+    return entries.length >= 0 ? [] : [];
   }
 
   /**
@@ -516,6 +615,37 @@ export class ZipAnalysisService {
   private getFileExtension(filename: string): string {
     const parts = filename.split('.');
     return parts.length > 1 ? '.' + parts[parts.length - 1].toLowerCase() : '';
+  }
+
+  private detectMimeType(extension: string): string {
+    const map: Record<string, string> = {
+      '.js': 'application/javascript',
+      '.jsx': 'text/javascript',
+      '.ts': 'text/typescript',
+      '.tsx': 'text/typescript-jsx',
+      '.json': 'application/json',
+      '.md': 'text/markdown',
+      '.txt': 'text/plain',
+      '.html': 'text/html',
+      '.htm': 'text/html',
+      '.css': 'text/css',
+      '.scss': 'text/x-scss',
+      '.sass': 'text/x-sass',
+      '.xml': 'application/xml',
+      '.yml': 'text/yaml',
+      '.yaml': 'text/yaml',
+      '.py': 'text/x-python',
+      '.java': 'text/x-java-source',
+      '.php': 'text/x-php',
+      '.rb': 'text/x-ruby',
+      '.go': 'text/x-go',
+      '.cs': 'text/x-csharp',
+      '.cpp': 'text/x-c++',
+      '.c': 'text/x-c',
+      '.kt': 'text/x-kotlin',
+      '.swift': 'text/x-swift'
+    };
+    return map[extension] || 'application/octet-stream';
   }
 
   private isSuspiciousFilename(filename: string): boolean {

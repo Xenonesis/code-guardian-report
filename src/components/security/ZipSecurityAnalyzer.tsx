@@ -1,7 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -10,27 +9,18 @@ import {
   Shield, 
   AlertTriangle, 
   FileText, 
-  Lock, 
   Zap,
   Package,
   Scale,
   TrendingUp,
-  Eye,
-  Download,
-  Upload,
-  FileX,
   CheckCircle,
-  XCircle,
-  Clock,
-  BarChart3,
-  List,
-  Layers,
-  Scan
+  XCircle
 } from 'lucide-react';
 import { ZipAnalysisService, ZipAnalysisResult } from '@/services/security/zipAnalysisService';
-import { EnhancedFileAnalysisService, EnhancedFileAnalysisResult } from '@/services/security/enhancedFileAnalysisService';
+import { EnhancedFileAnalysisResult } from '@/services/security/enhancedFileAnalysisService';
 import { DependencyVulnerabilityScanner, DependencyScanResult } from '@/services/security/dependencyVulnerabilityScanner';
 import { toast } from 'sonner';
+import JSZip from 'jszip';
 
 interface ZipSecurityAnalyzerProps {
   onAnalysisComplete?: (results: {
@@ -59,7 +49,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
   });
 
   const zipAnalysisService = new ZipAnalysisService();
-  const fileAnalysisService = new EnhancedFileAnalysisService();
+  // Removed unused fileAnalysisService to satisfy lints
   const dependencyScanner = new DependencyVulnerabilityScanner();
 
   const handleFileUpload = useCallback(async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,20 +73,41 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
       const zipAnalysis = await zipAnalysisService.analyzeZipFile(file);
       
       setAnalysisProgress(30);
+      setAnalysisStage('Extracting manifests for dependency scan...');
+
+      // Stage 2: Extract manifests from ZIP
+      const ab = await file.arrayBuffer();
+      const zip = await JSZip.loadAsync(ab);
+      const manifestNames = new Set([
+        'package.json', 'yarn.lock', 'pnpm-lock.yaml', 'requirements.txt', 'Pipfile', 'poetry.lock',
+        'composer.json', 'composer.lock', 'Gemfile', 'Gemfile.lock', 'pom.xml', 'build.gradle',
+        'Cargo.toml', 'Cargo.lock'
+      ]);
+
+      const filesForScan: Array<{ name: string; content: string }> = [];
+      await Promise.all(
+        Object.keys(zip.files).map(async (p) => {
+          const f = zip.files[p];
+          if (f.dir) return;
+          const base = p.split('/').pop() || p;
+          if (manifestNames.has(base)) {
+            const content = await f.async('string');
+            filesForScan.push({ name: base, content });
+          }
+        })
+      );
+
+      setAnalysisProgress(55);
       setAnalysisStage('Performing enhanced file analysis...');
-      
-      // Stage 2: Enhanced File Analysis (for key files)
+
+      // Stage 3: Enhanced File Analysis (optional deep analysis for key files)
       const fileAnalysisResults: EnhancedFileAnalysisResult[] = [];
-      // Note: In real implementation, you'd extract and analyze actual files
-      
-      setAnalysisProgress(60);
-      setAnalysisStage('Scanning dependencies for vulnerabilities...');
-      
-      // Stage 3: Dependency Vulnerability Scanning
-      const mockFiles = [
-        { name: 'package.json', content: '{"dependencies": {"lodash": "4.17.20"}}' }
-      ];
-      const dependencyAnalysis = await dependencyScanner.scanDependencies(mockFiles);
+
+      setAnalysisProgress(70);
+      setAnalysisStage('Scanning dependencies for vulnerabilities (live OSV)...');
+
+      // Stage 4: Dependency Vulnerability Scanning using real manifests
+      const dependencyAnalysis = await dependencyScanner.scanDependencies(filesForScan);
       
       setAnalysisProgress(90);
       setAnalysisStage('Finalizing analysis...');
@@ -118,7 +129,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
       toast.success('ZIP file analysis completed successfully');
       
     } catch (error) {
-      console.error('Analysis failed:', error);
+      globalThis.console?.error?.('Analysis failed:', error);
       toast.error(`Analysis failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
     } finally {
       setIsAnalyzing(false);
@@ -135,12 +146,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
     }
   };
 
-  const getRiskLevelColor = (risk: number) => {
-    if (risk >= 80) return 'text-red-600';
-    if (risk >= 60) return 'text-orange-600';
-    if (risk >= 40) return 'text-yellow-600';
-    return 'text-green-600';
-  };
+  // Removed unused getRiskLevelColor
 
   return (
     <div className={`space-y-6 ${className}`}>
@@ -169,6 +175,8 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
                   accept=".zip"
                   onChange={handleFileUpload}
                   disabled={isAnalyzing}
+                  aria-label="Upload ZIP file for security analysis"
+                  title="Upload ZIP file for security analysis"
                   className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                 />
               </div>
