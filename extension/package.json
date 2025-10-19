@@ -1,0 +1,40 @@
+{
+  "name": "code-guardian-automation",
+  "displayName": "Code Guardian Automation",
+  "publisher": "abc",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.60.0"
+  },
+  "activationEvents": [
+    "onCommand:extension.runUpdateContributors",
+    "onCommand:extension.setupGitHooks",
+    "onCommand:extension.runTestAutomation"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.runUpdateContributors",
+        "title": "Run Update Contributors"
+      },
+      {
+        "command": "extension.setupGitHooks",
+        "title": "Setup Git Hooks"
+      },
+      {
+        "command": "extension.runTestAutomation",
+        "title": "Run Test Automation"
+      }
+    ]
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "vscode:prepublish": "tsc -p ./"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.0",
+    "@types/vscode": "^1.85.0",
+    "@vscode/test-electron": "^2.3.0"
+  }
+}
