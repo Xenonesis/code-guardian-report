@@ -9,6 +9,7 @@ export interface SecurityIssue {
   column?: number;
   endLine?: number;
   endColumn?: number;
+  startColumn?: number; // Alternative naming for column ranges
   tool: string;
   type: string;
   category: string; // OWASP category
@@ -18,6 +19,7 @@ export interface SecurityIssue {
   confidence: number; // 0-100
   cvssScore?: number; // 0-10
   cweId?: string; // CWE reference
+  cveId?: string; // CVE reference
   owaspCategory?: string; // OWASP Top 10 category
   recommendation: string;
   remediation: {
@@ -34,6 +36,9 @@ export interface SecurityIssue {
   likelihood: string;
   references?: string[];
   tags?: string[];
+  aiSummary?: string; // AI-generated summary
+  affectedFunction?: string; // Function where issue was found
+  effort?: 'Low' | 'Medium' | 'High'; // Remediation effort (duplicate of remediation.effort for backward compat)
 }
 
 export interface AnalysisResults {

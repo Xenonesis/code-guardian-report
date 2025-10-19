@@ -41,10 +41,10 @@ export const PWA_CONFIG = {
 
   // Cache Configuration
   cache: {
-    staticCacheName: 'code-guardian-static-v7.3.0',
-    dynamicCacheName: 'code-guardian-dynamic-v7.3.0',
-    apiCacheName: 'code-guardian-api-v7.3.0',
-    uploadCacheName: 'code-guardian-uploads-v7.3.0',
+    staticCacheName: 'code-guardian-static-v8.5.0',
+    dynamicCacheName: 'code-guardian-dynamic-v8.5.0',
+    apiCacheName: 'code-guardian-api-v8.5.0',
+    uploadCacheName: 'code-guardian-uploads-v8.5.0',
     maxEntries: {
       static: 100,
       dynamic: 50,

@@ -370,8 +370,8 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
     }
   };
 
-  const getUniqueOwaspCategories = () => {
-    return [...new Set(results.issues.map(issue => issue.owaspCategory).filter(Boolean))];
+  const getUniqueOwaspCategories = (): string[] => {
+    return [...new Set(results.issues.map(issue => issue.owaspCategory).filter((cat): cat is string => Boolean(cat)))];
   };
 
   const formatTimestamp = (date: Date) => {

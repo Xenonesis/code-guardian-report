@@ -7,8 +7,8 @@ export interface NotificationPayload {
   icon?: string;
   badge?: string;
   image?: string;
-  data?: any;
-  actions?: NotificationAction[];
+  data?: Record<string, unknown>;
+  actions?: Array<{ action: string; title: string; icon?: string }>;
   tag?: string;
   requireInteraction?: boolean;
 }
@@ -49,11 +49,12 @@ class PushNotificationService {
 
       // Get service worker registration
       const registration = await navigator.serviceWorker.ready;
+      const appServerKey = this.urlBase64ToUint8Array(this.vapidPublicKey);
 
       // Subscribe to push notifications
       const subscription = await registration.pushManager.subscribe({
         userVisibleOnly: true,
-        applicationServerKey: this.urlBase64ToUint8Array(this.vapidPublicKey)
+        applicationServerKey: new Uint8Array(appServerKey.buffer)
       });
 
       // Send subscription to server
@@ -206,7 +207,6 @@ class PushNotificationService {
         body: payload.body,
         icon: payload.icon || '/favicon-192x192.svg',
         badge: payload.badge || '/favicon-192x192.svg',
-        image: payload.image,
         data: payload.data,
         tag: payload.tag,
         requireInteraction: payload.requireInteraction || false
@@ -216,7 +216,7 @@ class PushNotificationService {
       notification.onclick = (event) => {
         event.preventDefault();
         window.focus();
-        if (payload.data?.url) {
+        if (payload.data?.url && typeof payload.data.url === 'string') {
           window.open(payload.data.url, '_blank');
         }
         notification.close();

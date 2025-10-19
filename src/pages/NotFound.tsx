@@ -1,21 +1,19 @@
-import { useLocation, Link } from "react-router-dom";
 import { useEffect } from "react";
 import { Home, ArrowLeft, Search, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { PageLayout } from "@/components/layouts/PageLayout";
+import { PageLayout } from "@/components/layout/PageLayout";
 import { useDarkMode } from "@/hooks/useDarkMode";
 
 const NotFound = () => {
-  const location = useLocation();
   const { isDarkMode, toggleDarkMode } = useDarkMode();
 
   useEffect(() => {
     console.error(
       "404 Error: User attempted to access non-existent route:",
-      location.pathname
+      window.location.pathname
     );
-  }, [location.pathname]);
+  }, []);
 
   return (
     <PageLayout isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} showNavigation={false}>
@@ -61,13 +59,11 @@ const NotFound = () => {
 
           <div className="flex flex-col sm:flex-row gap-3 pt-4">
             <Button
-              asChild
+              onClick={() => window.location.href = '/'}
               className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 focus-ring"
             >
-              <Link to="/">
-                <Home className="h-4 w-4" />
-                Go Home
-              </Link>
+              <Home className="h-4 w-4" />
+              Go Home
             </Button>
             <Button
               variant="outline"

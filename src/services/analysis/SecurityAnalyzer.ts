@@ -645,7 +645,7 @@ export class SecurityAnalyzer {
    * Get secret-specific remediation
    */
   private getSecretRemediation(type: SecretType): SecurityIssue['remediation'] {
-    const remediations: Record<SecretType, SecurityIssue['remediation']> = {
+    const remediations: Partial<Record<SecretType, SecurityIssue['remediation']>> = {
       'api_key': {
         description: 'Move API keys to environment variables and use secure configuration management',
         codeExample: 'const apiKey = "sk_live_1234567890abcdef";',
@@ -723,7 +723,7 @@ export class SecurityAnalyzer {
       'https://cwe.mitre.org/data/definitions/798.html'
     ];
 
-    const typeSpecificReferences: Record<SecretType, string[]> = {
+    const typeSpecificReferences: Partial<Record<SecretType, string[]>> = {
       'aws_access_key': [
         'https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html',
         'https://aws.amazon.com/blogs/security/a-new-and-standardized-way-to-manage-credentials-in-the-aws-sdks/'
@@ -905,21 +905,18 @@ export class SecurityAnalyzer {
             category: rule.category,
             message: rule.description,
             severity: rule.severity,
-            confidence: 85, // High confidence for framework-specific rules
-            cvssScore: this.calculateFrameworkRuleCVSS(rule.severity),
-            cweId: rule.cweId,
-            owaspCategory: rule.owaspCategory,
+            confidence: 85,
+            filename: filename,
+            codeSnippet: this.extractCodeSnippet(lines, lineNumber),
             recommendation: rule.remediation.description,
             remediation: {
               description: rule.remediation.description,
-              codeExample: rule.remediation.codeExample,
-              fixExample: rule.remediation.fixExample,
-              effort: rule.remediation.effort,
-              priority: rule.remediation.priority
+              codeExample: rule.remediation.example,
+              fixExample: rule.remediation.example,
+              effort: this.getEffortLevel(rule.severity),
+              priority: this.getPriorityLevel(rule.severity)
             },
-            filename,
-            codeSnippet: this.extractCodeSnippet(lines, lineNumber),
-            riskRating: this.calculateRiskRating(rule.severity, 85),
+            riskRating: rule.severity,
             impact: this.getFrameworkRuleImpact(rule.severity),
             likelihood: 'Medium',
             references: [`Framework: ${rule.frameworks?.join(', ') || 'Generic'}`],
@@ -989,6 +986,39 @@ export class SecurityAnalyzer {
     }
 
     return this.languageDetectionService.getLanguageSummary(this.analysisContext.detectionResult);
+  }
+
+  /**
+   * Get remediation effort level based on severity
+   */
+  private getEffortLevel(severity: string): 'Low' | 'Medium' | 'High' {
+    switch (severity) {
+      case 'Critical':
+      case 'High':
+        return 'High';
+      case 'Medium':
+        return 'Medium';
+      default:
+        return 'Low';
+    }
+  }
+
+  /**
+   * Get priority level based on severity
+   */
+  private getPriorityLevel(severity: string): number {
+    switch (severity) {
+      case 'Critical':
+        return 5;
+      case 'High':
+        return 4;
+      case 'Medium':
+        return 3;
+      case 'Low':
+        return 2;
+      default:
+        return 1;
+    }
   }
 
 }

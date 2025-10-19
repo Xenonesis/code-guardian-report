@@ -52,12 +52,10 @@ export const registerForPushNotifications = async (): Promise<string | null> => 
   }
 
   const registration = await navigator.serviceWorker.ready;
+  const appServerKey = urlBase64ToUint8Array('your-vapid-public-key-here');
   const subscription = await registration.pushManager.subscribe({
     userVisibleOnly: true,
-    applicationServerKey: urlBase64ToUint8Array(
-      // Replace with your VAPID public key
-      'your-vapid-public-key-here'
-    ),
+    applicationServerKey: new Uint8Array(appServerKey.buffer),
   });
 
   return JSON.stringify(subscription);

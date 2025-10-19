@@ -1,27 +1,13 @@
 import { useState, useCallback, useMemo } from 'react';
 import { AIService } from '../services/ai/aiService';
 import { toast } from 'sonner';
+import { AnalysisResults } from './useAnalysis';
 
 interface ChatMessage {
   id: string;
   role: 'user' | 'assistant';
   content: string;
   timestamp: Date;
-}
-
-interface AnalysisResults {
-  issues: Array<{
-    severity: string;
-    type: string;
-    message: string;
-    filename: string;
-    line: number;
-  }>;
-  totalFiles: number;
-  summary?: {
-    securityScore?: number;
-    qualityScore?: number;
-  };
 }
 
 export const useChatBot = (analysisResults: AnalysisResults) => {

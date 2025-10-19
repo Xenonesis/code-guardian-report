@@ -15,14 +15,12 @@ export * from './security/securityAnalysisEngine';
 export * from './security/secretDetectionService';
 export * from './security/secureCodeSearchService';
 
-// PWA services
-export * from './pwa/pushNotifications';
-export * from './pwa/pushNotificationService';
-export * from './pwa/backgroundSync';
-export * from './pwa/backgroundSyncService';
-export * from './pwa/enhancedBackgroundSyncService';
-export * from './pwa/pwaAnalytics';
-export * from './pwa/pwaAnalyticsService';
+// PWA services - selective exports to avoid naming conflicts
+export { pushNotificationService } from './pwa/pushNotifications';
+// Note: pushNotificationService and PushNotificationService have overlapping exports
+export { backgroundSyncService } from './pwa/backgroundSync';
+// Note: backgroundSyncService and enhancedBackgroundSyncService have overlapping SyncTask exports
+export { pwaAnalyticsService } from './pwa/pwaAnalytics';
 export * from './pwa/pwaIntegration';
 
 // Detection services

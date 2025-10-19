@@ -2,7 +2,7 @@
 
 export const APP_CONFIG = {
   name: 'Code Guardian Report',
-  version: '7.3.0',
+  version: '8.5.0',
   description: 'Next-Generation AI-Powered Security Analysis Platform',
   author: 'Code Guardian Team',
   repository: 'https://github.com/your-org/code-guardian-report',
