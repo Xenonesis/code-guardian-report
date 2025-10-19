@@ -282,10 +282,10 @@ export class ZipAnalysisService {
             content = decoder.decode(bytes);
             encoding = 'utf-8';
           } else {
-            content = bytes.buffer;
+            content = bytes.buffer as ArrayBuffer;
           }
         } catch {
-          content = bytes.buffer;
+          content = bytes.buffer as ArrayBuffer;
         }
       }
 

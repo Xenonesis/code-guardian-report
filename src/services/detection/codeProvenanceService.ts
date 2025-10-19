@@ -593,7 +593,7 @@ export class CodeProvenanceService {
         this.fileRecords = new Map(data.fileRecords || []);
         this.alerts = (data.alerts || []).map((alert: Record<string, unknown>) => ({
           ...alert,
-          detectedAt: new Date(alert.detectedAt)
+          detectedAt: new Date(alert.detectedAt as string | number | Date)
         }));
         this.monitoringEnabled = data.monitoringEnabled || false;
       }

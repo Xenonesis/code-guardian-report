@@ -75,10 +75,17 @@ export function usePWA() {
 
   return {
     status,
+    isInstalled: status.isInstalled,
+    isOnline: status.isOnline,
+    isInstallable: status.installPromptAvailable,
+    isUpdateAvailable: false, // TODO: Track update availability
+    hasNotificationPermission: status.hasNotificationPermission,
     notifications,
     promptInstall,
+    installApp: promptInstall, // Alias for compatibility
     enableNotifications,
     disableNotifications,
+    requestNotificationPermission: enableNotifications, // Alias for compatibility
     sendTestNotification,
     shareContent,
     updateApp,
@@ -177,7 +184,22 @@ export function usePWAAnalytics() {
 }
 
 export function usePWACapabilities() {
-  const [capabilities] = useState(() => pwaIntegrationService.getCapabilities());
+  const [capabilities] = useState(() => {
+    // Get capabilities from the service
+    let backgroundSyncSupported = false;
+    try {
+      backgroundSyncSupported = 'sync' in ServiceWorkerRegistration.prototype;
+    } catch {
+      backgroundSyncSupported = false;
+    }
+    
+    return {
+      install: 'serviceWorker' in navigator,
+      notifications: 'Notification' in window,
+      backgroundSync: backgroundSyncSupported,
+      share: 'share' in navigator
+    };
+  });
 
   return capabilities;
 }

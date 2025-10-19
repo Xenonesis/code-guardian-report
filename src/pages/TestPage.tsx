@@ -3,7 +3,7 @@
  * Accessible via URL parameter: ?test=firebase
  */
 
-import { FirebaseTestPanel } from '@/components/FirebaseTestPanel';
+// import { FirebaseTestPanel } from '@/components/FirebaseTestPanel'; // Not available
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, TestTube } from 'lucide-react';
@@ -43,7 +43,7 @@ export const TestPage = ({ onBack }: TestPageProps) => {
         </div>
 
         {/* Test Panel */}
-        <FirebaseTestPanel />
+        <div className="text-center p-8">Firebase Test Panel Not Available</div>
 
         {/* Additional Information */}
         <Card className="mt-8">

@@ -1,6 +1,12 @@
 // src/lib/firestore-utils.ts
-import { doc, getDoc, setDoc, DocumentReference, DocumentSnapshot } from 'firebase/firestore';
-import { db } from './firebase';
+import { 
+  getDoc, 
+  setDoc, 
+  DocumentReference, 
+  PartialWithFieldValue, 
+  DocumentData,
+  SetOptions
+} from 'firebase/firestore';
 import { connectionManager } from './connection-manager';
 import { analyzeFirestoreError, shouldShowErrorToUser } from './firestore-error-handler';
 
@@ -138,14 +144,18 @@ export async function safeGetDoc<T>(
 }
 
 // Safe Firestore document setter with enhanced error handling
-export async function safeSetDoc<T>(
+export async function safeSetDoc<T extends PartialWithFieldValue<DocumentData>>(
   docRef: DocumentReference,
   data: T,
-  options?: { merge?: boolean }
+  options?: SetOptions
 ): Promise<{ success: boolean; error?: Error; errorInfo?: any }> {
   try {
     await withRetry(async () => {
-      await setDoc(docRef, data, options);
+      if (options) {
+        await setDoc(docRef, data, options);
+      } else {
+        await setDoc(docRef, data);
+      }
     });
     return { success: true };
   } catch (error) {

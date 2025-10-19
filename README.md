@@ -1,19 +1,19 @@
 <div align="center">
 
-# 🛡️ Code Guardian v7.3.0
+# 🛡️ Code Guardian v8.5.0
 ### 🚀 Next-Generation AI-Powered Security Analysis Platform
 Enhanced with AI Fix Suggestions, Secure Code Search, Code Provenance Monitoring & Advanced Analytics
 
-**Current Version: 7.3.0 - Developed by Aditya Kumar Tiwari**
+**Current Version: 8.5.0 - Developed by Aditya Kumar Tiwari**
 Now with Revolutionary AI-Powered Security Features & Enterprise Analytics
 
 <img src="./public/home.png" alt="Code Guardian - AI-Powered Security Analysis Platform" width="100%" style="border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.15); border: 2px solid rgba(255,255,255,0.1);">
 
 <div align="center">
-  <img src="https://img.shields.io/badge/Version-7.3.0-ff6b6b?style=for-the-badge&logo=rocket&logoColor=white&labelColor=1a1a1a" alt="Version"/>
+  <img src="https://img.shields.io/badge/Version-8.5.0-ff6b6b?style=for-the-badge&logo=rocket&logoColor=white&labelColor=1a1a1a" alt="Version"/>
   <img src="https://img.shields.io/badge/Status-Production%20Ready-00C851?style=for-the-badge&logo=checkmarx&logoColor=white&labelColor=1a1a1a" alt="Status"/>
   <img src="https://img.shields.io/badge/AI%20Powered-GPT--4%20%7C%20Claude%20%7C%20Gemini-9C27B0?style=for-the-badge&logo=openai&logoColor=white&labelColor=1a1a1a" alt="AI Powered"/>
-  <img src="https://img.shields.io/badge/npm-v7.3.0-CB3837?style=for-the-badge&logo=npm&logoColor=white&labelColor=1a1a1a" alt="NPM Version"/>
+  <img src="https://img.shields.io/badge/npm-v8.5.0-CB3837?style=for-the-badge&logo=npm&logoColor=white&labelColor=1a1a1a" alt="NPM Version"/>
   <img src="https://img.shields.io/badge/Analytics-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white&labelColor=1a1a1a" alt="Analytics"/>
   <img src="https://img.shields.io/badge/PWA-Ready-FF6F00?style=for-the-badge&logo=pwa&logoColor=white&labelColor=1a1a1a" alt="PWA Ready"/>
 </div>
@@ -1361,7 +1361,7 @@ We welcome contributions! Please follow these steps:
 
 ## 📈 Changelog
 
-### 🔄 Version 7.3.0 - Current Release ⭐
+### 🔄 Version 8.5.0 - Current Release ⭐
 - 🔄 **Version Synchronization**: Updated all version references across the entire project for consistency
 - 📦 **Dependency Alignment**: Synchronized package.json, manifest, and service worker versions
 - 🛠️ **Build Optimization**: Enhanced Vite configuration with advanced chunk splitting strategies

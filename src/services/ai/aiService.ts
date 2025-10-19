@@ -43,13 +43,7 @@ interface AnalysisDependencies {
   outdated: number;
 }
 
-interface AnalysisResults {
-  issues: SecurityIssue[];
-  totalFiles: number;
-  summary?: AnalysisSummary;
-  metrics?: AnalysisMetrics;
-  dependencies?: AnalysisDependencies;
-}
+// AnalysisResults is imported from @/hooks/useAnalysis - no need to redefine
 
 export class AIService {
   private getStoredAPIKeys(): AIProvider[] {

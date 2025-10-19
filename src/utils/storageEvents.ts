@@ -84,5 +84,5 @@ export function useStorageListener(
   const cleanup = createStorageChangeListener(key, callback);
   
   // Return cleanup function (to be called in useEffect cleanup)
-  return cleanup;
+  return cleanup();
 }

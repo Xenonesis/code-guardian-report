@@ -59,10 +59,11 @@ class PushNotificationService {
   async subscribe(): Promise<boolean> {
     try {
       const registration = await navigator.serviceWorker.ready;
+      const appServerKey = this.urlBase64ToUint8Array(this.vapidPublicKey);
       
       const subscription = await registration.pushManager.subscribe({
         userVisibleOnly: true,
-        applicationServerKey: this.urlBase64ToUint8Array(this.vapidPublicKey)
+        applicationServerKey: new Uint8Array(appServerKey.buffer)
       });
 
       this.subscription = subscription;

@@ -45,7 +45,7 @@ const Index = () => {
     handleRestoreFromHistory
   } = useAnalysisHandlers({
     hasStoredData,
-    onAnalysisComplete: handleAnalysisComplete,
+    onAnalysisComplete: (results, file) => handleAnalysisComplete(results, undefined, file),
     onSetCurrentTab: setCurrentTab,
     onSetIsRedirecting: setIsRedirecting,
     onClearStoredData: clearStoredData,

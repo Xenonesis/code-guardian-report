@@ -13,46 +13,64 @@ const testAnalysisResults: AnalysisResults = {
       id: 'test-issue-1',
       type: 'Security',
       category: 'Authentication',
-      severity: 'high',
-      description: 'Test security issue found in authentication module',
+      severity: 'High',
+      tool: 'test-analyzer',
+      message: 'Test security issue found in authentication module',
       filename: 'auth.js',
       line: 42,
       column: 10,
+      confidence: 95,
       codeSnippet: 'const password = "hardcoded_password";',
-      suggestion: 'Use environment variables for sensitive data',
+      recommendation: 'Use environment variables for sensitive data',
+      remediation: {
+        description: 'Use environment variables for sensitive data',
+        effort: 'Low',
+        priority: 5
+      },
       impact: 'High - Hardcoded credentials can be exploited',
-      ruleId: 'SEC001'
+      likelihood: 'High',
+      riskRating: 'High'
     },
     {
       id: 'test-issue-2',
       type: 'Code Quality',
       category: 'Best Practices',
-      severity: 'medium',
-      description: 'Unused variable detected',
+      severity: 'Medium',
+      tool: 'test-analyzer',
+      message: 'Unused variable detected',
       filename: 'utils.js',
       line: 15,
       column: 6,
+      confidence: 80,
       codeSnippet: 'const unusedVar = "test";',
-      suggestion: 'Remove unused variable',
+      recommendation: 'Remove unused variable',
+      remediation: {
+        description: 'Remove unused variable',
+        effort: 'Low',
+        priority: 3
+      },
       impact: 'Medium - Code maintainability issue',
-      ruleId: 'CQ001'
+      likelihood: 'Medium',
+      riskRating: 'Medium'
     }
   ],
   totalFiles: 5,
   analysisTime: '1.2s',
   summary: {
-    totalIssues: 2,
     criticalIssues: 0,
     highIssues: 1,
     mediumIssues: 1,
     lowIssues: 0,
-    filesWithIssues: 2,
-    securityScore: 75
+    securityScore: 75,
+    qualityScore: 80,
+    coveragePercentage: 85,
+    linesAnalyzed: 1000
   },
   metrics: {
-    codeQualityScore: 80,
+    vulnerabilityDensity: 0.1,
     maintainabilityIndex: 65,
     technicalDebt: '2.5h',
+    duplicatedLines: 50,
     testCoverage: 85
   }
 };

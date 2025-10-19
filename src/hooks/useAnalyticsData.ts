@@ -1,14 +1,5 @@
 import { useMemo } from 'react';
-
-interface Issue {
-  severity: 'Critical' | 'High' | 'Medium' | 'Low';
-  type: 'Security' | 'Bug' | 'Code Smell' | 'Vulnerability';
-  file: string;
-  line: number;
-  description: string;
-  tool?: string;
-  timestamp?: string;
-}
+import { SecurityIssue } from './useAnalysis';
 
 const SEVERITY_COLORS = {
   Critical: '#ef4444',
@@ -24,7 +15,7 @@ const TYPE_COLORS = {
   Vulnerability: '#b91c1c'
 } as const;
 
-export const useAnalyticsData = (issues: Issue[], totalFiles: number) => {
+export const useAnalyticsData = (issues: SecurityIssue[], totalFiles: number) => {
   const severityData = useMemo(() => {
     const counts = issues.reduce((acc, issue) => {
       acc[issue.severity] = (acc[issue.severity] || 0) + 1;
@@ -55,7 +46,7 @@ export const useAnalyticsData = (issues: Issue[], totalFiles: number) => {
 
   const fileComplexityData = useMemo(() => {
     const fileStats = issues.reduce((acc, issue) => {
-      const fileName = issue.file.split('/').pop() || issue.file;
+      const fileName = issue.filename.split('/').pop() || issue.filename;
       if (!acc[fileName]) {
         acc[fileName] = { 
           file: fileName, 
