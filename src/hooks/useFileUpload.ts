@@ -219,6 +219,11 @@ export const useFileUpload = ({ onFileSelect, onAnalysisComplete }: UseFileUploa
     setError(null);
   };
 
+  // Direct file processing method for programmatically created files (e.g., from GitHub)
+  const processFileDirectly = useCallback((file: File) => {
+    processFile(file);
+  }, [processFile]);
+
   return {
     isDragOver,
     uploadProgress,
@@ -231,6 +236,7 @@ export const useFileUpload = ({ onFileSelect, onAnalysisComplete }: UseFileUploa
     handleDragLeave,
     handleDrop,
     handleFileInput,
-    removeFile
+    removeFile,
+    processFileDirectly
   };
 };
