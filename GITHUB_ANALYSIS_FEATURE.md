@@ -202,5 +202,5 @@ For issues or questions:
 ---
 
 **Last Updated**: October 2, 2025  
-**Version**: 6.1.0+
+**Version**: 8.6.0
 
