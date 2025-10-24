@@ -1,16 +1,16 @@
 <div align="center">
 
-# 🛡️ Code Guardian v8.5.0
+# 🛡️ Code Guardian v8.6.0
 ### 🚀 Next-Generation AI-Powered Security Analysis Platform
 Enhanced with AI Fix Suggestions, Secure Code Search, Code Provenance Monitoring & Advanced Analytics
 
-**Current Version: 8.5.0 - Developed by Aditya Kumar Tiwari**
-Now with Revolutionary AI-Powered Security Features & Enterprise Analytics
+**Current Version: 8.6.0 - Developed by Aditya Kumar Tiwari**
+Now with Revolutionary AI-Powered Security Features, GitHub Analysis & Enterprise Analytics
 
 <img src="./public/home.png" alt="Code Guardian - AI-Powered Security Analysis Platform" width="100%" style="border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.15); border: 2px solid rgba(255,255,255,0.1);">
 
 <div align="center">
-  <img src="https://img.shields.io/badge/Version-8.5.0-ff6b6b?style=for-the-badge&logo=rocket&logoColor=white&labelColor=1a1a1a" alt="Version"/>
+  <img src="https://img.shields.io/badge/Version-8.6.0-ff6b6b?style=for-the-badge&logo=rocket&logoColor=white&labelColor=1a1a1a" alt="Version"/>
   <img src="https://img.shields.io/badge/Status-Production%20Ready-00C851?style=for-the-badge&logo=checkmarx&logoColor=white&labelColor=1a1a1a" alt="Status"/>
   <img src="https://img.shields.io/badge/AI%20Powered-GPT--4%20%7C%20Claude%20%7C%20Gemini-9C27B0?style=for-the-badge&logo=openai&logoColor=white&labelColor=1a1a1a" alt="AI Powered"/>
   <img src="https://img.shields.io/badge/npm-v8.5.0-CB3837?style=for-the-badge&logo=npm&logoColor=white&labelColor=1a1a1a" alt="NPM Version"/>
@@ -914,8 +914,8 @@ VITE_APP_VERSION="6.0"
 <td width="33%" align="center">
   <img src="https://img.icons8.com/fluency/96/upload-to-cloud.png" alt="Upload" width="64"/>
   <h4>1️⃣ Upload Code</h4>
-  <p>Drag & drop ZIP files or select from your device</p>
-  <code>Supports 15+ languages</code>
+  <p>Drag & drop ZIP files or analyze GitHub repos directly</p>
+  <code>ZIP Upload | GitHub URL</code>
 </td>
 <td width="33%" align="center">
   <img src="https://img.icons8.com/fluency/96/artificial-intelligence.png" alt="Analyze" width="64"/>
@@ -940,6 +940,7 @@ VITE_APP_VERSION="6.0"
 
 | Feature | Description | Supported Formats |
 |---------|-------------|-------------------|
+| 🔗 **GitHub Analysis** | Direct repository analysis without downloads | Any public GitHub repo, all branches |
 | 📁 **File Upload** | Drag & drop ZIP files with intelligent parsing | `.zip`, `.tar.gz`, `.rar` |
 | 🔍 **Code Analysis** | Multi-language static analysis engine | `Python`, `JavaScript`, `TypeScript`, `Java`, `C++`, `Go`, `Rust` |
 | 🛡️ **Security Scan** | OWASP Top 10 vulnerability detection | `SQL Injection`, `XSS`, `CSRF`, `Auth Issues` |
