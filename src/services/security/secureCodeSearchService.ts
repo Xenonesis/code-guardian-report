@@ -153,7 +153,7 @@ export class SecureCodeSearchService {
    * Get all available frameworks
    */
   public getFrameworks(): string[] {
-    return [...new Set(this.snippets.map(s => s.framework).filter(Boolean))].sort();
+    return [...new Set(this.snippets.map(s => s.framework).filter((f): f is string => Boolean(f)))].sort();
   }
 
   /**

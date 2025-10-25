@@ -11,7 +11,9 @@ import { FileComplexityChart } from '@/components/dashboard/charts/FileComplexit
 import { RiskAssessment } from '@/components/dashboard/RiskAssessment';
 import { PerformanceMetrics } from '@/components/dashboard/PerformanceMetrics';
 import { useAnalyticsData } from '@/hooks/useAnalyticsData';
+import { SecurityIssue } from '@/hooks/useAnalysis';
 
+// Legacy Issue type for backward compatibility
 interface Issue {
   severity: 'Critical' | 'High' | 'Medium' | 'Low';
   type: 'Security' | 'Bug' | 'Code Smell' | 'Vulnerability';
@@ -23,9 +25,9 @@ interface Issue {
 }
 
 interface EnhancedAnalyticsDashboardProps {
-  issues: Issue[];
-  totalFiles: number;
-  analysisTime: string;
+  issues: SecurityIssue[];
+  totalFiles?: number;
+  analysisTime?: string;
 }
 
 const EnhancedAnalyticsDashboard: React.FC<EnhancedAnalyticsDashboardProps> = ({ 
@@ -42,7 +44,7 @@ const EnhancedAnalyticsDashboard: React.FC<EnhancedAnalyticsDashboardProps> = ({
     fileComplexityData,
     riskMetrics,
     performanceData
-  } = useAnalyticsData(issues, totalFiles);
+  } = useAnalyticsData(issues, totalFiles || 0);
 
   if (issues.length === 0) {
     return (

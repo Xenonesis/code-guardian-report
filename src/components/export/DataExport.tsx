@@ -19,7 +19,7 @@ export interface ExportData {
     recommendation?: string;
     codeSnippet?: string;
   }>;
-  summary: {
+  summary?: {
     totalIssues: number;
     totalFiles: number;
     analysisTime: string;
@@ -232,7 +232,7 @@ const DataExport: React.FC<DataExportProps> = ({ data, className = '' }) => {
         <p>Generated on ${new Date().toLocaleString()}</p>
     </div>
     
-    ${options.includeSummary ? `
+    ${options.includeSummary && data.summary ? `
     <div class="summary">
         <h2>Summary</h2>
         <p><strong>Total Issues:</strong> ${data.summary.totalIssues}</p>
@@ -293,7 +293,7 @@ const DataExport: React.FC<DataExportProps> = ({ data, className = '' }) => {
         <projectName>${escapeXml(data.metadata.projectName || 'Unknown')}</projectName>
         <tools>${data.metadata.tools.map(tool => `<tool>${escapeXml(tool)}</tool>`).join('')}</tools>
     </metadata>
-    ${options.includeSummary ? `
+    ${options.includeSummary && data.summary ? `
     <summary>
         <totalIssues>${data.summary.totalIssues}</totalIssues>
         <totalFiles>${data.summary.totalFiles}</totalFiles>

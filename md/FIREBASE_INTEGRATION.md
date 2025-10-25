@@ -315,5 +315,5 @@ For Firebase-related issues:
 3. Contact support with Firebase logs
 
 **Implementation Date**: January 2025  
-**Version**: 7.3.0+  
+**Version**: 8.5.0+  
 **Status**: ✅ Production Ready

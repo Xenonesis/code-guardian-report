@@ -174,23 +174,48 @@ class PWAAnalyticsService {
 
   private async measureWebVitals(): Promise<void> {
     try {
-      const { getCLS, getFID, getFCP, getLCP, getTTFB } = await import('web-vitals');
+      // Try web-vitals v3+ API first (onCLS, onFID, etc.)
+      const webVitals = await import('web-vitals');
       
-      getCLS((metric) => {
-        this.performance.cumulativeLayoutShift = metric.value;
-      });
-      
-      getFID((metric) => {
-        this.performance.firstInputDelay = metric.value;
-      });
-      
-      getFCP((metric) => {
-        this.performance.firstContentfulPaint = metric.value;
-      });
-      
-      getLCP((metric) => {
-        this.performance.largestContentfulPaint = metric.value;
-      });
+      if ('onCLS' in webVitals) {
+        // Web Vitals v3+
+        const { onCLS, onINP, onFCP, onLCP, onTTFB } = webVitals;
+        
+        onCLS((metric) => {
+          this.performance.cumulativeLayoutShift = metric.value;
+        });
+        
+        onINP((metric) => {
+          this.performance.firstInputDelay = metric.value;
+        });
+        
+        onFCP((metric) => {
+          this.performance.firstContentfulPaint = metric.value;
+        });
+        
+        onLCP((metric) => {
+          this.performance.largestContentfulPaint = metric.value;
+        });
+      } else if ('getCLS' in webVitals) {
+        // Web Vitals v2
+        const { getCLS, getFID, getFCP, getLCP, getTTFB } = webVitals as any;
+        
+        getCLS((metric: any) => {
+          this.performance.cumulativeLayoutShift = metric.value;
+        });
+        
+        getFID((metric: any) => {
+          this.performance.firstInputDelay = metric.value;
+        });
+        
+        getFCP((metric: any) => {
+          this.performance.firstContentfulPaint = metric.value;
+        });
+        
+        getLCP((metric: any) => {
+          this.performance.largestContentfulPaint = metric.value;
+        });
+      }
     } catch (error) {
       // Web Vitals not available - continue without them
     }

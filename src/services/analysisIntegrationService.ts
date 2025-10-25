@@ -151,7 +151,7 @@ export class AnalysisIntegrationService {
       return result;
     } catch (error) {
       console.error('❌ CRITICAL ERROR in handleAnalysisComplete:', error);
-      console.error('Stack trace:', error.stack);
+      console.error('Stack trace:', error instanceof Error ? error.stack : 'No stack trace');
       throw error;
     }
   }

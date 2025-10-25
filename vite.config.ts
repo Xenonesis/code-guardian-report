@@ -128,7 +128,10 @@ export default defineConfig({
       '@radix-ui/react-tabs',
       '@radix-ui/react-toast'
     ],
-    exclude: ['@vite/client', '@vite/env']
+    exclude: ['@vite/client', '@vite/env'],
+    esbuildOptions: {
+      sourcemap: false // Disable source maps during dependency pre-bundling
+    }
   },
   // Environment variables
   define: {
@@ -142,6 +145,7 @@ export default defineConfig({
     minifyIdentifiers: false, // Prevent React scheduler mangling
     minifySyntax: true,
     minifyWhitespace: true,
-    keepNames: true // Preserve function names for React
+    keepNames: true, // Preserve function names for React
+    sourcemap: false // Disable source maps to avoid corrupted map files
   }
 });

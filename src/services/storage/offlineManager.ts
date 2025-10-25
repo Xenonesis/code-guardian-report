@@ -148,7 +148,8 @@ class OfflineManager {
       const store = transaction.objectStore('offlineData');
       const index = store.index('synced');
       
-      const request = index.getAll(false);
+      // Query for unsynced records (synced = 0 or false)
+      const request = index.getAll(IDBKeyRange.only(0));
       request.onsuccess = () => resolve(request.result);
       request.onerror = () => reject(request.error);
     });

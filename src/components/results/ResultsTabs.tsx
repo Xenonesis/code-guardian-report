@@ -52,7 +52,7 @@ export const ResultsTabs: React.FC<ResultsTabsProps> = ({ results }) => {
           <SecurityOverview results={results} />
         </TabsContent>
 
-        {hasLanguageDetection && (
+        {hasLanguageDetection && results.languageDetection && (
           <TabsContent value="language-detection" className="space-y-6 mt-0">
             <LanguageDetectionDisplay detectionResult={results.languageDetection} />
           </TabsContent>
