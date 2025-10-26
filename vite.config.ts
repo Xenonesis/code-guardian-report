@@ -51,32 +51,16 @@ export default defineConfig({
     reportCompressedSize: true,
     rollupOptions: {
       output: {
-        // Advanced chunk splitting strategy
-        manualChunks: (id) => {
-          if (id.includes('node_modules')) {
-            // Keep scheduler separate to avoid __name issues
-            if (id.includes('scheduler')) {
-              return 'scheduler';
-            }
-            // Keep React separate and load first
-            if (id.includes('react/') && !id.includes('react-dom') && !id.includes('react-router')) {
-              return 'react';
-            }
-            if (id.includes('react-dom')) {
-              return 'react-dom';
-            }
-
-            if (id.includes('@radix-ui')) {
-              return 'radix-ui';
-            }
-            if (id.includes('recharts')) {
-              return 'charts';
-            }
-            if (id.includes('lucide-react') || id.includes('framer-motion')) {
-              return 'icons-animations';
-            }
-            return 'vendor';
-          }
+        // Conservative chunk splitting to avoid circular dependencies on Vercel
+        manualChunks: {
+          // Core React libraries - loaded first
+          'react-vendor': ['react', 'react-dom', 'react/jsx-runtime'],
+          // UI libraries
+          'ui-vendor': ['@radix-ui/react-dialog', '@radix-ui/react-tabs', '@radix-ui/react-toast', '@radix-ui/react-slot'],
+          // Chart libraries
+          'charts': ['recharts'],
+          // Icons and animations
+          'icons': ['lucide-react', 'framer-motion']
         },
 
         // Professional file naming
@@ -104,11 +88,11 @@ export default defineConfig({
       },
       // External dependencies optimization
       external: [],
-      // Tree shaking optimization
+      // Tree shaking optimization - conservative settings for Vercel
       treeshake: {
-        moduleSideEffects: false,
-        propertyReadSideEffects: false,
-        unknownGlobalSideEffects: false
+        moduleSideEffects: 'no-external',
+        propertyReadSideEffects: true,
+        unknownGlobalSideEffects: true
       }
     },
     // CSS optimization
