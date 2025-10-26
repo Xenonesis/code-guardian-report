@@ -103,13 +103,6 @@ export class AnalysisStorageService {
       // Notify listeners
       this.notifyListeners(analysisData);
 
-      console.log('✅ Analysis results stored successfully:', {
-        id: analysisData.id,
-        fileName: file.name,
-        size: this.formatBytes(this.getDataSize(analysisData)),
-        compressed: analysisData.compressed,
-      });
-
     } catch (error) {
       console.error('❌ Failed to store analysis results:', error);
       throw new Error('Failed to store analysis results');
@@ -343,11 +336,11 @@ export class AnalysisStorageService {
   }
 
   private generateAnalysisId(): string {
-    return `analysis_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    return `analysis_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
   }
 
   private generateSessionId(): string {
-    return `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    return `session_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
   }
 
   private compressResults(results: AnalysisResults): AnalysisResults {
@@ -401,7 +394,7 @@ export class AnalysisStorageService {
     const k = 1024;
     const sizes = ['Bytes', 'KB', 'MB', 'GB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    return Number.parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   }
 
   private isVersionCompatible(version: string): boolean {
@@ -453,13 +446,13 @@ export class AnalysisStorageService {
   }
 
   private notifyListeners(data: StoredAnalysisData | null): void {
-    this.listeners.forEach(callback => {
+    for (const callback of this.listeners) {
       try {
         callback(data);
       } catch (error) {
         // Silent error handling
       }
-    });
+    }
   }
 }
 

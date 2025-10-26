@@ -88,11 +88,6 @@ export class FirebaseAnalysisStorageService {
    */
   public setUserId(userId: string | null): void {
     if (this.userId !== userId) {
-      console.log('🔑 Firebase Storage: Setting user ID:', {
-        oldUserId: this.userId,
-        newUserId: userId,
-        timestamp: new Date().toISOString()
-      });
       this.userId = userId;
       this.setupRealtimeListener();
     }
@@ -159,13 +154,6 @@ export class FirebaseAnalysisStorageService {
       // Update sync status
       await updateDoc(docRef, { syncStatus: 'synced' });
       await this.updateUserStats(file.size, results.issues?.length || 0);
-
-      console.log('✅ Analysis results stored to Firebase:', {
-        id: docRef.id,
-        fileName: file.name,
-        compressed: shouldCompress,
-        issuesFound: results.issues?.length || 0,
-      });
 
       return docRef.id;
 
@@ -448,7 +436,6 @@ export class FirebaseAnalysisStorageService {
 
       await updateDoc(docRef, this.sanitizeObject(updateData));
 
-      console.log('✅ Analysis results updated in Firebase:', analysisId);
       return analysisId;
     } catch (error) {
       console.error('❌ Failed to update analysis results:', error);
@@ -650,11 +637,12 @@ export class FirebaseAnalysisStorageService {
   }
 
   private generateSessionId(): string {
-    return `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    return `session_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
   }
 
   private getDeviceInfo(): string {
-    return `${navigator.platform} - ${navigator.userAgent.substring(0, 100)}`;
+    const platform = (navigator as any).userAgentData?.platform || 'Unknown';
+    return `${platform} - ${navigator.userAgent.substring(0, 100)}`;
   }
 
   private compressResults(results: AnalysisResults): AnalysisResults {
@@ -698,13 +686,13 @@ export class FirebaseAnalysisStorageService {
   }
 
   private notifyListeners(data: FirebaseAnalysisData[]): void {
-    this.listeners.forEach(callback => {
+    for (const callback of this.listeners) {
       try {
         callback(data);
       } catch (error) {
         console.error('Error in listener callback:', error);
       }
-    });
+    }
   }
 
   private sanitizeObject(obj: any): any {
@@ -719,7 +707,7 @@ export class FirebaseAnalysisStorageService {
     if (typeof obj === 'object' && obj.constructor === Object) {
       const newObj: { [key: string]: any } = {};
       for (const key in obj) {
-        if (Object.prototype.hasOwnProperty.call(obj, key) && obj[key] !== undefined) {
+        if (Object.hasOwn(obj, key) && obj[key] !== undefined) {
           newObj[key] = this.sanitizeObject(obj[key]);
         }
       }

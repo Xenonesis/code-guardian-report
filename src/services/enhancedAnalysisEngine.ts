@@ -117,12 +117,17 @@ export class EnhancedAnalysisEngine {
         // Initialize smart language detection
         await this.securityAnalyzer.initializeAnalysisContext(fileContents);
 
-        // Analyze files with enhanced context
-        for (let i = 0; i < fileContents.length; i++) {
-          const fileContent = fileContents[i];
+        // Analyze files in parallel for faster processing
+        const analysisPromises = fileContents.map(fileContent => {
           const fileIssues = this.securityAnalyzer.analyzeFile(fileContent.filename, fileContent.content);
-          allIssues = [...allIssues, ...fileIssues];
-          linesAnalyzed += fileContent.content.split('\n').length;
+          const lines = fileContent.content.split('\n').length;
+          return { fileIssues, lines };
+        });
+
+        // Combine all results
+        for (const result of analysisPromises) {
+          allIssues = [...allIssues, ...result.fileIssues];
+          linesAnalyzed += result.lines;
         }
       } catch {
         // Return error-based analysis for failed ZIP processing

@@ -1,4 +1,4 @@
-export const validateZipFile = async (file: any): Promise<{isValid: boolean, message: string}> => {
+export const validateZipFile = async (file: File): Promise<{isValid: boolean, message: string}> => {
   // Check for valid file type and extension
   const allowedTypes = ['application/zip', 'application/x-zip-compressed'];
   const isValidType = allowedTypes.includes(file.type);

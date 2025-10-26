@@ -39,98 +39,95 @@ export const useFileUpload = ({ onFileSelect, onAnalysisComplete }: UseFileUploa
       const arrayBuffer = await file.arrayBuffer();
       console.log('File size:', arrayBuffer.byteLength, 'bytes');
 
-      setTimeout(async () => {
-        try {
-          const analysisResults = await analysisEngine.analyzeCodebase(file);
-          console.log('Enhanced analysis complete:', {
-            totalIssues: analysisResults.issues.length,
-            totalFiles: analysisResults.totalFiles,
-            analysisTime: analysisResults.analysisTime,
-            securityScore: analysisResults.summary.securityScore,
-            qualityScore: analysisResults.summary.qualityScore,
-            criticalIssues: analysisResults.summary.criticalIssues,
-            fullSummary: analysisResults.summary
-          });
+      try {
+        const analysisResults = await analysisEngine.analyzeCodebase(file);
+        console.log('Enhanced analysis complete:', {
+          totalIssues: analysisResults.issues.length,
+          totalFiles: analysisResults.totalFiles,
+          analysisTime: analysisResults.analysisTime,
+          securityScore: analysisResults.summary.securityScore,
+          qualityScore: analysisResults.summary.qualityScore,
+          criticalIssues: analysisResults.summary.criticalIssues,
+          fullSummary: analysisResults.summary
+        });
 
-          let finalResults: AnalysisResults = analysisResults;
+        let finalResults: AnalysisResults = analysisResults;
 
-          // If a ZIP is uploaded, run ZIP analysis + dependency scan and merge into results
-          if (file.name.toLowerCase().endsWith('.zip')) {
-            try {
-              const zipAnalysis = await zipAnalysisService.analyzeZipFile(file as unknown as { name: string; size: number; lastModified: number; arrayBuffer: () => Promise<ArrayBuffer> });
+        // If a ZIP is uploaded, run ZIP analysis + dependency scan and merge into results
+        if (file.name.toLowerCase().endsWith('.zip')) {
+          try {
+            const zipAnalysis = await zipAnalysisService.analyzeZipFile(file as unknown as { name: string; size: number; lastModified: number; arrayBuffer: () => Promise<ArrayBuffer> });
 
-              const zip = await JSZip.loadAsync(arrayBuffer);
-              const manifestNames = new Set([
-                'package.json', 'yarn.lock', 'pnpm-lock.yaml', 'requirements.txt', 'Pipfile', 'poetry.lock',
-                'composer.json', 'composer.lock', 'Gemfile', 'Gemfile.lock', 'pom.xml', 'build.gradle',
-                'Cargo.toml', 'Cargo.lock'
-              ]);
-              const filesForScan: Array<{ name: string; content: string }> = [];
-              await Promise.all(
-                Object.keys(zip.files).map(async (p) => {
-                  const f = zip.files[p];
-                  if (f.dir) return;
-                  const base = p.split('/').pop() || p;
-                  if (manifestNames.has(base)) {
-                    const content = await f.async('string');
-                    filesForScan.push({ name: base, content });
-                  }
-                })
-              );
-              const dependencyAnalysis = await dependencyScanner.scanDependencies(filesForScan);
+            const zip = await JSZip.loadAsync(arrayBuffer);
+            const manifestNames = new Set([
+              'package.json', 'yarn.lock', 'pnpm-lock.yaml', 'requirements.txt', 'Pipfile', 'poetry.lock',
+              'composer.json', 'composer.lock', 'Gemfile', 'Gemfile.lock', 'pom.xml', 'build.gradle',
+              'Cargo.toml', 'Cargo.lock'
+            ]);
+            const filesForScan: Array<{ name: string; content: string }> = [];
+            await Promise.all(
+              Object.keys(zip.files).map(async (p) => {
+                const f = zip.files[p];
+                if (f.dir) return;
+                const base = p.split('/').pop() || p;
+                if (manifestNames.has(base)) {
+                  const content = await f.async('string');
+                  filesForScan.push({ name: base, content });
+                }
+              })
+            );
+            const dependencyAnalysis = await dependencyScanner.scanDependencies(filesForScan);
 
-              finalResults = { ...analysisResults, zipAnalysis, dependencyAnalysis };
-            } catch (zipErr) {
-              console.warn('ZIP/dependency analysis failed, continuing with core results:', zipErr);
-            }
+            finalResults = { ...analysisResults, zipAnalysis, dependencyAnalysis };
+          } catch (zipErr) {
+            console.warn('ZIP/dependency analysis failed, continuing with core results:', zipErr);
           }
-
-          setIsAnalyzing(false);
-          setCurrentAnalysisFile(null);
-          onAnalysisComplete(finalResults, file);
-        } catch (analysisError) {
-          console.error('Analysis engine error:', analysisError);
-          setIsAnalyzing(false);
-          setCurrentAnalysisFile(null);
-          
-          if (analysisError instanceof Error && analysisError.message.includes('does not contain any code files')) {
-            setError(analysisError.message);
-            setSelectedFile(null);
-            setUploadComplete(false);
-            return;
-          }
-          
-          const emptyResults = {
-            issues: [],
-            totalFiles: 0,
-            analysisTime: '0.1s',
-            summary: {
-              criticalIssues: 0,
-              highIssues: 0,
-              mediumIssues: 0,
-              lowIssues: 0,
-              securityScore: 100,
-              qualityScore: 100,
-              coveragePercentage: 0,
-              linesAnalyzed: 0
-            },
-            metrics: {
-              vulnerabilityDensity: 0,
-              technicalDebt: '0',
-              maintainabilityIndex: 100,
-              duplicatedLines: 0
-            },
-            dependencies: {
-              total: 0,
-              vulnerable: 0,
-              outdated: 0,
-              licenses: []
-            }
-          };
-          onAnalysisComplete(emptyResults, file);
         }
-      }, 4000);
 
+        setIsAnalyzing(false);
+        setCurrentAnalysisFile(null);
+        onAnalysisComplete(finalResults, file);
+      } catch (analysisError) {
+        console.error('Analysis engine error:', analysisError);
+        setIsAnalyzing(false);
+        setCurrentAnalysisFile(null);
+        
+        if (analysisError instanceof Error && analysisError.message.includes('does not contain any code files')) {
+          setError(analysisError.message);
+          setSelectedFile(null);
+          setUploadComplete(false);
+          return;
+        }
+        
+        const emptyResults = {
+          issues: [],
+          totalFiles: 0,
+          analysisTime: '0.1s',
+          summary: {
+            criticalIssues: 0,
+            highIssues: 0,
+            mediumIssues: 0,
+            lowIssues: 0,
+            securityScore: 100,
+            qualityScore: 100,
+            coveragePercentage: 0,
+            linesAnalyzed: 0
+          },
+          metrics: {
+            vulnerabilityDensity: 0,
+            technicalDebt: '0',
+            maintainabilityIndex: 100,
+            duplicatedLines: 0
+          },
+          dependencies: {
+            total: 0,
+            vulnerable: 0,
+            outdated: 0,
+            licenses: []
+          }
+        };
+        onAnalysisComplete(emptyResults, file);
+      }
     } catch (error) {
       console.error('Error processing file:', error);
       setIsAnalyzing(false);
