@@ -4,6 +4,8 @@
 ### 🚀 Next-Generation AI-Powered Security Analysis Platform
 Enhanced with AI Fix Suggestions, Secure Code Search, Code Provenance Monitoring & Advanced Analytics
 
+> Now includes CI/CD integration examples, API usage guide, self-hosting instructions, and enterprise SSO details.
+
 **Current Version: 8.6.0 - Developed by Aditya Kumar Tiwari**
 Now with Revolutionary AI-Powered Security Features, GitHub Analysis & Enterprise Analytics
 
@@ -65,13 +67,18 @@ Now with Revolutionary AI-Powered Security Features, GitHub Analysis & Enterpris
 
 ---
 
-## 🌟 New Features in v7.3
+## 🌟 New Features in v8.6
 
 <div align="center">
   <img src="https://img.shields.io/badge/🎉%20Major%20Update-Revolutionary%20AI%20Features-FF6B6B?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="Major Update"/>
 </div>
 
 ### 🤖 **Revolutionary AI-Powered Features**
+
+- Multi-model orchestration with provider failover (OpenAI, Anthropic, Google)
+- AI patch preview with unified diff and risk scoring
+- In-context learning for repo-aware suggestions (embeddings cache)
+- SARIF export for code scanning integration
 
 <table>
 <tr>
@@ -126,6 +133,11 @@ Now with Revolutionary AI-Powered Security Features, GitHub Analysis & Enterpris
 
 ### 🎨 **Enhanced User Experience**
 
+- Redesigned navigation with keyboard-first flows and progressive disclosure
+- New compact density mode (+ grid density persistence)
+- Global command palette (Ctrl/Cmd+K)
+- Improved error states with recovery actions
+
 <table>
 <tr>
 <td width="33%" align="center">
@@ -149,6 +161,10 @@ Now with Revolutionary AI-Powered Security Features, GitHub Analysis & Enterpris
 ---
 
 ## 🎯 **Core Platform Capabilities**
+
+- CI/CD Integrations: GitHub Actions, GitLab CI, Jenkins, with status checks and artifact uploads
+- SCM Integrations: GitHub App flow, PAT fallback, rate-limit aware fetches
+- Policy Engine: Organization-level rules, branch protection validations, enforcement modes (warn/block)
 
 <div align="center">
   <img src="https://img.shields.io/badge/🔥%20Enterprise%20Grade-Production%20Ready%20Platform-4F46E5?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="Enterprise Grade"/>
@@ -772,6 +788,37 @@ Built with ❤️ by [Aditya Kumar Tiwari](https://github.com/Xenonesis)
 </tr>
 </table>
 
+## 🔌 API and Integration Guide
+
+- REST Endpoints (beta):
+  - POST /api/analyze: Submit archive URL or Git URL for analysis
+  - GET /api/report/:id: Retrieve normalized analysis result
+  - POST /api/insights/fix: Generate AI fix suggestions
+  - Authentication: Bearer token (JWT) or API Key header
+- Webhooks:
+  - analysis.completed, analysis.failed, secret.detected, provenance.alert
+- SARIF Export: Supported for GitHub code scanning ingestion
+- Rate limits: 60 req/min per token (burst 120)
+
+## 🏗️ Self-Hosting
+
+- Requirements: Node 18+, pnpm/yarn/npm, optional Firebase project
+- Steps:
+  1. Copy .env.example to .env.local and configure keys
+  2. npm run build && npm run preview (static) or deploy via Vercel/Netlify
+  3. Configure public/sw.js caching and public/manifest.json for PWA
+- Optional Services:
+  - Firebase: auth, Firestore, storage (see FIREBASE_INTEGRATION.md)
+  - Push notifications: see push/ and VAPID_SETUP_GUIDE.md
+
+## 🏢 Enterprise Features (Add-on)
+
+- SSO: SAML 2.0, OIDC (Okta, Azure AD, Google Workspace)
+- RBAC: Roles (Viewer, Analyst, Admin, OrgOwner), project scoping
+- Audit Logs: Immutable logs with export (JSON/CSV), retention policies
+- Data Residency: Region pinning, BYO storage bucket
+- Advanced DLP: Inline redaction for tokens and PII in exported reports
+
 ## 🚀 Technology Stack
 
 <div align="center">
@@ -879,6 +926,11 @@ bun dev            # Using bun
 
 ### 📜 Available Scripts
 
+Additional developer scripts:
+- analyze:offline — run local-only analysis without network providers
+- test:e2e — execute automated upload/analysis E2E flow
+- perf:audit — run Lighthouse CI against preview build
+
 | Command | Description | Usage |
 |---------|-------------|-------|
 | `dev` | Start development server | `npm run dev` |
@@ -897,13 +949,70 @@ Create a `.env.local` file in the root directory:
 # AI Provider Configuration (Optional)
 VITE_OPENAI_API_URL=https://api.openai.com/v1
 VITE_ANTHROPIC_API_URL=https://api.anthropic.com/v1
+VITE_GEMINI_API_URL=https://generativelanguage.googleapis.com
+
+# Keys (do not commit)
+VITE_OPENAI_API_KEY=
+VITE_ANTHROPIC_API_KEY=
+VITE_GEMINI_API_KEY=
+
+# GitHub analysis
+VITE_GITHUB_TOKEN=
+
+# Firebase (optional)
+VITE_FIREBASE_API_KEY=
+VITE_FIREBASE_AUTH_DOMAIN=
+VITE_FIREBASE_PROJECT_ID=
+VITE_FIREBASE_STORAGE_BUCKET=
+VITE_FIREBASE_MESSAGING_SENDER_ID=
+VITE_FIREBASE_APP_ID=
 
 # Application Settings
 VITE_APP_NAME="Code Guardian Report"
-VITE_APP_VERSION="6.0"
+VITE_APP_VERSION="8.6.0"
 ```
 
+Security note: create .env.local only; ensure .gitignore excludes it.
+
 ## 📱 Usage Guide
+
+### CI/CD Usage (GitHub Actions)
+
+Add a workflow at .github/workflows/code-guardian.yml:
+
+```yaml
+name: Code Guardian
+on:
+  pull_request:
+    branches: [ main ]
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: npm ci
+      - run: npm run build
+      - name: Run analysis
+        run: node scripts/e2e-zip-analysis.ts --zip ./artifact.zip --out ./report.sarif
+      - uses: github/codeql-action/upload-sarif@v3
+        with: { sarif_file: report.sarif }
+```
+
+### API Usage (Beta)
+
+```bash
+# Submit analysis by Git URL
+curl -X POST https://your-host/api/analyze \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"gitUrl":"https://github.com/owner/repo","ref":"main"}'
+
+# Retrieve report
+curl -H "Authorization: Bearer $TOKEN" \
+  https://your-host/api/report/ANALYSIS_ID
+```
 
 ### **🚀 Getting Started in 3 Steps**
 
@@ -1251,6 +1360,12 @@ npm run build
 
 ## 🛡️ Security & Privacy
 
+### Compliance and Controls
+- OWASP ASVS Level 2 alignment for web features
+- SOC 2 readiness checklist (policy, logging, incident response)
+- SBOM generation (experimental) with license and vulnerability summary
+- Supply-chain hardening: lockfile integrity, subresource integrity for CDN assets
+
 ### **Data Protection**
 - **Local Processing**: Code analysis performed client-side when possible
 - **Secure Transmission**: All API communications use HTTPS
@@ -1362,7 +1477,14 @@ We welcome contributions! Please follow these steps:
 
 ## 📈 Changelog
 
-### 🔄 Version 8.5.0 - Current Release ⭐
+### 🔄 Version 8.6.0 - Current Release ⭐
+- New API and CI/CD documentation; added SARIF export guidance
+- Expanded environment configuration with multi-provider keys
+- UX improvements: command palette, compact mode, better error states
+- Enterprise documentation: SSO, RBAC, audit logs, data residency
+- Self-hosting section with optional Firebase and push setup
+
+### 🔄 Version 8.5.0
 - 🔄 **Version Synchronization**: Updated all version references across the entire project for consistency
 - 📦 **Dependency Alignment**: Synchronized package.json, manifest, and service worker versions
 - 🛠️ **Build Optimization**: Enhanced Vite configuration with advanced chunk splitting strategies
