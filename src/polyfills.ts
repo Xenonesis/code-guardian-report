@@ -14,4 +14,13 @@ if (typeof globalThis.performance === 'undefined') {
   } as Performance;
 }
 
+// Polyfill for Node.js process global (required by Babel libraries)
+if (typeof (globalThis as any).process === 'undefined') {
+  (globalThis as any).process = {
+    env: {
+      NODE_ENV: import.meta.env.MODE || 'production'
+    }
+  };
+}
+
 export {};

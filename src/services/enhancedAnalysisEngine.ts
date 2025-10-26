@@ -1,6 +1,8 @@
 import { SecurityIssue, AnalysisResults } from '@/hooks/useAnalysis';
 import { SecurityAnalyzer } from './analysis/SecurityAnalyzer';
 import { MetricsCalculator } from './analysis/MetricsCalculator';
+import { ASTAnalyzer } from './analysis/ASTAnalyzer';
+import { DataFlowAnalyzer } from './analysis/DataFlowAnalyzer';
 import JSZip from 'jszip';
 
 interface FileContent {
@@ -12,10 +14,14 @@ interface FileContent {
 export class EnhancedAnalysisEngine {
   private securityAnalyzer: SecurityAnalyzer;
   private metricsCalculator: MetricsCalculator;
+  private astAnalyzer: ASTAnalyzer;
+  private dataFlowAnalyzer: DataFlowAnalyzer;
 
   constructor() {
     this.securityAnalyzer = new SecurityAnalyzer();
     this.metricsCalculator = new MetricsCalculator();
+    this.astAnalyzer = new ASTAnalyzer();
+    this.dataFlowAnalyzer = new DataFlowAnalyzer();
   }
 
   private async extractZipContents(zipFile: { arrayBuffer: () => Promise<ArrayBuffer> }): Promise<FileContent[]> {
@@ -117,18 +123,28 @@ export class EnhancedAnalysisEngine {
         // Initialize smart language detection
         await this.securityAnalyzer.initializeAnalysisContext(fileContents);
 
-        // Analyze files in parallel for faster processing
+        // Phase 1: Pattern-based and framework-specific analysis
         const analysisPromises = fileContents.map(fileContent => {
           const fileIssues = this.securityAnalyzer.analyzeFile(fileContent.filename, fileContent.content);
           const lines = fileContent.content.split('\n').length;
           return { fileIssues, lines };
         });
 
-        // Combine all results
+        // Combine pattern-based results
         for (const result of analysisPromises) {
           allIssues = [...allIssues, ...result.fileIssues];
           linesAnalyzed += result.lines;
         }
+
+        // Phase 2: AST-based deep analysis
+        for (const fileContent of fileContents) {
+          const astIssues = this.astAnalyzer.analyzeAST(fileContent.filename, fileContent.content);
+          allIssues = [...allIssues, ...astIssues];
+        }
+
+        // Phase 3: Data flow and taint analysis
+        const dataFlowIssues = this.dataFlowAnalyzer.analyzeDataFlow(fileContents);
+        allIssues = [...allIssues, ...dataFlowIssues];
       } catch {
         // Return error-based analysis for failed ZIP processing
         

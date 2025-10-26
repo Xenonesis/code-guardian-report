@@ -17,6 +17,9 @@
         "test:e2e-zip": "tsx scripts/e2e-zip-analysis.ts"
     },
     "dependencies": {
+        "@babel/parser": "^7.25.9",
+        "@babel/traverse": "^7.25.9",
+        "@babel/types": "^7.25.9",
         "@radix-ui/react-checkbox": "^1.3.2",
         "@radix-ui/react-collapsible": "^1.1.11",
         "@radix-ui/react-dialog": "^1.1.2",
@@ -34,9 +37,13 @@
         "@vercel/analytics": "^1.4.1",
         "@vercel/speed-insights": "^1.1.0",
         "@vitejs/plugin-react-swc": "^4.2.0",
+        "acorn": "^8.14.0",
+        "acorn-walk": "^8.3.4",
         "autoprefixer": "^10.4.20",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
+        "esprima": "^4.0.1",
+        "esquery": "^1.6.0",
         "firebase": "^11.10.0",
         "framer-motion": "^11.18.2",
         "html2canvas": "^1.4.1",

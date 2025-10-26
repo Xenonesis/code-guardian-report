@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Shield, ChevronDown } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { AnalysisResults } from '@/hooks/useAnalysis';
-import { SecuritySummaryCards } from '@/components/security/SecuritySummaryCards';
 import { SecurityIssueItem } from '@/components/security/SecurityIssueItem';
 import { SecretDetectionCard } from '@/components/security/SecretDetectionCard';
 import { SecureCodeSearchCard } from '@/components/security/SecureCodeSearchCard';
@@ -85,7 +84,7 @@ ${suggestion.testingRecommendations.map((rec, i) => `${i + 1}. ${rec}`).join('\n
       link.download = `security-fix-${suggestion.issueId}-${Date.now()}.patch`;
       document.body.appendChild(link);
       link.click();
-      document.body.removeChild(link);
+      link.remove();
       URL.revokeObjectURL(url);
       /* eslint-enable no-undef */
 
@@ -132,8 +131,6 @@ ${suggestion.testingRecommendations.map((rec, i) => `${i + 1}. ${rec}`).join('\n
           className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg"
         />
       </div>
-
-      <SecuritySummaryCards results={results} />
 
       {/* Secret Detection Section */}
       <SecretDetectionCard secretIssues={secretIssues} />

@@ -5,6 +5,7 @@ import { SecurityOverview } from './SecurityOverview';
 import { AISecurityInsights } from '../ai/AISecurityInsights';
 import { SecurityMetricsDashboard } from '@/components/SecurityMetricsDashboard';
 import { LanguageDetectionDisplay } from '../language/LanguageDetectionDisplay';
+import { UnifiedMetricsHeader } from './UnifiedMetricsHeader';
 
 interface ResultsTabsProps {
   results: AnalysisResults;
@@ -12,10 +13,12 @@ interface ResultsTabsProps {
 
 export const ResultsTabs: React.FC<ResultsTabsProps> = ({ results }) => {
   const hasLanguageDetection = results.languageDetection;
-  const tabCount = hasLanguageDetection ? 4 : 3;
 
   return (
     <div className="w-full space-y-6">
+      {/* Unified Metrics Header - Shows across all tabs */}
+      <UnifiedMetricsHeader results={results} />
+
       <Tabs defaultValue="overview" className="w-full">
         <div className="sticky top-0 z-10 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl pb-4 mb-6">
           <TabsList className={`grid w-full ${hasLanguageDetection ? 'grid-cols-2 sm:grid-cols-4' : 'grid-cols-1 sm:grid-cols-3'} gap-1 sm:gap-2 bg-white/95 dark:bg-slate-800/95 backdrop-blur-xl border-2 border-slate-200/50 dark:border-slate-700/50 shadow-lg rounded-2xl p-1 sm:p-2`}>

@@ -119,6 +119,7 @@ export default defineConfig({
   },
   // Environment variables
   define: {
+    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
     __APP_VERSION__: JSON.stringify(process.env.npm_package_version || '4.5.0'),
     __BUILD_TIME__: JSON.stringify(new Date().toISOString())
   },
