@@ -34,15 +34,15 @@ export const SecurityMetricsDashboard: React.FC<SecurityMetricsDashboardProps> =
     <TooltipProvider>
       <div className="space-y-6">
         {/* Page Header */}
-        <div className="mb-6">
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Detailed Security Metrics</h2>
-          <p className="text-sm text-slate-600 dark:text-slate-400">
+        <div className="mb-8 pb-6 border-b-2 border-slate-200/60 dark:border-slate-700/60">
+          <h2 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 dark:from-white dark:via-blue-100 dark:to-indigo-100 bg-clip-text text-transparent mb-3">Detailed Security Metrics</h2>
+          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
             In-depth analysis of security vulnerabilities, code quality metrics, and actionable recommendations
           </p>
         </div>
 
         {/* Key Metrics Grid - Focus on unique metrics not in header */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
           <MetricsCard
             title="Technical Debt"
             value={results.metrics.technicalDebt}
@@ -75,7 +75,7 @@ export const SecurityMetricsDashboard: React.FC<SecurityMetricsDashboardProps> =
         </div>
 
         {/* Detailed Metrics Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
           <SeverityChart
             criticalIssues={results.summary.criticalIssues}
             highIssues={results.summary.highIssues}
@@ -112,13 +112,15 @@ export const SecurityMetricsDashboard: React.FC<SecurityMetricsDashboardProps> =
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border-blue-200 dark:border-blue-800">
+        <Card className="bg-gradient-to-br from-blue-50 via-indigo-50/80 to-purple-50/50 dark:from-blue-900/20 dark:via-indigo-900/15 dark:to-purple-900/10 border-2 border-blue-200 dark:border-blue-800 shadow-xl hover:shadow-2xl transition-all duration-300">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Bug className="h-5 w-5 text-blue-600" />
-              Advanced Quality Metrics
+            <CardTitle className="flex items-center gap-3 text-xl">
+              <div className="p-2 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl shadow-lg">
+                <Bug className="h-5 w-5 text-white" />
+              </div>
+              <span className="font-bold text-slate-900 dark:text-white">Advanced Quality Metrics</span>
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="text-sm sm:text-base mt-2">
               Detailed code quality indicators and maintainability assessment
             </CardDescription>
           </CardHeader>

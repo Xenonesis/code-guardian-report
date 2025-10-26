@@ -79,29 +79,44 @@ export const TabContent: React.FC<TabContentProps> = ({
           }>
             {/* Suspicious Files Section (if available) */}
             {analysisResults.zipAnalysis && (
-              <div className="space-y-6 mb-6">
+              <div className="space-y-6 mb-8">
                 {/* Suspicious files (compact) */}
                 {analysisResults.zipAnalysis.fileStructure.suspiciousFiles.length > 0 && (
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Suspicious Files</CardTitle>
-                      <CardDescription>
-                        Files flagged due to risky extensions or patterns
-                      </CardDescription>
+                  <Card className="bg-gradient-to-br from-amber-50/50 via-orange-50/30 to-yellow-50/50 dark:from-amber-950/20 dark:via-orange-950/10 dark:to-yellow-950/20 border-2 border-amber-200/60 dark:border-amber-800/40 shadow-xl hover:shadow-2xl transition-all duration-300">
+                    <CardHeader className="pb-4">
+                      <div className="flex items-center gap-3">
+                        <div className="p-2.5 bg-gradient-to-br from-amber-500 to-orange-500 rounded-xl shadow-lg">
+                          <AlertTriangle className="h-5 w-5 text-white" />
+                        </div>
+                        <div>
+                          <CardTitle className="text-lg sm:text-xl font-bold bg-gradient-to-r from-amber-900 via-orange-900 to-yellow-900 dark:from-amber-200 dark:via-orange-200 dark:to-yellow-200 bg-clip-text text-transparent">
+                            Suspicious Files
+                          </CardTitle>
+                          <CardDescription className="text-xs sm:text-sm font-medium mt-0.5">
+                            Files flagged due to risky extensions or patterns
+                          </CardDescription>
+                        </div>
+                      </div>
                     </CardHeader>
                     <CardContent>
-                      <div className="space-y-2">
+                      <div className="space-y-2.5">
                         {analysisResults.zipAnalysis.fileStructure.suspiciousFiles.slice(0, 8).map((file) => (
                           <div
                             key={file}
-                            className="flex items-center gap-2 p-2 rounded border border-yellow-200 dark:border-yellow-700/40 bg-yellow-50 dark:bg-yellow-900/30"
+                            className="group flex items-center gap-3 p-3.5 rounded-xl border-2 border-amber-300/50 dark:border-amber-700/30 bg-gradient-to-r from-amber-100/80 via-orange-50/70 to-yellow-50/80 dark:from-amber-900/40 dark:via-orange-900/30 dark:to-yellow-900/40 hover:border-amber-400/70 dark:hover:border-amber-600/50 hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5"
                           >
-                            <AlertTriangle className="h-4 w-4 text-yellow-600 dark:text-yellow-400" />
-                            <span className="text-sm truncate text-slate-800 dark:text-slate-100">{file}</span>
+                            <div className="p-1.5 bg-gradient-to-br from-amber-400 to-orange-500 rounded-lg shadow-sm group-hover:scale-110 transition-transform duration-200">
+                              <AlertTriangle className="h-3.5 w-3.5 text-white" />
+                            </div>
+                            <span className="text-sm font-mono font-medium truncate text-amber-900 dark:text-amber-100 flex-1">{file}</span>
                           </div>
                         ))}
                         {analysisResults.zipAnalysis.fileStructure.suspiciousFiles.length > 8 && (
-                          <p className="text-xs text-slate-500 dark:text-slate-400">+ more files omitted</p>
+                          <div className="mt-3 pt-3 border-t border-amber-300/30 dark:border-amber-700/20">
+                            <p className="text-xs font-medium text-amber-700 dark:text-amber-300 text-center">
+                              + {analysisResults.zipAnalysis.fileStructure.suspiciousFiles.length - 8} more files omitted
+                            </p>
+                          </div>
                         )}
                       </div>
                     </CardContent>

@@ -3,6 +3,7 @@
 @import './styles/about-page-enhancements.css';
 @import './styles/sidebar-fix.css';
 @import './styles/sidebar-position-fix.css';
+@import './styles/professional-enhancements.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
