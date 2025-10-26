@@ -95,8 +95,8 @@ export default defineConfig({
         unknownGlobalSideEffects: true
       }
     },
-    // CSS optimization
-    cssMinify: 'lightningcss'
+    // CSS optimization - use esbuild for Vercel compatibility
+    cssMinify: 'esbuild'
   },
   // Dependency optimization
   optimizeDeps: {
