@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
-import { Shield, Home, Moon, Sun, Menu, X, Info, Lock, Award, User, LogOut, History, TestTube } from 'lucide-react';
+import { Shield, Home, Moon, Sun, Menu, X, Info, Lock, Award, User, LogOut, History } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/lib/auth-context';
@@ -60,11 +60,6 @@ export const Navigation: React.FC<NavigationProps> = ({ isDarkMode, toggleDarkMo
       label: 'History',
       icon: <History className="h-4 w-4" />
     }] : []),
-    {
-      id: 'test',
-      label: 'Test Analysis',
-      icon: <TestTube className="h-4 w-4" />
-    },
     {
       id: 'privacy',
       label: 'Privacy',

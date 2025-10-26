@@ -31,7 +31,7 @@ import { AboutFeatures } from '@/components/pages/about/AboutFeatures';
 import { LegalSection, LegalSubsection, LegalList } from '@/components/legal/LegalSection';
 import { HelpPage } from '@/components/HelpPage';
 import { HistoryPage } from './HistoryPage';
-import { AnalysisTestRunner } from '@/components/testing/AnalysisTestRunner';
+
 import { Shield, Eye, Database, Lock, Users, Globe, Mail, FileText, Scale, AlertTriangle } from 'lucide-react';
 
 // Lazy load heavy components for better performance
@@ -491,19 +491,6 @@ const SinglePageApp = () => {
             onNavigateBack={() => navigateTo('home')}
           />
         </div>
-      )}
-
-      {/* Test Analysis Section */}
-      {currentSection === 'test' && (
-        <section id="test" className="min-h-screen bg-slate-50 dark:bg-slate-900/50">
-          <div className="pt-16">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
-              <div className="max-w-6xl mx-auto">
-                <AnalysisTestRunner />
-              </div>
-            </div>
-          </div>
-        </section>
       )}
 
       {/* Footer */}

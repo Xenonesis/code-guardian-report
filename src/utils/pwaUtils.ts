@@ -55,13 +55,13 @@ export const registerForPushNotifications = async (): Promise<string | null> => 
   const appServerKey = urlBase64ToUint8Array('your-vapid-public-key-here');
   const subscription = await registration.pushManager.subscribe({
     userVisibleOnly: true,
-    applicationServerKey: new Uint8Array(appServerKey.buffer),
+    applicationServerKey: appServerKey,
   });
 
   return JSON.stringify(subscription);
 };
 
-function urlBase64ToUint8Array(base64String: string): Uint8Array {
+function urlBase64ToUint8Array(base64String: string): BufferSource {
   const padding = '='.repeat((4 - base64String.length % 4) % 4);
   const base64 = (base64String + padding)
     .replace(/-/g, '+')
@@ -73,7 +73,7 @@ function urlBase64ToUint8Array(base64String: string): Uint8Array {
   for (let i = 0; i < rawData.length; ++i) {
     outputArray[i] = rawData.charCodeAt(i);
   }
-  return outputArray;
+  return outputArray.buffer;
 }
 
 export const scheduleBackgroundSync = async (tag: string): Promise<void> => {

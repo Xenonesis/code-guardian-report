@@ -707,6 +707,10 @@ export class FirebaseAnalysisStorageService {
     if (typeof obj === 'object' && obj.constructor === Object) {
       const newObj: { [key: string]: any } = {};
       for (const key in obj) {
+        // Skip empty string keys (Firebase doesn't allow them)
+        if (key === '') {
+          continue;
+        }
         if (Object.hasOwn(obj, key) && obj[key] !== undefined) {
           newObj[key] = this.sanitizeObject(obj[key]);
         }

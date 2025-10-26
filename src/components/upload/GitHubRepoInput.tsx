@@ -153,7 +153,7 @@ export const GitHubRepoInput: React.FC<GitHubRepoInputProps> = ({ onFileReady })
             onChange={handleUrlChange}
             onKeyPress={handleKeyPress}
             disabled={isLoading}
-            pattern="https://github\.com/[^/]+/[^/]+(/.*)?"
+            pattern="https://github\.com/[^\/]+/[^\/]+(/.*)?"
             title="Enter a valid GitHub repository URL"
             className="pl-10 h-12 text-base border-2 focus:border-blue-500 transition-all"
           />

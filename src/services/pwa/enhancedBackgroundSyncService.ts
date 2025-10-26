@@ -171,7 +171,8 @@ class EnhancedBackgroundSyncService {
       await this.removeTask(taskId);
       
     } catch (error) {
-      console.error('Sync task failed:', error);
+      const err = error instanceof Error ? error : new Error(String(error));
+      console.error('Sync task failed:', err);
       task.retryCount++;
       task.status = 'failed';
       
@@ -184,8 +185,8 @@ class EnhancedBackgroundSyncService {
         
         this.emitEvent('syncRetry', { taskId, retryCount: task.retryCount, nextRetry: retryDelay });
       } else {
-        this.emitEvent('syncFailed', { taskId, error: error.message });
-        toast.error(`Sync failed for ${task.type}: ${error.message}`);
+        this.emitEvent('syncFailed', { taskId, error: err.message });
+        toast.error(`Sync failed for ${task.type}: ${err.message}`);
       }
     } finally {
       this.syncInProgress.delete(taskId);
@@ -410,7 +411,7 @@ class EnhancedBackgroundSyncService {
   }
 
   private detectConflicts(local: any, server: any): string[] {
-    const conflicts = [];
+    const conflicts: string[] = [];
     // Add conflict detection logic
     return conflicts;
   }
