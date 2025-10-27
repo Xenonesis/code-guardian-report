@@ -111,118 +111,138 @@ export class ASTAnalyzer {
       traverse(ast as any, {
         // Detect dangerous function calls
         CallExpression: (path: NodePath<t.CallExpression>) => {
-          const node = path.node;
-          
-          // Check for eval usage
-          if (t.isIdentifier(node.callee) && this.dangerousFunctions.eval.includes(node.callee.name)) {
-            issues.push(this.createIssue(
-              'Code Injection via eval',
-              'Critical',
-              'Use of eval() or Function constructor can lead to arbitrary code execution',
-              filename,
-              node.loc?.start.line || 1,
-              node.loc?.start.column || 0,
-              this.extractSnippet(content, node.loc?.start.line || 1)
-            ));
-          }
-
-          // Check for command execution
-          if (t.isMemberExpression(node.callee)) {
-            const memberName = this.getMemberExpressionName(node.callee);
-            if (this.dangerousFunctions.exec.some(fn => memberName.includes(fn))) {
+          try {
+            const node = path.node;
+            
+            // Check for eval usage
+            if (t.isIdentifier(node.callee) && this.dangerousFunctions.eval.includes(node.callee.name)) {
               issues.push(this.createIssue(
-                'Command Injection Risk',
+                'Code Injection via eval',
                 'Critical',
-                'Direct command execution with user input can lead to command injection',
+                'Use of eval() or Function constructor can lead to arbitrary code execution',
                 filename,
                 node.loc?.start.line || 1,
                 node.loc?.start.column || 0,
                 this.extractSnippet(content, node.loc?.start.line || 1)
               ));
             }
-          }
 
-          // Track taint sources
-          this.trackTaintSources(path);
-          
-          // Track taint sinks
-          this.trackTaintSinks(path);
+            // Check for command execution
+            if (t.isMemberExpression(node.callee)) {
+              const memberName = this.getMemberExpressionName(node.callee);
+              if (this.dangerousFunctions.exec.some(fn => memberName.includes(fn))) {
+                issues.push(this.createIssue(
+                  'Command Injection Risk',
+                  'Critical',
+                  'Direct command execution with user input can lead to command injection',
+                  filename,
+                  node.loc?.start.line || 1,
+                  node.loc?.start.column || 0,
+                  this.extractSnippet(content, node.loc?.start.line || 1)
+                ));
+              }
+            }
+
+            // Track taint sources
+            this.trackTaintSources(path);
+            
+            // Track taint sinks
+            this.trackTaintSinks(path);
+          } catch (error) {
+            console.warn(`Error in CallExpression visitor for ${filename}:`, error);
+          }
         },
 
         // Detect dangerous member expressions (e.g., dangerouslySetInnerHTML)
         JSXAttribute: (path: NodePath<t.JSXAttribute>) => {
-          const node = path.node;
-          if (t.isJSXIdentifier(node.name) && node.name.name === 'dangerouslySetInnerHTML') {
-            issues.push(this.createIssue(
-              'XSS via dangerouslySetInnerHTML',
-              'High',
-              'Using dangerouslySetInnerHTML without sanitization can lead to XSS attacks',
-              filename,
-              node.loc?.start.line || 1,
-              node.loc?.start.column || 0,
-              this.extractSnippet(content, node.loc?.start.line || 1)
-            ));
+          try {
+            const node = path.node;
+            if (t.isJSXIdentifier(node.name) && node.name.name === 'dangerouslySetInnerHTML') {
+              issues.push(this.createIssue(
+                'XSS via dangerouslySetInnerHTML',
+                'High',
+                'Using dangerouslySetInnerHTML without sanitization can lead to XSS attacks',
+                filename,
+                node.loc?.start.line || 1,
+                node.loc?.start.column || 0,
+                this.extractSnippet(content, node.loc?.start.line || 1)
+              ));
+            }
+          } catch (error) {
+            console.warn(`Error in JSXAttribute visitor for ${filename}:`, error);
           }
         },
 
         // Detect assignment to innerHTML
         AssignmentExpression: (path: NodePath<t.AssignmentExpression>) => {
-          const node = path.node;
-          if (t.isMemberExpression(node.left)) {
-            const memberName = this.getMemberExpressionName(node.left);
-            if (this.dangerousFunctions.xss.some(prop => memberName.includes(prop))) {
+          try {
+            const node = path.node;
+            if (t.isMemberExpression(node.left)) {
+              const memberName = this.getMemberExpressionName(node.left);
+              if (this.dangerousFunctions.xss.some(prop => memberName.includes(prop))) {
+                issues.push(this.createIssue(
+                  'XSS via DOM Manipulation',
+                  'High',
+                  'Direct manipulation of innerHTML or similar properties can lead to XSS',
+                  filename,
+                  node.loc?.start.line || 1,
+                  node.loc?.start.column || 0,
+                  this.extractSnippet(content, node.loc?.start.line || 1)
+                ));
+              }
+            }
+          } catch (error) {
+            console.warn(`Error in AssignmentExpression visitor for ${filename}:`, error);
+          }
+        },
+
+        // Detect hardcoded secrets
+        VariableDeclarator: (path: NodePath<t.VariableDeclarator>) => {
+          try {
+            const node = path.node;
+            if (t.isIdentifier(node.id) && t.isStringLiteral(node.init)) {
+              const varName = node.id.name.toLowerCase();
+              const value = node.init.value;
+              
+              // Check for potential secrets
+              if ((varName.includes('password') || varName.includes('secret') || 
+                   varName.includes('key') || varName.includes('token')) &&
+                  value.length > 8 && !value.includes('your_') && !value.includes('example')) {
+                issues.push(this.createIssue(
+                  'Hardcoded Secret',
+                  'High',
+                  `Potential hardcoded ${varName} detected in source code`,
+                  filename,
+                  node.loc?.start.line || 1,
+                  node.loc?.start.column || 0,
+                  this.extractSnippet(content, node.loc?.start.line || 1, true)
+                ));
+              }
+            }
+          } catch (error) {
+            console.warn(`Error in VariableDeclarator visitor for ${filename}:`, error);
+          }
+        },
+
+        // Detect weak random number generation
+        MemberExpression: (path: NodePath<t.MemberExpression>) => {
+          try {
+            const node = path.node;
+            const memberName = this.getMemberExpressionName(node);
+            
+            if (memberName === 'Math.random' && this.isUsedForSecurity(path)) {
               issues.push(this.createIssue(
-                'XSS via DOM Manipulation',
-                'High',
-                'Direct manipulation of innerHTML or similar properties can lead to XSS',
+                'Weak Random Number Generation',
+                'Medium',
+                'Math.random() is not cryptographically secure. Use crypto.getRandomValues() instead',
                 filename,
                 node.loc?.start.line || 1,
                 node.loc?.start.column || 0,
                 this.extractSnippet(content, node.loc?.start.line || 1)
               ));
             }
-          }
-        },
-
-        // Detect hardcoded secrets
-        VariableDeclarator: (path: NodePath<t.VariableDeclarator>) => {
-          const node = path.node;
-          if (t.isIdentifier(node.id) && t.isStringLiteral(node.init)) {
-            const varName = node.id.name.toLowerCase();
-            const value = node.init.value;
-            
-            // Check for potential secrets
-            if ((varName.includes('password') || varName.includes('secret') || 
-                 varName.includes('key') || varName.includes('token')) &&
-                value.length > 8 && !value.includes('your_') && !value.includes('example')) {
-              issues.push(this.createIssue(
-                'Hardcoded Secret',
-                'High',
-                `Potential hardcoded ${varName} detected in source code`,
-                filename,
-                node.loc?.start.line || 1,
-                node.loc?.start.column || 0,
-                this.extractSnippet(content, node.loc?.start.line || 1, true)
-              ));
-            }
-          }
-        },
-
-        // Detect weak random number generation
-        MemberExpression: (path: NodePath<t.MemberExpression>) => {
-          const node = path.node;
-          const memberName = this.getMemberExpressionName(node);
-          
-          if (memberName === 'Math.random' && this.isUsedForSecurity(path)) {
-            issues.push(this.createIssue(
-              'Weak Random Number Generation',
-              'Medium',
-              'Math.random() is not cryptographically secure. Use crypto.getRandomValues() instead',
-              filename,
-              node.loc?.start.line || 1,
-              node.loc?.start.column || 0,
-              this.extractSnippet(content, node.loc?.start.line || 1)
-            ));
+          } catch (error) {
+            console.warn(`Error in MemberExpression visitor for ${filename}:`, error);
           }
         }
       });
@@ -242,26 +262,30 @@ export class ASTAnalyzer {
    * Track taint sources (user inputs)
    */
   private trackTaintSources(path: NodePath<t.CallExpression>): void {
-    const node = path.node;
-    
-    // Check if this is a user input source
-    const sourceName = t.isExpression(node.callee) ? this.getMemberExpressionName(node.callee) : '';
-    if (this.userInputSources.some(src => sourceName.includes(src))) {
-      const parent = path.parentPath?.node;
-      if (t.isVariableDeclarator(parent) && t.isIdentifier(parent.id)) {
-        const varName = parent.id.name;
-        const source: TaintSource = {
-          node: node as unknown as ASTNode,
-          variableName: varName,
-          type: 'user_input',
-          line: node.loc?.start.line || 1,
-          column: node.loc?.start.column || 0
-        };
-        
-        const sources = this.taintSources.get(varName) || [];
-        sources.push(source);
-        this.taintSources.set(varName, sources);
+    try {
+      const node = path.node;
+      
+      // Check if this is a user input source
+      const sourceName = t.isExpression(node.callee) ? this.getMemberExpressionName(node.callee) : '';
+      if (this.userInputSources.some(src => sourceName.includes(src))) {
+        const parent = path.parentPath?.node;
+        if (t.isVariableDeclarator(parent) && t.isIdentifier(parent.id)) {
+          const varName = parent.id.name;
+          const source: TaintSource = {
+            node: node as unknown as ASTNode,
+            variableName: varName,
+            type: 'user_input',
+            line: node.loc?.start.line || 1,
+            column: node.loc?.start.column || 0
+          };
+          
+          const sources = this.taintSources.get(varName) || [];
+          sources.push(source);
+          this.taintSources.set(varName, sources);
+        }
       }
+    } catch (error) {
+      console.warn('Error in trackTaintSources:', error);
     }
   }
 
@@ -269,40 +293,44 @@ export class ASTAnalyzer {
    * Track taint sinks (dangerous operations)
    */
   private trackTaintSinks(path: NodePath<t.CallExpression>): void {
-    const node = path.node;
-    const calleeName = t.isExpression(node.callee) ? this.getMemberExpressionName(node.callee) : '';
-    
-    // Check for SQL sinks
-    if (this.dangerousFunctions.sql.some(fn => calleeName.includes(fn))) {
-      this.taintSinks.push({
-        node: node as unknown as ASTNode,
-        type: 'sql',
-        line: node.loc?.start.line || 1,
-        column: node.loc?.start.column || 0,
-        functionName: calleeName
-      });
-    }
-    
-    // Check for XSS sinks
-    if (this.dangerousFunctions.xss.some(fn => calleeName.includes(fn))) {
-      this.taintSinks.push({
-        node: node as unknown as ASTNode,
-        type: 'xss',
-        line: node.loc?.start.line || 1,
-        column: node.loc?.start.column || 0,
-        functionName: calleeName
-      });
-    }
-    
-    // Check for command execution sinks
-    if (this.dangerousFunctions.exec.some(fn => calleeName.includes(fn))) {
-      this.taintSinks.push({
-        node: node as unknown as ASTNode,
-        type: 'command',
-        line: node.loc?.start.line || 1,
-        column: node.loc?.start.column || 0,
-        functionName: calleeName
-      });
+    try {
+      const node = path.node;
+      const calleeName = t.isExpression(node.callee) ? this.getMemberExpressionName(node.callee) : '';
+      
+      // Check for SQL sinks
+      if (this.dangerousFunctions.sql.some(fn => calleeName.includes(fn))) {
+        this.taintSinks.push({
+          node: node as unknown as ASTNode,
+          type: 'sql',
+          line: node.loc?.start.line || 1,
+          column: node.loc?.start.column || 0,
+          functionName: calleeName
+        });
+      }
+      
+      // Check for XSS sinks
+      if (this.dangerousFunctions.xss.some(fn => calleeName.includes(fn))) {
+        this.taintSinks.push({
+          node: node as unknown as ASTNode,
+          type: 'xss',
+          line: node.loc?.start.line || 1,
+          column: node.loc?.start.column || 0,
+          functionName: calleeName
+        });
+      }
+      
+      // Check for command execution sinks
+      if (this.dangerousFunctions.exec.some(fn => calleeName.includes(fn))) {
+        this.taintSinks.push({
+          node: node as unknown as ASTNode,
+          type: 'command',
+          line: node.loc?.start.line || 1,
+          column: node.loc?.start.column || 0,
+          functionName: calleeName
+        });
+      }
+    } catch (error) {
+      console.warn('Error in trackTaintSinks:', error);
     }
   }
 
@@ -355,25 +383,35 @@ export class ASTAnalyzer {
    * Helper methods
    */
   private getMemberExpressionName(node: t.Expression): string {
-    if (t.isIdentifier(node)) {
-      return node.name;
+    try {
+      if (t.isIdentifier(node)) {
+        return node.name;
+      }
+      if (t.isMemberExpression(node)) {
+        const object = this.getMemberExpressionName(node.object as t.Expression);
+        const property = t.isIdentifier(node.property) ? node.property.name : '';
+        return `${object}.${property}`;
+      }
+      return '';
+    } catch (error) {
+      console.warn('Error in getMemberExpressionName:', error);
+      return '';
     }
-    if (t.isMemberExpression(node)) {
-      const object = this.getMemberExpressionName(node.object as t.Expression);
-      const property = t.isIdentifier(node.property) ? node.property.name : '';
-      return `${object}.${property}`;
-    }
-    return '';
   }
 
   private isUsedForSecurity(path: NodePath<t.MemberExpression>): boolean {
-    const parent = path.parentPath?.node;
-    const code = path.getSource() || '';
-    
-    // Check if it's used in security-related context
-    return code.includes('token') || code.includes('session') || 
-           code.includes('id') || code.includes('key') ||
-           (parent && t.isCallExpression(parent));
+    try {
+      const parent = path.parentPath?.node;
+      const code = path.getSource ? path.getSource() || '' : '';
+      
+      // Check if it's used in security-related context
+      return code.includes('token') || code.includes('session') || 
+             code.includes('id') || code.includes('key') ||
+             (parent && t.isCallExpression(parent));
+    } catch (error) {
+      console.warn('Error in isUsedForSecurity:', error);
+      return false;
+    }
   }
 
   private isJavaScriptFile(filename: string): boolean {

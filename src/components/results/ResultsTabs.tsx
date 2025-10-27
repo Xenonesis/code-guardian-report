@@ -1,4 +1,4 @@
-import { Shield, FileCode, Sparkles, BarChart3 } from 'lucide-react';
+import { Shield, FileCode, Sparkles, BarChart3, Package } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { AnalysisResults } from '@/hooks/useAnalysis';
 import { SecurityOverview } from './SecurityOverview';
@@ -6,6 +6,7 @@ import { AISecurityInsights } from '../ai/AISecurityInsights';
 import { SecurityMetricsDashboard } from '@/components/SecurityMetricsDashboard';
 import { LanguageDetectionDisplay } from '../language/LanguageDetectionDisplay';
 import { UnifiedMetricsHeader } from './UnifiedMetricsHeader';
+import { DependencyAnalysisDisplay } from './DependencyAnalysisDisplay';
 
 interface ResultsTabsProps {
   results: AnalysisResults;
@@ -13,6 +14,14 @@ interface ResultsTabsProps {
 
 export const ResultsTabs: React.FC<ResultsTabsProps> = ({ results }) => {
   const hasLanguageDetection = results.languageDetection;
+  const hasDependencyAnalysis = results.dependencyAnalysis;
+
+  // Calculate grid columns based on available features
+  const getGridCols = () => {
+    if (hasLanguageDetection && hasDependencyAnalysis) return 'grid-cols-2 sm:grid-cols-5';
+    if (hasLanguageDetection || hasDependencyAnalysis) return 'grid-cols-2 sm:grid-cols-4';
+    return 'grid-cols-1 sm:grid-cols-3';
+  };
 
   return (
     <div className="w-full space-y-6">
@@ -21,7 +30,7 @@ export const ResultsTabs: React.FC<ResultsTabsProps> = ({ results }) => {
 
       <Tabs defaultValue="overview" className="w-full">
         <div className="sticky top-0 z-20 bg-gradient-to-b from-white via-white/98 to-white/95 dark:from-slate-900 dark:via-slate-900/98 dark:to-slate-900/95 backdrop-blur-2xl pb-6 mb-8 border-b border-slate-200/50 dark:border-slate-700/50">
-          <TabsList className={`grid w-full ${hasLanguageDetection ? 'grid-cols-2 sm:grid-cols-4' : 'grid-cols-1 sm:grid-cols-3'} gap-2 bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-900 backdrop-blur-xl border-2 border-slate-200/80 dark:border-slate-700/80 shadow-xl rounded-2xl p-2`}>
+          <TabsList className={`grid w-full gap-2 bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-900 backdrop-blur-xl border-2 border-slate-200/80 dark:border-slate-700/80 shadow-xl rounded-2xl p-2 ${getGridCols()}`}>
             <TabsTrigger
               value="overview"
               className="flex flex-col sm:flex-row items-center justify-center gap-2 py-3 sm:py-4 px-3 sm:px-4 text-xs sm:text-sm font-bold data-[state=active]:bg-gradient-to-br data-[state=active]:from-blue-500 data-[state=active]:via-blue-600 data-[state=active]:to-indigo-600 data-[state=active]:text-white data-[state=active]:shadow-xl hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-all duration-300 rounded-xl group"
@@ -36,6 +45,15 @@ export const ResultsTabs: React.FC<ResultsTabsProps> = ({ results }) => {
               >
                 <FileCode className="h-4 w-4 sm:h-5 sm:w-5 group-data-[state=active]:animate-pulse" />
                 <span className="text-center leading-tight">Language Detection</span>
+              </TabsTrigger>
+            )}
+            {hasDependencyAnalysis && (
+              <TabsTrigger
+                value="dependency-analysis"
+                className="flex flex-col sm:flex-row items-center justify-center gap-2 py-3 sm:py-4 px-3 sm:px-4 text-xs sm:text-sm font-bold data-[state=active]:bg-gradient-to-br data-[state=active]:from-green-500 data-[state=active]:via-green-600 data-[state=active]:to-emerald-600 data-[state=active]:text-white data-[state=active]:shadow-xl hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-all duration-300 rounded-xl group"
+              >
+                <Package className="h-4 w-4 sm:h-5 sm:w-5 group-data-[state=active]:animate-pulse" />
+                <span className="text-center leading-tight">Dependencies</span>
               </TabsTrigger>
             )}
             <TabsTrigger
@@ -62,6 +80,12 @@ export const ResultsTabs: React.FC<ResultsTabsProps> = ({ results }) => {
         {hasLanguageDetection && results.languageDetection && (
           <TabsContent value="language-detection" className="space-y-6 mt-0">
             <LanguageDetectionDisplay detectionResult={results.languageDetection} />
+          </TabsContent>
+        )}
+
+        {hasDependencyAnalysis && results.dependencyAnalysis && (
+          <TabsContent value="dependency-analysis" className="space-y-6 mt-0">
+            <DependencyAnalysisDisplay results={results.dependencyAnalysis} />
           </TabsContent>
         )}
 
