@@ -13,9 +13,10 @@ import { toast } from 'sonner';
 
 interface SecurityOverviewProps {
   results: AnalysisResults;
+  isLoading?: boolean;
 }
 
-export const SecurityOverview: React.FC<SecurityOverviewProps> = ({ results }) => {
+export const SecurityOverview: React.FC<SecurityOverviewProps> = ({ results, isLoading }) => {
   const [expandedIssues, setExpandedIssues] = useState<Set<string>>(new Set());
 
   const toggleIssueExpansion = (issueId: string) => {
@@ -111,6 +112,31 @@ ${suggestion.testingRecommendations.map((rec, i) => `${i + 1}. ${rec}`).join('\n
     filename: issue.filename,
     content: issue.codeSnippet || `// File: ${issue.filename}\n// Issue: ${issue.message}`
   }));
+
+  if (isLoading) {
+    return (
+      <div className="space-y-6 px-4 sm:px-0" role="status" aria-live="polite">
+        <Card className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900/40 dark:to-slate-900/10 border-slate-200 dark:border-slate-800 shadow-sm">
+          <CardContent className="p-8">
+            <div className="animate-pulse space-y-4">
+              <div className="h-6 w-48 rounded bg-slate-200 dark:bg-slate-800" />
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="h-32 rounded-lg bg-slate-200 dark:bg-slate-800" />
+                <div className="h-32 rounded-lg bg-slate-200 dark:bg-slate-800" />
+                <div className="h-32 rounded-lg bg-slate-200 dark:bg-slate-800" />
+              </div>
+              <div className="space-y-3">
+                <div className="h-4 w-64 rounded bg-slate-200 dark:bg-slate-800" />
+                <div className="h-4 w-80 rounded bg-slate-200 dark:bg-slate-800" />
+                <div className="h-20 rounded-lg bg-slate-200 dark:bg-slate-800" />
+                <div className="h-20 rounded-lg bg-slate-200 dark:bg-slate-800" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6 px-4 sm:px-0">

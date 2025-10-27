@@ -13,14 +13,12 @@ interface ResultsTabsProps {
 }
 
 export const ResultsTabs: React.FC<ResultsTabsProps> = ({ results }) => {
-  const hasLanguageDetection = results.languageDetection;
-  const hasDependencyAnalysis = results.dependencyAnalysis;
+  const hasLanguageDetection = !!results.languageDetection;
 
-  // Calculate grid columns based on available features
+  // Calculate grid columns based on available features (Dependencies tab is always shown)
   const getGridCols = () => {
-    if (hasLanguageDetection && hasDependencyAnalysis) return 'grid-cols-2 sm:grid-cols-5';
-    if (hasLanguageDetection || hasDependencyAnalysis) return 'grid-cols-2 sm:grid-cols-4';
-    return 'grid-cols-1 sm:grid-cols-3';
+    if (hasLanguageDetection) return 'grid-cols-2 sm:grid-cols-5';
+    return 'grid-cols-1 sm:grid-cols-4';
   };
 
   return (
@@ -47,15 +45,13 @@ export const ResultsTabs: React.FC<ResultsTabsProps> = ({ results }) => {
                 <span className="text-center leading-tight">Language Detection</span>
               </TabsTrigger>
             )}
-            {hasDependencyAnalysis && (
-              <TabsTrigger
+            <TabsTrigger
                 value="dependency-analysis"
                 className="flex flex-col sm:flex-row items-center justify-center gap-2 py-3 sm:py-4 px-3 sm:px-4 text-xs sm:text-sm font-bold data-[state=active]:bg-gradient-to-br data-[state=active]:from-green-500 data-[state=active]:via-green-600 data-[state=active]:to-emerald-600 data-[state=active]:text-white data-[state=active]:shadow-xl hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-all duration-300 rounded-xl group"
               >
                 <Package className="h-4 w-4 sm:h-5 sm:w-5 group-data-[state=active]:animate-pulse" />
                 <span className="text-center leading-tight">Dependencies</span>
               </TabsTrigger>
-            )}
             <TabsTrigger
               value="ai-insights"
               className="flex flex-col sm:flex-row items-center justify-center gap-2 py-3 sm:py-4 px-3 sm:px-4 text-xs sm:text-sm font-bold data-[state=active]:bg-gradient-to-br data-[state=active]:from-orange-500 data-[state=active]:via-orange-600 data-[state=active]:to-red-600 data-[state=active]:text-white data-[state=active]:shadow-xl hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-all duration-300 rounded-xl group"
@@ -83,11 +79,13 @@ export const ResultsTabs: React.FC<ResultsTabsProps> = ({ results }) => {
           </TabsContent>
         )}
 
-        {hasDependencyAnalysis && results.dependencyAnalysis && (
-          <TabsContent value="dependency-analysis" className="space-y-6 mt-0">
-            <DependencyAnalysisDisplay results={results.dependencyAnalysis} />
-          </TabsContent>
-        )}
+        <TabsContent value="dependency-analysis" className="space-y-6 mt-0">
+          <DependencyAnalysisDisplay
+            dependencyAnalysis={results.dependencyAnalysis}
+            onRetry={() => { try { if (typeof window !== 'undefined') window.location.reload(); } catch { /* noop */ } }}
+            isLoading={false}
+          />
+        </TabsContent>
 
         <TabsContent value="ai-insights" className="space-y-6 mt-0">
           <AISecurityInsights results={results} />

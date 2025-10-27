@@ -5,25 +5,123 @@ import { AlertTriangle, Shield, Package, Clock, Database } from 'lucide-react';
 import { DependencyScanResult } from '@/services/security/dependencyVulnerabilityScanner';
 
 interface DependencyAnalysisDisplayProps {
-  dependencyAnalysis: DependencyScanResult;
+  dependencyAnalysis: DependencyScanResult | null | undefined;
+  onRetry?: () => void | Promise<void>;
+  isLoading?: boolean;
 }
 
 export const DependencyAnalysisDisplay: React.FC<DependencyAnalysisDisplayProps> = ({
-  dependencyAnalysis
+  dependencyAnalysis,
+  onRetry,
+  isLoading
 }) => {
   // Handle case where dependency analysis failed or is undefined
+  if (isLoading) {
+    return (
+      <div className="space-y-6" role="status" aria-live="polite">
+        <Card className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900/40 dark:to-slate-900/10 border-slate-200 dark:border-slate-800 shadow-sm">
+          <CardContent className="p-8">
+            <div className="animate-pulse space-y-4">
+              <div className="h-6 w-48 rounded bg-slate-200 dark:bg-slate-800" />
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="h-24 rounded-lg bg-slate-200 dark:bg-slate-800" />
+                <div className="h-24 rounded-lg bg-slate-200 dark:bg-slate-800" />
+                <div className="h-24 rounded-lg bg-slate-200 dark:bg-slate-800" />
+                <div className="h-24 rounded-lg bg-slate-200 dark:bg-slate-800" />
+              </div>
+              <div className="h-4 w-64 rounded bg-slate-200 dark:bg-slate-800" />
+              <div className="h-4 w-80 rounded bg-slate-200 dark:bg-slate-800" />
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   if (!dependencyAnalysis) {
+    const handleRetry = () => {
+      try {
+        // Simple retry: reload the page to re-run analysis flow
+        if (typeof window !== 'undefined') window.location.reload();
+      } catch {
+        // no-op fallback
+      }
+    };
+
     return (
       <div className="space-y-6">
-        <Card className="bg-gradient-to-br from-gray-50 to-slate-50 dark:from-gray-950/20 dark:to-slate-950/20 border-gray-200 dark:border-gray-800">
-          <CardContent className="p-8 text-center">
-            <Package className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-              Dependency Analysis Unavailable
-            </h3>
-            <p className="text-gray-600 dark:text-gray-300">
-              Dependency scanning encountered an error. This may be due to missing package files or configuration issues.
-            </p>
+        <Card className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900/40 dark:to-slate-900/10 border-slate-200 dark:border-slate-800 shadow-sm">
+          <CardContent className="p-8">
+            <div className="flex flex-col items-center text-center gap-4">
+              <div className="rounded-2xl p-3 bg-slate-100 dark:bg-slate-800">
+                <Package className="h-8 w-8 text-slate-600 dark:text-slate-300" />
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-50 mb-1">
+                  Dependency Analysis Unavailable
+                </h3>
+                <p className="text-sm text-slate-600 dark:text-slate-300 max-w-2xl">
+                  We couldn't complete dependency scanning. This often happens when required package manifests are missing
+                  or the file selection didn't include them.
+                </p>
+              </div>
+
+              <div className="flex flex-col md:flex-row items-center gap-3 mt-2">
+                <button
+                  onClick={handleRetry}
+                  className="inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900 transition-colors"
+                >
+                  Try again
+                </button>
+                <a
+                  href="#dependency-help"
+                  className="inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 hover:bg-emerald-50/60 dark:hover:bg-emerald-900/20 transition-colors"
+                >
+                  How to enable scanning
+                </a>
+              </div>
+
+              <div id="dependency-help" className="w-full mt-4">
+                <div className="text-left mx-auto max-w-2xl">
+                  <h4 className="text-sm font-semibold text-slate-800 dark:text-slate-200 mb-2">To enable Dependency Scanning:</h4>
+                  <ul className="text-sm text-slate-700 dark:text-slate-300 list-disc pl-5 space-y-1">
+                    <li>Include at least one supported manifest when running analysis or uploading archives.</li>
+                    <li>Ensure the manifest files are at the project root inside your zip or selection.</li>
+                  </ul>
+
+                  <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div className="rounded-lg border border-slate-200 dark:border-slate-800 p-3 bg-white/70 dark:bg-slate-900/30">
+                      <p className="text-xs font-semibold text-slate-900 dark:text-slate-100 mb-1">JavaScript/TypeScript</p>
+                      <p className="text-xs text-slate-600 dark:text-slate-400">package.json, yarn.lock</p>
+                    </div>
+                    <div className="rounded-lg border border-slate-200 dark:border-slate-800 p-3 bg-white/70 dark:bg-slate-900/30">
+                      <p className="text-xs font-semibold text-slate-900 dark:text-slate-100 mb-1">Python</p>
+                      <p className="text-xs text-slate-600 dark:text-slate-400">requirements.txt</p>
+                    </div>
+                    <div className="rounded-lg border border-slate-200 dark:border-slate-800 p-3 bg-white/70 dark:bg-slate-900/30">
+                      <p className="text-xs font-semibold text-slate-900 dark:text-slate-100 mb-1">Java (Maven/Gradle)</p>
+                      <p className="text-xs text-slate-600 dark:text-slate-400">pom.xml, build.gradle</p>
+                    </div>
+                    <div className="rounded-lg border border-slate-200 dark:border-slate-800 p-3 bg-white/70 dark:bg-slate-900/30">
+                      <p className="text-xs font-semibold text-slate-900 dark:text-slate-100 mb-1">PHP</p>
+                      <p className="text-xs text-slate-600 dark:text-slate-400">composer.json, composer.lock</p>
+                    </div>
+                    <div className="rounded-lg border border-slate-200 dark:border-slate-800 p-3 bg-white/70 dark:bg-slate-900/30">
+                      <p className="text-xs font-semibold text-slate-900 dark:text-slate-100 mb-1">Rust</p>
+                      <p className="text-xs text-slate-600 dark:text-slate-400">Cargo.toml, Cargo.lock</p>
+                    </div>
+                    <div className="rounded-lg border border-slate-200 dark:border-slate-800 p-3 bg-white/70 dark:bg-slate-900/30">
+                      <p className="text-xs font-semibold text-slate-900 dark:text-slate-100 mb-1">Ruby</p>
+                      <p className="text-xs text-slate-600 dark:text-slate-400">Gemfile, Gemfile.lock</p>
+                    </div>
+                  </div>
+
+                  <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">
+                    Tip: If you uploaded a zip, make sure your manifests are not nested too deeply. Place them near the root for best results.
+                  </p>
+                </div>
+              </div>
+            </div>
           </CardContent>
         </Card>
       </div>
@@ -65,6 +163,34 @@ export const DependencyAnalysisDisplay: React.FC<DependencyAnalysisDisplayProps>
 
   return (
     <div className="space-y-6">
+      {/* Scan Metadata Header */}
+      <Card className="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-950/10 dark:to-teal-950/10 border-emerald-200 dark:border-emerald-900">
+        <CardHeader className="pb-2">
+          <CardTitle className="flex items-center gap-2 text-emerald-800 dark:text-emerald-200">
+            <Package className="h-5 w-5" />
+            Dependencies Overview
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="pt-0 text-sm text-emerald-900/80 dark:text-emerald-200/80">
+          <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+            <div className="flex flex-wrap gap-3">
+              <span className="inline-flex items-center gap-2">
+                <span className="font-medium">Scanned:</span>
+                <time dateTime={new Date(summary ? (dependencyAnalysis?.scanMetadata?.scanDate || new Date()) : new Date()).toISOString()}>
+                  {dependencyAnalysis?.scanMetadata?.scanDate ? new Date(dependencyAnalysis.scanMetadata.scanDate).toLocaleString() : '—'}
+                </time>
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <span className="font-medium">Duration:</span>
+                <span>{typeof dependencyAnalysis?.scanMetadata?.scanDuration === 'number' ? `${Math.max(1, Math.round(dependencyAnalysis.scanMetadata.scanDuration))} ms` : '—'}</span>
+              </span>
+            </div>
+            <div className="text-xs opacity-80">
+              Databases: {Array.isArray(dependencyAnalysis?.scanMetadata?.databasesUsed) ? dependencyAnalysis!.scanMetadata.databasesUsed.join(', ') : '—'}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
       {/* Summary Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-950/20 border-blue-200 dark:border-blue-800">
@@ -117,7 +243,22 @@ export const DependencyAnalysisDisplay: React.FC<DependencyAnalysisDisplayProps>
       </div>
 
       {/* Vulnerabilities Section */}
-      {vulnerabilities.length > 0 && (
+      {vulnerabilities.length === 0 ? (
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Shield className="h-5 w-5 text-emerald-600" />
+              No Vulnerabilities Found
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-gray-600 dark:text-gray-300">
+              Great news! We didn’t find any known vulnerabilities in your dependencies.
+              Keep your dependencies updated and consider enabling automated scanning in CI.
+            </p>
+          </CardContent>
+        </Card>
+      ) : (
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">

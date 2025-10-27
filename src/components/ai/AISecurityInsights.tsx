@@ -40,6 +40,7 @@ import { toast } from 'sonner';
 interface AISecurityInsightsProps {
   results: AnalysisResults;
   className?: string;
+  isLoading?: boolean;
 }
 
 interface InsightState {
