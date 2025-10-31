@@ -402,14 +402,34 @@ export class ASTAnalyzer {
   private isUsedForSecurity(path: NodePath<t.MemberExpression>): boolean {
     try {
       const parent = path.parentPath?.node;
-      const code = path.getSource ? path.getSource() || '' : '';
+      
+      // Safely check if getSource is available and the hub/scope has the necessary data
+      let code = '';
+      if (typeof path.getSource === 'function') {
+        try {
+          const source = path.getSource();
+          code = source || '';
+        } catch {
+          // getSource might fail if hub/scope is not properly initialized
+          // Fall back to checking the node structure directly
+          code = '';
+        }
+      }
+      
+      // If we couldn't get source code, check node structure directly
+      if (!code) {
+        const node = path.node;
+        if (t.isIdentifier(node.property)) {
+          code = node.property.name;
+        }
+      }
       
       // Check if it's used in security-related context
       return code.includes('token') || code.includes('session') || 
              code.includes('id') || code.includes('key') ||
              (parent && t.isCallExpression(parent));
     } catch (error) {
-      console.warn('Error in isUsedForSecurity:', error);
+      console.error('Error in isUsedForSecurity:', error);
       return false;
     }
   }

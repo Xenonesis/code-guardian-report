@@ -268,8 +268,8 @@ export const DependencyAnalysisDisplay: React.FC<DependencyAnalysisDisplayProps>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              {vulnerabilities.slice(0, 10).map((vuln) => (
-                <div key={`vulnerability-${vuln.package}-${vuln.vulnerability.id}`} className="border rounded-lg p-4 bg-red-50 dark:bg-red-950/10">
+              {vulnerabilities.slice(0, 10).map((vuln, index) => (
+                <div key={`vulnerability-${vuln.package}-${vuln.vulnerability.id}-${vuln.version}-${index}`} className="border rounded-lg p-4 bg-red-50 dark:bg-red-950/10">
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-2">
@@ -319,8 +319,8 @@ export const DependencyAnalysisDisplay: React.FC<DependencyAnalysisDisplayProps>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              {licenseIssues.map((issue) => (
-                <div key={`license-${issue.package}-${issue.license}`} className="border rounded-lg p-4 bg-yellow-50 dark:bg-yellow-950/10">
+              {licenseIssues.map((issue, index) => (
+                <div key={`license-${issue.package}-${issue.license}-${index}`} className="border rounded-lg p-4 bg-yellow-50 dark:bg-yellow-950/10">
                   <div className="flex items-center justify-between">
                     <div>
                       <Badge className={getSeverityColor(issue.severity)}>
@@ -352,8 +352,8 @@ export const DependencyAnalysisDisplay: React.FC<DependencyAnalysisDisplayProps>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              {outdatedPackages.slice(0, 10).map((pkg) => (
-                <div key={`outdated-${pkg.package}-${pkg.currentVersion}`} className="border rounded-lg p-4 bg-blue-50 dark:bg-blue-950/10">
+              {outdatedPackages.slice(0, 10).map((pkg, index) => (
+                <div key={`outdated-${pkg.package}-${pkg.currentVersion}-${index}`} className="border rounded-lg p-4 bg-blue-50 dark:bg-blue-950/10">
                   <div className="flex items-center justify-between">
                     <div>
                       <h4 className="font-semibold text-gray-900 dark:text-white">
@@ -397,8 +397,8 @@ export const DependencyAnalysisDisplay: React.FC<DependencyAnalysisDisplayProps>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              {recommendations.map((rec) => (
-                <div key={`recommendation-${rec.title}-${rec.priority}`} className={`border rounded-lg p-4 ${getPriorityColor(rec.priority)}`}>
+              {recommendations.map((rec, index) => (
+                <div key={`recommendation-${rec.title}-${rec.priority}-${index}`} className={`border rounded-lg p-4 ${getPriorityColor(rec.priority)}`}>
                   <div className="flex items-start gap-3">
                     <Badge className={getSeverityColor(rec.priority)}>
                       {rec.priority}
@@ -415,8 +415,8 @@ export const DependencyAnalysisDisplay: React.FC<DependencyAnalysisDisplayProps>
                       </p>
                       {rec.packages.length > 0 && (
                         <div className="flex flex-wrap gap-1">
-                          {rec.packages.slice(0, 5).map((pkg) => (
-                            <Badge key={`pkg-${pkg}`} variant="outline" className="text-xs">
+                          {rec.packages.slice(0, 5).map((pkg, pkgIndex) => (
+                            <Badge key={`pkg-${pkg}-${pkgIndex}`} variant="outline" className="text-xs">
                               {pkg}
                             </Badge>
                           ))}
@@ -447,8 +447,8 @@ export const DependencyAnalysisDisplay: React.FC<DependencyAnalysisDisplayProps>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              {supplyChainRisks.map((risk) => (
-                <div key={`risk-${risk.package}-${risk.riskType}`} className="border rounded-lg p-4 bg-purple-50 dark:bg-purple-950/10">
+              {supplyChainRisks.map((risk, index) => (
+                <div key={`risk-${risk.package}-${risk.riskType}-${index}`} className="border rounded-lg p-4 bg-purple-50 dark:bg-purple-950/10">
                   <div className="flex items-center justify-between mb-2">
                     <Badge className={getSeverityColor(risk.severity)}>
                       {risk.severity}

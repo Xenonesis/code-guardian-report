@@ -175,27 +175,69 @@ export const SecurityIssueItem: React.FC<SecurityIssueItemProps> = ({
       </button>
 
       {isExpanded && (
-        <div className="border-t border-slate-700/50 p-4">
+        <div className="border-t border-slate-700/50 p-3 sm:p-4">
           <Tabs defaultValue="summary" className="w-full">
-            <TabsList className="grid w-full grid-cols-3 sm:grid-cols-5 h-auto bg-slate-800 p-1 rounded-lg">
-              <TabsTrigger value="summary" className="flex items-center gap-1.5 text-sm py-2.5 px-3 rounded-md text-slate-300 data-[state=active]:bg-blue-500 data-[state=active]:text-white">
-                <MessageSquare className="h-3 w-3" />
-                <span className="hidden sm:inline">Summary</span>
-                <span className="sm:hidden">Info</span>
+            <TabsList className="grid w-full grid-cols-3 h-auto bg-slate-800 p-1 rounded-lg gap-1 mb-4">
+              <TabsTrigger 
+                value="summary" 
+                className="flex items-center justify-center gap-1.5 text-xs sm:text-sm py-2.5 sm:py-3 px-2 sm:px-3 rounded-md text-slate-300 data-[state=active]:bg-blue-500 data-[state=active]:text-white transition-all touch-target"
+              >
+                <MessageSquare className="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0" />
+                <span className="hidden xs:inline">Summary</span>
+                <span className="xs:hidden">Info</span>
               </TabsTrigger>
-              <TabsTrigger value="details" className="text-sm py-2.5 px-3 rounded-md text-slate-300 data-[state=active]:bg-blue-500 data-[state=active]:text-white">
-                <span className="hidden sm:inline">Technical</span>
-                <span className="sm:hidden">Tech</span>
+              <TabsTrigger 
+                value="details" 
+                className="flex items-center justify-center text-xs sm:text-sm py-2.5 sm:py-3 px-2 sm:px-3 rounded-md text-slate-300 data-[state=active]:bg-blue-500 data-[state=active]:text-white transition-all touch-target"
+              >
+                <span className="hidden xs:inline">Technical</span>
+                <span className="xs:hidden">Tech</span>
               </TabsTrigger>
-              <TabsTrigger value="remediation" className="text-sm py-2.5 px-3 rounded-md text-slate-300 data-[state=active]:bg-blue-500 data-[state=active]:text-white">
-                <span className="hidden sm:inline">Fix Guide</span>
-                <span className="sm:hidden">Fix</span>
+              <TabsTrigger 
+                value="remediation" 
+                className="flex items-center justify-center text-xs sm:text-sm py-2.5 sm:py-3 px-2 sm:px-3 rounded-md text-slate-300 data-[state=active]:bg-blue-500 data-[state=active]:text-white transition-all touch-target"
+              >
+                <span className="hidden xs:inline">Fix Guide</span>
+                <span className="xs:hidden">Fix</span>
               </TabsTrigger>
-              <TabsTrigger value="ai-fixes" className="hidden sm:flex items-center gap-1.5 text-sm py-2.5 px-3 rounded-md text-slate-300 data-[state=active]:bg-blue-500 data-[state=active]:text-white">
-                <Brain className="h-3 w-3" />
+            </TabsList>
+
+            {/* Mobile-only secondary tabs */}
+            <div className="sm:hidden grid grid-cols-2 gap-2 mb-4">
+              <TabsList className="grid w-full grid-cols-1 h-auto bg-slate-800 p-1 rounded-lg">
+                <TabsTrigger 
+                  value="ai-fixes" 
+                  className="flex items-center justify-center gap-1.5 text-xs py-2.5 px-2 rounded-md text-slate-300 data-[state=active]:bg-blue-500 data-[state=active]:text-white transition-all touch-target"
+                >
+                  <Brain className="h-3.5 w-3.5 flex-shrink-0" />
+                  AI Fixes
+                </TabsTrigger>
+              </TabsList>
+              <TabsList className="grid w-full grid-cols-1 h-auto bg-slate-800 p-1 rounded-lg">
+                <TabsTrigger 
+                  value="references" 
+                  className="flex items-center justify-center text-xs py-2.5 px-2 rounded-md text-slate-300 data-[state=active]:bg-blue-500 data-[state=active]:text-white transition-all touch-target"
+                >
+                  References
+                </TabsTrigger>
+              </TabsList>
+            </div>
+
+            {/* Desktop tabs row */}
+            <TabsList className="hidden sm:grid w-full grid-cols-2 h-auto bg-slate-800 p-1 rounded-lg gap-1 mb-4">
+              <TabsTrigger 
+                value="ai-fixes" 
+                className="flex items-center justify-center gap-1.5 text-sm py-3 px-3 rounded-md text-slate-300 data-[state=active]:bg-blue-500 data-[state=active]:text-white transition-all"
+              >
+                <Brain className="h-4 w-4 flex-shrink-0" />
                 AI Fixes
               </TabsTrigger>
-              <TabsTrigger value="references" className="hidden sm:block text-sm py-2.5 px-3 rounded-md text-slate-300 data-[state=active]:bg-blue-500 data-[state=active]:text-white">References</TabsTrigger>
+              <TabsTrigger 
+                value="references" 
+                className="flex items-center justify-center text-sm py-3 px-3 rounded-md text-slate-300 data-[state=active]:bg-blue-500 data-[state=active]:text-white transition-all"
+              >
+                References
+              </TabsTrigger>
             </TabsList>
 
             <TabsContent value="summary" className="space-y-4 mt-4">
@@ -245,82 +287,95 @@ export const SecurityIssueItem: React.FC<SecurityIssueItemProps> = ({
                 </div>
               </div>
 
-              <div className="bg-slate-800/50 border border-slate-700/50 rounded-lg p-4">
-                <h4 className="font-semibold text-white mb-2">
+              <div className="bg-slate-800/50 border border-slate-700/50 rounded-lg p-3 sm:p-4">
+                <h4 className="font-semibold text-white mb-2 text-sm sm:text-base">
                   Location
                 </h4>
-                <p className="text-slate-300">
-                  Found in <code className="bg-slate-700 px-2 py-1 rounded text-sm">{issue.filename}</code> at line <strong>{issue.line}</strong>
-                </p>
+                <div className="text-slate-300 text-xs sm:text-sm space-y-1.5">
+                  <p>
+                    Found in <code className="bg-slate-700 px-1.5 py-0.5 rounded text-xs sm:text-sm break-all">{issue.filename}</code>
+                  </p>
+                  <p>
+                    at line <strong className="text-white">{issue.line}</strong>
+                  </p>
+                </div>
                 {issue.confidence && (
-                  <p className="text-sm text-slate-400 mt-2">
-                    Detection confidence: {issue.confidence}%
+                  <p className="text-xs sm:text-sm text-slate-400 mt-2 pt-2 border-t border-slate-700/50">
+                    Detection confidence: <strong className="text-white">{issue.confidence}%</strong>
                   </p>
                 )}
               </div>
             </TabsContent>
 
-            <TabsContent value="details" className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <h4 className="font-semibold mb-2 text-white">Issue Details</h4>
-                  <div className="space-y-2 text-sm">
+            <TabsContent value="details" className="space-y-3 sm:space-y-4">
+              <div className="grid grid-cols-1 gap-3 sm:gap-4">
+                {/* Issue Details Section */}
+                <div className="bg-slate-800/50 border border-slate-700/50 rounded-lg p-3 sm:p-4">
+                  <h4 className="font-semibold mb-3 text-white text-base flex items-center gap-2">
+                    <span className="text-blue-400">ℹ️</span>
+                    Issue Details
+                  </h4>
+                  <div className="space-y-2.5 text-sm">
                     {issue.cweId && (
-                      <div className="flex items-center gap-2">
-                        <span className="font-medium text-slate-400">CWE:</span>
+                      <div className="flex flex-col xs:flex-row xs:items-center gap-1 xs:gap-2 py-2 border-b border-slate-700/50 last:border-0">
+                        <span className="font-medium text-slate-400 min-w-[80px] text-xs sm:text-sm">CWE:</span>
                         <a
                           href={`https://cwe.mitre.org/data/definitions/${issue.cweId.replace('CWE-', '')}.html`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-blue-400 hover:underline flex items-center gap-1"
+                          className="text-blue-400 hover:underline flex items-center gap-1.5 touch-target-lg"
                         >
-                          {issue.cweId}
-                          <ExternalLink className="h-3 w-3" />
+                          <span className="text-sm sm:text-base">{issue.cweId}</span>
+                          <ExternalLink className="h-3.5 w-3.5 flex-shrink-0" />
                         </a>
                       </div>
                     )}
                     {issue.owaspCategory && (
-                      <div className="flex items-center gap-2">
-                        <span className="font-medium text-slate-400">OWASP:</span>
-                        <span className="text-slate-300">
+                      <div className="flex flex-col xs:flex-row xs:items-start gap-1 xs:gap-2 py-2 border-b border-slate-700/50 last:border-0">
+                        <span className="font-medium text-slate-400 min-w-[80px] text-xs sm:text-sm flex-shrink-0">OWASP:</span>
+                        <span className="text-slate-300 text-sm sm:text-base break-words">
                           {issue.owaspCategory}
                         </span>
                       </div>
                     )}
-                    <div className="flex items-center gap-2">
-                      <span className="font-medium text-slate-400">Risk:</span>
-                      <span className={getRiskColor(issue.riskRating)}>
+                    <div className="flex flex-col xs:flex-row xs:items-center gap-1 xs:gap-2 py-2 border-b border-slate-700/50 last:border-0">
+                      <span className="font-medium text-slate-400 min-w-[80px] text-xs sm:text-sm">Risk:</span>
+                      <span className={`${getRiskColor(issue.riskRating)} font-semibold text-sm sm:text-base`}>
                         {issue.riskRating}
                       </span>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <span className="font-medium text-slate-400">Impact:</span>
-                      <span className="text-slate-300">
+                    <div className="flex flex-col xs:flex-row xs:items-start gap-1 xs:gap-2 py-2">
+                      <span className="font-medium text-slate-400 min-w-[80px] text-xs sm:text-sm flex-shrink-0">Impact:</span>
+                      <span className="text-slate-300 text-sm sm:text-base break-words">
                         {issue.impact}
                       </span>
                     </div>
                   </div>
                 </div>
 
-                <div>
-                  <h4 className="font-semibold mb-2 text-white">Technical Information</h4>
-                  <div className="space-y-2 text-sm">
-                    <div className="flex items-center gap-2">
-                      <span className="font-medium text-slate-400">File:</span>
-                      <span className="text-slate-300">
+                {/* Technical Information Section */}
+                <div className="bg-slate-800/50 border border-slate-700/50 rounded-lg p-3 sm:p-4">
+                  <h4 className="font-semibold mb-3 text-white text-base flex items-center gap-2">
+                    <span className="text-purple-400">⚙️</span>
+                    Technical Information
+                  </h4>
+                  <div className="space-y-2.5 text-sm">
+                    <div className="flex flex-col gap-1 py-2 border-b border-slate-700/50 last:border-0">
+                      <span className="font-medium text-slate-400 text-xs sm:text-sm">File:</span>
+                      <span className="font-mono text-xs sm:text-sm bg-slate-700 px-2.5 py-1.5 rounded text-slate-300 break-all">
                         {issue.filename}:{issue.line}
                       </span>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <span className="font-medium text-slate-400">Category:</span>
-                      <span className="text-slate-300">
+                    <div className="flex flex-col xs:flex-row xs:items-start gap-1 xs:gap-2 py-2 border-b border-slate-700/50 last:border-0">
+                      <span className="font-medium text-slate-400 min-w-[80px] text-xs sm:text-sm flex-shrink-0">Category:</span>
+                      <span className="text-slate-300 text-sm sm:text-base break-words">
                         {issue.category}
                       </span>
                     </div>
                     {issue.tool && (
-                      <div className="flex items-center gap-2">
-                        <span className="font-medium text-slate-400">Detected by:</span>
-                        <Badge variant="outline" className="text-slate-300 border-slate-600">
+                      <div className="flex flex-col xs:flex-row xs:items-center gap-1 xs:gap-2 py-2">
+                        <span className="font-medium text-slate-400 min-w-[80px] text-xs sm:text-sm">Detected by:</span>
+                        <Badge variant="outline" className="text-slate-300 border-slate-600 self-start xs:self-auto text-xs sm:text-sm">
                           {issue.tool}
                         </Badge>
                       </div>
@@ -330,30 +385,37 @@ export const SecurityIssueItem: React.FC<SecurityIssueItemProps> = ({
               </div>
             </TabsContent>
 
-            <TabsContent value="remediation" className="space-y-4">
-              <div>
-                <h4 className="font-semibold mb-2 text-white">Remediation Guidance</h4>
-                <div className="space-y-2 text-sm">
-                  <p className="text-slate-300">
+            <TabsContent value="remediation" className="space-y-3 sm:space-y-4">
+              <div className="bg-slate-800/50 border border-slate-700/50 rounded-lg p-3 sm:p-4">
+                <h4 className="font-semibold mb-3 text-white text-base flex items-center gap-2">
+                  <span className="text-green-400">🛠️</span>{' '}
+                  Remediation Guidance
+                </h4>
+                <div className="space-y-3 text-sm">
+                  <p className="text-slate-300 leading-relaxed">
                     {issue.remediation.description}
                   </p>
-                  <div className="flex items-center gap-2">
-                    <span className="font-medium text-slate-400">Effort:</span>
-                    <Badge variant="outline" className="text-slate-300 border-slate-600">
-                      {issue.remediation.effort}
-                    </Badge>
-                    <span className="font-medium text-slate-400">Priority:</span>
-                    <div className="flex">
-                      {Array.from({ length: 5 }, (_, i) => (
-                        <Star
-                          key={i}
-                          className={`h-3 w-3 ${
-                            i < issue.remediation.priority
-                              ? 'text-yellow-400 fill-current'
-                              : 'text-slate-600'
-                          }`}
-                        />
-                      ))}
+                  <div className="flex flex-col xs:flex-row xs:items-center gap-3 pt-2 border-t border-slate-700/50">
+                    <div className="flex items-center gap-2">
+                      <span className="font-medium text-slate-400 text-xs sm:text-sm">Effort:</span>
+                      <Badge variant="outline" className="text-slate-300 border-slate-600 text-xs sm:text-sm">
+                        {issue.remediation.effort}
+                      </Badge>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-medium text-slate-400 text-xs sm:text-sm">Priority:</span>
+                      <div className="flex gap-0.5">
+                        {Array.from({ length: 5 }, (_, i) => (
+                          <Star
+                            key={i}
+                            className={`h-3.5 w-3.5 sm:h-4 sm:w-4 ${
+                              i < issue.remediation.priority
+                                ? 'text-yellow-400 fill-current'
+                                : 'text-slate-600'
+                            }`}
+                          />
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -361,50 +423,62 @@ export const SecurityIssueItem: React.FC<SecurityIssueItemProps> = ({
 
               {/* Code Examples */}
               {(issue.codeSnippet || issue.remediation.codeExample) && (
-                <div className="space-y-4">
+                <div className="space-y-3 sm:space-y-4">
                   {issue.remediation.codeExample && (
-                    <div>
-                      <div className="flex items-center justify-between mb-2">
-                        <h4 className="font-semibold text-red-400">Vulnerable Code</h4>
+                    <div className="bg-red-950/20 border border-red-800 rounded-lg p-3 sm:p-4">
+                      <div className="flex items-center justify-between mb-3 gap-2">
+                        <h4 className="font-semibold text-red-400 text-sm sm:text-base flex items-center gap-2">
+                          <span className="text-lg">⚠️</span>{' '}
+                          Vulnerable Code
+                        </h4>
                         <Button
                           size="sm"
                           variant="outline"
                           onClick={() => copyToClipboard(issue.remediation.codeExample!, 'Vulnerable code')}
-                          className="text-slate-300 border-slate-600 hover:bg-slate-700"
+                          className="text-slate-300 border-slate-600 hover:bg-slate-700 px-2 sm:px-3 touch-target"
                         >
                           {copiedCode === 'Vulnerable code' ? (
-                            <CheckCircle className="h-4 w-4" />
+                            <CheckCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                           ) : (
-                            <Copy className="h-4 w-4" />
+                            <Copy className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                           )}
+                          <span className="ml-1.5 hidden sm:inline text-xs">Copy</span>
                         </Button>
                       </div>
-                      <pre className="bg-red-950/20 p-3 rounded border border-red-800 text-sm overflow-x-auto">
-                        <code className="text-red-200">{issue.remediation.codeExample}</code>
-                      </pre>
+                      <div className="bg-slate-900/50 rounded-lg overflow-hidden">
+                        <pre className="p-3 sm:p-4 text-xs sm:text-sm overflow-x-auto">
+                          <code className="text-red-200">{issue.remediation.codeExample}</code>
+                        </pre>
+                      </div>
                     </div>
                   )}
 
                   {issue.remediation.fixExample && (
-                    <div>
-                      <div className="flex items-center justify-between mb-2">
-                        <h4 className="font-semibold text-green-400">Fixed Code</h4>
+                    <div className="bg-green-950/20 border border-green-800 rounded-lg p-3 sm:p-4">
+                      <div className="flex items-center justify-between mb-3 gap-2">
+                        <h4 className="font-semibold text-green-400 text-sm sm:text-base flex items-center gap-2">
+                          <span className="text-lg">✅</span>{' '}
+                          Fixed Code
+                        </h4>
                         <Button
                           size="sm"
                           variant="outline"
                           onClick={() => copyToClipboard(issue.remediation.fixExample!, 'Fixed code')}
-                          className="text-slate-300 border-slate-600 hover:bg-slate-700"
+                          className="text-slate-300 border-slate-600 hover:bg-slate-700 px-2 sm:px-3 touch-target"
                         >
                           {copiedCode === 'Fixed code' ? (
-                            <CheckCircle className="h-4 w-4" />
+                            <CheckCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                           ) : (
-                            <Copy className="h-4 w-4" />
+                            <Copy className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                           )}
+                          <span className="ml-1.5 hidden sm:inline text-xs">Copy</span>
                         </Button>
                       </div>
-                      <pre className="bg-green-950/20 p-3 rounded border border-green-800 text-sm overflow-x-auto">
-                        <code className="text-green-200">{issue.remediation.fixExample}</code>
-                      </pre>
+                      <div className="bg-slate-900/50 rounded-lg overflow-hidden">
+                        <pre className="p-3 sm:p-4 text-xs sm:text-sm overflow-x-auto">
+                          <code className="text-green-200">{issue.remediation.fixExample}</code>
+                        </pre>
+                      </div>
                     </div>
                   )}
                 </div>
@@ -435,19 +509,22 @@ export const SecurityIssueItem: React.FC<SecurityIssueItemProps> = ({
 
             <TabsContent value="references" className="space-y-4">
               {issue.references && issue.references.length > 0 ? (
-                <div>
-                  <h4 className="font-semibold mb-2 text-white">External References</h4>
-                  <div className="space-y-1">
-                    {issue.references.map((ref, index) => (
+                <div className="bg-slate-800/50 border border-slate-700/50 rounded-lg p-3 sm:p-4">
+                  <h4 className="font-semibold mb-3 text-white text-base flex items-center gap-2">
+                    <ExternalLink className="h-4 w-4 text-blue-400" />
+                    External References
+                  </h4>
+                  <div className="space-y-2">
+                    {issue.references.map((ref) => (
                       <a
-                        key={index}
+                        key={ref}
                         href={ref}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-blue-400 hover:underline text-sm flex items-center gap-1"
+                        className="text-blue-400 hover:underline text-xs sm:text-sm flex items-start gap-2 p-2 rounded hover:bg-slate-700/50 transition-colors break-all touch-target"
                       >
-                        {ref}
-                        <ExternalLink className="h-3 w-3" />
+                        <ExternalLink className="h-3.5 w-3.5 mt-0.5 flex-shrink-0" />
+                        <span className="break-all">{ref}</span>
                       </a>
                     ))}
                   </div>
