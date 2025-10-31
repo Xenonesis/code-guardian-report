@@ -2227,3 +2227,8 @@
 .navigation-scroll > * {
   scroll-margin-top: 1rem;
 }
+
+/* Custom styles for Upload ZIP File tab trigger */
+[data-state="active"][value="file"] {
+  transform: translateX(-6px) translateY(-5px);
+}
