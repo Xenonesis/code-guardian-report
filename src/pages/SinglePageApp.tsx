@@ -209,9 +209,9 @@ const SinglePageApp = () => {
         <section id="about" className="min-h-screen relative overflow-hidden">
           <AnimatedBackground />
           
-          <div className="pt-16">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="relative z-10 space-y-16 sm:space-y-20 lg:space-y-24">
+          <div className="pt-12 sm:pt-16">
+            <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
+              <div className="relative z-10 space-y-12 sm:space-y-16 lg:space-y-20 xl:space-y-24">
                 {/* Enhanced Hero Section */}
                 <div>
                   <HeroSection
@@ -274,28 +274,28 @@ const SinglePageApp = () => {
       {/* Privacy Section */}
       {currentSection === 'privacy' && (
         <section id="privacy" className="min-h-screen bg-slate-50 dark:bg-slate-900/50">
-          <div className="pt-16">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="pt-12 sm:pt-16">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
               <div className="max-w-4xl mx-auto">
                 {/* Privacy Header */}
-                <div className="text-center mb-16">
-                  <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-full mb-6">
-                    <Shield className="h-8 w-8 text-blue-600 dark:text-blue-400" />
+                <div className="text-center mb-8 sm:mb-12 lg:mb-16">
+                  <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 bg-blue-100 dark:bg-blue-900/30 rounded-full mb-4 sm:mb-6">
+                    <Shield className="h-6 w-6 sm:h-8 sm:w-8 text-blue-600 dark:text-blue-400" />
                   </div>
-                  <h1 className="text-4xl font-bold text-slate-900 dark:text-white mb-4">
+                  <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 dark:text-white mb-3 sm:mb-4 px-4">
                     Privacy Policy
                   </h1>
-                  <p className="text-xl text-slate-600 dark:text-slate-400">
+                  <p className="text-base sm:text-lg lg:text-xl text-slate-600 dark:text-slate-400 px-4">
                     Your privacy is our priority. Learn how we protect and handle your data.
                   </p>
-                  <p className="text-sm text-slate-500 dark:text-slate-500 mt-2">
+                  <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-500 mt-2">
                     Last updated: July 17, 2025
                   </p>
                 </div>
 
                 {/* Privacy Content */}
-                <div className="space-y-12">
-                  <LegalSection title="Introduction" icon={<Eye className="h-5 w-5" />}>
+                <div className="space-y-8 sm:space-y-10 lg:space-y-12">
+                  <LegalSection title="Introduction" icon={<Eye className="h-4 w-4 sm:h-5 sm:w-5" />}>
                     <p>
                       Welcome to Code Guardian, an AI-powered code security analysis platform. This Privacy Policy explains how we collect, use, protect, and share information about you when you use our service. We are committed to protecting your privacy and ensuring transparency about our data practices.
                     </p>
@@ -357,28 +357,28 @@ const SinglePageApp = () => {
       {/* Terms Section */}
       {currentSection === 'terms' && (
         <section id="terms" className="min-h-screen bg-white dark:bg-slate-900">
-          <div className="pt-16">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="pt-12 sm:pt-16">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
               <div className="max-w-4xl mx-auto">
                 {/* Terms Header */}
-                <div className="text-center mb-16">
-                  <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-full mb-6">
-                    <Scale className="h-8 w-8 text-blue-600 dark:text-blue-400" />
+                <div className="text-center mb-8 sm:mb-12 lg:mb-16">
+                  <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 bg-blue-100 dark:bg-blue-900/30 rounded-full mb-4 sm:mb-6">
+                    <Scale className="h-6 w-6 sm:h-8 sm:w-8 text-blue-600 dark:text-blue-400" />
                   </div>
-                  <h1 className="text-4xl font-bold text-slate-900 dark:text-white mb-4">
+                  <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 dark:text-white mb-3 sm:mb-4 px-4">
                     Terms of Service
                   </h1>
-                  <p className="text-xl text-slate-600 dark:text-slate-400">
+                  <p className="text-base sm:text-lg lg:text-xl text-slate-600 dark:text-slate-400 px-4">
                     Please read these terms carefully before using Code Guardian.
                   </p>
-                  <p className="text-sm text-slate-500 dark:text-slate-500 mt-2">
+                  <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-500 mt-2">
                     Last updated: July 17, 2025
                   </p>
                 </div>
 
                 {/* Terms Content */}
-                <div className="space-y-12">
-                  <LegalSection title="Agreement to Terms" icon={<FileText className="h-5 w-5" />}>
+                <div className="space-y-8 sm:space-y-10 lg:space-y-12">
+                  <LegalSection title="Agreement to Terms" icon={<FileText className="h-4 w-4 sm:h-5 sm:w-5" />}>
                     <p>
                       Welcome to Code Guardian, an AI-powered code security analysis platform. These Terms of Service ("Terms") govern your use of our website and services. By accessing or using Code Guardian, you agree to be bound by these Terms.
                     </p>
