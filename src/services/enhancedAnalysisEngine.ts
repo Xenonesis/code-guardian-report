@@ -152,7 +152,9 @@ export class EnhancedAnalysisEngine {
 
         // Phase 4: Dependency vulnerability scanning
         try {
-          dependencyAnalysis = await this.dependencyScanner.scanDependencies(fileContents);
+          // Map FileContent to expected format with 'name' property
+          const filesForScanning = fileContents.map(f => ({ name: f.filename, content: f.content }));
+          dependencyAnalysis = await this.dependencyScanner.scanDependencies(filesForScanning);
         } catch (error) {
           console.warn('Dependency scanning failed:', error);
           dependencyAnalysis = undefined;

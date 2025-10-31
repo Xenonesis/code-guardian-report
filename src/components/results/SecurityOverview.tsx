@@ -6,9 +6,11 @@ import { SecurityIssueItem } from '@/components/security/SecurityIssueItem';
 import { SecretDetectionCard } from '@/components/security/SecretDetectionCard';
 import { SecureCodeSearchCard } from '@/components/security/SecureCodeSearchCard';
 import { CodeProvenanceCard } from '@/components/security/CodeProvenanceCard';
+import { ModernSecurityDashboard } from '@/components/security/ModernSecurityDashboard';
 import { LanguageDetectionSummary } from '../language/LanguageDetectionSummary';
 import { PDFDownloadButton } from '../export/PDFDownloadButton';
 import { FixSuggestion } from '@/services/ai/aiFixSuggestionsService';
+import { modernCodeScanningService } from '@/services/security/modernCodeScanningService';
 import { toast } from 'sonner';
 
 interface SecurityOverviewProps {
@@ -147,6 +149,121 @@ ${suggestion.testingRecommendations.map((rec, i) => `${i + 1}. ${rec}`).join('\n
           className="mb-6"
         />
       )}
+
+      {/* Modern Code Quality Dashboard - SonarQube-style metrics */}
+      {(() => {
+        // Calculate aggregate modern metrics from all files
+        let totalMetrics = {
+          cyclomaticComplexity: 0,
+          cognitiveComplexity: 0,
+          linesOfCode: 0,
+          commentLines: 0,
+          blankLines: 0,
+          maintainabilityIndex: 0,
+          technicalDebtRatio: 0,
+          codeSmells: 0,
+          bugs: 0,
+          vulnerabilities: 0,
+          securityHotspots: 0,
+          estimatedTestCoverage: 0,
+          duplicatedBlocks: 0,
+          duplicatedLines: 0,
+        };
+        let totalDebt = 0;
+        let fileCount = 0;
+
+        // Analyze each file to get modern metrics
+        const zipFiles = results.zipAnalysis?.files || [];
+        for (const file of zipFiles) {
+          try {
+            const analysis = modernCodeScanningService.analyzeCode(
+              file.content,
+              file.name,
+              file.language || 'javascript'
+            );
+            
+            totalMetrics.cyclomaticComplexity += analysis.metrics.cyclomaticComplexity;
+            totalMetrics.cognitiveComplexity += analysis.metrics.cognitiveComplexity;
+            totalMetrics.linesOfCode += analysis.metrics.linesOfCode;
+            totalMetrics.commentLines += analysis.metrics.commentLines;
+            totalMetrics.blankLines += analysis.metrics.blankLines;
+            totalMetrics.maintainabilityIndex += analysis.metrics.maintainabilityIndex;
+            totalMetrics.codeSmells += analysis.metrics.codeSmells;
+            totalMetrics.bugs += analysis.metrics.bugs;
+            totalMetrics.vulnerabilities += analysis.metrics.vulnerabilities;
+            totalMetrics.securityHotspots += analysis.metrics.securityHotspots;
+            totalMetrics.duplicatedBlocks += analysis.metrics.duplicatedBlocks;
+            totalMetrics.duplicatedLines += analysis.metrics.duplicatedLines;
+            
+            totalDebt += analysis.technicalDebt;
+            fileCount++;
+          } catch (error) {
+            console.warn(`Failed to analyze ${file.name} for modern metrics:`, error);
+          }
+        }
+
+        // Average maintainability index across files
+        if (fileCount > 0) {
+          totalMetrics.maintainabilityIndex = totalMetrics.maintainabilityIndex / fileCount;
+          totalMetrics.technicalDebtRatio = totalMetrics.linesOfCode > 0
+            ? (totalDebt / (totalMetrics.linesOfCode * 0.06)) * 100
+            : 0;
+        }
+
+        // Create quality gate based on aggregated metrics
+        const qualityGate = {
+          passed: totalMetrics.vulnerabilities === 0 &&
+                  totalMetrics.bugs <= 5 &&
+                  totalMetrics.maintainabilityIndex >= 65,
+          conditions: [
+            {
+              metric: 'New Vulnerabilities',
+              status: (totalMetrics.vulnerabilities === 0 ? 'OK' : 'ERROR') as 'OK' | 'ERROR',
+              value: totalMetrics.vulnerabilities,
+              threshold: 0
+            },
+            {
+              metric: 'New Bugs',
+              status: (totalMetrics.bugs <= 5 ? 'OK' : 'ERROR') as 'OK' | 'ERROR',
+              value: totalMetrics.bugs,
+              threshold: 5
+            },
+            {
+              metric: 'Maintainability Index',
+              status: (totalMetrics.maintainabilityIndex >= 65 ? 'OK' : 'ERROR') as 'OK' | 'ERROR',
+              value: Math.round(totalMetrics.maintainabilityIndex),
+              threshold: 65
+            },
+            {
+              metric: 'Technical Debt Ratio',
+              status: (totalMetrics.technicalDebtRatio <= 5 ? 'OK' : 'ERROR') as 'OK' | 'ERROR',
+              value: Number(totalMetrics.technicalDebtRatio.toFixed(1)),
+              threshold: 5
+            },
+            {
+              metric: 'Code Smells',
+              status: (totalMetrics.codeSmells <= 10 ? 'OK' : 'ERROR') as 'OK' | 'ERROR',
+              value: totalMetrics.codeSmells,
+              threshold: 10
+            },
+            {
+              metric: 'Duplicated Lines Density',
+              status: ((totalMetrics.duplicatedLines / Math.max(totalMetrics.linesOfCode, 1) * 100) <= 3 ? 'OK' : 'ERROR') as 'OK' | 'ERROR',
+              value: Number(((totalMetrics.duplicatedLines / Math.max(totalMetrics.linesOfCode, 1)) * 100).toFixed(1)),
+              threshold: 3
+            }
+          ]
+        };
+
+        return fileCount > 0 ? (
+          <ModernSecurityDashboard
+            metrics={totalMetrics}
+            technicalDebt={totalDebt}
+            qualityGate={qualityGate}
+            totalIssues={results.issues?.length || 0}
+          />
+        ) : null;
+      })()}
 
       {/* PDF Download Section */}
       <div className="flex justify-end mb-4">
