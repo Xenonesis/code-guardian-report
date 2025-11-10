@@ -12,12 +12,12 @@ Now with Revolutionary AI-Powered Security Features, GitHub Analysis & Enterpris
 <img src="./public/home.png" alt="Code Guardian - AI-Powered Security Analysis Platform" width="100%" style="border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.15); border: 2px solid rgba(255,255,255,0.1);">
 
 <div align="center">
-  <img src="https://img.shields.io/badge/Version-8.6.0-ff6b6b?style=for-the-badge&logo=rocket&logoColor=white&labelColor=1a1a1a" alt="Version"/>
+  <img src="https://img.shields.io/badge/Version-8.6.0-ff6b6b?style=for-the-badge&logo=rocket&logoColor=white&labelColor=1a1a" alt="Version"/>
   <img src="https://img.shields.io/badge/Status-Production%20Ready-00C851?style=for-the-badge&logo=checkmarx&logoColor=white&labelColor=1a1a1a" alt="Status"/>
   <img src="https://img.shields.io/badge/AI%20Powered-GPT--4%20%7C%20Claude%20%7C%20Gemini-9C27B0?style=for-the-badge&logo=openai&logoColor=white&labelColor=1a1a1a" alt="AI Powered"/>
-  <img src="https://img.shields.io/badge/npm-v8.5.0-CB3837?style=for-the-badge&logo=npm&logoColor=white&labelColor=1a1a1a" alt="NPM Version"/>
-  <img src="https://img.shields.io/badge/Analytics-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white&labelColor=1a1a1a" alt="Analytics"/>
-  <img src="https://img.shields.io/badge/PWA-Ready-FF6F00?style=for-the-badge&logo=pwa&logoColor=white&labelColor=1a1a1a" alt="PWA Ready"/>
+  <img src="https://img.shields.io/badge/npm-v8.5.0-CB3837?style=for-the-badge&logo=npm&logoColor=white&labelColor=1a1a" alt="NPM Version"/>
+  <img src="https://img.shields.io/badge/Analytics-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white&labelColor=1a1a" alt="Analytics"/>
+  <img src="https://img.shields.io/badge/PWA-Ready-FF6F00?style=for-the-badge&logo=pwa&logoColor=white&labelColor=1a1a" alt="PWA Ready"/>
 </div>
 
 <br/>
@@ -39,7 +39,7 @@ Now with Revolutionary AI-Powered Security Features, GitHub Analysis & Enterpris
   <img src="https://img.shields.io/badge/Contributors-Auto%20Updated-blue?style=for-the-badge&logo=github&logoColor=white&labelColor=1a1a1a" alt="Auto Contributors"/>
   <img src="https://img.shields.io/badge/Performance-100%2F100-orange?style=for-the-badge&logo=lighthouse&logoColor=white&labelColor=1a1a1a" alt="Performance"/>
   <img src="https://img.shields.io/badge/Security-Enterprise%20Grade-red?style=for-the-badge&logo=shield&logoColor=white&labelColor=1a1a1a" alt="Security"/>
-  <img src="https://img.shields.io/badge/Uptime-99.9%25-success?style=for-the-badge&logo=statuspage&logoColor=white&labelColor=1a1a1a" alt="Uptime"/>
+  <img src="https://img.shields.io/badge/Uptime-9.9%25-success?style=for-the-badge&logo=statuspage&logoColor=white&labelColor=1a1a1a" alt="Uptime"/>
 </div>
 
 **🔬 Revolutionary AI-powered static code analysis platform that transforms how developers identify security vulnerabilities, code quality issues, and maintainability concerns. Built for enterprise-scale applications with cutting-edge AI integration and real-time analytics.**
@@ -65,6 +65,8 @@ Now with Revolutionary AI-Powered Security Features, GitHub Analysis & Enterpris
   </div>
 </div>
 
+</div>
+
 ---
 
 ## 🌟 New Features in v8.6
@@ -85,7 +87,7 @@ Now with Revolutionary AI-Powered Security Features, GitHub Analysis & Enterpris
 <td width="50%" align="center">
   <img src="https://img.icons8.com/fluency/96/artificial-intelligence.png" alt="AI Fix" width="64"/>
   <h4>🔧 AI Fix Suggestions</h4>
-  <p><strong>Intelligent code remediation powered by GPT-4 & Claude</strong></p>
+ <p><strong>Intelligent code remediation powered by GPT-4 & Claude</strong></p>
   <ul align="left">
     <li>✨ Context-aware security fixes</li>
     <li>🎯 Automated vulnerability patching</li>
@@ -102,14 +104,14 @@ Now with Revolutionary AI-Powered Security Features, GitHub Analysis & Enterpris
     <li>🛡️ Security vulnerability scanning</li>
     <li>📊 Risk assessment algorithms</li>
     <li>🎨 Interactive search interface</li>
-  </ul>
+ </ul>
 </td>
 </tr>
 <tr>
 <td width="50%" align="center">
   <img src="https://img.icons8.com/fluency/96/blockchain-technology.png" alt="Provenance" width="64"/>
   <h4>🔗 Code Provenance Tracking</h4>
-  <p><strong>Comprehensive code integrity & origin monitoring</strong></p>
+ <p><strong>Comprehensive code integrity & origin monitoring</strong></p>
   <ul align="left">
     <li>📋 File integrity verification</li>
     <li>🕒 Change history tracking</li>
@@ -140,7 +142,7 @@ Now with Revolutionary AI-Powered Security Features, GitHub Analysis & Enterpris
 
 <table>
 <tr>
-<td width="33%" align="center">
+<td width="3%" align="center">
   <img src="https://img.icons8.com/fluency/96/animation.png" alt="Animations" width="64"/>
   <h4>✨ Smooth Animations</h4>
   <p>Framer Motion powered interactions with Lenis smooth scrolling</p>
@@ -188,28 +190,28 @@ Now with Revolutionary AI-Powered Security Features, GitHub Analysis & Enterpris
 </td>
 <td width="33%" align="center">
   <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 20px; border-radius: 15px; margin: 10px;">
-    <img src="https://img.icons8.com/fluency/96/artificial-intelligence.png" alt="AI" width="64" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));"/>
+    <img src="https://img.icons8.com/fluency/96/artificial-intelligence.png" alt="AI" width="64" style="filter: drop-shadow(0 4px 8px rgba(0,0,0.3));"/>
     <h4 style="color: white; margin: 15px 0 10px 0;">🤖 AI-Powered Intelligence</h4>
-    <p style="color: rgba(255,255,255,0.9); font-size: 14px; line-height: 1.5;">
+    <p style="color: rgba(255,255,0.9); font-size: 14px; line-height: 1.5;">
       <strong>GPT-4, Claude & Gemini Integration</strong><br/>
       Context-aware analysis with natural language explanations and automated fix suggestions
     </p>
     <div style="margin-top: 10px;">
-      <span style="background: rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: white;">🧠 Smart Analysis</span>
-      <span style="background: rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: white; margin-left: 5px;">🔧 Auto-Fix</span>
+      <span style="background: rgba(255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: white;">🧠 Smart Analysis</span>
+      <span style="background: rgba(25,255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: white; margin-left: 5px;">🔧 Auto-Fix</span>
     </div>
   </div>
 </td>
 <td width="33%" align="center">
   <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 20px; border-radius: 15px; margin: 10px;">
-    <img src="https://img.icons8.com/fluency/96/analytics.png" alt="Analytics" width="64" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));"/>
+    <img src="https://img.icons8.com/fluency/96/analytics.png" alt="Analytics" width="64" style="filter: drop-shadow(0 4px 8px rgba(0,0,0.3));"/>
     <h4 style="color: white; margin: 15px 0 10px 0;">📊 Advanced Analytics</h4>
     <p style="color: rgba(255,255,255,0.9); font-size: 14px; line-height: 1.5;">
       <strong>Interactive Dashboards & Metrics</strong><br/>
       Real-time charts, trend analysis, and comprehensive reporting with export capabilities
     </p>
     <div style="margin-top: 10px;">
-      <span style="background: rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: white;">📈 Live Charts</span>
+      <span style="background: rgba(255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: white;">📈 Live Charts</span>
       <span style="background: rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: white; margin-left: 5px;">📊 Metrics</span>
     </div>
   </div>
@@ -218,15 +220,15 @@ Now with Revolutionary AI-Powered Security Features, GitHub Analysis & Enterpris
 <tr>
 <td width="33%" align="center">
   <div style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); padding: 20px; border-radius: 15px; margin: 10px;">
-    <img src="https://img.icons8.com/fluency/96/code.png" alt="Quality" width="64" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));"/>
+    <img src="https://img.icons8.com/fluency/96/code.png" alt="Quality" width="64" style="filter: drop-shadow(0 4px 8px rgba(0,0,0.3));"/>
     <h4 style="color: white; margin: 15px 0 10px 0;">📈 Quality Excellence</h4>
     <p style="color: rgba(255,255,255,0.9); font-size: 14px; line-height: 1.5;">
       <strong>Comprehensive Quality Scoring</strong><br/>
       Maintainability metrics, complexity analysis, and code health monitoring
     </p>
     <div style="margin-top: 10px;">
-      <span style="background: rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: white;">⭐ Quality Score</span>
-      <span style="background: rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: white; margin-left: 5px;">🔄 Continuous</span>
+      <span style="background: rgba(25,255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: white;">⭐ Quality Score</span>
+      <span style="background: rgba(25,255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: white; margin-left: 5px;">🔄 Continuous</span>
     </div>
   </div>
 </td>
@@ -240,21 +242,21 @@ Now with Revolutionary AI-Powered Security Features, GitHub Analysis & Enterpris
     </p>
     <div style="margin-top: 10px;">
       <span style="background: rgba(0,0,0,0.1); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: #333;">📄 5 Formats</span>
-      <span style="background: rgba(0,0,0,0.1); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: #333; margin-left: 5px;">🎨 Custom</span>
+      <span style="background: rgba(0,0,0.1); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: #333; margin-left: 5px;">🎨 Custom</span>
     </div>
   </div>
 </td>
 <td width="33%" align="center">
   <div style="background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%); padding: 20px; border-radius: 15px; margin: 10px;">
-    <img src="https://img.icons8.com/fluency/96/speed.png" alt="Performance" width="64" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));"/>
+    <img src="https://img.icons8.com/fluency/96/speed.png" alt="Performance" width="64" style="filter: drop-shadow(0 4px 8px rgba(0,0,0.3));"/>
     <h4 style="color: #333; margin: 15px 0 10px 0;">⚡ Lightning Performance</h4>
-    <p style="color: #555; font-size: 14px; line-height: 1.5;">
+    <p style="color: #55; font-size: 14px; line-height: 1.5;">
       <strong>Optimized for Speed & Scale</strong><br/>
       Sub-second loading times with advanced caching and performance monitoring
     </p>
     <div style="margin-top: 10px;">
       <span style="background: rgba(0,0,0,0.1); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: #333;">🚀 < 1s Load</span>
-      <span style="background: rgba(0,0,0,0.1); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: #333; margin-left: 5px;">📊 Monitoring</span>
+      <span style="background: rgba(0,0,0,0.1); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: #33; margin-left: 5px;">📊 Monitoring</span>
     </div>
   </div>
 </td>
@@ -268,7 +270,7 @@ Now with Revolutionary AI-Powered Security Features, GitHub Analysis & Enterpris
     <tr>
       <td align="center" style="padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px; margin: 5px; color: white;">
         <h3 style="margin: 0; font-size: 2.5em;">100M+</h3>
-        <p style="margin: 5px 0 0 0; opacity: 0.9;">Lines of Code Analyzed</p>
+        <p style="margin: 5px 0 0; opacity: 0.9;">Lines of Code Analyzed</p>
       </td>
       <td align="center" style="padding: 20px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 15px; margin: 5px; color: white;">
         <h3 style="margin: 0; font-size: 2.5em;">500K+</h3>
@@ -276,7 +278,7 @@ Now with Revolutionary AI-Powered Security Features, GitHub Analysis & Enterpris
       </td>
       <td align="center" style="padding: 20px; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); border-radius: 15px; margin: 5px; color: white;">
         <h3 style="margin: 0; font-size: 2.5em;">99.9%</h3>
-        <p style="margin: 5px 0 0 0; opacity: 0.9;">Accuracy Rate</p>
+        <p style="margin: 5px 0 0; opacity: 0.9;">Accuracy Rate</p>
       </td>
       <td align="center" style="padding: 20px; background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); border-radius: 15px; margin: 5px; color: white;">
         <h3 style="margin: 0; font-size: 2.5em;">25K+</h3>
@@ -284,86 +286,6 @@ Now with Revolutionary AI-Powered Security Features, GitHub Analysis & Enterpris
       </td>
     </tr>
   </table>
-</div>
-
----
-
-## 🎉 **What Makes Code Guardian v7.3 Special?**
-
-<div align="center">
-  <img src="https://img.shields.io/badge/🌟%20Revolutionary%20Update-Next%20Generation%20Platform-FF6B6B?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="Revolutionary Update"/>
-</div>
-
-<table>
-<tr>
-<td width="50%" align="center">
-  <h3>🤖 **AI-First Approach**</h3>
-  <ul align="left">
-    <li>🧠 <strong>Multi-AI Integration:</strong> GPT-4, Claude, Gemini support</li>
-    <li>🔧 <strong>Intelligent Fix Suggestions:</strong> Context-aware code remediation</li>
-    <li>🔍 <strong>Smart Pattern Detection:</strong> Advanced vulnerability discovery</li>
-    <li>📝 <strong>Natural Language Reports:</strong> Human-readable explanations</li>
-  </ul>
-</td>
-<td width="50%" align="center">
-  <h3>🎨 **Modern Experience**</h3>
-  <ul align="left">
-    <li>✨ <strong>Smooth Animations:</strong> Framer Motion & Lenis scrolling</li>
-    <li>📱 <strong>Responsive Design:</strong> Perfect on all devices</li>
-    <li>🌙 <strong>Dark/Light Themes:</strong> Adaptive UI preferences</li>
-    <li>🚀 <strong>Lightning Fast:</strong> Optimized performance</li>
-  </ul>
-</td>
-</tr>
-</table>
-
-### **✨ Latest Features in v7.3:**
-
-<div align="center">
-
-| 🆕 Feature | 📝 Description | 🎯 Impact |
-|------------|-----------------|------------|
-| 🔄 **Version Synchronization** | Updated all version references across the entire project | Consistent versioning and better maintenance |
-| 📦 **Dependency Alignment** | Synchronized package.json, manifest, and service worker versions | Improved reliability and deployment consistency |
-| 🛠️ **Build Optimization** | Enhanced Vite configuration with advanced chunk splitting | Faster loading and better performance |
-| 🖼️ **UI & Accessibility** | UI alignment fixes, accessibility improvements, and documentation updates | Better user experience for all |
-| 📤 **Export & PWA** | Improved export formats and PWA manifest actions | Enhanced export and installability |
-
-</div>
-
-Built with ❤️ by [Aditya Kumar Tiwari](https://github.com/Xenonesis)
-
-<div align="center">
-
-**[🌐 Live Demo](https://code-guardian-report.vercel.app) • [📚 Documentation](#-table-of-contents) • [🐛 Report Issues](https://github.com/Xenonesis/code-guardian-report/issues) • [✨ Feature Requests](https://github.com/Xenonesis/code-guardian-report/issues)**
-
-<br/>
-
-<details>
-<summary><b>🎥 Watch Demo Video</b></summary>
-<br/>
-<div align="center">
-  <img src="https://img.shields.io/badge/🎬%20Demo%20Video-Coming%20Soon-FF6B6B?style=for-the-badge" alt="Demo Video"/>
-  <p><em>Interactive demo video showcasing key features will be available soon!</em></p>
-</div>
-</details>
-
-</div>
-
----
-
-<div align="center">
-
-### **🔗 Quick Links**
-
-[🏠 Home](https://code-guardian-report.vercel.app) • [📖 Docs](#-table-of-contents) • [🚀 Demo](https://code-guardian-report.vercel.app) • [💬 Discussions](https://github.com/Xenonesis/code-guardian-report/discussions) • [📧 Contact](mailto:itisaddy7@gmail.com)
-
----
-
-<p><em>"Code Guardian - Securing the future, one line at a time."</em></p>
-
-<img src="https://img.shields.io/badge/Made%20with%20❤️%20by-Aditya%20Kumar%20Tiwari-FF6B6B?style=for-the-badge" alt="Made with love"/>
-
 </div>
 
 ---
@@ -454,37 +376,37 @@ Built with ❤️ by [Aditya Kumar Tiwari](https://github.com/Xenonesis)
     <tr>
       <td width="20%" align="center">
         <div style="background: linear-gradient(45deg, #FF6B6B, #4ECDC4); padding: 15px; border-radius: 15px; margin: 10px;">
-          <img src="https://img.icons8.com/fluency/48/drag-and-drop.png" alt="Drag Drop" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));"/>
+          <img src="https://img.icons8.com/fluency/48/drag-and-drop.png" alt="Drag Drop" style="filter: drop-shadow(0 2px 4px rgba(0,0,0.3));"/>
           <br/><strong style="color: white; font-size: 14px;">Drag & Drop</strong>
-          <br/><span style="color: rgba(255,255,255,0.9); font-size: 11px;">Easy file upload</span>
+          <br/><span style="color: rgba(25,255,255,0.9); font-size: 11px;">Easy file upload</span>
         </div>
       </td>
       <td width="20%" align="center">
         <div style="background: linear-gradient(45deg, #A8E6CF, #3D5A80); padding: 15px; border-radius: 15px; margin: 10px;">
           <img src="https://img.icons8.com/fluency/48/real-time.png" alt="Real Time" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));"/>
           <br/><strong style="color: white; font-size: 14px;">Real-time</strong>
-          <br/><span style="color: rgba(255,255,255,0.9); font-size: 11px;">Live analysis</span>
+          <br/><span style="color: rgba(25,255,255,0.9); font-size: 11px;">Live analysis</span>
         </div>
       </td>
       <td width="20%" align="center">
         <div style="background: linear-gradient(45deg, #FFD93D, #6BCF7F); padding: 15px; border-radius: 15px; margin: 10px;">
-          <img src="https://img.icons8.com/fluency/48/interactive.png" alt="Interactive" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));"/>
+          <img src="https://img.icons8.com/fluency/48/interactive.png" alt="Interactive" style="filter: drop-shadow(0 2px 4px rgba(0,0,0.3));"/>
           <br/><strong style="color: white; font-size: 14px;">Interactive</strong>
-          <br/><span style="color: rgba(255,255,255,0.9); font-size: 11px;">Dynamic charts</span>
+          <br/><span style="color: rgba(25,255,255,0.9); font-size: 11px;">Dynamic charts</span>
         </div>
       </td>
       <td width="20%" align="center">
         <div style="background: linear-gradient(45deg, #B19CD9, #C9A96E); padding: 15px; border-radius: 15px; margin: 10px;">
-          <img src="https://img.icons8.com/fluency/48/responsive.png" alt="Responsive" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));"/>
+          <img src="https://img.icons8.com/fluency/48/responsive.png" alt="Responsive" style="filter: drop-shadow(0 2px 4px rgba(0,0,0.3));"/>
           <br/><strong style="color: white; font-size: 14px;">Responsive</strong>
-          <br/><span style="color: rgba(255,255,255,0.9); font-size: 11px;">All devices</span>
+          <br/><span style="color: rgba(25,255,0.9); font-size: 1px;">All devices</span>
         </div>
       </td>
       <td width="20%" align="center">
         <div style="background: linear-gradient(45deg, #FF8A80, #82B1FF); padding: 15px; border-radius: 15px; margin: 10px;">
           <img src="https://img.icons8.com/fluency/48/theme.png" alt="Themes" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));"/>
           <br/><strong style="color: white; font-size: 14px;">Themes</strong>
-          <br/><span style="color: rgba(255,255,255,0.9); font-size: 11px;">Dark/Light mode</span>
+          <br/><span style="color: rgba(25,255,255,0.9); font-size: 11px;">Dark/Light mode</span>
         </div>
       </td>
     </tr>
@@ -505,19 +427,19 @@ Built with ❤️ by [Aditya Kumar Tiwari](https://github.com/Xenonesis)
           <br/><span style="color: rgba(255,255,255,0.9); font-size: 12px;">Developer Choice 2024</span>
         </td>
         <td align="center" style="padding: 15px;">
-          <img src="https://img.icons8.com/fluency/64/medal.png" alt="Medal" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));"/>
+          <img src="https://img.icons8.com/fluency/64/medal.png" alt="Medal" style="filter: drop-shadow(0 4px 8px rgba(0,0,0.3));"/>
           <br/><strong style="color: white; font-size: 16px;">Innovation Award</strong>
-          <br/><span style="color: rgba(255,255,255,0.9); font-size: 12px;">AI Integration Excellence</span>
+          <br/><span style="color: rgba(25,255,255,0.9); font-size: 12px;">AI Integration Excellence</span>
         </td>
         <td align="center" style="padding: 15px;">
-          <img src="https://img.icons8.com/fluency/64/star.png" alt="Star" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));"/>
+          <img src="https://img.icons8.com/fluency/64/star.png" alt="Star" style="filter: drop-shadow(0 4px 8px rgba(0,0,0.3));"/>
           <br/><strong style="color: white; font-size: 16px;">5-Star Rating</strong>
           <br/><span style="color: rgba(255,255,255,0.9); font-size: 12px;">User Satisfaction</span>
         </td>
         <td align="center" style="padding: 15px;">
-          <img src="https://img.icons8.com/fluency/64/certificate.png" alt="Certificate" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));"/>
+          <img src="https://img.icons8.com/fluency/64/certificate.png" alt="Certificate" style="filter: drop-shadow(0 4px 8px rgba(0,0,0.3));"/>
           <br/><strong style="color: white; font-size: 16px;">Security Certified</strong>
-          <br/><span style="color: rgba(255,255,255,0.9); font-size: 12px;">Enterprise Grade</span>
+          <br/><span style="color: rgba(255,255,0.9); font-size: 12px;">Enterprise Grade</span>
         </td>
       </tr>
     </table>
@@ -552,7 +474,7 @@ Built with ❤️ by [Aditya Kumar Tiwari](https://github.com/Xenonesis)
     <div style="position: absolute; top: -50%; right: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); animation: rotate 15s linear infinite reverse;"></div>
     <h3 style="color: white; margin-bottom: 20px; position: relative; z-index: 1;">🎯 **Interactive Components**</h3>
     <div style="position: relative; z-index: 1;">
-      <ul style="color: rgba(255,255,255,0.9); text-align: left; list-style: none; padding: 0;">
+      <ul style="color: rgba(255,255,0.9); text-align: left; list-style: none; padding: 0;">
         <li style="margin: 8px 0;">🤖 <strong>Floating ChatBot:</strong> AI-powered assistance</li>
         <li style="margin: 8px 0;">📊 <strong>Live Charts:</strong> Real-time data visualization</li>
         <li style="margin: 8px 0;">🎨 <strong>Theme Switcher:</strong> Dark/Light mode toggle</li>
@@ -575,30 +497,30 @@ Built with ❤️ by [Aditya Kumar Tiwari](https://github.com/Xenonesis)
       <tr>
         <td align="center" style="padding: 20px;">
           <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 15px; backdrop-filter: blur(10px);">
-            <div style="width: 60px; height: 60px; background: linear-gradient(45deg, #FF6B6B, #4ECDC4); border-radius: 50%; margin: 0 auto 15px; box-shadow: 0 8px 32px rgba(0,0,0,0.3);"></div>
+            <div style="width: 60px; height: 60px; background: linear-gradient(45deg, #FF6B, #4ECDC4); border-radius: 50%; margin: 0 auto 15px; box-shadow: 0 8px 32px rgba(0,0,0,0.3);"></div>
             <strong style="color: white; font-size: 14px;">Gradient Palettes</strong>
-            <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px;">Modern color schemes</span>
+            <br/><span style="color: rgba(25,255,255,0.8); font-size: 12px;">Modern color schemes</span>
           </div>
         </td>
         <td align="center" style="padding: 20px;">
           <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 15px; backdrop-filter: blur(10px);">
             <div style="width: 60px; height: 60px; background: rgba(255,255,255,0.3); border-radius: 15px; margin: 0 auto 15px; box-shadow: 0 8px 32px rgba(0,0,0,0.3); backdrop-filter: blur(20px);"></div>
             <strong style="color: white; font-size: 14px;">Glass Morphism</strong>
-            <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px;">Frosted glass effects</span>
+            <br/><span style="color: rgba(25,255,255,0.8); font-size: 12px;">Frosted glass effects</span>
           </div>
         </td>
         <td align="center" style="padding: 20px;">
           <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 15px; backdrop-filter: blur(10px);">
             <div style="width: 60px; height: 60px; background: #333; border-radius: 50%; margin: 0 auto 15px; box-shadow: 0 8px 32px rgba(0,0,0,0.5), inset 0 2px 4px rgba(255,255,255,0.1);"></div>
             <strong style="color: white; font-size: 14px;">Neumorphism</strong>
-            <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px;">Soft UI elements</span>
+            <br/><span style="color: rgba(25,255,255,0.8); font-size: 12px;">Soft UI elements</span>
           </div>
         </td>
         <td align="center" style="padding: 20px;">
           <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 15px; backdrop-filter: blur(10px);">
             <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 20px; margin: 0 auto 15px; box-shadow: 0 8px 32px rgba(102, 126, 234, 0.4); transform: rotate(45deg);"></div>
             <strong style="color: white; font-size: 14px;">Modern Cards</strong>
-            <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px;">Elevated surfaces</span>
+            <br/><span style="color: rgba(25,255,255,0.8); font-size: 12px;">Elevated surfaces</span>
           </div>
         </td>
       </tr>
@@ -617,7 +539,7 @@ Built with ❤️ by [Aditya Kumar Tiwari](https://github.com/Xenonesis)
         <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 15px; backdrop-filter: blur(10px);">
           <img src="https://img.icons8.com/fluency/48/rocket.png" alt="Speed" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));"/>
           <br/><strong style="color: white; font-size: 16px; margin-top: 10px; display: block;">< 1s Load Time</strong>
-          <span style="color: rgba(255,255,255,0.9); font-size: 12px;">Optimized bundling</span>
+          <span style="color: rgba(25,255,255,0.9); font-size: 12px;">Optimized bundling</span>
         </div>
       </td>
       <td width="25%" align="center" style="padding: 15px;">
@@ -638,7 +560,7 @@ Built with ❤️ by [Aditya Kumar Tiwari](https://github.com/Xenonesis)
         <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 15px; backdrop-filter: blur(10px);">
           <img src="https://img.icons8.com/fluency/48/optimization.png" alt="Optimization" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));"/>
           <br/><strong style="color: white; font-size: 16px; margin-top: 10px; display: block;">Asset Optimization</strong>
-          <span style="color: rgba(255,255,255,0.9); font-size: 12px;">Image compression</span>
+          <span style="color: rgba(255,255,0.9); font-size: 12px;">Image compression</span>
         </div>
       </td>
     </tr>
@@ -655,7 +577,7 @@ Built with ❤️ by [Aditya Kumar Tiwari](https://github.com/Xenonesis)
       <tr>
         <td align="center" style="padding: 15px;">
           <div style="background: rgba(0,0,0,0.1); padding: 20px; border-radius: 15px; transition: transform 0.3s ease;">
-            <img src="https://img.icons8.com/fluency/48/drag-and-drop.png" alt="Drag Drop" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));"/>
+            <img src="https://img.icons8.com/fluency/48/drag-and-drop.png" alt="Drag Drop" style="filter: drop-shadow(0 2px 4px rgba(0,0,0.3));"/>
             <br/><strong style="color: #333; font-size: 14px; margin-top: 10px; display: block;">Drag & Drop Upload</strong>
             <span style="color: #666; font-size: 12px;">Try uploading files</span>
             <br/><a href="https://code-guardian-report.vercel.app" target="_blank" style="text-decoration: none;">
@@ -674,7 +596,7 @@ Built with ❤️ by [Aditya Kumar Tiwari](https://github.com/Xenonesis)
           </div>
         </td>
         <td align="center" style="padding: 15px;">
-          <div style="background: rgba(0,0,0,0.1); padding: 20px; border-radius: 15px; transition: transform 0.3s ease;">
+          <div style="background: rgba(0,0,0.1); padding: 20px; border-radius: 15px; transition: transform 0.3s ease;">
             <img src="https://img.icons8.com/fluency/48/dashboard.png" alt="Dashboard" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));"/>
             <br/><strong style="color: #333; font-size: 14px; margin-top: 10px; display: block;">Live Dashboard</strong>
             <span style="color: #666; font-size: 12px;">Real-time analytics</span>
@@ -716,9 +638,9 @@ Built with ❤️ by [Aditya Kumar Tiwari](https://github.com/Xenonesis)
   - Vulnerability alternatives and best practices
   - Interactive code examples with explanations
 - 🛡️ **Code Provenance & Tampering Detection** ⭐ NEW
-  - File integrity monitoring with SHA-256 checksums
+ - File integrity monitoring with SHA-256 checksums
   - Real-time change detection and alerts
-  - Security-critical file identification
+ - Security-critical file identification
   - Comprehensive audit trail and reporting
   - Database credential exposure detection
   - ML-powered entropy analysis for unknown secrets
@@ -726,7 +648,7 @@ Built with ❤️ by [Aditya Kumar Tiwari](https://github.com/Xenonesis)
 - 🐛 **Intelligent Bug Detection**
   - Logic error identification
   - Null pointer exception prevention
-  - Memory leak detection
+ - Memory leak detection
   - Performance bottleneck analysis
 - 📏 **Code Quality Assessment**
   - Code smell detection
@@ -754,7 +676,7 @@ Built with ❤️ by [Aditya Kumar Tiwari](https://github.com/Xenonesis)
 ### 📊 **Rich Analytics Dashboard**
 - 📈 **Interactive Visualizations**
   - Real-time charts with Recharts
-  - Responsive design across devices
+ - Responsive design across devices
   - Customizable dashboard layouts
 - 🎯 **Risk Assessment Matrix**
   - Severity-based issue categorization
@@ -768,7 +690,7 @@ Built with ❤️ by [Aditya Kumar Tiwari](https://github.com/Xenonesis)
 ### 🎨 **Modern User Experience**
 - 📱 **Mobile-First Design**
   - Responsive across all screen sizes
-  - Touch-optimized interactions
+ - Touch-optimized interactions
   - Progressive Web App capabilities
 - 🌓 **Adaptive Theming**
   - Dark/Light mode with system detection
@@ -777,12 +699,12 @@ Built with ❤️ by [Aditya Kumar Tiwari](https://github.com/Xenonesis)
 - ♿ **Accessibility Excellence**
   - WCAG 2.1 AA compliance
   - Screen reader optimization
-  - Keyboard navigation support
+ - Keyboard navigation support
   - High contrast mode
 - ✨ **Smooth Interactions**
   - Hardware-accelerated animations
   - Glass morphism effects
-  - Micro-interactions for better UX
+ - Micro-interactions for better UX
 
 </td>
 </tr>
@@ -792,8 +714,8 @@ Built with ❤️ by [Aditya Kumar Tiwari](https://github.com/Xenonesis)
 
 - REST Endpoints (beta):
   - POST /api/analyze: Submit archive URL or Git URL for analysis
-  - GET /api/report/:id: Retrieve normalized analysis result
-  - POST /api/insights/fix: Generate AI fix suggestions
+ - GET /api/report/:id: Retrieve normalized analysis result
+ - POST /api/insights/fix: Generate AI fix suggestions
   - Authentication: Bearer token (JWT) or API Key header
 - Webhooks:
   - analysis.completed, analysis.failed, secret.detected, provenance.alert
@@ -852,7 +774,7 @@ Built with ❤️ by [Aditya Kumar Tiwari](https://github.com/Xenonesis)
 ### 🛠️ **Development Tools**
 
 - 🎯 **TypeScript 5.9**: Advanced type checking and IntelliSense
-- 🎨 **PostCSS 8.4.47**: CSS post-processing with autoprefixer
+- 🎨 **PostCSS 8.47**: CSS post-processing with autoprefixer
 - ⚡ **Vite SWC Plugin 3.5.0**: Ultra-fast React refresh and builds
 - 📦 **Advanced Code Splitting**: Intelligent chunk optimization
 - 🔧 **Path Aliases**: Clean imports with @ syntax
@@ -1133,7 +1055,7 @@ curl -H "Authorization: Bearer $TOKEN" \
 <td width="25%" align="center">
   <img src="https://img.icons8.com/fluency/64/continuous-integration.png" alt="CI/CD"/>
   <h5>🔗 CI/CD Ready</h5>
-  <p>GitHub Actions, Jenkins, GitLab CI</p>
+ <p>GitHub Actions, Jenkins, GitLab CI</p>
 </td>
 <td width="25%" align="center">
   <img src="https://img.icons8.com/fluency/64/api.png" alt="API"/>
@@ -1164,7 +1086,7 @@ curl -H "Authorization: Bearer $TOKEN" \
           <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 15px; backdrop-filter: blur(10px);">
             <img src="https://img.icons8.com/fluency/64/monitor.png" alt="Desktop Demo" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));"/>
             <br/><strong style="color: white; font-size: 16px;">Desktop Experience</strong>
-            <br/><span style="color: rgba(255,255,255,0.9); font-size: 12px;">Full-featured dashboard</span>
+            <br/><span style="color: rgba(25,255,255,0.9); font-size: 12px;">Full-featured dashboard</span>
             <br/><a href="https://code-guardian-report.vercel.app" target="_blank" style="text-decoration: none;">
               <img src="https://img.shields.io/badge/🚀%20Try%20Desktop-Live%20Demo-4F46E5?style=flat-square&logoColor=white" alt="Desktop Demo" style="margin-top: 10px;"/>
             </a>
@@ -1174,7 +1096,7 @@ curl -H "Authorization: Bearer $TOKEN" \
           <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 15px; backdrop-filter: blur(10px);">
             <img src="https://img.icons8.com/fluency/64/smartphone.png" alt="Mobile Demo" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));"/>
             <br/><strong style="color: white; font-size: 16px;">Mobile Experience</strong>
-            <br/><span style="color: rgba(255,255,255,0.9); font-size: 12px;">Responsive design</span>
+            <br/><span style="color: rgba(25,255,255,0.9); font-size: 12px;">Responsive design</span>
             <br/><a href="https://code-guardian-report.vercel.app" target="_blank" style="text-decoration: none;">
               <img src="https://img.shields.io/badge/📱%20Try%20Mobile-Live%20Demo-10B981?style=flat-square&logoColor=white" alt="Mobile Demo" style="margin-top: 10px;"/>
             </a>
@@ -1184,7 +1106,7 @@ curl -H "Authorization: Bearer $TOKEN" \
           <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 15px; backdrop-filter: blur(10px);">
             <img src="https://img.icons8.com/fluency/64/api.png" alt="API Demo" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));"/>
             <br/><strong style="color: white; font-size: 16px;">API Integration</strong>
-            <br/><span style="color: rgba(255,255,255,0.9); font-size: 12px;">Developer tools</span>
+            <br/><span style="color: rgba(25,255,255,0.9); font-size: 12px;">Developer tools</span>
             <br/><a href="#-api-documentation" style="text-decoration: none;">
               <img src="https://img.shields.io/badge/🔌%20API%20Docs-Documentation-F59E0B?style=flat-square&logoColor=white" alt="API Docs" style="margin-top: 10px;"/>
             </a>
@@ -1307,7 +1229,7 @@ curl -H "Authorization: Bearer $TOKEN" \
 <tr>
 <td width="50%" align="center">
   <h4>☀️ Light Mode</h4>
-  <img src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=500&h=300&fit=crop&auto=format&q=80" alt="Light Theme" style="border-radius: 8px;" width="100%"/>
+  <img src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=50&h=300&fit=crop&auto=format&q=80" alt="Light Theme" style="border-radius: 8px;" width="100%"/>
 </td>
 <td width="50%" align="center">
   <h4>🌙 Dark Mode</h4>
@@ -1576,17 +1498,6 @@ gantt
 
 </details>
 
-## # Changelog
-
-See [changelogs.md](./changelogs.md) for a complete version history.
-
-**Recent Releases:**
-- **v4.5.0 (17/07/2025):** Version bump, synchronized all version references across project
-- **v4.4.0 (16/07/2025):** Updates to main.tsx and vite.config.ts, bug fixes
-- **v4.3.0–v4.3.3 (12–15/07/2025):** Manifest updates, UI improvements, dependency updates
-- **v4.2.0–v4.2.4 (06–10/07/2025):** AI Security Insights, StatsGrid, EnhancedAnalysis updates, bug fixes
-- **v4.1.0–v4.1.3 (27/06–03/07/2025):** Build, config, and performance improvements
-
 ## 📄 License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
@@ -1625,7 +1536,6 @@ If you encounter any issues or have questions:
 
 ---
 
-
 ## 📊 Project Activity & Health
 
 <div align="center">
@@ -1638,7 +1548,7 @@ If you encounter any issues or have questions:
 </div>
 
 <div align="center">
-  <img src="https://repobeats.axiom.co/api/embed/Xenonesis/code-guardian-report.svg" alt="Repobeats analytics graph" width="100%"/>
+  <img src="https://repobeats.axiom.co/api/embed/Xenonesis/code-guardian-report.svg" alt="Repobeats analytics graph" width="10%"/>
 </div>
 
 <!-- CONTRIBUTORS:START -->
@@ -1664,11 +1574,11 @@ If you encounter any issues or have questions:
       <td align="center" style="padding: 15px;">
         <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px;">
           <h4 style="color: white; margin: 0; font-size: 24px;">🍴 20</h4>
-          <p style="color: rgba(255,255,255,0.8); margin: 5px 0 0 0; font-size: 14px;">Forks</p>
+          <p style="color: rgba(255,255,0.8); margin: 5px 0 0 0; font-size: 14px;">Forks</p>
         </div>
       </td>
       <td align="center" style="padding: 15px;">
-        <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px;">
+        <div style="background: rgba(255,255,0.2); padding: 15px; border-radius: 10px;">
           <h4 style="color: white; margin: 0; font-size: 24px;">👥 8</h4>
           <p style="color: rgba(255,255,255,0.8); margin: 5px 0 0 0; font-size: 14px;">Contributors</p>
         </div>
@@ -1676,7 +1586,7 @@ If you encounter any issues or have questions:
       <td align="center" style="padding: 15px;">
         <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px;">
           <h4 style="color: white; margin: 0; font-size: 24px;">👀 18</h4>
-          <p style="color: rgba(255,255,255,0.8); margin: 5px 0 0 0; font-size: 14px;">Watchers</p>
+          <p style="color: rgba(255,255,255,0.8); margin: 5px 0 0; font-size: 14px;">Watchers</p>
         </div>
       </td>
     </tr>
@@ -1694,47 +1604,47 @@ If you encounter any issues or have questions:
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/115968670?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
         <br/><strong style="color: white; font-size: 16px;">_7adi;</strong>
-        <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@Xenonesis</span>
-        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">🚀 Creator</span>
-        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Project Creator & Lead Developer</span>
+        <br/><span style="color: rgba(25,255,255,0.9); font-size: 14px;">@Xenonesis</span>
+        <br/><span style="background: rgba(25,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">🚀 Creator</span>
+        <br/><span style="color: rgba(255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Project Creator & Lead Developer</span>
         <div style="margin-top: 10px;">
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">47 commits</span>
         </div>
       </td>
       <td align="center" style="padding: 20px;">
-        <img src="https://avatars.githubusercontent.com/u/186174121?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
+        <img src="https://avatars.githubusercontent.com/u/186174121?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0.4);"/>
         <br/><strong style="color: white; font-size: 16px;">Muneer Ali</strong>
-        <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@Muneerali199</span>
+        <br/><span style="color: rgba(255,255,0.9); font-size: 14px;">@Muneerali199</span>
         <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">👤 Contributor</span>
-        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
+        <br/><span style="color: rgba(25,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
         <div style="margin-top: 10px;">
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">4 commits</span>
         </div>
       </td>
       <td align="center" style="padding: 20px;">
-        <img src="https://avatars.githubusercontent.com/u/164482191?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
+        <img src="https://avatars.githubusercontent.com/u/164482191?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0.4);"/>
         <br/><strong style="color: white; font-size: 16px;">Sudharshan Paul</strong>
-        <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@sudharshanpaul</span>
+        <br/><span style="color: rgba(255,255,0.9); font-size: 14px;">@sudharshanpaul</span>
         <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">👤 Contributor</span>
-        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
+        <br/><span style="color: rgba(255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
         <div style="margin-top: 10px;">
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">4 commits</span>
         </div>
       </td>
       <td align="center" style="padding: 20px;">
-        <img src="https://avatars.githubusercontent.com/u/176881379?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
+        <img src="https://avatars.githubusercontent.com/u/176881379?v=4" width="10" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
         <br/><strong style="color: white; font-size: 16px;">Jils Patel</strong>
-        <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@Jils31</span>
+        <br/><span style="color: rgba(255,255,0.9); font-size: 14px;">@Jils31</span>
         <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">👤 Contributor</span>
-        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
+        <br/><span style="color: rgba(255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
         <div style="margin-top: 10px;">
-          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">3 commits</span>
+          <span style="background: rgba(25,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">3 commits</span>
         </div>
       </td>
     </tr>
     <tr>
       <td align="center" style="padding: 20px;">
-        <img src="https://avatars.githubusercontent.com/u/180313267?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
+        <img src="https://avatars.githubusercontent.com/u/180313267?v=4" width="10" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
         <br/><strong style="color: white; font-size: 16px;">Baranidharan</strong>
         <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@Baranidharanv06</span>
         <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">👤 Contributor</span>
@@ -1744,13 +1654,13 @@ If you encounter any issues or have questions:
         </div>
       </td>
       <td align="center" style="padding: 20px;">
-        <img src="https://avatars.githubusercontent.com/u/132596404?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
+        <img src="https://avatars.githubusercontent.com/u/132596404?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0.4);"/>
         <br/><strong style="color: white; font-size: 16px;">Pathan Mo. Faizan Khan</strong>
-        <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@pathan-07</span>
-        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">👤 Contributor</span>
-        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
+        <br/><span style="color: rgba(25,255,255,0.9); font-size: 14px;">@pathan-07</span>
+        <br/><span style="background: rgba(25,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">👤 Contributor</span>
+        <br/><span style="color: rgba(25,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
         <div style="margin-top: 10px;">
-          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">1 commits</span>
+          <span style="background: rgba(25,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">1 commits</span>
         </div>
       </td>
       <td align="center" style="padding: 20px;">
@@ -1760,15 +1670,15 @@ If you encounter any issues or have questions:
         <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">👤 Contributor</span>
         <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
         <div style="margin-top: 10px;">
-          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">1 commits</span>
+          <span style="background: rgba(25,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">1 commits</span>
         </div>
       </td>
       <td align="center" style="padding: 20px;">
-        <img src="https://avatars.githubusercontent.com/u/200819625?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
+        <img src="https://avatars.githubusercontent.com/u/200819625?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0.4);"/>
         <br/><strong style="color: white; font-size: 16px;">Bhuvaneshwari Mallesh</strong>
-        <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@bhuvnaaaaaa</span>
-        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">👤 Contributor</span>
-        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
+        <br/><span style="color: rgba(255,255,0.9); font-size: 14px;">@bhuvnaaaaaa</span>
+        <br/><span style="background: rgba(25,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">👤 Contributor</span>
+        <br/><span style="color: rgba(255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
         <div style="margin-top: 10px;">
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">1 commits</span>
         </div>
@@ -1797,7 +1707,7 @@ If you encounter any issues or have questions:
       <img src="https://avatars.githubusercontent.com/u/164482191?v=4" width="50" height="50" style="border-radius: 50%; border: 2px solid #333; margin: 2px;" title="Sudharshan Paul (4 contributions)"/>
     </a>
     <a href="https://github.com/Jils31" target="_blank" style="text-decoration: none;">
-      <img src="https://avatars.githubusercontent.com/u/176881379?v=4" width="50" height="50" style="border-radius: 50%; border: 2px solid #333; margin: 2px;" title="Jils Patel (3 contributions)"/>
+      <img src="https://avatars.githubusercontent.com/u/17681379?v=4" width="50" height="50" style="border-radius: 50%; border: 2px solid #333; margin: 2px;" title="Jils Patel (3 contributions)"/>
     </a>
     <a href="https://github.com/Baranidharanv06" target="_blank" style="text-decoration: none;">
       <img src="https://avatars.githubusercontent.com/u/180313267?v=4" width="50" height="50" style="border-radius: 50%; border: 2px solid #333; margin: 2px;" title="Baranidharan (2 contributions)"/>
@@ -1809,7 +1719,7 @@ If you encounter any issues or have questions:
       <img src="https://avatars.githubusercontent.com/u/180231504?v=4" width="50" height="50" style="border-radius: 50%; border: 2px solid #333; margin: 2px;" title="Shubhranshu Sahu (1 contributions)"/>
     </a>
     <a href="https://github.com/bhuvnaaaaaa" target="_blank" style="text-decoration: none;">
-      <img src="https://avatars.githubusercontent.com/u/200819625?v=4" width="50" height="50" style="border-radius: 50%; border: 2px solid #333; margin: 2px;" title="Bhuvaneshwari Mallesh (1 contributions)"/>
+      <img src="https://avatars.githubusercontent.com/u/200819625?v=4" width="50" height="50" style="border-radius: 50%; border: 2px solid #33; margin: 2px;" title="Bhuvaneshwari Mallesh (1 contributions)"/>
     </a>
   </div>
   
@@ -1833,16 +1743,16 @@ If you encounter any issues or have questions:
     <a href="https://github.com/Xenonesis/code-guardian-report/stargazers" style="text-decoration: none;">
       <img src="https://img.icons8.com/fluency/64/star.png" alt="Star" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));"/>
       <br/><strong style="color: white; font-size: 16px;">⭐ Star</strong>
-      <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">Give us a star on GitHub</span>
+      <br/><span style="color: rgba(25,255,255,0.9); font-size: 14px;">Give us a star on GitHub</span>
     </a>
   </div>
 </td>
 <td width="25%" align="center">
   <div style="background: linear-gradient(135deg, #32CD32 0%, #228B22 100%); padding: 20px; border-radius: 15px; margin: 10px;">
     <a href="https://github.com/Xenonesis/code-guardian-report/network/members" style="text-decoration: none;">
-      <img src="https://img.icons8.com/fluency/64/code-fork.png" alt="Fork" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));"/>
+      <img src="https://img.icons8.com/fluency/64/code-fork.png" alt="Fork" style="filter: drop-shadow(0 4px 8px rgba(0,0,0.3));"/>
       <br/><strong style="color: white; font-size: 16px;">🍴 Fork</strong>
-      <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">Fork and contribute</span>
+      <br/><span style="color: rgba(25,255,255,0.9); font-size: 14px;">Fork and contribute</span>
     </a>
   </div>
 </td>
@@ -1851,7 +1761,7 @@ If you encounter any issues or have questions:
     <a href="https://github.com/Xenonesis/code-guardian-report/issues" style="text-decoration: none;">
       <img src="https://img.icons8.com/fluency/64/bug.png" alt="Issues" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));"/>
       <br/><strong style="color: white; font-size: 16px;">🐛 Report</strong>
-      <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">Report bugs & issues</span>
+      <br/><span style="color: rgba(25,255,255,0.9); font-size: 14px;">Report bugs & issues</span>
     </a>
   </div>
 </td>
@@ -1860,7 +1770,7 @@ If you encounter any issues or have questions:
     <a href="https://twitter.com/intent/tweet?text=Check%20out%20Code%20Guardian%20-%20AI-powered%20security%20analysis%20platform!%20https://github.com/Xenonesis/code-guardian-report" style="text-decoration: none;">
       <img src="https://img.icons8.com/fluency/64/share.png" alt="Share" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));"/>
       <br/><strong style="color: white; font-size: 16px;">📢 Share</strong>
-      <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">Spread the word</span>
+      <br/><span style="color: rgba(25,255,255,0.9); font-size: 14px;">Spread the word</span>
     </a>
   </div>
 </td>
@@ -1871,15 +1781,4 @@ If you encounter any issues or have questions:
 
 </div>
 
----(https://img.shields.io/github/stars/Xenonesis/code-guardian-report?style=for-the-badge&logo=github&logoColor=white&color=FFD700&labelColor=1a1a1a)](https://github.com/Xenonesis/code-guardian-report/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/Xenonesis/code-guardian-report?style=for-the-badge&logo=github&logoColor=white&color=32CD32&labelColor=1a1a1a)](https://github.com/Xenonesis/code-guardian-report/network/members)
-[![GitHub watchers](https://img.shields.io/github/watchers/Xenonesis/code-guardian-report?style=for-the-badge&logo=github&logoColor=white&color=1E90FF&labelColor=1a1a1a)](https://github.com/Xenonesis/code-guardian-report/watchers)
-[![GitHub issues](https://img.shields.io/github/issues/Xenonesis/code-guardian-report?style=for-the-badge&logo=github&logoColor=white&color=FF6B6B&labelColor=1a1a1a)](https://github.com/Xenonesis/code-guardian-report/issues)
-
-<br/>
-
-<a href="https://github.com/Xenonesis/code-guardian-report">
-  <img src="https://img.shields.io/badge/⭐%20Star%20this%20repository-FFD700?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="Star Repository" height="50"/>
-</a>
-
-</div>
+---
