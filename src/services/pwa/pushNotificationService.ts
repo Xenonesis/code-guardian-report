@@ -54,11 +54,8 @@ class PushNotificationService {
       // Subscribe to push notifications
       const subscription = await registration.pushManager.subscribe({
         userVisibleOnly: true,
-<<<<<<< HEAD
         applicationServerKey: new Uint8Array(appServerKey.buffer)
-=======
-        applicationServerKey: appServerKey
->>>>>>> upstream/main
+
       });
 
       // Send subscription to server
