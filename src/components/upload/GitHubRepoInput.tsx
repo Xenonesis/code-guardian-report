@@ -142,10 +142,12 @@ export const GitHubRepoInput: React.FC<GitHubRepoInputProps> = ({ onFileReady })
   };
 
   return (
+
     <div className="space-y-4">
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">
           <Github className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400" />
+
           <Input
             type="url"
             placeholder="https://github.com/owner/repository"
@@ -159,21 +161,26 @@ export const GitHubRepoInput: React.FC<GitHubRepoInputProps> = ({ onFileReady })
           />
           {isFetchingInfo && (
             <Loader2 className="absolute right-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-blue-500 animate-spin" />
+
           )}
         </div>
         <Button
           onClick={handleAnalyze}
           disabled={isLoading || !repoUrl.trim()}
+
           className="h-12 px-6 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold shadow-lg hover:shadow-xl transition-all"
         >
           {isLoading ? (
             <>
               <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+
               Analyzing...
             </>
           ) : (
             <>
+
               <Download className="mr-2 h-5 w-5" />
+
               Analyze Repository
             </>
           )}
@@ -191,16 +198,19 @@ export const GitHubRepoInput: React.FC<GitHubRepoInputProps> = ({ onFileReady })
                 </p>
                 {repoInfo.description && (
                   <p className="text-sm text-slate-600 dark:text-slate-300 mt-1">
+
                     {repoInfo.description}
                   </p>
                 )}
               </div>
+
 
               <div className="flex flex-wrap gap-3 text-sm text-slate-600 dark:text-slate-300">
                 {repoInfo.language && (
                   <span className="flex items-center gap-1">
                     <span className="w-3 h-3 rounded-full bg-blue-500"></span>
                     {repoInfo.language}
+
                   </span>
                 )}
                 {estimatedSize && (
@@ -209,6 +219,7 @@ export const GitHubRepoInput: React.FC<GitHubRepoInputProps> = ({ onFileReady })
                     <span>{estimatedSize.fileCount} code files</span>
                     <span>•</span>
                     <span>{estimatedSize.formattedSize}</span>
+
                   </>
                 )}
               </div>
@@ -228,6 +239,7 @@ export const GitHubRepoInput: React.FC<GitHubRepoInputProps> = ({ onFileReady })
             </span>
           </div>
           <Progress value={progress} className="h-2" />
+
         </div>
       )}
 
@@ -235,6 +247,7 @@ export const GitHubRepoInput: React.FC<GitHubRepoInputProps> = ({ onFileReady })
         <Alert className="border-l-4 border-l-red-500 bg-red-50 dark:bg-red-950/20">
           <AlertCircle className="h-5 w-5 text-red-600 dark:text-red-400" />
           <AlertDescription className="text-red-800 dark:text-red-200">
+
             <strong>Error:</strong> {error}
           </AlertDescription>
         </Alert>
@@ -247,6 +260,7 @@ export const GitHubRepoInput: React.FC<GitHubRepoInputProps> = ({ onFileReady })
           <ul className="list-disc list-inside mt-2 space-y-1">
             <li>https://github.com/owner/repository</li>
             <li>https://github.com/owner/repository/tree/branch</li>
+
           </ul>
         </AlertDescription>
       </Alert>

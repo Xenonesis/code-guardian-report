@@ -263,11 +263,14 @@ class GitHubRepositoryService {
             }
           })
         );
+<<<<<<< HEAD
 
         // Small delay between batches to avoid rate limiting
         if (i + batchSize < codeFiles.length) {
           await new Promise(resolve => setTimeout(resolve, 100));
         }
+=======
+>>>>>>> upstream/main
       }
 
       onProgress?.(90, 'Creating zip file...');

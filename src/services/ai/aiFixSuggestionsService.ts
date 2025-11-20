@@ -482,11 +482,6 @@ Format your response as a JSON array with this structure:
       batchResults.forEach(({ issueId, suggestions }) => {
         results.set(issueId, suggestions);
       });
-
-      // Small delay between batches to avoid rate limiting
-      if (i + batchSize < requests.length) {
-        await new Promise(resolve => setTimeout(resolve, 1000));
-      }
     }
 
     return results;

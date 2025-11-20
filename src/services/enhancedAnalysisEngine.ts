@@ -1,6 +1,9 @@
 import { SecurityIssue, AnalysisResults } from '@/hooks/useAnalysis';
 import { SecurityAnalyzer } from './analysis/SecurityAnalyzer';
 import { MetricsCalculator } from './analysis/MetricsCalculator';
+import { ASTAnalyzer } from './analysis/ASTAnalyzer';
+import { DataFlowAnalyzer } from './analysis/DataFlowAnalyzer';
+import { DependencyVulnerabilityScanner } from './security/dependencyVulnerabilityScanner';
 import JSZip from 'jszip';
 
 interface FileContent {
@@ -10,12 +13,18 @@ interface FileContent {
 }
 
 export class EnhancedAnalysisEngine {
-  private securityAnalyzer: SecurityAnalyzer;
-  private metricsCalculator: MetricsCalculator;
+  private readonly securityAnalyzer: SecurityAnalyzer;
+  private readonly metricsCalculator: MetricsCalculator;
+  private readonly astAnalyzer: ASTAnalyzer;
+  private readonly dataFlowAnalyzer: DataFlowAnalyzer;
+  private readonly dependencyScanner: DependencyVulnerabilityScanner;
 
   constructor() {
     this.securityAnalyzer = new SecurityAnalyzer();
     this.metricsCalculator = new MetricsCalculator();
+    this.astAnalyzer = new ASTAnalyzer();
+    this.dataFlowAnalyzer = new DataFlowAnalyzer();
+    this.dependencyScanner = new DependencyVulnerabilityScanner();
   }
 
   private async extractZipContents(zipFile: { arrayBuffer: () => Promise<ArrayBuffer> }): Promise<FileContent[]> {
@@ -98,6 +107,7 @@ export class EnhancedAnalysisEngine {
     let linesAnalyzed = 0;
     let totalFiles = 0;
     let packageJsonContent: string | undefined;
+    let dependencyAnalysis;
 
     if (zipFile) {
       try {
@@ -117,12 +127,37 @@ export class EnhancedAnalysisEngine {
         // Initialize smart language detection
         await this.securityAnalyzer.initializeAnalysisContext(fileContents);
 
-        // Analyze files with enhanced context
-        for (let i = 0; i < fileContents.length; i++) {
-          const fileContent = fileContents[i];
+        // Phase 1: Pattern-based and framework-specific analysis
+        const analysisPromises = fileContents.map(fileContent => {
           const fileIssues = this.securityAnalyzer.analyzeFile(fileContent.filename, fileContent.content);
-          allIssues = [...allIssues, ...fileIssues];
-          linesAnalyzed += fileContent.content.split('\n').length;
+          const lines = fileContent.content.split('\n').length;
+          return { fileIssues, lines };
+        });
+
+        // Combine pattern-based results
+        for (const result of analysisPromises) {
+          allIssues = [...allIssues, ...result.fileIssues];
+          linesAnalyzed += result.lines;
+        }
+
+        // Phase 2: AST-based deep analysis
+        for (const fileContent of fileContents) {
+          const astIssues = this.astAnalyzer.analyzeAST(fileContent.filename, fileContent.content);
+          allIssues = [...allIssues, ...astIssues];
+        }
+
+        // Phase 3: Data flow and taint analysis
+        const dataFlowIssues = this.dataFlowAnalyzer.analyzeDataFlow(fileContents);
+        allIssues = [...allIssues, ...dataFlowIssues];
+
+        // Phase 4: Dependency vulnerability scanning
+        try {
+          // Map FileContent to expected format with 'name' property
+          const filesForScanning = fileContents.map(f => ({ name: f.filename, content: f.content }));
+          dependencyAnalysis = await this.dependencyScanner.scanDependencies(filesForScanning);
+        } catch (error) {
+          console.warn('Dependency scanning failed:', error);
+          dependencyAnalysis = undefined;
         }
       } catch {
         // Return error-based analysis for failed ZIP processing
@@ -133,7 +168,7 @@ export class EnhancedAnalysisEngine {
           analysisTime: '0.1s',
           summary: this.metricsCalculator.calculateSummaryMetrics([], 0),
           metrics: this.metricsCalculator.calculateDetailedMetrics([], 0),
-          dependencies: this.metricsCalculator.analyzeDependencies(undefined)
+          dependencies: this.metricsCalculator.analyzeDependencies()
         };
       }
     } else {
@@ -144,7 +179,7 @@ export class EnhancedAnalysisEngine {
         analysisTime: '0.1s',
         summary: this.metricsCalculator.calculateSummaryMetrics([], 0),
         metrics: this.metricsCalculator.calculateDetailedMetrics([], 0),
-        dependencies: this.metricsCalculator.analyzeDependencies(undefined)
+        dependencies: this.metricsCalculator.analyzeDependencies()
       };
     }
 
@@ -158,7 +193,8 @@ export class EnhancedAnalysisEngine {
       summary: this.metricsCalculator.calculateSummaryMetrics(allIssues, linesAnalyzed),
       languageDetection: this.securityAnalyzer.getAnalysisContext()?.detectionResult,
       metrics: this.metricsCalculator.calculateDetailedMetrics(allIssues, linesAnalyzed),
-      dependencies: this.metricsCalculator.analyzeDependencies(packageJsonContent)
+      dependencies: this.metricsCalculator.analyzeDependencies(packageJsonContent),
+      dependencyAnalysis
     };
 
     // Verify we have real analysis results

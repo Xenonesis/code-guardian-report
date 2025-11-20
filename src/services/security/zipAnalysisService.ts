@@ -566,11 +566,11 @@ export class ZipAnalysisService {
       documentationFiles,
       averageFileSize: fileSizes.length > 0 ? fileSizes.reduce((a, b) => a + b, 0) / fileSizes.length : 0,
       largestFiles: largestFiles.slice(0, 10),
-      duplicateFiles: [], // TODO: Implement duplicate detection
+      duplicateFiles: this.findDuplicateFiles(fileHashes),
       complexity: {
-        cyclomatic: 0, // TODO: Calculate cyclomatic complexity
-        cognitive: 0, // TODO: Calculate cognitive complexity
-        maintainabilityIndex: 0 // TODO: Calculate maintainability index
+        cyclomatic: this.calculateAverageCyclomaticComplexity(stats),
+        cognitive: this.estimateAverageCognitiveComplexity(stats),
+        maintainabilityIndex: this.calculateMaintainabilityIndex(stats)
       }
     };
   }
@@ -682,5 +682,78 @@ export class ZipAnalysisService {
   private isDocumentationFile(extension: string): boolean {
     const docExtensions = ['.md', '.txt', '.rst', '.adoc'];
     return docExtensions.includes(extension);
+  }
+
+  /**
+   * Find duplicate files by comparing hashes
+   */
+  private findDuplicateFiles(fileHashes: Map<string, string>): Array<{ files: string[]; hash: string }> {
+    const hashGroups = new Map<string, string[]>();
+    
+    fileHashes.forEach((hash, file) => {
+      if (!hashGroups.has(hash)) {
+        hashGroups.set(hash, []);
+      }
+      hashGroups.get(hash)!.push(file);
+    });
+    
+    const duplicates: Array<{ files: string[]; hash: string }> = [];
+    hashGroups.forEach((files, hash) => {
+      if (files.length > 1) {
+        duplicates.push({ files, hash });
+      }
+    });
+    
+    return duplicates;
+  }
+
+  /**
+   * Calculate average cyclomatic complexity
+   */
+  private calculateAverageCyclomaticComplexity(stats: any): number {
+    // Estimate based on file types and sizes
+    const codeFiles = stats.codeFiles || 0;
+    const totalLines = stats.totalLines || 0;
+    
+    if (codeFiles === 0) return 0;
+    
+    // Simple estimation: complexity increases with file size
+    const avgLinesPerFile = totalLines / codeFiles;
+    const estimatedComplexity = Math.min(50, Math.max(1, Math.floor(avgLinesPerFile / 20)));
+    
+    return estimatedComplexity;
+  }
+
+  /**
+   * Estimate average cognitive complexity
+   */
+  private estimateAverageCognitiveComplexity(stats: any): number {
+    // Cognitive complexity is typically 20-30% higher than cyclomatic
+    const cyclomaticComplexity = this.calculateAverageCyclomaticComplexity(stats);
+    return Math.floor(cyclomaticComplexity * 1.25);
+  }
+
+  /**
+   * Calculate maintainability index
+   */
+  private calculateMaintainabilityIndex(stats: any): number {
+    const codeFiles = stats.codeFiles || 0;
+    const totalLines = stats.totalLines || 0;
+    const issues = stats.securityIssues?.length || 0;
+    
+    if (codeFiles === 0) return 100;
+    
+    // Maintainability Index formula (simplified)
+    // MI = 171 - 5.2 * ln(Halstead Volume) - 0.23 * Cyclomatic - 16.2 * ln(Lines of Code)
+    const avgLinesPerFile = totalLines / codeFiles;
+    const cyclomaticComplexity = this.calculateAverageCyclomaticComplexity(stats);
+    
+    // Simplified calculation
+    let mi = 100;
+    mi -= Math.log(avgLinesPerFile + 1) * 5; // Penalty for large files
+    mi -= cyclomaticComplexity * 0.5; // Penalty for complexity
+    mi -= issues * 2; // Penalty for issues
+    
+    return Math.max(0, Math.min(100, Math.floor(mi)));
   }
 }

@@ -3,6 +3,7 @@
 @import './styles/about-page-enhancements.css';
 @import './styles/sidebar-fix.css';
 @import './styles/sidebar-position-fix.css';
+@import './styles/professional-enhancements.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -291,6 +292,7 @@
         body {
             -webkit-overflow-scrolling: touch;
             overscroll-behavior: contain;
+            font-size: 16px; /* Prevent zoom on input focus */
         }
         * {
             -webkit-tap-highlight-color: transparent;
@@ -311,14 +313,44 @@
         input,
         select,
         textarea {
-            min-height: 44px;
+            min-height: 48px;
+            min-width: 48px;
+        }
+        /* Mobile container improvements */
+        .container {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        /* Better mobile scrolling */
+        html {
+            -webkit-overflow-scrolling: touch;
         }
     }
     /* Tablet optimizations */
     @media (min-width: 768px) and (max-width: 1024px) {
         .container {
-            padding-left: 2rem;
-            padding-right: 2rem;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+        }
+        body {
+            font-size: 15px;
+        }
+    }
+    
+    /* Extra small mobile devices */
+    @media (max-width: 390px) {
+        body {
+            font-size: 14px;
+        }
+        .container {
+            padding-left: 0.75rem;
+            padding-right: 0.75rem;
+        }
+        h1 {
+            font-size: 1.75rem;
+        }
+        h2 {
+            font-size: 1.5rem;
         }
     }
     /* High DPI display optimizations */
@@ -2225,4 +2257,9 @@
 /* Smooth scrolling for navigation items */
 .navigation-scroll > * {
   scroll-margin-top: 1rem;
+}
+
+/* Custom styles for Upload ZIP File tab trigger */
+[data-state="active"][value="file"] {
+  transform: translateX(-6px) translateY(-5px);
 }

@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { FileCode, Shield, FileText, AlertTriangle, Zap } from 'lucide-react';
+import { FileCode, AlertTriangle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { TabsContent } from '@/components/ui/tabs';
 import { UploadForm } from '@/components/UploadForm';
@@ -77,97 +77,46 @@ export const TabContent: React.FC<TabContentProps> = ({
               <LoadingSpinner size="lg" message="Loading Results..." />
             </div>
           }>
-            {/* ZIP Overview (if available) */}
+            {/* Suspicious Files Section (if available) */}
             {analysisResults.zipAnalysis && (
-              <div className="space-y-6 mb-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                  <Card>
-                    <CardContent className="p-4">
+              <div className="space-y-6 mb-8">
+                {/* Suspicious files (compact) */}
+                {analysisResults.zipAnalysis.fileStructure.suspiciousFiles.length > 0 && (
+                  <Card className="bg-gradient-to-br from-amber-50/50 via-orange-50/30 to-yellow-50/50 dark:from-amber-950/20 dark:via-orange-950/10 dark:to-yellow-950/20 border-2 border-amber-200/60 dark:border-amber-800/40 shadow-xl hover:shadow-2xl transition-all duration-300">
+                    <CardHeader className="pb-4">
                       <div className="flex items-center gap-3">
-                        <div className="p-2 bg-blue-500 rounded-lg">
-                          <Shield className="h-5 w-5 text-white" />
-                        </div>
-                        <div>
-                          <p className="text-2xl font-bold text-blue-800 dark:text-blue-200">
-                            {100 - (analysisResults.zipAnalysis.securityThreats.length * 10)}
-                          </p>
-                          <p className="text-sm text-blue-600 dark:text-blue-300">Security Score</p>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  <Card>
-                    <CardContent className="p-4">
-                      <div className="flex items-center gap-3">
-                        <div className="p-2 bg-green-500 rounded-lg">
-                          <FileText className="h-5 w-5 text-white" />
-                        </div>
-                        <div>
-                          <p className="text-2xl font-bold text-green-800 dark:text-green-200">
-                            {analysisResults.zipAnalysis.fileStructure.totalFiles}
-                          </p>
-                          <p className="text-sm text-green-600 dark:text-green-300">Total Files</p>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  <Card>
-                    <CardContent className="p-4">
-                      <div className="flex items-center gap-3">
-                        <div className="p-2 bg-red-500 rounded-lg">
+                        <div className="p-2.5 bg-gradient-to-br from-amber-500 to-orange-500 rounded-xl shadow-lg">
                           <AlertTriangle className="h-5 w-5 text-white" />
                         </div>
                         <div>
-                          <p className="text-2xl font-bold text-red-800 dark:text-red-200">
-                            {analysisResults.zipAnalysis.securityThreats.length}
-                          </p>
-                          <p className="text-sm text-red-600 dark:text-red-300">Security Threats</p>
+                          <CardTitle className="text-lg sm:text-xl font-bold bg-gradient-to-r from-amber-900 via-orange-900 to-yellow-900 dark:from-amber-200 dark:via-orange-200 dark:to-yellow-200 bg-clip-text text-transparent">
+                            Suspicious Files
+                          </CardTitle>
+                          <CardDescription className="text-xs sm:text-sm font-medium mt-0.5">
+                            Files flagged due to risky extensions or patterns
+                          </CardDescription>
                         </div>
                       </div>
-                    </CardContent>
-                  </Card>
-
-                  <Card>
-                    <CardContent className="p-4">
-                      <div className="flex items-center gap-3">
-                        <div className="p-2 bg-orange-500 rounded-lg">
-                          <Zap className="h-5 w-5 text-white" />
-                        </div>
-                        <div>
-                          <p className="text-2xl font-bold text-orange-800 dark:text-orange-200">
-                            {analysisResults.dependencyAnalysis?.summary.criticalVulnerabilities || 0}
-                          </p>
-                          <p className="text-sm text-orange-600 dark:text-orange-300">Critical Vulns</p>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
-
-                {/* Suspicious files (compact) */}
-                {analysisResults.zipAnalysis.fileStructure.suspiciousFiles.length > 0 && (
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Suspicious Files</CardTitle>
-                      <CardDescription>
-                        Files flagged due to risky extensions or patterns
-                      </CardDescription>
                     </CardHeader>
                     <CardContent>
-                      <div className="space-y-2">
-                        {analysisResults.zipAnalysis.fileStructure.suspiciousFiles.slice(0, 8).map((file, i) => (
+                      <div className="space-y-2.5">
+                        {analysisResults.zipAnalysis.fileStructure.suspiciousFiles.slice(0, 8).map((file) => (
                           <div
-                            key={i}
-                            className="flex items-center gap-2 p-2 rounded border border-yellow-200 dark:border-yellow-700/40 bg-yellow-50 dark:bg-yellow-900/30"
+                            key={file}
+                            className="group flex items-center gap-3 p-3.5 rounded-xl border-2 border-amber-300/50 dark:border-amber-700/30 bg-gradient-to-r from-amber-100/80 via-orange-50/70 to-yellow-50/80 dark:from-amber-900/40 dark:via-orange-900/30 dark:to-yellow-900/40 hover:border-amber-400/70 dark:hover:border-amber-600/50 hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5"
                           >
-                            <AlertTriangle className="h-4 w-4 text-yellow-600 dark:text-yellow-400" />
-                            <span className="text-sm truncate text-slate-800 dark:text-slate-100">{file}</span>
+                            <div className="p-1.5 bg-gradient-to-br from-amber-400 to-orange-500 rounded-lg shadow-sm group-hover:scale-110 transition-transform duration-200">
+                              <AlertTriangle className="h-3.5 w-3.5 text-white" />
+                            </div>
+                            <span className="text-sm font-mono font-medium truncate text-amber-900 dark:text-amber-100 flex-1">{file}</span>
                           </div>
                         ))}
                         {analysisResults.zipAnalysis.fileStructure.suspiciousFiles.length > 8 && (
-                          <p className="text-xs text-slate-500 dark:text-slate-400">+ more files omitted</p>
+                          <div className="mt-3 pt-3 border-t border-amber-300/30 dark:border-amber-700/20">
+                            <p className="text-xs font-medium text-amber-700 dark:text-amber-300 text-center">
+                              + {analysisResults.zipAnalysis.fileStructure.suspiciousFiles.length - 8} more files omitted
+                            </p>
+                          </div>
                         )}
                       </div>
                     </CardContent>

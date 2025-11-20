@@ -43,13 +43,8 @@ export const useEnhancedAnalysis = () => {
   // Sync userId with Firebase storage whenever user changes
   useEffect(() => {
     if (user?.uid) {
-      // Small delay to ensure auth is fully ready before setting up listeners
-      const timeoutId = setTimeout(() => {
-        firebaseAnalysisStorage.setUserId(user.uid);
-        console.log('✅ Firebase storage userId synced:', user.uid);
-      }, 300);
-      
-      return () => clearTimeout(timeoutId);
+      firebaseAnalysisStorage.setUserId(user.uid);
+      console.log('✅ Firebase storage userId synced:', user.uid);
     } else {
       firebaseAnalysisStorage.setUserId(null);
       console.log('ℹ️ Firebase storage userId cleared (user logged out)');

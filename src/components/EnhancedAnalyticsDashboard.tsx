@@ -49,28 +49,28 @@ const EnhancedAnalyticsDashboard: React.FC<EnhancedAnalyticsDashboardProps> = ({
   if (issues.length === 0) {
     return (
       <Card className="animate-fade-in">
-        <CardContent className="p-8 text-center">
-          <div className="mb-4 p-3 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full w-fit mx-auto">
-            <Shield className="h-8 w-8 text-white" />
+        <CardContent className="p-6 sm:p-8 text-center">
+          <div className="mb-4 p-2.5 sm:p-3 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full w-fit mx-auto">
+            <Shield className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
           </div>
-          <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">
+          <h3 className="text-lg sm:text-xl font-semibold text-slate-900 dark:text-white mb-2">
             Excellent Code Quality!
           </h3>
-          <p className="text-slate-600 dark:text-slate-300">
+          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300">
             No issues found in your code analysis. Keep up the great work!
           </p>
-          <div className="mt-6 grid grid-cols-3 gap-4 text-center">
+          <div className="mt-4 sm:mt-6 grid grid-cols-3 gap-3 sm:gap-4 text-center">
             <div>
-              <p className="text-2xl font-bold text-green-600">100%</p>
-              <p className="text-sm text-slate-500">Quality Score</p>
+              <p className="text-xl sm:text-2xl font-bold text-green-600">100%</p>
+              <p className="text-xs sm:text-sm text-slate-500">Quality Score</p>
             </div>
             <div>
-              <p className="text-2xl font-bold text-green-600">{totalFiles}</p>
-              <p className="text-sm text-slate-500">Files Clean</p>
+              <p className="text-xl sm:text-2xl font-bold text-green-600">{totalFiles}</p>
+              <p className="text-xs sm:text-sm text-slate-500">Files Clean</p>
             </div>
             <div>
-              <p className="text-2xl font-bold text-green-600">{analysisTime}</p>
-              <p className="text-sm text-slate-500">Analysis Time</p>
+              <p className="text-xl sm:text-2xl font-bold text-green-600">{analysisTime}</p>
+              <p className="text-xs sm:text-sm text-slate-500">Analysis Time</p>
             </div>
           </div>
         </CardContent>
@@ -81,16 +81,16 @@ const EnhancedAnalyticsDashboard: React.FC<EnhancedAnalyticsDashboardProps> = ({
   return (
     <div className="space-y-4 sm:space-y-6 animate-fade-in">
       {/* Header with controls */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div>
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Analytics Dashboard</h2>
-          <p className="text-slate-600 dark:text-slate-400">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4">
+        <div className="w-full sm:w-auto">
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">Analytics Dashboard</h2>
+          <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1">
             Comprehensive analysis of {issues.length} issues across {totalFiles} files
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 w-full sm:w-auto">
           <Select value={timeframe} onValueChange={setTimeframe}>
-            <SelectTrigger className="w-32">
+            <SelectTrigger className="w-28 sm:w-32 h-9 text-sm">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -99,36 +99,36 @@ const EnhancedAnalyticsDashboard: React.FC<EnhancedAnalyticsDashboardProps> = ({
               <SelectItem value="30d">30 Days</SelectItem>
             </SelectContent>
           </Select>
-          <Button variant="outline" size="sm">
-            <Download className="h-4 w-4 mr-2" />
-            Export
+          <Button variant="outline" size="sm" className="h-9 text-sm">
+            <Download className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+            <span className="hidden xs:inline">Export</span>
           </Button>
         </div>
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 mb-6">
-          <TabsTrigger value="overview" className="text-xs sm:text-sm">
-            <Activity className="h-4 w-4 mr-1 sm:mr-2" />
-            <span className="hidden sm:inline">Overview</span>
-            <span className="sm:hidden">Stats</span>
+        <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 mb-4 sm:mb-6 h-auto">
+          <TabsTrigger value="overview" className="text-xs sm:text-sm py-2 sm:py-2.5">
+            <Activity className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+            <span className="hidden xs:inline">Overview</span>
+            <span className="xs:hidden">Stats</span>
           </TabsTrigger>
-          <TabsTrigger value="files" className="text-xs sm:text-sm">
-            <FileText className="h-4 w-4 mr-1 sm:mr-2" />
+          <TabsTrigger value="files" className="text-xs sm:text-sm py-2 sm:py-2.5">
+            <FileText className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
             Files
           </TabsTrigger>
-          <TabsTrigger value="risk" className="text-xs sm:text-sm">
-            <Target className="h-4 w-4 mr-1 sm:mr-2" />
+          <TabsTrigger value="risk" className="text-xs sm:text-sm py-2 sm:py-2.5">
+            <Target className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
             Risk
           </TabsTrigger>
-          <TabsTrigger value="performance" className="text-xs sm:text-sm">
-            <Zap className="h-4 w-4 mr-1 sm:mr-2" />
-            <span className="hidden sm:inline">Performance</span>
-            <span className="sm:hidden">Perf</span>
+          <TabsTrigger value="performance" className="text-xs sm:text-sm py-2 sm:py-2.5">
+            <Zap className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+            <span className="hidden xs:inline">Performance</span>
+            <span className="xs:hidden">Perf</span>
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="overview" className="space-y-6">
+        <TabsContent value="overview" className="space-y-4 sm:space-y-6">
           <MetricsCards
             totalIssues={issues.length}
             criticalIssues={riskMetrics.criticalIssues}
@@ -136,21 +136,21 @@ const EnhancedAnalyticsDashboard: React.FC<EnhancedAnalyticsDashboardProps> = ({
             codeQuality={riskMetrics.codeQuality}
           />
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
             <SeverityChart data={severityData} />
             <TypeChart data={typeData} />
           </div>
         </TabsContent>
 
-        <TabsContent value="files" className="space-y-6">
+        <TabsContent value="files" className="space-y-4 sm:space-y-6">
           <FileComplexityChart data={fileComplexityData} />
         </TabsContent>
 
-        <TabsContent value="risk" className="space-y-6">
+        <TabsContent value="risk" className="space-y-4 sm:space-y-6">
           <RiskAssessment metrics={riskMetrics} />
         </TabsContent>
 
-        <TabsContent value="performance" className="space-y-6">
+        <TabsContent value="performance" className="space-y-4 sm:space-y-6">
           <PerformanceMetrics data={performanceData} />
         </TabsContent>
       </Tabs>

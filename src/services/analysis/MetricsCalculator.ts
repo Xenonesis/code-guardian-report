@@ -114,6 +114,9 @@ export class MetricsCalculator {
     const coveragePercentage = totalIssues === 0 ? 100 : 
       Math.max(40, Math.min(95, 100 - (severityWeightedIssues * 2)));
     
+    // Calculate risk level based on severity distribution
+    const riskLevel = this.calculateTechnicalRisk(issues, linesAnalyzed);
+    
     return {
       criticalIssues,
       highIssues,
@@ -122,7 +125,8 @@ export class MetricsCalculator {
       securityScore: calculateSecurityScore(issues),
       qualityScore: this.calculateQualityScore(issues, linesAnalyzed),
       coveragePercentage: Math.round(coveragePercentage),
-      linesAnalyzed
+      linesAnalyzed,
+      riskLevel
     };
   }
 
@@ -376,6 +380,8 @@ export class MetricsCalculator {
     if (!packageJsonContent) {
       return {
         total: 0,
+        production: 0,
+        development: 0,
         vulnerable: 0,
         outdated: 0,
         licenses: [] as string[]
@@ -384,8 +390,12 @@ export class MetricsCalculator {
 
     try {
       const packageData = JSON.parse(packageJsonContent);
-      const dependencies = { ...packageData.dependencies, ...packageData.devDependencies };
-      const depCount = Object.keys(dependencies).length;
+      const prodDeps = packageData.dependencies || {};
+      const devDeps = packageData.devDependencies || {};
+      
+      const productionCount = Object.keys(prodDeps).length;
+      const developmentCount = Object.keys(devDeps).length;
+      const totalCount = productionCount + developmentCount;
 
       // Extract licenses if available
       const licenses = packageData.license ? [packageData.license] : [];
@@ -393,7 +403,9 @@ export class MetricsCalculator {
       // Note: Vulnerability scanning requires external API calls
       // For now, return counts based on actual dependencies found
       return {
-        total: depCount,
+        total: totalCount,
+        production: productionCount,
+        development: developmentCount,
         vulnerable: 0, // Real vulnerability scanning would require npm audit API
         outdated: 0,   // Real version checking would require npm registry API
         licenses
@@ -402,6 +414,8 @@ export class MetricsCalculator {
       // Invalid JSON parse, return empty
       return {
         total: 0,
+        production: 0,
+        development: 0,
         vulnerable: 0,
         outdated: 0,
         licenses: [] as string[]

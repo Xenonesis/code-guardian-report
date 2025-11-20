@@ -1,393 +1,210 @@
 #!/usr/bin/env node
+/**
+ * Auto-update README sections: Repository Statistics and Top Contributors.
+ * - Fetches data from GitHub REST API
+ * - Replaces only the target HTML blocks while preserving styles
+ * - Commits only when there are changes
+ */
 
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
+const fs = require('fs');
+const path = require('path');
+const https = require('https');
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const REPO = process.env.GITHUB_REPOSITORY || 'Xenonesis/code-guardian-report';
+const TOKEN = process.env.GITHUB_TOKEN || process.env.GH_TOKEN || '';
+const ROOT = process.cwd();
+const README_PATH = path.join(ROOT, 'README.md');
 
-// GitHub API configuration
-const GITHUB_API_BASE = 'https://api.github.com';
-const REPO_OWNER = 'Xenonesis';
-const REPO_NAME = 'code-guardian-report';
+// Config
+const MAX_TOP_CONTRIBUTORS = parseInt(process.env.MAX_TOP_CONTRIBUTORS || '8', 10);
+const REQUEST_TIMEOUT_MS = 15000;
 
-// Fetch contributors from GitHub API
-async function fetchContributors() {
-  try {
-    console.log('Fetching contributors from GitHub API...');
-    
-    const headers = {};
-    if (process.env.GITHUB_TOKEN) {
-      headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
-      console.log('Using GitHub token for API requests');
-    }
-    
-    const response = await fetch(`${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}/contributors?per_page=50`, {
-      headers
+function ghApi(pathname) {
+  const headers = {
+    'User-Agent': 'readme-updater',
+    'Accept': 'application/vnd.github+json',
+  };
+  if (TOKEN) headers.Authorization = `Bearer ${TOKEN}`;
+
+  return new Promise((resolve, reject) => {
+    const req = https.request({
+      hostname: 'api.github.com',
+      path: pathname,
+      method: 'GET',
+      headers,
+      timeout: REQUEST_TIMEOUT_MS,
+    }, (res) => {
+      let data = '';
+      res.on('data', (chunk) => (data += chunk));
+      res.on('end', () => {
+        if (res.statusCode && res.statusCode >= 200 && res.statusCode < 300) {
+          try { resolve(JSON.parse(data)); } catch (_) { resolve({}); }
+        } else {
+          reject(new Error(`GitHub API ${pathname} failed: ${res.statusCode} ${data}`));
+        }
+      });
     });
-    
-    if (!response.ok) {
-      throw new Error(`GitHub API error: ${response.status} ${response.statusText}`);
-    }
-    
-    const contributors = await response.json();
-    
-    // Filter out bots and get only real users
-    const realContributors = contributors.filter(contributor => 
-      contributor.type === 'User' && 
-      contributor.contributions > 0 &&
-      !contributor.login.includes('[bot]')
-    );
-    
-    console.log(`Found ${realContributors.length} real contributors`);
-    return realContributors;
-  } catch (error) {
-    console.error('Error fetching contributors:', error);
-    return [];
-  }
+    req.on('error', reject);
+    req.on('timeout', () => {
+      req.destroy(new Error('Request timeout'));
+    });
+    req.end();
+  });
 }
 
-// Fetch detailed user information
-async function fetchUserDetails(username) {
-  try {
-    const headers = {};
-    if (process.env.GITHUB_TOKEN) {
-      headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
-    }
-    
-    const response = await fetch(`${GITHUB_API_BASE}/users/${username}`, {
-      headers
-    });
-    
-    if (!response.ok) {
-      console.warn(`Could not fetch details for ${username}: ${response.status}`);
-      return null;
-    }
-    
-    return await response.json();
-  } catch (error) {
-    console.warn(`Error fetching details for ${username}:`, error.message);
-    return null;
-  }
-}
-
-// Fetch repository stats
 async function fetchRepoStats() {
-  try {
-    const headers = {};
-    if (process.env.GITHUB_TOKEN) {
-      headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
-    }
-    
-    const response = await fetch(`${GITHUB_API_BASE}/repos/${REPO_OWNER}/${REPO_NAME}`, {
-      headers
-    });
-    
-    if (!response.ok) {
-      throw new Error(`GitHub API error: ${response.status}`);
-    }
-    
-    const repo = await response.json();
-    return {
-      stars: repo.stargazers_count,
-      forks: repo.forks_count,
-      watchers: repo.watchers_count,
-      openIssues: repo.open_issues_count
-    };
-  } catch (error) {
-    console.error('Error fetching repository stats:', error);
-    return { stars: 0, forks: 0, watchers: 0, openIssues: 0 };
-  }
+  const [owner, repo] = REPO.split('/');
+  const repoData = await ghApi(`/repos/${owner}/${repo}`);
+  const contribs = await ghApi(`/repos/${owner}/${repo}/contributors?per_page=100`);
+
+  const stars = repoData.stargazers_count || 0;
+  const forks = repoData.forks_count || 0;
+  const watchers = repoData.subscribers_count || repoData.watchers_count || 0;
+  const contributors = Array.isArray(contribs) ? contribs : [];
+
+  const topContributors = contributors
+    .filter((c) => !!c && typeof c.contributions === 'number')
+    .sort((a, b) => b.contributions - a.contributions)
+    .slice(0, MAX_TOP_CONTRIBUTORS)
+    .map((c) => ({
+      login: c.login,
+      contributions: c.contributions,
+      avatar_url: c.avatar_url,
+      html_url: c.html_url,
+    }));
+
+  return { stars, forks, watchers, contributorsCount: contributors.length, topContributors };
 }
 
-// Generate contributor role based on contributions
-function getContributorRole(contributions, index) {
-  if (index === 0) return 'Project Creator & Lead Developer';
-  if (contributions > 100) return 'Core Contributor';
-  if (contributions > 50) return 'Senior Contributor';
-  if (contributions > 20) return 'Active Contributor';
-  if (contributions > 10) return 'Regular Contributor';
-  return 'Contributor';
+function replaceBetween(content, startMarker, endMarker, newBlock) {
+  const startIdx = content.indexOf(startMarker);
+  const endIdx = content.indexOf(endMarker, startIdx + startMarker.length);
+  if (startIdx === -1 || endIdx === -1) return content; // not found
+  return content.slice(0, startIdx + startMarker.length) + newBlock + content.slice(endIdx);
 }
 
-// Generate contributor badge color
-function getContributorBadge(contributions, index) {
-  if (index === 0) return '🚀 Creator';
-  if (contributions > 100) return '⭐ Core';
-  if (contributions > 50) return '💎 Senior';
-  if (contributions > 20) return '🔥 Active';
-  if (contributions > 10) return '✨ Regular';
-  return '👤 Contributor';
-}
-
-// Generate the new contributors section
-function generateContributorsSection(contributors, repoStats) {
-  const START_MARKER = '<!-- CONTRIBUTORS:START -->';
-  const END_MARKER = '<!-- CONTRIBUTORS:END -->';
-  const topContributors = contributors.slice(0, 8); // Show top 8 contributors
-  
-  let contributorsHtml = `
-${START_MARKER}
-
-## 🌟 Community & Contributors
-
-<div align="center">
-
-### **👥 Our Amazing Community**
-
-<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 20px; margin: 20px 0;">
-  <h3 style="color: white; margin-bottom: 20px;">📊 **Repository Statistics** 📊</h3>
-  <p style="color: rgba(255,255,255,0.9); margin-bottom: 25px;">Thank you to our amazing community for making Code Guardian possible!</p>
-  
+function renderRepositoryStatsHTML(stats) {
+  // Preserve the surrounding gradient container by only replacing the inner <table> ... </table>
+  const table = `
   <table style="margin: 0 auto;">
     <tr>
       <td align="center" style="padding: 15px;">
         <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px;">
-          <h4 style="color: white; margin: 0; font-size: 24px;">⭐ ${repoStats.stars}</h4>
+          <h4 style="color: white; margin: 0; font-size: 24px;">⭐ ${stats.stars}</h4>
           <p style="color: rgba(255,255,255,0.8); margin: 5px 0 0 0; font-size: 14px;">Stars</p>
         </div>
       </td>
       <td align="center" style="padding: 15px;">
         <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px;">
-          <h4 style="color: white; margin: 0; font-size: 24px;">🍴 ${repoStats.forks}</h4>
+          <h4 style="color: white; margin: 0; font-size: 24px;">🍴 ${stats.forks}</h4>
           <p style="color: rgba(255,255,255,0.8); margin: 5px 0 0 0; font-size: 14px;">Forks</p>
         </div>
       </td>
       <td align="center" style="padding: 15px;">
         <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px;">
-          <h4 style="color: white; margin: 0; font-size: 24px;">👥 ${contributors.length}</h4>
+          <h4 style="color: white; margin: 0; font-size: 24px;">👥 ${stats.contributorsCount}</h4>
           <p style="color: rgba(255,255,255,0.8); margin: 5px 0 0 0; font-size: 14px;">Contributors</p>
         </div>
       </td>
       <td align="center" style="padding: 15px;">
         <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px;">
-          <h4 style="color: white; margin: 0; font-size: 24px;">👀 ${repoStats.watchers}</h4>
+          <h4 style="color: white; margin: 0; font-size: 24px;">👀 ${stats.watchers}</h4>
           <p style="color: rgba(255,255,255,0.8); margin: 5px 0 0 0; font-size: 14px;">Watchers</p>
         </div>
       </td>
     </tr>
-  </table>
-</div>
+  </table>`;
+  return table;
+}
 
-### **🤝 Core Contributors**
-
-<div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 30px; border-radius: 20px; margin: 20px 0;">
-  <h3 style="color: white; margin-bottom: 20px;">💻 **Top Contributors** 💻</h3>
-  <p style="color: rgba(255,255,255,0.9); margin-bottom: 25px; text-align: center;">Meet the amazing developers who have contributed to Code Guardian</p>
-  
-  <table style="margin: 0 auto;">`}}]}>>{
-
-  // Generate rows for top contributors (4 per row)
-  for (let i = 0; i < topContributors.length; i += 4) {
-    contributorsHtml += '\n    <tr>';
-    
-    for (let j = i; j < Math.min(i + 4, topContributors.length); j++) {
-      const contributor = topContributors[j];
-      const role = getContributorRole(contributor.contributions, j);
-      const badge = getContributorBadge(contributor.contributions, j);
-      
-      contributorsHtml += `
+function renderTopContributorsTable(top) {
+  // Renders the block of <tr>...</tr> tables with 4 items per row similar to current layout
+  const chunk = (arr, size) => arr.reduce((acc, _, i) => (i % size ? acc : [...acc, arr.slice(i, i + size)]), []);
+  const rows = chunk(top, 4).map((group) => {
+    const tds = group.map((c) => `
       <td align="center" style="padding: 20px;">
-        <img src="${contributor.avatar_url}" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
-        <br/><strong style="color: white; font-size: 16px;">${contributor.name || contributor.login}</strong>
-        <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@${contributor.login}</span>
-        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">${badge}</span>
-        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">${role}</span>
+        <img src="${c.avatar_url}" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
+        <br/><strong style="color: white; font-size: 16px;">${c.login}</strong>
+        <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@${c.login}</span>
+        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">👤 Contributor</span>
+        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
         <div style="margin-top: 10px;">
-          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">${contributor.contributions} commits</span>
+          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">${c.contributions} commits</span>
         </div>
-      </td>`;
-    }
-    
-    contributorsHtml += '\n    </tr>';
-  }
-
-  contributorsHtml += `
-  </table>
-</div>
-
-### **🏅 All Contributors**
-
-<div style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); padding: 25px; border-radius: 20px; margin: 20px 0;">
-  <h3 style="color: #333; margin-bottom: 20px;">🌟 **Thank You to All Contributors** 🌟</h3>
-  
-  <div style="text-align: center; margin-bottom: 20px;">
-    <p style="color: #666; font-size: 16px;">We appreciate every contribution, no matter how big or small!</p>
-  </div>
-  
-  <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 20px 0;">`;
-
-  // Add all contributors as small avatars
-  contributors.forEach(contributor => {
-    contributorsHtml += `
-    <a href="${contributor.html_url}" target="_blank" style="text-decoration: none;">
-      <img src="${contributor.avatar_url}" width="50" height="50" style="border-radius: 50%; border: 2px solid #333; margin: 2px;" title="${contributor.name || contributor.login} (${contributor.contributions} contributions)"/>
-    </a>`;
-  });
-
-  contributorsHtml += `
-  </div>
-  
-  <div style="margin-top: 20px; text-align: center;">
-    <span style="color: #666; font-size: 14px;">🙏 <strong>Thank you to all ${contributors.length} contributors who make Code Guardian possible!</strong></span>
-  </div>
-</div>
-
-${END_MARKER}
-
-## 🌟 Show Your Support
-
-<div align="center">
-
-### **💖 Love Code Guardian? Here's how you can help:**
-
-<table>
-<tr>
-<td width="25%" align="center">
-  <div style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); padding: 20px; border-radius: 15px; margin: 10px;">
-    <a href="https://github.com/${REPO_OWNER}/${REPO_NAME}/stargazers" style="text-decoration: none;">
-      <img src="https://img.icons8.com/fluency/64/star.png" alt="Star" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));"/>
-      <br/><strong style="color: white; font-size: 16px;">⭐ Star</strong>
-      <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">Give us a star on GitHub</span>
-    </a>
-  </div>
-</td>
-<td width="25%" align="center">
-  <div style="background: linear-gradient(135deg, #32CD32 0%, #228B22 100%); padding: 20px; border-radius: 15px; margin: 10px;">
-    <a href="https://github.com/${REPO_OWNER}/${REPO_NAME}/network/members" style="text-decoration: none;">
-      <img src="https://img.icons8.com/fluency/64/code-fork.png" alt="Fork" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));"/>
-      <br/><strong style="color: white; font-size: 16px;">🍴 Fork</strong>
-      <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">Fork and contribute</span>
-    </a>
-  </div>
-</td>
-<td width="25%" align="center">
-  <div style="background: linear-gradient(135deg, #FF6B6B 0%, #FF4757 100%); padding: 20px; border-radius: 15px; margin: 10px;">
-    <a href="https://github.com/${REPO_OWNER}/${REPO_NAME}/issues" style="text-decoration: none;">
-      <img src="https://img.icons8.com/fluency/64/bug.png" alt="Issues" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));"/>
-      <br/><strong style="color: white; font-size: 16px;">🐛 Report</strong>
-      <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">Report bugs & issues</span>
-    </a>
-  </div>
-</td>
-<td width="25%" align="center">
-  <div style="background: linear-gradient(135deg, #1E90FF 0%, #0066CC 100%); padding: 20px; border-radius: 15px; margin: 10px;">
-    <a href="https://twitter.com/intent/tweet?text=Check%20out%20Code%20Guardian%20-%20AI-powered%20security%20analysis%20platform!%20https://github.com/${REPO_OWNER}/${REPO_NAME}" style="text-decoration: none;">
-      <img src="https://img.icons8.com/fluency/64/share.png" alt="Share" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));"/>
-      <br/><strong style="color: white; font-size: 16px;">📢 Share</strong>
-      <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">Spread the word</span>
-    </a>
-  </div>
-</td>
-</tr>
-</table>
-
-<br/>
-
-</div>`;
-
-  return contributorsHtml;
+      </td>
+    `).join('\n');
+    return `<tr>\n${tds}\n    </tr>`;
+  }).join('\n');
+  return rows;
 }
 
-// Main function
-async function updateReadmeContributors() {
+function safeReplaceRepositoryStats(readme, stats) {
+  const start = '<h3 style="color: white; margin-bottom: 20px;">📊 **Repository Statistics** 📊</h3>';
+  // We replace the immediate following <table>...</table> block within the stats container
+  const tableStart = '<table style="margin: 0 auto;">';
+  const tableEnd = '</table>';
+
+  const startIdx = readme.indexOf(start);
+  if (startIdx === -1) return readme;
+  const tableIdx = readme.indexOf(tableStart, startIdx);
+  if (tableIdx === -1) return readme;
+  const endIdx = readme.indexOf(tableEnd, tableIdx);
+  if (endIdx === -1) return readme;
+
+  const before = readme.slice(0, tableIdx);
+  const after = readme.slice(endIdx + tableEnd.length);
+  const replacement = renderRepositoryStatsHTML(stats);
+  return before + replacement + after;
+}
+
+function safeReplaceTopContributors(readme, top) {
+  const header = '💻 **Top Contributors** 💻';
+  const headerAlt = '💻 **Top Contributors** 💻</h3>'; // in case of exact h3 markup
+  const sectionStartIdx = readme.indexOf(header);
+  const sectionIdx = sectionStartIdx !== -1 ? sectionStartIdx : readme.indexOf(headerAlt);
+  if (sectionIdx === -1) return readme;
+
+  // Locate the gradient container table area following the header; replace rows inside first <table> ... </table>
+  const tableStart = '<table style="margin: 0 auto;">';
+  const tableEnd = '</table>';
+  const tStartIdx = readme.indexOf(tableStart, sectionIdx);
+  if (tStartIdx === -1) return readme;
+  const tEndIdx = readme.indexOf(tableEnd, tStartIdx);
+  if (tEndIdx === -1) return readme;
+
+  // Inside this table, replace content between the first <tr> ... last </tr> with freshly rendered rows
+  const firstTr = readme.indexOf('<tr>', tStartIdx);
+  const lastTrEnd = readme.lastIndexOf('</tr>', tEndIdx);
+  if (firstTr === -1 || lastTrEnd === -1) return readme;
+
+  const before = readme.slice(0, firstTr);
+  const after = readme.slice(lastTrEnd + '</tr>'.length);
+  const rows = renderTopContributorsTable(top);
+  return before + rows + after;
+}
+
+async function main() {
+  if (!fs.existsSync(README_PATH)) {
+    console.error('README.md not found at', README_PATH);
+    process.exit(0);
+  }
+  let readme = fs.readFileSync(README_PATH, 'utf8');
+
   try {
-    console.log('Starting README contributors update...');
-    console.log('Current working directory:', process.cwd());
-    console.log('Script file:', import.meta.url);
-    
-    // Fetch data from GitHub
-    const [contributors, repoStats] = await Promise.all([
-      fetchContributors(),
-      fetchRepoStats()
-    ]);
-    
-    if (contributors.length === 0) {
-      console.error('No contributors found. Exiting...');
-      return;
-    }
-    
-    // Fetch detailed information for top contributors
-    console.log('Fetching detailed contributor information...');
-    const topContributors = contributors.slice(0, 8);
-    
-    for (let i = 0; i < topContributors.length; i++) {
-      const details = await fetchUserDetails(topContributors[i].login);
-      if (details) {
-        topContributors[i] = { ...topContributors[i], ...details };
-      }
-      
-      // Add delay to avoid rate limiting
-      if (i < topContributors.length - 1) {
-        await new Promise(resolve => setTimeout(resolve, 200));
-      }
-    }
-    
-    // Update contributors array with detailed info
-    contributors.splice(0, topContributors.length, ...topContributors);
-    
-    // Generate new contributors section
-    const newContributorsSection = generateContributorsSection(contributors, repoStats);
-    
-    // Read current README
-    const readmePath = path.join(process.cwd(), 'README.md');
-    console.log('Reading README from:', readmePath);
-    let readmeContent = fs.readFileSync(readmePath, 'utf8');
-    
-    // Find the contributors section and replace it
-    const START_MARKER = '<!-- CONTRIBUTORS:START -->';
-    const END_MARKER = '<!-- CONTRIBUTORS:END -->';
+    const stats = await fetchRepoStats();
+    const updatedStats = safeReplaceRepositoryStats(readme, stats);
+    const updatedContribs = safeReplaceTopContributors(updatedStats, stats.topContributors);
 
-    let beforeSection = '';
-    let afterSection = '';
-
-    const markerStartIndex = readmeContent.indexOf(START_MARKER);
-    const markerEndIndex = readmeContent.indexOf(END_MARKER);
-
-    if (markerStartIndex !== -1 && markerEndIndex !== -1 && markerEndIndex > markerStartIndex) {
-      beforeSection = readmeContent.substring(0, markerStartIndex);
-      afterSection = readmeContent.substring(markerEndIndex + END_MARKER.length);
+    if (updatedContribs !== readme) {
+      fs.writeFileSync(README_PATH, updatedContribs, 'utf8');
+      console.log('README.md updated.');
     } else {
-      // Fallback: find by headings
-      const headingStart = '## 🌟 Community & Contributors';
-      const headingEnd = '## 🌟 Show Your Support';
-      const startIndex = readmeContent.indexOf(headingStart);
-      const endIndex = readmeContent.indexOf(headingEnd, startIndex);
-
-      console.log('Fallback heading start index:', startIndex);
-      console.log('Fallback heading end index:', endIndex);
-
-      if (startIndex === -1 || endIndex === -1) {
-        console.error('Could not find contributors section using markers or headings in README.md');
-        return;
-      }
-
-      beforeSection = readmeContent.substring(0, startIndex);
-      afterSection = readmeContent.substring(endIndex);
+      console.log('No changes detected.');
     }
-
-    const updatedReadme = beforeSection + newContributorsSection + '\n\n---' + afterSection;
-    
-    // Write updated README
-    fs.writeFileSync(readmePath, updatedReadme, 'utf8');
-    
-    console.log('✅ README.md contributors section updated successfully!');
-    console.log(`📊 Updated with ${contributors.length} contributors`);
-    console.log(`⭐ Repository stats: ${repoStats.stars} stars, ${repoStats.forks} forks`);
-    
-  } catch (error) {
-    console.error('❌ Error updating README contributors:', error);
-    process.exit(1);
+  } catch (err) {
+    console.error('Failed to update README:', err.message);
+    process.exit(0); // do not fail CI for transient issues
   }
 }
 
-// Run the script
-if (process.argv[1] && import.meta.url === `file://${process.argv[1]}`) {
-  updateReadmeContributors();
-} else {
-  // Always run if called directly
-  updateReadmeContributors();
-}
-
-export { updateReadmeContributors };
+main();

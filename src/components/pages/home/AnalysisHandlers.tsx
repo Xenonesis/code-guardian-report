@@ -5,7 +5,7 @@ import { type FirebaseAnalysisData } from '../../../services/storage/firebaseAna
 
 interface AnalysisHandlersProps {
   hasStoredData: boolean;
-  onAnalysisComplete: (results: AnalysisResults, file?: File) => void;
+  onAnalysisComplete: (results: AnalysisResults, file?: File) => void | Promise<void>;
   onSetCurrentTab: (tab: string) => void;
   onSetIsRedirecting: (isRedirecting: boolean) => void;
   onClearStoredData: () => void;

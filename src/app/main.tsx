@@ -6,37 +6,27 @@ import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
 // Import base styles first
 import '../styles/base.css';
-// Then try importing other styles incrementally
-// import '../styles/enhanced-ui.css';
-// import '../styles/about-page-enhancements.css';
-// import '../styles/sidebar-fix.css';
-// import '../styles/sidebar-position-fix.css';
-// import '../index.css';
 
-// Performance monitoring
-if ('performance' in window && 'mark' in window.performance) {
-  performance.mark('app-start');
+// Production-grade utilities
+import { logger } from '../utils/logger';
+import { env } from '../utils/envValidator';
+import { ErrorBoundary } from '../utils/errorBoundary';
+import '../utils/errorHandler'; // Initialize global error handlers
+
+// Validate environment on app start (production only)
+try {
+  env.validate();
+} catch (error) {
+  logger.error('Environment validation failed', error);
+  if (env.isProd()) {
+    throw error; // Stop app in production if env is invalid
+  }
 }
 
-// Error boundary for unhandled errors
-window.addEventListener('error', (event) => {
-  console.error('Global error:', event.error);
-  // In production, send to error reporting service
-  if (import.meta.env.PROD) {
-    // Example: Sentry.captureException(event.error);
-  }
-});
-
-// Unhandled promise rejection handler
-window.addEventListener('unhandledrejection', (event) => {
-  console.error('Unhandled promise rejection:', event.reason);
-  // In production, send to error reporting service
-  if (import.meta.env.PROD) {
-    // Example: Sentry.captureException(event.reason);
-  }
-});
-
-// Service Worker registration is handled by PWA integration (src/pwa-init.ts)
+// Performance monitoring
+if ('performance' in globalThis && 'mark' in globalThis.performance) {
+  performance.mark('app-start');
+}
 
 // Initialize app with error boundary and performance monitoring
 const container = document.getElementById('root');
@@ -46,36 +36,46 @@ if (!container) {
 
 const root = createRoot(container);
 
-// Render app with React StrictMode for development checks
+// Render app with React StrictMode and ErrorBoundary
 root.render(
   <StrictMode>
+    <ErrorBoundary>
       <App />
+    </ErrorBoundary>
   </StrictMode>
 );
 
 // Performance measurement
-if ('performance' in window && 'measure' in window.performance) {
-  window.addEventListener('load', () => {
+if ('performance' in globalThis && 'measure' in globalThis.performance) {
+  globalThis.addEventListener('load', () => {
     performance.mark('app-end');
     performance.measure('app-load-time', 'app-start', 'app-end');
     
-    // Log performance metrics in development
-    if (import.meta.env.DEV) {
-      const measure = performance.getEntriesByName('app-load-time')[0];
-      console.log(`App load time: ${measure.duration.toFixed(2)}ms`);
-    }
+    // Log performance metrics
+    const measure = performance.getEntriesByName('app-load-time')[0];
+    logger.info(`App load time: ${measure.duration.toFixed(2)}ms`);
   });
 }
 
-// Web Vitals reporting (for production)
-if (import.meta.env.PROD) {
-  import('web-vitals').then(({ onCLS, onFID, onFCP, onLCP, onTTFB }) => {
-    onCLS(console.log);
-    onFID(console.log);
-    onFCP(console.log);
-    onLCP(console.log);
-    onTTFB(console.log);
-  }).catch(() => {
-    // Gracefully handle if web-vitals is not available
-  });
+// Web Vitals reporting (for production monitoring)
+if (env.isProd()) {
+  void (async () => {
+    try {
+      const { onCLS, onINP, onFCP, onLCP, onTTFB } = await import('web-vitals');
+      
+      // Send vitals to analytics or logging service
+      const sendToAnalytics = (metric: { name: string; value: number }) => {
+        logger.info(`Web Vital: ${metric.name}`, { value: metric.value });
+      };
+
+      onCLS(sendToAnalytics);
+      onINP(sendToAnalytics);
+      onFCP(sendToAnalytics);
+      onLCP(sendToAnalytics);
+      onTTFB(sendToAnalytics);
+    } catch (error) {
+      logger.warn('Web Vitals not available', error);
+    }
+  })();
 }
+

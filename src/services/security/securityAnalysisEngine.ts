@@ -32,13 +32,133 @@ export const CWE_MAPPINGS = {
 export const SECURITY_RULES = {
   javascript: [
     {
-      pattern: /eval\s*\(/gi,
+      pattern: /SELECT.*FROM.*["'`]\s*\+|query.*["'`]\s*\+/gi,
+      severity: 'Critical' as const,
+      type: 'SQL Injection',
+      category: 'Injection',
+      cweId: 'CWE-89',
+      owaspCategory: OWASP_CATEGORIES.A03_INJECTION,
+      message: 'Potential SQL injection vulnerability - dynamic SQL query construction detected',
+      confidence: 90,
+      cvssScore: 9.8,
+      impact: 'Database compromise, data theft, or manipulation',
+      likelihood: 'High',
+      remediation: {
+        description: 'Use parameterized queries or prepared statements instead of string concatenation',
+        codeExample: 'const query = "SELECT * FROM users WHERE id = \'" + userId + "\'";',
+        fixExample: 'const query = "SELECT * FROM users WHERE id = ?"; db.query(query, [userId]);',
+        effort: 'Low' as const,
+        priority: 5
+      }
+    },
+    {
+      pattern: /\.query\(["'`].*["'`]\s*\+|\.execute\(["'`].*["'`]\s*\+/gi,
+      severity: 'Critical' as const,
+      type: 'SQL Injection',
+      category: 'Injection',
+      cweId: 'CWE-89',
+      owaspCategory: OWASP_CATEGORIES.A03_INJECTION,
+      message: 'SQL query with string concatenation detected - use parameterized queries',
+      confidence: 92,
+      cvssScore: 9.8,
+      impact: 'SQL injection leading to data breach',
+      likelihood: 'High',
+      remediation: {
+        description: 'Use parameterized queries with placeholders',
+        codeExample: 'db.query("SELECT * FROM users WHERE id = \'" + id + "\'");',
+        fixExample: 'db.query("SELECT * FROM users WHERE id = ?", [id]);',
+        effort: 'Low' as const,
+        priority: 5
+      }
+    },
+    {
+      pattern: /dangerouslySetInnerHTML|__html:/gi,
+      severity: 'High' as const,
+      type: 'XSS',
+      category: 'Cross-Site Scripting',
+      cweId: 'CWE-79',
+      owaspCategory: OWASP_CATEGORIES.A03_INJECTION,
+      message: 'dangerouslySetInnerHTML usage detected - potential XSS vulnerability',
+      confidence: 88,
+      cvssScore: 8.2,
+      impact: 'Cross-site scripting attacks possible',
+      likelihood: 'High',
+      remediation: {
+        description: 'Sanitize HTML content or use textContent instead',
+        codeExample: '<div dangerouslySetInnerHTML={{__html: userInput}} />',
+        fixExample: '<div>{DOMPurify.sanitize(userInput)}</div>',
+        effort: 'Medium' as const,
+        priority: 4
+      }
+    },
+    {
+      pattern: /\bexec\s*\(|\bspawn\s*\(|\bexecSync\s*\(|child_process\.exec|child_process\.spawn/gi,
+      severity: 'Critical' as const,
+      type: 'Command Injection',
+      category: 'Injection',
+      cweId: 'CWE-78',
+      owaspCategory: OWASP_CATEGORIES.A03_INJECTION,
+      message: 'Command execution detected - potential command injection vulnerability',
+      confidence: 85,
+      cvssScore: 9.1,
+      impact: 'Remote command execution possible',
+      likelihood: 'High',
+      remediation: {
+        description: 'Validate and sanitize all user inputs before executing system commands, use execFile with argument array',
+        codeExample: 'exec("command " + userInput);',
+        fixExample: 'execFile("command", [sanitizedInput]);',
+        effort: 'Medium' as const,
+        priority: 5
+      }
+    },
+    {
+      pattern: /['"]\.\/.*['"]\s*\+|\+\s*['"]\.\/|require\s*\(.*\+|import\s*\(.*\+/gi,
+      severity: 'High' as const,
+      type: 'Path Traversal',
+      category: 'Injection',
+      cweId: 'CWE-22',
+      owaspCategory: OWASP_CATEGORIES.A01_BROKEN_ACCESS_CONTROL,
+      message: 'Dynamic module loading with concatenation - potential path traversal',
+      confidence: 80,
+      cvssScore: 7.5,
+      impact: 'Arbitrary file access or code execution',
+      likelihood: 'Medium',
+      remediation: {
+        description: 'Use a whitelist of allowed modules or validate input against allowed paths',
+        codeExample: 'require("./" + userInput);',
+        fixExample: 'const allowedModules = {mod1: "./mod1"}; require(allowedModules[userInput]);',
+        effort: 'Medium' as const,
+        priority: 4
+      }
+    },
+    {
+      pattern: /createHash\s*\(\s*["']md5["']|createHash\s*\(\s*["']sha1["']/gi,
+      severity: 'Medium' as const,
+      type: 'Weak Cryptography',
+      category: 'Cryptographic Failure',
+      cweId: 'CWE-327',
+      owaspCategory: OWASP_CATEGORIES.A02_CRYPTOGRAPHIC_FAILURES,
+      message: 'Weak cryptographic algorithm (MD5/SHA1) detected',
+      confidence: 95,
+      cvssScore: 5.9,
+      impact: 'Cryptographic weaknesses may be exploited',
+      likelihood: 'Medium',
+      remediation: {
+        description: 'Use stronger hashing algorithms like SHA-256 or bcrypt',
+        codeExample: 'crypto.createHash("md5");',
+        fixExample: 'crypto.createHash("sha256");',
+        effort: 'Low' as const,
+        priority: 3
+      }
+    },
+    {
+      pattern: /\beval\s*\(|\bnew\s+Function\s*\(/gi,
       severity: 'Critical' as const,
       type: 'Security',
-      category: 'Code Injection',
+      category: 'Code Quality',
       cweId: 'CWE-95',
       owaspCategory: OWASP_CATEGORIES.A03_INJECTION,
-      message: 'Use of eval() function detected - potential code injection vulnerability',
+      message: 'Use of eval() or new Function() detected - potential code injection vulnerability',
       confidence: 95,
       cvssScore: 9.3,
       impact: 'Remote code execution possible',
@@ -191,6 +311,46 @@ export const SECURITY_RULES = {
         codeExample: 'subprocess.call(cmd, shell=True)',
         fixExample: 'subprocess.call(["/bin/ls", "-l"])  # Pass as list',
         effort: 'Low' as const,
+        priority: 4
+      }
+    },
+    {
+      pattern: /os\.system\s*\(/gi,
+      severity: 'Critical' as const,
+      type: 'Command Injection',
+      category: 'Injection',
+      cweId: 'CWE-78',
+      owaspCategory: OWASP_CATEGORIES.A03_INJECTION,
+      message: 'os.system() detected - potential command injection vulnerability',
+      confidence: 95,
+      cvssScore: 9.8,
+      impact: 'Remote command execution possible',
+      likelihood: 'High',
+      remediation: {
+        description: 'Use subprocess.run() with argument list instead of os.system()',
+        codeExample: 'os.system(user_command)',
+        fixExample: 'subprocess.run(["command", arg1, arg2], check=True)',
+        effort: 'Low' as const,
+        priority: 5
+      }
+    },
+    {
+      pattern: /pickle\.loads?\s*\(/gi,
+      severity: 'High' as const,
+      type: 'Deserialization',
+      category: 'Security',
+      cweId: 'CWE-502',
+      owaspCategory: OWASP_CATEGORIES.A08_SOFTWARE_INTEGRITY_FAILURES,
+      message: 'Unsafe deserialization with pickle detected',
+      confidence: 90,
+      cvssScore: 8.1,
+      impact: 'Arbitrary code execution through deserialization',
+      likelihood: 'High',
+      remediation: {
+        description: 'Avoid pickle for untrusted data. Use JSON or safer serialization formats',
+        codeExample: 'pickle.loads(untrusted_data)',
+        fixExample: 'json.loads(untrusted_data)  # Use JSON instead',
+        effort: 'Medium' as const,
         priority: 4
       }
     },

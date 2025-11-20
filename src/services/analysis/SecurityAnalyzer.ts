@@ -7,6 +7,7 @@ import { SecretDetectionService, SecretMatch, SecretType } from '../security/sec
 import { LanguageDetectionService, DetectionResult, LanguageInfo, FrameworkInfo } from '../detection/languageDetectionService';
 import { FrameworkDetectionEngine, DependencyInfo } from '../detection/frameworkDetectionEngine';
 import { naturalLanguageDescriptionService } from '../ai/naturalLanguageDescriptionService';
+import { modernCodeScanningService, CodeQualityMetrics } from '../security/modernCodeScanningService';
 
 type SupportedLanguage = 'javascript' | 'typescript' | 'python' | 'java' | 'php' | 'ruby' | 'golang' | 'csharp';
 type ToolsByLanguage = Record<SupportedLanguage, string[]>;
@@ -793,6 +794,20 @@ export class SecurityAnalyzer {
     const rules = SECURITY_RULES[language as keyof typeof SECURITY_RULES] || SECURITY_RULES.javascript;
 
     if (content) {
+      // **NEW: Modern Code Scanning (SonarQube-style analysis)**
+      try {
+        const modernAnalysis = modernCodeScanningService.analyzeCode(content, filename, language);
+        const modernIssues = modernCodeScanningService.convertToSecurityIssues(modernAnalysis.issues, filename);
+        issues.push(...modernIssues);
+        
+        // Log quality gate results for informational purposes
+        if (!modernAnalysis.qualityGate.passed) {
+          console.info(`Quality Gate Failed for ${filename}:`, modernAnalysis.qualityGate.conditions);
+        }
+      } catch (error) {
+        console.warn('Modern code scanning failed, falling back to traditional analysis:', error);
+      }
+
       // Real analysis with actual file content
       // Apply framework-specific rules if available
       if (this.analysisContext?.frameworkSpecificRules.length) {
@@ -802,10 +817,10 @@ export class SecurityAnalyzer {
 
       const lines = content.split('\n');
       
-      rules.forEach((rule: typeof rules[0]) => {
+      for (const rule of rules) {
         const matches = content.match(rule.pattern);
         if (matches) {
-          matches.forEach((match) => {
+          for (const match of matches) {
             // Find the line number where this match occurs
             let lineNumber = 1;
             let characterIndex = 0;
@@ -846,9 +861,9 @@ export class SecurityAnalyzer {
             issue.naturalLanguageDescription = naturalLanguageDescriptionService.generateDescription(issue);
 
             issues.push(issue);
-          });
+          }
         }
-      });
+      }
 
       // Perform secret detection
       const secretDetectionResult = this.secretDetectionService.detectSecrets(content);

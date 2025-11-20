@@ -2,21 +2,23 @@ import React, { useState } from 'react';
 import { Shield, ChevronDown } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { AnalysisResults } from '@/hooks/useAnalysis';
-import { SecuritySummaryCards } from '@/components/security/SecuritySummaryCards';
 import { SecurityIssueItem } from '@/components/security/SecurityIssueItem';
 import { SecretDetectionCard } from '@/components/security/SecretDetectionCard';
 import { SecureCodeSearchCard } from '@/components/security/SecureCodeSearchCard';
 import { CodeProvenanceCard } from '@/components/security/CodeProvenanceCard';
+import { ModernSecurityDashboard } from '@/components/security/ModernSecurityDashboard';
 import { LanguageDetectionSummary } from '../language/LanguageDetectionSummary';
 import { PDFDownloadButton } from '../export/PDFDownloadButton';
 import { FixSuggestion } from '@/services/ai/aiFixSuggestionsService';
+import { modernCodeScanningService } from '@/services/security/modernCodeScanningService';
 import { toast } from 'sonner';
 
 interface SecurityOverviewProps {
   results: AnalysisResults;
+  isLoading?: boolean;
 }
 
-export const SecurityOverview: React.FC<SecurityOverviewProps> = ({ results }) => {
+export const SecurityOverview: React.FC<SecurityOverviewProps> = ({ results, isLoading }) => {
   const [expandedIssues, setExpandedIssues] = useState<Set<string>>(new Set());
 
   const toggleIssueExpansion = (issueId: string) => {
@@ -85,7 +87,7 @@ ${suggestion.testingRecommendations.map((rec, i) => `${i + 1}. ${rec}`).join('\n
       link.download = `security-fix-${suggestion.issueId}-${Date.now()}.patch`;
       document.body.appendChild(link);
       link.click();
-      document.body.removeChild(link);
+      link.remove();
       URL.revokeObjectURL(url);
       /* eslint-enable no-undef */
 
@@ -113,6 +115,31 @@ ${suggestion.testingRecommendations.map((rec, i) => `${i + 1}. ${rec}`).join('\n
     content: issue.codeSnippet || `// File: ${issue.filename}\n// Issue: ${issue.message}`
   }));
 
+  if (isLoading) {
+    return (
+      <div className="space-y-6 px-4 sm:px-0" role="status" aria-live="polite">
+        <Card className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900/40 dark:to-slate-900/10 border-slate-200 dark:border-slate-800 shadow-sm">
+          <CardContent className="p-8">
+            <div className="animate-pulse space-y-4">
+              <div className="h-6 w-48 rounded bg-slate-200 dark:bg-slate-800" />
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="h-32 rounded-lg bg-slate-200 dark:bg-slate-800" />
+                <div className="h-32 rounded-lg bg-slate-200 dark:bg-slate-800" />
+                <div className="h-32 rounded-lg bg-slate-200 dark:bg-slate-800" />
+              </div>
+              <div className="space-y-3">
+                <div className="h-4 w-64 rounded bg-slate-200 dark:bg-slate-800" />
+                <div className="h-4 w-80 rounded bg-slate-200 dark:bg-slate-800" />
+                <div className="h-20 rounded-lg bg-slate-200 dark:bg-slate-800" />
+                <div className="h-20 rounded-lg bg-slate-200 dark:bg-slate-800" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6 px-4 sm:px-0">
       {/* Language Detection Summary */}
@@ -123,6 +150,121 @@ ${suggestion.testingRecommendations.map((rec, i) => `${i + 1}. ${rec}`).join('\n
         />
       )}
 
+      {/* Modern Code Quality Dashboard - SonarQube-style metrics */}
+      {(() => {
+        // Calculate aggregate modern metrics from all files
+        let totalMetrics = {
+          cyclomaticComplexity: 0,
+          cognitiveComplexity: 0,
+          linesOfCode: 0,
+          commentLines: 0,
+          blankLines: 0,
+          maintainabilityIndex: 0,
+          technicalDebtRatio: 0,
+          codeSmells: 0,
+          bugs: 0,
+          vulnerabilities: 0,
+          securityHotspots: 0,
+          estimatedTestCoverage: 0,
+          duplicatedBlocks: 0,
+          duplicatedLines: 0,
+        };
+        let totalDebt = 0;
+        let fileCount = 0;
+
+        // Analyze each file to get modern metrics
+        const zipFiles = results.zipAnalysis?.files || [];
+        for (const file of zipFiles) {
+          try {
+            const analysis = modernCodeScanningService.analyzeCode(
+              file.content,
+              file.name,
+              file.language || 'javascript'
+            );
+            
+            totalMetrics.cyclomaticComplexity += analysis.metrics.cyclomaticComplexity;
+            totalMetrics.cognitiveComplexity += analysis.metrics.cognitiveComplexity;
+            totalMetrics.linesOfCode += analysis.metrics.linesOfCode;
+            totalMetrics.commentLines += analysis.metrics.commentLines;
+            totalMetrics.blankLines += analysis.metrics.blankLines;
+            totalMetrics.maintainabilityIndex += analysis.metrics.maintainabilityIndex;
+            totalMetrics.codeSmells += analysis.metrics.codeSmells;
+            totalMetrics.bugs += analysis.metrics.bugs;
+            totalMetrics.vulnerabilities += analysis.metrics.vulnerabilities;
+            totalMetrics.securityHotspots += analysis.metrics.securityHotspots;
+            totalMetrics.duplicatedBlocks += analysis.metrics.duplicatedBlocks;
+            totalMetrics.duplicatedLines += analysis.metrics.duplicatedLines;
+            
+            totalDebt += analysis.technicalDebt;
+            fileCount++;
+          } catch (error) {
+            console.warn(`Failed to analyze ${file.name} for modern metrics:`, error);
+          }
+        }
+
+        // Average maintainability index across files
+        if (fileCount > 0) {
+          totalMetrics.maintainabilityIndex = totalMetrics.maintainabilityIndex / fileCount;
+          totalMetrics.technicalDebtRatio = totalMetrics.linesOfCode > 0
+            ? (totalDebt / (totalMetrics.linesOfCode * 0.06)) * 100
+            : 0;
+        }
+
+        // Create quality gate based on aggregated metrics
+        const qualityGate = {
+          passed: totalMetrics.vulnerabilities === 0 &&
+                  totalMetrics.bugs <= 5 &&
+                  totalMetrics.maintainabilityIndex >= 65,
+          conditions: [
+            {
+              metric: 'New Vulnerabilities',
+              status: (totalMetrics.vulnerabilities === 0 ? 'OK' : 'ERROR') as 'OK' | 'ERROR',
+              value: totalMetrics.vulnerabilities,
+              threshold: 0
+            },
+            {
+              metric: 'New Bugs',
+              status: (totalMetrics.bugs <= 5 ? 'OK' : 'ERROR') as 'OK' | 'ERROR',
+              value: totalMetrics.bugs,
+              threshold: 5
+            },
+            {
+              metric: 'Maintainability Index',
+              status: (totalMetrics.maintainabilityIndex >= 65 ? 'OK' : 'ERROR') as 'OK' | 'ERROR',
+              value: Math.round(totalMetrics.maintainabilityIndex),
+              threshold: 65
+            },
+            {
+              metric: 'Technical Debt Ratio',
+              status: (totalMetrics.technicalDebtRatio <= 5 ? 'OK' : 'ERROR') as 'OK' | 'ERROR',
+              value: Number(totalMetrics.technicalDebtRatio.toFixed(1)),
+              threshold: 5
+            },
+            {
+              metric: 'Code Smells',
+              status: (totalMetrics.codeSmells <= 10 ? 'OK' : 'ERROR') as 'OK' | 'ERROR',
+              value: totalMetrics.codeSmells,
+              threshold: 10
+            },
+            {
+              metric: 'Duplicated Lines Density',
+              status: ((totalMetrics.duplicatedLines / Math.max(totalMetrics.linesOfCode, 1) * 100) <= 3 ? 'OK' : 'ERROR') as 'OK' | 'ERROR',
+              value: Number(((totalMetrics.duplicatedLines / Math.max(totalMetrics.linesOfCode, 1)) * 100).toFixed(1)),
+              threshold: 3
+            }
+          ]
+        };
+
+        return fileCount > 0 ? (
+          <ModernSecurityDashboard
+            metrics={totalMetrics}
+            technicalDebt={totalDebt}
+            qualityGate={qualityGate}
+            totalIssues={results.issues?.length || 0}
+          />
+        ) : null;
+      })()}
+
       {/* PDF Download Section */}
       <div className="flex justify-end mb-4">
         <PDFDownloadButton 
@@ -132,8 +274,6 @@ ${suggestion.testingRecommendations.map((rec, i) => `${i + 1}. ${rec}`).join('\n
           className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg"
         />
       </div>
-
-      <SecuritySummaryCards results={results} />
 
       {/* Secret Detection Section */}
       <SecretDetectionCard secretIssues={secretIssues} />

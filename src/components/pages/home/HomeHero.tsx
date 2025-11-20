@@ -19,7 +19,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ onStartAnalysis }) => {
       subtitle="Revolutionary code analysis powered by advanced artificial intelligence"
       description="Transform your development workflow with enterprise-grade security analysis that detects vulnerabilities, bugs, and quality issues in real-time with unprecedented accuracy."
       variant="gradient"
-      className="relative min-h-[90vh] sm:min-h-[85vh] flex items-center justify-center px-4 sm:px-6"
+      className="relative min-h-[50vh] sm:min-h-[55vh] flex items-center justify-center px-4 sm:px-6"
     >
       {/* Revolutionary Background Effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
@@ -34,10 +34,10 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ onStartAnalysis }) => {
         <div className="absolute top-1/3 right-1/3 w-72 h-72 bg-gradient-to-r from-violet-400/25 via-indigo-400/25 to-blue-400/25 rounded-full blur-3xl animate-float-gentle" />
 
       {/* Premium Main Content */}
-      <div className="relative z-10 max-w-5xl mx-auto text-center space-y-8 sm:space-y-12">
+      <div className="relative z-10 max-w-5xl mx-auto text-center space-y-4 sm:space-y-6">
 
         {/* Revolutionary CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 justify-center items-center">
+        <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center">
           <Button
             onClick={onStartAnalysis}
             size="lg"
@@ -137,7 +137,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ onStartAnalysis }) => {
         </div>
         
         {/* Revolutionary Stats */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 mt-16 sm:mt-20 pt-10 sm:pt-12 border-t border-gradient-to-r from-blue-500/30 via-purple-500/30 to-pink-500/30">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mt-8 sm:mt-10 pt-6 sm:pt-8 border-t border-gradient-to-r from-blue-500/30 via-purple-500/30 to-pink-500/30">
           <div className="text-center group hover:scale-110 transition-all duration-500 relative">
             <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
             <div className="relative p-6 rounded-3xl bg-gradient-to-r from-white/10 to-white/5 dark:from-black/10 dark:to-black/5 backdrop-blur-xl border border-white/20 dark:border-white/10">

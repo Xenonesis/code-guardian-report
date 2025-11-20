@@ -73,9 +73,6 @@ class GitHubService {
             ...details
           });
         }
-        
-        // Add small delay to avoid rate limiting
-        await new Promise(resolve => setTimeout(resolve, 100));
       }
 
       return contributorsWithDetails;
