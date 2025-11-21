@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
-import { Shield, Home, Moon, Sun, Menu, X, Info, Lock, Award, User, LogOut, History } from 'lucide-react';
+import { Shield, Home, Menu, X, Info, Lock, Award, User, LogOut, History } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/lib/auth-context';
 import { useNavigation } from '@/lib/navigation-context';
 import { AuthModal } from '@/components/auth/AuthModal';
+import type { Theme } from '@/hooks/useDarkMode';
 
 interface NavigationProps {
-  isDarkMode: boolean;
-  toggleDarkMode: () => void;
+  theme: Theme;
+  onThemeChange: (theme: Theme) => void;
 }
 
-export const Navigation: React.FC<NavigationProps> = ({ isDarkMode, toggleDarkMode }) => {
+export const Navigation: React.FC<NavigationProps> = ({ theme, onThemeChange }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -187,22 +189,8 @@ export const Navigation: React.FC<NavigationProps> = ({ isDarkMode, toggleDarkMo
               </div>
             )}
 
-            {/* Dark Mode Toggle */}
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={toggleDarkMode}
-              className="p-1.5 sm:p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors duration-200"
-              aria-label={
-                isDarkMode ? "Switch to light mode" : "Switch to dark mode"
-              }
-            >
-              {isDarkMode ? (
-                <Sun className="h-4 w-4 sm:h-5 sm:w-5 text-amber-500" />
-              ) : (
-                <Moon className="h-4 w-4 sm:h-5 sm:w-5 text-slate-600 dark:text-slate-400" />
-              )}
-            </Button>
+            {/* Theme Toggle */}
+            <ThemeToggle theme={theme} onThemeChange={onThemeChange} variant="dropdown" />
 
             {/* Mobile Menu Toggle */}
             <Button
