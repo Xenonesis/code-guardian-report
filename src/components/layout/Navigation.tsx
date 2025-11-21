@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
-import { Shield, Home, Menu, X, Info, Lock, Award, User, LogOut, History } from 'lucide-react';
+import { Shield, Home, Menu, X, Info, Lock, Award, User, LogOut, History, Github } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import { cn } from '@/lib/utils';
@@ -20,7 +20,7 @@ export const Navigation: React.FC<NavigationProps> = ({ theme, onThemeChange }) 
   const [mounted, setMounted] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
   
-  const { user, userProfile, logout } = useAuth();
+  const { user, userProfile, logout, isGitHubUser } = useAuth();
   const { currentSection, navigateTo } = useNavigation();
 
   // Mount detection and scroll detection for navbar styling
@@ -62,6 +62,12 @@ export const Navigation: React.FC<NavigationProps> = ({ theme, onThemeChange }) 
       label: 'History',
       icon: <History className="h-4 w-4" />
     }] : []),
+    // Show GitHub Analysis for all users (will prompt non-GitHub users to sign in)
+    {
+      id: 'github-analysis',
+      label: 'GitHub Analysis',
+      icon: <Github className="h-4 w-4" />
+    },
     {
       id: 'privacy',
       label: 'Privacy',

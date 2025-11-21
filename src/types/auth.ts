@@ -9,6 +9,25 @@ export interface User {
   createdAt: Date;
   lastLoginAt: Date;
   preferences?: UserPreferences;
+  // GitHub-specific fields
+  githubUsername?: string;
+  githubId?: string;
+  isGitHubUser?: boolean;
+  githubMetadata?: GitHubMetadata;
+}
+
+export interface GitHubMetadata {
+  login: string;
+  avatarUrl: string;
+  htmlUrl: string;
+  bio?: string;
+  company?: string;
+  location?: string;
+  publicRepos: number;
+  followers: number;
+  following: number;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface UserPreferences {

@@ -1,0 +1,196 @@
+/* GitHub-themed styling for GitHub Analysis Dashboard */
+
+.github-gradient-bg {
+  background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #1c2128 100%);
+}
+
+.github-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.github-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.github-stat-card {
+  background: linear-gradient(135deg, rgba(33, 136, 255, 0.1) 0%, rgba(79, 70, 229, 0.1) 100%);
+  border: 1px solid rgba(33, 136, 255, 0.2);
+}
+
+.github-button-primary {
+  background: linear-gradient(135deg, #2188ff 0%, #0366d6 100%);
+  color: white;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.github-button-primary:hover {
+  background: linear-gradient(135deg, #0366d6 0%, #044289 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(33, 136, 255, 0.4);
+}
+
+.github-badge-success {
+  background: linear-gradient(135deg, #28a745 0%, #22863a 100%);
+  color: white;
+}
+
+.github-badge-warning {
+  background: linear-gradient(135deg, #ffd33d 0%, #f9c513 100%);
+  color: #1c2128;
+}
+
+.github-badge-danger {
+  background: linear-gradient(135deg, #d73a49 0%, #cb2431 100%);
+  color: white;
+}
+
+/* GitHub-style animations */
+@keyframes github-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.github-pulse {
+  animation: github-pulse 2s ease-in-out infinite;
+}
+
+/* Octocat theme elements */
+.octocat-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 30c0-5.523-4.477-10-10-10s-10 4.477-10 10 4.477 10 10 10 10-4.477 10-10zm20 0c0-5.523-4.477-10-10-10s-10 4.477-10 10 4.477 10 10 10 10-4.477 10-10z' fill='%23ffffff' fill-opacity='0.02'/%3E%3C/svg%3E");
+}
+
+/* GitHub code-style typography */
+.github-code-font {
+  font-family: 'SFMono-Regular', 'Consolas', 'Liberation Mono', 'Menlo', monospace;
+}
+
+/* Repository card specific styles */
+.repo-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.repo-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #2188ff 0%, #79c0ff 50%, #2188ff 100%);
+  background-size: 200% 100%;
+  animation: gradient-shift 3s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Security score visualization */
+.security-score-ring {
+  position: relative;
+  display: inline-block;
+}
+
+.security-score-ring svg {
+  transform: rotate(-90deg);
+}
+
+.security-score-ring circle {
+  fill: none;
+  stroke-width: 8;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s ease;
+}
+
+/* Timeline styles */
+.timeline-item {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, #2188ff 0%, rgba(33, 136, 255, 0.1) 100%);
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -6px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #2188ff;
+  border: 3px solid #0d1117;
+  z-index: 1;
+}
+
+/* GitHub-style tooltips */
+.github-tooltip {
+  position: relative;
+}
+
+.github-tooltip::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-8px);
+  padding: 4px 8px;
+  background: #1c2128;
+  color: white;
+  border-radius: 6px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 1000;
+}
+
+.github-tooltip:hover::after {
+  opacity: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .github-card {
+    padding: 1rem;
+  }
+  
+  .timeline-item {
+    padding-left: 1.5rem;
+  }
+}
+
+/* Dark mode specific enhancements */
+.dark .github-card {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.dark .github-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.15);
+}

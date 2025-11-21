@@ -38,6 +38,7 @@ import { Shield, Eye, Database, Lock, Users, Globe, Mail, FileText, Scale, Alert
 const FloatingChatBot = lazy(() => import('@/components/ai/FloatingChatBot'));
 const StorageStatus = lazy(() => import('@/components/firebase/StorageStatus'));
 const AnalysisHistoryModal = lazy(() => import('@/components/analysis/AnalysisHistoryModal'));
+const GitHubAnalysisPage = lazy(() => import('./GitHubAnalysisPage').then(m => ({ default: m.GitHubAnalysisPage })));
 
 const SinglePageApp = () => {
   const [isRedirecting, setIsRedirecting] = useState(false);
@@ -490,6 +491,17 @@ const SinglePageApp = () => {
             onNavigateBack={() => navigateTo('home')}
           />
         </div>
+      )}
+
+      {/* GitHub Analysis Section */}
+      {currentSection === 'github-analysis' && (
+        <Suspense fallback={
+          <div className="min-h-screen flex items-center justify-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+          </div>
+        }>
+          <GitHubAnalysisPage />
+        </Suspense>
       )}
 
       {/* Footer */}

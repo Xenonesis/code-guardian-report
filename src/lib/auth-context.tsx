@@ -25,6 +25,7 @@ interface AuthContextType {
   signInWithGoogle: () => Promise<UserCredential>;
   signInWithGithub: () => Promise<UserCredential>;
   logout: () => Promise<void>;
+  isGitHubUser: boolean;
 }
 
 interface UserProfile {
@@ -33,6 +34,22 @@ interface UserProfile {
   displayName: string;
   createdAt: Date;
   lastLogin: Date;
+  // GitHub-specific fields
+  isGitHubUser?: boolean;
+  githubUsername?: string;
+  githubId?: string;
+  githubMetadata?: {
+    login: string;
+    avatarUrl: string;
+    htmlUrl: string;
+    bio?: string;
+    company?: string;
+    location?: string;
+    publicRepos: number;
+    followers: number;
+    following: number;
+  };
+  repositoriesAnalyzed?: number;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -54,15 +71,57 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
 
+  // Utility function to detect if user is from GitHub
+  const isGitHubUser = (user: User): boolean => {
+    // Check provider data
+    if (user.providerData) {
+      const hasGitHubProvider = user.providerData.some(
+        provider => provider.providerId === 'github.com'
+      );
+      if (hasGitHubProvider) return true;
+    }
+    
+    // Check email patterns (GitHub uses noreply.github.com)
+    if (user.email && user.email.includes('@users.noreply.github.com')) {
+      return true;
+    }
+    
+    return false;
+  };
+
+  // Extract GitHub metadata from user credential
+  const extractGitHubMetadata = (user: User): any => {
+    const githubProvider = user.providerData?.find(p => p.providerId === 'github.com');
+    if (!githubProvider) return null;
+
+    // GitHub stores additional info in the user object
+    // We'll extract what we can from the display name and photoURL
+    return {
+      login: githubProvider.displayName || user.displayName || 'unknown',
+      avatarUrl: githubProvider.photoURL || user.photoURL || '',
+      htmlUrl: `https://github.com/${githubProvider.displayName || user.displayName || ''}`,
+      publicRepos: 0,
+      followers: 0,
+      following: 0
+    };
+  };
+
   // Create user profile in Firestore with better error handling
-  const createUserProfile = async (user: User, displayName?: string) => {
+  const createUserProfile = async (user: User, displayName?: string, isFromGitHub?: boolean) => {
+    const isGitHub = isFromGitHub || isGitHubUser(user);
+    const githubMetadata = isGitHub ? extractGitHubMetadata(user) : undefined;
+    
     // Create fallback profile immediately
     const fallbackProfile: UserProfile = {
       uid: user.uid,
       email: user.email || '',
       displayName: displayName || user.displayName || 'Anonymous User',
       createdAt: new Date(),
-      lastLogin: new Date()
+      lastLogin: new Date(),
+      isGitHubUser: isGitHub,
+      githubUsername: isGitHub ? (githubMetadata?.login || user.displayName) : undefined,
+      githubMetadata: githubMetadata,
+      repositoriesAnalyzed: 0
     };
     
     // Set fallback profile first to avoid blocking UI
@@ -213,7 +272,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const signInWithGithub = async () => {
     try {
       const result = await signInWithPopup(auth, githubProvider);
-      await createUserProfile(result.user);
+      await createUserProfile(result.user, undefined, true);
       return result;
     } catch (error: any) {
       // Check if it's a COOP-related error or popup blocked
@@ -298,7 +357,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     createUser,
     signInWithGoogle,
     signInWithGithub,
-    logout
+    logout,
+    isGitHubUser: userProfile?.isGitHubUser || false
   };
 
   return (

@@ -4,6 +4,7 @@
 @import './styles/sidebar-fix.css';
 @import './styles/sidebar-position-fix.css';
 @import './styles/professional-enhancements.css';
+@import './styles/github-theme.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
