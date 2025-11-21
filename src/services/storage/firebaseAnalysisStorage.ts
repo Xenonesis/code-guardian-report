@@ -114,6 +114,13 @@ export class FirebaseAnalysisStorageService {
     }
 
     try {
+      console.log('🔥 Storing analysis results to Firebase...', {
+        fileName: file.name,
+        fileSize: file.size,
+        userId: this.userId,
+        issuesCount: results.issues?.length
+      });
+
       const fileHash = await this.calculateFileHash(file);
       const sessionId = this.generateSessionId();
 
@@ -150,6 +157,8 @@ export class FirebaseAnalysisStorageService {
 
       // Store in Firestore
       const docRef = await addDoc(collection(db, FirebaseAnalysisStorageService.COLLECTION_NAME), sanitizedData);
+
+      console.log('✅ Analysis stored successfully with ID:', docRef.id);
 
       // Update sync status
       await updateDoc(docRef, { syncStatus: 'synced' });
@@ -698,6 +707,10 @@ export class FirebaseAnalysisStorageService {
   private sanitizeObject(obj: any): any {
     if (obj === null || obj === undefined) {
       return null;
+    }
+
+    if (obj instanceof Date) {
+      return obj;
     }
 
     if (Array.isArray(obj)) {

@@ -61,7 +61,7 @@ class GitHubRepositoryService {
           // Validate owner and repo names (GitHub restrictions)
           const owner = match[1];
           const repo = match[2].replace(/\.git$/, '');
-          const branch = match[3] || 'main';
+          const branch = match[3];
 
           // Security: Validate owner and repo names contain only allowed characters
           const validNamePattern = /^[a-zA-Z0-9._-]+$/;

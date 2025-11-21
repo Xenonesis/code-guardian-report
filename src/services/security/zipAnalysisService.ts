@@ -526,6 +526,7 @@ export class ZipAnalysisService {
     let documentationFiles = 0;
     const fileSizes: number[] = [];
     const largestFiles: Array<{ file: string; size: number }> = [];
+    const fileHashes = new Map<string, string>();
 
     entries.forEach(entry => {
       if (!entry.isDirectory) {
@@ -552,10 +553,22 @@ export class ZipAnalysisService {
         if (entry.size > 50000) { // Files larger than 50KB
           largestFiles.push({ file: entry.path, size: entry.size });
         }
+
+        // Generate hash for duplicate detection
+        if (entry.crc32) {
+          fileHashes.set(entry.path, entry.crc32);
+        }
       }
     });
 
     largestFiles.sort((a, b) => b.size - a.size);
+
+    // Create stats object for complexity calculations
+    const stats = {
+      codeFiles,
+      totalLines: linesOfCode,
+      securityIssues: []
+    };
 
     return {
       totalFiles,
@@ -755,5 +768,16 @@ export class ZipAnalysisService {
     mi -= issues * 2; // Penalty for issues
     
     return Math.max(0, Math.min(100, Math.floor(mi)));
+  }
+
+  /**
+   * Generate a simple hash for string content
+   */
+  private simpleHash(str: string): string {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      hash = (hash << 5) - hash + str.charCodeAt(i);
+    }
+    return (hash >>> 0).toString(16);
   }
 }

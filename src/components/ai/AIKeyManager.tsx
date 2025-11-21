@@ -1,7 +1,7 @@
 // src/components/AIKeyManager.tsx
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { Key, Eye, EyeOff, Plus, Trash2, Bot, AlertTriangle } from 'lucide-react';
+import { Key, Eye, EyeOff, Plus, Trash2, Bot, AlertTriangle, CheckCircle, Zap, Shield, Sparkles, Clock, Users, Star } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -435,60 +435,152 @@ export const AIKeyManager: React.FC = () => {
   // console.log("AIKeyManager: Current apiKeys state during render:", apiKeys); // Debug log removed for PR
 
   return (
-    <Card className="w-full max-w-4xl mx-auto card-hover animate-fade-in">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-xl sm:text-2xl">
-          <Bot className="h-5 w-5 sm:h-6 sm:w-6 text-purple-600" />
-          AI Analysis Integration
-        </CardTitle>
-        <CardDescription className="text-sm sm:text-base">
-          Connect your AI API keys to get enhanced code analysis with natural language insights and chat assistance
-        </CardDescription>
-      </CardHeader>
+    <div className="w-full max-w-6xl mx-auto space-y-6 sm:space-y-8">
+      {/* Hero Section */}
+      <Card variant="modern" className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-600/10 via-blue-600/10 to-indigo-600/10 dark:from-purple-400/10 dark:via-blue-400/10 dark:to-indigo-400/10" />
+        <CardHeader className="relative z-10 pb-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div className="flex items-center gap-3">
+              <div className="p-3 bg-gradient-to-br from-purple-500 to-blue-600 rounded-2xl shadow-lg">
+                <Bot className="h-6 w-6 text-white" />
+              </div>
+              <div>
+                <CardTitle className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 dark:from-purple-400 dark:via-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">
+                  AI Analysis Integration
+                </CardTitle>
+                <CardDescription className="text-base mt-1 text-slate-600 dark:text-slate-300">
+                  Supercharge your code analysis with AI-powered insights
+                </CardDescription>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 ml-auto">
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-green-100 dark:bg-green-900/30 rounded-full border border-green-200 dark:border-green-800">
+                <CheckCircle className="h-4 w-4 text-green-600 dark:text-green-400" />
+                <span className="text-sm font-medium text-green-700 dark:text-green-300">
+                  {apiKeys.length} Active
+                </span>
+              </div>
+            </div>
+          </div>
+        </CardHeader>
       <CardContent className="space-y-4 sm:space-y-6">
 
-        {/* Available Providers */}
-        <section aria-labelledby="providers-title">
-          <h3 id="providers-title" className="text-base sm:text-lg font-semibold mb-3">Supported AI Providers</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-            {aiProviders.map((provider, index) => (
-              <div
-                key={provider.id}
-                className={`flex items-start gap-3 p-3 sm:p-4 border rounded-lg hover:border-purple-300 dark:hover:border-purple-600 transition-colors duration-200 card-hover animate-fade-in animate-stagger-${Math.min(index + 1, 8)}`}
-                role="article"
-                aria-labelledby={`provider-${provider.id}-name`}
-              >
-                <span className="text-xl sm:text-2xl mt-1 flex-shrink-0" aria-hidden="true">{provider.icon}</span>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-baseline gap-2">
-                    <h4 id={`provider-${provider.id}-name`} className="font-medium text-sm sm:text-base truncate">{provider.name}</h4>
-                    <Badge variant="outline" className="text-xs">{provider.models.length} models</Badge>
-                  </div>
-                  <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-2">{provider.description}</p>
-                  <div className="flex flex-wrap gap-1">
-                    {provider.models.slice(0, 3).map(model => (
-                      <Badge key={model.id} variant="secondary" className="text-xs truncate max-w-[100px]">
-                        {model.name}
-                      </Badge>
-                    ))}
-                    {provider.models.length > 3 && (
-                      <Badge variant="secondary" className="text-xs">
-                        +{provider.models.length - 3} more
-                      </Badge>
-                    )}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
+      </Card>
 
-        {/* Current API Keys */}
-        <section aria-labelledby="api-keys-title">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-3">
-            <h3 id="api-keys-title" className="text-base sm:text-lg font-semibold">Your API Keys</h3>
+      {/* Available Providers */}
+      <Card variant="modern">
+        <CardHeader className="pb-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl">
+              <Sparkles className="h-5 w-5 text-white" />
+            </div>
+            <div>
+              <CardTitle className="text-xl font-bold text-slate-900 dark:text-white">
+                Supported AI Providers
+              </CardTitle>
+              <CardDescription className="text-slate-600 dark:text-slate-300">
+                Choose from industry-leading AI providers for enhanced analysis
+              </CardDescription>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+            {aiProviders.map((provider, index) => {
+              const isConfigured = apiKeys.some(key => key.provider === provider.id);
+              return (
+                <Card
+                  key={provider.id}
+                  variant="glass"
+                  className={`group relative overflow-hidden transition-all duration-300 hover:scale-105 ${
+                    isConfigured 
+                      ? 'ring-2 ring-green-400/50 dark:ring-green-500/50 bg-green-50/50 dark:bg-green-900/20' 
+                      : 'hover:ring-2 hover:ring-blue-400/50 dark:hover:ring-blue-500/50'
+                  }`}
+                >
+                  {isConfigured && (
+                    <div className="absolute top-3 right-3">
+                      <div className="flex items-center gap-1 px-2 py-1 bg-green-100 dark:bg-green-900/50 rounded-full border border-green-300 dark:border-green-700">
+                        <CheckCircle className="h-3 w-3 text-green-600 dark:text-green-400" />
+                        <span className="text-xs font-medium text-green-700 dark:text-green-300">Active</span>
+                      </div>
+                    </div>
+                  )}
+                  <CardHeader className="pb-3">
+                    <div className="flex items-center gap-3">
+                      <div className="text-2xl p-2 bg-white/50 dark:bg-black/20 rounded-xl border border-white/30 dark:border-white/10 group-hover:scale-110 transition-transform duration-200">
+                        {provider.icon}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-semibold text-base text-slate-900 dark:text-white truncate">
+                          {provider.name}
+                        </h4>
+                        <p className="text-sm text-slate-600 dark:text-slate-400 line-clamp-2">
+                          {provider.description}
+                        </p>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="pt-0">
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <Badge variant="outline" className="text-xs">
+                          {provider.models.length} models
+                        </Badge>
+                        <div className="flex items-center gap-1 text-xs text-slate-500 dark:text-slate-400">
+                          <Clock className="h-3 w-3" />
+                          <span>Real-time</span>
+                        </div>
+                      </div>
+                      <div className="space-y-1">
+                        {provider.models.slice(0, 2).map(model => (
+                          <div key={model.id} className="flex items-center justify-between text-xs">
+                            <span className="font-medium text-slate-700 dark:text-slate-300 truncate">
+                              {model.name}
+                            </span>
+                            <Badge variant="secondary" className="text-xs">
+                              {model.capabilities.includes('code') && '🔍'}
+                              {model.capabilities.includes('vision') && '👁️'}
+                              {model.capabilities.includes('audio') && '🎵'}
+                            </Badge>
+                          </div>
+                        ))}
+                        {provider.models.length > 2 && (
+                          <div className="text-xs text-slate-500 dark:text-slate-400 text-center pt-1">
+                            +{provider.models.length - 2} more models
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Current API Keys */}
+      <Card variant="modern">
+        <CardHeader>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl">
+                <Key className="h-5 w-5 text-white" />
+              </div>
+              <div>
+                <CardTitle className="text-xl font-bold text-slate-900 dark:text-white">
+                  Your API Keys
+                </CardTitle>
+                <CardDescription className="text-slate-600 dark:text-slate-300">
+                  Manage your AI provider credentials securely
+                </CardDescription>
+              </div>
+            </div>
             <Button
               onClick={() => setIsAdding(true)}
+              variant="default"
               className="flex items-center gap-2 focus-ring"
               disabled={isAdding}
               size="sm"
@@ -498,71 +590,153 @@ export const AIKeyManager: React.FC = () => {
               <span className="sm:hidden">Add Key</span>
             </Button>
           </div>
-
-          {/* Conditional rendering based on apiKeys.length is key here */}
+        </CardHeader>
+        <CardContent>
+          {/* Empty State */}
           {apiKeys.length === 0 && !isAdding && (
-            <Alert className="animate-fade-in">
-              <Key className="h-4 w-4" />
-              <AlertDescription className="text-sm sm:text-base">
-                No API keys configured. Add your first API key to enable AI-powered analysis and chat assistance.
-              </AlertDescription>
-            </Alert>
+            <div className="text-center py-12 animate-fade-in">
+              <div className="mx-auto w-16 h-16 bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 rounded-2xl flex items-center justify-center mb-4">
+                <Key className="h-8 w-8 text-slate-400" />
+              </div>
+              <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
+                No API Keys Configured
+              </h3>
+              <p className="text-slate-600 dark:text-slate-300 mb-6 max-w-md mx-auto">
+                Add your first API key to unlock AI-powered code analysis, intelligent insights, and chat assistance.
+              </p>
+              <Button
+                onClick={() => setIsAdding(true)}
+                variant="default"
+                size="lg"
+                className="animate-pulse"
+              >
+                <Plus className="h-5 w-5 mr-2" />
+                Get Started
+              </Button>
+            </div>
           )}
 
-          <div className="space-y-3">
+          <div className="space-y-4">
             {apiKeys.map((key, index) => {
               const provider = getProviderInfo(key.provider);
               const model = getModelInfo(key.provider, key.model);
               return (
-                <div
-                  key={key.id} // Ensure this key is truly unique for React list rendering
-                  className={`flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 p-3 sm:p-4 border rounded-lg bg-gray-50 dark:bg-gray-800 hover:border-purple-300 dark:hover:border-purple-600 transition-colors duration-200 animate-fade-in animate-stagger-${Math.min(index + 1, 5)}`}
+                <Card
+                  key={key.id}
+                  variant="glass"
+                  className="group relative overflow-hidden transition-all duration-300 hover:scale-[1.02] border border-slate-200/50 dark:border-slate-700/50"
                 >
-                  <div className="flex items-center gap-3 min-w-0 flex-1">
-                    <span className="text-lg sm:text-xl flex-shrink-0" aria-hidden="true">{provider?.icon}</span>
-                    <div className="min-w-0 flex-1">
-                      <h4 className="font-medium text-sm sm:text-base truncate">{key.name}</h4>
-                      <div className="flex flex-col sm:flex-row sm:items-center gap-2 mt-1">
-                        <Badge variant="outline" className="text-xs w-fit">{provider?.name}</Badge>
-                        {model && (
-                          <Badge variant="outline" className="text-xs w-fit">
-                            {model.name}
-                          </Badge>
-                        )}
-                        <div className="flex items-center gap-2">
-                          <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 font-mono truncate max-w-[200px]">
-                            {showKeys[key.id] ? key.key : maskKey(key.key)}
-                          </span>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => toggleKeyVisibility(key.id)}
-                            className="h-6 w-6 p-0 focus-ring"
-                            aria-label={showKeys[key.id] ? "Hide API key" : "Show API key"}
-                          >
-                            {showKeys[key.id] ? <EyeOff className="h-3 w-3 sm:h-4 sm:w-4" /> : <Eye className="h-3 w-3 sm:h-4 sm:w-4" />}
-                          </Button>
+                  <CardContent className="p-4">
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex items-start gap-3 flex-1 min-w-0">
+                        <div className="p-2 bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-900 rounded-xl border border-slate-200/50 dark:border-slate-700/50 group-hover:scale-110 transition-transform duration-200">
+                          <span className="text-lg">{provider?.icon}</span>
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-2">
+                            <h4 className="font-semibold text-base text-slate-900 dark:text-white truncate">
+                              {key.name}
+                            </h4>
+                            <div className="flex items-center gap-1 px-2 py-0.5 bg-green-100 dark:bg-green-900/30 rounded-full">
+                              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                              <span className="text-xs font-medium text-green-700 dark:text-green-300">Active</span>
+                            </div>
+                          </div>
+                          
+                          <div className="flex flex-wrap items-center gap-2 mb-3">
+                            <Badge variant="outline" className="text-xs bg-white/50 dark:bg-black/20">
+                              {provider?.name}
+                            </Badge>
+                            {model && (
+                              <Badge variant="secondary" className="text-xs">
+                                {model.name}
+                              </Badge>
+                            )}
+                            {model?.capabilities && (
+                              <div className="flex items-center gap-1">
+                                {model.capabilities.includes('code') && (
+                                  <div className="w-5 h-5 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
+                                    <span className="text-xs">🔍</span>
+                                  </div>
+                                )}
+                                {model.capabilities.includes('vision') && (
+                                  <div className="w-5 h-5 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center">
+                                    <span className="text-xs">👁️</span>
+                                  </div>
+                                )}
+                              </div>
+                            )}
+                          </div>
+
+                          <div className="flex items-center gap-3">
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2 p-2 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-200/50 dark:border-slate-700/50">
+                                <span className="text-xs font-mono text-slate-600 dark:text-slate-400 truncate flex-1">
+                                  {showKeys[key.id] ? key.key : maskKey(key.key)}
+                                </span>
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => toggleKeyVisibility(key.id)}
+                                  className="h-6 w-6 p-0 hover:bg-slate-200 dark:hover:bg-slate-700"
+                                  aria-label={showKeys[key.id] ? "Hide API key" : "Show API key"}
+                                >
+                                  {showKeys[key.id] ? (
+                                    <EyeOff className="h-3 w-3" />
+                                  ) : (
+                                    <Eye className="h-3 w-3" />
+                                  )}
+                                </Button>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
+                      
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => removeAPIKey(key.id)}
+                        className="text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 p-2 rounded-xl"
+                        aria-label={`Remove ${key.name} API key`}
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
                     </div>
-                  </div>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => removeAPIKey(key.id)}
-                    className="text-red-600 hover:text-red-700 focus-ring self-end sm:self-auto"
-                    aria-label={`Remove ${key.name} API key`}
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                </div>
+                    
+                    {model && (
+                      <div className="mt-3 pt-3 border-t border-slate-200/50 dark:border-slate-700/50">
+                        <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+                          <span>Max Context: {model.maxTokens?.toLocaleString() || 'N/A'} tokens</span>
+                          <span>Updated: Just now</span>
+                        </div>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
               );
             })}
 
             {/* Add New Key Form */}
             {isAdding && (
-              <div className="p-4 border rounded-lg bg-blue-50 dark:bg-blue-950/20 space-y-4 animate-slide-down">
-                <h4 className="font-medium text-sm sm:text-base">Add New API Key</h4>
+              <Card variant="modern" className="relative overflow-hidden animate-slide-down">
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-indigo-50/30 to-purple-50/50 dark:from-blue-900/20 dark:via-indigo-900/10 dark:to-purple-900/20" />
+                <CardHeader className="relative z-10 pb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl">
+                      <Plus className="h-5 w-5 text-white" />
+                    </div>
+                    <div>
+                      <CardTitle className="text-lg font-bold text-slate-900 dark:text-white">
+                        Add New API Key
+                      </CardTitle>
+                      <CardDescription className="text-slate-600 dark:text-slate-300">
+                        Connect your AI provider to unlock powerful features
+                      </CardDescription>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent className="relative z-10 space-y-6">
 
                 {errors.general && (
                   <Alert className="border-red-200 bg-red-50 dark:bg-red-950/20">
@@ -573,10 +747,10 @@ export const AIKeyManager: React.FC = () => {
                   </Alert>
                 )}
 
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                  <div>
-                    <Label htmlFor="provider-select" className="text-sm">
-                      Provider <span className="text-red-500">*</span>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="provider-select" className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                      AI Provider <span className="text-red-500">*</span>
                     </Label>
                     <Select
                       value={newKey.provider}
@@ -584,29 +758,39 @@ export const AIKeyManager: React.FC = () => {
                     >
                       <SelectTrigger
                         id="provider-select"
-                        className={`focus-ring ${errors.provider ? 'border-red-500 focus:ring-red-500' : ''}`}
+                        className={`h-12 border-2 rounded-xl transition-all duration-200 ${
+                          errors.provider 
+                            ? 'border-red-300 focus:border-red-500 focus:ring-red-200' 
+                            : 'border-slate-200 focus:border-blue-400 focus:ring-blue-100 dark:border-slate-700 dark:focus:border-blue-500'
+                        }`}
                       >
-                        <SelectValue placeholder="Select provider" />
+                        <SelectValue placeholder="Choose your AI provider" />
                       </SelectTrigger>
-                      <SelectContent className="z-[9999] bg-slate-900 text-white border border-slate-700 shadow-lg ">
+                      <SelectContent className="rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-800/95 backdrop-blur-xl shadow-2xl">
                         {aiProviders.map((provider) => (
-                          <SelectItem key={provider.id} value={provider.id}>
-                            <div className="flex items-center gap-2">
-                              <span>{provider.icon}</span>
-                              <span>{provider.name}</span>
+                          <SelectItem key={provider.id} value={provider.id} className="rounded-lg my-1 hover:bg-slate-50 dark:hover:bg-slate-700/50">
+                            <div className="flex items-center gap-3 py-1">
+                              <div className="text-xl">{provider.icon}</div>
+                              <div>
+                                <div className="font-medium">{provider.name}</div>
+                                <div className="text-xs text-slate-500 dark:text-slate-400">{provider.description}</div>
+                              </div>
                             </div>
                           </SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
                     {errors.provider && (
-                      <p className="text-red-500 text-xs mt-1">{errors.provider}</p>
+                      <p className="text-red-500 text-xs mt-1 flex items-center gap-1">
+                        <AlertTriangle className="h-3 w-3" />
+                        {errors.provider}
+                      </p>
                     )}
                   </div>
 
-                  <div>
-                    <Label htmlFor="model-select" className="text-sm">
-                      Model <span className="text-red-500">*</span>
+                  <div className="space-y-2">
+                    <Label htmlFor="model-select" className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                      AI Model <span className="text-red-500">*</span>
                     </Label>
                     <Select
                       value={newKey.model}
@@ -620,57 +804,82 @@ export const AIKeyManager: React.FC = () => {
                     >
                       <SelectTrigger
                         id="model-select"
-                        className={`focus-ring ${errors.model ? 'border-red-500 focus:ring-red-500' : ''}`}
+                        className={`h-12 border-2 rounded-xl transition-all duration-200 ${
+                          !newKey.provider 
+                            ? 'bg-slate-50 dark:bg-slate-800/50 cursor-not-allowed opacity-60'
+                            : errors.model 
+                              ? 'border-red-300 focus:border-red-500 focus:ring-red-200' 
+                              : 'border-slate-200 focus:border-blue-400 focus:ring-blue-100 dark:border-slate-700 dark:focus:border-blue-500'
+                        }`}
                       >
-                        <SelectValue placeholder={newKey.provider ? "Select model" : "Select provider first"} />
+                        <SelectValue placeholder={newKey.provider ? "Choose a model" : "Select provider first"} />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent className="rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-800/95 backdrop-blur-xl shadow-2xl max-h-60">
                         {newKey.provider ? (
                           aiProviders.find(p => p.id === newKey.provider)?.models.map(model => (
-                            <SelectItem key={model.id} value={model.id}>
-                              <div className="flex flex-col">
-                                <span>{model.name}</span>
-                                <span className="text-xs text-gray-500">{model.description}</span>
+                            <SelectItem key={model.id} value={model.id} className="rounded-lg my-1 hover:bg-slate-50 dark:hover:bg-slate-700/50">
+                              <div className="flex flex-col items-start py-1">
+                                <div className="flex items-center gap-2">
+                                  <span className="font-medium">{model.name}</span>
+                                  <div className="flex items-center gap-1">
+                                    {model.capabilities.includes('code') && <span className="text-xs">🔍</span>}
+                                    {model.capabilities.includes('vision') && <span className="text-xs">👁️</span>}
+                                  </div>
+                                </div>
+                                <span className="text-xs text-slate-500 dark:text-slate-400 line-clamp-1">{model.description}</span>
+                                <span className="text-xs text-blue-600 dark:text-blue-400 mt-0.5">
+                                  {model.maxTokens?.toLocaleString()} tokens
+                                </span>
                               </div>
                             </SelectItem>
                           ))
                         ) : (
-                          <div className="p-2 text-sm text-gray-500">
+                          <div className="p-4 text-sm text-slate-500 dark:text-slate-400 text-center">
                             Please select a provider first
                           </div>
                         )}
                       </SelectContent>
                     </Select>
                     {errors.model && (
-                      <p className="text-red-500 text-xs mt-1">{errors.model}</p>
-                    )}
-                  </div>
-
-                  <div>
-                    <Label htmlFor="key-name" className="text-sm">
-                      Key Name <span className="text-red-500">*</span>
-                    </Label>
-                    <Input
-                      id="key-name"
-                      placeholder="My OpenAI Key"
-                      value={newKey.name}
-                      onChange={(e) => {
-                        setNewKey({...newKey, name: e.target.value});
-                        if (errors.name) {
-                          setErrors(prev => ({ ...prev, name: '' }));
-                        }
-                      }}
-                      className={`focus-ring ${errors.name ? 'border-red-500 focus:ring-red-500' : ''}`}
-                      aria-describedby={errors.name ? "name-error" : undefined}
-                    />
-                    {errors.name && (
-                      <p id="name-error" className="text-red-500 text-xs mt-1">{errors.name}</p>
+                      <p className="text-red-500 text-xs mt-1 flex items-center gap-1">
+                        <AlertTriangle className="h-3 w-3" />
+                        {errors.model}
+                      </p>
                     )}
                   </div>
                 </div>
 
-                <div>
-                  <Label htmlFor="api-key" className="text-sm">
+                <div className="space-y-2">
+                  <Label htmlFor="key-name" className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                    Display Name <span className="text-red-500">*</span>
+                  </Label>
+                  <Input
+                    id="key-name"
+                    placeholder="e.g., My Production OpenAI Key"
+                    value={newKey.name}
+                    onChange={(e) => {
+                      setNewKey({...newKey, name: e.target.value});
+                      if (errors.name) {
+                        setErrors(prev => ({ ...prev, name: '' }));
+                      }
+                    }}
+                    className={`h-12 border-2 rounded-xl transition-all duration-200 ${
+                      errors.name 
+                        ? 'border-red-300 focus:border-red-500 focus:ring-red-200' 
+                        : 'border-slate-200 focus:border-blue-400 focus:ring-blue-100 dark:border-slate-700 dark:focus:border-blue-500'
+                    }`}
+                    aria-describedby={errors.name ? "name-error" : undefined}
+                  />
+                  {errors.name && (
+                    <p id="name-error" className="text-red-500 text-xs mt-1 flex items-center gap-1">
+                      <AlertTriangle className="h-3 w-3" />
+                      {errors.name}
+                    </p>
+                  )}
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="api-key" className="text-sm font-medium text-slate-700 dark:text-slate-300">
                     API Key <span className="text-red-500">*</span>
                   </Label>
                   <Input
@@ -684,164 +893,285 @@ export const AIKeyManager: React.FC = () => {
                         setErrors(prev => ({ ...prev, key: '' }));
                       }
                     }}
-                    className={`focus-ring ${errors.key ? 'border-red-500 focus:ring-red-500' : ''}`}
+                    className={`h-12 border-2 rounded-xl transition-all duration-200 font-mono ${
+                      errors.key 
+                        ? 'border-red-300 focus:border-red-500 focus:ring-red-200' 
+                        : 'border-slate-200 focus:border-blue-400 focus:ring-blue-100 dark:border-slate-700 dark:focus:border-blue-500'
+                    }`}
                     aria-describedby={errors.key ? "key-error" : undefined}
                   />
                   {errors.key && (
-                    <p id="key-error" className="text-red-500 text-xs mt-1">{errors.key}</p>
+                    <p id="key-error" className="text-red-500 text-xs mt-1 flex items-center gap-1">
+                      <AlertTriangle className="h-3 w-3" />
+                      {errors.key}
+                    </p>
                   )}
                 </div>
-
                 {newKey.provider && (
-                  <div className="p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                    <h5 className="text-xs font-semibold mb-2">PROVIDER INFO</h5>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
-                      <div>
-                        <span className="text-gray-500 dark:text-gray-400">Selected Provider:</span>{' '}
-                        <span className="font-medium">
-                          {aiProviders.find(p => p.id === newKey.provider)?.name}
-                        </span>
+                  <Card variant="glass" className="bg-slate-50/50 dark:bg-slate-800/30">
+                    <CardContent className="p-4">
+                      <div className="flex items-center gap-2 mb-3">
+                        <Shield className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                        <h5 className="text-sm font-semibold text-slate-800 dark:text-slate-200">Configuration Preview</h5>
                       </div>
-                      {newKey.model && (
-                        <>
-                          <div>
-                            <span className="text-gray-500 dark:text-gray-400">Selected Model:</span>{' '}
-                            <span className="font-medium">
-                              {aiProviders.find(p => p.id === newKey.provider)?.models.find(m => m.id === newKey.model)?.name}
-                            </span>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                        <div className="space-y-2">
+                          <div className="flex items-center gap-2">
+                            <span className="text-slate-600 dark:text-slate-400">Provider:</span>
+                            <Badge variant="outline" className="text-xs">
+                              {aiProviders.find(p => p.id === newKey.provider)?.name}
+                            </Badge>
                           </div>
-                          <div>
-                            <span className="text-gray-500 dark:text-gray-400">Capabilities:</span>{' '}
-                            <span className="font-medium">
-                              {aiProviders.find(p => p.id === newKey.provider)?.models.find(m => m.id === newKey.model)?.capabilities.join(', ')}
-                            </span>
+                          {newKey.model && (
+                            <div className="flex items-center gap-2">
+                              <span className="text-slate-600 dark:text-slate-400">Model:</span>
+                              <Badge variant="secondary" className="text-xs">
+                                {aiProviders.find(p => p.id === newKey.provider)?.models.find(m => m.id === newKey.model)?.name}
+                              </Badge>
+                            </div>
+                          )}
+                        </div>
+                        {newKey.model && (
+                          <div className="space-y-2">
+                            <div className="flex items-center gap-2">
+                              <span className="text-slate-600 dark:text-slate-400">Capabilities:</span>
+                              <div className="flex items-center gap-1">
+                                {aiProviders.find(p => p.id === newKey.provider)?.models.find(m => m.id === newKey.model)?.capabilities.map(cap => (
+                                  <Badge key={cap} variant="outline" className="text-xs">
+                                    {cap}
+                                  </Badge>
+                                ))}
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <span className="text-slate-600 dark:text-slate-400">Max Context:</span>
+                              <span className="text-xs font-medium text-slate-800 dark:text-slate-200">
+                                {aiProviders.find(p => p.id === newKey.provider)?.models.find(m => m.id === newKey.model)?.maxTokens?.toLocaleString() || 'Unknown'} tokens
+                              </span>
+                            </div>
                           </div>
-                          <div>
-                            <span className="text-gray-500 dark:text-gray-400">Max Context:</span>{' '}
-                            <span className="font-medium">
-                              {aiProviders.find(p => p.id === newKey.provider)?.models.find(m => m.id === newKey.model)?.maxTokens?.toLocaleString() || 'Unknown'} tokens
-                            </span>
-                          </div>
-                        </>
-                      )}
-                    </div>
-                  </div>
+                        )}
+                      </div>
+                    </CardContent>
+                  </Card>
                 )}
 
-                <div className="flex flex-col sm:flex-row gap-2">
+                <div className="flex flex-col sm:flex-row gap-3 pt-2">
                   <Button
                     onClick={addAPIKey}
                     disabled={isSubmitting}
-                    className="focus-ring"
+                    variant="default"
+                    size="lg"
+                    className="flex-1 sm:flex-none"
                   >
                     {isSubmitting ? (
                       <>
                         <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent mr-2" />
-                        Adding...
+                        Adding Key...
                       </>
                     ) : (
-                      'Add Key'
+                      <>
+                        <Plus className="h-4 w-4 mr-2" />
+                        Add API Key
+                      </>
                     )}
                   </Button>
                   <Button
                     variant="outline"
+                    size="lg"
                     onClick={() => {
                       setIsAdding(false);
                       setNewKey({ provider: '', model: '', key: '', name: '' });
                       setErrors({});
                     }}
                     disabled={isSubmitting}
-                    className="focus-ring"
+                    className="flex-1 sm:flex-none"
                   >
                     Cancel
                   </Button>
                 </div>
-              </div>
+                </CardContent>
+              </Card>
             )}
           </div>
-        </section>
+        </CardContent>
+      </Card>
 
-        {/* AI-Powered Security Features Status */}
-        <section className="space-y-4">
-          <h3 className="text-lg font-semibold flex items-center gap-2">
-            <Bot className="h-5 w-5" />
-            AI-Powered Security Features
-          </h3>
-
+      {/* AI-Powered Features Status */}
+      <Card variant="modern">
+        <CardHeader className="pb-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-gradient-to-br from-violet-500 to-purple-600 rounded-xl">
+              <Zap className="h-5 w-5 text-white" />
+            </div>
+            <div>
+              <CardTitle className="text-xl font-bold text-slate-900 dark:text-white">
+                Available AI Features
+              </CardTitle>
+              <CardDescription className="text-slate-600 dark:text-slate-300">
+                Unlock powerful analysis capabilities with your API keys
+              </CardDescription>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Card className="bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-950/20 dark:to-blue-900/20">
+            <Card 
+              variant="glass" 
+              className={`group transition-all duration-300 hover:scale-105 ${
+                apiKeys.length > 0 
+                  ? 'bg-gradient-to-br from-purple-50/50 to-blue-50/50 dark:from-purple-900/20 dark:to-blue-900/20 ring-2 ring-purple-200/50 dark:ring-purple-800/50' 
+                  : 'bg-gradient-to-br from-slate-50/50 to-slate-100/50 dark:from-slate-800/20 dark:to-slate-900/20'
+              }`}
+            >
               <CardContent className="p-4">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-purple-500 rounded-lg">
-                    <Bot className="h-4 w-4 text-white" />
+                <div className="flex items-start gap-3">
+                  <div className={`p-2.5 rounded-xl transition-all duration-200 ${
+                    apiKeys.length > 0 
+                      ? 'bg-gradient-to-br from-purple-500 to-blue-600 group-hover:scale-110' 
+                      : 'bg-slate-400'
+                  }`}>
+                    <Bot className="h-5 w-5 text-white" />
                   </div>
-                  <div>
-                    <p className="font-semibold text-purple-800 dark:text-purple-200">
-                      AI Fix Suggestions
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1">
+                      <h4 className="font-semibold text-slate-900 dark:text-white">AI Fix Suggestions</h4>
+                      {apiKeys.length > 0 ? (
+                        <CheckCircle className="h-4 w-4 text-green-500" />
+                      ) : (
+                        <Clock className="h-4 w-4 text-slate-400" />
+                      )}
+                    </div>
+                    <p className="text-sm text-slate-600 dark:text-slate-400 mb-2">
+                      Intelligent code fixes and security recommendations
                     </p>
-                    <p className="text-sm text-purple-600 dark:text-purple-400">
-                      {apiKeys.length > 0 ? 'Available' : 'Requires API Key'}
-                    </p>
+                    <div className="flex items-center gap-1">
+                      <div className={`w-2 h-2 rounded-full ${apiKeys.length > 0 ? 'bg-green-500 animate-pulse' : 'bg-slate-400'}`} />
+                      <span className={`text-xs font-medium ${
+                        apiKeys.length > 0 ? 'text-green-700 dark:text-green-300' : 'text-slate-500'
+                      }`}>
+                        {apiKeys.length > 0 ? 'Ready' : 'Requires API Key'}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-900/20">
+            <Card variant="glass" className="bg-gradient-to-br from-blue-50/50 to-indigo-50/50 dark:from-blue-900/20 dark:to-indigo-900/20 ring-2 ring-blue-200/50 dark:ring-blue-800/50 group transition-all duration-300 hover:scale-105">
               <CardContent className="p-4">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-blue-500 rounded-lg">
-                    <Key className="h-4 w-4 text-white" />
+                <div className="flex items-start gap-3">
+                  <div className="p-2.5 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl group-hover:scale-110 transition-transform duration-200">
+                    <Shield className="h-5 w-5 text-white" />
                   </div>
-                  <div>
-                    <p className="font-semibold text-blue-800 dark:text-blue-200">
-                      Secure Code Search
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1">
+                      <h4 className="font-semibold text-slate-900 dark:text-white">Secure Code Search</h4>
+                      <CheckCircle className="h-4 w-4 text-green-500" />
+                    </div>
+                    <p className="text-sm text-slate-600 dark:text-slate-400 mb-2">
+                      Advanced pattern matching and vulnerability detection
                     </p>
-                    <p className="text-sm text-blue-600 dark:text-blue-400">
-                      Always Available
-                    </p>
+                    <div className="flex items-center gap-1">
+                      <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                      <span className="text-xs font-medium text-green-700 dark:text-green-300">
+                        Always Available
+                      </span>
+                    </div>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/20 dark:to-emerald-900/20">
+            <Card variant="glass" className="bg-gradient-to-br from-emerald-50/50 to-teal-50/50 dark:from-emerald-900/20 dark:to-teal-900/20 ring-2 ring-emerald-200/50 dark:ring-emerald-800/50 group transition-all duration-300 hover:scale-105">
               <CardContent className="p-4">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-green-500 rounded-lg">
-                    <AlertTriangle className="h-4 w-4 text-white" />
+                <div className="flex items-start gap-3">
+                  <div className="p-2.5 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl group-hover:scale-110 transition-transform duration-200">
+                    <Star className="h-5 w-5 text-white" />
                   </div>
-                  <div>
-                    <p className="font-semibold text-green-800 dark:text-green-200">
-                      Code Provenance
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1">
+                      <h4 className="font-semibold text-slate-900 dark:text-white">Code Provenance</h4>
+                      <CheckCircle className="h-4 w-4 text-green-500" />
+                    </div>
+                    <p className="text-sm text-slate-600 dark:text-slate-400 mb-2">
+                      Track code origins and identify potential supply chain risks
                     </p>
-                    <p className="text-sm text-green-600 dark:text-green-400">
-                      Always Available
-                    </p>
+                    <div className="flex items-center gap-1">
+                      <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                      <span className="text-xs font-medium text-green-700 dark:text-green-300">
+                        Always Available
+                      </span>
+                    </div>
                   </div>
                 </div>
               </CardContent>
             </Card>
           </div>
 
-          <Alert className="bg-blue-50 border-blue-200 dark:bg-blue-950/20 dark:border-blue-800">
-            <Bot className="h-4 w-4 text-blue-600" />
-            <AlertDescription className="text-blue-800 dark:text-blue-200">
-              <strong>AI Fix Suggestions</strong> require at least one configured AI provider.
-              The Secure Code Search Engine and Code Provenance features work without API keys.
-            </AlertDescription>
-          </Alert>
-        </section>
+          {apiKeys.length === 0 && (
+            <Card variant="glass" className="mt-6 bg-gradient-to-r from-amber-50/50 to-orange-50/50 dark:from-amber-900/20 dark:to-orange-900/20 border border-amber-200/50 dark:border-amber-800/50">
+              <CardContent className="p-4">
+                <div className="flex items-start gap-3">
+                  <div className="p-2 bg-amber-500 rounded-xl">
+                    <AlertTriangle className="h-5 w-5 text-white" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-amber-900 dark:text-amber-200 mb-1">
+                      Unlock AI-Powered Analysis
+                    </h4>
+                    <p className="text-sm text-amber-800 dark:text-amber-300 mb-3">
+                      Add your first API key to enable intelligent fix suggestions, contextual code analysis, and AI-powered chat assistance. Your keys are stored securely in your browser and never shared with our servers.
+                    </p>
+                    <Button
+                      onClick={() => setIsAdding(true)}
+                      variant="default"
+                      size="sm"
+                      className="bg-amber-600 hover:bg-amber-700 text-white"
+                    >
+                      <Plus className="h-4 w-4 mr-2" />
+                      Add Your First API Key
+                    </Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+        </CardContent>
+      </Card>
 
-        {/* Security Notice */}
-        <Alert className="animate-fade-in" role="note">
-          <Key className="h-4 w-4" aria-hidden="true" />
-          <AlertDescription className="text-sm sm:text-base">
-            Your API keys are stored locally in your browser and are never sent to our servers.
-            They are only used to communicate directly with the AI providers during analysis.
-          </AlertDescription>
-        </Alert>
-      </CardContent>
-    </Card>
+      {/* Security Notice */}
+      <Card variant="glass" className="bg-gradient-to-r from-slate-50/50 to-slate-100/50 dark:from-slate-800/20 dark:to-slate-900/20">
+        <CardContent className="p-6">
+          <div className="flex items-start gap-4">
+            <div className="p-3 bg-slate-200 dark:bg-slate-700 rounded-2xl">
+              <Shield className="h-6 w-6 text-slate-600 dark:text-slate-300" />
+            </div>
+            <div>
+              <h4 className="font-semibold text-slate-900 dark:text-white mb-2">
+                🔒 Privacy & Security Guarantee
+              </h4>
+              <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                Your API keys are encrypted and stored locally in your browser. They are never transmitted to our servers and are only used to communicate directly with your chosen AI providers. You maintain complete control over your credentials at all times.
+              </p>
+              <div className="flex items-center gap-4 mt-3 text-xs text-slate-500 dark:text-slate-400">
+                <div className="flex items-center gap-1">
+                  <CheckCircle className="h-3 w-3 text-green-500" />
+                  <span>Local Storage Only</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <CheckCircle className="h-3 w-3 text-green-500" />
+                  <span>End-to-End Encryption</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <CheckCircle className="h-3 w-3 text-green-500" />
+                  <span>Zero Server Access</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   );
 };
