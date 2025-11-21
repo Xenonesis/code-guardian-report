@@ -43,7 +43,7 @@ const SinglePageApp = () => {
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [showStorageStatus, setShowStorageStatus] = useState(false);
   const [showHistoryModal, setShowHistoryModal] = useState(false);
-  const { isDarkMode, toggleDarkMode } = useDarkMode();
+  const { theme, isDarkMode, setTheme } = useDarkMode();
   const { currentSection, currentTab, setCurrentTab, navigateTo, isSidebarCollapsed, toggleSidebar } = useNavigation();
   
   const {
@@ -124,7 +124,7 @@ const SinglePageApp = () => {
   return (
     <div className="min-h-screen">
       {/* Navigation */}
-      <Navigation isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
+      <Navigation theme={theme} onThemeChange={setTheme} />
       
       {/* Sidebar Navigation */}
       <SidebarNavigation
@@ -145,7 +145,6 @@ const SinglePageApp = () => {
         <section id="home" className="min-h-screen">
           <PageLayout
             isDarkMode={isDarkMode}
-            toggleDarkMode={toggleDarkMode}
             showNavigation={false}
           >
             <HomeHero onStartAnalysis={handleStartAnalysis} />
