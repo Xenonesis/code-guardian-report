@@ -96,38 +96,38 @@ export const Navigation: React.FC<NavigationProps> = ({ isDarkMode, toggleDarkMo
         paddingTop: 'env(safe-area-inset-top)'
       }}
     >
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-14 sm:h-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+        <div className="flex items-center justify-between h-12 sm:h-14 md:h-16">
           {/* Code Guardian Logo */}
           <button
             onClick={() => handleNavigate('home')}
-            className="flex items-center gap-2 sm:gap-3 group transition-all duration-300 hover:scale-105"
+            className="flex items-center gap-2 sm:gap-2.5 group transition-all duration-300 hover:scale-105 -ml-1 sm:ml-0"
           >
             {/* Shield Icon */}
-            <div className="relative p-1.5 sm:p-2 rounded-lg sm:rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:rotate-3">
-              <Shield className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
-              <div className="absolute inset-0 rounded-lg sm:rounded-xl bg-gradient-to-br from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div className="relative p-1.5 sm:p-2 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 shadow-md group-hover:shadow-lg transition-all duration-300 group-hover:rotate-3">
+              <Shield className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-white" />
+              <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </div>
             
             {/* Brand Text */}
             <div className="flex flex-col">
-              <h1 className="text-base sm:text-lg lg:text-xl font-bold bg-gradient-to-r from-slate-900 to-blue-900 dark:from-white dark:to-blue-100 bg-clip-text text-transparent leading-tight">
+              <h1 className="text-sm sm:text-base md:text-lg font-bold bg-gradient-to-r from-slate-900 to-blue-900 dark:from-white dark:to-blue-100 bg-clip-text text-transparent leading-tight">
                 Code Guardian
               </h1>
-              <p className="text-[10px] sm:text-xs text-slate-600 dark:text-slate-400 font-medium leading-none hidden xs:block">
+              <p className="text-[9px] sm:text-[10px] md:text-xs text-slate-600 dark:text-slate-400 font-medium leading-none hidden sm:block">
                 Security Analysis
               </p>
             </div>
           </button>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-4 lg:space-x-6 xl:space-x-8">
+          <div className="hidden md:flex items-center space-x-1 lg:space-x-2">
             {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => handleNavigate(item.id)}
                 className={cn(
-                  "relative flex items-center gap-1.5 lg:gap-2 px-2 lg:px-3 py-1.5 lg:py-2 rounded-lg font-medium transition-all duration-200 text-xs lg:text-sm group",
+                  "relative flex items-center gap-1.5 px-2.5 lg:px-3 py-1.5 rounded-lg font-medium transition-all duration-200 text-xs lg:text-sm group",
                   isActive(item.id)
                     ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20"
                     : "text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-50 dark:hover:bg-slate-800/50"
@@ -147,13 +147,13 @@ export const Navigation: React.FC<NavigationProps> = ({ isDarkMode, toggleDarkMo
           </div>
 
           {/* Right side actions */}
-          <div className="flex items-center gap-2 sm:gap-3 lg:gap-4">
+          <div className="flex items-center gap-1.5 sm:gap-2 md:gap-3">
             {/* Authentication Section */}
             {user ? (
-              <div className="hidden md:flex items-center gap-2 lg:gap-3">
-                <div className="flex items-center gap-1.5 lg:gap-2 px-2 lg:px-3 py-1.5 lg:py-2 rounded-lg bg-slate-50 dark:bg-slate-800/50">
-                  <User className="h-3.5 w-3.5 lg:h-4 lg:w-4 text-slate-600 dark:text-slate-400" />
-                  <span className="text-xs lg:text-sm font-medium text-slate-700 dark:text-slate-300 max-w-[100px] truncate">
+              <div className="hidden md:flex items-center gap-2">
+                <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-800/50">
+                  <User className="h-3.5 w-3.5 text-slate-600 dark:text-slate-400" />
+                  <span className="text-xs font-medium text-slate-700 dark:text-slate-300 max-w-[80px] lg:max-w-[100px] truncate">
                     {userProfile?.displayName || 'User'}
                   </span>
                 </div>
@@ -161,26 +161,26 @@ export const Navigation: React.FC<NavigationProps> = ({ isDarkMode, toggleDarkMo
                   variant="ghost"
                   size="sm"
                   onClick={logout}
-                  className="p-1.5 lg:p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors duration-200 text-red-600 dark:text-red-400"
+                  className="p-1.5 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors duration-200 text-red-600 dark:text-red-400"
                   aria-label="Sign out"
                 >
-                  <LogOut className="h-3.5 w-3.5 lg:h-4 lg:w-4" />
+                  <LogOut className="h-3.5 w-3.5" />
                 </Button>
               </div>
             ) : (
-              <div className="hidden md:flex items-center gap-1.5 lg:gap-2">
+              <div className="hidden md:flex items-center gap-1.5">
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={() => setShowAuthModal(true)}
-                  className="px-2 lg:px-3 py-1.5 lg:py-2 text-xs lg:text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors duration-200"
+                  className="px-2.5 py-1.5 text-xs font-medium text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors duration-200"
                 >
                   Sign In
                 </Button>
                 <Button
                   size="sm"
                   onClick={() => setShowAuthModal(true)}
-                  className="px-3 lg:px-4 py-1.5 lg:py-2 text-xs lg:text-sm font-medium bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-lg transition-all duration-200 shadow-sm hover:shadow-md"
+                  className="px-3 py-1.5 text-xs font-medium bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-lg transition-all duration-200 shadow-sm hover:shadow-md"
                 >
                   Sign Up
                 </Button>
@@ -231,7 +231,7 @@ export const Navigation: React.FC<NavigationProps> = ({ isDarkMode, toggleDarkMo
                   key={item.id}
                   onClick={() => handleNavigate(item.id)}
                   className={cn(
-                    "flex items-center gap-2.5 sm:gap-3 px-3 sm:px-4 py-3 rounded-lg font-medium transition-colors duration-200 w-full text-left text-sm sm:text-base",
+                    "flex items-center gap-2.5 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg font-medium transition-colors duration-200 w-full text-left text-sm sm:text-base",
                     isActive(item.id)
                       ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20"
                       : "text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-50 dark:hover:bg-slate-800/50"
@@ -259,7 +259,7 @@ export const Navigation: React.FC<NavigationProps> = ({ isDarkMode, toggleDarkMo
                         logout();
                         setIsMobileMenuOpen(false);
                       }}
-                      className="flex items-center gap-2.5 sm:gap-3 px-3 sm:px-4 py-3 rounded-lg font-medium transition-colors duration-200 w-full text-left text-sm sm:text-base text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20"
+                      className="flex items-center gap-2.5 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg font-medium transition-colors duration-200 w-full text-left text-sm sm:text-base text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20"
                     >
                       <LogOut className="h-4 w-4 sm:h-5 sm:w-5" />
                       <span>Sign Out</span>
@@ -272,7 +272,7 @@ export const Navigation: React.FC<NavigationProps> = ({ isDarkMode, toggleDarkMo
                         setShowAuthModal(true);
                         setIsMobileMenuOpen(false);
                       }}
-                      className="flex items-center gap-2.5 sm:gap-3 px-3 sm:px-4 py-3 rounded-lg font-medium transition-colors duration-200 w-full text-left text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-50 dark:hover:bg-slate-800/50"
+                      className="flex items-center gap-2.5 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg font-medium transition-colors duration-200 w-full text-left text-sm sm:text-base text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-50 dark:hover:bg-slate-800/50"
                     >
                       <User className="h-4 w-4 sm:h-5 sm:w-5" />
                       <span>Sign In</span>
@@ -282,7 +282,7 @@ export const Navigation: React.FC<NavigationProps> = ({ isDarkMode, toggleDarkMo
                         setShowAuthModal(true);
                         setIsMobileMenuOpen(false);
                       }}
-                      className="flex items-center gap-2.5 sm:gap-3 px-3 sm:px-4 py-3 rounded-lg font-medium bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 w-full text-left text-sm sm:text-base"
+                      className="flex items-center gap-2.5 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg font-medium bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 w-full text-left text-sm sm:text-base"
                     >
                       <User className="h-4 w-4 sm:h-5 sm:w-5" />
                       <span>Sign Up</span>

@@ -457,20 +457,16 @@ export const AIKeyManager: React.FC = () => {
             <div className="flex items-center gap-2 ml-auto">
               <div className="flex items-center gap-2 px-3 py-1.5 bg-green-100 dark:bg-green-900/30 rounded-full border border-green-200 dark:border-green-800">
                 <CheckCircle className="h-4 w-4 text-green-600 dark:text-green-400" />
-                <span className="text-sm font-medium text-green-700 dark:text-green-300">
-                  {apiKeys.length} Active
-                </span>
+                <span className="text-xs font-medium text-green-700 dark:text-green-300">Secure Storage</span>
               </div>
             </div>
           </div>
         </CardHeader>
-      <CardContent className="space-y-4 sm:space-y-6">
-
       </Card>
 
-      {/* Available Providers */}
+      {/* Supported AI Providers */}
       <Card variant="modern">
-        <CardHeader className="pb-4">
+        <CardHeader>
           <div className="flex items-center gap-3">
             <div className="p-2 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl">
               <Sparkles className="h-5 w-5 text-white" />

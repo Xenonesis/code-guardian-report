@@ -2,14 +2,30 @@
 import { 
   getFirestore,
   connectFirestoreEmulator,
-  Firestore
+  Firestore,
+  initializeFirestore,
+  persistentLocalCache,
+  persistentMultipleTabManager
 } from 'firebase/firestore';
 import { FirebaseApp } from 'firebase/app';
 
 export function createOptimizedFirestore(app: FirebaseApp): Firestore {
-  console.log('Using default Firestore configuration to avoid connection issues');
-  
-  const db = getFirestore(app);
+  let db: Firestore;
+
+  try {
+    // Initialize with long polling to fix 404/transport errors
+    db = initializeFirestore(app, {
+      experimentalForceLongPolling: true,
+      localCache: persistentLocalCache({
+        tabManager: persistentMultipleTabManager()
+      })
+    });
+    console.log('Firestore initialized with long polling and persistence');
+  } catch (error) {
+    // Fallback if already initialized
+    console.log('Firestore already initialized, using existing instance', error);
+    db = getFirestore(app);
+  }
   
   // Connect to emulator if in development
   if (import.meta.env.DEV && import.meta.env.VITE_USE_FIREBASE_EMULATOR === 'true') {
@@ -17,7 +33,7 @@ export function createOptimizedFirestore(app: FirebaseApp): Firestore {
       connectFirestoreEmulator(db, 'localhost', 8080);
       console.log('Connected to Firestore emulator');
     } catch (error) {
-      console.log('Firestore emulator not available, using production');
+      console.log('Firestore emulator not available, using production', error);
     }
   }
   
