@@ -59,16 +59,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
       <div className="relative z-10 container mx-auto mobile-container">
         {/* Enhanced Title with Ultra-Modern Typography */}
-        <h1
-          id={titleId}
-          className={`text-responsive-2xl font-bold mb-6 sm:mb-8 lg:mb-10 tracking-tight leading-tight px-4 sm:px-0 ${
-            variant === 'gradient' || variant === 'ultra'
-              ? 'gradient-text-animated text-ultra-gradient'
-              : 'text-slate-900 dark:text-white'
-          }`}
-        >
-          {title}
-        </h1>
+        {title && (
+          <h1
+            id={titleId}
+            className={`text-responsive-2xl font-bold mb-6 sm:mb-8 lg:mb-10 tracking-tight leading-tight px-4 sm:px-0 ${
+              variant === 'gradient' || variant === 'ultra'
+                ? 'gradient-text-animated text-ultra-gradient'
+                : 'text-slate-900 dark:text-white'
+            }`}
+          >
+            {title}
+          </h1>
+        )}
 
         {subtitle && (
           <div className="glass-card-ultra max-w-4xl mx-auto mb-6 sm:mb-8 lg:mb-10 px-6 py-4 sm:px-8 sm:py-6">
