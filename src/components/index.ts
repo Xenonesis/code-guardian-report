@@ -16,6 +16,7 @@ export { AboutPageLayout } from './layout/AboutPageLayout';
 
 // Auth components
 export { AuthModal } from './auth/AuthModal';
+export { AccountConflictModal } from './auth/AccountConflictModal';
 export { default as UserDashboard } from './auth/UserDashboard';
 
 // Analysis components

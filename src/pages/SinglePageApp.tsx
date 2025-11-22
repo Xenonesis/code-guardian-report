@@ -39,6 +39,7 @@ const FloatingChatBot = lazy(() => import('@/components/ai/FloatingChatBot'));
 const StorageStatus = lazy(() => import('@/components/firebase/StorageStatus'));
 const AnalysisHistoryModal = lazy(() => import('@/components/analysis/AnalysisHistoryModal'));
 const GitHubAnalysisPage = lazy(() => import('./GitHubAnalysisPage').then(m => ({ default: m.GitHubAnalysisPage })));
+const AccountConflictDemo = lazy(() => import('./AccountConflictDemo').then(m => ({ default: m.AccountConflictDemo })));
 
 const SinglePageApp = () => {
   const [isRedirecting, setIsRedirecting] = useState(false);
@@ -501,6 +502,17 @@ const SinglePageApp = () => {
           </div>
         }>
           <GitHubAnalysisPage />
+        </Suspense>
+      )}
+
+      {/* Account Conflict Demo Section */}
+      {currentSection === 'account-conflict-demo' && (
+        <Suspense fallback={
+          <div className="min-h-screen flex items-center justify-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+          </div>
+        }>
+          <AccountConflictDemo />
         </Suspense>
       )}
 

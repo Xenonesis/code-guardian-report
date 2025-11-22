@@ -42,12 +42,13 @@ export const handleAuthError = (error: any, context: string) => {
     'auth/email-already-in-use': 'An account with this email already exists.',
     'auth/weak-password': 'Password is too weak. Please choose a stronger password.',
     'auth/invalid-email': 'Please enter a valid email address.',
+    'auth/account-exists-with-different-credential': 'An account with this email already exists with a different sign-in method.',
   };
 
   const userMessage = errorMessages[error.code] || 'An unexpected error occurred. Please try again.';
   
-  // Don't show error toast for popup-blocked since we handle it with redirect
-  if (error.code !== 'auth/popup-blocked') {
+  // Don't show error toast for popup-blocked and account-exists since we handle them specially
+  if (error.code !== 'auth/popup-blocked' && error.code !== 'auth/account-exists-with-different-credential') {
     toast.error('Authentication Error', {
       description: userMessage,
       duration: 5000
@@ -55,6 +56,22 @@ export const handleAuthError = (error: any, context: string) => {
   }
   
   return userMessage;
+};
+
+// Helper function to extract provider info from Firebase auth error
+export const getProviderFromError = (error: any): string | null => {
+  if (error.customData?.providerId) {
+    return error.customData.providerId;
+  }
+  if (error.credential?.providerId) {
+    return error.credential.providerId;
+  }
+  return null;
+};
+
+// Helper function to get email from Firebase auth error
+export const getEmailFromError = (error: any): string | null => {
+  return error.customData?.email || error.email || null;
 };
 
 // Helper to clean up URL after redirect authentication

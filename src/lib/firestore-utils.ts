@@ -105,7 +105,8 @@ export async function withRetry<T>(
 // Safe Firestore document getter with enhanced error handling
 export async function safeGetDoc<T>(
   docRef: DocumentReference,
-  fallback?: T
+  fallback?: T,
+  options?: { suppressErrorToast?: boolean }
 ): Promise<{ data: T | null; exists: boolean; error?: Error; errorInfo?: any }> {
   try {
     const result = await withRetry(async () => {
@@ -126,8 +127,8 @@ export async function safeGetDoc<T>(
       docPath: docRef.path
     });
     
-    // Show user-friendly error if appropriate
-    if (shouldShowErrorToUser(errorInfo)) {
+    // Show user-friendly error if appropriate and not suppressed
+    if (shouldShowErrorToUser(errorInfo) && !options?.suppressErrorToast) {
       // Dispatch custom event for error display
       window.dispatchEvent(new CustomEvent('firestore-error', {
         detail: { errorInfo, operation: 'read', docPath: docRef.path }

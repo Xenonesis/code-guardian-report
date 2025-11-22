@@ -150,7 +150,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         }
 
         const userDoc = doc(db, 'users', user.uid);
-        const { data: existingProfile, exists, error } = await safeGetDoc<UserProfile>(userDoc);
+        const { data: existingProfile, exists, error } = await safeGetDoc<UserProfile>(userDoc, undefined, { suppressErrorToast: true });
         
         if (error) {
           // Store profile in localStorage as backup
