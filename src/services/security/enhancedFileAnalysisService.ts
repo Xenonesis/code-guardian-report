@@ -6,7 +6,10 @@
  * - File signature verification
  * - Embedded content detection
  * - Advanced pattern matching
+ * - Multi-language support (JavaScript, TypeScript, Python, Java, C++, Go, Rust, PHP, C#)
  */
+
+import { multiLanguageSecurityAnalyzer } from '../analysis/MultiLanguageSecurityAnalyzer';
 
 export interface FileMetadata {
   filename: string;
@@ -186,7 +189,7 @@ export class EnhancedFileAnalysisService {
     const dataFlow = this.analyzeDataFlow(content);
     const complexity = this.calculateComplexity(content);
     const apiSecurity = this.analyzeAPISecurity(content);
-    const securityFindings = this.performSecurityAnalysis(content);
+    const securityFindings = this.performSecurityAnalysis(content, file.name);
     const qualityIssues = this.analyzeCodeQuality(content);
     const dependencies = this.analyzeDependencies(content);
     const performanceIssues = this.analyzePerformance(content);
@@ -463,9 +466,29 @@ export class EnhancedFileAnalysisService {
   /**
    * Perform comprehensive security analysis
    */
-  private performSecurityAnalysis(content: string): EnhancedFileAnalysisResult['securityFindings'] {
+  private performSecurityAnalysis(content: string, filename?: string): EnhancedFileAnalysisResult['securityFindings'] {
     const findings: EnhancedFileAnalysisResult['securityFindings'] = [];
     const lines = content.split('\n');
+
+    // Use multi-language analyzer if filename is provided
+    if (filename) {
+      const multiLangIssues = multiLanguageSecurityAnalyzer.analyzeCode(content, filename);
+      
+      // Convert multi-language issues to findings format
+      for (const issue of multiLangIssues) {
+        findings.push({
+          type: issue.type,
+          severity: issue.severity,
+          description: issue.description,
+          line: issue.line,
+          column: issue.column,
+          evidence: issue.codeSnippet || '',
+          recommendation: issue.recommendation,
+          cwe: issue.cweId,
+          owasp: issue.owaspCategory
+        });
+      }
+    }
 
     // Check for hardcoded secrets
     const secretPatterns = [

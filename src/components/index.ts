@@ -50,6 +50,7 @@ export { default as PromptGenerator } from './ai/PromptGenerator';
 // Language components
 export { LanguageDetectionDisplay } from './language/LanguageDetectionDisplay';
 export { LanguageDetectionSummary } from './language/LanguageDetectionSummary';
+export { default as MultiLanguageSupportDisplay } from './language/MultiLanguageSupportDisplay';
 
 // Export components
 export { default as DataExport } from './export/DataExport';
