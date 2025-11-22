@@ -115,141 +115,151 @@ export const AccountConflictModal: React.FC<AccountConflictModalProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[600px] max-w-[95vw] p-0 overflow-hidden bg-white dark:bg-gray-950 border-none shadow-2xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-[480px] p-0 overflow-hidden bg-white/90 dark:bg-slate-950/90 backdrop-blur-xl border-white/20 dark:border-slate-800 shadow-2xl duration-300 animate-in fade-in zoom-in-95">
+        {/* Decorative Background Elements */}
+        <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-blue-500/10 to-transparent pointer-events-none" />
+        <div className="absolute -top-24 -right-24 w-48 h-48 bg-blue-500/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-purple-500/20 rounded-full blur-3xl pointer-events-none" />
+
         {/* Header */}
-        <div className="relative bg-white dark:bg-gray-950 p-6 pb-2 text-center">
-          <div className="mx-auto w-16 h-16 bg-amber-50 dark:bg-amber-900/20 rounded-full flex items-center justify-center mb-4 ring-8 ring-amber-50/50 dark:ring-amber-900/10">
-            <ShieldCheck className="w-8 h-8 text-amber-500" />
+        <div className="relative pt-8 px-6 pb-2 text-center">
+          <div className="mx-auto w-20 h-20 mb-6 relative group cursor-default">
+            <div className="absolute inset-0 bg-gradient-to-tr from-blue-500 to-purple-500 rounded-2xl blur-lg opacity-40 group-hover:opacity-60 transition-opacity duration-500" />
+            <div className="relative bg-white dark:bg-slate-900 rounded-2xl p-5 shadow-xl ring-1 ring-black/5 dark:ring-white/10 transform transition-transform duration-500 group-hover:scale-105">
+              <ShieldCheck className="w-full h-full text-blue-500 dark:text-blue-400" />
+            </div>
+            <div className="absolute -bottom-2 -right-2 bg-red-500 text-white p-1.5 rounded-full border-2 border-white dark:border-slate-900 shadow-sm">
+              <AlertTriangle className="w-3 h-3" />
+            </div>
           </div>
-          <DialogTitle className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-            Account Already Exists
+          
+          <DialogTitle className="text-2xl sm:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 mb-3">
+            Account Conflict
           </DialogTitle>
-          <DialogDescription className="text-base text-gray-600 dark:text-gray-400 max-w-md mx-auto">
-            It looks like you already have an account with <span className="font-semibold text-gray-900 dark:text-gray-200">{email}</span>.
+          
+          <DialogDescription className="text-base text-slate-600 dark:text-slate-400 max-w-xs mx-auto leading-relaxed">
+            You already have an account linked to <span className="font-semibold text-slate-900 dark:text-white">{email}</span>
           </DialogDescription>
         </div>
 
         {/* Main Content */}
-        <div className="px-6 py-4">
-          {/* Conflict Visualization */}
-          <div className="relative bg-gray-50 dark:bg-gray-900/50 rounded-2xl p-6 sm:p-8 border border-gray-100 dark:border-gray-800">
-            {/* Connector Lines */}
-            <div className="absolute top-1/2 left-0 w-full h-0.5 bg-gray-200 dark:bg-gray-700 -translate-y-1/2 hidden sm:block z-0" />
-            <div className="absolute left-1/2 top-0 w-0.5 h-full bg-gray-200 dark:bg-gray-700 -translate-x-1/2 block sm:hidden z-0" />
-
-            <div className="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-8 sm:gap-0">
+        <div className="px-6 py-6">
+          {/* Conflict Visualization Card */}
+          <div className="relative bg-slate-50/80 dark:bg-slate-900/50 rounded-2xl p-6 border border-slate-200/60 dark:border-slate-800/60 backdrop-blur-sm">
+            <div className="flex items-center justify-between gap-4">
               
-              {/* Attempted Provider (Blocked) */}
-              <div className="flex flex-col items-center w-32">
-                <div className="relative group">
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white dark:bg-gray-800 border-2 border-dashed border-gray-300 dark:border-gray-600 flex items-center justify-center p-4 grayscale opacity-70 shadow-sm">
-                    {attemptedProviderInfo.icon}
-                  </div>
-                  <div className="absolute -top-2 -right-2 bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 p-1 rounded-full border border-gray-200 dark:border-gray-600">
+              {/* Attempted Provider (Faded) */}
+              <div className="flex flex-col items-center gap-3 group">
+                <div className="relative w-14 h-14 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center p-3.5 opacity-50 grayscale group-hover:opacity-75 group-hover:grayscale-0 transition-all duration-300">
+                  {attemptedProviderInfo.icon}
+                  <div className="absolute -top-1.5 -right-1.5 bg-slate-200 dark:bg-slate-700 text-slate-500 p-0.5 rounded-full ring-2 ring-white dark:ring-slate-900">
                     <X className="w-3 h-3" />
                   </div>
                 </div>
-                <div className="mt-3 text-center">
-                  <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-0.5">You Tried</p>
-                  <p className="text-sm font-bold text-gray-700 dark:text-gray-300">{attemptedProviderInfo.name}</p>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Blocked</span>
+              </div>
+
+              {/* Connection Line */}
+              <div className="flex-1 flex flex-col items-center -mt-4">
+                <div className="text-[10px] font-medium text-slate-400 mb-1">Use instead</div>
+                <div className="w-full h-px bg-gradient-to-r from-transparent via-slate-300 dark:via-slate-600 to-transparent relative">
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-slate-50 dark:bg-slate-900 px-2">
+                    <ArrowRight className="w-4 h-4 text-slate-400" />
+                  </div>
                 </div>
               </div>
 
-              {/* Direction Indicator */}
-              <div className="bg-white dark:bg-gray-800 p-2 rounded-full border border-gray-200 dark:border-gray-700 shadow-sm z-10">
-                <ArrowRight className="w-5 h-5 text-gray-400 hidden sm:block" />
-                <ArrowDown className="w-5 h-5 text-gray-400 block sm:hidden" />
-              </div>
-
-              {/* Existing Provider (Recommended) */}
-              <div className="flex flex-col items-center w-32">
-                <div className="relative group">
-                  <div className="absolute -inset-3 bg-green-500/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              {/* Existing Provider (Highlighted) */}
+              <div className="flex flex-col items-center gap-3">
+                <div className="relative group cursor-pointer" onClick={onSignInWithExisting}>
+                  <div className="absolute -inset-3 bg-blue-500/20 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <div className={cn(
-                    "relative w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-white dark:bg-gray-800 border-2 flex items-center justify-center p-5 shadow-xl transform transition-transform hover:scale-105",
+                    "relative w-16 h-16 rounded-xl bg-white dark:bg-slate-800 border-2 flex items-center justify-center p-4 shadow-lg transform transition-all duration-300 group-hover:scale-105 group-hover:-translate-y-1",
                     existingProviderInfo.borderColor
                   )}>
                     {existingProviderInfo.icon}
                   </div>
-                  <div className="absolute -top-3 -right-3 bg-green-500 text-white text-[10px] font-bold px-2.5 py-1 rounded-full shadow-md uppercase tracking-wider border-2 border-white dark:border-gray-900">
-                    Use This
+                  <div className="absolute -top-2 -right-2 bg-blue-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm ring-2 ring-white dark:ring-slate-900 animate-bounce-slow">
+                    USE THIS
                   </div>
                 </div>
-                <div className="mt-4 text-center">
-                  <p className="text-xs font-medium text-green-600 dark:text-green-400 uppercase tracking-wide mb-0.5">Existing Account</p>
-                  <p className="text-base font-bold text-gray-900 dark:text-white">{existingProviderInfo.name}</p>
-                </div>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400">Recommended</span>
               </div>
 
             </div>
           </div>
 
-          {/* Explanation */}
-          <div className="mt-6 flex items-start gap-3 p-4 bg-blue-50 dark:bg-blue-900/10 rounded-xl border border-blue-100 dark:border-blue-900/30">
-            <HelpCircle className="w-5 h-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
-            <div className="text-sm text-blue-900 dark:text-blue-100">
-              <p className="font-medium mb-1">Why is this happening?</p>
-              <p className="text-blue-700 dark:text-blue-300 leading-relaxed opacity-90">
-                For security, we only allow one account per email address. Please sign in with your existing method first. You can link other login methods in your settings later.
-              </p>
-            </div>
-          </div>
-
-          {/* Technical Details Toggle */}
-          <div className="mt-4">
-            <button
-              onClick={() => setShowTechnicalDetails(!showTechnicalDetails)}
-              className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors mx-auto"
-            >
-              <span>Technical Details</span>
-              {showTechnicalDetails ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
-            </button>
-            
-            {showTechnicalDetails && (
-              <div className="mt-3 p-3 bg-gray-100 dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 font-mono text-[10px] text-gray-600 dark:text-gray-400 space-y-1">
-                <p>Error: auth/account-exists-with-different-credential</p>
-                <p>Email: {email}</p>
-                <p>Existing: {existingProvider}</p>
-                <p>Attempted: {attemptedProvider}</p>
-              </div>
-            )}
+          {/* Explanation Text */}
+          <div className="mt-6 flex gap-3 px-2">
+            <HelpCircle className="w-5 h-5 text-slate-400 flex-shrink-0 mt-0.5" />
+            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+              To protect your security, please sign in with your existing account. You can link other login methods in your settings later.
+            </p>
           </div>
         </div>
 
         {/* Footer */}
-        <DialogFooter className="p-6 pt-2 bg-white dark:bg-gray-950 flex-col sm:flex-row gap-3 border-t-0">
-          <Button
-            variant="ghost"
-            onClick={onTryDifferentMethod}
-            disabled={isLinking}
-            className="w-full sm:w-auto text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
-          >
-            Try Different Email
-          </Button>
-          
+        <div className="p-6 pt-2 bg-slate-50/50 dark:bg-slate-900/30 border-t border-slate-100 dark:border-slate-800/50 flex flex-col gap-3">
           <Button
             onClick={onSignInWithExisting}
             disabled={isLinking}
             className={cn(
-              'w-full sm:w-auto sm:flex-1 gap-2 h-12 text-base font-medium shadow-lg hover:shadow-xl transition-all',
-              existingProviderInfo.color,
-              existingProviderInfo.hoverColor,
-              'text-white'
+              'w-full h-12 text-base font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.01] active:scale-[0.99] rounded-xl relative overflow-hidden',
+              'bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700 text-white border-0'
             )}
           >
-            {isLinking ? (
-              <>
-                <Loader2 className="w-5 h-5 animate-spin" />
-                Connecting Accounts...
-              </>
-            ) : (
-              <>
-                <Lock className="w-4 h-4" />
-                Sign in with {existingProviderInfo.name}
-              </>
-            )}
+            <div className="absolute inset-0 bg-white/20 translate-y-full hover:translate-y-0 transition-transform duration-300" />
+            <div className="relative flex items-center justify-center gap-2">
+              {isLinking ? (
+                <>
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                  Connecting Accounts...
+                </>
+              ) : (
+                <>
+                  <Lock className="w-4 h-4" />
+                  Sign in with {existingProviderInfo.name}
+                </>
+              )}
+            </div>
           </Button>
-        </DialogFooter>
+
+          <Button
+            variant="ghost"
+            onClick={onTryDifferentMethod}
+            disabled={isLinking}
+            className="w-full h-10 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl text-sm font-normal"
+          >
+            I want to use a different email address
+          </Button>
+        </div>
+
+        {/* Technical Details (Subtle) */}
+        <div className="absolute bottom-2 right-2 opacity-0 hover:opacity-100 transition-opacity">
+            <button
+              onClick={() => setShowTechnicalDetails(!showTechnicalDetails)}
+              className="p-1 text-slate-300 dark:text-slate-700 hover:text-slate-500 dark:hover:text-slate-500"
+            >
+                <HelpCircle className="w-3 h-3" />
+            </button>
+        </div>
+        
+        {showTechnicalDetails && (
+            <div className="absolute inset-0 bg-white/95 dark:bg-slate-950/95 z-50 p-6 flex flex-col">
+                <div className="flex items-center justify-between mb-4">
+                    <h3 className="font-bold text-slate-900 dark:text-white">Technical Details</h3>
+                    <Button variant="ghost" size="sm" onClick={() => setShowTechnicalDetails(false)}>
+                        <X className="w-4 h-4" />
+                    </Button>
+                </div>
+                <div className="flex-1 overflow-auto font-mono text-xs text-slate-600 dark:text-slate-400 space-y-2">
+                    <p>Error: auth/account-exists-with-different-credential</p>
+                    <p>Email: {email}</p>
+                    <p>Existing Provider: {existingProvider}</p>
+                    <p>Attempted Provider: {attemptedProvider}</p>
+                </div>
+            </div>
+        )}
       </DialogContent>
     </Dialog>
   );
