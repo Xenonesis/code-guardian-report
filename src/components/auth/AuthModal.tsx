@@ -1,6 +1,7 @@
 // components/auth-modal.tsx
 import React, { useState } from 'react';
 import { useAuth } from '@/lib/auth-context';
+import { AccountConflictModal } from './AccountConflictModal';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -15,7 +16,16 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const { signInWithEmailAndPassword, createUser, signInWithGoogle, signInWithGithub } = useAuth();
+  const { 
+    signInWithEmailAndPassword, 
+    createUser, 
+    signInWithGoogle, 
+    signInWithGithub,
+    accountConflict,
+    setAccountConflict,
+    handleSignInWithExisting,
+    isLinkingAccounts
+  } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -79,9 +89,14 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
     resetForm();
   };
 
+  const handleTryDifferentMethod = () => {
+    setAccountConflict(prev => ({ ...prev, isOpen: false }));
+  };
+
   if (!isOpen) return null;
 
   return (
+    <>
     <div className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-50">
   <div className="bg-gradient-to-b from-[#121829] to-[#1E293B] text-white rounded-xl p-8 w-full max-w-md mx-4 shadow-2xl border border-[#2A3B5F]">
     <div className="flex justify-between items-center mb-6">
@@ -212,5 +227,17 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   </div>
 </div>
 
+      {/* Account Conflict Modal */}
+      <AccountConflictModal
+        isOpen={accountConflict.isOpen}
+        onClose={() => setAccountConflict(prev => ({ ...prev, isOpen: false }))}
+        email={accountConflict.email}
+        existingProvider={accountConflict.existingProvider}
+        attemptedProvider={accountConflict.attemptedProvider}
+        onSignInWithExisting={handleSignInWithExisting}
+        onTryDifferentMethod={handleTryDifferentMethod}
+        isLinking={isLinkingAccounts}
+      />
+    </>
   );
 };

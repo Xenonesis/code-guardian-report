@@ -40,6 +40,7 @@ const StorageStatus = lazy(() => import('@/components/firebase/StorageStatus'));
 const AnalysisHistoryModal = lazy(() => import('@/components/analysis/AnalysisHistoryModal'));
 const GitHubAnalysisPage = lazy(() => import('./GitHubAnalysisPage').then(m => ({ default: m.GitHubAnalysisPage })));
 const AccountConflictDemo = lazy(() => import('./AccountConflictDemo').then(m => ({ default: m.AccountConflictDemo })));
+const TestAuthConflict = lazy(() => import('./TestAuthConflict').then(m => ({ default: m.TestAuthConflict })));
 
 const SinglePageApp = () => {
   const [isRedirecting, setIsRedirecting] = useState(false);
@@ -513,6 +514,17 @@ const SinglePageApp = () => {
           </div>
         }>
           <AccountConflictDemo />
+        </Suspense>
+      )}
+
+      {/* Test Auth Conflict Section */}
+      {currentSection === 'test-auth-conflict' && (
+        <Suspense fallback={
+          <div className="min-h-screen flex items-center justify-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+          </div>
+        }>
+          <TestAuthConflict />
         </Suspense>
       )}
 

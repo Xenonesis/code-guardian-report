@@ -9,12 +9,26 @@ import {
   signInWithRedirect,
   getRedirectResult,
   onAuthStateChanged,
-  UserCredential
+  UserCredential,
+  fetchSignInMethodsForEmail,
+  linkWithCredential,
+  AuthError,
+  AuthCredential
 } from 'firebase/auth';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { auth, googleProvider, githubProvider, db } from './firebase';
 import { safeGetDoc, safeSetDoc, isConnectionError } from './firestore-utils';
-import { showAuthFallbackMessage, handleAuthError, cleanupRedirectUrl, showRedirectLoadingMessage } from './auth-utils';
+import { showAuthFallbackMessage, handleAuthError, cleanupRedirectUrl, showRedirectLoadingMessage, getEmailFromError } from './auth-utils';
+
+type Provider = 'google.com' | 'github.com' | 'password' | 'facebook.com' | 'twitter.com';
+
+interface AccountConflictState {
+  isOpen: boolean;
+  email: string;
+  existingProvider: Provider;
+  attemptedProvider: Provider;
+  pendingCredential: AuthCredential | null;
+}
 
 interface AuthContextType {
   user: User | null;
@@ -26,6 +40,10 @@ interface AuthContextType {
   signInWithGithub: () => Promise<UserCredential>;
   logout: () => Promise<void>;
   isGitHubUser: boolean;
+  accountConflict: AccountConflictState;
+  setAccountConflict: React.Dispatch<React.SetStateAction<AccountConflictState>>;
+  handleSignInWithExisting: () => Promise<void>;
+  isLinkingAccounts: boolean;
 }
 
 interface UserProfile {
@@ -70,6 +88,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
+  const [accountConflict, setAccountConflict] = useState<AccountConflictState>({
+    isOpen: false,
+    email: '',
+    existingProvider: 'password',
+    attemptedProvider: 'google.com',
+    pendingCredential: null,
+  });
+  const [isLinkingAccounts, setIsLinkingAccounts] = useState(false);
 
   // Utility function to detect if user is from GitHub
   const isGitHubUser = (user: User): boolean => {
@@ -245,6 +271,97 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
+  // Handle account conflict error
+  const handleAccountConflictError = async (error: AuthError, attemptedProvider: Provider): Promise<boolean> => {
+    if (error.code === 'auth/account-exists-with-different-credential') {
+      try {
+        const email = getEmailFromError(error) || '';
+        const signInMethods = await fetchSignInMethodsForEmail(auth, email);
+        
+        let existingProvider: Provider = 'password';
+        if (signInMethods.includes('google.com')) {
+          existingProvider = 'google.com';
+        } else if (signInMethods.includes('github.com')) {
+          existingProvider = 'github.com';
+        } else if (signInMethods.includes('facebook.com')) {
+          existingProvider = 'facebook.com';
+        } else if (signInMethods.includes('twitter.com')) {
+          existingProvider = 'twitter.com';
+        } else if (signInMethods.includes('password')) {
+          existingProvider = 'password';
+        }
+        
+        setAccountConflict({
+          isOpen: true,
+          email,
+          existingProvider,
+          attemptedProvider,
+          pendingCredential: (error as any).credential || null,
+        });
+        
+        return true; // Handled
+      } catch (fetchError) {
+        console.error('Error fetching sign-in methods:', fetchError);
+        handleAuthError(error, 'Account conflict detection');
+        return false;
+      }
+    }
+    return false; // Not handled
+  };
+
+  // Handle signing in with existing provider from conflict modal
+  const handleSignInWithExisting = async () => {
+    const { existingProvider, email, pendingCredential } = accountConflict;
+    
+    setIsLinkingAccounts(true);
+    
+    try {
+      let userCredential: UserCredential;
+      
+      switch (existingProvider) {
+        case 'google.com': {
+          const provider = googleProvider;
+          provider.setCustomParameters({ login_hint: email });
+          userCredential = await signInWithPopup(auth, provider);
+          break;
+        }
+        case 'github.com': {
+          const provider = githubProvider;
+          provider.setCustomParameters({ login: email });
+          userCredential = await signInWithPopup(auth, provider);
+          break;
+        }
+        case 'password': {
+          // For email/password, we can't auto-sign-in, close modal and let user sign in manually
+          setAccountConflict(prev => ({ ...prev, isOpen: false }));
+          setIsLinkingAccounts(false);
+          return;
+        }
+        default:
+          throw new Error('Unsupported provider');
+      }
+      
+      // Link the pending credential if available
+      if (pendingCredential && userCredential.user) {
+        try {
+          await linkWithCredential(userCredential.user, pendingCredential);
+          console.log('Successfully linked accounts');
+        } catch (linkError) {
+          console.error('Error linking accounts:', linkError);
+          // User is still signed in even if linking fails
+        }
+      }
+      
+      await createUserProfile(userCredential.user);
+      setAccountConflict(prev => ({ ...prev, isOpen: false }));
+    } catch (error: any) {
+      console.error('Error signing in with existing provider:', error);
+      handleAuthError(error, 'Sign in with existing provider');
+    } finally {
+      setIsLinkingAccounts(false);
+    }
+  };
+
   // Sign in with Google (with redirect fallback for COOP issues)
   const signInWithGoogle = async () => {
     try {
@@ -252,6 +369,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       await createUserProfile(result.user);
       return result;
     } catch (error: any) {
+      // Check for account conflict first
+      const handled = await handleAccountConflictError(error, 'google.com');
+      if (handled) {
+        return new Promise(() => {}) as Promise<UserCredential>;
+      }
+      
       // Check if it's a COOP-related error or popup blocked
       if (error.code === 'auth/popup-blocked' || 
           error.code === 'auth/popup-closed-by-user' ||
@@ -275,6 +398,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       await createUserProfile(result.user, undefined, true);
       return result;
     } catch (error: any) {
+      // Check for account conflict first
+      const handled = await handleAccountConflictError(error, 'github.com');
+      if (handled) {
+        return new Promise(() => {}) as Promise<UserCredential>;
+      }
+      
       // Check if it's a COOP-related error or popup blocked
       if (error.code === 'auth/popup-blocked' || 
           error.code === 'auth/popup-closed-by-user' ||
@@ -358,7 +487,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     signInWithGoogle,
     signInWithGithub,
     logout,
-    isGitHubUser: userProfile?.isGitHubUser || false
+    isGitHubUser: userProfile?.isGitHubUser || false,
+    accountConflict,
+    setAccountConflict,
+    handleSignInWithExisting,
+    isLinkingAccounts
   };
 
   return (
