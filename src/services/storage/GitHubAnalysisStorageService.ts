@@ -80,6 +80,27 @@ export class GitHubAnalysisStorageService {
       return repositories;
     } catch (error) {
       console.error('Error fetching repositories:', error);
+      console.warn('⚠️ Using offline mode - Firebase unavailable. Returning empty data.');
+      
+      // Show toast notification
+      if (typeof window !== 'undefined') {
+        const toastNotifications = (window as any).toastNotifications;
+        if (toastNotifications) {
+          toastNotifications.offline();
+        } else if ((window as any).showToast) {
+          (window as any).showToast('warning', 'Offline Mode', 'Unable to fetch repositories. Please check your connection.');
+        }
+      }
+      
+      // Return empty array instead of mock data in production
+      if (import.meta.env.PROD) {
+        return [];
+      }
+      
+      // Only return mock data in development (with warning)
+      if (typeof window !== 'undefined' && (window as any).toastNotifications) {
+        (window as any).toastNotifications.mockDataWarning();
+      }
       return this.getMockRepositories();
     }
   }
@@ -118,6 +139,27 @@ export class GitHubAnalysisStorageService {
       return analyses;
     } catch (error) {
       console.error('Error fetching analysis history:', error);
+      console.warn('⚠️ Using offline mode - Firebase unavailable. Returning empty data.');
+      
+      // Show toast notification
+      if (typeof window !== 'undefined') {
+        const serviceToasts = (window as any).toastNotifications?.services;
+        if (serviceToasts) {
+          serviceToasts.analysisHistory.loadError();
+        } else if ((window as any).showToast) {
+          (window as any).showToast('warning', 'Offline Mode', 'Unable to fetch analysis history. Please check your connection.');
+        }
+      }
+      
+      // Return empty array instead of mock data in production
+      if (import.meta.env.PROD) {
+        return [];
+      }
+      
+      // Only return mock data in development (with warning)
+      if (typeof window !== 'undefined' && (window as any).toastNotifications) {
+        (window as any).toastNotifications.mockDataWarning();
+      }
       return this.getMockAnalysisHistory();
     }
   }
@@ -182,6 +224,20 @@ export class GitHubAnalysisStorageService {
       };
     } catch (error) {
       console.error('Error fetching security trends:', error);
+      console.warn('⚠️ Using offline mode - Firebase unavailable.');
+      // Return empty data in production
+      if (import.meta.env.PROD) {
+        return {
+          trends: [],
+          stats: {
+            averageScore: 0,
+            totalIssues: 0,
+            criticalIssues: 0,
+            trend: 'stable' as const
+          }
+        };
+      }
+      // Only return mock data in development
       return this.getMockSecurityTrends();
     }
   }
@@ -252,6 +308,20 @@ export class GitHubAnalysisStorageService {
       };
     } catch (error) {
       console.error('Error fetching activity analytics:', error);
+      console.warn('⚠️ Using offline mode - Firebase unavailable.');
+      // Return empty data in production
+      if (import.meta.env.PROD) {
+        return {
+          languageDistribution: [],
+          stats: {
+            totalAnalyses: 0,
+            averageDuration: 0,
+            mostAnalyzedRepo: '',
+            mostCommonLanguage: ''
+          }
+        };
+      }
+      // Only return mock data in development
       return this.getMockActivityAnalytics();
     }
   }

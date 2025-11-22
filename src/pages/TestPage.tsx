@@ -1,8 +1,10 @@
 /**
  * Test Page for Firebase Integration
  * Accessible via URL parameter: ?test=firebase
+ * DEVELOPMENT ONLY - Not available in production
  */
 
+import { useEffect } from 'react';
 // import { FirebaseTestPanel } from '@/components/FirebaseTestPanel'; // Not available
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -13,6 +15,13 @@ interface TestPageProps {
 }
 
 export const TestPage = ({ onBack }: TestPageProps) => {
+  // Prevent access in production
+  useEffect(() => {
+    if (import.meta.env.PROD) {
+      console.warn('⚠️ Test pages are not available in production');
+      window.location.href = '/';
+    }
+  }, []);
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
       <div className="container mx-auto py-8">

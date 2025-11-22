@@ -12,6 +12,10 @@ import { logger } from '../utils/logger';
 import { env } from '../utils/envValidator';
 import { ErrorBoundary } from '../utils/errorBoundary';
 import '../utils/errorHandler'; // Initialize global error handlers
+import { setupGlobalToast } from '../utils/toastNotifications';
+
+// Setup global toast notifications
+setupGlobalToast();
 
 // Validate environment on app start (production only)
 try {

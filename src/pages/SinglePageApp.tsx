@@ -1,4 +1,5 @@
 import { useState, Suspense, lazy, useCallback } from 'react';
+import { Toaster } from 'sonner';
 import { PageLayout } from '@/components/layout/PageLayout';
 import { HomeHero } from '@/components/pages/home/HomeHero';
 import { AnalysisTabs } from '@/components/pages/home/AnalysisTabs';
@@ -12,6 +13,7 @@ import { SidebarNavigation } from '@/components/SidebarNavigation';
 import { BreadcrumbContainer } from '@/components/BreadcrumbContainer';
 import { useNavigation } from '@/lib/navigation-context';
 import { Footer } from '@/components/layout/Footer';
+import { ConnectionStatusBanner, useConnectionStatus } from '@/components/common/ConnectionStatusBanner';
 
 // Import About page components
 import { HeroSection } from '@/components/layout/HeroSection';
@@ -48,6 +50,7 @@ const SinglePageApp = () => {
   const [showHistoryModal, setShowHistoryModal] = useState(false);
   const { theme, isDarkMode, setTheme } = useDarkMode();
   const { currentSection, currentTab, setCurrentTab, navigateTo, isSidebarCollapsed, toggleSidebar } = useNavigation();
+  const { online, firebaseConnected, usingMockData } = useConnectionStatus();
   
   const {
     analysisResults,
@@ -126,6 +129,35 @@ const SinglePageApp = () => {
 
   return (
     <div className="min-h-screen">
+      {/* Toast Notifications */}
+      <Toaster 
+        position="top-right"
+        expand={false}
+        richColors
+        closeButton
+        theme={isDarkMode ? 'dark' : 'light'}
+      />
+      
+      {/* Connection Status Banners */}
+      <ConnectionStatusBanner 
+        show={!online} 
+        type="offline"
+        message="You are currently offline. Some features may be limited."
+      />
+      <ConnectionStatusBanner 
+        show={!firebaseConnected && online} 
+        type="firebase-error"
+        message="Unable to connect to Firebase. Using local storage only."
+      />
+      {/* Only show mock data warning in development */}
+      {import.meta.env.DEV && (
+        <ConnectionStatusBanner 
+          show={usingMockData} 
+          type="mock-data"
+          message="Displaying sample data for testing. Connect to see your real data."
+        />
+      )}
+      
       {/* Navigation */}
       <Navigation theme={theme} onThemeChange={setTheme} />
       

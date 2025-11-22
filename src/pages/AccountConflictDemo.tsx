@@ -1,5 +1,5 @@
 // src/pages/AccountConflictDemo.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AccountConflictModal } from '@/components/auth/AccountConflictModal';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -8,6 +8,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 type Provider = 'google.com' | 'github.com' | 'password' | 'facebook.com' | 'twitter.com';
 
 export const AccountConflictDemo: React.FC = () => {
+  // Prevent access in production
+  useEffect(() => {
+    if (import.meta.env.PROD) {
+      console.warn('⚠️ Demo pages are not available in production');
+      window.location.href = '/';
+    }
+  }, []);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [existingProvider, setExistingProvider] = useState<Provider>('password');
   const [attemptedProvider, setAttemptedProvider] = useState<Provider>('google.com');
