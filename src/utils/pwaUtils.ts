@@ -55,7 +55,11 @@ export const registerForPushNotifications = async (): Promise<string | null> => 
   const appServerKey = urlBase64ToUint8Array('your-vapid-public-key-here');
   const subscription = await registration.pushManager.subscribe({
     userVisibleOnly: true,
+<<<<<<< HEAD
+    applicationServerKey: new Uint8Array(appServerKey.buffer),
+=======
     applicationServerKey: appServerKey,
+>>>>>>> upstream/main
   });
 
   return JSON.stringify(subscription);
