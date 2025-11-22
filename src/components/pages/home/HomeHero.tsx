@@ -14,8 +14,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ onStartAnalysis }) => {
 
   return (
     <HeroSection
-      title="Next-Gen
-       AI Security Platform"
+      title=""
       subtitle="Revolutionary code analysis powered by advanced artificial intelligence"
       description="Transform your development workflow with enterprise-grade security analysis that detects vulnerabilities, bugs, and quality issues in real-time with unprecedented accuracy."
       variant="gradient"
