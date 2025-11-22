@@ -1,7 +1,7 @@
 // src/components/AIKeyManager.tsx
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { Key, Eye, EyeOff, Plus, Trash2, Bot, AlertTriangle, CheckCircle, Zap, Shield, Sparkles, Clock, Users, Star } from 'lucide-react';
+import { Key, Eye, EyeOff, Plus, Trash2, Bot, AlertTriangle, CheckCircle, Zap, Shield, Sparkles, Clock, Users, Star, RefreshCw } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { setLocalStorageItem, removeLocalStorageItem } from '@/utils/storageEvents'; // Ensure both are imported
+import { discoverModels, validateAPIKey, AIModel } from '@/services/ai/modelDiscoveryService';
 
 interface AIProvider {
   id: string;
@@ -35,29 +36,7 @@ const aiProviders: AIProvider[] = [
     description: 'GPT-4 powered analysis',
     keyPrefix: 'sk-',
     keyPlaceholder: 'sk-... (starts with sk-)',
-    models: [
-      {
-        id: 'gpt-4-turbo',
-        name: 'GPT-4 Turbo',
-        description: 'Most capable GPT-4 model with 128k context',
-        maxTokens: 128000,
-        capabilities: ['code', 'text', 'vision']
-      },
-      {
-        id: 'gpt-4',
-        name: 'GPT-4',
-        description: 'More capable than any GPT-3.5 model',
-        maxTokens: 8192,
-        capabilities: ['code', 'text']
-      },
-      {
-        id: 'gpt-3.5-turbo',
-        name: 'GPT-3.5 Turbo',
-        description: 'Fast and cost-effective',
-        maxTokens: 4096,
-        capabilities: ['code', 'text']
-      }
-    ]
+    models: []
   },
   {
     id: 'gemini',
@@ -66,29 +45,7 @@ const aiProviders: AIProvider[] = [
     description: 'Advanced code understanding',
     keyPrefix: 'AIza',
     keyPlaceholder: 'AIza... (starts with AIza)',
-    models: [
-      {
-        id: 'gemini-1.5-pro',
-        name: 'Gemini 1.5 Pro',
-        description: 'Most capable Gemini model with 1M token context',
-        maxTokens: 1000000,
-        capabilities: ['code', 'text', 'vision', 'audio']
-      },
-      {
-        id: 'gemini-1.0-pro',
-        name: 'Gemini 1.0 Pro',
-        description: 'General purpose model',
-        maxTokens: 32768,
-        capabilities: ['code', 'text']
-      },
-      {
-        id: 'gemini-1.0-ultra',
-        name: 'Gemini 1.0 Ultra',
-        description: 'Most capable model for highly complex tasks',
-        maxTokens: 32768,
-        capabilities: ['code', 'text', 'vision']
-      }
-    ]
+    models: []
   },
   {
     id: 'claude',
@@ -97,29 +54,7 @@ const aiProviders: AIProvider[] = [
     description: 'Detailed security insights',
     keyPrefix: 'sk-ant-',
     keyPlaceholder: 'sk-ant-... (starts with sk-ant-)',
-    models: [
-      {
-        id: 'claude-3-opus',
-        name: 'Claude 3 Opus',
-        description: 'Most powerful model for highly complex tasks',
-        maxTokens: 200000,
-        capabilities: ['code', 'text', 'vision']
-      },
-      {
-        id: 'claude-3-sonnet',
-        name: 'Claude 3 Sonnet',
-        description: 'Ideal balance of intelligence and speed',
-        maxTokens: 200000,
-        capabilities: ['code', 'text', 'vision']
-      },
-      {
-        id: 'claude-2.1',
-        name: 'Claude 2.1',
-        description: 'Improved version of Claude 2',
-        maxTokens: 100000,
-        capabilities: ['code', 'text']
-      }
-    ]
+    models: []
   },
   {
     id: 'mistral',
@@ -128,29 +63,7 @@ const aiProviders: AIProvider[] = [
     description: 'Fast and efficient analysis',
     keyPrefix: '',
     keyPlaceholder: 'Your Mistral API key',
-    models: [
-      {
-        id: 'mistral-large',
-        name: 'Mistral Large',
-        description: 'Top-tier reasoning capabilities',
-        maxTokens: 32768,
-        capabilities: ['code', 'text']
-      },
-      {
-        id: 'mixtral-8x7b',
-        name: 'Mixtral 8x7B',
-        description: 'Sparse mixture of experts model',
-        maxTokens: 32768,
-        capabilities: ['code', 'text']
-      },
-      {
-        id: 'mistral-7b',
-        name: 'Mistral 7B',
-        description: 'Most efficient 7B model',
-        maxTokens: 32768,
-        capabilities: ['code', 'text']
-      }
-    ]
+    models: []
   },
   {
     id: 'llama',
@@ -159,29 +72,7 @@ const aiProviders: AIProvider[] = [
     description: 'Open-weight models',
     keyPrefix: '',
     keyPlaceholder: 'Your Llama API key',
-    models: [
-      {
-        id: 'llama3-70b',
-        name: 'Llama 3 70B',
-        description: 'Most capable Llama 3 model',
-        maxTokens: 8192,
-        capabilities: ['code', 'text']
-      },
-      {
-        id: 'llama3-8b',
-        name: 'Llama 3 8B',
-        description: 'Efficient smaller model',
-        maxTokens: 8192,
-        capabilities: ['code', 'text']
-      },
-      {
-        id: 'llama2-70b',
-        name: 'Llama 2 70B',
-        description: 'Previous generation model',
-        maxTokens: 4096,
-        capabilities: ['code', 'text']
-      }
-    ]
+    models: []
   },
   {
     id: 'cohere',
@@ -190,29 +81,7 @@ const aiProviders: AIProvider[] = [
     description: 'Enterprise-focused models',
     keyPrefix: '',
     keyPlaceholder: 'Your Cohere API key',
-    models: [
-      {
-        id: 'command-r-plus',
-        name: 'Command R+',
-        description: 'Most capable model for RAG and tool use',
-        maxTokens: 128000,
-        capabilities: ['code', 'text']
-      },
-      {
-        id: 'command-r',
-        name: 'Command R',
-        description: 'Optimized for RAG and tool use',
-        maxTokens: 128000,
-        capabilities: ['code', 'text']
-      },
-      {
-        id: 'command',
-        name: 'Command',
-        description: 'General purpose model',
-        maxTokens: 4096,
-        capabilities: ['code', 'text']
-      }
-    ]
+    models: []
   },
   {
     id: 'perplexity',
@@ -221,29 +90,7 @@ const aiProviders: AIProvider[] = [
     description: 'Fast online models',
     keyPrefix: 'pplx-',
     keyPlaceholder: 'pplx-... (Perplexity API key)',
-    models: [
-      {
-        id: 'pplx-70b-online',
-        name: 'PPLX 70B Online',
-        description: 'Most capable online model',
-        maxTokens: 4096,
-        capabilities: ['code', 'text']
-      },
-      {
-        id: 'pplx-7b-online',
-        name: 'PPLX 7B Online',
-        description: 'Fast online model',
-        maxTokens: 4096,
-        capabilities: ['code', 'text']
-      },
-      {
-        id: 'pplx-70b',
-        name: 'PPLX 70B',
-        description: 'Most capable offline model',
-        maxTokens: 4096,
-        capabilities: ['code', 'text']
-      }
-    ]
+    models: []
   },
   {
     id: 'groq',
@@ -252,29 +99,7 @@ const aiProviders: AIProvider[] = [
     description: 'Extremely fast inference',
     keyPrefix: 'gsk-',
     keyPlaceholder: 'gsk-... (Groq API key)',
-    models: [
-      {
-        id: 'mixtral-8x7b-groq',
-        name: 'Mixtral 8x7B (Groq)',
-        description: 'Fastest Mixtral implementation',
-        maxTokens: 32768,
-        capabilities: ['code', 'text']
-      },
-      {
-        id: 'llama3-70b-groq',
-        name: 'Llama 3 70B (Groq)',
-        description: 'Fastest Llama 3 implementation',
-        maxTokens: 8192,
-        capabilities: ['code', 'text']
-      },
-      {
-        id: 'gemma-7b-groq',
-        name: 'Gemma 7B (Groq)',
-        description: 'Fast Gemma implementation',
-        maxTokens: 8192,
-        capabilities: ['code', 'text']
-      }
-    ]
+    models: []
   }
 ];
 
@@ -307,6 +132,9 @@ export const AIKeyManager: React.FC = () => {
   const [isAdding, setIsAdding] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [discoveredModels, setDiscoveredModels] = useState<AIModel[]>([]);
+  const [isScanning, setIsScanning] = useState(false);
+  const [scanStatus, setScanStatus] = useState<{ message: string; type: 'success' | 'error' | 'info' } | null>(null);
 
   // Effect to save keys to localStorage whenever apiKeys state changes
   // This effect is now responsible for ALL saves (add, remove)
@@ -422,10 +250,70 @@ export const AIKeyManager: React.FC = () => {
       model: '',
       key: ''
     });
+    setDiscoveredModels([]);
+    setScanStatus(null);
     if (errors.provider) {
       setErrors(prev => ({ ...prev, provider: '' }));
     }
   };
+
+  const handleScanAPI = async () => {
+    if (!newKey.provider || !newKey.key) {
+      setScanStatus({ message: 'Please select a provider and enter an API key first', type: 'error' });
+      return;
+    }
+
+    setIsScanning(true);
+    setScanStatus({ message: 'Scanning API and discovering available models...', type: 'info' });
+
+    try {
+      // First validate the API key
+      const validation = await validateAPIKey(newKey.provider, newKey.key);
+      
+      if (!validation.valid) {
+        setScanStatus({ message: validation.error || 'Invalid API key', type: 'error' });
+        setIsScanning(false);
+        return;
+      }
+
+      // Then discover available models
+      const result = await discoverModels(newKey.provider, newKey.key);
+      
+      if (result.success && result.models.length > 0) {
+        setDiscoveredModels(result.models);
+        setScanStatus({ 
+          message: `✓ Successfully discovered ${result.models.length} available models!`, 
+          type: 'success' 
+        });
+      } else if (result.error) {
+        setScanStatus({ message: result.error, type: 'error' });
+      } else {
+        setScanStatus({ message: 'No models found', type: 'error' });
+      }
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to scan API';
+      setScanStatus({ message: errorMessage, type: 'error' });
+    } finally {
+      setIsScanning(false);
+    }
+  };
+
+  // Automatically scan API when provider and key are both entered
+  useEffect(() => {
+    // Only auto-scan if we have both provider and key, and key looks valid
+    if (newKey.provider && newKey.key && newKey.key.length > 10) {
+      // Debounce the auto-scan to avoid scanning on every keystroke
+      const timeoutId = setTimeout(() => {
+        handleScanAPI();
+      }, 1000); // Wait 1 second after user stops typing
+
+      return () => clearTimeout(timeoutId);
+    } else {
+      // Clear discovered models if key is cleared or too short
+      setDiscoveredModels([]);
+      setScanStatus(null);
+    }
+  }, [newKey.provider, newKey.key]);
 
   const getKeyPlaceholder = (providerId: string) => {
     const provider = aiProviders.find(p => p.id === providerId);
@@ -467,18 +355,26 @@ export const AIKeyManager: React.FC = () => {
       {/* Supported AI Providers */}
       <Card variant="modern">
         <CardHeader>
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl">
-              <Sparkles className="h-5 w-5 text-white" />
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl">
+                <Sparkles className="h-5 w-5 text-white" />
+              </div>
+              <div>
+                <CardTitle className="text-xl font-bold text-slate-900 dark:text-white">
+                  Supported AI Providers
+                </CardTitle>
+                <CardDescription className="text-slate-600 dark:text-slate-300">
+                  Choose from industry-leading AI providers for enhanced analysis
+                </CardDescription>
+              </div>
             </div>
-            <div>
-              <CardTitle className="text-xl font-bold text-slate-900 dark:text-white">
-                Supported AI Providers
-              </CardTitle>
-              <CardDescription className="text-slate-600 dark:text-slate-300">
-                Choose from industry-leading AI providers for enhanced analysis
-              </CardDescription>
-            </div>
+            {discoveredModels.length > 0 && (
+              <Badge variant="outline" className="flex items-center gap-2">
+                <CheckCircle className="h-3 w-3 text-green-600" />
+                {discoveredModels.length} Models Discovered
+              </Badge>
+            )}
           </div>
         </CardHeader>
         <CardContent>
@@ -522,31 +418,16 @@ export const AIKeyManager: React.FC = () => {
                     <div className="space-y-3">
                       <div className="flex items-center justify-between">
                         <Badge variant="outline" className="text-xs">
-                          {provider.models.length} models
+                          <Sparkles className="h-3 w-3 mr-1" />
+                          Live Discovery
                         </Badge>
                         <div className="flex items-center gap-1 text-xs text-slate-500 dark:text-slate-400">
                           <Clock className="h-3 w-3" />
                           <span>Real-time</span>
                         </div>
                       </div>
-                      <div className="space-y-1">
-                        {provider.models.slice(0, 2).map(model => (
-                          <div key={model.id} className="flex items-center justify-between text-xs">
-                            <span className="font-medium text-slate-700 dark:text-slate-300 truncate">
-                              {model.name}
-                            </span>
-                            <Badge variant="secondary" className="text-xs">
-                              {model.capabilities.includes('code') && '🔍'}
-                              {model.capabilities.includes('vision') && '👁️'}
-                              {model.capabilities.includes('audio') && '🎵'}
-                            </Badge>
-                          </div>
-                        ))}
-                        {provider.models.length > 2 && (
-                          <div className="text-xs text-slate-500 dark:text-slate-400 text-center pt-1">
-                            +{provider.models.length - 2} more models
-                          </div>
-                        )}
+                      <div className="text-xs text-slate-600 dark:text-slate-400">
+                        Models are discovered automatically from the API when you add your key
                       </div>
                     </div>
                   </CardContent>
@@ -787,6 +668,12 @@ export const AIKeyManager: React.FC = () => {
                   <div className="space-y-2">
                     <Label htmlFor="model-select" className="text-sm font-medium text-slate-700 dark:text-slate-300">
                       AI Model <span className="text-red-500">*</span>
+                      {discoveredModels.length > 0 && (
+                        <Badge variant="outline" className="ml-2 text-xs">
+                          <Sparkles className="h-3 w-3 mr-1" />
+                          {discoveredModels.length} Live Models
+                        </Badge>
+                      )}
                     </Label>
                     <Select
                       value={newKey.model}
@@ -808,30 +695,69 @@ export const AIKeyManager: React.FC = () => {
                               : 'border-slate-200 focus:border-blue-400 focus:ring-blue-100 dark:border-slate-700 dark:focus:border-blue-500'
                         }`}
                       >
-                        <SelectValue placeholder={newKey.provider ? "Choose a model" : "Select provider first"} />
+                        <SelectValue placeholder={newKey.provider ? (discoveredModels.length > 0 ? "Choose from discovered models" : "Choose a model or scan API first") : "Select provider first"} />
                       </SelectTrigger>
-                      <SelectContent className="rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-800/95 backdrop-blur-xl shadow-2xl max-h-60">
+                      <SelectContent className="rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-800/95 backdrop-blur-xl shadow-2xl max-h-96">
                         {newKey.provider ? (
-                          aiProviders.find(p => p.id === newKey.provider)?.models.map(model => (
-                            <SelectItem key={model.id} value={model.id} className="rounded-lg my-1 hover:bg-slate-50 dark:hover:bg-slate-700/50">
-                              <div className="flex flex-col items-start py-1">
-                                <div className="flex items-center gap-2">
-                                  <span className="font-medium">{model.name}</span>
-                                  <div className="flex items-center gap-1">
-                                    {model.capabilities.includes('code') && <span className="text-xs">🔍</span>}
-                                    {model.capabilities.includes('vision') && <span className="text-xs">👁️</span>}
+                          <>
+                            {discoveredModels.length > 0 ? (
+                              <>
+                                <div className="px-2 py-1.5 text-xs font-semibold text-slate-600 dark:text-slate-400 bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20 sticky top-0 z-10">
+                                  <div className="flex items-center gap-2">
+                                    <Sparkles className="h-3 w-3 text-green-600 dark:text-green-400" />
+                                    Available Models ({discoveredModels.length})
                                   </div>
                                 </div>
-                                <span className="text-xs text-slate-500 dark:text-slate-400 line-clamp-1">{model.description}</span>
-                                <span className="text-xs text-blue-600 dark:text-blue-400 mt-0.5">
-                                  {model.maxTokens?.toLocaleString()} tokens
-                                </span>
+                                {discoveredModels.map(model => (
+                                  <SelectItem key={model.id} value={model.id} className="rounded-lg my-1 hover:bg-slate-50 dark:hover:bg-slate-700/50">
+                                    <div className="flex flex-col items-start py-1">
+                                      <div className="flex items-center gap-2">
+                                        <CheckCircle className="h-3 w-3 text-green-600 dark:text-green-400" />
+                                        <span className="font-medium">{model.name}</span>
+                                        <div className="flex items-center gap-1">
+                                          {model.capabilities.includes('code') && <span className="text-xs" title="Code">🔍</span>}
+                                          {model.capabilities.includes('vision') && <span className="text-xs" title="Vision">👁️</span>}
+                                          {model.capabilities.includes('audio') && <span className="text-xs" title="Audio">🎵</span>}
+                                          {model.capabilities.includes('reasoning') && <span className="text-xs" title="Advanced Reasoning">🧠</span>}
+                                        </div>
+                                      </div>
+                                      <span className="text-xs text-slate-500 dark:text-slate-400 line-clamp-1">{model.description}</span>
+                                      <span className="text-xs text-green-600 dark:text-green-400 mt-0.5 font-medium">
+                                        {model.maxTokens?.toLocaleString()} tokens
+                                      </span>
+                                    </div>
+                                  </SelectItem>
+                                ))}
+                              </>
+                            ) : (
+                              <div className="p-4 text-sm text-slate-500 dark:text-slate-400 text-center">
+                                {isScanning ? (
+                                  <div className="flex items-center justify-center gap-2">
+                                    <RefreshCw className="h-4 w-4 animate-spin" />
+                                    <span>Scanning for available models...</span>
+                                  </div>
+                                ) : scanStatus?.type === 'error' ? (
+                                  <div className="flex flex-col items-center gap-2">
+                                    <AlertTriangle className="h-8 w-8 text-red-500" />
+                                    <span className="font-medium">Unable to fetch models</span>
+                                    <span className="text-xs">{scanStatus.message}</span>
+                                  </div>
+                                ) : (
+                                  <div className="flex flex-col items-center gap-2">
+                                    <Sparkles className="h-8 w-8 text-blue-500" />
+                                    <span className="font-medium">Enter your API key to discover models</span>
+                                    <span className="text-xs">Models will appear automatically after scanning</span>
+                                  </div>
+                                )}
                               </div>
-                            </SelectItem>
-                          ))
+                            )}
+                          </>
                         ) : (
                           <div className="p-4 text-sm text-slate-500 dark:text-slate-400 text-center">
-                            Please select a provider first
+                            <div className="flex flex-col items-center gap-2">
+                              <Key className="h-8 w-8 text-slate-400" />
+                              <span className="font-medium">Select a provider first</span>
+                            </div>
                           </div>
                         )}
                       </SelectContent>
@@ -840,6 +766,12 @@ export const AIKeyManager: React.FC = () => {
                       <p className="text-red-500 text-xs mt-1 flex items-center gap-1">
                         <AlertTriangle className="h-3 w-3" />
                         {errors.model}
+                      </p>
+                    )}
+                    {newKey.provider && discoveredModels.length === 0 && !isScanning && !scanStatus && (
+                      <p className="text-blue-600 dark:text-blue-400 text-xs mt-1 flex items-center gap-1">
+                        <Sparkles className="h-3 w-3" />
+                        Tip: Models will be discovered automatically from the API
                       </p>
                     )}
                   </div>
@@ -878,29 +810,71 @@ export const AIKeyManager: React.FC = () => {
                   <Label htmlFor="api-key" className="text-sm font-medium text-slate-700 dark:text-slate-300">
                     API Key <span className="text-red-500">*</span>
                   </Label>
-                  <Input
-                    id="api-key"
-                    type="password"
-                    placeholder={getKeyPlaceholder(newKey.provider)}
-                    value={newKey.key}
-                    onChange={(e) => {
-                      setNewKey({...newKey, key: e.target.value});
-                      if (errors.key) {
-                        setErrors(prev => ({ ...prev, key: '' }));
-                      }
-                    }}
-                    className={`h-12 border-2 rounded-xl transition-all duration-200 font-mono ${
-                      errors.key 
-                        ? 'border-red-300 focus:border-red-500 focus:ring-red-200' 
-                        : 'border-slate-200 focus:border-blue-400 focus:ring-blue-100 dark:border-slate-700 dark:focus:border-blue-500'
-                    }`}
-                    aria-describedby={errors.key ? "key-error" : undefined}
-                  />
+                  <div className="relative">
+                    <Input
+                      id="api-key"
+                      type="password"
+                      placeholder={getKeyPlaceholder(newKey.provider)}
+                      value={newKey.key}
+                      onChange={(e) => {
+                        setNewKey({...newKey, key: e.target.value});
+                        setDiscoveredModels([]);
+                        setScanStatus(null);
+                        if (errors.key) {
+                          setErrors(prev => ({ ...prev, key: '' }));
+                        }
+                      }}
+                      className={`h-12 border-2 rounded-xl transition-all duration-200 font-mono pr-12 ${
+                        errors.key 
+                          ? 'border-red-300 focus:border-red-500 focus:ring-red-200' 
+                          : 'border-slate-200 focus:border-blue-400 focus:ring-blue-100 dark:border-slate-700 dark:focus:border-blue-500'
+                      }`}
+                      aria-describedby={errors.key ? "key-error" : undefined}
+                    />
+                    {isScanning && (
+                      <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                        <RefreshCw className="h-5 w-5 animate-spin text-blue-600 dark:text-blue-400" />
+                      </div>
+                    )}
+                    {scanStatus?.type === 'success' && (
+                      <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                        <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400" />
+                      </div>
+                    )}
+                    {scanStatus?.type === 'error' && (
+                      <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                        <AlertTriangle className="h-5 w-5 text-red-600 dark:text-red-400" />
+                      </div>
+                    )}
+                  </div>
                   {errors.key && (
                     <p id="key-error" className="text-red-500 text-xs mt-1 flex items-center gap-1">
                       <AlertTriangle className="h-3 w-3" />
                       {errors.key}
                     </p>
+                  )}
+                  {scanStatus && (
+                    <Alert className={`mt-2 ${
+                      scanStatus.type === 'success' ? 'border-green-200 bg-green-50 dark:bg-green-950/20' :
+                      scanStatus.type === 'error' ? 'border-red-200 bg-red-50 dark:bg-red-950/20' :
+                      'border-blue-200 bg-blue-50 dark:bg-blue-950/20'
+                    }`}>
+                      {scanStatus.type === 'success' ? (
+                        <CheckCircle className="h-4 w-4 text-green-600" />
+                      ) : scanStatus.type === 'error' ? (
+                        <AlertTriangle className="h-4 w-4 text-red-600" />
+                      ) : (
+                        <RefreshCw className="h-4 w-4 text-blue-600 animate-spin" />
+                      )}
+                      <AlertDescription className={
+                        scanStatus.type === 'success' ? 'text-green-700 dark:text-green-300' :
+                        scanStatus.type === 'error' ? 'text-red-700 dark:text-red-300' :
+                        'text-blue-700 dark:text-blue-300'
+                      }>
+                        {scanStatus.message}
+                        {scanStatus.type === 'success' && ' You can now save this configuration.'}
+                      </AlertDescription>
+                    </Alert>
                   )}
                 </div>
                 {newKey.provider && (
@@ -955,10 +929,15 @@ export const AIKeyManager: React.FC = () => {
                 <div className="flex flex-col sm:flex-row gap-3 pt-2">
                   <Button
                     onClick={addAPIKey}
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || isScanning || scanStatus?.type !== 'success'}
                     variant="default"
                     size="lg"
                     className="flex-1 sm:flex-none"
+                    title={
+                      isScanning ? 'Please wait for API scan to complete' :
+                      scanStatus?.type !== 'success' ? 'Please scan your API key first' :
+                      'Add this API key'
+                    }
                   >
                     {isSubmitting ? (
                       <>
@@ -979,6 +958,8 @@ export const AIKeyManager: React.FC = () => {
                       setIsAdding(false);
                       setNewKey({ provider: '', model: '', key: '', name: '' });
                       setErrors({});
+                      setDiscoveredModels([]);
+                      setScanStatus(null);
                     }}
                     disabled={isSubmitting}
                     className="flex-1 sm:flex-none"

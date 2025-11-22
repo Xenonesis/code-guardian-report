@@ -9,6 +9,7 @@ export * from './storage/offlineManager';
 export * from './ai/aiService';
 export * from './ai/aiFixSuggestionsService';
 export * from './ai/naturalLanguageDescriptionService';
+export * from './ai/modelDiscoveryService';
 
 // Security services
 export * from './security/securityAnalysisEngine';
