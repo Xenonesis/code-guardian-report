@@ -6,6 +6,7 @@ interface AIProvider {
   id: string;
   name: string;
   apiKey: string;
+  model?: string;
 }
 
 // Interface for the actual stored API key format
@@ -14,6 +15,7 @@ interface StoredAPIKey {
   provider: string;
   key: string;
   name: string;
+  model: string;
 }
 
 interface ChatMessage {
@@ -49,13 +51,14 @@ export class AIService {
   private getStoredAPIKeys(): AIProvider[] {
     try {
       const keys = localStorage.getItem('aiApiKeys');
-      const storedKeys: StoredAPIKey[] = keys ? JSON.parse(keys) : [];
+      const storedKeys: any[] = keys ? JSON.parse(keys) : [];
 
       // Convert stored format to expected format
       return storedKeys.map(key => ({
         id: key.provider,
         name: key.name,
-        apiKey: key.key
+        apiKey: key.key,
+        model: key.model || this.getDefaultModel(key.provider) // Include the model or use default
       }));
     } catch (error) {
       console.error('Error parsing stored API keys:', error);
@@ -63,12 +66,29 @@ export class AIService {
     }
   }
 
-  private async callOpenAI(apiKey: string, messages: ChatMessage[]): Promise<string> {
+  private getDefaultModel(provider: string): string {
+    switch (provider) {
+      case 'openai':
+        return 'gpt-4o-mini';
+      case 'gemini':
+        return 'gemini-1.5-flash';
+      case 'claude':
+        return 'claude-3-5-sonnet-20241022';
+      default:
+        return '';
+    }
+  }
+
+  private async callOpenAI(apiKey: string, messages: ChatMessage[], model?: string): Promise<string> {
     console.log('Calling OpenAI API...');
     
     if (!apiKey || !apiKey.startsWith('sk-')) {
       throw new Error('Invalid OpenAI API key format. Key should start with "sk-"');
     }
+
+    // Use provided model or default to gpt-4o-mini
+    const modelToUse = model || 'gpt-4o-mini';
+    console.log('Using OpenAI model:', modelToUse);
 
     try {
       const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -78,7 +98,7 @@ export class AIService {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          model: 'gpt-4o-mini',
+          model: modelToUse,
           messages,
           temperature: 0.7,
           max_tokens: 2048,
@@ -118,12 +138,16 @@ export class AIService {
     }
   }
 
-  private async callGemini(apiKey: string, messages: ChatMessage[]): Promise<string> {
+  private async callGemini(apiKey: string, messages: ChatMessage[], model?: string): Promise<string> {
     console.log('Calling Gemini API...');
     
     if (!apiKey) {
       throw new Error('Gemini API key is required');
     }
+
+    // Use provided model or default to gemini-1.5-flash
+    const modelToUse = model || 'gemini-1.5-flash';
+    console.log('Using Gemini model:', modelToUse);
 
     try {
       // Convert messages to Gemini format
@@ -136,7 +160,7 @@ export class AIService {
       }
       prompt += userMessages.map(m => `${m.role}: ${m.content}`).join('\n');
 
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modelToUse}:generateContent?key=${apiKey}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -189,12 +213,16 @@ export class AIService {
     }
   }
 
-  private async callClaude(apiKey: string, messages: ChatMessage[]): Promise<string> {
+  private async callClaude(apiKey: string, messages: ChatMessage[], model?: string): Promise<string> {
     console.log('Calling Claude API...');
     
     if (!apiKey) {
       throw new Error('Claude API key is required');
     }
+
+    // Use provided model or default to claude-3-5-sonnet-20241022
+    const modelToUse = model || 'claude-3-5-sonnet-20241022';
+    console.log('Using Claude model:', modelToUse);
 
     try {
       const systemMessage = messages.find(m => m.role === 'system');
@@ -208,7 +236,7 @@ export class AIService {
           'anthropic-version': '2023-06-01'
         },
         body: JSON.stringify({
-          model: 'claude-3-5-sonnet-20241022',
+          model: modelToUse,
           max_tokens: 2048,
           messages: userMessages,
           system: systemMessage?.content,
@@ -250,7 +278,7 @@ export class AIService {
 
   async generateResponse(messages: ChatMessage[]): Promise<string> {
     const apiKeys = this.getStoredAPIKeys();
-    console.log('Available API keys:', apiKeys.map(k => ({ id: k.id, name: k.name })));
+    console.log('Available API keys:', apiKeys.map(k => ({ id: k.id, name: k.name, model: k.model })));
     
     if (apiKeys.length === 0) {
       throw new Error('No AI API keys configured. Please add an API key in the AI Configuration tab.');
@@ -261,15 +289,15 @@ export class AIService {
     // Try each API key until one works
     for (const provider of apiKeys) {
       try {
-        console.log(`Trying provider: ${provider.name} (${provider.id})`);
+        console.log(`Trying provider: ${provider.name} (${provider.id}) with model: ${provider.model || 'default'}`);
         
         switch (provider.id) {
           case 'openai':
-            return await this.callOpenAI(provider.apiKey, messages);
+            return await this.callOpenAI(provider.apiKey, messages, provider.model);
           case 'gemini':
-            return await this.callGemini(provider.apiKey, messages);
+            return await this.callGemini(provider.apiKey, messages, provider.model);
           case 'claude':
-            return await this.callClaude(provider.apiKey, messages);
+            return await this.callClaude(provider.apiKey, messages, provider.model);
           default:
             console.warn(`Unsupported provider: ${provider.id}`);
             errors.push(`Unsupported provider: ${provider.id}`);
