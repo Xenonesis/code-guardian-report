@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { githubService, ContributorWithDetails } from '@/services/api/githubService';
 
+import { logger } from '@/utils/logger';
 const GitHubContributorsSection = () => {
   const [contributors, setContributors] = useState<ContributorWithDetails[]>([]);
   const [repoStats, setRepoStats] = useState<any>(null);
@@ -35,7 +36,7 @@ const GitHubContributorsSection = () => {
         setRepoStats(statsData);
       } catch (err) {
         setError('Failed to load GitHub data');
-        console.error('Error loading GitHub data:', err);
+        logger.error('Error loading GitHub data:', err);
       } finally {
         setLoading(false);
       }

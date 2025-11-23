@@ -2,6 +2,7 @@
 import { db, enableNetwork, disableNetwork } from './firebase';
 import { recordWebChannelFailure, clearWebChannelFailures } from './firestore-config';
 
+import { logger } from '@/utils/logger';
 interface ConnectionState {
   isOnline: boolean;
   lastCheck: number;
@@ -37,7 +38,7 @@ class ConnectionManager {
   }
 
   private handleOnline() {
-    console.log('Browser detected online');
+    logger.debug('Browser detected online');
     this.updateConnectionState(true);
     // Don't immediately reconnect, let natural operations handle it
     this.state.retryCount = 0;

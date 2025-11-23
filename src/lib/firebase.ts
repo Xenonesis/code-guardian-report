@@ -10,6 +10,7 @@ import {
   CACHE_SIZE_UNLIMITED
 } from "firebase/firestore";
 import { getAuth, GoogleAuthProvider, GithubAuthProvider, connectAuthEmulator } from "firebase/auth";
+import { logger } from '@/utils/logger';
 
 // Firebase configuration using .env.local variables
 const firebaseConfig = {
@@ -33,7 +34,7 @@ const requiredEnvVars = [
 
 const missingVars = requiredEnvVars.filter(varName => !import.meta.env[varName]);
 if (missingVars.length > 0) {
-  console.error('Missing Firebase environment variables:', missingVars);
+  logger.error('Missing Firebase environment variables:', missingVars);
   throw new Error(`Missing Firebase configuration: ${missingVars.join(', ')}`);
 }
 

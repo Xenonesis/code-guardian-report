@@ -14,6 +14,7 @@ import {
 import { analysisStorage } from '../services/storage/analysisStorage';
 import { useAuth } from '@/lib/auth-context';
 
+import { logger } from '@/utils/logger';
 export interface FirebaseAnalysisState {
   analysisResults: AnalysisResults | null;
   cloudAnalysis: FirebaseAnalysisData | null;
@@ -129,7 +130,7 @@ export const useFirebaseAnalysis = () => {
         setLastSyncTime(new Date());
       }
     } catch (error) {
-      console.error('Error loading initial data:', error);
+      logger.error('Error loading initial data:', error);
       setSyncStatus('error');
     } finally {
       setIsSyncing(false);
@@ -166,7 +167,7 @@ export const useFirebaseAnalysis = () => {
         setLastSyncTime(new Date());
       }
     } catch (error) {
-      console.error('Error syncing data:', error);
+      logger.error('Error syncing data:', error);
       setSyncStatus('error');
     } finally {
       setIsSyncing(false);
@@ -224,7 +225,7 @@ export const useFirebaseAnalysis = () => {
         setSyncStatus('pending'); // Will sync when user logs in
       }
     } catch (error) {
-      console.error('Error storing analysis results:', error);
+      logger.error('Error storing analysis results:', error);
       setSyncStatus('error');
     } finally {
       setIsSyncing(false);
@@ -263,7 +264,7 @@ export const useFirebaseAnalysis = () => {
         setSelectedFile(analysisFile);
       }
     } catch (error) {
-      console.error('Error loading analysis from history:', error);
+      logger.error('Error loading analysis from history:', error);
       throw error;
     } finally {
       setIsSyncing(false);
@@ -283,7 +284,7 @@ export const useFirebaseAnalysis = () => {
         setAnalysisResults(null);
       }
     } catch (error) {
-      console.error('Error deleting analysis:', error);
+      logger.error('Error deleting analysis:', error);
       throw error;
     }
   }, [cloudAnalysis?.id]);
@@ -296,7 +297,7 @@ export const useFirebaseAnalysis = () => {
       const results = await firebaseAnalysisStorage.searchAnalysis(searchTerm, filters);
       return results;
     } catch (error) {
-      console.error('Error searching analysis history:', error);
+      logger.error('Error searching analysis history:', error);
       throw error;
     }
   }, []);
@@ -319,7 +320,7 @@ export const useFirebaseAnalysis = () => {
       );
       return analysisId;
     } catch (error) {
-      console.error('Error exporting analysis to cloud:', error);
+      logger.error('Error exporting analysis to cloud:', error);
       throw error;
     }
   }, [user?.uid]);
@@ -330,7 +331,7 @@ export const useFirebaseAnalysis = () => {
     try {
       await syncPendingData();
     } catch (error) {
-      console.error('Error retrying sync:', error);
+      logger.error('Error retrying sync:', error);
       setSyncStatus('error');
     }
   }, [user?.uid, isOnline]);

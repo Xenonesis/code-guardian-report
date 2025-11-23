@@ -15,6 +15,7 @@ import { useNavigation } from '@/lib/navigation-context';
 import { Footer } from '@/components/layout/Footer';
 import { ConnectionStatusBanner, useConnectionStatus } from '@/components/common/ConnectionStatusBanner';
 
+import { logger } from '@/utils/logger';
 // Import About page components
 import { HeroSection } from '@/components/layout/HeroSection';
 import { AnimatedBackground } from '@/components/pages/about/AnimatedBackground';
@@ -75,13 +76,13 @@ const SinglePageApp = () => {
   const [currentAnalysisFile, setCurrentAnalysisFile] = useState<File | null>(null);
   
   const handleFileSelectWithTracking = useCallback((file: File) => {
-    console.log('🔄 File selected with tracking:', file.name);
+    logger.debug('🔄 File selected with tracking:', file.name);
     setCurrentAnalysisFile(file);
     handleFileSelect(file);
   }, [handleFileSelect]);
   
   const handleAnalysisCompleteWithFile = useCallback(async (results: AnalysisResults, file?: File) => {
-    console.log('🔄 Analysis complete with file:', { 
+    logger.debug('🔄 Analysis complete with file:', { 
       hasFile: !!file, 
       fileName: file?.name,
       hasCurrentAnalysisFile: !!currentAnalysisFile,
@@ -92,11 +93,11 @@ const SinglePageApp = () => {
     const fileToUse = file || currentAnalysisFile;
     
     if (fileToUse) {
-      console.log('🔄 Storing analysis results with file:', fileToUse.name);
+      logger.debug('🔄 Storing analysis results with file:', fileToUse.name);
       // Pass the file directly to handleAnalysisComplete to bypass state synchronization issues
       await handleAnalysisComplete(results, undefined, fileToUse);
     } else {
-      console.error('❌ No file available for analysis storage');
+      logger.error('❌ No file available for analysis storage');
       await handleAnalysisComplete(results);
     }
   }, [currentAnalysisFile, selectedFile, handleFileSelect, handleAnalysisComplete]);

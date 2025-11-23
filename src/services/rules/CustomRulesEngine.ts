@@ -7,6 +7,7 @@ import { db } from '@/lib/firebase';
 import { collection, addDoc, query, where, getDocs, updateDoc, doc, deleteDoc } from 'firebase/firestore';
 import { enhancedNotifications } from '@/utils/enhancedToastNotifications';
 
+import { logger } from '@/utils/logger';
 export type RuleType = 'pattern' | 'ast' | 'regex' | 'esquery';
 export type RuleSeverity = 'Critical' | 'High' | 'Medium' | 'Low';
 export type RuleLanguage = 'javascript' | 'typescript' | 'python' | 'java' | 'go' | 'rust' | 'php' | 'ruby' | 'all';
@@ -226,7 +227,7 @@ class CustomRulesEngineClass {
 
       return customRule;
     } catch (error) {
-      console.error('Failed to create custom rule:', error);
+      logger.error('Failed to create custom rule:', error);
       enhancedNotifications.error('Rule Creation Failed', {
         message: error instanceof Error ? error.message : 'Unknown error',
         category: 'system',
@@ -269,7 +270,7 @@ class CustomRulesEngineClass {
 
       return rules;
     } catch (error) {
-      console.error('Failed to get custom rules:', error);
+      logger.error('Failed to get custom rules:', error);
       return [];
     }
   }
@@ -303,7 +304,7 @@ class CustomRulesEngineClass {
 
       return rules;
     } catch (error) {
-      console.error('Failed to get public rules:', error);
+      logger.error('Failed to get public rules:', error);
       return [];
     }
   }
@@ -324,7 +325,7 @@ class CustomRulesEngineClass {
         priority: 'low',
       });
     } catch (error) {
-      console.error('Failed to update rule:', error);
+      logger.error('Failed to update rule:', error);
       enhancedNotifications.error('Rule Update Failed', {
         category: 'system',
         priority: 'high',
@@ -345,7 +346,7 @@ class CustomRulesEngineClass {
         priority: 'low',
       });
     } catch (error) {
-      console.error('Failed to delete rule:', error);
+      logger.error('Failed to delete rule:', error);
       enhancedNotifications.error('Rule Deletion Failed', {
         category: 'system',
         priority: 'high',
@@ -376,7 +377,7 @@ class CustomRulesEngineClass {
           await this.updateMatchCount(rule.id, ruleMatches.length);
         }
       } catch (error) {
-        console.error(`Failed to apply rule ${rule.name}:`, error);
+        logger.error(`Failed to apply rule ${rule.name}:`, error);
       }
     }
 
@@ -448,7 +449,7 @@ class CustomRulesEngineClass {
         }
       });
     } catch (error) {
-      console.error('Regex rule error:', error);
+      logger.error('Regex rule error:', error);
     }
 
     return matches;
@@ -487,7 +488,7 @@ class CustomRulesEngineClass {
         }
       });
     } catch (error) {
-      console.error('Pattern rule error:', error);
+      logger.error('Pattern rule error:', error);
     }
 
     return matches;
@@ -509,7 +510,7 @@ class CustomRulesEngineClass {
         });
       }
     } catch (error) {
-      console.error('Failed to update match count:', error);
+      logger.error('Failed to update match count:', error);
     }
   }
 

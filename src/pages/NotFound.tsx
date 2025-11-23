@@ -5,11 +5,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { PageLayout } from "@/components/layout/PageLayout";
 import { useDarkMode } from "@/hooks/useDarkMode";
 
+import { logger } from '@/utils/logger';
 const NotFound = () => {
   const { isDarkMode, toggleDarkMode } = useDarkMode();
 
   useEffect(() => {
-    console.error(
+    logger.error(
       "404 Error: User attempted to access non-existent route:",
       window.location.pathname
     );

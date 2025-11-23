@@ -7,6 +7,7 @@ import { Progress } from '@/components/ui/progress';
 import { githubRepositoryService } from '@/services/githubRepositoryService';
 import { Card } from '@/components/ui/card';
 
+import { logger } from '@/utils/logger';
 interface GitHubRepoInputProps {
   onFileReady: (file: File) => void;
 }
@@ -55,7 +56,7 @@ export const GitHubRepoInput: React.FC<GitHubRepoInputProps> = ({ onFileReady })
       );
       setEstimatedSize(size);
     } catch (err) {
-      console.error('Error fetching repo info:', err);
+      logger.error('Error fetching repo info:', err);
     } finally {
       setIsFetchingInfo(false);
     }
@@ -126,7 +127,7 @@ export const GitHubRepoInput: React.FC<GitHubRepoInputProps> = ({ onFileReady })
       setEstimatedSize(null);
 
     } catch (err) {
-      console.error('Error analyzing GitHub repository:', err);
+      logger.error('Error analyzing GitHub repository:', err);
       setError(err instanceof Error ? err.message : 'Failed to analyze repository');
     } finally {
       setIsLoading(false);

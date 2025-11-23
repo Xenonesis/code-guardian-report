@@ -1,3 +1,5 @@
+import { logger } from '@/utils/logger';
+
 // Background Sync Service for PWA
 // Handles offline file uploads and analysis requests
 
@@ -48,7 +50,7 @@ class BackgroundSyncService {
         const registration = await navigator.serviceWorker.ready;
         await registration.sync.register(`background-sync-${task.type}`);
       } catch (error) {
-        console.warn('Background sync registration failed:', error);
+        logger.warn('Background sync registration failed:', error);
         // Fallback: try to process immediately if online
         if (navigator.onLine) {
           this.processQueue();
@@ -75,11 +77,11 @@ class BackgroundSyncService {
         await this.processTask(task);
         this.removeTask(task.id);
       } catch (error) {
-        console.error(`Failed to process task ${task.id}:`, error);
+        logger.error(`Failed to process task ${task.id}:`, error);
         task.retries++;
         
         if (task.retries >= task.maxRetries) {
-          console.error(`Task ${task.id} exceeded max retries, removing from queue`);
+          logger.error(`Task ${task.id} exceeded max retries, removing from queue`);
           this.removeTask(task.id);
         }
       }
@@ -124,7 +126,7 @@ class BackgroundSyncService {
 
     // Skip API calls in development mode
     if (import.meta.env.DEV) {
-      console.log('File Upload (dev mode):', { formData: Array.from(formData.entries()) });
+      logger.debug('File Upload (dev mode):', { formData: Array.from(formData.entries()) });
       this.notifyUser('File upload completed (dev mode)', 'Your files would be analyzed in production');
       return;
     }
@@ -148,7 +150,7 @@ class BackgroundSyncService {
     
     // Skip API calls in development mode
     if (import.meta.env.DEV) {
-      console.log('Analysis Request (dev mode):', { analysisId, options });
+      logger.debug('Analysis Request (dev mode):', { analysisId, options });
       this.notifyUser('Analysis completed (dev mode)', 'Your security analysis would be updated in production');
       return;
     }
@@ -174,7 +176,7 @@ class BackgroundSyncService {
     
     // Skip API calls in development mode
     if (import.meta.env.DEV) {
-      console.log('User Action Sync (dev mode):', { action, payload, timestamp: task.timestamp });
+      logger.debug('User Action Sync (dev mode):', { action, payload, timestamp: task.timestamp });
       return;
     }
     
@@ -214,7 +216,7 @@ class BackgroundSyncService {
   private setupEventListeners(): void {
     // Process queue when coming back online
     window.addEventListener('online', () => {
-      console.log('Back online, processing sync queue');
+      logger.debug('Back online, processing sync queue');
       this.processQueue();
     });
 
@@ -241,7 +243,7 @@ class BackgroundSyncService {
     try {
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.syncQueue));
     } catch (error) {
-      console.error('Failed to save sync queue:', error);
+      logger.error('Failed to save sync queue:', error);
     }
   }
 
@@ -252,7 +254,7 @@ class BackgroundSyncService {
         this.syncQueue = JSON.parse(stored);
       }
     } catch (error) {
-      console.error('Failed to load sync queue:', error);
+      logger.error('Failed to load sync queue:', error);
       this.syncQueue = [];
     }
   }

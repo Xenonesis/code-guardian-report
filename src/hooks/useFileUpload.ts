@@ -6,6 +6,7 @@ import { ZipAnalysisService } from '@/services/security/zipAnalysisService';
 import { DependencyVulnerabilityScanner } from '@/services/security/dependencyVulnerabilityScanner';
 import JSZip from 'jszip';
 
+import { logger } from '@/utils/logger';
 interface UseFileUploadProps {
   onFileSelect: (file: File) => void;
   onAnalysisComplete: (results: AnalysisResults, file?: File) => void;
@@ -27,21 +28,21 @@ export const useFileUpload = ({ onFileSelect, onAnalysisComplete }: UseFileUploa
   const analyzeCode = useCallback(async (file: File) => {
     // Prevent duplicate analysis for the same file
     if (currentAnalysisFile === file.name && isAnalyzing) {
-      console.log('⚠️ Analysis already in progress for:', file.name);
+      logger.debug('⚠️ Analysis already in progress for:', file.name);
       return;
     }
     
-    console.log('Starting enhanced security analysis for:', file.name);
+    logger.debug('Starting enhanced security analysis for:', file.name);
     setCurrentAnalysisFile(file.name);
     setIsAnalyzing(true);
 
     try {
       const arrayBuffer = await file.arrayBuffer();
-      console.log('File size:', arrayBuffer.byteLength, 'bytes');
+      logger.debug('File size:', arrayBuffer.byteLength, 'bytes');
 
       try {
         const analysisResults = await analysisEngine.analyzeCodebase(file);
-        console.log('Enhanced analysis complete:', {
+        logger.debug('Enhanced analysis complete:', {
           totalIssues: analysisResults.issues.length,
           totalFiles: analysisResults.totalFiles,
           analysisTime: analysisResults.analysisTime,
@@ -80,7 +81,7 @@ export const useFileUpload = ({ onFileSelect, onAnalysisComplete }: UseFileUploa
 
             finalResults = { ...analysisResults, zipAnalysis, dependencyAnalysis };
           } catch (zipErr) {
-            console.warn('ZIP/dependency analysis failed, continuing with core results:', zipErr);
+            logger.warn('ZIP/dependency analysis failed, continuing with core results:', zipErr);
           }
         }
 
@@ -88,7 +89,7 @@ export const useFileUpload = ({ onFileSelect, onAnalysisComplete }: UseFileUploa
         setCurrentAnalysisFile(null);
         onAnalysisComplete(finalResults, file);
       } catch (analysisError) {
-        console.error('Analysis engine error:', analysisError);
+        logger.error('Analysis engine error:', analysisError);
         setIsAnalyzing(false);
         setCurrentAnalysisFile(null);
         
@@ -129,14 +130,14 @@ export const useFileUpload = ({ onFileSelect, onAnalysisComplete }: UseFileUploa
         onAnalysisComplete(emptyResults, file);
       }
     } catch (error) {
-      console.error('Error processing file:', error);
+      logger.error('Error processing file:', error);
       setIsAnalyzing(false);
       setError('Failed to process the ZIP file. Please try again.');
     }
   }, [onAnalysisComplete, analysisEngine]);
 
   const processZipFile = useCallback(async (file: File) => {
-    console.log('Starting to process zip file:', file.name);
+    logger.debug('Starting to process zip file:', file.name);
     
     const validation = await validateZipFile(file);
     if (!validation.isValid) {

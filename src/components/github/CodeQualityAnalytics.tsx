@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { GitHubAnalysisStorageService } from '@/services/storage/GitHubAnalysisStorageService';
 
+import { logger } from '@/utils/logger';
 interface CodeQualityMetrics {
   complexity: {
     average: number;
@@ -130,7 +131,7 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({ user
         setAggregateMetrics(aggregate);
       }
     } catch (error) {
-      console.error('Error loading code quality data:', error);
+      logger.error('Error loading code quality data:', error);
     } finally {
       setLoading(false);
     }

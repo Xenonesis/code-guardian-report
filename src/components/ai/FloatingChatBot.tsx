@@ -9,6 +9,7 @@ import { AIService } from '../../services/ai/aiService';
 import { toast } from 'sonner';
 import { AnalysisResults } from '@/hooks/useAnalysis';
 
+import { logger } from '@/utils/logger';
 interface ChatMessage {
   id: string;
   role: 'user' | 'assistant';
@@ -74,8 +75,8 @@ How can I help you today?`,
     setIsLoading(true);
 
     try {
-      console.log('Sending question to AI service:', currentInput);
-      console.log('Analysis results available:', !!analysisResults?.issues);
+      logger.debug('Sending question to AI service:', currentInput);
+      logger.debug('Analysis results available:', !!analysisResults?.issues);
       
       if (!analysisResults || !analysisResults.issues) {
         throw new Error('No analysis results available. Please run an analysis first.');
@@ -92,7 +93,7 @@ How can I help you today?`,
 
       setMessages(prev => [...prev, assistantMessage]);
     } catch (error) {
-      console.error('Error getting AI response:', error);
+      logger.error('Error getting AI response:', error);
       
       let errorMessage = 'Sorry, I encountered an error while processing your question.';
       
@@ -108,7 +109,7 @@ How can I help you today?`,
         }
       }
       
-      console.error('Detailed error for user:', errorMessage);
+      logger.error('Detailed error for user:', errorMessage);
       toast.error(errorMessage);
       
       const errorResponse: ChatMessage = {

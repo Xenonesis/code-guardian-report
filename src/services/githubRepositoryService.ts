@@ -1,5 +1,6 @@
 import JSZip from 'jszip';
 
+import { logger } from '@/utils/logger';
 export interface GitHubRepoInfo {
   owner: string;
   repo: string;
@@ -79,7 +80,7 @@ class GitHubRepositoryService {
 
       return null;
     } catch (error) {
-      console.error('Error parsing GitHub URL:', error);
+      logger.error('Error parsing GitHub URL:', error);
       return null;
     }
   }
@@ -92,7 +93,7 @@ class GitHubRepositoryService {
       const response = await fetch(`${this.baseUrl}/repos/${owner}/${repo}`);
       return response.ok;
     } catch (error) {
-      console.error('Error validating repository:', error);
+      logger.error('Error validating repository:', error);
       return false;
     }
   }
@@ -124,7 +125,7 @@ class GitHubRepositoryService {
         updatedAt: data.updated_at,
       };
     } catch (error) {
-      console.error('Error fetching repository info:', error);
+      logger.error('Error fetching repository info:', error);
       throw error;
     }
   }
@@ -145,7 +146,7 @@ class GitHubRepositoryService {
       const data = await response.json();
       return data.tree;
     } catch (error) {
-      console.error('Error fetching repository tree:', error);
+      logger.error('Error fetching repository tree:', error);
       throw error;
     }
   }
@@ -165,7 +166,7 @@ class GitHubRepositoryService {
 
       return await response.text();
     } catch (error) {
-      console.error(`Error fetching file ${path}:`, error);
+      logger.error(`Error fetching file ${path}:`, error);
       throw error;
     }
   }
@@ -259,7 +260,7 @@ class GitHubRepositoryService {
               const progress = 30 + Math.floor((downloadedFiles / totalFiles) * 60);
               onProgress?.(progress, `Downloaded ${downloadedFiles}/${totalFiles} files...`);
             } catch (error) {
-              console.warn(`Failed to download ${file.path}:`, error);
+              logger.warn(`Failed to download ${file.path}:`, error);
             }
           })
         );
@@ -283,7 +284,7 @@ class GitHubRepositoryService {
       return new File([zipBlob], fileName, { type: 'application/zip' });
 
     } catch (error) {
-      console.error('Error downloading repository:', error);
+      logger.error('Error downloading repository:', error);
       throw error;
     }
   }
@@ -313,7 +314,7 @@ class GitHubRepositoryService {
         formattedSize: this.formatBytes(totalSize),
       };
     } catch (error) {
-      console.error('Error estimating repository size:', error);
+      logger.error('Error estimating repository size:', error);
       return null;
     }
   }

@@ -12,6 +12,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { setLocalStorageItem, removeLocalStorageItem } from '@/utils/storageEvents'; // Ensure both are imported
 import { discoverModels, validateAPIKey, AIModel } from '@/services/ai/modelDiscoveryService';
 
+import { logger } from '@/utils/logger';
 interface AIProvider {
   id: string;
   name: string;
@@ -204,14 +205,14 @@ export const AIKeyManager: React.FC = () => {
         name: newKey.name.trim(),
       };
       setApiKeys(prevKeys => [...prevKeys, key]); // This will trigger the save useEffect automatically
-      // console.log("AIKeyManager: API key added to state, save useEffect should be triggered."); // Debug log removed for PR
+      // logger.debug("AIKeyManager: API key added to state, save useEffect should be triggered."); // Debug log removed for PR
 
       setNewKey({ provider: '', model: '', key: '', name: '' });
       setIsAdding(false);
       setErrors({});
 
     } catch (error) {
-      // console.error('AIKeyManager: Error adding API key:', error); // Debug log removed for PR
+      // logger.error('AIKeyManager: Error adding API key:', error); // Debug log removed for PR
       setErrors({ general: 'Failed to add API key. Please try again.' });
     } finally {
       setIsSubmitting(false);
@@ -219,10 +220,10 @@ export const AIKeyManager: React.FC = () => {
   };
 
   const removeAPIKey = (id: string) => {
-    // console.log(`AIKeyManager: Attempting to remove API key with ID: ${id}`); // Debug log removed for PR
+    // logger.debug(`AIKeyManager: Attempting to remove API key with ID: ${id}`); // Debug log removed for PR
     const updatedKeys = apiKeys.filter(key => key.id !== id);
     setApiKeys(updatedKeys); // This will trigger the save useEffect (and clear localStorage if array becomes empty)
-    // console.log("AIKeyManager: API key removed from state, save useEffect should be triggered (clearing if empty)."); // Debug log removed for PR
+    // logger.debug("AIKeyManager: API key removed from state, save useEffect should be triggered (clearing if empty)."); // Debug log removed for PR
   };
 
   const toggleKeyVisibility = (id: string) => {
@@ -320,7 +321,7 @@ export const AIKeyManager: React.FC = () => {
     return provider?.keyPlaceholder || 'Enter your API key';
   };
 
-  // console.log("AIKeyManager: Current apiKeys state during render:", apiKeys); // Debug log removed for PR
+  // logger.debug("AIKeyManager: Current apiKeys state during render:", apiKeys); // Debug log removed for PR
 
   return (
     <div className="w-full max-w-6xl mx-auto space-y-6 sm:space-y-8">

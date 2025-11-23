@@ -13,6 +13,7 @@ import { Cloud, CloudOff, RefreshCw, Download, Trash2, Search, Filter } from 'lu
 import { firebaseAnalysisStorage, FirebaseAnalysisData } from '../../services/storage/firebaseAnalysisStorage';
 import { useToast } from '@/hooks/use-toast';
 
+import { logger } from '@/utils/logger';
 interface FirebaseAnalyticsDashboardProps {
   userId?: string;
   onAnalysisSelect?: (analysis: FirebaseAnalysisData) => void;
@@ -58,7 +59,7 @@ export const FirebaseAnalyticsDashboard = ({
       const history = await firebaseAnalysisStorage.getUserAnalysisHistory(userId);
       setAnalysisHistory(history);
     } catch (error) {
-      console.error('Error loading analysis history:', error);
+      logger.error('Error loading analysis history:', error);
       toast({
         title: '❌ Failed to Load History',
         description: 'Could not load analysis history from cloud storage.',
@@ -102,7 +103,7 @@ export const FirebaseAnalyticsDashboard = ({
         description: 'Analysis has been deleted from cloud storage.',
       });
     } catch (error) {
-      console.error('Error deleting analysis:', error);
+      logger.error('Error deleting analysis:', error);
       toast({
         title: '❌ Delete Failed',
         description: 'Could not delete analysis. Please try again.',
@@ -131,7 +132,7 @@ export const FirebaseAnalyticsDashboard = ({
         description: `Found ${results.length} matching analyses.`,
       });
     } catch (error) {
-      console.error('Error searching analysis:', error);
+      logger.error('Error searching analysis:', error);
       toast({
         title: '❌ Search Failed',
         description: 'Could not search analyses. Please try again.',

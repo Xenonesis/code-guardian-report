@@ -26,6 +26,7 @@ import { useAuth } from '@/lib/auth-context';
 import { useToast } from '@/hooks/use-toast';
  
 
+import { logger } from '@/utils/logger';
 interface HistoryPageProps {
   onAnalysisSelect?: (analysis: FirebaseAnalysisData) => void;
   onNavigateBack?: () => void;
@@ -52,20 +53,20 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
 
   const loadAnalysisHistory = useCallback(async () => {
     if (!currentUser?.uid) {
-      console.log('🚫 No user authenticated for history loading');
+      logger.debug('🚫 No user authenticated for history loading');
       return;
     }
 
-    console.log('📊 Loading analysis history for user:', currentUser.uid);
+    logger.debug('📊 Loading analysis history for user:', currentUser.uid);
     setIsLoading(true);
     
     try {
       firebaseAnalysisStorage.setUserId(currentUser.uid);
-      console.log('🔧 Firebase service user ID set');
+      logger.debug('🔧 Firebase service user ID set');
       
       const history = await firebaseAnalysisStorage.getUserAnalysisHistory(currentUser.uid);
-      console.log('📈 Retrieved history:', history.length, 'analyses');
-      console.log('📋 History data:', history);
+      logger.debug('📈 Retrieved history:', history.length, 'analyses');
+      logger.debug('📋 History data:', history);
       
       // Deduplicate history entries based on fileName and fileHash
       const deduplicatedHistory = history.filter((analysis, index, array) => {
@@ -76,7 +77,7 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
         return index === firstOccurrence;
       });
       
-      console.log('🔄 Deduplicated history:', deduplicatedHistory.length, 'unique analyses');
+      logger.debug('🔄 Deduplicated history:', deduplicatedHistory.length, 'unique analyses');
       
       setAnalysisHistory(deduplicatedHistory);
       
@@ -86,7 +87,7 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
       });
       
       if (deduplicatedHistory.length === 0) {
-        console.log('ℹ️ No analysis history found for this user');
+        logger.debug('ℹ️ No analysis history found for this user');
         toast({
           title: '📝 No History Yet',
           description: 'Upload and analyze some code to see your history here.',
@@ -94,7 +95,7 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
       }
       
     } catch (err) {
-      console.error('❌ Error loading analysis history:', err);
+      logger.error('❌ Error loading analysis history:', err);
       
       toast({
         title: '❌ Failed to Load History',
@@ -138,7 +139,7 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
       const stats = await firebaseAnalysisStorage.getUserStats(currentUser.uid);
       setUserStats(stats);
     } catch (error) {
-      console.error('Error loading user stats:', error);
+      logger.error('Error loading user stats:', error);
     }
   };
 
@@ -211,7 +212,7 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
       // Reload stats after deletion
       loadUserStats();
     } catch (error) {
-      console.error('Error deleting analysis:', error);
+      logger.error('Error deleting analysis:', error);
       toast({
         title: '❌ Delete Failed',
         description: 'Could not delete analysis.',
@@ -290,13 +291,13 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
         date = new Date(t);
       } else {
         // Fallback to current date
-        console.warn('Unable to parse timestamp:', t);
+        logger.warn('Unable to parse timestamp:', t);
         date = new Date();
       }
       
       return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
     } catch (error) {
-      console.error('Error formatting date:', error, timestamp);
+      logger.error('Error formatting date:', error, timestamp);
       return 'Invalid Date';
     }
   };

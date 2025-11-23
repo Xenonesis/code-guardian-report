@@ -29,6 +29,7 @@ import {
 } from '@/services/security/secureCodeSearchService';
 import { toast } from 'sonner';
 
+import { logger } from '@/utils/logger';
 interface SecureCodeSearchCardProps {
   language?: string;
   framework?: string;
@@ -77,7 +78,7 @@ export const SecureCodeSearchCard: React.FC<SecureCodeSearchCardProps> = ({
       setSearchResults(results || []);
     } catch (error) {
       toast.error('Search failed');
-      console.error('Search error:', error);
+      logger.error('Search error:', error);
     } finally {
       setIsLoading(false);
     }

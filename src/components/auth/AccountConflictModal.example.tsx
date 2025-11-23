@@ -22,6 +22,7 @@ import { AccountConflictModal } from './AccountConflictModal';
 import { getProviderFromError, getEmailFromError } from '@/lib/auth-utils';
 import { toast } from 'sonner';
 
+import { logger } from '@/utils/logger';
 type Provider = 'google.com' | 'github.com' | 'password' | 'facebook.com' | 'twitter.com';
 
 interface ConflictState {
@@ -106,12 +107,12 @@ export const AuthWithConflictHandling: React.FC = () => {
           pendingCredential,
         });
       } catch (fetchError) {
-        console.error('Error fetching sign-in methods:', fetchError);
+        logger.error('Error fetching sign-in methods:', fetchError);
         toast.error('Unable to determine existing sign-in method. Please try again.');
       }
     } else {
       // Handle other errors normally
-      console.error('Auth error:', error);
+      logger.error('Auth error:', error);
       toast.error(error.message || 'An authentication error occurred');
     }
   };
@@ -160,7 +161,7 @@ export const AuthWithConflictHandling: React.FC = () => {
           toast.success('Successfully linked accounts! You can now use both sign-in methods.');
         } catch (linkError: any) {
           // If linking fails, it's okay - the user is still signed in
-          console.error('Error linking accounts:', linkError);
+          logger.error('Error linking accounts:', linkError);
           toast.info('Signed in successfully. You can link additional providers from your profile.');
         }
       } else {
@@ -170,7 +171,7 @@ export const AuthWithConflictHandling: React.FC = () => {
       // Close the modal
       setConflictState(prev => ({ ...prev, isOpen: false }));
     } catch (error: any) {
-      console.error('Error signing in with existing provider:', error);
+      logger.error('Error signing in with existing provider:', error);
       toast.error('Failed to sign in. Please try again.');
     } finally {
       setIsLinking(false);

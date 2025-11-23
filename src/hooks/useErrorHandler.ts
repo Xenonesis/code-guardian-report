@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import { toast } from 'sonner';
 
+import { logger } from '@/utils/logger';
 export interface ErrorContext {
   component?: string;
   action?: string;
@@ -12,7 +13,7 @@ export const useErrorHandler = () => {
   const handleError = useCallback((error: Error | unknown, context?: ErrorContext) => {
     const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
     
-    console.error('Error handled:', {
+    logger.error('Error handled:', {
       error: errorMessage,
       context,
       stack: error instanceof Error ? error.stack : undefined

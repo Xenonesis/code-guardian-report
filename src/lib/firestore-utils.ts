@@ -10,6 +10,7 @@ import {
 import { connectionManager } from './connection-manager';
 import { analyzeFirestoreError, shouldShowErrorToUser } from './firestore-error-handler';
 
+import { logger } from '@/utils/logger';
 // Retry configuration - more conservative approach
 const RETRY_ATTEMPTS = 1; // Single retry to avoid connection storms
 const RETRY_DELAY = 5000; // 5 seconds - longer delay for stability
@@ -67,7 +68,7 @@ export async function withRetry<T>(
       recentFailures++;
       lastFailureTime = now;
       
-      console.warn(`Firestore operation failed (attempt ${i + 1}/${attempts}):`, error);
+      logger.warn(`Firestore operation failed (attempt ${i + 1}/${attempts}):`, error);
       
       // Don't retry on certain errors
       if (error instanceof Error) {
@@ -85,7 +86,7 @@ export async function withRetry<T>(
         if (isConnectionError(error) && i < attempts - 1) {
           const canRetry = await connectionManager.handleFirestoreError(error);
           if (!canRetry) {
-            console.warn('Connection manager advised against retry');
+            logger.warn('Connection manager advised against retry');
             throw error;
           }
         }
@@ -93,7 +94,7 @@ export async function withRetry<T>(
       
       if (i < attempts - 1) {
         const backoffDelay = delay * Math.pow(2, i);
-        console.log(`Waiting ${backoffDelay}ms before retry...`);
+        logger.debug(`Waiting ${backoffDelay}ms before retry...`);
         await wait(backoffDelay);
       }
     }
@@ -121,7 +122,7 @@ export async function safeGetDoc<T>(
     const errorInfo = analyzeFirestoreError(error);
     
     // Log detailed error information
-    console.warn('Failed to get document after retries:', {
+    logger.warn('Failed to get document after retries:', {
       error: error,
       errorInfo: errorInfo,
       docPath: docRef.path
@@ -163,7 +164,7 @@ export async function safeSetDoc<T extends PartialWithFieldValue<DocumentData>>(
     const errorInfo = analyzeFirestoreError(error);
     
     // Log detailed error information
-    console.warn('Failed to set document after retries:', {
+    logger.warn('Failed to set document after retries:', {
       error: error,
       errorInfo: errorInfo,
       docPath: docRef.path

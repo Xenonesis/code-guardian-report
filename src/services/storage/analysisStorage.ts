@@ -12,6 +12,7 @@
 import { AnalysisResults } from '@/hooks/useAnalysis';
 import { setLocalStorageItem, removeLocalStorageItem, createStorageChangeListener } from '@/utils/storageEvents';
 
+import { logger } from '@/utils/logger';
 interface StoredAnalysisData {
   id: string;
   timestamp: number;
@@ -104,7 +105,7 @@ export class AnalysisStorageService {
       this.notifyListeners(analysisData);
 
     } catch (error) {
-      console.error('❌ Failed to store analysis results:', error);
+      logger.error('❌ Failed to store analysis results:', error);
       throw new Error('Failed to store analysis results');
     }
   }

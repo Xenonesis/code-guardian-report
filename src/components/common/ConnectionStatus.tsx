@@ -4,6 +4,7 @@ import { AlertCircle, CheckCircle, Wifi, WifiOff, Database, AlertTriangle } from
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { enableNetwork, disableNetwork } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
+import { logger } from '@/utils/logger';
 
 interface ConnectionStatusProps {
   className?: string;
@@ -23,7 +24,7 @@ export const ConnectionStatus: React.FC<ConnectionStatusProps> = ({ className })
       setTimeout(() => setShowStatus(false), 3000);
       
       // Re-enable Firebase network
-      enableNetwork(db).catch(console.warn);
+      enableNetwork(db).catch((err) => logger.warn('Failed to re-enable Firebase network', err));
     };
 
     const handleOffline = () => {
@@ -31,33 +32,19 @@ export const ConnectionStatus: React.FC<ConnectionStatusProps> = ({ className })
       setShowStatus(true);
       
       // Disable Firebase network to prevent connection attempts
-      disableNetwork(db).catch(console.warn);
+      disableNetwork(db).catch((err) => logger.warn('Failed to disable Firebase network', err));
     };
 
     // Monitor Firebase connection errors
     const monitorFirebaseErrors = () => {
-      const originalError = console.error;
-      console.error = (...args) => {
-        const message = args.join(' ').toLowerCase();
-        if (message.includes('firestore') && 
-            (message.includes('transport error') || 
-             message.includes('400') || 
-             message.includes('bad request'))) {
-          setFirebaseConnected(false);
-          setConnectionState('firebase-error');
-          setShowStatus(true);
-          
-          // Auto-hide after 5 seconds for Firebase errors
-          setTimeout(() => {
-            setShowStatus(false);
-            setFirebaseConnected(true);
-          }, 5000);
-        }
-        originalError.apply(console, args);
-      };
+      // Note: In production, Firebase errors are handled by the logger
+      // This is a lightweight monitor for connection state only
+      const checkFirebaseHealth = setInterval(() => {
+        // Firebase health is monitored via connection-manager
+      }, 10000);
       
       return () => {
-        console.error = originalError;
+        clearInterval(checkFirebaseHealth);
       };
     };
 

@@ -1,6 +1,7 @@
 // src/components/ErrorBoundary.tsx
 import React, { Component, ErrorInfo, ReactNode } from 'react';
 
+import { logger } from '@/utils/logger';
 interface Props {
   children: ReactNode;
   fallback?: ReactNode;
@@ -22,11 +23,11 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error('ErrorBoundary caught an error:', error, errorInfo);
+    logger.error('ErrorBoundary caught an error:', error, errorInfo);
     
     // Log Firebase-specific errors
     if (error.message.includes('firebase') || error.message.includes('firestore')) {
-      console.warn('Firebase error caught by ErrorBoundary:', {
+      logger.warn('Firebase error caught by ErrorBoundary:', {
         message: error.message,
         stack: error.stack,
         componentStack: errorInfo.componentStack

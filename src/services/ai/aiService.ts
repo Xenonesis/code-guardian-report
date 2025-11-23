@@ -2,6 +2,7 @@
 
 import { SecurityIssue, AnalysisResults } from '@/hooks/useAnalysis';
 
+import { logger } from '@/utils/logger';
 interface AIProvider {
   id: string;
   name: string;
@@ -61,7 +62,7 @@ export class AIService {
         model: key.model || this.getDefaultModel(key.provider) // Include the model or use default
       }));
     } catch (error) {
-      console.error('Error parsing stored API keys:', error);
+      logger.error('Error parsing stored API keys:', error);
       return [];
     }
   }
@@ -80,7 +81,7 @@ export class AIService {
   }
 
   private async callOpenAI(apiKey: string, messages: ChatMessage[], model?: string): Promise<string> {
-    console.log('Calling OpenAI API...');
+    logger.debug('Calling OpenAI API...');
     
     if (!apiKey || !apiKey.startsWith('sk-')) {
       throw new Error('Invalid OpenAI API key format. Key should start with "sk-"');
@@ -88,7 +89,7 @@ export class AIService {
 
     // Use provided model or default to gpt-4o-mini
     const modelToUse = model || 'gpt-4o-mini';
-    console.log('Using OpenAI model:', modelToUse);
+    logger.debug('Using OpenAI model:', modelToUse);
 
     try {
       const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -105,11 +106,11 @@ export class AIService {
         }),
       });
 
-      console.log('OpenAI Response Status:', response.status);
+      logger.debug('OpenAI Response Status:', response.status);
 
       if (!response.ok) {
         const errorText = await response.text();
-        console.error('OpenAI API Error Response:', errorText);
+        logger.error('OpenAI API Error Response:', errorText);
         
         let errorMessage = `OpenAI API error (${response.status})`;
         try {
@@ -125,7 +126,7 @@ export class AIService {
       }
 
       const data = await response.json();
-      console.log('OpenAI API Response:', data);
+      logger.debug('OpenAI API Response:', data);
       
       if (!data.choices?.[0]?.message?.content) {
         throw new Error('Invalid response format from OpenAI - no content found');
@@ -133,13 +134,13 @@ export class AIService {
 
       return data.choices[0].message.content;
     } catch (error) {
-      console.error('OpenAI API call failed:', error);
+      logger.error('OpenAI API call failed:', error);
       throw error;
     }
   }
 
   private async callGemini(apiKey: string, messages: ChatMessage[], model?: string): Promise<string> {
-    console.log('Calling Gemini API...');
+    logger.debug('Calling Gemini API...');
     
     if (!apiKey) {
       throw new Error('Gemini API key is required');
@@ -147,7 +148,7 @@ export class AIService {
 
     // Use provided model or default to gemini-1.5-flash
     const modelToUse = model || 'gemini-1.5-flash';
-    console.log('Using Gemini model:', modelToUse);
+    logger.debug('Using Gemini model:', modelToUse);
 
     try {
       // Convert messages to Gemini format
@@ -180,11 +181,11 @@ export class AIService {
         }),
       });
 
-      console.log('Gemini Response Status:', response.status);
+      logger.debug('Gemini Response Status:', response.status);
 
       if (!response.ok) {
         const errorText = await response.text();
-        console.error('Gemini API Error Response:', errorText);
+        logger.error('Gemini API Error Response:', errorText);
         
         let errorMessage = `Gemini API error (${response.status})`;
         try {
@@ -200,7 +201,7 @@ export class AIService {
       }
 
       const data = await response.json();
-      console.log('Gemini API Response:', data);
+      logger.debug('Gemini API Response:', data);
       
       if (!data.candidates?.[0]?.content?.parts?.[0]?.text) {
         throw new Error('Invalid response format from Gemini - no content found');
@@ -208,13 +209,13 @@ export class AIService {
 
       return data.candidates[0].content.parts[0].text;
     } catch (error) {
-      console.error('Gemini API call failed:', error);
+      logger.error('Gemini API call failed:', error);
       throw error;
     }
   }
 
   private async callClaude(apiKey: string, messages: ChatMessage[], model?: string): Promise<string> {
-    console.log('Calling Claude API...');
+    logger.debug('Calling Claude API...');
     
     if (!apiKey) {
       throw new Error('Claude API key is required');
@@ -222,7 +223,7 @@ export class AIService {
 
     // Use provided model or default to claude-3-5-sonnet-20241022
     const modelToUse = model || 'claude-3-5-sonnet-20241022';
-    console.log('Using Claude model:', modelToUse);
+    logger.debug('Using Claude model:', modelToUse);
 
     try {
       const systemMessage = messages.find(m => m.role === 'system');
@@ -243,11 +244,11 @@ export class AIService {
         }),
       });
 
-      console.log('Claude Response Status:', response.status);
+      logger.debug('Claude Response Status:', response.status);
 
       if (!response.ok) {
         const errorText = await response.text();
-        console.error('Claude API Error Response:', errorText);
+        logger.error('Claude API Error Response:', errorText);
         
         let errorMessage = `Claude API error (${response.status})`;
         try {
@@ -263,7 +264,7 @@ export class AIService {
       }
 
       const data = await response.json();
-      console.log('Claude API Response:', data);
+      logger.debug('Claude API Response:', data);
       
       if (!data.content?.[0]?.text) {
         throw new Error('Invalid response format from Claude - no content found');
@@ -271,14 +272,14 @@ export class AIService {
 
       return data.content[0].text;
     } catch (error) {
-      console.error('Claude API call failed:', error);
+      logger.error('Claude API call failed:', error);
       throw error;
     }
   }
 
   async generateResponse(messages: ChatMessage[]): Promise<string> {
     const apiKeys = this.getStoredAPIKeys();
-    console.log('Available API keys:', apiKeys.map(k => ({ id: k.id, name: k.name, model: k.model })));
+    logger.debug('Available API keys:', apiKeys.map(k => ({ id: k.id, name: k.name, model: k.model })));
     
     if (apiKeys.length === 0) {
       throw new Error('No AI API keys configured. Please add an API key in the AI Configuration tab.');
@@ -289,7 +290,7 @@ export class AIService {
     // Try each API key until one works
     for (const provider of apiKeys) {
       try {
-        console.log(`Trying provider: ${provider.name} (${provider.id}) with model: ${provider.model || 'default'}`);
+        logger.debug(`Trying provider: ${provider.name} (${provider.id}) with model: ${provider.model || 'default'}`);
         
         switch (provider.id) {
           case 'openai':
@@ -299,13 +300,13 @@ export class AIService {
           case 'claude':
             return await this.callClaude(provider.apiKey, messages, provider.model);
           default:
-            console.warn(`Unsupported provider: ${provider.id}`);
+            logger.warn(`Unsupported provider: ${provider.id}`);
             errors.push(`Unsupported provider: ${provider.id}`);
             continue;
         }
       } catch (error) {
         const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-        console.error(`Error with ${provider.name}:`, errorMessage);
+        logger.error(`Error with ${provider.name}:`, errorMessage);
         errors.push(`${provider.name}: ${errorMessage}`);
         continue;
       }
@@ -316,7 +317,7 @@ export class AIService {
   }
 
   async generateSummary(issues: SecurityIssue[]): Promise<string> {
-    console.log('Generating summary for', issues.length, 'issues');
+    logger.debug('Generating summary for', issues.length, 'issues');
     
     if (!issues || issues.length === 0) {
       throw new Error('No issues provided for summary generation');
@@ -356,7 +357,7 @@ export class AIService {
     try {
       return await this.generateResponse([systemPrompt, userPrompt]);
     } catch (error) {
-      console.error('Summary generation failed:', error);
+      logger.error('Summary generation failed:', error);
       throw new Error(`Failed to generate AI summary: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
@@ -436,7 +437,7 @@ Please provide actionable insights that help prioritize security improvements an
   }
 
   async generateOwaspExplanation(owaspCategory: string, relatedIssues: SecurityIssue[]): Promise<string> {
-    console.log('Generating OWASP explanation for:', owaspCategory);
+    logger.debug('Generating OWASP explanation for:', owaspCategory);
 
     const systemPrompt = {
       role: 'system' as const,
@@ -474,13 +475,13 @@ Please provide specific guidance based on these actual findings in our codebase.
     try {
       return await this.generateResponse([systemPrompt, userPrompt]);
     } catch (error) {
-      console.error('OWASP explanation generation failed:', error);
+      logger.error('OWASP explanation generation failed:', error);
       throw new Error(`Failed to generate OWASP explanation: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 
   async generateRemediationStrategy(analysisResults: AnalysisResults): Promise<string> {
-    console.log('Generating remediation strategy');
+    logger.debug('Generating remediation strategy');
 
     const systemPrompt = {
       role: 'system' as const,
@@ -536,13 +537,13 @@ Please provide a realistic, actionable remediation roadmap with specific timelin
     try {
       return await this.generateResponse([systemPrompt, userPrompt]);
     } catch (error) {
-      console.error('Remediation strategy generation failed:', error);
+      logger.error('Remediation strategy generation failed:', error);
       throw new Error(`Failed to generate remediation strategy: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 
   async answerQuestion(question: string, analysisResults: AnalysisResults): Promise<string> {
-    console.log('Answering question:', question);
+    logger.debug('Answering question:', question);
 
     if (!analysisResults || !analysisResults.issues) {
       throw new Error('No analysis results provided for question answering');
@@ -580,7 +581,7 @@ Please provide a realistic, actionable remediation roadmap with specific timelin
     try {
       return await this.generateResponse([systemPrompt, contextPrompt]);
     } catch (error) {
-      console.error('Question answering failed:', error);
+      logger.error('Question answering failed:', error);
       throw new Error(`Failed to answer question: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }

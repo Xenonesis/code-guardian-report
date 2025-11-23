@@ -5,6 +5,7 @@
  */
 
 import { useEffect } from 'react';
+import { logger } from '@/utils/logger';
 // import { FirebaseTestPanel } from '@/components/FirebaseTestPanel'; // Not available
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -18,7 +19,7 @@ export const TestPage = ({ onBack }: TestPageProps) => {
   // Prevent access in production
   useEffect(() => {
     if (import.meta.env.PROD) {
-      console.warn('⚠️ Test pages are not available in production');
+      logger.warn('⚠️ Test pages are not available in production');
       window.location.href = '/';
     }
   }, []);

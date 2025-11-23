@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { testFirebaseIntegration, testFirebaseConnection } from '@/tests/firebaseIntegrationTest';
 
+import { logger } from '@/utils/logger';
 interface TestResult {
   success: boolean;
   results: {
@@ -42,7 +43,7 @@ export const FirebaseTestPanel = () => {
       const result = await testFirebaseConnection();
       setConnectionStatus(result);
     } catch (error) {
-      console.error('Connection test error:', error);
+      logger.error('Connection test error:', error);
       setConnectionStatus(false);
     }
   };
@@ -52,11 +53,11 @@ export const FirebaseTestPanel = () => {
     setTestResult(null);
     
     try {
-      console.log('🚀 Starting Firebase integration tests...');
+      logger.debug('🚀 Starting Firebase integration tests...');
       const result = await testFirebaseIntegration();
       setTestResult(result);
     } catch (error) {
-      console.error('Test execution error:', error);
+      logger.error('Test execution error:', error);
       setTestResult({
         success: false,
         results: {

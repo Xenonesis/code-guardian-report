@@ -31,6 +31,7 @@ import {
 } from '../../services/detection/codeProvenanceService';
 import { toast } from 'sonner';
 
+import { logger } from '@/utils/logger';
 interface CodeProvenanceCardProps {
   files?: { filename: string; content: string }[];
   onInitializeMonitoring?: () => void;
@@ -88,7 +89,7 @@ export const CodeProvenanceCard: React.FC<CodeProvenanceCardProps> = ({
       }
     } catch (error) {
       toast.error('Integrity scan failed');
-      console.error('Scan error:', error);
+      logger.error('Scan error:', error);
     } finally {
       setIsScanning(false);
     }
@@ -120,7 +121,7 @@ export const CodeProvenanceCard: React.FC<CodeProvenanceCardProps> = ({
       onInitializeMonitoring?.();
     } catch (error) {
       toast.error('Failed to initialize monitoring');
-      console.error('Monitoring initialization error:', error);
+      logger.error('Monitoring initialization error:', error);
     } finally {
       setIsScanning(false);
     }

@@ -5,13 +5,14 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
+import { logger } from '@/utils/logger';
 type Provider = 'google.com' | 'github.com' | 'password' | 'facebook.com' | 'twitter.com';
 
 export const AccountConflictDemo: React.FC = () => {
   // Prevent access in production
   useEffect(() => {
     if (import.meta.env.PROD) {
-      console.warn('⚠️ Demo pages are not available in production');
+      logger.warn('⚠️ Demo pages are not available in production');
       window.location.href = '/';
     }
   }, []);
@@ -22,7 +23,7 @@ export const AccountConflictDemo: React.FC = () => {
   const [email, setEmail] = useState('user@example.com');
 
   const handleSignInWithExisting = () => {
-    console.log('Sign in with existing provider:', existingProvider);
+    logger.debug('Sign in with existing provider:', existingProvider);
     setIsLinking(true);
     
     // Simulate async operation
@@ -34,7 +35,7 @@ export const AccountConflictDemo: React.FC = () => {
   };
 
   const handleTryDifferentMethod = () => {
-    console.log('User wants to try a different method');
+    logger.debug('User wants to try a different method');
     setIsModalOpen(false);
     alert('Redirecting to sign-in options...');
   };

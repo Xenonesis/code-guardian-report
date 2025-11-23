@@ -1,3 +1,5 @@
+import { logger } from '@/utils/logger';
+
 export interface FileIntegrityRecord {
   id: string;
   filename: string;
@@ -71,7 +73,7 @@ export class CodeProvenanceService {
   public async initializeMonitoring(
     files: { filename: string; content: string; path?: string }[]
   ): Promise<void> {
-    console.log('Initializing code provenance monitoring...');
+    logger.debug('Initializing code provenance monitoring...');
 
     for (const file of files) {
       await this.addFileToMonitoring(file.filename, file.content, file.path);
@@ -80,7 +82,7 @@ export class CodeProvenanceService {
     this.monitoringEnabled = true;
     this.saveData();
     
-    console.log(`Monitoring initialized for ${files.length} files`);
+    logger.debug(`Monitoring initialized for ${files.length} files`);
   }
 
   /**

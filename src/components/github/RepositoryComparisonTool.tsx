@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { GitHubAnalysisStorageService } from '@/services/storage/GitHubAnalysisStorageService';
 
+import { logger } from '@/utils/logger';
 interface Repository {
   id: string;
   name: string;
@@ -60,7 +61,7 @@ export const RepositoryComparisonTool: React.FC<RepositoryComparisonToolProps> =
         setSelectedRepos([repos[0], repos[1]]);
       }
     } catch (error) {
-      console.error('Error loading repositories:', error);
+      logger.error('Error loading repositories:', error);
     } finally {
       setLoading(false);
     }

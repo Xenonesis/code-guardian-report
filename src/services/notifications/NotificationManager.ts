@@ -5,6 +5,7 @@
 
 import { toast } from 'sonner';
 
+import { logger } from '@/utils/logger';
 export type NotificationPriority = 'low' | 'normal' | 'high' | 'urgent';
 export type NotificationType = 'success' | 'error' | 'warning' | 'info';
 export type NotificationCategory = 
@@ -102,7 +103,7 @@ class NotificationManagerClass {
         return { ...DEFAULT_PREFERENCES, ...JSON.parse(stored) };
       }
     } catch (error) {
-      console.error('Failed to load notification preferences:', error);
+      logger.error('Failed to load notification preferences:', error);
     }
     return DEFAULT_PREFERENCES;
   }
@@ -115,7 +116,7 @@ class NotificationManagerClass {
       localStorage.setItem('notificationPreferences', JSON.stringify(this.preferences));
       this.notifyPreferencesListeners();
     } catch (error) {
-      console.error('Failed to save notification preferences:', error);
+      logger.error('Failed to save notification preferences:', error);
     }
   }
 
@@ -132,7 +133,7 @@ class NotificationManagerClass {
         this.notifyListeners();
       }
     } catch (error) {
-      console.error('Failed to load notification history:', error);
+      logger.error('Failed to load notification history:', error);
     }
   }
 
@@ -147,7 +148,7 @@ class NotificationManagerClass {
       const toSave = this.notifications.slice(-this.preferences.maxHistorySize);
       localStorage.setItem('notificationHistory', JSON.stringify(toSave));
     } catch (error) {
-      console.error('Failed to save notification history:', error);
+      logger.error('Failed to save notification history:', error);
     }
   }
 

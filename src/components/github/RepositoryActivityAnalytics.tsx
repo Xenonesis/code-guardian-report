@@ -3,6 +3,7 @@ import { Card } from '@/components/ui/card';
 import { Activity, GitBranch, Code, Zap } from 'lucide-react';
 import { GitHubAnalysisStorageService } from '@/services/storage/GitHubAnalysisStorageService';
 
+import { logger } from '@/utils/logger';
 interface LanguageDistribution {
   language: string;
   count: number;
@@ -39,7 +40,7 @@ export const RepositoryActivityAnalytics: React.FC<RepositoryActivityAnalyticsPr
       setLanguageDistribution(data.languageDistribution);
       setActivityStats(data.stats);
     } catch (error) {
-      console.error('Error loading activity analytics:', error);
+      logger.error('Error loading activity analytics:', error);
     } finally {
       setLoading(false);
     }

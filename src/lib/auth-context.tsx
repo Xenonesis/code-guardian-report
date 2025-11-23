@@ -20,6 +20,7 @@ import { auth, googleProvider, githubProvider, db } from './firebase';
 import { safeGetDoc, safeSetDoc, isConnectionError } from './firestore-utils';
 import { showAuthFallbackMessage, handleAuthError, cleanupRedirectUrl, showRedirectLoadingMessage, getEmailFromError } from './auth-utils';
 
+import { logger } from '@/utils/logger';
 type Provider = 'google.com' | 'github.com' | 'password' | 'facebook.com' | 'twitter.com';
 
 interface AccountConflictState {
@@ -301,7 +302,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         
         return true; // Handled
       } catch (fetchError) {
-        console.error('Error fetching sign-in methods:', fetchError);
+        logger.error('Error fetching sign-in methods:', fetchError);
         handleAuthError(error, 'Account conflict detection');
         return false;
       }
@@ -345,9 +346,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       if (pendingCredential && userCredential.user) {
         try {
           await linkWithCredential(userCredential.user, pendingCredential);
-          console.log('Successfully linked accounts');
+          logger.debug('Successfully linked accounts');
         } catch (linkError) {
-          console.error('Error linking accounts:', linkError);
+          logger.error('Error linking accounts:', linkError);
           // User is still signed in even if linking fails
         }
       }
@@ -355,7 +356,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       await createUserProfile(userCredential.user);
       setAccountConflict(prev => ({ ...prev, isOpen: false }));
     } catch (error: any) {
-      console.error('Error signing in with existing provider:', error);
+      logger.error('Error signing in with existing provider:', error);
       handleAuthError(error, 'Sign in with existing provider');
     } finally {
       setIsLinkingAccounts(false);

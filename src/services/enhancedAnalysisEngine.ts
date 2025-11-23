@@ -4,6 +4,7 @@ import { MetricsCalculator } from './analysis/MetricsCalculator';
 import { ASTAnalyzer } from './analysis/ASTAnalyzer';
 import { DataFlowAnalyzer } from './analysis/DataFlowAnalyzer';
 import { DependencyVulnerabilityScanner } from './security/dependencyVulnerabilityScanner';
+import { logger } from '@/utils/logger';
 import JSZip from 'jszip';
 
 interface FileContent {
@@ -45,7 +46,7 @@ export class EnhancedAnalysisEngine {
         }
       }
     } catch (error) {
-      console.error('Failed to extract zip file contents:', error);
+      logger.error('Failed to extract zip file contents:', error);
       throw new Error('Failed to extract zip file contents');
     }
 
@@ -103,7 +104,7 @@ export class EnhancedAnalysisEngine {
   }
 
   public async analyzeCodebase(zipFile: { arrayBuffer: () => Promise<ArrayBuffer> }): Promise<AnalysisResults> {
-    console.log('🚀 Starting analyzeCodebase...');
+    logger.info('Starting codebase analysis');
     const startTime = Date.now();
     let allIssues: SecurityIssue[] = [];
     let linesAnalyzed = 0;
@@ -113,10 +114,10 @@ export class EnhancedAnalysisEngine {
 
     if (zipFile) {
       try {
-        console.log('📂 Extracting ZIP contents...');
+        logger.debug('Extracting ZIP contents');
         const fileContents = await this.extractZipContents(zipFile);
         totalFiles = fileContents.length;
-        console.log(`📂 Extracted ${totalFiles} files.`);
+        logger.info(`Extracted ${totalFiles} files for analysis`);
 
         if (totalFiles === 0) {
           throw new Error('This ZIP file does not contain any code files. Please upload a ZIP file with source code (.js, .py, .java, .ts, etc.)');
@@ -129,11 +130,11 @@ export class EnhancedAnalysisEngine {
         }
 
         // Initialize smart language detection
-        console.log('🔍 Initializing analysis context...');
+        logger.debug('Initializing analysis context');
         await this.securityAnalyzer.initializeAnalysisContext(fileContents);
 
         // Phase 1: Pattern-based and framework-specific analysis
-        console.log('Phase 1: Pattern-based analysis...');
+        logger.debug('Phase 1: Pattern-based analysis');
         const analysisPromises = fileContents.map(fileContent => {
           const fileIssues = this.securityAnalyzer.analyzeFile(fileContent.filename, fileContent.content);
           const lines = fileContent.content.split('\n').length;
@@ -145,35 +146,35 @@ export class EnhancedAnalysisEngine {
           allIssues = [...allIssues, ...result.fileIssues];
           linesAnalyzed += result.lines;
         }
-        console.log(`Phase 1 complete. Found ${allIssues.length} issues so far.`);
+        logger.debug(`Phase 1 complete. Found ${allIssues.length} issues`);
 
         // Phase 2: AST-based deep analysis
-        console.log('Phase 2: AST-based deep analysis...');
+        logger.debug('Phase 2: AST-based deep analysis');
         for (const fileContent of fileContents) {
           const astIssues = this.astAnalyzer.analyzeAST(fileContent.filename, fileContent.content);
           allIssues = [...allIssues, ...astIssues];
         }
-        console.log(`Phase 2 complete. Total issues: ${allIssues.length}`);
+        logger.debug(`Phase 2 complete. Total issues: ${allIssues.length}`);
 
         // Phase 3: Data flow and taint analysis
-        console.log('Phase 3: Data flow analysis...');
+        logger.debug('Phase 3: Data flow analysis');
         const dataFlowIssues = this.dataFlowAnalyzer.analyzeDataFlow(fileContents);
         allIssues = [...allIssues, ...dataFlowIssues];
-        console.log(`Phase 3 complete. Total issues: ${allIssues.length}`);
+        logger.debug(`Phase 3 complete. Total issues: ${allIssues.length}`);
 
         // Phase 4: Dependency vulnerability scanning
-        console.log('Phase 4: Dependency scanning...');
+        logger.debug('Phase 4: Dependency scanning');
         try {
           // Map FileContent to expected format with 'name' property
           const filesForScanning = fileContents.map(f => ({ name: f.filename, content: f.content }));
           dependencyAnalysis = await this.dependencyScanner.scanDependencies(filesForScanning);
-          console.log('Phase 4 complete.');
+          logger.debug('Phase 4 complete');
         } catch (error) {
-          console.warn('Dependency scanning failed:', error);
+          logger.warn('Dependency scanning failed:', error);
           dependencyAnalysis = undefined;
         }
       } catch (error) {
-        console.error('❌ Error during analyzeCodebase:', error);
+        logger.error('Error during codebase analysis:', error);
         // Return error-based analysis for failed ZIP processing
         
         return {
@@ -200,7 +201,7 @@ export class EnhancedAnalysisEngine {
     const endTime = Date.now();
     const analysisTime = ((endTime - startTime) / 1000).toFixed(1) + 's';
 
-    console.log('✅ Analysis finished. Preparing results...');
+    logger.info(`Analysis complete in ${analysisTime}. Found ${allIssues.length} issues`);
     const analysisResults: AnalysisResults = {
       issues: allIssues,
       totalFiles,

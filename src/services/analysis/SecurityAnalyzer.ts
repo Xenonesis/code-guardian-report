@@ -8,6 +8,7 @@ import { LanguageDetectionService, DetectionResult, LanguageInfo, FrameworkInfo 
 import { FrameworkDetectionEngine, DependencyInfo } from '../detection/frameworkDetectionEngine';
 import { naturalLanguageDescriptionService } from '../ai/naturalLanguageDescriptionService';
 import { modernCodeScanningService, CodeQualityMetrics } from '../security/modernCodeScanningService';
+import { logger } from '@/utils/logger';
 
 type SupportedLanguage = 'javascript' | 'typescript' | 'python' | 'java' | 'php' | 'ruby' | 'golang' | 'csharp';
 type ToolsByLanguage = Record<SupportedLanguage, string[]>;
@@ -802,10 +803,10 @@ export class SecurityAnalyzer {
         
         // Log quality gate results for informational purposes
         if (!modernAnalysis.qualityGate.passed) {
-          console.info(`Quality Gate Failed for ${filename}:`, modernAnalysis.qualityGate.conditions);
+          logger.debug(`Quality Gate Failed for ${filename}`, modernAnalysis.qualityGate.conditions);
         }
       } catch (error) {
-        console.warn('Modern code scanning failed, falling back to traditional analysis:', error);
+        logger.debug('Modern code scanning failed, using traditional analysis', error);
       }
 
       // Real analysis with actual file content

@@ -3,6 +3,7 @@ import { Card } from '@/components/ui/card';
 import { Shield, TrendingUp, TrendingDown, AlertTriangle, CheckCircle } from 'lucide-react';
 import { GitHubAnalysisStorageService } from '@/services/storage/GitHubAnalysisStorageService';
 
+import { logger } from '@/utils/logger';
 interface SecurityTrend {
   date: string;
   score: number;
@@ -39,7 +40,7 @@ export const SecurityAnalyticsSection: React.FC<SecurityAnalyticsSectionProps> =
       setTrends(data.trends);
       setStats(data.stats);
     } catch (error) {
-      console.error('Error loading security analytics:', error);
+      logger.error('Error loading security analytics:', error);
     } finally {
       setLoading(false);
     }

@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { GitHubAnalysisStorageService } from '@/services/storage/GitHubAnalysisStorageService';
 
+import { logger } from '@/utils/logger';
 interface Repository {
   id: string;
   name: string;
@@ -50,7 +51,7 @@ export const RepositoryAnalysisGrid: React.FC<RepositoryAnalysisGridProps> = ({ 
       const repos = await storageService.getUserRepositories(userId);
       setRepositories(repos);
     } catch (error) {
-      console.error('Error loading repositories:', error);
+      logger.error('Error loading repositories:', error);
     } finally {
       setLoading(false);
     }

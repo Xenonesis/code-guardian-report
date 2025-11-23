@@ -7,11 +7,12 @@ import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
 
+import { logger } from '@/utils/logger';
 export const TestAuthConflict: React.FC = () => {
   // Prevent access in production
   useEffect(() => {
     if (import.meta.env.PROD) {
-      console.warn('⚠️ Test pages are not available in production');
+      logger.warn('⚠️ Test pages are not available in production');
       window.location.href = '/';
     }
   }, []);

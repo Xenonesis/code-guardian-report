@@ -18,6 +18,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Webhook, Plus, Trash2, Settings, Activity, Bell, Shield, Code } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+import { logger } from '@/utils/logger';
 const WebhookManagement: React.FC = () => {
   const { user } = useAuth();
   const [webhooks, setWebhooks] = useState<WebhookConfig[]>([]);
@@ -39,7 +40,7 @@ const WebhookManagement: React.FC = () => {
       const data = await WebhookManager.getWebhooks(user.uid);
       setWebhooks(data);
     } catch (error) {
-      console.error('Failed to load webhooks:', error);
+      logger.error('Failed to load webhooks:', error);
     } finally {
       setIsLoading(false);
     }
@@ -67,7 +68,7 @@ const WebhookManagement: React.FC = () => {
       await loadWebhooks();
       setIsCreateDialogOpen(false);
     } catch (error) {
-      console.error('Failed to create webhook:', error);
+      logger.error('Failed to create webhook:', error);
     }
   };
 
@@ -76,7 +77,7 @@ const WebhookManagement: React.FC = () => {
       await WebhookManager.updateWebhook(webhookId, { active });
       await loadWebhooks();
     } catch (error) {
-      console.error('Failed to toggle webhook:', error);
+      logger.error('Failed to toggle webhook:', error);
     }
   };
 
@@ -87,7 +88,7 @@ const WebhookManagement: React.FC = () => {
       await WebhookManager.deleteWebhook(webhookId);
       await loadWebhooks();
     } catch (error) {
-      console.error('Failed to delete webhook:', error);
+      logger.error('Failed to delete webhook:', error);
     }
   };
 

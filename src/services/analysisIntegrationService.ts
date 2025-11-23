@@ -8,6 +8,7 @@ import { AnalysisResults } from '@/hooks/useAnalysis';
 import { analysisStorage } from './storage/analysisStorage';
 import { firebaseAnalysisStorage } from './storage/firebaseAnalysisStorage';
 
+import { logger } from '@/utils/logger';
 export interface AnalysisStorageOptions {
   storeLocally?: boolean;
   storeInFirebase?: boolean;
@@ -66,10 +67,10 @@ export class AnalysisIntegrationService {
       try {
         await analysisStorage.storeAnalysisResults(results, file);
         result.local.success = true;
-        console.log('✅ Analysis stored locally');
+        logger.debug('✅ Analysis stored locally');
       } catch (error) {
         result.local.error = error instanceof Error ? error.message : 'Unknown error';
-        console.error('❌ Failed to store analysis locally:', error);
+        logger.error('❌ Failed to store analysis locally:', error);
       }
     }
 
@@ -85,10 +86,10 @@ export class AnalysisIntegrationService {
         );
         result.firebase.success = true;
         result.firebase.analysisId = analysisId;
-        console.log('✅ Analysis stored in Firebase:', analysisId);
+        logger.debug('✅ Analysis stored in Firebase:', analysisId);
       } catch (error) {
         result.firebase.error = error instanceof Error ? error.message : 'Unknown error';
-        console.error('❌ Failed to store analysis in Firebase:', error);
+        logger.error('❌ Failed to store analysis in Firebase:', error);
       }
     } else if (storeInFirebase && !userId) {
       result.firebase.error = 'User authentication required for Firebase storage';
@@ -107,8 +108,8 @@ export class AnalysisIntegrationService {
     userId?: string,
     options: Partial<AnalysisStorageOptions> = {}
   ): Promise<StorageResult> {
-    console.log('🔄 Handling analysis completion...');
-    console.log('📊 Input params:', {
+    logger.debug('🔄 Handling analysis completion...');
+    logger.debug('📊 Input params:', {
       hasResults: !!results,
       fileName: file?.name,
       fileSize: file?.size,
@@ -125,33 +126,33 @@ export class AnalysisIntegrationService {
       ...options
     };
 
-    console.log('⚙️ Storage options:', storageOptions);
+    logger.debug('⚙️ Storage options:', storageOptions);
 
     try {
       const result = await this.storeAnalysisResults(results, file, storageOptions);
 
       // Enhanced logging with more detail
-      console.log('📝 Storage result:', result);
+      logger.debug('📝 Storage result:', result);
       
       if (result.local.success && result.firebase.success) {
-        console.log('✅ SUCCESS: Analysis stored in both local and Firebase storage');
-        console.log(`🔥 Firebase analysis ID: ${result.firebase.analysisId}`);
+        logger.debug('✅ SUCCESS: Analysis stored in both local and Firebase storage');
+        logger.debug(`🔥 Firebase analysis ID: ${result.firebase.analysisId}`);
       } else if (result.local.success) {
-        console.log('✅ SUCCESS: Analysis stored locally');
-        console.log('⚠️ Firebase storage failed or unavailable:', result.firebase.error);
+        logger.debug('✅ SUCCESS: Analysis stored locally');
+        logger.debug('⚠️ Firebase storage failed or unavailable:', result.firebase.error);
       } else if (result.firebase.success) {
-        console.log('✅ SUCCESS: Analysis stored in Firebase');
-        console.log('⚠️ Local storage failed:', result.local.error);
+        logger.debug('✅ SUCCESS: Analysis stored in Firebase');
+        logger.debug('⚠️ Local storage failed:', result.local.error);
       } else {
-        console.error('❌ FAILED: Both local and Firebase storage failed');
-        console.error('Local error:', result.local.error);
-        console.error('Firebase error:', result.firebase.error);
+        logger.error('❌ FAILED: Both local and Firebase storage failed');
+        logger.error('Local error:', result.local.error);
+        logger.error('Firebase error:', result.firebase.error);
       }
 
       return result;
     } catch (error) {
-      console.error('❌ CRITICAL ERROR in handleAnalysisComplete:', error);
-      console.error('Stack trace:', error instanceof Error ? error.stack : 'No stack trace');
+      logger.error('❌ CRITICAL ERROR in handleAnalysisComplete:', error);
+      logger.error('Stack trace:', error instanceof Error ? error.stack : 'No stack trace');
       throw error;
     }
   }
@@ -172,7 +173,7 @@ export class AnalysisIntegrationService {
           };
         }
       } catch (error) {
-        console.error('Error getting Firebase analysis:', error);
+        logger.error('Error getting Firebase analysis:', error);
       }
     }
 
@@ -193,14 +194,14 @@ export class AnalysisIntegrationService {
    */
   public async syncLocalToFirebase(userId: string, file?: File): Promise<boolean> {
     if (!userId) {
-      console.error('User ID required for syncing to Firebase');
+      logger.error('User ID required for syncing to Firebase');
       return false;
     }
 
     try {
       const localAnalysis = analysisStorage.getCurrentAnalysis();
       if (!localAnalysis || !file) {
-        console.log('No local analysis to sync or file missing');
+        logger.debug('No local analysis to sync or file missing');
         return false;
       }
 
@@ -214,7 +215,7 @@ export class AnalysisIntegrationService {
       );
 
       if (existingAnalysis) {
-        console.log('Analysis already exists in Firebase, skipping sync');
+        logger.debug('Analysis already exists in Firebase, skipping sync');
         return true;
       }
 
@@ -226,10 +227,10 @@ export class AnalysisIntegrationService {
         false
       );
 
-      console.log('✅ Local analysis synced to Firebase');
+      logger.debug('✅ Local analysis synced to Firebase');
       return true;
     } catch (error) {
-      console.error('❌ Failed to sync local analysis to Firebase:', error);
+      logger.error('❌ Failed to sync local analysis to Firebase:', error);
       return false;
     }
   }
@@ -240,12 +241,12 @@ export class AnalysisIntegrationService {
   public clearAllAnalysisData(userId?: string): void {
     // Clear local storage
     analysisStorage.clearCurrentAnalysis();
-    console.log('✅ Local analysis data cleared');
+    logger.debug('✅ Local analysis data cleared');
 
     // Note: Firebase data is not automatically cleared for safety
     // Users can manually delete from the Firebase dashboard
     if (userId) {
-      console.log('ℹ️ Firebase data preserved. Use Firebase dashboard to manage cloud data.');
+      logger.debug('ℹ️ Firebase data preserved. Use Firebase dashboard to manage cloud data.');
     }
   }
 

@@ -1,3 +1,5 @@
+import { logger } from '@/utils/logger';
+
 // PWA Analytics Service
 // Tracks PWA usage, performance, and user engagement
 
@@ -129,7 +131,7 @@ class PWAAnalyticsService {
           this.saveAnalytics();
         }
       } catch (error) {
-        console.error('Failed to get cache analytics:', error);
+        logger.error('Failed to get cache analytics:', error);
       }
     }
   }
@@ -143,7 +145,7 @@ class PWAAnalyticsService {
         this.saveAnalytics();
       }
     } catch (error) {
-      console.error('Failed to get storage estimate:', error);
+      logger.error('Failed to get storage estimate:', error);
     }
   }
 
@@ -171,7 +173,7 @@ class PWAAnalyticsService {
         this.saveAnalytics();
       }
     } catch (error) {
-      console.error('Failed to calculate cache size:', error);
+      logger.error('Failed to calculate cache size:', error);
     }
   }
 
@@ -313,7 +315,7 @@ class PWAAnalyticsService {
         return { ...this.createEmptyAnalytics(), ...JSON.parse(stored) };
       }
     } catch (error) {
-      console.error('Failed to load analytics:', error);
+      logger.error('Failed to load analytics:', error);
     }
     return this.createEmptyAnalytics();
   }
@@ -322,7 +324,7 @@ class PWAAnalyticsService {
     try {
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.analytics));
     } catch (error) {
-      console.error('Failed to save analytics:', error);
+      logger.error('Failed to save analytics:', error);
     }
   }
 
@@ -332,7 +334,7 @@ class PWAAnalyticsService {
       const eventsToSave = this.events.slice(-1000);
       localStorage.setItem(this.EVENTS_KEY, JSON.stringify(eventsToSave));
     } catch (error) {
-      console.error('Failed to save events:', error);
+      logger.error('Failed to save events:', error);
     }
   }
 }

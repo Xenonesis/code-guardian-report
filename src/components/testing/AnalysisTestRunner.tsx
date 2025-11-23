@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { AlertCircle, CheckCircle, XCircle, PlayCircle, Loader2 } from 'lucide-react';
 
+import { logger } from '@/utils/logger';
 interface TestResult {
   testName: string;
   status: 'PASS' | 'FAIL';
@@ -37,7 +38,7 @@ export function AnalysisTestRunner() {
       const testResults = await runAnalysisAccuracyTests();
       setResults(testResults);
     } catch (error) {
-      console.error('Test execution failed:', error);
+      logger.error('Test execution failed:', error);
     } finally {
       setIsRunning(false);
     }

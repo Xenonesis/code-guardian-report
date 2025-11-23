@@ -4,6 +4,7 @@ import { useAuth } from '@/lib/auth-context';
 import { collection, query, where, getDocs, addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
+import { logger } from '@/utils/logger';
 interface Task {
   id: string;
   title: string;
@@ -38,7 +39,7 @@ const UserDashboard: React.FC = () => {
 
       setTasks(userTasks.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()));
     } catch (error) {
-      console.warn('Firestore connection error - tasks feature unavailable:', error);
+      logger.warn('Firestore connection error - tasks feature unavailable:', error);
       // You could show a message to the user here if needed
       setTasks([]);
     }
@@ -63,7 +64,7 @@ const UserDashboard: React.FC = () => {
       setNewTaskDescription('');
       await fetchTasks();
     } catch (error) {
-      console.warn('Firestore connection error - unable to add task:', error);
+      logger.warn('Firestore connection error - unable to add task:', error);
       // You could show a toast notification here
     } finally {
       setLoading(false);
@@ -76,7 +77,7 @@ const UserDashboard: React.FC = () => {
       await updateDoc(taskRef, { completed: !completed });
       await fetchTasks();
     } catch (error) {
-      console.warn('Firestore connection error - unable to update task:', error);
+      logger.warn('Firestore connection error - unable to update task:', error);
     }
   };
 
@@ -85,7 +86,7 @@ const UserDashboard: React.FC = () => {
       await deleteDoc(doc(db, 'tasks', taskId));
       await fetchTasks();
     } catch (error) {
-      console.warn('Firestore connection error - unable to delete task:', error);
+      logger.warn('Firestore connection error - unable to delete task:', error);
     }
   };
 
@@ -93,7 +94,7 @@ const UserDashboard: React.FC = () => {
     try {
       await logout();
     } catch (error) {
-      console.error('Error signing out:', error);
+      logger.error('Error signing out:', error);
     }
   };
 

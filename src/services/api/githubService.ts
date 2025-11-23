@@ -1,3 +1,5 @@
+import { logger } from '@/utils/logger';
+
 export interface GitHubContributor {
   id: number;
   login: string;
@@ -37,7 +39,7 @@ class GitHubService {
         contributor.type === 'User' && contributor.contributions > 0
       );
     } catch (error) {
-      console.error('Error fetching contributors:', error);
+      logger.error('Error fetching contributors:', error);
       return [];
     }
   }
@@ -52,7 +54,7 @@ class GitHubService {
       
       return await response.json();
     } catch (error) {
-      console.error(`Error fetching details for ${username}:`, error);
+      logger.error(`Error fetching details for ${username}:`, error);
       return null;
     }
   }
@@ -77,7 +79,7 @@ class GitHubService {
 
       return contributorsWithDetails;
     } catch (error) {
-      console.error('Error fetching contributors with details:', error);
+      logger.error('Error fetching contributors with details:', error);
       return [];
     }
   }
@@ -102,7 +104,7 @@ class GitHubService {
         description: repo.description
       };
     } catch (error) {
-      console.error('Error fetching repository stats:', error);
+      logger.error('Error fetching repository stats:', error);
       return null;
     }
   }

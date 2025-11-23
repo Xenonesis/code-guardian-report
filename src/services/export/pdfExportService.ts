@@ -2,6 +2,7 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { AnalysisResults } from '@/hooks/useAnalysis';
 
+import { logger } from '@/utils/logger';
 export interface PDFReportOptions {
   includeCharts?: boolean;
   includeCodeSnippets?: boolean;
@@ -53,7 +54,7 @@ export class PDFExportService {
       const pdfBlob = this.doc.output('blob');
       return pdfBlob;
     } catch (error) {
-      console.error('Error generating PDF report:', error);
+      logger.error('Error generating PDF report:', error);
       throw new Error('Failed to generate PDF report');
     }
   }
@@ -224,7 +225,7 @@ export class PDFExportService {
       });
       return canvas.toDataURL('image/png');
     } catch (error) {
-      console.error('Error capturing element:', error);
+      logger.error('Error capturing element:', error);
       throw new Error('Failed to capture element as image');
     }
   }

@@ -28,6 +28,7 @@ import { db } from '@/lib/firebase';
 import { AnalysisResults } from '@/hooks/useAnalysis';
 import { safeGetDoc, safeSetDoc } from '@/lib/firestore-utils';
 
+import { logger } from '@/utils/logger';
 export interface FirebaseAnalysisData {
   id: string;
   userId: string;
@@ -114,7 +115,7 @@ export class FirebaseAnalysisStorageService {
     }
 
     try {
-      console.log('🔥 Storing analysis results to Firebase...', {
+      logger.debug('🔥 Storing analysis results to Firebase...', {
         fileName: file.name,
         fileSize: file.size,
         userId: this.userId,
@@ -158,7 +159,7 @@ export class FirebaseAnalysisStorageService {
       // Store in Firestore
       const docRef = await addDoc(collection(db, FirebaseAnalysisStorageService.COLLECTION_NAME), sanitizedData);
 
-      console.log('✅ Analysis stored successfully with ID:', docRef.id);
+      logger.debug('✅ Analysis stored successfully with ID:', docRef.id);
 
       // Update sync status
       await updateDoc(docRef, { syncStatus: 'synced' });
@@ -167,7 +168,7 @@ export class FirebaseAnalysisStorageService {
       return docRef.id;
 
     } catch (error) {
-      console.error('❌ Failed to store analysis results to Firebase:', error);
+      logger.error('❌ Failed to store analysis results to Firebase:', error);
       throw new Error(`Failed to store analysis results: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
@@ -193,7 +194,7 @@ export class FirebaseAnalysisStorageService {
       
       return null;
     } catch (error) {
-      console.error('Error getting analysis by ID:', error);
+      logger.error('Error getting analysis by ID:', error);
       return null;
     }
   }
@@ -231,7 +232,7 @@ export class FirebaseAnalysisStorageService {
         querySnapshot = await getDocs(q);
       } catch (err: any) {
         // Fallback when composite index is missing or other precondition fails
-        console.warn('Primary history query failed, falling back to basic query:', err?.code || err);
+        logger.warn('Primary history query failed, falling back to basic query:', err?.code || err);
         let fallback = query(
           collection(db, FirebaseAnalysisStorageService.COLLECTION_NAME),
           where('userId', '==', targetUserId)
@@ -283,7 +284,7 @@ export class FirebaseAnalysisStorageService {
       return results.slice(0, limitAmount);
 
     } catch (error) {
-      console.error('Error getting user analysis history:', error);
+      logger.error('Error getting user analysis history:', error);
       throw error;
     }
   }
@@ -328,7 +329,7 @@ export class FirebaseAnalysisStorageService {
         lastAnalysis: null,
       };
     } catch (error) {
-      console.error('Error getting user stats:', error);
+      logger.error('Error getting user stats:', error);
       throw error;
     }
   }
@@ -365,7 +366,7 @@ export class FirebaseAnalysisStorageService {
       );
       
     } catch (error) {
-      console.error('Error deleting analysis results:', error);
+      logger.error('Error deleting analysis results:', error);
       throw error;
     }
   }
@@ -395,7 +396,7 @@ export class FirebaseAnalysisStorageService {
 
       await safeSetDoc(userStatsRef, updateData, { merge: true });
     } catch (error) {
-      console.error('Error updating user stats after deletion:', error);
+      logger.error('Error updating user stats after deletion:', error);
     }
   }
 
@@ -447,7 +448,7 @@ export class FirebaseAnalysisStorageService {
 
       return analysisId;
     } catch (error) {
-      console.error('❌ Failed to update analysis results:', error);
+      logger.error('❌ Failed to update analysis results:', error);
       throw error;
     }
   }
@@ -483,7 +484,7 @@ export class FirebaseAnalysisStorageService {
 
       return searchResults;
     } catch (error) {
-      console.error('Error searching analysis results:', error);
+      logger.error('Error searching analysis results:', error);
       throw error;
     }
   }
@@ -546,19 +547,19 @@ export class FirebaseAnalysisStorageService {
         (error: any) => {
           // Handle permission errors gracefully
           if (error?.code === 'permission-denied') {
-            console.warn('⚠️ Firebase real-time listener: Permission denied. User may not be authenticated or lacks access rights.');
+            logger.warn('⚠️ Firebase real-time listener: Permission denied. User may not be authenticated or lacks access rights.');
             // Clean up the listener
             if (this.unsubscribeSnapshot) {
               this.unsubscribeSnapshot();
               this.unsubscribeSnapshot = null;
             }
           } else {
-            console.error('❌ Real-time listener error:', error);
+            logger.error('❌ Real-time listener error:', error);
           }
         }
       );
     } catch (error) {
-      console.error('❌ Failed to setup real-time listener:', error);
+      logger.error('❌ Failed to setup real-time listener:', error);
     }
   }
 
@@ -605,7 +606,7 @@ export class FirebaseAnalysisStorageService {
 
       return null;
     } catch (error) {
-      console.error('Error getting analysis by hash:', error);
+      logger.error('Error getting analysis by hash:', error);
       return null;
     }
   }
@@ -634,7 +635,7 @@ export class FirebaseAnalysisStorageService {
 
       await safeSetDoc(userStatsRef, this.sanitizeObject(updateData), { merge: true });
     } catch (error) {
-      console.error('Error updating user stats:', error);
+      logger.error('Error updating user stats:', error);
     }
   }
 
@@ -699,7 +700,7 @@ export class FirebaseAnalysisStorageService {
       try {
         callback(data);
       } catch (error) {
-        console.error('Error in listener callback:', error);
+        logger.error('Error in listener callback:', error);
       }
     }
   }

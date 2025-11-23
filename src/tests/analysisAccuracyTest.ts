@@ -6,6 +6,7 @@
 import { EnhancedAnalysisEngine } from '../services/enhancedAnalysisEngine';
 import JSZip from 'jszip';
 
+import { logger } from '@/utils/logger';
 interface TestCase {
   name: string;
   description: string;
@@ -243,32 +244,32 @@ api_key = "sk-1234567890abcdefghijklmnopqrstuvwx"
    */
   private async runTestCase(testCase: TestCase): Promise<void> {
     console.group(`🧪 ${testCase.name}`);
-    console.log(`📝 ${testCase.description}`);
-    console.log(`📄 Filename: ${testCase.filename}`);
-    console.log(`📋 Test Code:\n${testCase.code}`);
+    logger.debug(`📝 ${testCase.description}`);
+    logger.debug(`📄 Filename: ${testCase.filename}`);
+    logger.debug(`📋 Test Code:\n${testCase.code}`);
 
     try {
       // Create test ZIP
       const zipBlob = await this.createTestZip(testCase.filename, testCase.code);
-      console.log(`📦 Created ZIP blob: ${zipBlob.size} bytes`);
+      logger.debug(`📦 Created ZIP blob: ${zipBlob.size} bytes`);
       
       // Run analysis
-      console.log(`⚙️  Running analysis...`);
+      logger.debug(`⚙️  Running analysis...`);
       const results = await this.engine.analyzeCodebase(zipBlob as any);
 
-      console.log(`� Analysis Complete:`);
-      console.log(`   Total Issues: ${results.issues.length}`);
-      console.log(`   Total Files: ${results.totalFiles}`);
-      console.log(`   Analysis Time: ${results.analysisTime}`);
-      console.log(`   Security Score: ${results.summary?.securityScore}`);
+      logger.debug(`� Analysis Complete:`);
+      logger.debug(`   Total Issues: ${results.issues.length}`);
+      logger.debug(`   Total Files: ${results.totalFiles}`);
+      logger.debug(`   Analysis Time: ${results.analysisTime}`);
+      logger.debug(`   Security Score: ${results.summary?.securityScore}`);
       
       if (results.issues.length > 0) {
-        console.log(`   Issues Details:`);
+        logger.debug(`   Issues Details:`);
         for (const issue of results.issues) {
-          console.log(`      - ${issue.type} (${issue.severity}): ${issue.message}`);
+          logger.debug(`      - ${issue.type} (${issue.severity}): ${issue.message}`);
         }
       } else {
-        console.warn(`   ⚠️  NO ISSUES DETECTED!`);
+        logger.warn(`   ⚠️  NO ISSUES DETECTED!`);
       }
 
       // Verify results are real (not mock)
@@ -288,9 +289,9 @@ api_key = "sk-1234567890abcdefghijklmnopqrstuvwx"
       const foundTypes = new Set(results.issues.map(i => i.type));
       const foundSeverities = new Set(results.issues.map(i => i.severity));
 
-      console.log(`   Found ${issueCount} issues`);
-      console.log(`   Types: ${Array.from(foundTypes).join(', ')}`);
-      console.log(`   Severities: ${Array.from(foundSeverities).join(', ')}`);
+      logger.debug(`   Found ${issueCount} issues`);
+      logger.debug(`   Types: ${Array.from(foundTypes).join(', ')}`);
+      logger.debug(`   Severities: ${Array.from(foundSeverities).join(', ')}`);
 
       // Check if minimum issues found
       if (issueCount < testCase.expectedIssues.minCount) {
@@ -332,7 +333,7 @@ api_key = "sk-1234567890abcdefghijklmnopqrstuvwx"
       );
 
       if (!hasExpectedSeverity) {
-        console.log(`   ⚠️ Warning: Expected severities not found`);
+        logger.debug(`   ⚠️ Warning: Expected severities not found`);
       }
 
       // Test PASSED
@@ -344,7 +345,7 @@ api_key = "sk-1234567890abcdefghijklmnopqrstuvwx"
         actualIssues: issueCount,
         expectedMin: testCase.expectedIssues.minCount
       });
-      console.log(`   ✅ Test PASSED`);
+      logger.debug(`   ✅ Test PASSED`);
       console.groupEnd();
 
     } catch (error) {
@@ -356,7 +357,7 @@ api_key = "sk-1234567890abcdefghijklmnopqrstuvwx"
         message: `❌ ERROR: ${errorMsg}`
       });
       this.results.errors.push(`${testCase.name}: ${errorMsg}`);
-      console.error(`   ❌ Test FAILED:`, errorMsg);
+      logger.error(`   ❌ Test FAILED:`, errorMsg);
       console.groupEnd();
     }
   }
@@ -393,9 +394,9 @@ api_key = "sk-1234567890abcdefghijklmnopqrstuvwx"
    * Run all tests
    */
   public async runAllTests(): Promise<void> {
-    console.log('🔬 ANALYSIS ACCURACY TEST SUITE');
-    console.log('================================\n');
-    console.log('Testing real vulnerability detection...\n');
+    logger.debug('🔬 ANALYSIS ACCURACY TEST SUITE');
+    logger.debug('================================\n');
+    logger.debug('Testing real vulnerability detection...\n');
 
     const testCases = this.getTestCases();
     this.results.total = testCases.length;
@@ -411,35 +412,35 @@ api_key = "sk-1234567890abcdefghijklmnopqrstuvwx"
    * Print test results summary
    */
   private printResults(): void {
-    console.log('\n\n📊 TEST RESULTS SUMMARY');
-    console.log('================================');
-    console.log(`Total Tests: ${this.results.total}`);
-    console.log(`✅ Passed: ${this.results.passed}`);
-    console.log(`❌ Failed: ${this.results.failed}`);
-    console.log(`📈 Success Rate: ${((this.results.passed / this.results.total) * 100).toFixed(1)}%`);
+    logger.debug('\n\n📊 TEST RESULTS SUMMARY');
+    logger.debug('================================');
+    logger.debug(`Total Tests: ${this.results.total}`);
+    logger.debug(`✅ Passed: ${this.results.passed}`);
+    logger.debug(`❌ Failed: ${this.results.failed}`);
+    logger.debug(`📈 Success Rate: ${((this.results.passed / this.results.total) * 100).toFixed(1)}%`);
 
     if (this.results.failed > 0) {
-      console.log('\n❌ FAILED TESTS:');
+      logger.debug('\n❌ FAILED TESTS:');
       this.results.details
         .filter(d => d.status === 'FAIL')
         .forEach((detail, index) => {
-          console.log(`\n${index + 1}. ${detail.testName}`);
-          console.log(`   ${detail.message}`);
+          logger.debug(`\n${index + 1}. ${detail.testName}`);
+          logger.debug(`   ${detail.message}`);
         });
     }
 
     if (this.results.passed === this.results.total) {
-      console.log('\n🎉 ALL TESTS PASSED!');
-      console.log('✅ Analysis engine is providing accurate, real results');
-      console.log('✅ No mock or fake data detected');
-      console.log('✅ Vulnerability detection is working correctly');
+      logger.debug('\n🎉 ALL TESTS PASSED!');
+      logger.debug('✅ Analysis engine is providing accurate, real results');
+      logger.debug('✅ No mock or fake data detected');
+      logger.debug('✅ Vulnerability detection is working correctly');
     } else {
-      console.log('\n⚠️ SOME TESTS FAILED');
-      console.log('The analysis engine may not be detecting all vulnerabilities correctly.');
-      console.log('Review the failed tests above for details.');
+      logger.debug('\n⚠️ SOME TESTS FAILED');
+      logger.debug('The analysis engine may not be detecting all vulnerabilities correctly.');
+      logger.debug('Review the failed tests above for details.');
     }
 
-    console.log('\n================================\n');
+    logger.debug('\n================================\n');
   }
 
   /**

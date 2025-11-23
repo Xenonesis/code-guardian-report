@@ -7,6 +7,7 @@ import { db } from '@/lib/firebase';
 import { collection, addDoc, query, where, getDocs, updateDoc, doc, deleteDoc } from 'firebase/firestore';
 import { enhancedNotifications } from '@/utils/enhancedToastNotifications';
 
+import { logger } from '@/utils/logger';
 export type WebhookProvider = 'github' | 'gitlab' | 'bitbucket';
 export type WebhookEvent = 
   | 'push' 
@@ -140,7 +141,7 @@ class WebhookManagerClass {
 
       return webhook;
     } catch (error) {
-      console.error('Failed to create webhook:', error);
+      logger.error('Failed to create webhook:', error);
       enhancedNotifications.error('Webhook Creation Failed', {
         message: error instanceof Error ? error.message : 'Unknown error',
         category: 'system',
@@ -166,7 +167,7 @@ class WebhookManagerClass {
         ...doc.data(),
       } as WebhookConfig));
     } catch (error) {
-      console.error('Failed to get webhooks:', error);
+      logger.error('Failed to get webhooks:', error);
       return [];
     }
   }
@@ -187,7 +188,7 @@ class WebhookManagerClass {
         priority: 'low',
       });
     } catch (error) {
-      console.error('Failed to update webhook:', error);
+      logger.error('Failed to update webhook:', error);
       enhancedNotifications.error('Webhook Update Failed', {
         category: 'system',
         priority: 'high',
@@ -217,7 +218,7 @@ class WebhookManagerClass {
         priority: 'low',
       });
     } catch (error) {
-      console.error('Failed to delete webhook:', error);
+      logger.error('Failed to delete webhook:', error);
       enhancedNotifications.error('Webhook Deletion Failed', {
         category: 'system',
         priority: 'high',
@@ -256,7 +257,7 @@ class WebhookManagerClass {
 
       return signature === expectedSignature;
     } catch (error) {
-      console.error('Failed to validate signature:', error);
+      logger.error('Failed to validate signature:', error);
       return false;
     }
   }
@@ -296,7 +297,7 @@ class WebhookManagerClass {
         priority: 'normal',
       });
     } catch (error) {
-      console.error('Failed to process webhook:', error);
+      logger.error('Failed to process webhook:', error);
       enhancedNotifications.error('Webhook Processing Failed', {
         category: 'system',
         priority: 'high',
@@ -321,7 +322,7 @@ class WebhookManagerClass {
         processed: true,
       });
     } catch (error) {
-      console.error('Failed to log webhook event:', error);
+      logger.error('Failed to log webhook event:', error);
     }
   }
 
@@ -344,7 +345,7 @@ class WebhookManagerClass {
         id: docRef.id,
       };
     } catch (error) {
-      console.error('Failed to create monitoring rule:', error);
+      logger.error('Failed to create monitoring rule:', error);
       throw error;
     }
   }
@@ -365,7 +366,7 @@ class WebhookManagerClass {
         ...doc.data(),
       } as MonitoringRule));
     } catch (error) {
-      console.error('Failed to get monitoring rules:', error);
+      logger.error('Failed to get monitoring rules:', error);
       return [];
     }
   }
@@ -481,7 +482,7 @@ class WebhookManagerClass {
         lastEvent,
       };
     } catch (error) {
-      console.error('Failed to get webhook stats:', error);
+      logger.error('Failed to get webhook stats:', error);
       return {
         totalEvents: 0,
         eventsByType: {},

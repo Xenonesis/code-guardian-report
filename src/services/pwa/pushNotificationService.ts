@@ -1,3 +1,5 @@
+import { logger } from '@/utils/logger';
+
 // Push Notification Service for PWA
 // Handles server integration and notification management
 
@@ -36,7 +38,7 @@ class PushNotificationService {
   // Request notification permission and subscribe
   async subscribe(): Promise<PushSubscription | null> {
     if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
-      console.warn('Push notifications not supported');
+      logger.warn('Push notifications not supported');
       return null;
     }
 
@@ -73,7 +75,7 @@ class PushNotificationService {
 
       return subscriptionData;
     } catch (error) {
-      console.error('Failed to subscribe to push notifications:', error);
+      logger.error('Failed to subscribe to push notifications:', error);
       return null;
     }
   }
@@ -92,7 +94,7 @@ class PushNotificationService {
       }
       return false;
     } catch (error) {
-      console.error('Failed to unsubscribe from push notifications:', error);
+      logger.error('Failed to unsubscribe from push notifications:', error);
       return false;
     }
   }
@@ -147,7 +149,7 @@ class PushNotificationService {
     });
 
     if (!response.ok) {
-      console.warn(`Failed to remove subscription from server: ${response.statusText}`);
+      logger.warn(`Failed to remove subscription from server: ${response.statusText}`);
     }
   }
 
@@ -177,7 +179,7 @@ class PushNotificationService {
 
       return response.ok;
     } catch (error) {
-      console.error('Failed to send notification:', error);
+      logger.error('Failed to send notification:', error);
       return false;
     }
   }
@@ -195,7 +197,7 @@ class PushNotificationService {
 
       return response.ok;
     } catch (error) {
-      console.error('Failed to broadcast notification:', error);
+      logger.error('Failed to broadcast notification:', error);
       return false;
     }
   }

@@ -12,6 +12,7 @@ import { PDFDownloadButton } from '../export/PDFDownloadButton';
 import { toast } from 'sonner';
 import { SecurityIssue } from '@/hooks/useAnalysis';
 
+import { logger } from '@/utils/logger';
 // Use SecurityIssue interface from hooks, but keep backward compatibility
 interface Issue extends Partial<SecurityIssue> {
   line: number;
@@ -49,9 +50,9 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
         const keys = localStorage.getItem('aiApiKeys');
         const parsedKeys = keys ? JSON.parse(keys) : [];
         setHasApiKeys(parsedKeys.length > 0);
-        console.log('API keys available:', parsedKeys.length > 0);
+        logger.debug('API keys available:', parsedKeys.length > 0);
       } catch (error) {
-        console.error('Error checking API keys:', error);
+        logger.error('Error checking API keys:', error);
         setHasApiKeys(false);
       }
     };
@@ -68,7 +69,7 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
   }, []);
 
   const generateAISummary = useCallback(async () => {
-    console.log('Starting AI summary generation...');
+    logger.debug('Starting AI summary generation...');
     setIsGeneratingSummary(true);
     
     try {
@@ -80,20 +81,20 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
         throw new Error('No issues available to summarize');
       }
       
-      console.log('Generating summary for', issues.length, 'issues');
+      logger.debug('Generating summary for', issues.length, 'issues');
       
       const summary = await aiService.generateSummary(issues);
-      console.log('Summary generated successfully:', summary.substring(0, 100) + '...');
+      logger.debug('Summary generated successfully:', summary.substring(0, 100) + '...');
       
       setAiSummary(summary);
       toast.success('AI summary generated successfully!');
     } catch (error) {
-      console.error('Detailed error generating AI summary:', error);
+      logger.error('Detailed error generating AI summary:', error);
       
       let errorMessage = 'Failed to generate AI summary.';
       
       if (error instanceof Error) {
-        console.log('Error message:', error.message);
+        logger.debug('Error message:', error.message);
         
         if (error.message.includes('No AI API keys configured')) {
           errorMessage = 'Please configure your AI API keys in the AI Configuration tab to generate summaries.';
@@ -106,7 +107,7 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
         }
       }
       
-      console.error('Final error message for user:', errorMessage);
+      logger.error('Final error message for user:', errorMessage);
       toast.error(errorMessage);
       
       // Set a fallback summary if API fails
@@ -131,7 +132,7 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
   // Auto-generate summary when component mounts if we have API keys and issues
   useEffect(() => {
     if (hasApiKeys && issues.length > 0 && !aiSummary && !isGeneratingSummary) {
-      console.log('Auto-generating AI summary...');
+      logger.debug('Auto-generating AI summary...');
       generateAISummary();
     }
   }, [hasApiKeys, issues.length, aiSummary, isGeneratingSummary, generateAISummary]);

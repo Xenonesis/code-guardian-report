@@ -13,6 +13,7 @@ import { FixSuggestion } from '@/services/ai/aiFixSuggestionsService';
 import { modernCodeScanningService } from '@/services/security/modernCodeScanningService';
 import { toast } from 'sonner';
 
+import { logger } from '@/utils/logger';
 interface SecurityOverviewProps {
   results: AnalysisResults;
   isLoading?: boolean;
@@ -198,7 +199,7 @@ ${suggestion.testingRecommendations.map((rec, i) => `${i + 1}. ${rec}`).join('\n
             totalDebt += analysis.technicalDebt;
             fileCount++;
           } catch (error) {
-            console.warn(`Failed to analyze ${file.name} for modern metrics:`, error);
+            logger.warn(`Failed to analyze ${file.name} for modern metrics:`, error);
           }
         }
 

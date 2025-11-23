@@ -1,6 +1,7 @@
 // Enhanced Background Sync Service for File Uploads and Data Sync
 import { toast } from 'sonner';
 
+import { logger } from '@/utils/logger';
 export interface SyncTask {
   id: string;
   type: 'file-upload' | 'analysis-data' | 'user-preferences' | 'analytics';
@@ -172,7 +173,7 @@ class EnhancedBackgroundSyncService {
       
     } catch (error) {
       const err = error instanceof Error ? error : new Error(String(error));
-      console.error('Sync task failed:', err);
+      logger.error('Sync task failed:', err);
       task.retryCount++;
       task.status = 'failed';
       
@@ -320,7 +321,7 @@ class EnhancedBackgroundSyncService {
   private async uploadChunk(chunk: any, index: number, taskId: string): Promise<void> {
     // Skip API calls in development mode
     if (import.meta.env.DEV) {
-      console.log('Upload Chunk (dev mode):', { chunk, index, taskId });
+      logger.debug('Upload Chunk (dev mode):', { chunk, index, taskId });
       return;
     }
 
@@ -338,7 +339,7 @@ class EnhancedBackgroundSyncService {
   private async finalizeFileUpload(taskId: string, metadata: any): Promise<void> {
     // Skip API calls in development mode
     if (import.meta.env.DEV) {
-      console.log('Finalize File Upload (dev mode):', { taskId, metadata });
+      logger.debug('Finalize File Upload (dev mode):', { taskId, metadata });
       return;
     }
 
@@ -356,7 +357,7 @@ class EnhancedBackgroundSyncService {
   private async uploadAnalysisData(data: any): Promise<void> {
     // Skip API calls in development mode
     if (import.meta.env.DEV) {
-      console.log('Upload Analysis Data (dev mode):', data);
+      logger.debug('Upload Analysis Data (dev mode):', data);
       return;
     }
 
@@ -374,7 +375,7 @@ class EnhancedBackgroundSyncService {
   private async uploadUserPreferences(preferences: any, deviceId: string): Promise<void> {
     // Skip API calls in development mode
     if (import.meta.env.DEV) {
-      console.log('Upload User Preferences (dev mode):', { preferences, deviceId });
+      logger.debug('Upload User Preferences (dev mode):', { preferences, deviceId });
       return;
     }
 
@@ -392,7 +393,7 @@ class EnhancedBackgroundSyncService {
   private async fetchServerData(id: string): Promise<any> {
     // Skip API calls in development mode
     if (import.meta.env.DEV) {
-      console.log('Fetch Server Data (dev mode):', { id });
+      logger.debug('Fetch Server Data (dev mode):', { id });
       return null;
     }
 

@@ -6,6 +6,7 @@ import * as t from '@babel/types';
 import { parse as acornParse } from 'acorn';
 import { SecurityIssue } from '@/hooks/useAnalysis';
 
+import { logger } from '@/utils/logger';
 export interface ASTNode {
   type: string;
   loc?: {
@@ -82,7 +83,7 @@ export class ASTAnalyzer {
           locations: true
         }) as unknown as ASTNode;
       } catch (fallbackError) {
-        console.warn(`Failed to parse ${filename}:`, fallbackError);
+        logger.warn(`Failed to parse ${filename}:`, fallbackError);
         return null;
       }
     }
@@ -153,7 +154,7 @@ export class ASTAnalyzer {
             // Track taint sinks
             this.trackTaintSinks(path);
           } catch (error) {
-            console.warn(`Error in CallExpression visitor for ${filename}:`, error);
+            logger.warn(`Error in CallExpression visitor for ${filename}:`, error);
           }
         },
 
@@ -174,7 +175,7 @@ export class ASTAnalyzer {
               ));
             }
           } catch (error) {
-            console.warn(`Error in JSXAttribute visitor for ${filename}:`, error);
+            logger.warn(`Error in JSXAttribute visitor for ${filename}:`, error);
           }
         },
 
@@ -197,7 +198,7 @@ export class ASTAnalyzer {
               }
             }
           } catch (error) {
-            console.warn(`Error in AssignmentExpression visitor for ${filename}:`, error);
+            logger.warn(`Error in AssignmentExpression visitor for ${filename}:`, error);
           }
         },
 
@@ -225,7 +226,7 @@ export class ASTAnalyzer {
               }
             }
           } catch (error) {
-            console.warn(`Error in VariableDeclarator visitor for ${filename}:`, error);
+            logger.warn(`Error in VariableDeclarator visitor for ${filename}:`, error);
           }
         },
 
@@ -247,7 +248,7 @@ export class ASTAnalyzer {
               ));
             }
           } catch (error) {
-            console.warn(`Error in MemberExpression visitor for ${filename}:`, error);
+            logger.warn(`Error in MemberExpression visitor for ${filename}:`, error);
           }
         }
       });
@@ -257,7 +258,7 @@ export class ASTAnalyzer {
       issues.push(...taintFlowIssues);
 
     } catch (error) {
-      console.warn(`Error analyzing AST for ${filename}:`, error);
+      logger.warn(`Error analyzing AST for ${filename}:`, error);
     }
 
     return issues;
@@ -290,7 +291,7 @@ export class ASTAnalyzer {
         }
       }
     } catch (error) {
-      console.warn('Error in trackTaintSources:', error);
+      logger.warn('Error in trackTaintSources:', error);
     }
   }
 
@@ -335,7 +336,7 @@ export class ASTAnalyzer {
         });
       }
     } catch (error) {
-      console.warn('Error in trackTaintSinks:', error);
+      logger.warn('Error in trackTaintSinks:', error);
     }
   }
 
@@ -399,7 +400,7 @@ export class ASTAnalyzer {
       }
       return '';
     } catch (error) {
-      console.warn('Error in getMemberExpressionName:', error);
+      logger.warn('Error in getMemberExpressionName:', error);
       return '';
     }
   }
@@ -434,7 +435,7 @@ export class ASTAnalyzer {
              code.includes('id') || code.includes('key') ||
              (parent && t.isCallExpression(parent));
     } catch (error) {
-      console.error('Error in isUsedForSecurity:', error);
+      logger.error('Error in isUsedForSecurity:', error);
       return false;
     }
   }

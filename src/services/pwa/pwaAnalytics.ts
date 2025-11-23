@@ -3,6 +3,7 @@
 
 import { PWA_CONFIG } from '../../config/pwa';
 
+import { logger } from '@/utils/logger';
 export interface PWAMetrics {
   installPrompts: number;
   installations: number;
@@ -349,7 +350,7 @@ class PWAAnalyticsService {
   private async sendAnalytics(event: string, data?: any): Promise<void> {
     // Skip API calls in development mode or when no backend is available
     if (import.meta.env.DEV || window.location.hostname === 'localhost') {
-      console.log('PWA Analytics (dev mode):', { event, data, timestamp: Date.now(), session: this.getSessionId() });
+      logger.debug('PWA Analytics (dev mode):', { event, data, timestamp: Date.now(), session: this.getSessionId() });
       return;
     }
 

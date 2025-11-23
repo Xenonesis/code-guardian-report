@@ -1,6 +1,7 @@
 import { collection, doc, getDocs, setDoc, query, where, orderBy, limit } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
+import { logger } from '@/utils/logger';
 interface Repository {
   id: string;
   name: string;
@@ -79,8 +80,8 @@ export class GitHubAnalysisStorageService {
       
       return repositories;
     } catch (error) {
-      console.error('Error fetching repositories:', error);
-      console.warn('⚠️ Using offline mode - Firebase unavailable. Returning empty data.');
+      logger.error('Error fetching repositories:', error);
+      logger.warn('⚠️ Using offline mode - Firebase unavailable. Returning empty data.');
       
       // Show toast notification
       if (typeof window !== 'undefined') {
@@ -138,8 +139,8 @@ export class GitHubAnalysisStorageService {
       
       return analyses;
     } catch (error) {
-      console.error('Error fetching analysis history:', error);
-      console.warn('⚠️ Using offline mode - Firebase unavailable. Returning empty data.');
+      logger.error('Error fetching analysis history:', error);
+      logger.warn('⚠️ Using offline mode - Firebase unavailable. Returning empty data.');
       
       // Show toast notification
       if (typeof window !== 'undefined') {
@@ -223,8 +224,8 @@ export class GitHubAnalysisStorageService {
         }
       };
     } catch (error) {
-      console.error('Error fetching security trends:', error);
-      console.warn('⚠️ Using offline mode - Firebase unavailable.');
+      logger.error('Error fetching security trends:', error);
+      logger.warn('⚠️ Using offline mode - Firebase unavailable.');
       // Return empty data in production
       if (import.meta.env.PROD) {
         return {
@@ -307,8 +308,8 @@ export class GitHubAnalysisStorageService {
         }
       };
     } catch (error) {
-      console.error('Error fetching activity analytics:', error);
-      console.warn('⚠️ Using offline mode - Firebase unavailable.');
+      logger.error('Error fetching activity analytics:', error);
+      logger.warn('⚠️ Using offline mode - Firebase unavailable.');
       // Return empty data in production
       if (import.meta.env.PROD) {
         return {
@@ -378,7 +379,7 @@ export class GitHubAnalysisStorageService {
         forks: repositoryData.forks || 0
       }, { merge: true });
     } catch (error) {
-      console.error('Error storing repository analysis:', error);
+      logger.error('Error storing repository analysis:', error);
       throw error;
     }
   }

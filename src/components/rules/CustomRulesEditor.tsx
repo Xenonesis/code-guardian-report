@@ -20,6 +20,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Shield, Plus, Edit, Trash2, Copy, Download, Upload, Code, AlertTriangle, CheckCircle, Play } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+import { logger } from '@/utils/logger';
 const CustomRulesEditor: React.FC = () => {
   const { user } = useAuth();
   const [rules, setRules] = useState<CustomRule[]>([]);
@@ -46,7 +47,7 @@ const CustomRulesEditor: React.FC = () => {
       const data = await CustomRulesEngine.getRules(user.uid);
       setRules(data);
     } catch (error) {
-      console.error('Failed to load rules:', error);
+      logger.error('Failed to load rules:', error);
     } finally {
       setIsLoading(false);
     }
@@ -59,7 +60,7 @@ const CustomRulesEditor: React.FC = () => {
       const data = await CustomRulesEngine.getRuleCategories(user.uid);
       setCategories(data);
     } catch (error) {
-      console.error('Failed to load categories:', error);
+      logger.error('Failed to load categories:', error);
     }
   };
 
@@ -75,7 +76,7 @@ const CustomRulesEditor: React.FC = () => {
       await loadCategories();
       setIsCreateDialogOpen(false);
     } catch (error) {
-      console.error('Failed to create rule:', error);
+      logger.error('Failed to create rule:', error);
     }
   };
 
@@ -84,7 +85,7 @@ const CustomRulesEditor: React.FC = () => {
       await CustomRulesEngine.updateRule(ruleId, updates);
       await loadRules();
     } catch (error) {
-      console.error('Failed to update rule:', error);
+      logger.error('Failed to update rule:', error);
     }
   };
 
@@ -96,7 +97,7 @@ const CustomRulesEditor: React.FC = () => {
       await loadRules();
       await loadCategories();
     } catch (error) {
-      console.error('Failed to delete rule:', error);
+      logger.error('Failed to delete rule:', error);
     }
   };
 
@@ -105,7 +106,7 @@ const CustomRulesEditor: React.FC = () => {
       await CustomRulesEngine.updateRule(ruleId, { enabled });
       await loadRules();
     } catch (error) {
-      console.error('Failed to toggle rule:', error);
+      logger.error('Failed to toggle rule:', error);
     }
   };
 
@@ -122,7 +123,7 @@ const CustomRulesEditor: React.FC = () => {
       a.click();
       URL.revokeObjectURL(url);
     } catch (error) {
-      console.error('Failed to export rules:', error);
+      logger.error('Failed to export rules:', error);
     }
   };
 
@@ -140,7 +141,7 @@ const CustomRulesEditor: React.FC = () => {
       
       alert(`Imported: ${result.imported}, Failed: ${result.failed}`);
     } catch (error) {
-      console.error('Failed to import rules:', error);
+      logger.error('Failed to import rules:', error);
     }
   };
 
@@ -335,7 +336,7 @@ const CustomRulesEditor: React.FC = () => {
                         await loadRules();
                         await loadCategories();
                       } catch (error) {
-                        console.error('Failed to create from template:', error);
+                        logger.error('Failed to create from template:', error);
                       }
                     }}
                   />

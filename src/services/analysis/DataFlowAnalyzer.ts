@@ -5,6 +5,7 @@ import traverse from '@babel/traverse';
 import type { NodePath } from '@babel/traverse';
 import * as t from '@babel/types';
 
+import { logger } from '@/utils/logger';
 export interface TaintFlow {
   source: {
     line: number;
@@ -76,7 +77,7 @@ export class DataFlowAnalyzer {
             issues.push(...flowIssues);
           }
         } catch (error) {
-          console.warn(`Error analyzing data flow in ${file.filename}:`, error);
+          logger.warn(`Error analyzing data flow in ${file.filename}:`, error);
         }
       }
     }
@@ -101,7 +102,7 @@ export class DataFlowAnalyzer {
         errorRecovery: true
       });
     } catch (error) {
-      console.warn(`Failed to parse ${filename}:`, error);
+      logger.warn(`Failed to parse ${filename}:`, error);
       return null;
     }
   }

@@ -6,6 +6,7 @@ import { AnalysisResults } from '@/hooks/useAnalysis';
 import { NotificationTemplates } from '@/utils/notificationTemplates';
 import { toast } from 'sonner';
 
+import { logger } from '@/utils/logger';
 interface PDFDownloadButtonProps {
   results: AnalysisResults;
   variant?: 'default' | 'outline' | 'ghost';
@@ -60,7 +61,7 @@ export const PDFDownloadButton: React.FC<PDFDownloadButtonProps> = ({
         }
       );
     } catch (error) {
-      console.error('PDF generation failed:', error);
+      logger.error('PDF generation failed:', error);
       toast.error(
         NotificationTemplates.exportError().title,
         {

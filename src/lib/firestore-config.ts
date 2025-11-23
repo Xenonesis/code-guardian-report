@@ -9,6 +9,7 @@ import {
 } from 'firebase/firestore';
 import { FirebaseApp } from 'firebase/app';
 
+import { logger } from '@/utils/logger';
 export function createOptimizedFirestore(app: FirebaseApp): Firestore {
   let db: Firestore;
 
@@ -20,10 +21,10 @@ export function createOptimizedFirestore(app: FirebaseApp): Firestore {
         tabManager: persistentMultipleTabManager()
       })
     });
-    console.log('Firestore initialized with long polling and persistence');
+    logger.debug('Firestore initialized with long polling and persistence');
   } catch (error) {
     // Fallback if already initialized
-    console.log('Firestore already initialized, using existing instance', error);
+    logger.debug('Firestore already initialized, using existing instance', error);
     db = getFirestore(app);
   }
   
@@ -31,9 +32,9 @@ export function createOptimizedFirestore(app: FirebaseApp): Firestore {
   if (import.meta.env.DEV && import.meta.env.VITE_USE_FIREBASE_EMULATOR === 'true') {
     try {
       connectFirestoreEmulator(db, 'localhost', 8080);
-      console.log('Connected to Firestore emulator');
+      logger.debug('Connected to Firestore emulator');
     } catch (error) {
-      console.log('Firestore emulator not available, using production', error);
+      logger.debug('Firestore emulator not available, using production', error);
     }
   }
   

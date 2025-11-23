@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 
+import { logger } from '@/utils/logger';
 export type Theme = 'light' | 'dark' | 'system';
 
 interface UseDarkModeReturn {
@@ -24,7 +25,7 @@ export const useDarkMode = (): UseDarkModeReturn => {
         return saved as Theme;
       }
     } catch (error) {
-      console.warn('Failed to load theme from localStorage:', error);
+      logger.warn('Failed to load theme from localStorage:', error);
     }
     return 'system';
   });
@@ -63,7 +64,7 @@ export const useDarkMode = (): UseDarkModeReturn => {
     try {
       localStorage.setItem(THEME_STORAGE_KEY, newTheme);
     } catch (error) {
-      console.warn('Failed to save theme to localStorage:', error);
+      logger.warn('Failed to save theme to localStorage:', error);
     }
   }, []);
 

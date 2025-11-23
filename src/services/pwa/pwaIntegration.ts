@@ -7,6 +7,7 @@ import { pwaAnalyticsService } from './pwaAnalytics';
 import { offlineManager } from '../storage/offlineManager';
 import { PWA_CONFIG } from '../../config/pwa';
 
+import { logger } from '@/utils/logger';
 export interface PWAStatus {
   isInstalled: boolean;
   isOnline: boolean;
@@ -168,7 +169,7 @@ class PWAIntegrationService {
       
       // Skip API calls in development mode or when no backend is available
       if (import.meta.env.DEV || window.location.hostname === 'localhost') {
-        console.log('PWA Analytics Sync (dev mode):', report);
+        logger.debug('PWA Analytics Sync (dev mode):', report);
         return;
       }
       

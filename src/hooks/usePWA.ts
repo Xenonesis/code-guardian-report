@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { pwaIntegrationService, PWAStatus } from '../services/pwa/pwaIntegration';
 
+import { logger } from '@/utils/logger';
 export function usePWA() {
   const [status, setStatus] = useState<PWAStatus>({
     isInstalled: false,
@@ -168,7 +169,7 @@ export function usePWAAnalytics() {
 
   const trackFeature = useCallback((feature: string) => {
     // This would be handled by the analytics service internally
-    console.log('Feature tracked:', feature);
+    logger.debug('Feature tracked:', feature);
   }, []);
 
   useEffect(() => {

@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { GitHubAnalysisStorageService } from '@/services/storage/GitHubAnalysisStorageService';
 
+import { logger } from '@/utils/logger';
 interface AnalysisRecord {
   id: string;
   repositoryName: string;
@@ -62,7 +63,7 @@ export const AnalysisHistorySection: React.FC<AnalysisHistorySectionProps> = ({ 
       setAnalyses(history);
       setFilteredAnalyses(history);
     } catch (error) {
-      console.error('Error loading analysis history:', error);
+      logger.error('Error loading analysis history:', error);
     } finally {
       setLoading(false);
     }
