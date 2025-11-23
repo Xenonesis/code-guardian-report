@@ -1,11 +1,12 @@
 /* @jsxImportSource react */
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Copy, Wand2, Shield, Bug, Code, Zap, FileCode, ChevronDown, ChevronUp } from 'lucide-react';
+import { Copy, Wand2, Shield, Bug, Code, Zap, FileCode, ChevronDown, ChevronUp, Settings, Filter, Download, Share2, Eye, Sparkles, FileText, TestTube, BookOpen, Layers } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { AnalysisResults } from '@/hooks/useAnalysis';
+import { logger } from '@/utils/logger';
 
 interface PromptTemplate {
   id: string;
@@ -281,6 +282,244 @@ Update command: [exact command to run]
 Alternative: [better package if needed]
 
 Give me exact commands to fix my dependencies safely.`
+  },
+  {
+    id: 'architecture-review',
+    title: 'Architecture & Design Review',
+    description: 'Review code architecture and design patterns',
+    category: 'quality',
+    icon: <Layers className="w-4 h-4" />,
+    tags: ['Architecture', 'Design Patterns', 'Structure'],
+    prompt: `You are a senior software architect. Review the codebase architecture and design.
+
+Analyze:
+- Code organization and structure
+- Design patterns usage
+- Separation of concerns
+- SOLID principles adherence
+- Module coupling and cohesion
+- Scalability considerations
+- Maintainability issues
+
+For each architectural issue:
+1. Describe the current design problem
+2. Explain why it's problematic
+3. Suggest better architecture
+4. Show code examples of improvement
+
+Format like this:
+
+**ARCHITECTURAL ISSUE:**
+Problem: [what's wrong with current design]
+Impact: [how it affects maintainability/scalability]
+
+Current structure:
+\`\`\`
+[show current design]
+\`\`\`
+
+Recommended structure:
+\`\`\`
+[show improved design]
+\`\`\`
+
+Benefits:
+- [improvement 1]
+- [improvement 2]
+
+Provide practical refactoring steps.`
+  },
+  {
+    id: 'testing-coverage',
+    title: 'Testing & Coverage Analyzer',
+    description: 'Identify missing tests and improve coverage',
+    category: 'quality',
+    icon: <TestTube className="w-4 h-4" />,
+    tags: ['Testing', 'Unit Tests', 'Coverage'],
+    prompt: `You are a testing expert. Analyze this code and identify missing tests.
+
+Focus on:
+- Untested functions and methods
+- Edge cases not covered
+- Error handling scenarios
+- Integration points
+- Critical business logic
+- Security-sensitive code
+
+For each area needing tests:
+1. Identify what needs testing
+2. Explain why it's important
+3. Provide complete test cases
+4. Include setup and assertions
+
+Format like this:
+
+**MISSING TEST:**
+Function: [function name]
+File: [filename]
+Priority: [High/Medium/Low]
+Risk: [what could go wrong without tests]
+
+Test scenarios needed:
+- [scenario 1]
+- [scenario 2]
+- [scenario 3]
+
+Test code:
+\`\`\`javascript
+describe('[function name]', () => {
+  it('should [expected behavior]', () => {
+    // Arrange
+    const input = [setup test data];
+    
+    // Act
+    const result = functionName(input);
+    
+    // Assert
+    expect(result).toBe([expected value]);
+  });
+  
+  it('should handle edge case: [case]', () => {
+    // Test edge case
+  });
+});
+\`\`\`
+
+Provide complete, runnable test code with good coverage.`
+  },
+  {
+    id: 'documentation-generator',
+    title: 'Documentation Generator',
+    description: 'Generate comprehensive code documentation',
+    category: 'general',
+    icon: <BookOpen className="w-4 h-4" />,
+    tags: ['Documentation', 'Comments', 'JSDoc'],
+    prompt: `You are a technical writer. Generate comprehensive documentation for this code.
+
+Create:
+- Function/method documentation (JSDoc/docstrings)
+- Parameter descriptions with types
+- Return value descriptions
+- Usage examples
+- Error handling notes
+- Side effects warnings
+
+For each function/class:
+1. Write clear JSDoc/docstring comments
+2. Explain purpose and behavior
+3. Document all parameters with types
+4. Provide usage examples
+5. Note any gotchas or edge cases
+
+Format like this:
+
+**DOCUMENTATION:**
+
+\`\`\`javascript
+/**
+ * [Brief one-line description]
+ * 
+ * [Detailed explanation of what the function does,
+ * including any important implementation details]
+ * 
+ * @param {string} paramName - [Description of parameter]
+ * @param {number} [optionalParam=10] - [Optional parameter description]
+ * @returns {Promise<Object>} [Description of return value]
+ * @throws {ValidationError} When input is invalid
+ * 
+ * @example
+ * // Basic usage
+ * const result = await myFunction('input', 5);
+ * console.log(result); // { success: true, data: [...] }
+ * 
+ * @example
+ * // Edge case handling
+ * try {
+ *   await myFunction('', 0);
+ * } catch (error) {
+ *   console.error('Validation failed');
+ * }
+ */
+function myFunction(paramName, optionalParam = 10) {
+  // implementation
+}
+\`\`\`
+
+Make documentation clear, accurate, and helpful for developers.`
+  },
+  {
+    id: 'refactoring-suggestions',
+    title: 'Refactoring Assistant',
+    description: 'Suggest code refactoring improvements',
+    category: 'quality',
+    icon: <Sparkles className="w-4 h-4" />,
+    tags: ['Refactoring', 'Clean Code', 'Optimization'],
+    prompt: `You are a refactoring expert. Analyze this code and suggest improvements.
+
+Look for:
+- Long functions (break them down)
+- Duplicate code (DRY principle)
+- Complex conditionals (simplify logic)
+- Magic numbers/strings (use constants)
+- Poor naming (improve clarity)
+- Code smells (fix anti-patterns)
+- Nested callbacks (use async/await)
+- God objects (split responsibilities)
+
+For each refactoring opportunity:
+1. Show the code that needs refactoring
+2. Explain the code smell
+3. Provide the refactored version
+4. Explain the benefits
+
+Format like this:
+
+**REFACTORING OPPORTUNITY:**
+Smell: [type of code smell]
+Complexity: [before/after metrics if applicable]
+File: [filename]
+
+Before (problematic):
+\`\`\`javascript
+// Complex, hard-to-maintain code
+function doEverything(data) {
+  if (data && data.value > 0) {
+    if (data.type === 'A') {
+      // 50 lines of logic
+    } else if (data.type === 'B') {
+      // 50 more lines
+    }
+  }
+}
+\`\`\`
+
+After (clean):
+\`\`\`javascript
+// Clean, maintainable, testable code
+function processDataTypeA(data) {
+  // Focused logic
+}
+
+function processDataTypeB(data) {
+  // Focused logic
+}
+
+function doEverything(data) {
+  if (!isValidData(data)) return;
+  
+  const processor = DATA_PROCESSORS[data.type];
+  return processor(data);
+}
+\`\`\`
+
+Improvements:
+✅ Single Responsibility Principle
+✅ Easier to test
+✅ Better readability
+✅ Reduced complexity
+✅ Reusable components
+
+Provide clean, maintainable code following SOLID principles and best practices.`
   }
 ];
 
@@ -288,6 +527,20 @@ const PromptGenerator: React.FC<PromptGeneratorProps> = ({ analysisResults }) =>
   const [selectedTemplate, setSelectedTemplate] = useState<PromptTemplate | null>(null);
   const [generatedPrompt, setGeneratedPrompt] = useState<string>('');
   const [showAllPrompts, setShowAllPrompts] = useState<boolean>(false);
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [severityFilter, setSeverityFilter] = useState<string[]>(['Critical', 'High', 'Medium', 'Low']);
+  const [showFilters, setShowFilters] = useState<boolean>(false);
+
+  // Calculate token count (rough estimate: ~4 chars per token)
+  const estimateTokens = (text: string): number => {
+    return Math.ceil(text.length / 4);
+  };
+
+  // Filter templates by category
+  const filteredTemplates = useMemo(() => {
+    if (selectedCategory === 'all') return PROMPT_TEMPLATES;
+    return PROMPT_TEMPLATES.filter(t => t.category === selectedCategory);
+  }, [selectedCategory]);
 
   const generateCodebasePrompt = () => {
     if (!analysisResults || !analysisResults.issues || analysisResults.issues.length === 0) {
@@ -300,35 +553,56 @@ const PromptGenerator: React.FC<PromptGeneratorProps> = ({ analysisResults }) =>
     }
 
     const { issues, totalFiles } = analysisResults;
-    const criticalIssues = issues.filter(i => i.severity === 'Critical');
-    const highIssues = issues.filter(i => i.severity === 'High');
-    const mediumIssues = issues.filter(i => i.severity === 'Medium');
-    const lowIssues = issues.filter(i => i.severity === 'Low');
     
-    const securityIssues = issues.filter(i => i.type?.toLowerCase().includes('security') || i.type?.toLowerCase().includes('vulnerability'));
-    const qualityIssues = issues.filter(i => i.type?.toLowerCase().includes('quality') || i.type?.toLowerCase().includes('smell') || i.type?.toLowerCase().includes('maintainability'));
-    const bugIssues = issues.filter(i => i.type?.toLowerCase().includes('bug') || i.type?.toLowerCase().includes('error'));
+    // Filter issues by selected severity
+    const filteredIssues = issues.filter(i => severityFilter.includes(i.severity));
+    
+    if (filteredIssues.length === 0) {
+      toast({
+        title: "No Issues Match Filter",
+        description: "Try adjusting your severity filters.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    const criticalIssues = filteredIssues.filter(i => i.severity === 'Critical');
+    const highIssues = filteredIssues.filter(i => i.severity === 'High');
+    const mediumIssues = filteredIssues.filter(i => i.severity === 'Medium');
+    const lowIssues = filteredIssues.filter(i => i.severity === 'Low');
+    
+    const securityIssues = filteredIssues.filter(i => i.type?.toLowerCase().includes('security') || i.type?.toLowerCase().includes('vulnerability'));
+    const qualityIssues = filteredIssues.filter(i => i.type?.toLowerCase().includes('quality') || i.type?.toLowerCase().includes('smell') || i.type?.toLowerCase().includes('maintainability'));
+    const bugIssues = filteredIssues.filter(i => i.type?.toLowerCase().includes('bug') || i.type?.toLowerCase().includes('error'));
     
     // Get all unique issue types
-    const allIssueTypes = [...new Set(issues.map(i => i.type))].filter(Boolean);
+    const allIssueTypes = [...new Set(filteredIssues.map(i => i.type))].filter(Boolean);
     
     // Get all unique files with issues
-    const allFiles = [...new Set(issues.map(i => i.filename))];
+    const allFiles = [...new Set(filteredIssues.map(i => i.filename))];
     
     // Get OWASP categories if available
-    const owaspCategories = [...new Set(issues.map(i => i.owaspCategory).filter(Boolean))];
+    const owaspCategories = [...new Set(filteredIssues.map(i => i.owaspCategory).filter(Boolean))];
     
     // Get CWE IDs if available
-    const cweIds = [...new Set(issues.map(i => i.cweId).filter(Boolean))];
+    const cweIds = [...new Set(filteredIssues.map(i => i.cweId).filter(Boolean))];
+    
+    // Add code snippets for top issues
+    const addCodeSnippet = (issue: any): string => {
+      if (issue.snippet) {
+        return `\n  Code snippet:\n  \`\`\`\n  ${issue.snippet}\n  \`\`\``;
+      }
+      return '';
+    };
     
     // Build detailed issue breakdown
     let issueBreakdown = '';
     if (criticalIssues.length > 0) {
       issueBreakdown += `\n\nCRITICAL ISSUES (${criticalIssues.length}):\n`;
-      criticalIssues.slice(0, 5).forEach(issue => {
-        issueBreakdown += `- ${issue.message} (${issue.filename}:${issue.line})\n`;
+      criticalIssues.slice(0, 3).forEach(issue => {
+        issueBreakdown += `- ${issue.message} (${issue.filename}:${issue.line})${addCodeSnippet(issue)}\n`;
       });
-      if (criticalIssues.length > 5) issueBreakdown += `... and ${criticalIssues.length - 5} more critical issues\n`;
+      if (criticalIssues.length > 3) issueBreakdown += `... and ${criticalIssues.length - 3} more critical issues\n`;
     }
     
     if (highIssues.length > 0) {
@@ -351,7 +625,7 @@ const PromptGenerator: React.FC<PromptGeneratorProps> = ({ analysisResults }) =>
 
 === CODEBASE ANALYSIS SUMMARY ===
 Total Files Analyzed: ${totalFiles}
-Total Issues Found: ${issues.length}
+Total Issues Found: ${filteredIssues.length}${severityFilter.length < 4 ? ` (filtered by: ${severityFilter.join(', ')})` : ''}
 
 ISSUE BREAKDOWN:
 - Critical Issues: ${criticalIssues.length}
@@ -411,6 +685,7 @@ Security/Quality improvement: [what this prevents/improves]
 Provide complete, copy-paste ready code fixes that I can implement immediately in my codebase.`;
 
     setGeneratedPrompt(customPrompt);
+    logger.info('Generated custom prompt', { issueCount: filteredIssues.length, filters: severityFilter });
   };
 
   const copyToClipboard = async (text: string, title: string) => {
@@ -420,10 +695,94 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
         title: "Copied!",
         description: `${title} prompt ready to use`,
       });
+      logger.info('Prompt copied to clipboard', { title, length: text.length });
     } catch (err) {
+      logger.error('Failed to copy prompt', err);
       toast({
         title: "Copy failed",
         description: "Please copy manually",
+        variant: "destructive",
+      });
+    }
+  };
+
+  // Export prompt as file
+  const exportPrompt = (text: string, filename: string) => {
+    try {
+      const blob = new Blob([text], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${filename}.txt`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      
+      toast({
+        title: "Exported!",
+        description: `Prompt saved as ${filename}.txt`,
+      });
+      logger.info('Prompt exported as file', { filename });
+    } catch (err) {
+      logger.error('Failed to export prompt', err);
+      toast({
+        title: "Export failed",
+        description: "Could not save file",
+        variant: "destructive",
+      });
+    }
+  };
+
+  // Share prompt via URL (compress and encode)
+  const sharePrompt = async (text: string) => {
+    try {
+      // Encode prompt to base64 for URL
+      const encoded = btoa(encodeURIComponent(text));
+      const shareUrl = `${window.location.origin}${window.location.pathname}?prompt=${encoded}`;
+      
+      // Copy URL to clipboard
+      await navigator.clipboard.writeText(shareUrl);
+      
+      toast({
+        title: "Share URL Copied!",
+        description: "Anyone with this URL can view the prompt",
+      });
+      logger.info('Prompt share URL created', { urlLength: shareUrl.length });
+    } catch (err) {
+      logger.error('Failed to create share URL', err);
+      toast({
+        title: "Share failed",
+        description: "Could not generate share URL",
+        variant: "destructive",
+      });
+    }
+  };
+
+  // Export as markdown file
+  const exportAsMarkdown = (text: string, filename: string) => {
+    try {
+      const markdownContent = `# AI Code Analysis Prompt\n\n## Generated: ${new Date().toLocaleString()}\n\n---\n\n${text}`;
+      const blob = new Blob([markdownContent], { type: 'text/markdown' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${filename}.md`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      
+      toast({
+        title: "Exported!",
+        description: `Prompt saved as ${filename}.md`,
+      });
+      logger.info('Prompt exported as markdown', { filename });
+    } catch (err) {
+      logger.error('Failed to export markdown', err);
+      toast({
+        title: "Export failed",
+        description: "Could not save markdown file",
         variant: "destructive",
       });
     }
@@ -456,7 +815,7 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
           <div className="mb-6">
             <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950 dark:to-indigo-950 border-blue-200 dark:border-blue-800">
               <CardContent className="p-4">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between flex-wrap gap-4">
                   <div className="flex items-center gap-3">
                     <div className="p-2 bg-blue-100 dark:bg-blue-900 rounded-lg">
                       <Wand2 className="w-5 h-5 text-blue-600 dark:text-blue-400" />
@@ -471,17 +830,77 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
                       </p>
                     </div>
                   </div>
-                  <Button
-                    onClick={generateCodebasePrompt}
-                    className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
-                    disabled={!analysisResults || !analysisResults.issues || analysisResults.issues.length === 0}
-                  >
-                    <Wand2 className="w-4 h-4 mr-2" />
-                    Generate Prompt
-                  </Button>
+                  <div className="flex items-center gap-2">
+                    <Button
+                      onClick={() => setShowFilters(!showFilters)}
+                      variant="outline"
+                      size="sm"
+                      className="border-blue-300 dark:border-blue-700"
+                    >
+                      <Filter className="w-4 h-4 mr-2" />
+                      Filters
+                    </Button>
+                    <Button
+                      onClick={generateCodebasePrompt}
+                      className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                      disabled={!analysisResults || !analysisResults.issues || analysisResults.issues.length === 0}
+                    >
+                      <Wand2 className="w-4 h-4 mr-2" />
+                      Generate
+                    </Button>
+                  </div>
                 </div>
+                
+                {/* Filters Section */}
+                {showFilters && analysisResults && (
+                  <div className="mt-4 p-4 bg-white dark:bg-gray-900 rounded-lg border border-blue-200 dark:border-blue-800">
+                    <h4 className="text-sm font-semibold mb-3 text-blue-900 dark:text-blue-100">Filter by Severity</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {['Critical', 'High', 'Medium', 'Low'].map((severity) => (
+                        <Badge
+                          key={severity}
+                          className={`cursor-pointer transition-all ${
+                            severityFilter.includes(severity)
+                              ? 'bg-blue-600 text-white hover:bg-blue-700'
+                              : 'bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-300 hover:bg-gray-300'
+                          }`}
+                          onClick={() => {
+                            setSeverityFilter(prev => 
+                              prev.includes(severity)
+                                ? prev.filter(s => s !== severity)
+                                : [...prev, severity]
+                            );
+                          }}
+                        >
+                          {severity}
+                        </Badge>
+                      ))}
+                    </div>
+                    <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">
+                      {severityFilter.length === 4 ? 'All severities selected' : `${severityFilter.length} severity level(s) selected`}
+                    </p>
+                  </div>
+                )}
               </CardContent>
             </Card>
+          </div>
+          
+          {/* Category Filter for Templates */}
+          <div className="mb-4 flex items-center gap-2 flex-wrap">
+            <span className="text-sm font-medium">Template Category:</span>
+            {['all', 'security', 'quality', 'performance', 'general'].map((cat) => (
+              <Badge
+                key={cat}
+                className={`cursor-pointer ${
+                  selectedCategory === cat
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-secondary hover:bg-secondary/80'
+                }`}
+                onClick={() => setSelectedCategory(cat)}
+              >
+                {cat.charAt(0).toUpperCase() + cat.slice(1)}
+              </Badge>
+            ))}
           </div>
 
           {/* Default Security Scanner */}
@@ -526,13 +945,13 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
               {showAllPrompts ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
               {showAllPrompts ? 'Hide Other AI Prompts' : 'Show More AI Prompts'}
               <Badge variant="secondary" className="ml-2">
-                {PROMPT_TEMPLATES.length - 1}
+                {filteredTemplates.length - 1}
               </Badge>
             </Button>
             
             {showAllPrompts && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {PROMPT_TEMPLATES.slice(1).map((template) => (
+                {filteredTemplates.slice(1).map((template) => (
                   <Card 
                     key={template.id} 
                     className="cursor-pointer hover:shadow-md transition-shadow"
@@ -574,23 +993,46 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
       {generatedPrompt && (
         <Card className="border-green-200 dark:border-green-800">
           <CardHeader>
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between flex-wrap gap-2">
               <div className="flex items-center gap-2">
                 <FileCode className="w-5 h-5 text-green-600" />
                 <CardTitle className="text-green-800 dark:text-green-200">Your Custom Prompt</CardTitle>
               </div>
-              <Button
-                onClick={() => copyToClipboard(generatedPrompt, 'Custom Codebase Prompt')}
-                className="bg-green-600 hover:bg-green-700"
-                size="sm"
-              >
-                <Copy className="w-4 h-4 mr-2" />
-                Copy Prompt
-              </Button>
+              <div className="flex items-center gap-2 flex-wrap">
+                <Badge variant="outline" className="text-green-700 dark:text-green-300">
+                  ~{estimateTokens(generatedPrompt)} tokens
+                </Badge>
+                <Button
+                  onClick={() => copyToClipboard(generatedPrompt, 'Custom Codebase Prompt')}
+                  className="bg-green-600 hover:bg-green-700"
+                  size="sm"
+                >
+                  <Copy className="w-4 h-4 mr-2" />
+                  Copy
+                </Button>
+                <Button
+                  onClick={() => exportPrompt(generatedPrompt, 'code-guardian-prompt')}
+                  variant="outline"
+                  size="sm"
+                  className="border-green-600 text-green-700 dark:text-green-300 hover:bg-green-50 dark:hover:bg-green-950"
+                >
+                  <Download className="w-4 h-4 mr-2" />
+                  Export
+                </Button>
+                <Button
+                  onClick={() => sharePrompt(generatedPrompt)}
+                  variant="outline"
+                  size="sm"
+                  className="border-green-600 text-green-700 dark:text-green-300 hover:bg-green-50 dark:hover:bg-green-950"
+                >
+                  <Share2 className="w-4 h-4 mr-2" />
+                  Share
+                </Button>
+              </div>
             </div>
             <CardDescription className="text-green-700 dark:text-green-300">
               {analysisResults ? 
-                `Tailored for your codebase with ${analysisResults.issues.length} detected issues` :
+                `Tailored for your codebase with ${analysisResults.issues.filter(i => severityFilter.includes(i.severity)).length} detected issues` :
                 'General code analysis prompt'
               }
             </CardDescription>
@@ -617,18 +1059,39 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
       {selectedTemplate && (
         <Card>
           <CardHeader>
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between flex-wrap gap-2">
               <div className="flex items-center gap-2">
                 {selectedTemplate.icon}
                 <CardTitle>{selectedTemplate.title}</CardTitle>
               </div>
-              <Button
-                onClick={() => copyToClipboard(selectedTemplate.prompt, selectedTemplate.title)}
-                size="sm"
-              >
-                <Copy className="w-4 h-4 mr-2" />
-                Copy Prompt
-              </Button>
+              <div className="flex items-center gap-2 flex-wrap">
+                <Badge variant="outline">
+                  ~{estimateTokens(selectedTemplate.prompt)} tokens
+                </Badge>
+                <Button
+                  onClick={() => copyToClipboard(selectedTemplate.prompt, selectedTemplate.title)}
+                  size="sm"
+                >
+                  <Copy className="w-4 h-4 mr-2" />
+                  Copy
+                </Button>
+                <Button
+                  onClick={() => exportPrompt(selectedTemplate.prompt, `${selectedTemplate.id}-prompt`)}
+                  variant="outline"
+                  size="sm"
+                >
+                  <Download className="w-4 h-4 mr-2" />
+                  Export
+                </Button>
+                <Button
+                  onClick={() => exportAsMarkdown(selectedTemplate.prompt, `${selectedTemplate.id}-prompt`)}
+                  variant="outline"
+                  size="sm"
+                >
+                  <FileText className="w-4 h-4 mr-2" />
+                  Markdown
+                </Button>
+              </div>
             </div>
             <CardDescription>{selectedTemplate.description}</CardDescription>
           </CardHeader>
