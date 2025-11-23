@@ -12,6 +12,8 @@ import HowToUseSection from '@/components/pages/about/HowToUseSection';
 import HowItWorksSection from '@/components/pages/about/HowItWorksSection';
 import GitHubContributorsSection from '@/components/pages/about/GitHubContributorsSection';
 import EnhancedFeatureShowcase from '@/components/pages/about/EnhancedFeatureShowcase';
+import { CustomRulesSection } from '@/components/pages/about/CustomRulesSection';
+import MonitoringInfoSection from '@/components/pages/about/MonitoringInfoSection';
 import { useDarkMode } from '@/hooks/useDarkMode';
 
 const About = () => {
@@ -69,6 +71,14 @@ const About = () => {
 
             {/* Enhanced Bottom Sections */}
             <div className="space-y-16 sm:space-y-20">
+              <section id="custom-rules">
+                <CustomRulesSection />
+              </section>
+
+              <section id="real-time-monitoring">
+                <MonitoringInfoSection />
+              </section>
+
               <section id="updates">
                 <SupportedToolsSection />
               </section>

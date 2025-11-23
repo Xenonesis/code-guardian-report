@@ -28,6 +28,7 @@ import HowItWorksSection from '@/components/pages/about/HowItWorksSection';
 import MeetDeveloperSection from '@/components/pages/about/MeetDeveloperSection';
 import EnhancedFeatureShowcase from '@/components/pages/about/EnhancedFeatureShowcase';
 import { AboutFeatures } from '@/components/pages/about/AboutFeatures';
+import { CustomRulesSection } from '@/components/pages/about/CustomRulesSection';
  
  // Import Legal page components
 import { LegalSection, LegalSubsection, LegalList } from '@/components/legal/LegalSection';
@@ -288,6 +289,10 @@ const SinglePageApp = () => {
 
                 {/* Enhanced Bottom Sections */}
                 <div className="space-y-16 sm:space-y-20">
+                  <div id="custom-rules">
+                    <CustomRulesSection />
+                  </div>
+
                   <div id="updates">
                     <SupportedToolsSection />
                   </div>
