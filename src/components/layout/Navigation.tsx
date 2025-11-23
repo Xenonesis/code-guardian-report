@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
-import { Shield, Home, Menu, X, Info, Lock, Award, User, LogOut, History, Github, Languages } from 'lucide-react';
+import { Shield, Home, Menu, X, Info, Lock, Award, User, LogOut, History, Github } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import { cn } from '@/lib/utils';
@@ -56,12 +56,6 @@ export const Navigation: React.FC<NavigationProps> = ({ theme, onThemeChange }) 
       id: 'about',
       label: 'About',
       icon: <Info className="h-4 w-4" />
-    },
-    {
-      id: 'multi-language',
-      label: 'Languages',
-      icon: <Languages className="h-4 w-4" />,
-      badge: 'NEW'
     },
     // Show History only for authenticated users
     ...(user ? [{

@@ -14,6 +14,7 @@ import GitHubContributorsSection from '@/components/pages/about/GitHubContributo
 import EnhancedFeatureShowcase from '@/components/pages/about/EnhancedFeatureShowcase';
 import { CustomRulesSection } from '@/components/pages/about/CustomRulesSection';
 import MonitoringInfoSection from '@/components/pages/about/MonitoringInfoSection';
+import MultiLanguageSupportDisplay from '@/components/language/MultiLanguageSupportDisplay';
 import { useDarkMode } from '@/hooks/useDarkMode';
 
 const About = () => {
@@ -77,6 +78,22 @@ const About = () => {
 
               <section id="real-time-monitoring">
                 <MonitoringInfoSection />
+              </section>
+
+              <section id="multi-language-support">
+                <MultiLanguageSupportDisplay 
+                  languageStats={[
+                    { language: 'JavaScript', fileCount: 45, lineCount: 3200, percentage: 35, securityIssues: 12, ruleCount: 17 },
+                    { language: 'TypeScript', fileCount: 38, lineCount: 2800, percentage: 30, securityIssues: 8, ruleCount: 17 },
+                    { language: 'Python', fileCount: 20, lineCount: 1500, percentage: 15, securityIssues: 6, ruleCount: 15 },
+                    { language: 'Java', fileCount: 15, lineCount: 1200, percentage: 10, securityIssues: 5, ruleCount: 14 },
+                    { language: 'PHP', fileCount: 8, lineCount: 600, percentage: 6, securityIssues: 4, ruleCount: 13 },
+                    { language: 'Ruby', fileCount: 4, lineCount: 300, percentage: 2, securityIssues: 2, ruleCount: 12 }
+                  ]}
+                  totalFiles={130}
+                  totalLines={9600}
+                  showFeatures={true}
+                />
               </section>
 
               <section id="updates">

@@ -43,7 +43,6 @@ const FloatingChatBot = lazy(() => import('@/components/ai/FloatingChatBot'));
 const StorageStatus = lazy(() => import('@/components/firebase/StorageStatus'));
 const AnalysisHistoryModal = lazy(() => import('@/components/analysis/AnalysisHistoryModal'));
 const GitHubAnalysisPage = lazy(() => import('./GitHubAnalysisPage').then(m => ({ default: m.GitHubAnalysisPage })));
-const MultiLanguagePage = lazy(() => import('./MultiLanguagePage'));
 const AccountConflictDemo = lazy(() => import('./AccountConflictDemo').then(m => ({ default: m.AccountConflictDemo })));
 const TestAuthConflict = lazy(() => import('./TestAuthConflict').then(m => ({ default: m.TestAuthConflict })));
 
@@ -564,17 +563,6 @@ const SinglePageApp = () => {
           </div>
         }>
           <TestAuthConflict />
-        </Suspense>
-      )}
-
-      {/* Multi-Language Support Section */}
-      {currentSection === 'multi-language' && (
-        <Suspense fallback={
-          <div className="min-h-screen flex items-center justify-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-          </div>
-        }>
-          <MultiLanguagePage />
         </Suspense>
       )}
 
