@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 import { useAuth } from '@/lib/auth-context';
 import { useNavigation } from '@/lib/navigation-context';
 import { AuthModal } from '@/components/auth/AuthModal';
+import NotificationCenter from '@/components/notifications/NotificationCenter';
 import type { Theme } from '@/hooks/useDarkMode';
 
 interface NavigationProps {
@@ -207,6 +208,9 @@ export const Navigation: React.FC<NavigationProps> = ({ theme, onThemeChange }) 
                 </Button>
               </div>
             )}
+
+            {/* Notification Center */}
+            <NotificationCenter />
 
             {/* Theme Toggle */}
             <ThemeToggle theme={theme} onThemeChange={onThemeChange} variant="dropdown" />

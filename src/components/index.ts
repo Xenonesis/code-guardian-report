@@ -52,6 +52,11 @@ export { LanguageDetectionDisplay } from './language/LanguageDetectionDisplay';
 export { LanguageDetectionSummary } from './language/LanguageDetectionSummary';
 export { default as MultiLanguageSupportDisplay } from './language/MultiLanguageSupportDisplay';
 
+// Notification components
+export { default as NotificationCenter } from './notifications/NotificationCenter';
+export { default as NotificationPreferences } from './notifications/NotificationPreferences';
+export { default as NotificationBadge } from './notifications/NotificationBadge';
+
 // Export components
 export { default as DataExport } from './export/DataExport';
 export { PDFDownloadButton } from './export/PDFDownloadButton';
