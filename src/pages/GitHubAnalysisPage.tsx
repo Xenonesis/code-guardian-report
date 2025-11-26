@@ -25,6 +25,42 @@ export const GitHubAnalysisPage: React.FC = () => {
   const [showPermissionModal, setShowPermissionModal] = useState(false);
   const [showUsernameInput, setShowUsernameInput] = useState(false);
   const [showGitHubRepos, setShowGitHubRepos] = useState(false);
+  const [dashboardStats, setDashboardStats] = useState({
+    repoCount: 0,
+    avgScore: 0,
+    totalIssues: 0,
+    loading: true
+  });
+
+  // Fetch dashboard stats
+  useEffect(() => {
+    const loadDashboardStats = async () => {
+      if (!user?.uid) return;
+      
+      try {
+        // Dynamically import to avoid circular dependencies if any, though direct import is also fine
+        const { GitHubAnalysisStorageService } = await import('@/services/storage/GitHubAnalysisStorageService');
+        const storageService = new GitHubAnalysisStorageService();
+        
+        const [repos, trends] = await Promise.all([
+          storageService.getUserRepositories(user.uid),
+          storageService.getSecurityTrends(user.uid)
+        ]);
+
+        setDashboardStats({
+          repoCount: repos.length,
+          avgScore: trends.stats.averageScore,
+          totalIssues: trends.stats.totalIssues,
+          loading: false
+        });
+      } catch (error) {
+        console.error('Failed to load dashboard stats:', error);
+        setDashboardStats(prev => ({ ...prev, loading: false }));
+      }
+    };
+
+    loadDashboardStats();
+  }, [user?.uid, selectedTab]); // Reload when tab changes (e.g. after analysis)
 
   // GitHub repositories integration for Google users
   const {
@@ -371,21 +407,38 @@ export const GitHubAnalysisPage: React.FC = () => {
 
             {/* Quick Stats */}
             <div className="flex-1 grid grid-cols-2 md:grid-cols-3 gap-4 md:ml-auto">
-              <Card className="bg-white/10 backdrop-blur-sm border-white/20 p-4">
-                <div className="text-blue-200 text-xs md:text-sm mb-1">Repositories Analyzed</div>
-                <div className="text-2xl md:text-3xl font-bold text-white">
-                  {userProfile?.repositoriesAnalyzed || 0}
+              <Card className="bg-white/10 backdrop-blur-md border-white/20 p-4 hover:bg-white/20 transition-all duration-300 group">
+                <div className="text-blue-200 text-xs md:text-sm mb-1 group-hover:text-blue-100 transition-colors">Repositories Analyzed</div>
+                <div className="text-2xl md:text-3xl font-bold text-white flex items-baseline gap-2">
+                  {dashboardStats.loading ? (
+                    <span className="animate-pulse">...</span>
+                  ) : (
+                    dashboardStats.repoCount
+                  )}
+                  <span className="text-xs font-normal text-blue-300/80">repos</span>
                 </div>
               </Card>
-              <Card className="bg-white/10 backdrop-blur-sm border-white/20 p-4">
-                <div className="text-blue-200 text-xs md:text-sm mb-1">Security Score</div>
-                <div className="text-2xl md:text-3xl font-bold text-white">
-                  8.5<span className="text-lg">/10</span>
+              <Card className="bg-white/10 backdrop-blur-md border-white/20 p-4 hover:bg-white/20 transition-all duration-300 group">
+                <div className="text-blue-200 text-xs md:text-sm mb-1 group-hover:text-blue-100 transition-colors">Security Score</div>
+                <div className="text-2xl md:text-3xl font-bold text-white flex items-baseline gap-1">
+                  {dashboardStats.loading ? (
+                    <span className="animate-pulse">...</span>
+                  ) : (
+                    dashboardStats.avgScore.toFixed(1)
+                  )}
+                  <span className="text-lg text-blue-300/80 font-normal">/10</span>
                 </div>
               </Card>
-              <Card className="bg-white/10 backdrop-blur-sm border-white/20 p-4 col-span-2 md:col-span-1">
-                <div className="text-blue-200 text-xs md:text-sm mb-1">Issues Found</div>
-                <div className="text-2xl md:text-3xl font-bold text-white">12</div>
+              <Card className="bg-white/10 backdrop-blur-md border-white/20 p-4 col-span-2 md:col-span-1 hover:bg-white/20 transition-all duration-300 group">
+                <div className="text-blue-200 text-xs md:text-sm mb-1 group-hover:text-blue-100 transition-colors">Issues Found</div>
+                <div className="text-2xl md:text-3xl font-bold text-white flex items-baseline gap-2">
+                  {dashboardStats.loading ? (
+                    <span className="animate-pulse">...</span>
+                  ) : (
+                    dashboardStats.totalIssues.toLocaleString()
+                  )}
+                  <span className="text-xs font-normal text-blue-300/80">total</span>
+                </div>
               </Card>
             </div>
           </div>
