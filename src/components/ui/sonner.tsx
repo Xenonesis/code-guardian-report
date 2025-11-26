@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react"
-import { Toaster as Sonner, toast } from "sonner"
+import { Toaster as Sonner } from "sonner"
 
 type ToasterProps = React.ComponentProps<typeof Sonner>
 
 const Toaster = ({ ...props }: ToasterProps) => {
-  const [theme, setTheme] = useState<"light" | "dark" | "system">("system")
+  // Initialize theme with a lazy initializer to avoid setState during render
+  const [theme, setTheme] = useState<"light" | "dark" | "system">(() => {
+    if (typeof document !== 'undefined') {
+      const isDarkMode = document.documentElement.classList.contains('dark')
+      return isDarkMode ? "dark" : "light"
+    }
+    return "system"
+  })
 
   useEffect(() => {
-    // Check if dark mode is enabled by looking at the document class
-    const isDarkMode = document.documentElement.classList.contains('dark')
-    setTheme(isDarkMode ? "dark" : "light")
-
     // Watch for changes to the dark class
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {

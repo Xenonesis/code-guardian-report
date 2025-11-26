@@ -16,6 +16,7 @@ import GitHubUsernameInput from '@/components/github/GitHubUsernameInput';
 import GitHubRepositoryPermissionModal from '@/components/github/GitHubRepositoryPermissionModal';
 import GitHubRepositoryList from '@/components/github/GitHubRepositoryList';
 import { toast } from 'sonner';
+import { logger } from '@/utils/logger';
 
 export const GitHubAnalysisPage: React.FC = () => {
   const { user, userProfile, isGitHubUser, signInWithGithub } = useAuth();
@@ -112,13 +113,33 @@ export const GitHubAnalysisPage: React.FC = () => {
       const progressToastId = toast.loading('Preparing to analyze repository...');
 
       try {
+        // If branch is not specified, fetch repo info to get default branch
+        let branch = repoInfo.branch;
+        if (!branch) {
+          try {
+            toast.loading('Checking repository details...', { id: progressToastId });
+            const details = await githubRepositoryService.getRepositoryInfo(repoInfo.owner, repoInfo.repo);
+            branch = details.defaultBranch;
+          } catch (err) {
+            console.warn('Failed to fetch repo info, defaulting to main', err);
+            branch = 'main';
+          }
+        }
+
         // Download repository as ZIP
+        let lastUpdate = 0;
         const zipFile = await githubRepositoryService.downloadRepositoryAsZip(
           repoInfo.owner,
           repoInfo.repo,
-          repoInfo.branch || 'main',
+          branch || 'main',
           (progress, message) => {
-            toast.loading(message, { id: progressToastId });
+            const now = Date.now();
+            // Throttle updates to avoid React "Maximum update depth exceeded" error
+            // Update at most every 100ms, or if it's the final step
+            if (now - lastUpdate > 100 || progress === 100) {
+              toast.loading(message, { id: progressToastId });
+              lastUpdate = now;
+            }
           }
         );
 
@@ -141,7 +162,9 @@ export const GitHubAnalysisPage: React.FC = () => {
             securityScore: results.summary.securityScore / 10, // Convert to 0-10 scale
             issuesFound: results.issues.length,
             criticalIssues: results.summary.criticalIssues,
-            language: results.languageDetection?.primaryLanguage || 'Unknown',
+            language: typeof results.languageDetection?.primaryLanguage === 'string' 
+              ? results.languageDetection.primaryLanguage 
+              : results.languageDetection?.primaryLanguage?.name || 'Unknown',
             stars: 0, // Could fetch from repo info
             forks: 0, // Could fetch from repo info
             duration: parseFloat(results.analysisTime) || 0

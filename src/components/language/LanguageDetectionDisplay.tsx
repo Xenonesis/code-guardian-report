@@ -262,7 +262,7 @@ export const LanguageDetectionDisplay: React.FC<LanguageDetectionDisplayProps> =
                   <div className="text-right">
                     <div className="font-semibold">{framework.confidence}%</div>
                     <Badge variant="outline" className="text-xs">
-                      {framework.ecosystem}
+                      {String(framework.ecosystem)}
                     </Badge>
                   </div>
                 </div>

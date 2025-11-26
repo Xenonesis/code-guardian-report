@@ -36,11 +36,12 @@ export const useGitHubRepositories = ({ email, enabled }: UseGitHubRepositoriesO
       // Extract username from email if it's a common pattern
       const username = email.split('@')[0];
       
-      // Try to fetch user profile
+      // Try to fetch user profile (404 is expected and normal)
       const response = await fetch(`https://api.github.com/users/${username}`);
       
       if (response.ok) {
         const userData = await response.json();
+        logger.debug('GitHub account verified:', username);
         
         // Additional verification: check if the user has public email
         if (userData.email && userData.email.toLowerCase() === email.toLowerCase()) {
@@ -51,9 +52,15 @@ export const useGitHubRepositories = ({ email, enabled }: UseGitHubRepositoriesO
         return username;
       }
       
+      // 404 is expected when username doesn't exist - don't log as error
+      if (response.status === 404) {
+        logger.debug(`No GitHub account found for extracted username: ${username}`);
+      }
+      
       return null;
     } catch (error) {
-      logger.error('Error checking GitHub association:', error);
+      // Only log unexpected errors (not 404s)
+      logger.debug('Error checking GitHub association:', error);
       return null;
     }
   };
