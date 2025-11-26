@@ -257,8 +257,11 @@ class GitHubRepositoryService {
               zip.file(file.path, content);
               downloadedFiles++;
 
-              const progress = 30 + Math.floor((downloadedFiles / totalFiles) * 60);
-              onProgress?.(progress, `Downloaded ${downloadedFiles}/${totalFiles} files...`);
+              // Throttle progress updates: every 5 files or last file
+              if (downloadedFiles % 5 === 0 || downloadedFiles === totalFiles) {
+                const progress = 30 + Math.floor((downloadedFiles / totalFiles) * 60);
+                onProgress?.(progress, `Downloaded ${downloadedFiles}/${totalFiles} files...`);
+              }
             } catch (error) {
               logger.warn(`Failed to download ${file.path}:`, error);
             }
@@ -269,11 +272,17 @@ class GitHubRepositoryService {
       onProgress?.(90, 'Creating zip file...');
 
       // Generate zip file
+      let lastZipProgress = 0;
       const zipBlob = await zip.generateAsync(
         { type: 'blob' },
         (metadata) => {
-          const progress = 90 + Math.floor(metadata.percent / 10);
-          onProgress?.(progress, `Compressing files... ${Math.floor(metadata.percent)}%`);
+          const now = Date.now();
+          // Throttle zip progress updates
+          if (now - lastZipProgress > 100 || metadata.percent === 100) {
+            const progress = 90 + Math.floor(metadata.percent / 10);
+            onProgress?.(progress, `Compressing files... ${Math.floor(metadata.percent)}%`);
+            lastZipProgress = now;
+          }
         }
       );
 

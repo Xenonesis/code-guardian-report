@@ -63,30 +63,31 @@ const GitHubRepositoryList: React.FC<GitHubRepositoryListProps> = ({
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3 sm:space-y-4">
       {repositories.map((repo) => (
         <div
           key={repo.id}
-          className="bg-[#252538] rounded-lg shadow p-5 border border-gray-700 hover:border-purple-500/50 transition-all"
+          className="bg-[#252538] rounded-lg shadow-lg p-4 sm:p-5 border border-gray-700 hover:border-purple-500/50 transition-all hover:shadow-purple-500/20 hover:shadow-xl"
         >
-          <div className="flex items-start justify-between">
-            <div className="flex-1">
+          {/* Mobile: Stack layout, Desktop: Side by side */}
+          <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
+            <div className="flex-1 min-w-0">
               {/* Repository name and visibility */}
-              <div className="flex items-center gap-2 mb-2">
-                <Github className="w-5 h-5 text-purple-400" />
-                <h3 className="text-lg font-semibold text-white hover:text-purple-400 transition-colors">
+              <div className="flex flex-wrap items-center gap-2 mb-2">
+                <Github className="w-5 h-5 text-purple-400 flex-shrink-0" />
+                <h3 className="text-base sm:text-lg font-semibold text-white hover:text-purple-400 transition-colors truncate">
                   <a
                     href={repo.html_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-1"
+                    className="flex items-center gap-1 hover:underline"
                   >
-                    {repo.name}
-                    <ExternalLink className="w-4 h-4" />
+                    <span className="truncate">{repo.name}</span>
+                    <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
                   </a>
                 </h3>
                 {repo.private && (
-                  <span className="px-2 py-0.5 text-xs bg-yellow-500/20 text-yellow-300 rounded-full border border-yellow-500/30">
+                  <span className="px-2 py-0.5 text-xs bg-yellow-500/20 text-yellow-300 rounded-full border border-yellow-500/30 whitespace-nowrap">
                     Private
                   </span>
                 )}
@@ -94,53 +95,53 @@ const GitHubRepositoryList: React.FC<GitHubRepositoryListProps> = ({
 
               {/* Description */}
               {repo.description && (
-                <p className="text-gray-400 text-sm mb-3 line-clamp-2">
+                <p className="text-gray-400 text-xs sm:text-sm mb-3 line-clamp-2">
                   {repo.description}
                 </p>
               )}
 
-              {/* Repository stats */}
-              <div className="flex items-center gap-4 text-sm text-gray-400">
+              {/* Repository stats - Responsive wrap */}
+              <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-xs sm:text-sm text-gray-400">
                 {repo.language && (
                   <div className="flex items-center gap-1">
                     <span className="w-3 h-3 rounded-full bg-purple-500"></span>
-                    <span>{repo.language}</span>
+                    <span className="truncate max-w-[100px] sm:max-w-none">{repo.language}</span>
                   </div>
                 )}
                 <div className="flex items-center gap-1">
-                  <Star className="w-4 h-4" />
-                  <span>{repo.stargazers_count}</span>
+                  <Star className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <span>{repo.stargazers_count.toLocaleString()}</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <GitFork className="w-4 h-4" />
-                  <span>{repo.forks_count}</span>
+                  <GitFork className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <span>{repo.forks_count.toLocaleString()}</span>
                 </div>
-                <span className="text-xs">
+                <span className="text-xs whitespace-nowrap">
                   Updated {new Date(repo.updated_at).toLocaleDateString()}
                 </span>
               </div>
             </div>
 
-            {/* Analyze button */}
-            <div className="ml-4">
+            {/* Analyze button - Full width on mobile, auto on desktop */}
+            <div className="w-full lg:w-auto lg:ml-4">
               <button
                 onClick={() => handleAnalyze(repo)}
                 disabled={analyzingRepo === repo.full_name}
-                className={`px-4 py-2 rounded-md text-sm font-medium transition-all flex items-center gap-2 ${
+                className={`w-full lg:w-auto px-4 py-2.5 sm:py-2 rounded-lg text-sm font-medium transition-all flex items-center justify-center gap-2 ${
                   analyzingRepo === repo.full_name
                     ? 'bg-gray-700 text-gray-400 cursor-not-allowed'
-                    : 'bg-gradient-to-r from-purple-600 to-blue-500 text-white hover:opacity-90'
+                    : 'bg-gradient-to-r from-purple-600 to-blue-500 text-white hover:from-purple-700 hover:to-blue-600 hover:shadow-lg active:scale-95'
                 }`}
               >
                 {analyzingRepo === repo.full_name ? (
                   <>
                     <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                    Analyzing...
+                    <span>Analyzing...</span>
                   </>
                 ) : (
                   <>
                     <TrendingUp className="w-4 h-4" />
-                    Analyze
+                    <span>Analyze</span>
                   </>
                 )}
               </button>

@@ -84,12 +84,15 @@ const [theme, setTheme] = useState<"light" | "dark" | "system">(() => {
 
 **Issue:** The repository download progress callback was calling `toast.loading()` for every single file downloaded. For large repositories with hundreds of files, this triggered hundreds of state updates in milliseconds, causing React to hit its update depth limit and crash.
 
-**Fix:** Throttled the toast updates to occur at most once every 100ms:
+**Fix:** Throttled the toast updates to occur at most once every 500ms, added message deduplication, and wrapped the update in `setTimeout` to break the synchronous call stack:
 
 ```typescript
-if (now - lastUpdate > 100 || progress === 100) {
-  toast.loading(message, { id: progressToastId });
+if ((now - lastUpdate > 500 || progress === 100) && message !== lastMessage) {
+  lastMessage = message;
   lastUpdate = now;
+  setTimeout(() => {
+    toast.loading(message, { id: progressToastId });
+  }, 0);
 }
 ```
 

@@ -65,62 +65,62 @@ export const SecurityAnalyticsSection: React.FC<SecurityAnalyticsSectionProps> =
         </p>
       </div>
 
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <Card className="p-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="p-3 bg-blue-100 dark:bg-blue-900/20 rounded-lg">
-              <Shield className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+      {/* Stats Cards - Responsive grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <Card className="p-4 sm:p-6 hover:shadow-lg transition-shadow">
+          <div className="flex items-center justify-between mb-3 sm:mb-4">
+            <div className="p-2 sm:p-3 bg-blue-100 dark:bg-blue-900/20 rounded-lg">
+              <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 dark:text-blue-400" />
             </div>
-            {stats.trend === 'up' && <TrendingUp className="w-5 h-5 text-green-600" />}
-            {stats.trend === 'down' && <TrendingDown className="w-5 h-5 text-red-600" />}
+            {stats.trend === 'up' && <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-green-600" />}
+            {stats.trend === 'down' && <TrendingDown className="w-4 h-4 sm:w-5 sm:h-5 text-red-600" />}
           </div>
-          <div className="text-3xl font-bold text-slate-900 dark:text-white mb-1">
+          <div className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-1">
             {stats.averageScore.toFixed(1)}
           </div>
-          <div className="text-sm text-slate-600 dark:text-slate-400">
+          <div className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
             Average Security Score
           </div>
         </Card>
 
-        <Card className="p-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="p-3 bg-yellow-100 dark:bg-yellow-900/20 rounded-lg">
-              <AlertTriangle className="w-6 h-6 text-yellow-600 dark:text-yellow-400" />
+        <Card className="p-4 sm:p-6 hover:shadow-lg transition-shadow">
+          <div className="flex items-center justify-between mb-3 sm:mb-4">
+            <div className="p-2 sm:p-3 bg-yellow-100 dark:bg-yellow-900/20 rounded-lg">
+              <AlertTriangle className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-600 dark:text-yellow-400" />
             </div>
           </div>
-          <div className="text-3xl font-bold text-slate-900 dark:text-white mb-1">
-            {stats.totalIssues}
+          <div className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-1">
+            {stats.totalIssues.toLocaleString()}
           </div>
-          <div className="text-sm text-slate-600 dark:text-slate-400">
+          <div className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
             Total Issues Found
           </div>
         </Card>
 
-        <Card className="p-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="p-3 bg-red-100 dark:bg-red-900/20 rounded-lg">
-              <AlertTriangle className="w-6 h-6 text-red-600 dark:text-red-400" />
+        <Card className="p-4 sm:p-6 hover:shadow-lg transition-shadow">
+          <div className="flex items-center justify-between mb-3 sm:mb-4">
+            <div className="p-2 sm:p-3 bg-red-100 dark:bg-red-900/20 rounded-lg">
+              <AlertTriangle className="w-5 h-5 sm:w-6 sm:h-6 text-red-600 dark:text-red-400" />
             </div>
           </div>
-          <div className="text-3xl font-bold text-slate-900 dark:text-white mb-1">
-            {stats.criticalIssues}
+          <div className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-1">
+            {stats.criticalIssues.toLocaleString()}
           </div>
-          <div className="text-sm text-slate-600 dark:text-slate-400">
+          <div className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
             Critical Issues
           </div>
         </Card>
 
-        <Card className="p-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="p-3 bg-green-100 dark:bg-green-900/20 rounded-lg">
-              <CheckCircle className="w-6 h-6 text-green-600 dark:text-green-400" />
+        <Card className="p-4 sm:p-6 hover:shadow-lg transition-shadow">
+          <div className="flex items-center justify-between mb-3 sm:mb-4">
+            <div className="p-2 sm:p-3 bg-green-100 dark:bg-green-900/20 rounded-lg">
+              <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-green-600 dark:text-green-400" />
             </div>
           </div>
-          <div className="text-3xl font-bold text-slate-900 dark:text-white mb-1">
-            {trends.length}
+          <div className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-1">
+            {trends.length.toLocaleString()}
           </div>
-          <div className="text-sm text-slate-600 dark:text-slate-400">
+          <div className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
             Analyses Completed
           </div>
         </Card>

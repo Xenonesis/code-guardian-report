@@ -65,52 +65,52 @@ export const RepositoryActivityAnalytics: React.FC<RepositoryActivityAnalyticsPr
         </p>
       </div>
 
-      {/* Activity Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <Card className="p-6">
-          <div className="p-3 bg-purple-100 dark:bg-purple-900/20 rounded-lg w-fit mb-4">
-            <Activity className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+      {/* Activity Stats - Responsive grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <Card className="p-4 sm:p-6 hover:shadow-lg transition-shadow">
+          <div className="p-2 sm:p-3 bg-purple-100 dark:bg-purple-900/20 rounded-lg w-fit mb-3 sm:mb-4">
+            <Activity className="w-5 h-5 sm:w-6 sm:h-6 text-purple-600 dark:text-purple-400" />
           </div>
-          <div className="text-3xl font-bold text-slate-900 dark:text-white mb-1">
-            {activityStats.totalAnalyses}
+          <div className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-1">
+            {activityStats.totalAnalyses.toLocaleString()}
           </div>
-          <div className="text-sm text-slate-600 dark:text-slate-400">
+          <div className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
             Total Analyses
           </div>
         </Card>
 
-        <Card className="p-6">
-          <div className="p-3 bg-blue-100 dark:bg-blue-900/20 rounded-lg w-fit mb-4">
-            <Zap className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+        <Card className="p-4 sm:p-6 hover:shadow-lg transition-shadow">
+          <div className="p-2 sm:p-3 bg-blue-100 dark:bg-blue-900/20 rounded-lg w-fit mb-3 sm:mb-4">
+            <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 dark:text-blue-400" />
           </div>
-          <div className="text-3xl font-bold text-slate-900 dark:text-white mb-1">
+          <div className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-1">
             {activityStats.averageDuration}s
           </div>
-          <div className="text-sm text-slate-600 dark:text-slate-400">
+          <div className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
             Avg. Analysis Time
           </div>
         </Card>
 
-        <Card className="p-6">
-          <div className="p-3 bg-green-100 dark:bg-green-900/20 rounded-lg w-fit mb-4">
-            <GitBranch className="w-6 h-6 text-green-600 dark:text-green-400" />
+        <Card className="p-4 sm:p-6 hover:shadow-lg transition-shadow">
+          <div className="p-2 sm:p-3 bg-green-100 dark:bg-green-900/20 rounded-lg w-fit mb-3 sm:mb-4">
+            <GitBranch className="w-5 h-5 sm:w-6 sm:h-6 text-green-600 dark:text-green-400" />
           </div>
-          <div className="text-xl font-bold text-slate-900 dark:text-white mb-1 truncate">
+          <div className="text-base sm:text-xl font-bold text-slate-900 dark:text-white mb-1 truncate">
             {activityStats.mostAnalyzedRepo || 'N/A'}
           </div>
-          <div className="text-sm text-slate-600 dark:text-slate-400">
+          <div className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
             Most Analyzed Repo
           </div>
         </Card>
 
-        <Card className="p-6">
-          <div className="p-3 bg-orange-100 dark:bg-orange-900/20 rounded-lg w-fit mb-4">
-            <Code className="w-6 h-6 text-orange-600 dark:text-orange-400" />
+        <Card className="p-4 sm:p-6 hover:shadow-lg transition-shadow">
+          <div className="p-2 sm:p-3 bg-orange-100 dark:bg-orange-900/20 rounded-lg w-fit mb-3 sm:mb-4">
+            <Code className="w-5 h-5 sm:w-6 sm:h-6 text-orange-600 dark:text-orange-400" />
           </div>
-          <div className="text-xl font-bold text-slate-900 dark:text-white mb-1">
+          <div className="text-base sm:text-xl font-bold text-slate-900 dark:text-white mb-1 truncate">
             {activityStats.mostCommonLanguage || 'N/A'}
           </div>
-          <div className="text-sm text-slate-600 dark:text-slate-400">
+          <div className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
             Most Common Language
           </div>
         </Card>

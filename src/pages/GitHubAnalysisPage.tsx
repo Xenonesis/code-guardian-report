@@ -128,6 +128,7 @@ export const GitHubAnalysisPage: React.FC = () => {
 
         // Download repository as ZIP
         let lastUpdate = 0;
+        let lastMessage = '';
         const zipFile = await githubRepositoryService.downloadRepositoryAsZip(
           repoInfo.owner,
           repoInfo.repo,
@@ -135,10 +136,15 @@ export const GitHubAnalysisPage: React.FC = () => {
           (progress, message) => {
             const now = Date.now();
             // Throttle updates to avoid React "Maximum update depth exceeded" error
-            // Update at most every 100ms, or if it's the final step
-            if (now - lastUpdate > 100 || progress === 100) {
-              toast.loading(message, { id: progressToastId });
+            // Update at most every 500ms, or if it's the final step
+            // AND ensure message has changed to avoid duplicate updates
+            if ((now - lastUpdate > 500 || progress === 100) && message !== lastMessage) {
+              lastMessage = message;
               lastUpdate = now;
+              // Use setTimeout to break the synchronous call stack and let React render
+              setTimeout(() => {
+                toast.loading(message, { id: progressToastId });
+              }, 0);
             }
           }
         );
