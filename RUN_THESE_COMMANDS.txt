@@ -1,0 +1,99 @@
+🚀 FIREBASE CLI DEPLOYMENT COMMANDS
+=====================================
+
+Copy and paste these commands ONE BY ONE in your terminal:
+
+1️⃣  LOGIN TO FIREBASE
+-----------------------
+firebase login
+
+→ This will open your browser
+→ Sign in with: itisaddy7@gmail.com (or the account that owns code-guardian-report)
+→ Grant permissions
+→ Return to terminal when done
+
+
+2️⃣  SELECT PROJECT
+-----------------------
+firebase use --add
+
+→ You'll see a list of your projects
+→ Use arrow keys to select: code-guardian-report
+→ Press Enter
+→ When asked for alias, type: default
+→ Press Enter
+
+
+3️⃣  DEPLOY INDEXES
+-----------------------
+firebase deploy --only firestore:indexes
+
+→ This will deploy the 3 indexes
+→ Takes about 30 seconds to deploy
+→ Indexes will then build (2-3 minutes)
+
+
+4️⃣  VERIFY DEPLOYMENT
+-----------------------
+firebase firestore:indexes
+
+→ Should show 3 indexes
+→ Status will be "Building" or "Enabled"
+
+
+5️⃣  CHECK FIREBASE CONSOLE
+-----------------------
+Open in browser:
+https://console.firebase.google.com/project/code-guardian-report/firestore/indexes
+
+→ You should see the 3 indexes building/enabled
+
+
+=====================================
+EXPECTED OUTPUT AFTER STEP 3:
+=====================================
+
+=== Deploying to 'code-guardian-report'...
+
+i  deploying firestore
+i  firestore: reading indexes from firestore.indexes.json...
+✔  firestore: deployed indexes successfully
+
+✔ Deploy complete!
+
+
+=====================================
+AFTER DEPLOYMENT:
+=====================================
+
+6️⃣  HARD REFRESH BROWSER
+   Windows/Linux: Ctrl + Shift + R
+   Mac: Cmd + Shift + R
+
+7️⃣  TEST APPLICATION
+   Open: http://localhost:5173
+   Sign in and test GitHub features
+
+
+=====================================
+COPY THIS COMMAND BLOCK:
+=====================================
+
+firebase login
+firebase use --add
+firebase deploy --only firestore:indexes
+firebase firestore:indexes
+
+
+=====================================
+NOTES:
+=====================================
+
+• If login opens browser, that's normal
+• Select "code-guardian-report" when prompted
+• Deployment takes ~30 seconds
+• Index building takes 2-3 minutes
+• You can continue working while indexes build
+
+
+Ready? Start with: firebase login

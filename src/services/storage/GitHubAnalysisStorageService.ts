@@ -83,14 +83,16 @@ export class GitHubAnalysisStorageService {
       logger.error('Error fetching repositories:', error);
       logger.warn('⚠️ Using offline mode - Firebase unavailable. Returning empty data.');
       
-      // Show toast notification
+      // Show toast notification asynchronously to avoid setState during render
       if (typeof window !== 'undefined') {
-        const toastNotifications = (window as any).toastNotifications;
-        if (toastNotifications) {
-          toastNotifications.offline();
-        } else if ((window as any).showToast) {
-          (window as any).showToast('warning', 'Offline Mode', 'Unable to fetch repositories. Please check your connection.');
-        }
+        setTimeout(() => {
+          const toastNotifications = (window as any).toastNotifications;
+          if (toastNotifications) {
+            toastNotifications.offline();
+          } else if ((window as any).showToast) {
+            (window as any).showToast('warning', 'Offline Mode', 'Unable to fetch repositories. Please check your connection.');
+          }
+        }, 0);
       }
       
       // Return empty array instead of mock data in production
@@ -100,7 +102,9 @@ export class GitHubAnalysisStorageService {
       
       // Only return mock data in development (with warning)
       if (typeof window !== 'undefined' && (window as any).toastNotifications) {
-        (window as any).toastNotifications.mockDataWarning();
+        setTimeout(() => {
+          (window as any).toastNotifications.mockDataWarning();
+        }, 0);
       }
       return this.getMockRepositories();
     }
@@ -142,14 +146,16 @@ export class GitHubAnalysisStorageService {
       logger.error('Error fetching analysis history:', error);
       logger.warn('⚠️ Using offline mode - Firebase unavailable. Returning empty data.');
       
-      // Show toast notification
+      // Show toast notification asynchronously to avoid setState during render
       if (typeof window !== 'undefined') {
-        const serviceToasts = (window as any).toastNotifications?.services;
-        if (serviceToasts) {
-          serviceToasts.analysisHistory.loadError();
-        } else if ((window as any).showToast) {
-          (window as any).showToast('warning', 'Offline Mode', 'Unable to fetch analysis history. Please check your connection.');
-        }
+        setTimeout(() => {
+          const serviceToasts = (window as any).toastNotifications?.services;
+          if (serviceToasts) {
+            serviceToasts.analysisHistory.loadError();
+          } else if ((window as any).showToast) {
+            (window as any).showToast('warning', 'Offline Mode', 'Unable to fetch analysis history. Please check your connection.');
+          }
+        }, 0);
       }
       
       // Return empty array instead of mock data in production
@@ -159,7 +165,9 @@ export class GitHubAnalysisStorageService {
       
       // Only return mock data in development (with warning)
       if (typeof window !== 'undefined' && (window as any).toastNotifications) {
-        (window as any).toastNotifications.mockDataWarning();
+        setTimeout(() => {
+          (window as any).toastNotifications.mockDataWarning();
+        }, 0);
       }
       return this.getMockAnalysisHistory();
     }

@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "default": "code-guardian-report",
+    "code-guardian": "code-guardian-report"
+  },
+  "targets": {},
+  "etags": {}
+}

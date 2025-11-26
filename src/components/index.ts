@@ -60,3 +60,8 @@ export { default as NotificationBadge } from './notifications/NotificationBadge'
 // Export components
 export { default as DataExport } from './export/DataExport';
 export { PDFDownloadButton } from './export/PDFDownloadButton';
+
+// GitHub components
+export { default as GitHubRepositoryPermissionModal } from './github/GitHubRepositoryPermissionModal';
+export { default as GitHubRepositoryList } from './github/GitHubRepositoryList';
+export { default as GitHubUsernameInput } from './github/GitHubUsernameInput';

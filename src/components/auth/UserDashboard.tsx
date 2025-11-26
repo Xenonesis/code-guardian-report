@@ -3,6 +3,12 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/lib/auth-context';
 import { collection, query, where, getDocs, addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
+import { useGitHubRepositories } from '@/hooks/useGitHubRepositories';
+import GitHubRepositoryPermissionModal from '@/components/github/GitHubRepositoryPermissionModal';
+import GitHubRepositoryList from '@/components/github/GitHubRepositoryList';
+import GitHubUsernameInput from '@/components/github/GitHubUsernameInput';
+import { Github } from 'lucide-react';
+import { toast } from 'sonner';
 
 import { logger } from '@/utils/logger';
 interface Task {
@@ -20,6 +26,26 @@ const UserDashboard: React.FC = () => {
   const [newTaskTitle, setNewTaskTitle] = useState('');
   const [newTaskDescription, setNewTaskDescription] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPermissionModal, setShowPermissionModal] = useState(false);
+  const [showUsernameInput, setShowUsernameInput] = useState(false);
+  const [showGitHubRepos, setShowGitHubRepos] = useState(false);
+
+  // GitHub repositories integration
+  const {
+    repositories,
+    loading: reposLoading,
+    error: reposError,
+    hasGitHubAccount,
+    permissionGranted,
+    permissionDenied,
+    grantPermission,
+    denyPermission,
+    revokePermission,
+    setManualUsername
+  } = useGitHubRepositories({
+    email: userProfile?.email || null,
+    enabled: !userProfile?.isGitHubUser // Only for non-GitHub users (Google sign-in)
+  });
 
   const fetchTasks = async () => {
     if (!user) return;
@@ -102,6 +128,68 @@ const UserDashboard: React.FC = () => {
     fetchTasks();
   }, [user]);
 
+  // Show permission modal if user has GitHub account but hasn't granted/denied permission
+  useEffect(() => {
+    if (hasGitHubAccount && !permissionGranted && !permissionDenied && !userProfile?.isGitHubUser) {
+      // Delay showing the modal by 2 seconds to not overwhelm the user immediately
+      const timer = setTimeout(() => {
+        setShowPermissionModal(true);
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [hasGitHubAccount, permissionGranted, permissionDenied, userProfile?.isGitHubUser]);
+
+  // Show username input if no GitHub account detected but user wants to connect
+  useEffect(() => {
+    if (!hasGitHubAccount && !permissionGranted && !permissionDenied && !userProfile?.isGitHubUser && userProfile?.email) {
+      // Check if we should prompt for manual username input
+      const hasAskedForUsername = localStorage.getItem('github_username_asked');
+      if (!hasAskedForUsername) {
+        const timer = setTimeout(() => {
+          setShowUsernameInput(true);
+          localStorage.setItem('github_username_asked', 'true');
+        }, 3000);
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [hasGitHubAccount, permissionGranted, permissionDenied, userProfile?.isGitHubUser, userProfile?.email]);
+
+  const handleAllowGitHubAccess = async () => {
+    setShowPermissionModal(false);
+    toast.loading('Fetching your repositories...');
+    await grantPermission();
+    toast.dismiss();
+    toast.success('GitHub repositories loaded successfully!');
+    setShowGitHubRepos(true);
+  };
+
+  const handleDenyGitHubAccess = () => {
+    setShowPermissionModal(false);
+    denyPermission();
+    toast.info('You can enable this later from settings.');
+  };
+
+  const handleManualUsernameSuccess = async (username: string) => {
+    setShowUsernameInput(false);
+    toast.loading('Fetching your repositories...');
+    await setManualUsername(username);
+    toast.dismiss();
+    toast.success('GitHub repositories loaded successfully!');
+    setShowGitHubRepos(true);
+  };
+
+  const handleSkipUsernameInput = () => {
+    setShowUsernameInput(false);
+    localStorage.setItem('github_repo_permission', 'denied');
+    toast.info('You can connect your GitHub account later from settings.');
+  };
+
+  const handleAnalyzeRepository = async (repoUrl: string, repoName: string) => {
+    toast.info(`Analysis for ${repoName} will be implemented soon!`);
+    // TODO: Integrate with the existing analysis flow
+    // This could navigate to the analysis page with the repo URL pre-filled
+  };
+
   if (!user || !userProfile) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-black text-white">
@@ -115,6 +203,24 @@ const UserDashboard: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0d0d1f] via-[#1b1b3a] to-[#0d0d1f] text-gray-100">
+      {/* GitHub Permission Modal */}
+      <GitHubRepositoryPermissionModal
+        isOpen={showPermissionModal}
+        email={userProfile?.email || ''}
+        onAllow={handleAllowGitHubAccess}
+        onDeny={handleDenyGitHubAccess}
+        onClose={() => setShowPermissionModal(false)}
+      />
+
+      {/* GitHub Username Input Modal */}
+      <GitHubUsernameInput
+        isOpen={showUsernameInput}
+        email={userProfile?.email || ''}
+        onSuccess={handleManualUsernameSuccess}
+        onSkip={handleSkipUsernameInput}
+        onClose={() => setShowUsernameInput(false)}
+      />
+
       <header className="bg-[#1e1e2f] shadow border-b border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
@@ -133,6 +239,35 @@ const UserDashboard: React.FC = () => {
       </header>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* GitHub Repositories Section - Show if permission granted */}
+        {permissionGranted && repositories.length > 0 && (
+          <div className="mb-8">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <Github className="w-6 h-6 text-purple-400" />
+                <h2 className="text-xl font-bold text-white">Your GitHub Repositories</h2>
+                <span className="px-2 py-1 text-xs bg-purple-500/20 text-purple-300 rounded-full">
+                  {repositories.length} repos
+                </span>
+              </div>
+              <button
+                onClick={() => setShowGitHubRepos(!showGitHubRepos)}
+                className="text-sm text-purple-400 hover:text-purple-300 transition-colors"
+              >
+                {showGitHubRepos ? 'Hide' : 'Show'}
+              </button>
+            </div>
+            
+            {showGitHubRepos && (
+              <GitHubRepositoryList
+                repositories={repositories}
+                onAnalyzeRepository={handleAnalyzeRepository}
+                loading={reposLoading}
+              />
+            )}
+          </div>
+        )}
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Profile and Stats */}
           <div className="lg:col-span-1 space-y-6">

@@ -11,14 +11,164 @@ import { RepositoryActivityAnalytics } from '@/components/github/RepositoryActiv
 import { RepositoryComparisonTool } from '@/components/github/RepositoryComparisonTool';
 import { CodeQualityAnalytics } from '@/components/github/CodeQualityAnalytics';
 import { VulnerabilityPatternAnalytics } from '@/components/github/VulnerabilityPatternAnalytics';
+import { useGitHubRepositories } from '@/hooks/useGitHubRepositories';
+import GitHubUsernameInput from '@/components/github/GitHubUsernameInput';
+import GitHubRepositoryPermissionModal from '@/components/github/GitHubRepositoryPermissionModal';
+import GitHubRepositoryList from '@/components/github/GitHubRepositoryList';
+import { toast } from 'sonner';
 
 export const GitHubAnalysisPage: React.FC = () => {
   const { user, userProfile, isGitHubUser, signInWithGithub } = useAuth();
   const { navigateTo } = useNavigation();
   const [selectedTab, setSelectedTab] = useState<'overview' | 'repositories' | 'history' | 'analytics' | 'comparison' | 'quality' | 'patterns'>('overview');
+  const [showPermissionModal, setShowPermissionModal] = useState(false);
+  const [showUsernameInput, setShowUsernameInput] = useState(false);
+  const [showGitHubRepos, setShowGitHubRepos] = useState(false);
 
-  // Show prompt for non-GitHub users instead of redirecting
-  if (!isGitHubUser) {
+  // GitHub repositories integration for Google users
+  const {
+    repositories,
+    loading: reposLoading,
+    hasGitHubAccount,
+    permissionGranted,
+    permissionDenied,
+    grantPermission,
+    denyPermission,
+    setManualUsername
+  } = useGitHubRepositories({
+    email: userProfile?.email || null,
+    enabled: !isGitHubUser && !!user // Only for non-GitHub users (Google sign-in)
+  });
+
+  // Show permission modal if user has GitHub account but hasn't granted/denied permission
+  useEffect(() => {
+    if (!isGitHubUser && hasGitHubAccount && !permissionGranted && !permissionDenied && user) {
+      const timer = setTimeout(() => {
+        setShowPermissionModal(true);
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [hasGitHubAccount, permissionGranted, permissionDenied, isGitHubUser, user]);
+
+  // Show username input if no GitHub account detected but user wants to connect
+  useEffect(() => {
+    if (!isGitHubUser && !hasGitHubAccount && !permissionGranted && !permissionDenied && user && userProfile?.email) {
+      const hasAskedForUsername = localStorage.getItem('github_username_asked');
+      if (!hasAskedForUsername) {
+        const timer = setTimeout(() => {
+          setShowUsernameInput(true);
+          localStorage.setItem('github_username_asked', 'true');
+        }, 3000);
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [hasGitHubAccount, permissionGranted, permissionDenied, isGitHubUser, user, userProfile?.email]);
+
+  const handleAllowGitHubAccess = async () => {
+    setShowPermissionModal(false);
+    toast.loading('Fetching your repositories...');
+    await grantPermission();
+    toast.dismiss();
+    toast.success('GitHub repositories loaded successfully!');
+    setShowGitHubRepos(true);
+  };
+
+  const handleDenyGitHubAccess = () => {
+    setShowPermissionModal(false);
+    denyPermission();
+    toast.info('You can enable this later from settings.');
+  };
+
+  const handleManualUsernameSuccess = async (username: string) => {
+    setShowUsernameInput(false);
+    toast.loading('Fetching your repositories...');
+    await setManualUsername(username);
+    toast.dismiss();
+    toast.success('GitHub repositories loaded successfully!');
+    setShowGitHubRepos(true);
+  };
+
+  const handleSkipUsernameInput = () => {
+    setShowUsernameInput(false);
+    localStorage.setItem('github_repo_permission', 'denied');
+    toast.info('You can connect your GitHub account later.');
+  };
+
+  const handleAnalyzeRepository = async (repoUrl: string, repoName: string) => {
+    try {
+      // Import required services
+      const { githubRepositoryService } = await import('@/services/githubRepositoryService');
+      const { EnhancedAnalysisEngine } = await import('@/services/enhancedAnalysisEngine');
+      const { GitHubAnalysisStorageService } = await import('@/services/storage/GitHubAnalysisStorageService');
+      
+      // Parse GitHub URL
+      const repoInfo = githubRepositoryService.parseGitHubUrl(repoUrl);
+      if (!repoInfo) {
+        toast.error('Invalid GitHub repository URL');
+        return;
+      }
+
+      // Show progress toast
+      const progressToastId = toast.loading('Preparing to analyze repository...');
+
+      try {
+        // Download repository as ZIP
+        const zipFile = await githubRepositoryService.downloadRepositoryAsZip(
+          repoInfo.owner,
+          repoInfo.repo,
+          repoInfo.branch || 'main',
+          (progress, message) => {
+            toast.loading(message, { id: progressToastId });
+          }
+        );
+
+        toast.loading('Analyzing code...', { id: progressToastId });
+
+        // Analyze the repository
+        const analysisEngine = new EnhancedAnalysisEngine();
+        const results = await analysisEngine.analyzeCodebase(zipFile);
+
+        toast.loading('Saving analysis results...', { id: progressToastId });
+
+        // Store analysis results in GitHub-specific storage
+        if (user?.uid) {
+          const storageService = new GitHubAnalysisStorageService();
+          await storageService.storeRepositoryAnalysis(user.uid, {
+            name: repoInfo.repo,
+            fullName: `${repoInfo.owner}/${repoInfo.repo}`,
+            description: `Analysis of ${repoInfo.owner}/${repoInfo.repo}`,
+            url: repoUrl,
+            securityScore: results.summary.securityScore / 10, // Convert to 0-10 scale
+            issuesFound: results.issues.length,
+            criticalIssues: results.summary.criticalIssues,
+            language: results.languageDetection?.primaryLanguage || 'Unknown',
+            stars: 0, // Could fetch from repo info
+            forks: 0, // Could fetch from repo info
+            duration: parseFloat(results.analysisTime) || 0
+          });
+        }
+
+        toast.success(`Analysis complete! Found ${results.issues.length} issues.`, { 
+          id: progressToastId,
+          duration: 4000 
+        });
+
+        // Optionally navigate to results or refresh analytics
+        setSelectedTab('analytics');
+
+      } catch (error: any) {
+        toast.error(`Analysis failed: ${error.message}`, { id: progressToastId });
+        logger.error('Repository analysis failed:', error);
+      }
+
+    } catch (error: any) {
+      toast.error(`Failed to analyze repository: ${error.message}`);
+      logger.error('Error in handleAnalyzeRepository:', error);
+    }
+  };
+
+  // Modified: Allow Google users if they have connected GitHub repos
+  if (!isGitHubUser && !permissionGranted && !user) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 flex items-center justify-center p-4">
         <Card className="max-w-2xl w-full p-8 md:p-12 text-center">
@@ -143,6 +293,23 @@ export const GitHubAnalysisPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+      {/* GitHub Permission Modal */}
+      <GitHubRepositoryPermissionModal
+        isOpen={showPermissionModal}
+        email={userProfile?.email || ''}
+        onAllow={handleAllowGitHubAccess}
+        onDeny={handleDenyGitHubAccess}
+        onClose={() => setShowPermissionModal(false)}
+      />
+
+      {/* GitHub Username Input Modal */}
+      <GitHubUsernameInput
+        isOpen={showUsernameInput}
+        email={userProfile?.email || ''}
+        onSuccess={handleManualUsernameSuccess}
+        onSkip={handleSkipUsernameInput}
+        onClose={() => setShowUsernameInput(false)}
+      />
       {/* Hero Header */}
       <div className="bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 dark:from-slate-950 dark:via-blue-950 dark:to-indigo-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
@@ -272,6 +439,39 @@ export const GitHubAnalysisPage: React.FC = () => {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* GitHub Repositories Section for Google Users */}
+        {!isGitHubUser && permissionGranted && repositories.length > 0 && (
+          <div className="mb-8">
+            <Card className="p-6">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-2">
+                  <Github className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+                  <h2 className="text-xl font-bold text-slate-900 dark:text-white">Your GitHub Repositories</h2>
+                  <span className="px-2 py-1 text-xs bg-purple-500/20 text-purple-600 dark:text-purple-300 rounded-full">
+                    {repositories.length} repos
+                  </span>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowGitHubRepos(!showGitHubRepos)}
+                  className="text-purple-600 dark:text-purple-400"
+                >
+                  {showGitHubRepos ? 'Hide' : 'Show'}
+                </Button>
+              </div>
+              
+              {showGitHubRepos && (
+                <GitHubRepositoryList
+                  repositories={repositories}
+                  onAnalyzeRepository={handleAnalyzeRepository}
+                  loading={reposLoading}
+                />
+              )}
+            </Card>
+          </div>
+        )}
+
         {selectedTab === 'overview' && (
           <div className="space-y-8">
             <SecurityAnalyticsSection userId={user.uid} />
