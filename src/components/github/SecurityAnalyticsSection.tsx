@@ -48,8 +48,30 @@ export const SecurityAnalyticsSection: React.FC<SecurityAnalyticsSectionProps> =
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-12">
-        <Shield className="w-8 h-8 animate-pulse text-blue-600" />
+      <div className="space-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <Card key={i} className="p-4 sm:p-6">
+              <div className="h-6 w-24 bg-slate-200 dark:bg-slate-700 rounded animate-pulse mb-4"></div>
+              <div className="h-8 w-16 bg-slate-200 dark:bg-slate-700 rounded animate-pulse mb-2"></div>
+              <div className="h-4 w-28 bg-slate-200 dark:bg-slate-700 rounded animate-pulse"></div>
+            </Card>
+          ))}
+        </div>
+        {detailed && (
+          <Card className="p-6">
+            <div className="h-5 w-48 bg-slate-200 dark:bg-slate-700 rounded animate-pulse mb-4"></div>
+            <div className="space-y-3">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div key={i} className="flex items-center gap-4">
+                  <div className="w-24 h-4 bg-slate-200 dark:bg-slate-700 rounded animate-pulse"></div>
+                  <div className="flex-1 h-2 bg-slate-200 dark:bg-slate-700 rounded animate-pulse"></div>
+                  <div className="w-12 h-4 bg-slate-200 dark:bg-slate-700 rounded animate-pulse"></div>
+                </div>
+              ))}
+            </div>
+          </Card>
+        )}
       </div>
     );
   }

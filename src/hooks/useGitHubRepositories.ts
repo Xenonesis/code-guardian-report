@@ -74,13 +74,28 @@ export const useGitHubRepositories = ({ email, enabled }: UseGitHubRepositoriesO
     }
   };
 
-  // Fetch GitHub user profile
+  // Fetch GitHub user profile with simple localStorage cache (24h TTL)
   const fetchUserProfile = async (username: string) => {
     try {
+      const cacheKey = `github_user_profile_${username}`;
+      const cached = localStorage.getItem(cacheKey);
+      if (cached) {
+        try {
+          const parsed = JSON.parse(cached);
+          if (parsed && parsed.data && parsed.cachedAt && (Date.now() - parsed.cachedAt) < 24 * 60 * 60 * 1000) {
+            setGithubUser(parsed.data);
+            return;
+          }
+        } catch {}
+      }
+
       const resp = await fetch(`https://api.github.com/users/${username}`);
       if (resp.ok) {
         const data = await resp.json();
         setGithubUser(data);
+        try {
+          localStorage.setItem(cacheKey, JSON.stringify({ data, cachedAt: Date.now() }));
+        } catch {}
       }
     } catch (e) {
       logger.debug('Error fetching GitHub user profile:', e);

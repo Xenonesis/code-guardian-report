@@ -79,8 +79,33 @@ export const RepositoryAnalysisGrid: React.FC<RepositoryAnalysisGridProps> = ({ 
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-12">
-        <RefreshCw className="w-8 h-8 animate-spin text-blue-600" />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <Card key={i} className="p-6">
+            <div className="flex items-start justify-between mb-4">
+              <div className="flex-1">
+                <div className="h-5 w-40 bg-slate-200 dark:bg-slate-700 rounded animate-pulse mb-2"></div>
+                <div className="h-4 w-56 bg-slate-200 dark:bg-slate-700 rounded animate-pulse"></div>
+              </div>
+              <div className="h-4 w-4 bg-slate-200 dark:bg-slate-700 rounded animate-pulse"></div>
+            </div>
+            <div className="h-4 w-full bg-slate-200 dark:bg-slate-700 rounded animate-pulse mb-3"></div>
+            <div className="flex items-center gap-4 mb-4">
+              <div className="h-4 w-12 bg-slate-200 dark:bg-slate-700 rounded animate-pulse"></div>
+              <div className="h-4 w-12 bg-slate-200 dark:bg-slate-700 rounded animate-pulse"></div>
+              <div className="h-5 w-20 bg-slate-200 dark:bg-slate-700 rounded animate-pulse"></div>
+            </div>
+            <div className="space-y-3">
+              <div className="h-4 w-32 bg-slate-200 dark:bg-slate-700 rounded animate-pulse"></div>
+              <div className="h-4 w-20 bg-slate-200 dark:bg-slate-700 rounded animate-pulse"></div>
+              <div className="h-4 w-24 bg-slate-200 dark:bg-slate-700 rounded animate-pulse"></div>
+            </div>
+            <div className="flex gap-2 mt-4">
+              <div className="h-8 w-24 bg-slate-200 dark:bg-slate-700 rounded animate-pulse"></div>
+              <div className="h-8 w-10 bg-slate-200 dark:bg-slate-700 rounded animate-pulse"></div>
+            </div>
+          </Card>
+        ))}
       </div>
     );
   }

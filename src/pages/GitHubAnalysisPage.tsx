@@ -21,7 +21,10 @@ import { logger } from '@/utils/logger';
 export const GitHubAnalysisPage: React.FC = () => {
   const { user, userProfile, isGitHubUser, signInWithGithub } = useAuth();
   const { navigateTo } = useNavigation();
-  const [selectedTab, setSelectedTab] = useState<'overview' | 'repositories' | 'history' | 'analytics' | 'comparison' | 'quality' | 'patterns'>('overview');
+  const [selectedTab, setSelectedTab] = useState<'overview' | 'repositories' | 'history' | 'analytics' | 'comparison' | 'quality' | 'patterns'>(() => {
+    const stored = typeof window !== 'undefined' ? localStorage.getItem('github_selected_tab') : null;
+    return (stored as any) || 'overview';
+  });
   const [showPermissionModal, setShowPermissionModal] = useState(false);
   const [showUsernameInput, setShowUsernameInput] = useState(false);
   const [showGitHubRepos, setShowGitHubRepos] = useState(false);
@@ -119,11 +122,11 @@ export const GitHubAnalysisPage: React.FC = () => {
   }, [hasGitHubAccount, permissionGranted, permissionDenied, isGitHubUser, user, userProfile?.email]);
 
   const handleAllowGitHubAccess = async () => {
+    localStorage.setItem('github_selected_tab', 'analytics');
     setShowPermissionModal(false);
-    toast.loading('Fetching your repositories...');
+    const t = toast.loading('Fetching your repositories...');
     await grantPermission();
-    toast.dismiss();
-    toast.success('GitHub repositories loaded successfully!');
+    toast.success('GitHub repositories loaded successfully!', { id: t });
     setShowGitHubRepos(true);
   };
 
@@ -134,11 +137,11 @@ export const GitHubAnalysisPage: React.FC = () => {
   };
 
   const handleManualUsernameSuccess = async (username: string) => {
+    localStorage.setItem('github_selected_tab', 'analytics');
     setShowUsernameInput(false);
-    toast.loading('Fetching your repositories...');
+    const t = toast.loading('Fetching your repositories...');
     await setManualUsername(username);
-    toast.dismiss();
-    toast.success('GitHub repositories loaded successfully!');
+    toast.success('GitHub repositories loaded successfully!', { id: t });
     setShowGitHubRepos(true);
   };
 
@@ -233,8 +236,8 @@ export const GitHubAnalysisPage: React.FC = () => {
             language: typeof results.languageDetection?.primaryLanguage === 'string' 
               ? results.languageDetection.primaryLanguage 
               : results.languageDetection?.primaryLanguage?.name || 'Unknown',
-            stars: 0, // Could fetch from repo info
-            forks: 0, // Could fetch from repo info
+            stars: 0,
+            forks: 0,
             duration: parseFloat(results.analysisTime) || 0
           });
         }
@@ -539,7 +542,10 @@ export const GitHubAnalysisPage: React.FC = () => {
             </Button>
             <Button
               variant={selectedTab === 'analytics' ? 'default' : 'ghost'}
-              onClick={() => setSelectedTab('analytics')}
+              onClick={() => {
+                setSelectedTab('analytics');
+                localStorage.setItem('github_selected_tab', 'analytics');
+              }}
               className={selectedTab === 'analytics' 
                 ? 'bg-white text-slate-900 hover:bg-white/90' 
                 : 'text-white hover:bg-white/10'}

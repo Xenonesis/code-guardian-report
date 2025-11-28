@@ -156,10 +156,9 @@ const UserDashboard: React.FC = () => {
 
   const handleAllowGitHubAccess = async () => {
     setShowPermissionModal(false);
-    toast.loading('Fetching your repositories...');
+    const t = toast.loading('Fetching your repositories...');
     await grantPermission();
-    toast.dismiss();
-    toast.success('GitHub repositories loaded successfully!');
+    toast.success('GitHub repositories loaded successfully!', { id: t });
     setShowGitHubRepos(true);
   };
 
@@ -171,10 +170,9 @@ const UserDashboard: React.FC = () => {
 
   const handleManualUsernameSuccess = async (username: string) => {
     setShowUsernameInput(false);
-    toast.loading('Fetching your repositories...');
+    const t = toast.loading('Fetching your repositories...');
     await setManualUsername(username);
-    toast.dismiss();
-    toast.success('GitHub repositories loaded successfully!');
+    toast.success('GitHub repositories loaded successfully!', { id: t });
     setShowGitHubRepos(true);
   };
 
@@ -184,10 +182,96 @@ const UserDashboard: React.FC = () => {
     toast.info('You can connect your GitHub account later from settings.');
   };
 
+  const { navigateTo, setCurrentSection, setCurrentTab } = useNavigation() as any;
+
   const handleAnalyzeRepository = async (repoUrl: string, repoName: string) => {
-    toast.info(`Analysis for ${repoName} will be implemented soon!`);
-    // TODO: Integrate with the existing analysis flow
-    // This could navigate to the analysis page with the repo URL pre-filled
+    try {
+      const { githubRepositoryService } = await import('@/services/githubRepositoryService');
+      const { EnhancedAnalysisEngine } = await import('@/services/enhancedAnalysisEngine');
+      const { GitHubAnalysisStorageService } = await import('@/services/storage/GitHubAnalysisStorageService');
+
+      const repoInfo = githubRepositoryService.parseGitHubUrl(repoUrl);
+      if (!repoInfo) {
+        toast.error('Invalid GitHub repository URL');
+        return;
+      }
+
+      const toastId = toast.loading(`Analyzing ${repoName}...`);
+
+      try {
+        // Ensure branch
+        let branch = repoInfo.branch;
+        if (!branch) {
+          try {
+            const details = await githubRepositoryService.getRepositoryInfo(repoInfo.owner, repoInfo.repo);
+            branch = details.defaultBranch;
+            // Update stored metadata with stars/forks
+            var stars = details.stars;
+            var forks = details.forks;
+          } catch {
+            branch = 'main';
+          }
+        }
+
+        // Download ZIP with progress updates (throttled)
+        let lastUpdate = 0;
+        let lastMessage = '';
+        const zipFile = await githubRepositoryService.downloadRepositoryAsZip(
+          repoInfo.owner,
+          repoInfo.repo,
+          branch || 'main',
+          (progress, message) => {
+            const now = Date.now();
+            if ((now - lastUpdate > 500 || progress === 100) && message !== lastMessage) {
+              lastMessage = message;
+              lastUpdate = now;
+              setTimeout(() => toast.loading(message, { id: toastId }), 0);
+            }
+          }
+        );
+
+        // Analyze
+        toast.loading('Analyzing code...', { id: toastId });
+        const engine = new EnhancedAnalysisEngine();
+        const results = await engine.analyzeCodebase(zipFile);
+
+        // Store results
+        if (user?.uid) {
+          const storage = new GitHubAnalysisStorageService();
+          await storage.storeRepositoryAnalysis(user.uid, {
+            name: repoInfo.repo,
+            fullName: `${repoInfo.owner}/${repoInfo.repo}`,
+            description: `Analysis of ${repoInfo.owner}/${repoInfo.repo}`,
+            url: repoUrl,
+            securityScore: results.summary.securityScore / 10,
+            issuesFound: results.issues.length,
+            criticalIssues: results.summary.criticalIssues,
+            language: typeof results.languageDetection?.primaryLanguage === 'string' 
+              ? results.languageDetection.primaryLanguage 
+              : results.languageDetection?.primaryLanguage?.name || 'Unknown',
+            stars: typeof stars === 'number' ? stars : 0,
+            forks: typeof forks === 'number' ? forks : 0,
+            duration: parseFloat(results.analysisTime) || 0
+          });
+        }
+
+        toast.success(`Analysis complete! Found ${results.issues.length} issues.`, { id: toastId, duration: 2000 });
+        // Navigate to GitHub Analysis page Analytics tab
+        localStorage.setItem('github_selected_tab', 'analytics');
+        if (navigateTo) {
+          navigateTo('github-analysis', 'analytics');
+        } else {
+          setCurrentSection?.('github-analysis');
+          setCurrentTab?.('analytics');
+        }
+      } catch (err: any) {
+        toast.error(`Analysis failed: ${err.message || 'Unknown error'}`, { id: toastId });
+        logger.error('Repository analysis failed:', err);
+      }
+    } catch (error: any) {
+      toast.error(`Failed to analyze repository: ${error.message || 'Unknown error'}`);
+      logger.error('Error in handleAnalyzeRepository:', error);
+    }
   };
 
   if (!user || !userProfile) {

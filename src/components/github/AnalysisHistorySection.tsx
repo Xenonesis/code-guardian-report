@@ -11,9 +11,15 @@ import {
   TrendingUp,
   AlertTriangle,
   CheckCircle,
-  Filter
+  Filter,
+  ExternalLink,
+  X,
+  Shield,
+  Bug,
+  FileCode
 } from 'lucide-react';
 import { GitHubAnalysisStorageService } from '@/services/storage/GitHubAnalysisStorageService';
+import { toast } from 'sonner';
 
 import { logger } from '@/utils/logger';
 interface AnalysisRecord {
@@ -38,6 +44,7 @@ export const AnalysisHistorySection: React.FC<AnalysisHistorySectionProps> = ({ 
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [viewMode, setViewMode] = useState<'timeline' | 'list'>('timeline');
+  const [selectedAnalysis, setSelectedAnalysis] = useState<AnalysisRecord | null>(null);
 
   useEffect(() => {
     loadAnalysisHistory();
@@ -86,10 +93,46 @@ export const AnalysisHistorySection: React.FC<AnalysisHistorySectionProps> = ({ 
     }
   };
 
+  const handleViewReport = (analysis: AnalysisRecord) => {
+    setSelectedAnalysis(analysis);
+    toast.info(`Viewing report for ${analysis.repositoryName}`);
+  };
+
+  const handleCloseReport = () => {
+    setSelectedAnalysis(null);
+  };
+
+  const handleOpenInGitHub = (url: string) => {
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
+
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-12">
-        <Clock className="w-8 h-8 animate-spin text-blue-600" />
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <div className="h-7 w-48 bg-slate-200 dark:bg-slate-700 rounded animate-pulse mb-2"></div>
+            <div className="h-4 w-64 bg-slate-200 dark:bg-slate-700 rounded animate-pulse"></div>
+          </div>
+          <div className="flex gap-2">
+            <div className="h-8 w-24 bg-slate-200 dark:bg-slate-700 rounded animate-pulse"></div>
+            <div className="h-8 w-20 bg-slate-200 dark:bg-slate-700 rounded animate-pulse"></div>
+          </div>
+        </div>
+        <div className="h-10 w-full bg-slate-200 dark:bg-slate-700 rounded animate-pulse"></div>
+        <div className="space-y-4">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <Card key={i} className="p-6">
+              <div className="flex items-center justify-between">
+                <div className="space-y-2">
+                  <div className="h-5 w-40 bg-slate-200 dark:bg-slate-700 rounded animate-pulse"></div>
+                  <div className="h-4 w-56 bg-slate-200 dark:bg-slate-700 rounded animate-pulse"></div>
+                </div>
+                <div className="h-8 w-24 bg-slate-200 dark:bg-slate-700 rounded animate-pulse"></div>
+              </div>
+            </Card>
+          ))}
+        </div>
       </div>
     );
   }
@@ -190,7 +233,7 @@ export const AnalysisHistorySection: React.FC<AnalysisHistorySectionProps> = ({ 
                         )}
                       </div>
 
-                      <Button size="sm" variant="outline">
+                      <Button size="sm" variant="outline" onClick={() => handleViewReport(analysis)}>
                         View Report
                       </Button>
                     </div>
@@ -259,7 +302,7 @@ export const AnalysisHistorySection: React.FC<AnalysisHistorySectionProps> = ({ 
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm">
-                      <Button size="sm" variant="outline">
+                      <Button size="sm" variant="outline" onClick={() => handleViewReport(analysis)}>
                         View
                       </Button>
                     </td>
@@ -284,6 +327,129 @@ export const AnalysisHistorySection: React.FC<AnalysisHistorySectionProps> = ({ 
               : 'Your repository analyses will appear here'}
           </p>
         </Card>
+      )}
+
+      {/* Analysis Report Modal */}
+      {selectedAnalysis && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <Card className="w-full max-w-2xl max-h-[90vh] overflow-auto">
+            <div className="sticky top-0 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 p-4 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <GitBranch className="w-6 h-6 text-blue-600" />
+                <h2 className="text-xl font-bold text-slate-900 dark:text-white">
+                  {selectedAnalysis.repositoryName}
+                </h2>
+              </div>
+              <Button variant="ghost" size="sm" onClick={handleCloseReport}>
+                <X className="w-5 h-5" />
+              </Button>
+            </div>
+            
+            <div className="p-6 space-y-6">
+              {/* Security Score */}
+              <div className="text-center p-6 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-lg">
+                <div className="text-5xl font-bold mb-2" style={{
+                  color: selectedAnalysis.securityScore >= 8 ? '#22c55e' : 
+                         selectedAnalysis.securityScore >= 6 ? '#eab308' : '#ef4444'
+                }}>
+                  {selectedAnalysis.securityScore.toFixed(1)}
+                </div>
+                <div className="text-slate-600 dark:text-slate-400 text-sm">Security Score (out of 10)</div>
+                <div className="mt-3">
+                  {getScoreBadge(selectedAnalysis.securityScore)}
+                </div>
+              </div>
+
+              {/* Stats Grid */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="p-4 bg-slate-50 dark:bg-slate-800 rounded-lg text-center">
+                  <Bug className="w-6 h-6 mx-auto mb-2 text-orange-500" />
+                  <div className="text-2xl font-bold text-slate-900 dark:text-white">{selectedAnalysis.issuesFound}</div>
+                  <div className="text-xs text-slate-600 dark:text-slate-400">Total Issues</div>
+                </div>
+                <div className="p-4 bg-slate-50 dark:bg-slate-800 rounded-lg text-center">
+                  <AlertTriangle className="w-6 h-6 mx-auto mb-2 text-red-500" />
+                  <div className="text-2xl font-bold text-slate-900 dark:text-white">{selectedAnalysis.criticalIssues}</div>
+                  <div className="text-xs text-slate-600 dark:text-slate-400">Critical Issues</div>
+                </div>
+                <div className="p-4 bg-slate-50 dark:bg-slate-800 rounded-lg text-center">
+                  <Clock className="w-6 h-6 mx-auto mb-2 text-blue-500" />
+                  <div className="text-2xl font-bold text-slate-900 dark:text-white">{formatDuration(selectedAnalysis.duration)}</div>
+                  <div className="text-xs text-slate-600 dark:text-slate-400">Duration</div>
+                </div>
+                <div className="p-4 bg-slate-50 dark:bg-slate-800 rounded-lg text-center">
+                  <FileCode className="w-6 h-6 mx-auto mb-2 text-purple-500" />
+                  <div className="text-2xl font-bold text-slate-900 dark:text-white">{selectedAnalysis.language}</div>
+                  <div className="text-xs text-slate-600 dark:text-slate-400">Language</div>
+                </div>
+              </div>
+
+              {/* Analysis Details */}
+              <div className="space-y-3">
+                <h3 className="font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+                  <Shield className="w-5 h-5 text-blue-600" />
+                  Analysis Details
+                </h3>
+                <div className="bg-slate-50 dark:bg-slate-800 rounded-lg p-4 space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-slate-600 dark:text-slate-400">Analyzed At</span>
+                    <span className="text-slate-900 dark:text-white font-medium">
+                      {new Date(selectedAnalysis.analyzedAt).toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-slate-600 dark:text-slate-400">Repository URL</span>
+                    <a 
+                      href={selectedAnalysis.repositoryUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1"
+                    >
+                      View on GitHub <ExternalLink className="w-3 h-3" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {/* Summary */}
+              <div className="p-4 border border-slate-200 dark:border-slate-700 rounded-lg">
+                <h4 className="font-medium text-slate-900 dark:text-white mb-2">Summary</h4>
+                <p className="text-sm text-slate-600 dark:text-slate-400">
+                  {selectedAnalysis.criticalIssues > 0 ? (
+                    <>
+                      ⚠️ This repository has <strong className="text-red-600">{selectedAnalysis.criticalIssues} critical security issues</strong> that 
+                      require immediate attention. Review the security vulnerabilities and apply recommended fixes.
+                    </>
+                  ) : selectedAnalysis.issuesFound > 0 ? (
+                    <>
+                      This repository has {selectedAnalysis.issuesFound} issues detected. While there are no critical vulnerabilities, 
+                      consider addressing the identified issues to improve code quality and security.
+                    </>
+                  ) : (
+                    <>
+                      ✅ Excellent! No security issues were detected in this repository. 
+                      Continue following security best practices to maintain this status.
+                    </>
+                  )}
+                </p>
+              </div>
+
+              {/* Actions */}
+              <div className="flex gap-3">
+                <Button 
+                  className="flex-1" 
+                  onClick={() => handleOpenInGitHub(selectedAnalysis.repositoryUrl)}
+                >
+                  <ExternalLink className="w-4 h-4 mr-2" />
+                  Open in GitHub
+                </Button>
+                <Button variant="outline" onClick={handleCloseReport}>
+                  Close
+                </Button>
+              </div>
+            </div>
+          </Card>
+        </div>
       )}
     </div>
   );
