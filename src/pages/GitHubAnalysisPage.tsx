@@ -1,7 +1,7 @@
 import React, { useEffect, useState, Suspense, lazy } from 'react';
 import { useAuth } from '@/lib/auth-context';
 import { useNavigation } from '@/lib/navigation-context';
-import { Github, TrendingUp, Shield, Activity, GitBranch, Star, BarChart3, Code2, AlertTriangle, CheckCircle, ArrowLeft, FileCode } from 'lucide-react';
+import { Github, TrendingUp, Shield, Activity, GitBranch, Star, BarChart3, Code2, AlertTriangle, CheckCircle, ArrowLeft, FileCode, Lock, Search, ExternalLink } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { RepositoryAnalysisGrid } from '@/components/github/RepositoryAnalysisGrid';
@@ -18,6 +18,7 @@ import GitHubRepositoryList from '@/components/github/GitHubRepositoryList';
 import { toast } from 'sonner';
 import { logger } from '@/utils/logger';
 import { AnalysisResults } from '@/hooks/useAnalysis';
+import { cn } from '@/lib/utils';
 
 // Lazy load the results component for better performance
 const EnhancedSecurityResults = lazy(() => import('@/components/analysis/EnhancedSecurityResults').then(m => ({ default: m.EnhancedSecurityResults })));
@@ -47,7 +48,6 @@ export const GitHubAnalysisPage: React.FC = () => {
       if (!user?.uid) return;
       
       try {
-        // Dynamically import to avoid circular dependencies if any, though direct import is also fine
         const { GitHubAnalysisStorageService } = await import('@/services/storage/GitHubAnalysisStorageService');
         const storageService = new GitHubAnalysisStorageService();
         
@@ -69,7 +69,7 @@ export const GitHubAnalysisPage: React.FC = () => {
     };
 
     loadDashboardStats();
-  }, [user?.uid, selectedTab]); // Reload when tab changes (e.g. after analysis)
+  }, [user?.uid, selectedTab]);
 
   // GitHub repositories integration for Google users
   const {
@@ -84,10 +84,10 @@ export const GitHubAnalysisPage: React.FC = () => {
     githubUser
   } = useGitHubRepositories({
     email: userProfile?.email || null,
-    enabled: !isGitHubUser && !!user // Only for non-GitHub users (Google sign-in)
+    enabled: !isGitHubUser && !!user
   });
 
-  // Derive header profile view from either GitHub sign-in metadata or connected GitHub profile
+  // Derive header profile view
   const nonGithubConnected = !isGitHubUser;
   const githubAvatarUrl = nonGithubConnected
     ? (githubUser?.avatar_url || null)
@@ -103,17 +103,15 @@ export const GitHubAnalysisPage: React.FC = () => {
     : (userProfile?.githubMetadata?.publicRepos || 0);
   const isLoadingProfile = !githubUsername && isGitHubUser;
 
-  // Show permission modal if user has GitHub account but hasn't granted/denied permission
+  // Show permission modal logic
   useEffect(() => {
     if (!isGitHubUser && hasGitHubAccount && !permissionGranted && !permissionDenied && user) {
-      const timer = setTimeout(() => {
-        setShowPermissionModal(true);
-      }, 2000);
+      const timer = setTimeout(() => setShowPermissionModal(true), 2000);
       return () => clearTimeout(timer);
     }
   }, [hasGitHubAccount, permissionGranted, permissionDenied, isGitHubUser, user]);
 
-  // Show username input if no GitHub account detected but user wants to connect
+  // Show username input logic
   useEffect(() => {
     if (!isGitHubUser && !hasGitHubAccount && !permissionGranted && !permissionDenied && user && userProfile?.email) {
       const hasAskedForUsername = localStorage.getItem('github_username_asked');
@@ -157,7 +155,6 @@ export const GitHubAnalysisPage: React.FC = () => {
     toast.info('You can connect your GitHub account later.');
   };
 
-  // Prompt user to connect GitHub until a profile is fetched (for non-GitHub sign-ins)
   const openConnectGitHubPrompt = () => {
     if (hasGitHubAccount && !permissionDenied) {
       setShowPermissionModal(true);
@@ -168,24 +165,20 @@ export const GitHubAnalysisPage: React.FC = () => {
 
   const handleAnalyzeRepository = async (repoUrl: string, repoName: string) => {
     try {
-      // Import required services
       const { githubRepositoryService } = await import('@/services/githubRepositoryService');
       const { EnhancedAnalysisEngine } = await import('@/services/enhancedAnalysisEngine');
       const { GitHubAnalysisStorageService } = await import('@/services/storage/GitHubAnalysisStorageService');
       const { firebaseAnalysisStorage } = await import('@/services/storage/firebaseAnalysisStorage');
       
-      // Parse GitHub URL
       const repoInfo = githubRepositoryService.parseGitHubUrl(repoUrl);
       if (!repoInfo) {
         toast.error('Invalid GitHub repository URL');
         return;
       }
 
-      // Show progress toast
       const progressToastId = toast.loading('Preparing to analyze repository...');
 
       try {
-        // If branch is not specified, fetch repo info to get default branch
         let branch = repoInfo.branch;
         let repoDetails: any = null;
         if (!branch) {
@@ -199,7 +192,6 @@ export const GitHubAnalysisPage: React.FC = () => {
           }
         }
 
-        // Download repository as ZIP
         let lastUpdate = 0;
         let lastMessage = '';
         const zipFile = await githubRepositoryService.downloadRepositoryAsZip(
@@ -220,13 +212,11 @@ export const GitHubAnalysisPage: React.FC = () => {
 
         toast.loading('Analyzing code...', { id: progressToastId });
 
-        // Analyze the repository
         const analysisEngine = new EnhancedAnalysisEngine();
         const results = await analysisEngine.analyzeCodebase(zipFile);
 
         toast.loading('Saving analysis results...', { id: progressToastId });
 
-        // Store analysis results in GitHub-specific storage (summary)
         if (user?.uid) {
           const storageService = new GitHubAnalysisStorageService();
           await storageService.storeRepositoryAnalysis(user.uid, {
@@ -245,9 +235,7 @@ export const GitHubAnalysisPage: React.FC = () => {
             duration: Number.parseFloat(results.analysisTime) || 0
           });
 
-          // Also store full analysis results in Firebase for viewing later
           firebaseAnalysisStorage.setUserId(user.uid);
-          // Create a File object from the zip data for storage
           const fileForStorage = new File([zipFile], `${repoInfo.owner}-${repoInfo.repo}.zip`, { type: 'application/zip' });
           await firebaseAnalysisStorage.storeAnalysisResults(
             results,
@@ -262,7 +250,6 @@ export const GitHubAnalysisPage: React.FC = () => {
           duration: 4000 
         });
 
-        // Store results in state and show results tab
         setAnalysisResults(results);
         setAnalyzedRepoName(`${repoInfo.owner}/${repoInfo.repo}`);
         setSelectedTab('results');
@@ -279,118 +266,85 @@ export const GitHubAnalysisPage: React.FC = () => {
     }
   };
 
-  // Modified: Allow Google users if they have connected GitHub repos
+  // Not signed in with GitHub and no permission granted
   if (!isGitHubUser && !permissionGranted && !user) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 flex items-center justify-center p-4">
-        <Card className="max-w-2xl w-full p-8 md:p-12 text-center">
-          <div className="mb-6">
-            <div className="inline-flex items-center justify-center w-20 h-20 md:w-24 md:h-24 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full mb-6">
-              <Github className="w-10 h-10 md:w-12 md:h-12 text-white" />
-            </div>
-            <h1 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">
-              GitHub Sign-In Required
-            </h1>
-            <p className="text-lg text-slate-600 dark:text-slate-400 mb-2">
-              The GitHub Analysis Dashboard is exclusively available for users who sign in with their GitHub account.
-            </p>
-            <p className="text-slate-500 dark:text-slate-500 mb-8">
-              Get access to advanced features like repository comparison, code quality analytics, and vulnerability pattern detection.
-            </p>
-          </div>
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-4 relative overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+          <div className="absolute -top-[20%] -left-[10%] w-[50%] h-[50%] rounded-full bg-blue-500/10 blur-[100px]" />
+          <div className="absolute top-[40%] -right-[10%] w-[40%] h-[40%] rounded-full bg-purple-500/10 blur-[100px]" />
+        </div>
 
-          <div className="space-y-6 mb-8">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
-              <div className="p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
-                <BarChart3 className="w-8 h-8 text-blue-600 dark:text-blue-400 mb-3" />
-                <h3 className="font-semibold text-slate-900 dark:text-white mb-1">
-                  Repository Comparison
-                </h3>
-                <p className="text-sm text-slate-600 dark:text-slate-400">
-                  Compare up to 4 repositories side-by-side
-                </p>
+        <Card className="max-w-4xl w-full p-0 overflow-hidden shadow-2xl border-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl ring-1 ring-slate-200 dark:ring-slate-800">
+          <div className="grid grid-cols-1 md:grid-cols-2">
+            <div className="p-8 md:p-12 flex flex-col justify-center">
+              <div className="w-16 h-16 bg-gradient-to-br from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 rounded-2xl flex items-center justify-center mb-8 shadow-lg">
+                <Github className="w-8 h-8 text-white dark:text-slate-900" />
               </div>
-              <div className="p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
-                <Code2 className="w-8 h-8 text-green-600 dark:text-green-400 mb-3" />
-                <h3 className="font-semibold text-slate-900 dark:text-white mb-1">
-                  Code Quality Metrics
-                </h3>
-                <p className="text-sm text-slate-600 dark:text-slate-400">
-                  Track complexity, maintainability, and coverage
-                </p>
-              </div>
-              <div className="p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
-                <AlertTriangle className="w-8 h-8 text-orange-600 dark:text-orange-400 mb-3" />
-                <h3 className="font-semibold text-slate-900 dark:text-white mb-1">
-                  Vulnerability Patterns
-                </h3>
-                <p className="text-sm text-slate-600 dark:text-slate-400">
-                  Detect and track security vulnerabilities
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="space-y-4">
-            <Button
-              onClick={signInWithGithub}
-              size="lg"
-              className="w-full md:w-auto px-8 py-6 text-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white"
-            >
-              <Github className="w-5 h-5 mr-3" />
-              Sign In with GitHub
-            </Button>
-            
-            {user && (
-              <div className="pt-4 border-t border-slate-200 dark:border-slate-700">
-                <p className="text-sm text-slate-600 dark:text-slate-400 mb-3">
-                  Currently signed in as: <strong>{user.email}</strong>
-                </p>
-                <p className="text-sm text-slate-500 dark:text-slate-500">
-                  You're signed in, but not with GitHub. Sign in with GitHub to access the dashboard.
-                </p>
-              </div>
-            )}
-            
-            {!user && (
-              <p className="text-sm text-slate-500 dark:text-slate-500">
-                Don't have a GitHub account? <a href="https://github.com/signup" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Create one for free</a>
+              
+              <h1 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4 tracking-tight">
+                GitHub Analysis
+              </h1>
+              <p className="text-lg text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
+                Connect your GitHub account to unlock advanced security insights, repository tracking, and automated code analysis.
               </p>
-            )}
-          </div>
 
-          <div className="mt-8 pt-8 border-t border-slate-200 dark:border-slate-700">
-            <h3 className="font-semibold text-slate-900 dark:text-white mb-4">
-              Why GitHub Sign-In?
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left text-sm">
-              <div className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                <div>
-                  <strong className="text-slate-900 dark:text-white">Access Your Repositories</strong>
-                  <p className="text-slate-600 dark:text-slate-400">Analyze your GitHub repositories directly</p>
-                </div>
+              <div className="space-y-4">
+                <Button
+                  onClick={signInWithGithub}
+                  size="lg"
+                  className="w-full h-12 text-base bg-[#24292F] hover:bg-[#24292F]/90 text-white dark:bg-white dark:text-[#24292F] dark:hover:bg-white/90 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+                >
+                  <Github className="w-5 h-5 mr-2" />
+                  Continue with GitHub
+                </Button>
+                
+                {!user && (
+                  <p className="text-center text-sm text-slate-500">
+                    Don't have an account? <a href="https://github.com/signup" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline font-medium">Sign up</a>
+                  </p>
+                )}
               </div>
-              <div className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                <div>
-                  <strong className="text-slate-900 dark:text-white">Personalized Dashboard</strong>
-                  <p className="text-slate-600 dark:text-slate-400">See metrics specific to your projects</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                <div>
-                  <strong className="text-slate-900 dark:text-white">Track Progress</strong>
-                  <p className="text-slate-600 dark:text-slate-400">Monitor security improvements over time</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                <div>
-                  <strong className="text-slate-900 dark:text-white">Advanced Analytics</strong>
-                  <p className="text-slate-600 dark:text-slate-400">Get detailed insights and comparisons</p>
-                </div>
+            </div>
+
+            <div className="bg-slate-50 dark:bg-slate-800/50 p-8 md:p-12 border-l border-slate-200 dark:border-slate-800 flex flex-col justify-center">
+              <h3 className="font-semibold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
+                <Shield className="w-5 h-5 text-blue-500" />
+                Premium Features
+              </h3>
+              
+              <div className="space-y-6">
+                {[
+                  {
+                    icon: BarChart3,
+                    title: "Deep Analysis",
+                    desc: "Comprehensive security scanning and code quality metrics",
+                    color: "text-blue-500"
+                  },
+                  {
+                    icon: Activity,
+                    title: "Real-time Tracking",
+                    desc: "Monitor repository health and vulnerability patterns",
+                    color: "text-green-500"
+                  },
+                  {
+                    icon: Lock,
+                    title: "Security First",
+                    desc: "Identify critical issues before they become threats",
+                    color: "text-purple-500"
+                  }
+                ].map((feature, i) => (
+                  <div key={i} className="flex gap-4">
+                    <div className={cn("w-10 h-10 rounded-lg bg-white dark:bg-slate-800 shadow-sm flex items-center justify-center flex-shrink-0", feature.color)}>
+                      <feature.icon className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h4 className="font-medium text-slate-900 dark:text-white">{feature.title}</h4>
+                      <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">{feature.desc}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -399,13 +353,10 @@ export const GitHubAnalysisPage: React.FC = () => {
     );
   }
 
-  if (!user) {
-    return null;
-  }
+  if (!user) return null;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
-      {/* GitHub Permission Modal */}
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
       <GitHubRepositoryPermissionModal
         isOpen={showPermissionModal}
         email={userProfile?.email || ''}
@@ -414,7 +365,6 @@ export const GitHubAnalysisPage: React.FC = () => {
         onClose={() => setShowPermissionModal(false)}
       />
 
-      {/* GitHub Username Input Modal */}
       <GitHubUsernameInput
         isOpen={showUsernameInput}
         email={userProfile?.email || ''}
@@ -422,359 +372,331 @@ export const GitHubAnalysisPage: React.FC = () => {
         onSkip={handleSkipUsernameInput}
         onClose={() => setShowUsernameInput(false)}
       />
-      {/* Hero Header */}
-      <div className="bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 dark:from-slate-950 dark:via-blue-950 dark:to-indigo-950">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
-          {/* User Info Header */}
-          <div className="flex flex-col md:flex-row items-start md:items-center gap-6 mb-8">
-            <div className="flex items-center gap-4">
-              {githubAvatarUrl ? (
-                <img
-                  src={githubAvatarUrl}
-                  alt={githubDisplayName}
-                  className="w-20 h-20 md:w-24 md:h-24 rounded-full ring-4 ring-white/20"
-                />
-              ) : (
-                <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center ring-4 ring-white/20">
-                  <Github className="w-10 h-10 md:w-12 md:h-12 text-white" />
+
+      {/* Hero Section */}
+      <div className="relative bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 overflow-hidden">
+        <div className="absolute inset-0 bg-slate-50/50 dark:bg-slate-900/50" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+            {/* Profile Section */}
+            <div className="flex items-center gap-6">
+              <div className="relative">
+                {githubAvatarUrl ? (
+                  <img
+                    src={githubAvatarUrl}
+                    alt={githubDisplayName || 'User'}
+                    className="w-20 h-20 rounded-2xl shadow-lg ring-4 ring-white dark:ring-slate-800 object-cover"
+                  />
+                ) : (
+                  <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-700 flex items-center justify-center shadow-lg ring-4 ring-white dark:ring-slate-800">
+                    <Github className="w-10 h-10 text-slate-400" />
+                  </div>
+                )}
+                <div className="absolute -bottom-2 -right-2 bg-white dark:bg-slate-800 p-1.5 rounded-full shadow-md ring-1 ring-slate-200 dark:ring-slate-700">
+                  <Github className="w-4 h-4 text-slate-900 dark:text-white" />
                 </div>
-              )}
+              </div>
+              
               <div>
-                <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
+                <h1 className="text-3xl font-bold text-slate-900 dark:text-white tracking-tight mb-1">
                   {isLoadingProfile ? (
-                    <span className="animate-pulse bg-white/20 rounded h-9 w-48 inline-block"></span>
-                  ) : githubDisplayName ? (
-                    githubDisplayName
+                    <span className="animate-pulse bg-slate-200 dark:bg-slate-700 rounded h-8 w-48 inline-block" />
                   ) : (
-                    <div className="flex items-center gap-3">
-                      <Button
-                        onClick={openConnectGitHubPrompt}
-                        size="sm"
-                        className="bg-white text-slate-900 hover:bg-white/90"
-                      >
-                        Connect GitHub
-                      </Button>
-                      <span className="text-blue-200 text-base">to show your profile</span>
-                    </div>
+                    githubDisplayName || 'GitHub User'
                   )}
                 </h1>
-                <div className="flex items-center gap-2 text-blue-200">
-                  <Github className="w-4 h-4" />
+                <div className="flex items-center gap-3 text-slate-500 dark:text-slate-400">
                   {isLoadingProfile ? (
-                    <span className="animate-pulse bg-white/10 rounded h-5 w-24 inline-block"></span>
+                    <span className="animate-pulse bg-slate-200 dark:bg-slate-700 rounded h-5 w-32 inline-block" />
                   ) : githubUsername ? (
                     <a 
                       href={`https://github.com/${githubUsername}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm md:text-base hover:text-white transition-colors"
+                      className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors flex items-center gap-1.5"
                     >
                       @{githubUsername}
+                      <ExternalLink className="w-3 h-3 opacity-50" />
                     </a>
                   ) : (
                     <button
                       onClick={openConnectGitHubPrompt}
-                      className="text-sm md:text-base text-blue-200 underline underline-offset-2 decoration-blue-300/60 hover:text-white"
+                      className="text-blue-600 hover:underline text-sm"
                     >
-                      Connect GitHub to show profile
+                      Connect GitHub Profile
                     </button>
                   )}
+                  {totalGitHubRepos > 0 && (
+                    <>
+                      <span className="w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-600" />
+                      <span>{totalGitHubRepos} repositories</span>
+                    </>
+                  )}
                 </div>
-                {totalGitHubRepos > 0 && (
-                  <div className="text-xs text-blue-300 mt-1">
-                    {totalGitHubRepos} public repositories
-                  </div>
-                )}
               </div>
             </div>
 
-            {/* Quick Stats */}
-            <div className="flex-1 grid grid-cols-2 md:grid-cols-3 gap-4 md:ml-auto">
-              <Card className="bg-white/10 backdrop-blur-md border-white/20 p-4 hover:bg-white/20 transition-all duration-300 group">
-                <div className="text-blue-200 text-xs md:text-sm mb-1 group-hover:text-blue-100 transition-colors">Repositories Analyzed</div>
-                <div className="text-2xl md:text-3xl font-bold text-white flex items-baseline gap-2">
-                  {dashboardStats.loading ? (
-                    <span className="animate-pulse">...</span>
-                  ) : (
-                    dashboardStats.repoCount
-                  )}
-                  <span className="text-xs font-normal text-blue-300/80">repos</span>
+            {/* Stats Cards */}
+            <div className="grid grid-cols-3 gap-4 lg:min-w-[500px]">
+              {[
+                { label: 'Analyzed', value: dashboardStats.repoCount, sub: 'repos', color: 'blue' },
+                { label: 'Score', value: dashboardStats.avgScore.toFixed(1), sub: '/10', color: 'green' },
+                { label: 'Issues', value: dashboardStats.totalIssues, sub: 'total', color: 'orange' }
+              ].map((stat, i) => (
+                <div key={i} className="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 hover:shadow-md transition-shadow">
+                  <div className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">
+                    {stat.label}
+                  </div>
+                  <div className="flex items-baseline gap-1">
+                    <span className={cn("text-2xl font-bold", {
+                      'text-blue-600 dark:text-blue-400': stat.color === 'blue',
+                      'text-emerald-600 dark:text-emerald-400': stat.color === 'green',
+                      'text-orange-600 dark:text-orange-400': stat.color === 'orange',
+                    })}>
+                      {dashboardStats.loading ? '...' : stat.value}
+                    </span>
+                    <span className="text-xs text-slate-400 dark:text-slate-500 font-medium">{stat.sub}</span>
+                  </div>
                 </div>
-              </Card>
-              <Card className="bg-white/10 backdrop-blur-md border-white/20 p-4 hover:bg-white/20 transition-all duration-300 group">
-                <div className="text-blue-200 text-xs md:text-sm mb-1 group-hover:text-blue-100 transition-colors">Security Score</div>
-                <div className="text-2xl md:text-3xl font-bold text-white flex items-baseline gap-1">
-                  {dashboardStats.loading ? (
-                    <span className="animate-pulse">...</span>
-                  ) : (
-                    dashboardStats.avgScore.toFixed(1)
-                  )}
-                  <span className="text-lg text-blue-300/80 font-normal">/10</span>
-                </div>
-              </Card>
-              <Card className="bg-white/10 backdrop-blur-md border-white/20 p-4 col-span-2 md:col-span-1 hover:bg-white/20 transition-all duration-300 group">
-                <div className="text-blue-200 text-xs md:text-sm mb-1 group-hover:text-blue-100 transition-colors">Issues Found</div>
-                <div className="text-2xl md:text-3xl font-bold text-white flex items-baseline gap-2">
-                  {dashboardStats.loading ? (
-                    <span className="animate-pulse">...</span>
-                  ) : (
-                    dashboardStats.totalIssues.toLocaleString()
-                  )}
-                  <span className="text-xs font-normal text-blue-300/80">total</span>
-                </div>
-              </Card>
+              ))}
             </div>
           </div>
 
-          {/* Tab Navigation */}
-          <div className="flex flex-wrap gap-2">
-            <Button
-              variant={selectedTab === 'overview' ? 'default' : 'ghost'}
-              onClick={() => setSelectedTab('overview')}
-              className={selectedTab === 'overview' 
-                ? 'bg-white text-slate-900 hover:bg-white/90' 
-                : 'text-white hover:bg-white/10'}
-            >
-              <TrendingUp className="w-4 h-4 mr-2" />
-              Overview
-            </Button>
-            <Button
-              variant={selectedTab === 'repositories' ? 'default' : 'ghost'}
-              onClick={() => setSelectedTab('repositories')}
-              className={selectedTab === 'repositories' 
-                ? 'bg-white text-slate-900 hover:bg-white/90' 
-                : 'text-white hover:bg-white/10'}
-            >
-              <GitBranch className="w-4 h-4 mr-2" />
-              Repositories
-            </Button>
-            <Button
-              variant={selectedTab === 'history' ? 'default' : 'ghost'}
-              onClick={() => setSelectedTab('history')}
-              className={selectedTab === 'history' 
-                ? 'bg-white text-slate-900 hover:bg-white/90' 
-                : 'text-white hover:bg-white/10'}
-            >
-              <Activity className="w-4 h-4 mr-2" />
-              History
-            </Button>
-            <Button
-              variant={selectedTab === 'analytics' ? 'default' : 'ghost'}
-              onClick={() => {
-                setSelectedTab('analytics');
-                localStorage.setItem('github_selected_tab', 'analytics');
-              }}
-              className={selectedTab === 'analytics' 
-                ? 'bg-white text-slate-900 hover:bg-white/90' 
-                : 'text-white hover:bg-white/10'}
-            >
-              <Shield className="w-4 h-4 mr-2" />
-              Analytics
-            </Button>
-            <Button
-              variant={selectedTab === 'comparison' ? 'default' : 'ghost'}
-              onClick={() => setSelectedTab('comparison')}
-              className={selectedTab === 'comparison' 
-                ? 'bg-white text-slate-900 hover:bg-white/90' 
-                : 'text-white hover:bg-white/10'}
-            >
-              <BarChart3 className="w-4 h-4 mr-2" />
-              Compare
-            </Button>
-            <Button
-              variant={selectedTab === 'quality' ? 'default' : 'ghost'}
-              onClick={() => setSelectedTab('quality')}
-              className={selectedTab === 'quality' 
-                ? 'bg-white text-slate-900 hover:bg-white/90' 
-                : 'text-white hover:bg-white/10'}
-            >
-              <Code2 className="w-4 h-4 mr-2" />
-              Quality
-            </Button>
-            <Button
-              variant={selectedTab === 'patterns' ? 'default' : 'ghost'}
-              onClick={() => setSelectedTab('patterns')}
-              className={selectedTab === 'patterns' 
-                ? 'bg-white text-slate-900 hover:bg-white/90' 
-                : 'text-white hover:bg-white/10'}
-            >
-              <AlertTriangle className="w-4 h-4 mr-2" />
-              Patterns
-            </Button>
-            {analysisResults && (
-              <Button
-                variant={selectedTab === 'results' ? 'default' : 'ghost'}
-                onClick={() => setSelectedTab('results')}
-                className={selectedTab === 'results' 
-                  ? 'bg-green-500 text-white hover:bg-green-600' 
-                  : 'text-white hover:bg-white/10 ring-2 ring-green-400/50'}
+          {/* Navigation Tabs */}
+          <div className="mt-12 flex items-center gap-1 overflow-x-auto pb-2 scrollbar-hide">
+            {[
+              { id: 'overview', icon: TrendingUp, label: 'Overview' },
+              { id: 'repositories', icon: GitBranch, label: 'Repositories' },
+              { id: 'history', icon: Activity, label: 'History' },
+              { id: 'analytics', icon: Shield, label: 'Analytics' },
+              { id: 'comparison', icon: BarChart3, label: 'Compare' },
+              { id: 'quality', icon: Code2, label: 'Quality' },
+              { id: 'patterns', icon: AlertTriangle, label: 'Patterns' },
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setSelectedTab(tab.id as any)}
+                className={cn(
+                  "flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all whitespace-nowrap",
+                  selectedTab === tab.id
+                    ? "bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-md"
+                    : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
+                )}
               >
-                <FileCode className="w-4 h-4 mr-2" />
-                Results
-                <span className="ml-2 px-2 py-0.5 bg-white/20 rounded-full text-xs">
-                  {analysisResults.issues.length}
-                </span>
-              </Button>
+                <tab.icon className="w-4 h-4" />
+                {tab.label}
+              </button>
+            ))}
+            
+            {analysisResults && (
+              <>
+                <div className="w-px h-6 bg-slate-200 dark:bg-slate-700 mx-2" />
+                <button
+                  onClick={() => setSelectedTab('results')}
+                  className={cn(
+                    "flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all whitespace-nowrap",
+                    selectedTab === 'results'
+                      ? "bg-emerald-600 text-white shadow-md shadow-emerald-500/20"
+                      : "text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 hover:bg-emerald-100 dark:hover:bg-emerald-900/40"
+                  )}
+                >
+                  <FileCode className="w-4 h-4" />
+                  Results
+                  <span className="bg-white/20 px-1.5 py-0.5 rounded text-[10px] font-bold">
+                    {analysisResults.issues.length}
+                  </span>
+                </button>
+              </>
             )}
           </div>
         </div>
       </div>
 
-      {/* Main Content */}
+      {/* Main Content Area */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* GitHub Repositories Section for Google Users */}
         {!isGitHubUser && permissionGranted && repositories.length > 0 && (
           <div className="mb-8">
-            <Card className="p-6">
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-2">
-                  <Github className="w-6 h-6 text-purple-600 dark:text-purple-400" />
-                  <h2 className="text-xl font-bold text-slate-900 dark:text-white">Your GitHub Repositories</h2>
-                  <span className="px-2 py-1 text-xs bg-purple-500/20 text-purple-600 dark:text-purple-300 rounded-full">
-                    {repositories.length} repos
-                  </span>
+            <Card className="p-6 border-slate-200 dark:border-slate-800 shadow-sm">
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 bg-purple-100 dark:bg-purple-900/30 rounded-lg">
+                    <Github className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                  </div>
+                  <div>
+                    <h2 className="text-lg font-semibold text-slate-900 dark:text-white">Your GitHub Repositories</h2>
+                    <p className="text-sm text-slate-500">Select a repository to analyze</p>
+                  </div>
                 </div>
                 <Button
-                  variant="ghost"
+                  variant="outline"
                   size="sm"
                   onClick={() => setShowGitHubRepos(!showGitHubRepos)}
-                  className="text-purple-600 dark:text-purple-400"
                 >
-                  {showGitHubRepos ? 'Hide' : 'Show'}
+                  {showGitHubRepos ? 'Hide List' : 'Show List'}
                 </Button>
               </div>
               
               {showGitHubRepos && (
-                <GitHubRepositoryList
-                  repositories={repositories}
-                  onAnalyzeRepository={handleAnalyzeRepository}
-                  loading={reposLoading}
-                />
+                <div className="animate-in fade-in slide-in-from-top-4 duration-300">
+                  <GitHubRepositoryList
+                    repositories={repositories}
+                    onAnalyzeRepository={handleAnalyzeRepository}
+                    loading={reposLoading}
+                  />
+                </div>
               )}
             </Card>
           </div>
         )}
 
-        {selectedTab === 'overview' && (
-          <div className="space-y-8">
-            <SecurityAnalyticsSection userId={user.uid} />
-            <RepositoryActivityAnalytics userId={user.uid} />
-          </div>
-        )}
+        <div className="space-y-6">
+          {selectedTab === 'overview' && (
+            <div className="space-y-8 animate-in fade-in duration-500">
+              <SecurityAnalyticsSection userId={user.uid} />
+              <RepositoryActivityAnalytics userId={user.uid} />
+            </div>
+          )}
 
-        {selectedTab === 'repositories' && (
-          <RepositoryAnalysisGrid userId={user.uid} />
-        )}
+          {selectedTab === 'repositories' && (
+            <div className="animate-in fade-in duration-500">
+              <RepositoryAnalysisGrid userId={user.uid} />
+            </div>
+          )}
 
-        {selectedTab === 'history' && (
-          <AnalysisHistorySection userId={user.uid} />
-        )}
+          {selectedTab === 'history' && (
+            <div className="animate-in fade-in duration-500">
+              <AnalysisHistorySection userId={user.uid} />
+            </div>
+          )}
 
-        {selectedTab === 'analytics' && (
-          <div className="space-y-8">
-            <SecurityAnalyticsSection userId={user.uid} detailed />
-            <RepositoryActivityAnalytics userId={user.uid} detailed />
-          </div>
-        )}
+          {selectedTab === 'analytics' && (
+            <div className="space-y-8 animate-in fade-in duration-500">
+              <SecurityAnalyticsSection userId={user.uid} detailed />
+              <RepositoryActivityAnalytics userId={user.uid} detailed />
+            </div>
+          )}
 
-        {selectedTab === 'comparison' && (
-          <RepositoryComparisonTool userId={user.uid} />
-        )}
+          {selectedTab === 'comparison' && (
+            <div className="animate-in fade-in duration-500">
+              <RepositoryComparisonTool userId={user.uid} />
+            </div>
+          )}
 
-        {selectedTab === 'quality' && (
-          <CodeQualityAnalytics userId={user.uid} />
-        )}
+          {selectedTab === 'quality' && (
+            <div className="animate-in fade-in duration-500">
+              <CodeQualityAnalytics userId={user.uid} />
+            </div>
+          )}
 
-        {selectedTab === 'patterns' && (
-          <VulnerabilityPatternAnalytics userId={user.uid} />
-        )}
+          {selectedTab === 'patterns' && (
+            <div className="animate-in fade-in duration-500">
+              <VulnerabilityPatternAnalytics userId={user.uid} />
+            </div>
+          )}
 
-        {selectedTab === 'results' && analysisResults && (
-          <div className="space-y-6">
-            {/* Results Header */}
-            <Card className="p-6">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center">
-                    <FileCode className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <h2 className="text-2xl font-bold text-slate-900 dark:text-white">
-                      Analysis Results
-                    </h2>
-                    <p className="text-slate-600 dark:text-slate-400">
-                      {analyzedRepoName}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div className="text-right">
-                    <div className="text-3xl font-bold text-slate-900 dark:text-white">
-                      {analysisResults.summary.securityScore}
-                      <span className="text-lg text-slate-500">/100</span>
+          {selectedTab === 'results' && analysisResults && (
+            <div className="space-y-6 animate-in fade-in duration-500">
+              {/* Results Header */}
+              <Card className="p-6 border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden relative">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/5 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none" />
+                
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
+                  <div className="flex items-center gap-5">
+                    <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center shadow-lg shadow-emerald-500/20">
+                      <FileCode className="w-8 h-8 text-white" />
                     </div>
-                    <div className="text-sm text-slate-600 dark:text-slate-400">Security Score</div>
+                    <div>
+                      <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-1">
+                        Analysis Results
+                      </h2>
+                      <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400">
+                        <GitBranch className="w-4 h-4" />
+                        {analyzedRepoName}
+                      </div>
+                    </div>
                   </div>
-                  <Button
-                    variant="outline"
-                    onClick={() => {
-                      setAnalysisResults(null);
-                      setAnalyzedRepoName('');
-                      setSelectedTab('overview');
-                    }}
-                  >
-                    <ArrowLeft className="w-4 h-4 mr-2" />
-                    Back
-                  </Button>
-                </div>
-              </div>
 
-              {/* Quick Stats */}
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mt-6">
-                <div className="p-4 bg-red-50 dark:bg-red-900/20 rounded-lg">
-                  <div className="text-2xl font-bold text-red-600 dark:text-red-400">
-                    {analysisResults.summary.criticalIssues}
+                  <div className="flex items-center gap-6">
+                    <div className="text-right">
+                      <div className="text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
+                        {analysisResults.summary.securityScore}
+                        <span className="text-xl text-slate-400 font-medium">/100</span>
+                      </div>
+                      <div className="text-sm font-medium text-emerald-600 dark:text-emerald-400">Security Score</div>
+                    </div>
+                    <div className="h-12 w-px bg-slate-200 dark:bg-slate-700" />
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        setAnalysisResults(null);
+                        setAnalyzedRepoName('');
+                        setSelectedTab('overview');
+                      }}
+                      className="hover:bg-slate-100 dark:hover:bg-slate-800"
+                    >
+                      <ArrowLeft className="w-4 h-4 mr-2" />
+                      Back
+                    </Button>
                   </div>
-                  <div className="text-sm text-red-700 dark:text-red-300">Critical</div>
                 </div>
-                <div className="p-4 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
-                  <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">
-                    {analysisResults.summary.highIssues}
-                  </div>
-                  <div className="text-sm text-orange-700 dark:text-orange-300">High</div>
-                </div>
-                <div className="p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
-                  <div className="text-2xl font-bold text-yellow-600 dark:text-yellow-400">
-                    {analysisResults.summary.mediumIssues}
-                  </div>
-                  <div className="text-sm text-yellow-700 dark:text-yellow-300">Medium</div>
-                </div>
-                <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                  <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
-                    {analysisResults.summary.lowIssues}
-                  </div>
-                  <div className="text-sm text-blue-700 dark:text-blue-300">Low</div>
-                </div>
-                <div className="p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
-                  <div className="text-2xl font-bold text-slate-600 dark:text-slate-400">
-                    {analysisResults.totalFiles}
-                  </div>
-                  <div className="text-sm text-slate-600 dark:text-slate-400">Files Analyzed</div>
-                </div>
-              </div>
-            </Card>
 
-            {/* Detailed Results using EnhancedSecurityResults */}
-            <Suspense fallback={
-              <Card className="p-8 text-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-                <p className="mt-4 text-slate-600 dark:text-slate-400">Loading results...</p>
+                {/* Quick Stats Grid */}
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mt-8">
+                  {[
+                    { label: 'Critical', value: analysisResults.summary.criticalIssues, color: 'red' },
+                    { label: 'High', value: analysisResults.summary.highIssues, color: 'orange' },
+                    { label: 'Medium', value: analysisResults.summary.mediumIssues, color: 'yellow' },
+                    { label: 'Low', value: analysisResults.summary.lowIssues, color: 'blue' },
+                    { label: 'Files', value: analysisResults.totalFiles, color: 'slate' },
+                  ].map((stat, i) => (
+                    <div key={i} className={cn(
+                      "p-4 rounded-xl border transition-all",
+                      stat.color === 'red' && "bg-red-50 dark:bg-red-900/10 border-red-100 dark:border-red-900/30",
+                      stat.color === 'orange' && "bg-orange-50 dark:bg-orange-900/10 border-orange-100 dark:border-orange-900/30",
+                      stat.color === 'yellow' && "bg-yellow-50 dark:bg-yellow-900/10 border-yellow-100 dark:border-yellow-900/30",
+                      stat.color === 'blue' && "bg-blue-50 dark:bg-blue-900/10 border-blue-100 dark:border-blue-900/30",
+                      stat.color === 'slate' && "bg-slate-50 dark:bg-slate-900/50 border-slate-100 dark:border-slate-800",
+                    )}>
+                      <div className={cn(
+                        "text-2xl font-bold mb-1",
+                        stat.color === 'red' && "text-red-600 dark:text-red-400",
+                        stat.color === 'orange' && "text-orange-600 dark:text-orange-400",
+                        stat.color === 'yellow' && "text-yellow-600 dark:text-yellow-400",
+                        stat.color === 'blue' && "text-blue-600 dark:text-blue-400",
+                        stat.color === 'slate' && "text-slate-600 dark:text-slate-400",
+                      )}>
+                        {stat.value}
+                      </div>
+                      <div className={cn(
+                        "text-xs font-semibold uppercase tracking-wider",
+                        stat.color === 'red' && "text-red-700 dark:text-red-300",
+                        stat.color === 'orange' && "text-orange-700 dark:text-orange-300",
+                        stat.color === 'yellow' && "text-yellow-700 dark:text-yellow-300",
+                        stat.color === 'blue' && "text-blue-700 dark:text-blue-300",
+                        stat.color === 'slate' && "text-slate-500 dark:text-slate-500",
+                      )}>
+                        {stat.label}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </Card>
-            }>
-              <EnhancedSecurityResults results={analysisResults} />
-            </Suspense>
-          </div>
-        )}
+
+              {/* Detailed Results */}
+              <Suspense fallback={
+                <div className="flex flex-col items-center justify-center py-12">
+                  <div className="w-12 h-12 border-4 border-slate-200 border-t-blue-600 rounded-full animate-spin mb-4" />
+                  <p className="text-slate-500">Loading detailed analysis...</p>
+                </div>
+              }>
+                <EnhancedSecurityResults results={analysisResults} />
+              </Suspense>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
