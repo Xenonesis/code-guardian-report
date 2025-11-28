@@ -142,6 +142,17 @@ export const RepositoryAnalysisGrid: React.FC<RepositoryAnalysisGridProps> = ({ 
         duration: parseFloat(results.analysisTime) || 0
       });
 
+      // Store full analysis results
+      const { firebaseAnalysisStorage } = await import('@/services/storage/firebaseAnalysisStorage');
+      firebaseAnalysisStorage.setUserId(userId);
+      const fileForStorage = new File([zipFile], `${repoInfo.owner}-${repoInfo.repo}.zip`, { type: 'application/zip' });
+      await firebaseAnalysisStorage.storeAnalysisResults(
+        results,
+        fileForStorage,
+        [`github-${repoInfo.owner}-${repoInfo.repo}`],
+        false
+      );
+
       toast.success(`Analysis complete! Found ${results.issues.length} issues.`, { 
         id: progressToastId,
         duration: 4000 
@@ -208,6 +219,17 @@ export const RepositoryAnalysisGrid: React.FC<RepositoryAnalysisGridProps> = ({ 
         forks: repo.forks,
         duration: parseFloat(results.analysisTime) || 0
       });
+
+      // Store full analysis results
+      const { firebaseAnalysisStorage } = await import('@/services/storage/firebaseAnalysisStorage');
+      firebaseAnalysisStorage.setUserId(userId);
+      const fileForStorage = new File([zipFile], `${repoInfo.owner}-${repoInfo.repo}.zip`, { type: 'application/zip' });
+      await firebaseAnalysisStorage.storeAnalysisResults(
+        results,
+        fileForStorage,
+        [`github-${repoInfo.owner}-${repoInfo.repo}`],
+        false
+      );
 
       toast.success(`Re-analysis complete! Found ${results.issues.length} issues.`, { 
         id: progressToastId,

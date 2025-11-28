@@ -336,7 +336,7 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
   }
 
   return (
-    <div className="container mx-auto py-8 space-y-6">
+    <div className="container mx-auto py-12 space-y-6">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
@@ -344,7 +344,7 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
             <History className="h-6 w-6" />
             <h1 className="text-3xl font-bold">Analysis History</h1>
           </div>
-          <p className="text-muted-foreground">
+          <p className="text-muted-foreground mt-2">
             Your personal security analysis results and statistics
           </p>
         </div>
