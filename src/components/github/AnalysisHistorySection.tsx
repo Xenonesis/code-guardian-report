@@ -348,10 +348,10 @@ export const AnalysisHistorySection: React.FC<AnalysisHistorySectionProps> = ({ 
             <div className="p-6 space-y-6">
               {/* Security Score */}
               <div className="text-center p-6 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-lg">
-                <div className="text-5xl font-bold mb-2" style={{
-                  color: selectedAnalysis.securityScore >= 8 ? '#22c55e' : 
-                         selectedAnalysis.securityScore >= 6 ? '#eab308' : '#ef4444'
-                }}>
+                <div className={`text-5xl font-bold mb-2 ${
+                  selectedAnalysis.securityScore >= 8 ? 'text-green-500' : 
+                  selectedAnalysis.securityScore >= 6 ? 'text-yellow-500' : 'text-red-500'
+                }`}>
                   {selectedAnalysis.securityScore.toFixed(1)}
                 </div>
                 <div className="text-slate-600 dark:text-slate-400 text-sm">Security Score (out of 10)</div>
