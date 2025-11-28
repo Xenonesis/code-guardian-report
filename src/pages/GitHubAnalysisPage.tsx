@@ -1,6 +1,7 @@
 import React, { useEffect, useState, Suspense, lazy } from 'react';
 import { useAuth } from '@/lib/auth-context';
 import { useNavigation } from '@/lib/navigation-context';
+import { AnimatedBackground } from '@/components/pages/about/AnimatedBackground';
 import { Github, TrendingUp, Shield, Activity, GitBranch, Star, BarChart3, Code2, AlertTriangle, CheckCircle, ArrowLeft, FileCode, Lock, Search, ExternalLink } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -356,7 +357,9 @@ export const GitHubAnalysisPage: React.FC = () => {
   if (!user) return null;
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
+    <div className="min-h-screen relative overflow-hidden">
+      <AnimatedBackground />
+      <div className="relative z-10">
       <GitHubRepositoryPermissionModal
         isOpen={showPermissionModal}
         email={userProfile?.email || ''}
@@ -697,6 +700,7 @@ export const GitHubAnalysisPage: React.FC = () => {
             </div>
           )}
         </div>
+      </div>
       </div>
     </div>
   );

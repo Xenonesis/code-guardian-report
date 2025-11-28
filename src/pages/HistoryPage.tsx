@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
+import { AnimatedBackground } from '@/components/pages/about/AnimatedBackground';
 import { 
   History, 
   Filter, 
@@ -336,7 +337,9 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
   }
 
   return (
-    <div className="container mx-auto py-12 space-y-6">
+    <div className="min-h-screen relative overflow-hidden">
+      <AnimatedBackground />
+      <div className="container mx-auto py-12 space-y-6 relative z-10">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
@@ -582,6 +585,7 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
           )}
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 };
