@@ -329,7 +329,7 @@ const SinglePageApp = () => {
                     Your privacy is our priority. Learn how we protect and handle your data.
                   </p>
                   <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-500 mt-2">
-                    Last updated: July 17, 2025
+                    Last updated: November 28, 2025
                   </p>
                 </div>
 
@@ -412,7 +412,7 @@ const SinglePageApp = () => {
                     Please read these terms carefully before using Code Guardian.
                   </p>
                   <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-500 mt-2">
-                    Last updated: July 17, 2025
+                    Last updated: November 28, 2025
                   </p>
                 </div>
 

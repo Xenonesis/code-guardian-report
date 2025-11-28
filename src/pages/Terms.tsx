@@ -9,7 +9,7 @@ export const Terms: React.FC = () => {
     <LegalPageLayout
       title="Terms of Service"
       subtitle="Please read these terms carefully before using Code Guardian."
-      lastUpdated="July 17, 2025"
+      lastUpdated="November 28, 2025"
       icon={<Scale className="h-8 w-8" />}
     >
       {/* Introduction */}
@@ -227,7 +227,7 @@ export const Terms: React.FC = () => {
         </div>
 
         <p className="mt-6 text-sm text-slate-600 dark:text-slate-400">
-          These Terms of Service are effective as of January 15, 2025. We reserve the right to update these Terms at any time. Continued use of the service after changes constitutes acceptance of the new Terms.
+          These Terms of Service are effective as of November 28, 2025. We reserve the right to update these Terms at any time. Continued use of the service after changes constitutes acceptance of the new Terms.
         </p>
       </LegalSection>
 

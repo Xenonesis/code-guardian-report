@@ -9,7 +9,7 @@ export const Privacy: React.FC = () => {
     <LegalPageLayout
       title="Privacy Policy"
       subtitle="Your privacy is our priority. Learn how we protect and handle your data."
-      lastUpdated="July 17, 2025"
+      lastUpdated="November 28, 2025"
       icon={<Shield className="h-8 w-8" />}
     >
       {/* Introduction */}
