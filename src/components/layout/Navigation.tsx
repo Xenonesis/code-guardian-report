@@ -110,17 +110,17 @@ export const Navigation: React.FC<NavigationProps> = ({ theme, onThemeChange }) 
           {/* Code Guardian Logo */}
           <button
             onClick={() => handleNavigate('home')}
-            className="flex items-center gap-2 sm:gap-2.5 group transition-all duration-300 hover:scale-105 -ml-1 sm:ml-0"
+            className="flex items-center gap-1.5 sm:gap-2.5 group transition-all duration-300 hover:scale-105 -ml-1 sm:ml-0 flex-shrink-0"
           >
             {/* Shield Icon */}
-            <div className="relative p-1.5 sm:p-2 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 shadow-md group-hover:shadow-lg transition-all duration-300 group-hover:rotate-3">
+            <div className="relative p-1.5 sm:p-2 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 shadow-md group-hover:shadow-lg transition-all duration-300 group-hover:rotate-3 flex-shrink-0">
               <Shield className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-white" />
               <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </div>
             
             {/* Brand Text */}
-            <div className="flex flex-col">
-              <h1 className="text-sm sm:text-base md:text-lg font-bold bg-gradient-to-r from-slate-900 to-blue-900 dark:from-white dark:to-blue-100 bg-clip-text text-transparent leading-tight">
+            <div className="flex flex-col min-w-0">
+              <h1 className="text-xs sm:text-base md:text-lg font-bold bg-gradient-to-r from-slate-900 to-blue-900 dark:from-white dark:to-blue-100 bg-clip-text text-transparent leading-tight truncate">
                 Code Guardian
               </h1>
               <p className="text-[9px] sm:text-[10px] md:text-xs text-slate-600 dark:text-slate-400 font-medium leading-none hidden sm:block">
@@ -163,7 +163,7 @@ export const Navigation: React.FC<NavigationProps> = ({ theme, onThemeChange }) 
           </div>
 
           {/* Right side actions */}
-          <div className="flex items-center gap-1.5 sm:gap-2 md:gap-3">
+          <div className="flex items-center gap-1 sm:gap-2 md:gap-3">
             {/* Authentication Section */}
             {user ? (
               <div className="hidden md:flex items-center gap-2">
@@ -204,23 +204,23 @@ export const Navigation: React.FC<NavigationProps> = ({ theme, onThemeChange }) 
             )}
 
             {/* Notification Center */}
-            <NotificationCenter />
+            <NotificationCenter className="h-8 w-8 sm:h-9 sm:w-9" />
 
             {/* Theme Toggle */}
-            <ThemeToggle theme={theme} onThemeChange={onThemeChange} variant="dropdown" />
+            <ThemeToggle theme={theme} onThemeChange={onThemeChange} className="h-8 w-8 sm:h-9 sm:w-9" />
 
             {/* Mobile Menu Toggle */}
             <Button
               variant="ghost"
               size="sm"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-1.5 sm:p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors duration-200 md:hidden"
+              className="h-8 w-8 sm:h-9 sm:w-9 p-1 sm:p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors duration-200 md:hidden flex items-center justify-center"
               aria-label="Toggle mobile menu"
             >
               {isMobileMenuOpen ? (
-                <X className="h-5 w-5 text-slate-600 dark:text-slate-400" />
+                <X className="h-4 w-4 sm:h-5 sm:w-5 text-slate-600 dark:text-slate-400" />
               ) : (
-                <Menu className="h-5 w-5 text-slate-600 dark:text-slate-400" />
+                <Menu className="h-4 w-4 sm:h-5 sm:w-5 text-slate-600 dark:text-slate-400" />
               )}
             </Button>
           </div>
