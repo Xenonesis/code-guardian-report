@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense, lazy } from 'react';
 import { useAuth } from '@/lib/auth-context';
 import { useNavigation } from '@/lib/navigation-context';
-import { Github, TrendingUp, Shield, Activity, GitBranch, Star, BarChart3, Code2, AlertTriangle, CheckCircle } from 'lucide-react';
+import { Github, TrendingUp, Shield, Activity, GitBranch, Star, BarChart3, Code2, AlertTriangle, CheckCircle, ArrowLeft, FileCode } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { RepositoryAnalysisGrid } from '@/components/github/RepositoryAnalysisGrid';
@@ -17,17 +17,23 @@ import GitHubRepositoryPermissionModal from '@/components/github/GitHubRepositor
 import GitHubRepositoryList from '@/components/github/GitHubRepositoryList';
 import { toast } from 'sonner';
 import { logger } from '@/utils/logger';
+import { AnalysisResults } from '@/hooks/useAnalysis';
+
+// Lazy load the results component for better performance
+const EnhancedSecurityResults = lazy(() => import('@/components/analysis/EnhancedSecurityResults').then(m => ({ default: m.EnhancedSecurityResults })));
 
 export const GitHubAnalysisPage: React.FC = () => {
   const { user, userProfile, isGitHubUser, signInWithGithub } = useAuth();
   const { navigateTo } = useNavigation();
-  const [selectedTab, setSelectedTab] = useState<'overview' | 'repositories' | 'history' | 'analytics' | 'comparison' | 'quality' | 'patterns'>(() => {
+  const [selectedTab, setSelectedTab] = useState<'overview' | 'repositories' | 'history' | 'analytics' | 'comparison' | 'quality' | 'patterns' | 'results'>(() => {
     const stored = typeof window !== 'undefined' ? localStorage.getItem('github_selected_tab') : null;
     return (stored as any) || 'overview';
   });
   const [showPermissionModal, setShowPermissionModal] = useState(false);
   const [showUsernameInput, setShowUsernameInput] = useState(false);
   const [showGitHubRepos, setShowGitHubRepos] = useState(false);
+  const [analysisResults, setAnalysisResults] = useState<AnalysisResults | null>(null);
+  const [analyzedRepoName, setAnalyzedRepoName] = useState<string>('');
   const [dashboardStats, setDashboardStats] = useState({
     repoCount: 0,
     avgScore: 0,
@@ -166,6 +172,7 @@ export const GitHubAnalysisPage: React.FC = () => {
       const { githubRepositoryService } = await import('@/services/githubRepositoryService');
       const { EnhancedAnalysisEngine } = await import('@/services/enhancedAnalysisEngine');
       const { GitHubAnalysisStorageService } = await import('@/services/storage/GitHubAnalysisStorageService');
+      const { firebaseAnalysisStorage } = await import('@/services/storage/firebaseAnalysisStorage');
       
       // Parse GitHub URL
       const repoInfo = githubRepositoryService.parseGitHubUrl(repoUrl);
@@ -180,11 +187,12 @@ export const GitHubAnalysisPage: React.FC = () => {
       try {
         // If branch is not specified, fetch repo info to get default branch
         let branch = repoInfo.branch;
+        let repoDetails: any = null;
         if (!branch) {
           try {
             toast.loading('Checking repository details...', { id: progressToastId });
-            const details = await githubRepositoryService.getRepositoryInfo(repoInfo.owner, repoInfo.repo);
-            branch = details.defaultBranch;
+            repoDetails = await githubRepositoryService.getRepositoryInfo(repoInfo.owner, repoInfo.repo);
+            branch = repoDetails.defaultBranch;
           } catch (err) {
             console.warn('Failed to fetch repo info, defaulting to main', err);
             branch = 'main';
@@ -200,13 +208,9 @@ export const GitHubAnalysisPage: React.FC = () => {
           branch || 'main',
           (progress, message) => {
             const now = Date.now();
-            // Throttle updates to avoid React "Maximum update depth exceeded" error
-            // Update at most every 500ms, or if it's the final step
-            // AND ensure message has changed to avoid duplicate updates
             if ((now - lastUpdate > 500 || progress === 100) && message !== lastMessage) {
               lastMessage = message;
               lastUpdate = now;
-              // Use setTimeout to break the synchronous call stack and let React render
               setTimeout(() => {
                 toast.loading(message, { id: progressToastId });
               }, 0);
@@ -222,24 +226,35 @@ export const GitHubAnalysisPage: React.FC = () => {
 
         toast.loading('Saving analysis results...', { id: progressToastId });
 
-        // Store analysis results in GitHub-specific storage
+        // Store analysis results in GitHub-specific storage (summary)
         if (user?.uid) {
           const storageService = new GitHubAnalysisStorageService();
           await storageService.storeRepositoryAnalysis(user.uid, {
             name: repoInfo.repo,
             fullName: `${repoInfo.owner}/${repoInfo.repo}`,
-            description: `Analysis of ${repoInfo.owner}/${repoInfo.repo}`,
+            description: repoDetails?.description || `Analysis of ${repoInfo.owner}/${repoInfo.repo}`,
             url: repoUrl,
-            securityScore: results.summary.securityScore / 10, // Convert to 0-10 scale
+            securityScore: results.summary.securityScore / 10,
             issuesFound: results.issues.length,
             criticalIssues: results.summary.criticalIssues,
             language: typeof results.languageDetection?.primaryLanguage === 'string' 
               ? results.languageDetection.primaryLanguage 
               : results.languageDetection?.primaryLanguage?.name || 'Unknown',
-            stars: 0,
-            forks: 0,
-            duration: parseFloat(results.analysisTime) || 0
+            stars: repoDetails?.stars || 0,
+            forks: repoDetails?.forks || 0,
+            duration: Number.parseFloat(results.analysisTime) || 0
           });
+
+          // Also store full analysis results in Firebase for viewing later
+          firebaseAnalysisStorage.setUserId(user.uid);
+          // Create a File object from the zip data for storage
+          const fileForStorage = new File([zipFile], `${repoInfo.owner}-${repoInfo.repo}.zip`, { type: 'application/zip' });
+          await firebaseAnalysisStorage.storeAnalysisResults(
+            results,
+            fileForStorage,
+            [`github-${repoInfo.owner}-${repoInfo.repo}`],
+            false
+          );
         }
 
         toast.success(`Analysis complete! Found ${results.issues.length} issues.`, { 
@@ -247,8 +262,11 @@ export const GitHubAnalysisPage: React.FC = () => {
           duration: 4000 
         });
 
-        // Optionally navigate to results or refresh analytics
-        setSelectedTab('analytics');
+        // Store results in state and show results tab
+        setAnalysisResults(results);
+        setAnalyzedRepoName(`${repoInfo.owner}/${repoInfo.repo}`);
+        setSelectedTab('results');
+        localStorage.setItem('github_selected_tab', 'results');
 
       } catch (error: any) {
         toast.error(`Analysis failed: ${error.message}`, { id: progressToastId });
@@ -583,6 +601,21 @@ export const GitHubAnalysisPage: React.FC = () => {
               <AlertTriangle className="w-4 h-4 mr-2" />
               Patterns
             </Button>
+            {analysisResults && (
+              <Button
+                variant={selectedTab === 'results' ? 'default' : 'ghost'}
+                onClick={() => setSelectedTab('results')}
+                className={selectedTab === 'results' 
+                  ? 'bg-green-500 text-white hover:bg-green-600' 
+                  : 'text-white hover:bg-white/10 ring-2 ring-green-400/50'}
+              >
+                <FileCode className="w-4 h-4 mr-2" />
+                Results
+                <span className="ml-2 px-2 py-0.5 bg-white/20 rounded-full text-xs">
+                  {analysisResults.issues.length}
+                </span>
+              </Button>
+            )}
           </div>
         </div>
       </div>
@@ -654,6 +687,93 @@ export const GitHubAnalysisPage: React.FC = () => {
 
         {selectedTab === 'patterns' && (
           <VulnerabilityPatternAnalytics userId={user.uid} />
+        )}
+
+        {selectedTab === 'results' && analysisResults && (
+          <div className="space-y-6">
+            {/* Results Header */}
+            <Card className="p-6">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center">
+                    <FileCode className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <h2 className="text-2xl font-bold text-slate-900 dark:text-white">
+                      Analysis Results
+                    </h2>
+                    <p className="text-slate-600 dark:text-slate-400">
+                      {analyzedRepoName}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4">
+                  <div className="text-right">
+                    <div className="text-3xl font-bold text-slate-900 dark:text-white">
+                      {analysisResults.summary.securityScore}
+                      <span className="text-lg text-slate-500">/100</span>
+                    </div>
+                    <div className="text-sm text-slate-600 dark:text-slate-400">Security Score</div>
+                  </div>
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      setAnalysisResults(null);
+                      setAnalyzedRepoName('');
+                      setSelectedTab('overview');
+                    }}
+                  >
+                    <ArrowLeft className="w-4 h-4 mr-2" />
+                    Back
+                  </Button>
+                </div>
+              </div>
+
+              {/* Quick Stats */}
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mt-6">
+                <div className="p-4 bg-red-50 dark:bg-red-900/20 rounded-lg">
+                  <div className="text-2xl font-bold text-red-600 dark:text-red-400">
+                    {analysisResults.summary.criticalIssues}
+                  </div>
+                  <div className="text-sm text-red-700 dark:text-red-300">Critical</div>
+                </div>
+                <div className="p-4 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
+                  <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">
+                    {analysisResults.summary.highIssues}
+                  </div>
+                  <div className="text-sm text-orange-700 dark:text-orange-300">High</div>
+                </div>
+                <div className="p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
+                  <div className="text-2xl font-bold text-yellow-600 dark:text-yellow-400">
+                    {analysisResults.summary.mediumIssues}
+                  </div>
+                  <div className="text-sm text-yellow-700 dark:text-yellow-300">Medium</div>
+                </div>
+                <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                  <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+                    {analysisResults.summary.lowIssues}
+                  </div>
+                  <div className="text-sm text-blue-700 dark:text-blue-300">Low</div>
+                </div>
+                <div className="p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
+                  <div className="text-2xl font-bold text-slate-600 dark:text-slate-400">
+                    {analysisResults.totalFiles}
+                  </div>
+                  <div className="text-sm text-slate-600 dark:text-slate-400">Files Analyzed</div>
+                </div>
+              </div>
+            </Card>
+
+            {/* Detailed Results using EnhancedSecurityResults */}
+            <Suspense fallback={
+              <Card className="p-8 text-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+                <p className="mt-4 text-slate-600 dark:text-slate-400">Loading results...</p>
+              </Card>
+            }>
+              <EnhancedSecurityResults results={analysisResults} />
+            </Suspense>
+          </div>
         )}
       </div>
     </div>
