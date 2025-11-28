@@ -189,7 +189,7 @@ export const LanguageDetectionDisplay: React.FC<LanguageDetectionDisplayProps> =
                 <h3 className="font-semibold text-lg capitalize">{primaryLanguage.name}</h3>
                 <p className="text-sm text-muted-foreground flex items-center gap-1">
                   {getEcosystemIcon(primaryLanguage.ecosystem || 'web')}
-                  {primaryLanguage.ecosystem || 'General Purpose'}
+                  {String(primaryLanguage.ecosystem || 'General Purpose')}
                 </p>
               </div>
             </div>
@@ -222,7 +222,7 @@ export const LanguageDetectionDisplay: React.FC<LanguageDetectionDisplayProps> =
                     <div>
                       <span className="font-medium capitalize">{language.name}</span>
                       <div className="text-xs text-muted-foreground">
-                        {language.category} • {language.ecosystem || 'general'}
+                        {language.category} • {String(language.ecosystem || 'general')}
                       </div>
                     </div>
                   </div>

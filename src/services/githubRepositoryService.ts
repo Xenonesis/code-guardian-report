@@ -14,6 +14,25 @@ export interface GitHubFileContent {
   type: string;
 }
 
+export interface GitHubUserInfo {
+  login: string;
+  id: number;
+  avatar_url: string;
+  html_url: string;
+  name: string | null;
+  company: string | null;
+  blog: string | null;
+  location: string | null;
+  email: string | null;
+  bio: string | null;
+  public_repos: number;
+  public_gists: number;
+  followers: number;
+  following: number;
+  created_at: string;
+  updated_at: string;
+}
+
 class GitHubRepositoryService {
   private readonly baseUrl = 'https://api.github.com';
   private readonly rawContentUrl = 'https://raw.githubusercontent.com';
@@ -127,6 +146,28 @@ class GitHubRepositoryService {
     } catch (error) {
       logger.error('Error fetching repository info:', error);
       throw error;
+    }
+  }
+
+  /**
+   * Get GitHub user information by username
+   */
+  async getGitHubUserInfo(username: string): Promise<GitHubUserInfo | null> {
+    try {
+      const response = await fetch(`${this.baseUrl}/users/${encodeURIComponent(username)}`);
+
+      if (!response.ok) {
+        if (response.status === 404) {
+          logger.warn(`GitHub user not found: ${username}`);
+          return null;
+        }
+        throw new Error(`Failed to fetch user: ${response.statusText}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      logger.error('Error fetching GitHub user info:', error);
+      return null;
     }
   }
 

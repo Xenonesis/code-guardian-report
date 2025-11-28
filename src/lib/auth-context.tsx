@@ -116,43 +116,112 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     return false;
   };
 
+  // Extract GitHub username from user - Firebase stores it in providerData uid field
+  const extractGitHubUsername = (user: User): string | null => {
+    const githubProvider = user.providerData?.find(p => p.providerId === 'github.com');
+    if (!githubProvider) return null;
+    
+    // The GitHub provider stores the username in different places
+    // First try to extract from the uid (most reliable)
+    // Firebase GitHub uid is the GitHub user ID number, not username
+    // But photoURL contains username: https://avatars.githubusercontent.com/u/{id}?v=4
+    // And displayName might have the actual name, not username
+    
+    // Check if displayName looks like a username (no spaces, valid chars)
+    const displayName = githubProvider.displayName || user.displayName;
+    if (displayName && /^[a-zA-Z0-9](?:[a-zA-Z0-9]|-(?=[a-zA-Z0-9])){0,38}$/.test(displayName)) {
+      return displayName;
+    }
+    
+    // Try to get from email if it's a GitHub noreply email
+    // Format: username@users.noreply.github.com or 123456789+username@users.noreply.github.com
+    const email = githubProvider.email || user.email;
+    if (email && email.includes('@users.noreply.github.com')) {
+      const match = email.match(/^(?:\d+\+)?([^@]+)@users\.noreply\.github\.com$/);
+      if (match) return match[1];
+    }
+    
+    return displayName || null;
+  };
+
   // Extract GitHub metadata from user credential
   const extractGitHubMetadata = (user: User): any => {
     const githubProvider = user.providerData?.find(p => p.providerId === 'github.com');
     if (!githubProvider) return null;
 
-    // GitHub stores additional info in the user object
-    // We'll extract what we can from the display name and photoURL
+    const username = extractGitHubUsername(user);
+    
     return {
-      login: githubProvider.displayName || user.displayName || 'unknown',
-      avatarUrl: githubProvider.photoURL || user.photoURL || '',
-      htmlUrl: `https://github.com/${githubProvider.displayName || user.displayName || ''}`,
+      login: username || null,
+      avatarUrl: githubProvider.photoURL || user.photoURL || null,
+      htmlUrl: username ? `https://github.com/${username}` : null,
       publicRepos: 0,
       followers: 0,
       following: 0
     };
   };
 
+  // Fetch additional GitHub user data from API
+  const fetchGitHubUserData = async (username: string) => {
+    try {
+      const { githubRepositoryService } = await import('@/services/githubRepositoryService');
+      const userData = await githubRepositoryService.getGitHubUserInfo(username);
+      return userData;
+    } catch (error) {
+      logger.error('Error fetching GitHub user data:', error);
+      return null;
+    }
+  };
+
   // Create user profile in Firestore with better error handling
   const createUserProfile = async (user: User, displayName?: string, isFromGitHub?: boolean) => {
     const isGitHub = isFromGitHub || isGitHubUser(user);
-    const githubMetadata = isGitHub ? extractGitHubMetadata(user) : undefined;
+    let githubMetadata = isGitHub ? extractGitHubMetadata(user) : undefined;
+    const githubUsername = isGitHub ? extractGitHubUsername(user) : undefined;
     
-    // Create fallback profile immediately
+    // Create profile with real data from Firebase Auth
     const fallbackProfile: UserProfile = {
       uid: user.uid,
       email: user.email || '',
-      displayName: displayName || user.displayName || 'Anonymous User',
+      displayName: displayName || user.displayName || '',
       createdAt: new Date(),
       lastLogin: new Date(),
       isGitHubUser: isGitHub,
-      githubUsername: isGitHub ? (githubMetadata?.login || user.displayName) : undefined,
+      githubUsername: githubUsername || undefined,
       githubMetadata: githubMetadata,
       repositoriesAnalyzed: 0
     };
     
     // Set fallback profile first to avoid blocking UI
     setUserProfile(fallbackProfile);
+    
+    // If GitHub user, fetch additional data from GitHub API in background
+    if (isGitHub && githubUsername) {
+      fetchGitHubUserData(githubUsername).then(userData => {
+        if (userData) {
+          const enhancedMetadata = {
+            login: userData.login,
+            avatarUrl: userData.avatar_url,
+            htmlUrl: userData.html_url,
+            bio: userData.bio || undefined,
+            company: userData.company || undefined,
+            location: userData.location || undefined,
+            publicRepos: userData.public_repos,
+            followers: userData.followers,
+            following: userData.following
+          };
+          
+          setUserProfile(prev => prev ? {
+            ...prev,
+            displayName: userData.name || prev.displayName,
+            githubUsername: userData.login,
+            githubMetadata: enhancedMetadata
+          } : prev);
+        }
+      }).catch(err => {
+        logger.warn('Failed to fetch enhanced GitHub data:', err);
+      });
+    }
     
     // Try to sync with Firestore in background with timeout
     const syncWithFirestore = async () => {
@@ -457,15 +526,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         return;
       }
       
-      // Create fallback profile immediately to avoid blocking UI
-      const fallbackProfile: UserProfile = {
+      // Create initial profile with real data from Firebase Auth (no hardcoded values)
+      const initialProfile: UserProfile = {
         uid: firebaseUser.uid,
         email: firebaseUser.email || '',
-        displayName: firebaseUser.displayName || 'Anonymous User',
+        displayName: firebaseUser.displayName || '',
         createdAt: new Date(),
         lastLogin: new Date()
       };
-      setUserProfile(fallbackProfile);
+      setUserProfile(initialProfile);
       setLoading(false);
       
       // Only sync with Firestore if we haven't already done so for this user

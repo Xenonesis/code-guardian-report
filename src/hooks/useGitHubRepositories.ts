@@ -2,6 +2,14 @@
 import { useState, useEffect } from 'react';
 import { logger } from '@/utils/logger';
 
+interface GitHubUserProfile {
+  login: string;
+  avatar_url: string | null;
+  html_url: string | null;
+  name?: string | null;
+  public_repos?: number;
+}
+
 interface GitHubRepository {
   id: number;
   name: string;
@@ -25,6 +33,7 @@ export const useGitHubRepositories = ({ email, enabled }: UseGitHubRepositoriesO
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [githubUsername, setGithubUsername] = useState<string | null>(null);
+  const [githubUser, setGithubUser] = useState<GitHubUserProfile | null>(null);
 
   // Check if email is associated with GitHub
   const checkGitHubAssociation = async (email: string): Promise<string | null> => {
@@ -65,10 +74,26 @@ export const useGitHubRepositories = ({ email, enabled }: UseGitHubRepositoriesO
     }
   };
 
+  // Fetch GitHub user profile
+  const fetchUserProfile = async (username: string) => {
+    try {
+      const resp = await fetch(`https://api.github.com/users/${username}`);
+      if (resp.ok) {
+        const data = await resp.json();
+        setGithubUser(data);
+      }
+    } catch (e) {
+      logger.debug('Error fetching GitHub user profile:', e);
+    }
+  };
+
   // Manually set GitHub username
   const setManualUsername = async (username: string) => {
     setGithubUsername(username);
-    await fetchRepositories(username);
+    await Promise.all([
+      fetchRepositories(username),
+      fetchUserProfile(username)
+    ]);
   };
 
   // Fetch user repositories from GitHub
@@ -114,7 +139,10 @@ export const useGitHubRepositories = ({ email, enabled }: UseGitHubRepositoriesO
 
       if (previousPermission === 'granted' && storedUsername) {
         setGithubUsername(storedUsername);
-        await fetchRepositories(storedUsername);
+        await Promise.all([
+          fetchRepositories(storedUsername),
+          fetchUserProfile(storedUsername)
+        ]);
         return;
       }
 
@@ -122,6 +150,7 @@ export const useGitHubRepositories = ({ email, enabled }: UseGitHubRepositoriesO
       const username = await checkGitHubAssociation(email);
       if (username) {
         setGithubUsername(username);
+        await fetchUserProfile(username);
       }
     };
 
@@ -130,7 +159,10 @@ export const useGitHubRepositories = ({ email, enabled }: UseGitHubRepositoriesO
 
   const grantPermission = async () => {
     if (githubUsername) {
-      await fetchRepositories(githubUsername);
+      await Promise.all([
+        fetchRepositories(githubUsername),
+        fetchUserProfile(githubUsername)
+      ]);
     }
   };
 
@@ -151,6 +183,7 @@ export const useGitHubRepositories = ({ email, enabled }: UseGitHubRepositoriesO
     loading,
     error,
     githubUsername,
+    githubUser,
     hasGitHubAccount: !!githubUsername,
     permissionGranted: repositories.length > 0 || localStorage.getItem('github_repo_permission') === 'granted',
     permissionDenied: localStorage.getItem('github_repo_permission') === 'denied',

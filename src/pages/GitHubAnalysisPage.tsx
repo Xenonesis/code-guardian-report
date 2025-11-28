@@ -71,11 +71,28 @@ export const GitHubAnalysisPage: React.FC = () => {
     permissionDenied,
     grantPermission,
     denyPermission,
-    setManualUsername
+    setManualUsername,
+    githubUser
   } = useGitHubRepositories({
     email: userProfile?.email || null,
     enabled: !isGitHubUser && !!user // Only for non-GitHub users (Google sign-in)
   });
+
+  // Derive header profile view from either GitHub sign-in metadata or connected GitHub profile
+  const nonGithubConnected = !isGitHubUser;
+  const githubAvatarUrl = nonGithubConnected
+    ? (githubUser?.avatar_url || null)
+    : (userProfile?.githubMetadata?.avatarUrl || user?.photoURL || null);
+  const githubDisplayName = nonGithubConnected
+    ? (githubUser?.name || githubUser?.login || null)
+    : (userProfile?.displayName || userProfile?.githubMetadata?.login || user?.displayName || null);
+  const githubUsername = nonGithubConnected
+    ? (githubUser?.login || null)
+    : (userProfile?.githubUsername || userProfile?.githubMetadata?.login || null);
+  const totalGitHubRepos = nonGithubConnected
+    ? (githubUser?.public_repos || 0)
+    : (userProfile?.githubMetadata?.publicRepos || 0);
+  const isLoadingProfile = !githubUsername && isGitHubUser;
 
   // Show permission modal if user has GitHub account but hasn't granted/denied permission
   useEffect(() => {
@@ -129,6 +146,15 @@ export const GitHubAnalysisPage: React.FC = () => {
     setShowUsernameInput(false);
     localStorage.setItem('github_repo_permission', 'denied');
     toast.info('You can connect your GitHub account later.');
+  };
+
+  // Prompt user to connect GitHub until a profile is fetched (for non-GitHub sign-ins)
+  const openConnectGitHubPrompt = () => {
+    if (hasGitHubAccount && !permissionDenied) {
+      setShowPermissionModal(true);
+    } else {
+      setShowUsernameInput(true);
+    }
   };
 
   const handleAnalyzeRepository = async (repoUrl: string, repoName: string) => {
@@ -381,10 +407,10 @@ export const GitHubAnalysisPage: React.FC = () => {
           {/* User Info Header */}
           <div className="flex flex-col md:flex-row items-start md:items-center gap-6 mb-8">
             <div className="flex items-center gap-4">
-              {userProfile?.githubMetadata?.avatarUrl ? (
+              {githubAvatarUrl ? (
                 <img
-                  src={userProfile.githubMetadata.avatarUrl}
-                  alt={userProfile.displayName}
+                  src={githubAvatarUrl}
+                  alt={githubDisplayName}
                   className="w-20 h-20 md:w-24 md:h-24 rounded-full ring-4 ring-white/20"
                 />
               ) : (
@@ -394,14 +420,50 @@ export const GitHubAnalysisPage: React.FC = () => {
               )}
               <div>
                 <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
-                  {userProfile?.displayName || 'GitHub User'}
+                  {isLoadingProfile ? (
+                    <span className="animate-pulse bg-white/20 rounded h-9 w-48 inline-block"></span>
+                  ) : githubDisplayName ? (
+                    githubDisplayName
+                  ) : (
+                    <div className="flex items-center gap-3">
+                      <Button
+                        onClick={openConnectGitHubPrompt}
+                        size="sm"
+                        className="bg-white text-slate-900 hover:bg-white/90"
+                      >
+                        Connect GitHub
+                      </Button>
+                      <span className="text-blue-200 text-base">to show your profile</span>
+                    </div>
+                  )}
                 </h1>
                 <div className="flex items-center gap-2 text-blue-200">
                   <Github className="w-4 h-4" />
-                  <span className="text-sm md:text-base">
-                    @{userProfile?.githubUsername || 'user'}
-                  </span>
+                  {isLoadingProfile ? (
+                    <span className="animate-pulse bg-white/10 rounded h-5 w-24 inline-block"></span>
+                  ) : githubUsername ? (
+                    <a 
+                      href={`https://github.com/${githubUsername}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm md:text-base hover:text-white transition-colors"
+                    >
+                      @{githubUsername}
+                    </a>
+                  ) : (
+                    <button
+                      onClick={openConnectGitHubPrompt}
+                      className="text-sm md:text-base text-blue-200 underline underline-offset-2 decoration-blue-300/60 hover:text-white"
+                    >
+                      Connect GitHub to show profile
+                    </button>
+                  )}
                 </div>
+                {totalGitHubRepos > 0 && (
+                  <div className="text-xs text-blue-300 mt-1">
+                    {totalGitHubRepos} public repositories
+                  </div>
+                )}
               </div>
             </div>
 

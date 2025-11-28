@@ -170,7 +170,7 @@ export const Navigation: React.FC<NavigationProps> = ({ theme, onThemeChange }) 
                 <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-800/50">
                   <User className="h-3.5 w-3.5 text-slate-600 dark:text-slate-400" />
                   <span className="text-xs font-medium text-slate-700 dark:text-slate-300 max-w-[80px] lg:max-w-[100px] truncate">
-                    {userProfile?.displayName || 'User'}
+                    {userProfile?.displayName || userProfile?.githubUsername || user?.email?.split('@')[0] || ''}
                   </span>
                 </div>
                 <Button
@@ -256,7 +256,7 @@ export const Navigation: React.FC<NavigationProps> = ({ theme, onThemeChange }) 
                     <div className="flex items-center gap-2 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg bg-slate-50 dark:bg-slate-800/50">
                       <User className="h-4 w-4 sm:h-5 sm:w-5 text-slate-600 dark:text-slate-400" />
                       <span className="text-sm sm:text-base font-medium text-slate-700 dark:text-slate-300">
-                        {userProfile?.displayName || 'User'}
+                        {userProfile?.displayName || userProfile?.githubUsername || user?.email?.split('@')[0] || 'User'}
                       </span>
                     </div>
                     <button

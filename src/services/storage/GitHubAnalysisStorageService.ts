@@ -72,7 +72,9 @@ export class GitHubAnalysisStorageService {
           securityScore: data.securityScore || 0,
           issuesFound: data.issuesFound || 0,
           criticalIssues: data.criticalIssues || 0,
-          language: data.language || 'Unknown',
+          language: typeof data.language === 'object' && data.language !== null 
+            ? (data.language.name || 'Unknown') 
+            : (data.language || 'Unknown'),
           stars: data.stars || 0,
           forks: data.forks || 0
         });
@@ -137,7 +139,9 @@ export class GitHubAnalysisStorageService {
           issuesFound: data.issuesFound || 0,
           criticalIssues: data.criticalIssues || 0,
           securityScore: data.securityScore || 0,
-          language: data.language || 'Unknown'
+          language: typeof data.language === 'object' && data.language !== null 
+            ? (data.language.name || 'Unknown') 
+            : (data.language || 'Unknown')
         });
       });
       
