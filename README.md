@@ -530,7 +530,7 @@ mindmap
 | 🐙 GitHub Token | `ghp_[A-Za-z0-9]{36}` | 95% |
 | 🔐 JWT Token | `eyJ[A-Za-z0-9_-]*\.eyJ...` | 90% |
 | 💬 Slack Token | `xox[bpars]-[0-9A-Za-z]{12}` | 95% |
-| 💳 Stripe Key | `sk_live_[0-9a-zA-Z]{24}` | 90% |
+| 💳 Stripe Key | `sk_test_xxxx...` | 90% |
 | 🌐 Google API | `AIza[0-9A-Za-z_-]{35}` | 90% |
 | 🔒 Private Key | `-----BEGIN.*PRIVATE KEY-----` | 95% |
 | 🗄️ DB Connection | `mongodb://`, `postgres://` | 85% |

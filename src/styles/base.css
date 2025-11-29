@@ -1,6 +1,12 @@
 @import "tailwindcss";
 
+/* Force class-based dark mode strategy */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
+  /* Custom xs breakpoint for extra small screens */
+  --breakpoint-xs: 475px;
+
   --color-border: hsl(var(--border));
   --color-input: hsl(var(--input));
   --color-ring: hsl(var(--ring));

@@ -1,4 +1,5 @@
 /* Enhanced UI Components - Modern Design System */
+@reference "tailwindcss";
 
 @layer components {
   /* Modern Card System */
@@ -75,7 +76,7 @@
   }
 
   .textarea-ultra-modern {
-    @apply input-ultra-modern min-h-[120px] resize-none;
+    @apply bg-white/20 dark:bg-slate-800/20 backdrop-blur-xl border-2 border-white/30 dark:border-white/20 rounded-2xl px-6 py-4 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 transition-all duration-500 focus:ring-4 focus:ring-blue-500/50 focus:border-blue-500/50 focus:bg-white/30 dark:focus:bg-slate-800/30 min-h-[120px] resize-none;
   }
 
   /* Enhanced Status Indicators */

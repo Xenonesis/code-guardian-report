@@ -2,6 +2,7 @@
  * Secret Detection Service
  * Detects secrets using pattern matching and ML-like classifiers
  * Supports API keys, JWTs, database credentials, and other sensitive data
+ * Updated: November 2025 with latest secret patterns
  */
 
 export interface SecretMatch {
@@ -20,7 +21,7 @@ export interface SecretDetectionResult {
   secrets: SecretMatch[];
   totalSecrets: number;
   highConfidenceSecrets: number;
-  secretTypes: Record<SecretType, number>;
+  secretTypes: Partial<Record<SecretType, number>>;
   riskScore: number;
 }
 
@@ -29,15 +30,36 @@ export type SecretType =
   | 'jwt_token'
   | 'database_credential'
   | 'aws_access_key'
+  | 'aws_secret_key'
   | 'github_token'
+  | 'gitlab_token'
   | 'slack_token'
+  | 'slack_webhook'
   | 'stripe_key'
   | 'google_api_key'
+  | 'google_oauth'
   | 'private_key'
+  | 'ssh_key'
   | 'password'
   | 'connection_string'
   | 'oauth_token'
   | 'webhook_url'
+  | 'azure_key'
+  | 'npm_token'
+  | 'pypi_token'
+  | 'docker_auth'
+  | 'openai_key'
+  | 'anthropic_key'
+  | 'firebase_key'
+  | 'twilio_key'
+  | 'sendgrid_key'
+  | 'mailchimp_key'
+  | 'discord_token'
+  | 'telegram_token'
+  | 'vercel_token'
+  | 'netlify_token'
+  | 'heroku_key'
+  | 'digitalocean_token'
   | 'generic_secret';
 
 interface SecretPattern {
@@ -88,9 +110,29 @@ export class SecretDetectionService {
         name: 'github_token',
         pattern: /gh[pousr]_[A-Za-z0-9_]{36,255}/gi,
         entropy: { min: 3.5, max: 6.0 },
-        confidence: 90,
+        confidence: 95,
         description: 'GitHub Personal Access Token',
-        examples: ['ghp_1234567890abcdef1234567890abcdef12345678']
+        examples: ['ghp_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
+      },
+      
+      // GitHub Fine-grained PAT (NEW 2024+)
+      {
+        name: 'github_token',
+        pattern: /github_pat_[A-Za-z0-9_]{22,}/gi,
+        entropy: { min: 4.0, max: 6.0 },
+        confidence: 95,
+        description: 'GitHub Fine-grained Personal Access Token',
+        examples: ['github_pat_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
+      },
+      
+      // GitLab Tokens (NEW)
+      {
+        name: 'gitlab_token',
+        pattern: /glpat-[A-Za-z0-9_-]{20,}/gi,
+        entropy: { min: 4.0, max: 6.0 },
+        confidence: 95,
+        description: 'GitLab Personal Access Token',
+        examples: ['glpat-XXXXXXXXXXXXXXXXXXXX']
       },
       
       // JWT Tokens
@@ -100,27 +142,37 @@ export class SecretDetectionService {
         entropy: { min: 4.0, max: 6.0 },
         confidence: 85,
         description: 'JSON Web Token (JWT)',
-        examples: ['eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c']
+        examples: ['eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0In0.dummy_signature']
       },
       
       // Slack Tokens
       {
         name: 'slack_token',
-        pattern: /xox[bpars]-[0-9A-Za-z]{12}-[0-9A-Za-z]{12}-[0-9a-zA-Z]{24}/gi,
+        pattern: /xox[bpars]-[0-9A-Za-z]{10,48}-[0-9A-Za-z]{10,48}(?:-[0-9a-zA-Z]{24,48})?/gi,
         entropy: { min: 3.0, max: 5.5 },
-        confidence: 90,
+        confidence: 95,
         description: 'Slack API Token',
         examples: ['xoxb-XXXXXXXXXXXX-XXXXXXXXXXXX-XXXXXXXXXXXXXXXXXXXXXXXX']
+      },
+      
+      // Slack Webhooks (NEW)
+      {
+        name: 'slack_webhook',
+        pattern: /https:\/\/hooks\.slack\.com\/services\/T[A-Z0-9]+\/B[A-Z0-9]+\/[A-Za-z0-9]+/gi,
+        entropy: { min: 3.0, max: 5.0 },
+        confidence: 95,
+        description: 'Slack Webhook URL',
+        examples: ['https://hooks.slack.com/services/TXXXXXX/BXXXXXX/xxxx (example format)']
       },
       
       // Stripe API Keys
       {
         name: 'stripe_key',
-        pattern: /sk_live_[0-9a-zA-Z]{24,}/gi,
+        pattern: /(?:sk|pk|rk)_(?:live|test)_[0-9a-zA-Z]{24,}/gi,
         entropy: { min: 4.0, max: 5.5 },
         confidence: 95,
-        description: 'Stripe Live API Key',
-        examples: ['sk_live_1234567890abcdef1234567890abcdef']
+        description: 'Stripe API Key',
+        examples: ['sk_test_xxxx...xxxx (example format)']
       },
       
       // Google API Keys
@@ -128,9 +180,169 @@ export class SecretDetectionService {
         name: 'google_api_key',
         pattern: /AIza[0-9A-Za-z_-]{35}/gi,
         entropy: { min: 4.0, max: 5.5 },
-        confidence: 85,
+        confidence: 90,
         description: 'Google API Key',
-        examples: ['AIzaSyDaGmWKa4JsXZ-HjGw7ISLn_3namBGewQe']
+        examples: ['AIzaSyAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA']
+      },
+      
+      // Google OAuth Client Secret (NEW)
+      {
+        name: 'google_oauth',
+        pattern: /GOCSPX-[A-Za-z0-9_-]{28}/gi,
+        entropy: { min: 4.0, max: 5.5 },
+        confidence: 95,
+        description: 'Google OAuth Client Secret',
+        examples: ['GOCSPX-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
+      },
+      
+      // OpenAI API Key (NEW)
+      {
+        name: 'openai_key',
+        pattern: /sk-(?:proj-)?[A-Za-z0-9]{20,}T3BlbkFJ[A-Za-z0-9]{20,}/gi,
+        entropy: { min: 4.5, max: 6.0 },
+        confidence: 98,
+        description: 'OpenAI API Key',
+        examples: ['sk-xxxx...xxxx (example format)']
+      },
+      
+      // Anthropic API Key (NEW)
+      {
+        name: 'anthropic_key',
+        pattern: /sk-ant-(?:api03-)?[A-Za-z0-9_-]{93,}/gi,
+        entropy: { min: 4.5, max: 6.0 },
+        confidence: 98,
+        description: 'Anthropic Claude API Key',
+        examples: ['sk-ant-api03-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
+      },
+      
+      // Firebase/Google Cloud (NEW)
+      {
+        name: 'firebase_key',
+        pattern: /AAAA[A-Za-z0-9_-]{7}:[A-Za-z0-9_-]{140,}/gi,
+        entropy: { min: 4.0, max: 6.0 },
+        confidence: 90,
+        description: 'Firebase Cloud Messaging Server Key',
+        examples: ['AAAAAAA:APA91bXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
+      },
+      
+      // Azure Storage Key (NEW)
+      {
+        name: 'azure_key',
+        pattern: /DefaultEndpointsProtocol=https;AccountName=[^;]+;AccountKey=[A-Za-z0-9+\/=]{88}/gi,
+        entropy: { min: 4.0, max: 6.0 },
+        confidence: 95,
+        description: 'Azure Storage Connection String',
+        examples: ['DefaultEndpointsProtocol=https;AccountName=myaccount;AccountKey=...']
+      },
+      
+      // npm Token (NEW)
+      {
+        name: 'npm_token',
+        pattern: /npm_[A-Za-z0-9]{36}/gi,
+        entropy: { min: 4.0, max: 6.0 },
+        confidence: 95,
+        description: 'npm Access Token',
+        examples: ['npm_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
+      },
+      
+      // PyPI Token (NEW)
+      {
+        name: 'pypi_token',
+        pattern: /pypi-AgE[A-Za-z0-9_-]{70,}/gi,
+        entropy: { min: 4.0, max: 6.0 },
+        confidence: 95,
+        description: 'PyPI API Token',
+        examples: ['pypi-AgEIcHlwaS5vcmcXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
+      },
+      
+      // Twilio (NEW)
+      {
+        name: 'twilio_key',
+        pattern: /SK[a-f0-9]{32}/gi,
+        entropy: { min: 3.5, max: 5.0 },
+        confidence: 85,
+        description: 'Twilio API Key SID',
+        examples: ['SKXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
+      },
+      
+      // SendGrid (NEW)
+      {
+        name: 'sendgrid_key',
+        pattern: /SG\.[A-Za-z0-9_-]{22}\.[A-Za-z0-9_-]{43}/gi,
+        entropy: { min: 4.0, max: 6.0 },
+        confidence: 95,
+        description: 'SendGrid API Key',
+        examples: ['SG.XXXXXXXXXXXXXXXXXXXXXX.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
+      },
+      
+      // Discord (NEW)
+      {
+        name: 'discord_token',
+        pattern: /[MN][A-Za-z\d]{23,}\.[\w-]{6}\.[\w-]{27,}/gi,
+        entropy: { min: 4.0, max: 6.0 },
+        confidence: 90,
+        description: 'Discord Bot Token',
+        examples: ['XXXXXXXXXXXXXXXXXXXXXXXX.XXXXXX.XXXXXXXXXXXXXXXXXXXXXXXXXXX']
+      },
+      
+      // Telegram Bot Token (NEW)
+      {
+        name: 'telegram_token',
+        pattern: /\d{8,10}:[A-Za-z0-9_-]{35}/gi,
+        entropy: { min: 4.0, max: 5.5 },
+        confidence: 90,
+        description: 'Telegram Bot Token',
+        examples: ['1234567890:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
+      },
+      
+      // Vercel Token (NEW)
+      {
+        name: 'vercel_token',
+        pattern: /vercel_[A-Za-z0-9]{24}/gi,
+        entropy: { min: 4.0, max: 6.0 },
+        confidence: 95,
+        description: 'Vercel API Token',
+        examples: ['vercel_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
+      },
+      
+      // Netlify Token (NEW)
+      {
+        name: 'netlify_token',
+        pattern: /nfp_[A-Za-z0-9]{40}/gi,
+        entropy: { min: 4.0, max: 6.0 },
+        confidence: 95,
+        description: 'Netlify Personal Access Token',
+        examples: ['nfp_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
+      },
+      
+      // Heroku API Key (NEW)
+      {
+        name: 'heroku_key',
+        pattern: /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/gi,
+        entropy: { min: 3.5, max: 5.0 },
+        confidence: 60, // Lower confidence as UUID format is common
+        description: 'Heroku API Key (UUID format)',
+        examples: ['12345678-1234-1234-1234-XXXXXXXXXXXX']
+      },
+      
+      // DigitalOcean Token (NEW)
+      {
+        name: 'digitalocean_token',
+        pattern: /dop_v1_[a-f0-9]{64}/gi,
+        entropy: { min: 4.0, max: 6.0 },
+        confidence: 95,
+        description: 'DigitalOcean Personal Access Token',
+        examples: ['dop_v1_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX']
+      },
+      
+      // Docker Auth Token (NEW)
+      {
+        name: 'docker_auth',
+        pattern: /dckr_pat_[A-Za-z0-9_-]{20,}/gi,
+        entropy: { min: 4.0, max: 6.0 },
+        confidence: 95,
+        description: 'Docker Personal Access Token',
+        examples: ['dckr_pat_XXXXXXXXXXXXXXXXXX']
       },
       
       // Private Keys
@@ -138,17 +350,27 @@ export class SecretDetectionService {
         name: 'private_key',
         pattern: /-----BEGIN[A-Z\s]+PRIVATE KEY-----[\s\S]*?-----END[A-Z\s]+PRIVATE KEY-----/gi,
         entropy: { min: 4.0, max: 6.0 },
-        confidence: 95,
+        confidence: 98,
         description: 'Private Key',
         examples: ['-----BEGIN RSA PRIVATE KEY-----\n...']
+      },
+      
+      // SSH Private Key (NEW)
+      {
+        name: 'ssh_key',
+        pattern: /-----BEGIN OPENSSH PRIVATE KEY-----[\s\S]*?-----END OPENSSH PRIVATE KEY-----/gi,
+        entropy: { min: 4.0, max: 6.0 },
+        confidence: 98,
+        description: 'OpenSSH Private Key',
+        examples: ['-----BEGIN OPENSSH PRIVATE KEY-----\n...']
       },
       
       // Database Connection Strings
       {
         name: 'connection_string',
-        pattern: /(mongodb|mysql|postgresql|postgres|redis):\/\/[^\s"']+/gi,
+        pattern: /(mongodb(?:\+srv)?|mysql|postgresql|postgres|redis|mssql|oracle):\/\/[^\s"']+/gi,
         entropy: { min: 3.0, max: 5.0 },
-        confidence: 80,
+        confidence: 85,
         description: 'Database Connection String',
         examples: ['mongodb://user:pass@host:port/db', 'postgresql://user:pass@host:port/db']
       },
@@ -156,21 +378,31 @@ export class SecretDetectionService {
       // Generic API Keys (high entropy strings)
       {
         name: 'api_key',
-        pattern: /['"](api[_-]?key|apikey|access[_-]?token|secret[_-]?key)['"]\s*[:=]\s*['"]\s*[A-Za-z0-9_-]{20,}['"]/gi,
+        pattern: /['"](api[_-]?key|apikey|access[_-]?token|secret[_-]?key|auth[_-]?token)['"]\s*[:=]\s*['"]\s*[A-Za-z0-9_-]{20,}['"]/gi,
         entropy: { min: 4.0, max: 6.0 },
         confidence: 75,
         description: 'Generic API Key',
-        examples: ['"api_key": "abcdef1234567890abcdef1234567890"']
+        examples: ['"api_key": "XXXXXXXXXXXXXXXXXXXXXXXXXX"']
       },
       
       // Password patterns
       {
         name: 'password',
-        pattern: /['"](password|passwd|pwd)['"]\s*[:=]\s*['"]\s*[A-Za-z0-9!@#$%^&*()_+-=]{8,}['"]/gi,
+        pattern: /['"](password|passwd|pwd|secret|credentials)['"]\s*[:=]\s*['"]\s*[A-Za-z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]{8,}['"]/gi,
         entropy: { min: 3.0, max: 5.0 },
-        confidence: 70,
+        confidence: 75,
         description: 'Hardcoded Password',
-        examples: ['"password": "mySecretPassword123!"']
+        examples: ['"password": "XXXXXXXXXXXXXXXXXX"']
+      },
+      
+      // Mailchimp API Key (NEW)
+      {
+        name: 'mailchimp_key',
+        pattern: /[a-f0-9]{32}-us\d{1,2}/gi,
+        entropy: { min: 3.5, max: 5.0 },
+        confidence: 85,
+        description: 'Mailchimp API Key',
+        examples: ['xxxx...xxxx-usXX (example format)']
       }
     ];
   }
@@ -509,16 +741,37 @@ export class SecretDetectionService {
     if (secrets.length === 0) return 0;
 
     let riskScore = 0;
-    const typeWeights: Record<SecretType, number> = {
+    const typeWeights: Partial<Record<SecretType, number>> = {
       'private_key': 10,
+      'ssh_key': 10,
       'aws_access_key': 9,
+      'aws_secret_key': 9,
+      'azure_key': 9,
       'stripe_key': 8,
       'github_token': 7,
+      'gitlab_token': 7,
       'google_api_key': 7,
+      'google_oauth': 7,
+      'openai_key': 8,
+      'anthropic_key': 8,
+      'firebase_key': 7,
       'slack_token': 6,
+      'slack_webhook': 5,
+      'discord_token': 6,
+      'telegram_token': 6,
       'jwt_token': 6,
       'database_credential': 8,
       'connection_string': 7,
+      'npm_token': 7,
+      'pypi_token': 7,
+      'docker_auth': 8,
+      'twilio_key': 6,
+      'sendgrid_key': 6,
+      'mailchimp_key': 5,
+      'vercel_token': 7,
+      'netlify_token': 7,
+      'heroku_key': 7,
+      'digitalocean_token': 7,
       'api_key': 5,
       'oauth_token': 5,
       'password': 4,
@@ -551,7 +804,7 @@ export class SecretDetectionService {
 
     // Calculate statistics
     const highConfidenceSecrets = allSecrets.filter(s => s.confidence >= 80).length;
-    const secretTypes: Record<SecretType, number> = {} as Record<SecretType, number>;
+    const secretTypes: Partial<Record<SecretType, number>> = {};
 
     allSecrets.forEach(secret => {
       secretTypes[secret.type] = (secretTypes[secret.type] || 0) + 1;
@@ -574,20 +827,41 @@ export class SecretDetectionService {
    * Get secret type description
    */
   public getSecretTypeDescription(type: SecretType): string {
-    const descriptions: Record<SecretType, string> = {
+    const descriptions: Partial<Record<SecretType, string>> = {
       'api_key': 'Generic API Key - Could provide access to external services',
       'jwt_token': 'JSON Web Token - May contain sensitive user information',
       'database_credential': 'Database Credential - Provides access to database systems',
       'aws_access_key': 'AWS Access Key - Provides access to Amazon Web Services',
+      'aws_secret_key': 'AWS Secret Key - Provides access to Amazon Web Services',
       'github_token': 'GitHub Token - Provides access to GitHub repositories',
+      'gitlab_token': 'GitLab Token - Provides access to GitLab repositories',
       'slack_token': 'Slack Token - Provides access to Slack workspace',
+      'slack_webhook': 'Slack Webhook - Provides posting access to Slack channels',
       'stripe_key': 'Stripe API Key - Provides access to payment processing',
       'google_api_key': 'Google API Key - Provides access to Google services',
+      'google_oauth': 'Google OAuth - Provides OAuth access to Google services',
       'private_key': 'Private Key - Used for cryptographic operations',
+      'ssh_key': 'SSH Key - Used for secure shell authentication',
       'password': 'Hardcoded Password - Authentication credential',
       'connection_string': 'Database Connection String - Contains database access information',
       'oauth_token': 'OAuth Token - Provides delegated access to resources',
       'webhook_url': 'Webhook URL - May contain sensitive callback information',
+      'azure_key': 'Azure Key - Provides access to Microsoft Azure services',
+      'npm_token': 'NPM Token - Provides access to NPM registry',
+      'pypi_token': 'PyPI Token - Provides access to Python Package Index',
+      'docker_auth': 'Docker Auth - Provides access to Docker registry',
+      'openai_key': 'OpenAI API Key - Provides access to OpenAI services',
+      'anthropic_key': 'Anthropic API Key - Provides access to Anthropic/Claude services',
+      'firebase_key': 'Firebase Key - Provides access to Firebase services',
+      'twilio_key': 'Twilio Key - Provides access to Twilio communications',
+      'sendgrid_key': 'SendGrid Key - Provides access to SendGrid email services',
+      'mailchimp_key': 'Mailchimp Key - Provides access to Mailchimp marketing services',
+      'discord_token': 'Discord Token - Provides bot access to Discord servers',
+      'telegram_token': 'Telegram Token - Provides bot access to Telegram',
+      'vercel_token': 'Vercel Token - Provides access to Vercel deployment services',
+      'netlify_token': 'Netlify Token - Provides access to Netlify services',
+      'heroku_key': 'Heroku Key - Provides access to Heroku platform',
+      'digitalocean_token': 'DigitalOcean Token - Provides access to DigitalOcean cloud services',
       'generic_secret': 'Generic Secret - High-entropy string that may be sensitive'
     };
 

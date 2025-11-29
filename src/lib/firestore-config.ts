@@ -29,7 +29,8 @@ export function createOptimizedFirestore(app: FirebaseApp): Firestore {
   }
   
   // Connect to emulator if in development
-  if (import.meta.env.DEV && import.meta.env.VITE_USE_FIREBASE_EMULATOR === 'true') {
+  const env = (import.meta as any).env || {};
+  if (env.DEV && env.VITE_USE_FIREBASE_EMULATOR === 'true') {
     try {
       connectFirestoreEmulator(db, 'localhost', 8080);
       logger.debug('Connected to Firestore emulator');

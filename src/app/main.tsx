@@ -4,8 +4,11 @@ import '../pwa-init';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
-// Import base styles first
+// Import styles - base.css for Tailwind v4 theme and index.css for additional component styles
 import '../styles/base.css';
+import '../index.css';
+import '../styles/enhanced-ui.css';
+import '../styles/about-page-enhancements.css';
 
 // Production-grade utilities
 import { logger } from '../utils/logger';

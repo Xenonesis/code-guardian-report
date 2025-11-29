@@ -11,9 +11,24 @@
  * - Dependency vulnerability scanning
  * 
  * Inspired by: SonarQube, Snyk, Checkmarx, Veracode, Fortify
+ * Updated: November 2025 with OWASP Top 10 2025 RC categories
  */
 
 import { SecurityIssue } from '@/hooks/useAnalysis';
+
+// OWASP Top 10 2025 Categories (Release Candidate)
+const OWASP_2025 = {
+  A01: 'A01:2025',
+  A02: 'A02:2025',
+  A03: 'A03:2025',
+  A04: 'A04:2025',
+  A05: 'A05:2025',
+  A06: 'A06:2025',
+  A07: 'A07:2025',
+  A08: 'A08:2025',
+  A09: 'A09:2025',
+  A10: 'A10:2025'
+};
 
 export type ScanSeverity = 'Blocker' | 'Critical' | 'Major' | 'Minor' | 'Info';
 export type IssueType = 'Bug' | 'Vulnerability' | 'Code Smell' | 'Security Hotspot';
@@ -74,7 +89,7 @@ export interface DetectedIssue {
 
 /**
  * Modern Code Scanning Engine
- * Implements SonarQube-style analysis
+ * Implements SonarQube-style analysis with OWASP 2025 support
  */
 export class ModernCodeScanningService {
   private rules: SonarRule[] = [];
@@ -84,7 +99,7 @@ export class ModernCodeScanningService {
   }
 
   /**
-   * Initialize comprehensive rule set
+   * Initialize comprehensive rule set - Updated for 2025
    */
   private initializeRules(): void {
     this.rules = [
@@ -98,14 +113,31 @@ export class ModernCodeScanningService {
         severity: 'Critical',
         type: 'Vulnerability',
         ruleType: 'Security',
-        pattern: /(?:query|execute|exec|sql|prepare)\s*\([^)]*["'`][^"'`]*(?:\+|FROM|WHERE)[^)]*["'`]|["'`]\s*SELECT[^"'`]*\+|["'`]\s*\+[^+]*(?:WHERE|FROM)/gi,
+        pattern: /(?:query|execute|exec|sql|prepare)\s*\([^)]*["'`][^"'`]*(?:\+|FROM|WHERE)[^)]*["'`]|["'`]\s*SELECT.*?["']\s*\+|["'`]\s*\+[^+]*(?:WHERE|FROM)/gi,
         languages: ['javascript', 'typescript', 'python'],
-        tags: ['sql', 'injection', 'owasp', 'sans-top25', 'cwe'],
+        tags: ['sql', 'injection', 'owasp-2025', 'sans-top25', 'cwe'],
         remediationEffort: 30,
         debtRemediationTime: '30min',
         cwe: ['CWE-89'],
-        owaspTop10: ['A03:2021'],
+        owaspTop10: [OWASP_2025.A05], // A05:2025 Injection
         sansTop25: ['CWE-89']
+      },
+      
+      // NoSQL Injection (NEW)
+      {
+        id: 'typescript:S5334',
+        name: 'NoSQL queries should not be vulnerable to injection attacks',
+        description: 'NoSQL queries constructed from user input without sanitization are vulnerable to injection attacks.',
+        severity: 'Critical',
+        type: 'Vulnerability',
+        ruleType: 'Security',
+        pattern: /\$where\s*:|\.find\s*\([^)]*\$|\$regex\s*:/gi,
+        languages: ['javascript', 'typescript'],
+        tags: ['nosql', 'injection', 'mongodb', 'owasp-2025', 'cwe'],
+        remediationEffort: 30,
+        debtRemediationTime: '30min',
+        cwe: ['CWE-943'],
+        owaspTop10: [OWASP_2025.A05]
       },
       
       // XSS Vulnerabilities
@@ -118,11 +150,11 @@ export class ModernCodeScanningService {
         ruleType: 'Security',
         pattern: /(?:innerHTML|dangerouslySetInnerHTML|outerHTML)\s*[:=]/gi,
         languages: ['javascript', 'typescript'],
-        tags: ['xss', 'injection', 'owasp', 'sans-top25', 'cwe'],
+        tags: ['xss', 'injection', 'owasp-2025', 'sans-top25', 'cwe'],
         remediationEffort: 20,
         debtRemediationTime: '20min',
         cwe: ['CWE-79'],
-        owaspTop10: ['A03:2021'],
+        owaspTop10: [OWASP_2025.A05], // A05:2025 Injection
         sansTop25: ['CWE-79']
       },
       
@@ -136,11 +168,11 @@ export class ModernCodeScanningService {
         ruleType: 'Security',
         pattern: /(?:exec|spawn|execSync|spawnSync|execFile)\s*\([^)]*(?:\+|`\$\{)/gi,
         languages: ['javascript', 'typescript'],
-        tags: ['command-injection', 'injection', 'owasp', 'sans-top25'],
+        tags: ['command-injection', 'injection', 'owasp-2025', 'sans-top25'],
         remediationEffort: 45,
         debtRemediationTime: '45min',
         cwe: ['CWE-78'],
-        owaspTop10: ['A03:2021'],
+        owaspTop10: [OWASP_2025.A05], // A05:2025 Injection
         sansTop25: ['CWE-78']
       },
       
@@ -154,11 +186,11 @@ export class ModernCodeScanningService {
         ruleType: 'Security',
         pattern: /(?:readFile|writeFile|readFileSync|writeFileSync|createReadStream)\s*\([^)]*(?:\+|`\$\{)/gi,
         languages: ['javascript', 'typescript'],
-        tags: ['path-traversal', 'owasp', 'sans-top25'],
+        tags: ['path-traversal', 'owasp-2025', 'sans-top25'],
         remediationEffort: 30,
         debtRemediationTime: '30min',
         cwe: ['CWE-22'],
-        owaspTop10: ['A01:2021']
+        owaspTop10: [OWASP_2025.A01] // A01:2025 Broken Access Control
       },
       
       // Weak Cryptography
@@ -171,11 +203,11 @@ export class ModernCodeScanningService {
         ruleType: 'Security',
         pattern: /createHash\s*\(\s*["'](?:md5|sha1)["']\s*\)/gi,
         languages: ['javascript', 'typescript'],
-        tags: ['cryptography', 'weak-crypto', 'owasp'],
+        tags: ['cryptography', 'weak-crypto', 'owasp-2025'],
         remediationEffort: 15,
         debtRemediationTime: '15min',
         cwe: ['CWE-327'],
-        owaspTop10: ['A02:2021']
+        owaspTop10: [OWASP_2025.A04] // A04:2025 Cryptographic Failures
       },
       
       // Insecure Random
@@ -188,11 +220,11 @@ export class ModernCodeScanningService {
         ruleType: 'Security',
         pattern: /Math\.random\s*\(\s*\)/gi,
         languages: ['javascript', 'typescript'],
-        tags: ['random', 'cryptography', 'owasp'],
+        tags: ['random', 'cryptography', 'owasp-2025'],
         remediationEffort: 10,
         debtRemediationTime: '10min',
         cwe: ['CWE-338'],
-        owaspTop10: ['A02:2021']
+        owaspTop10: [OWASP_2025.A04] // A04:2025 Cryptographic Failures
       },
       
       // Hardcoded Secrets
@@ -205,11 +237,79 @@ export class ModernCodeScanningService {
         ruleType: 'Security',
         pattern: /(?:password|secret|api[_-]?key|token|private[_-]?key)\s*[:=]\s*["'][^"']{8,}["']/gi,
         languages: ['javascript', 'typescript', 'python', 'java'],
-        tags: ['secrets', 'credentials', 'owasp'],
+        tags: ['secrets', 'credentials', 'owasp-2025'],
         remediationEffort: 20,
         debtRemediationTime: '20min',
         cwe: ['CWE-798'],
-        owaspTop10: ['A07:2021']
+        owaspTop10: [OWASP_2025.A07] // A07:2025 Authentication Failures
+      },
+      
+      // SSRF Vulnerability (NEW for 2025)
+      {
+        id: 'typescript:S5144',
+        name: 'Server-Side Request Forgery (SSRF) should be prevented',
+        description: 'User-controlled URLs passed to HTTP clients can lead to SSRF attacks.',
+        severity: 'Critical',
+        type: 'Vulnerability',
+        ruleType: 'Security',
+        pattern: /(?:fetch|axios|request|http\.get|https\.get)\s*\([^)]*(?:\+|`\$\{)/gi,
+        languages: ['javascript', 'typescript'],
+        tags: ['ssrf', 'owasp-2025', 'cwe'],
+        remediationEffort: 45,
+        debtRemediationTime: '45min',
+        cwe: ['CWE-918'],
+        owaspTop10: [OWASP_2025.A01] // Part of Broken Access Control
+      },
+      
+      // Prototype Pollution (NEW)
+      {
+        id: 'typescript:S5145',
+        name: 'Prototype pollution vulnerabilities should be prevented',
+        description: 'Object merge operations with user input can lead to prototype pollution.',
+        severity: 'Critical',
+        type: 'Vulnerability',
+        ruleType: 'Security',
+        pattern: /Object\.assign\s*\([^,]+,\s*(?:req\.|request\.|body|params|query)|\.\.\.(?:req\.|request\.|body|params|query)/gi,
+        languages: ['javascript', 'typescript'],
+        tags: ['prototype-pollution', 'owasp-2025', 'cwe'],
+        remediationEffort: 30,
+        debtRemediationTime: '30min',
+        cwe: ['CWE-1321'],
+        owaspTop10: [OWASP_2025.A05] // Injection
+      },
+      
+      // Insecure Deserialization (NEW)
+      {
+        id: 'typescript:S5135',
+        name: 'Deserialization should be performed securely',
+        description: 'Deserializing untrusted data can lead to remote code execution.',
+        severity: 'Critical',
+        type: 'Vulnerability',
+        ruleType: 'Security',
+        pattern: /(?:JSON\.parse|unserialize|deserialize|yaml\.load)\s*\([^)]*(?:req\.|request\.|body|user)/gi,
+        languages: ['javascript', 'typescript', 'python'],
+        tags: ['deserialization', 'owasp-2025', 'cwe'],
+        remediationEffort: 45,
+        debtRemediationTime: '45min',
+        cwe: ['CWE-502'],
+        owaspTop10: [OWASP_2025.A08] // A08:2025 Software or Data Integrity Failures
+      },
+      
+      // Supply Chain - Dependency Confusion (NEW for 2025)
+      {
+        id: 'typescript:S6350',
+        name: 'Package installation should use scoped or verified packages',
+        description: 'Unscoped package names can be vulnerable to dependency confusion attacks.',
+        severity: 'Major',
+        type: 'Security Hotspot',
+        ruleType: 'Security',
+        pattern: /"dependencies":\s*\{[^}]*"[a-z][^@"][^"]*":\s*"\*"/gi,
+        languages: ['javascript', 'typescript'],
+        tags: ['supply-chain', 'dependency-confusion', 'owasp-2025'],
+        remediationEffort: 30,
+        debtRemediationTime: '30min',
+        cwe: ['CWE-494', 'CWE-1395'],
+        owaspTop10: [OWASP_2025.A03] // A03:2025 Software Supply Chain Failures
       },
       
       // ==================== SECURITY HOTSPOTS ====================
@@ -224,14 +324,49 @@ export class ModernCodeScanningService {
         ruleType: 'Security',
         pattern: /\b(?:eval|Function)\s*\(/gi,
         languages: ['javascript', 'typescript'],
-        tags: ['eval', 'code-injection', 'sans-top25'],
+        tags: ['eval', 'code-injection', 'sans-top25', 'owasp-2025'],
         remediationEffort: 30,
         debtRemediationTime: '30min',
         cwe: ['CWE-95'],
-        owaspTop10: ['A03:2021']
+        owaspTop10: [OWASP_2025.A05] // A05:2025 Injection
+      },
+      
+      // Logging Sensitive Data (NEW for 2025)
+      {
+        id: 'typescript:S5757',
+        name: 'Logging should not include sensitive information',
+        description: 'Logging passwords, tokens, or other sensitive data exposes them to log readers.',
+        severity: 'Major',
+        type: 'Security Hotspot',
+        ruleType: 'Security',
+        pattern: /console\.(?:log|info|debug|warn|error)\s*\([^)]*(?:password|token|secret|apiKey|api_key|authorization)/gi,
+        languages: ['javascript', 'typescript'],
+        tags: ['logging', 'sensitive-data', 'owasp-2025'],
+        remediationEffort: 15,
+        debtRemediationTime: '15min',
+        cwe: ['CWE-532'],
+        owaspTop10: [OWASP_2025.A09] // A09:2025 Logging and Alerting Failures
+      },
+      
+      // Unhandled Exceptions (NEW for 2025 A10)
+      {
+        id: 'typescript:S2486',
+        name: 'Exceptions should be properly handled',
+        description: 'Empty catch blocks or swallowing exceptions without logging can mask errors.',
+        severity: 'Major',
+        type: 'Bug',
+        ruleType: 'Reliability',
+        pattern: /catch\s*\([^)]*\)\s*\{\s*\}/gi,
+        languages: ['javascript', 'typescript'],
+        tags: ['exception-handling', 'owasp-2025'],
+        remediationEffort: 15,
+        debtRemediationTime: '15min',
+        cwe: ['CWE-754'],
+        owaspTop10: [OWASP_2025.A10] // A10:2025 Mishandling of Exceptional Conditions
       },
       
       // ==================== BUGS (RELIABILITY) ====================
+
       
       // Null Pointer Dereference
       {
@@ -401,6 +536,59 @@ export class ModernCodeScanningService {
         tags: ['performance', 'optimization'],
         remediationEffort: 15,
         debtRemediationTime: '15min'
+      },
+
+      // ==================== ADDITIONAL SECURITY RULES (2025) ====================
+
+      // Zip Slip Vulnerability (NEW)
+      {
+        id: 'typescript:S6096',
+        name: 'Zip archives should be extracted securely',
+        description: 'Extracting zip archives without validating paths can lead to arbitrary file overwrite (Zip Slip).',
+        severity: 'Critical',
+        type: 'Vulnerability',
+        ruleType: 'Security',
+        pattern: /\.async\s*\(\s*["']string["']\s*\)|new\s+JSZip/gi,
+        languages: ['javascript', 'typescript'],
+        tags: ['zip-slip', 'path-traversal', 'owasp-2025'],
+        remediationEffort: 45,
+        debtRemediationTime: '45min',
+        cwe: ['CWE-22'],
+        owaspTop10: [OWASP_2025.A01]
+      },
+
+      // Unsafe React href (NEW)
+      {
+        id: 'typescript:S6097',
+        name: 'Links should not use javascript: protocol',
+        description: 'Using javascript: protocol in href attributes can lead to XSS attacks.',
+        severity: 'Critical',
+        type: 'Vulnerability',
+        ruleType: 'Security',
+        pattern: /href\s*=\s*["']javascript:/gi,
+        languages: ['javascript', 'typescript'],
+        tags: ['xss', 'react', 'owasp-2025'],
+        remediationEffort: 15,
+        debtRemediationTime: '15min',
+        cwe: ['CWE-79'],
+        owaspTop10: [OWASP_2025.A05]
+      },
+
+      // HTTP Header Injection (NEW)
+      {
+        id: 'typescript:S5146',
+        name: 'HTTP headers should not be vulnerable to injection',
+        description: 'User input in HTTP headers can lead to HTTP Response Splitting or Header Injection.',
+        severity: 'Critical',
+        type: 'Vulnerability',
+        ruleType: 'Security',
+        pattern: /(?:setHeader|writeHead)\s*\([^,]+,\s*(?:req\.|request\.|body|params|query)/gi,
+        languages: ['javascript', 'typescript'],
+        tags: ['header-injection', 'owasp-2025'],
+        remediationEffort: 30,
+        debtRemediationTime: '30min',
+        cwe: ['CWE-113'],
+        owaspTop10: [OWASP_2025.A05]
       }
     ];
   }

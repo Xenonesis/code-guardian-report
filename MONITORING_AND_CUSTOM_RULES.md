@@ -310,7 +310,7 @@ const rules = await CustomRulesEngine.getRules(user.uid, {
 
 // Apply rules to code
 const code = `
-const apiKey = "sk_live_1234567890abcdef";
+const apiKey = "YOUR_API_KEY_HERE";
 console.log(apiKey);
 `;
 

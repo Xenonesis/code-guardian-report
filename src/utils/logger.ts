@@ -3,8 +3,8 @@
  * Automatically removes console.log in production while preserving errors and warnings
  */
 
-const IS_DEV = import.meta.env.DEV;
-const IS_PROD = import.meta.env.PROD;
+const IS_DEV = (import.meta as any).env?.DEV ?? true;
+const IS_PROD = (import.meta as any).env?.PROD ?? false;
 
 export enum LogLevel {
   DEBUG = 'DEBUG',

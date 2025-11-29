@@ -1,7 +1,21 @@
 import { SecurityIssue } from '@/hooks/useAnalysis';
 
-// OWASP Top 10 2021 Categories
-export const OWASP_CATEGORIES = {
+// OWASP Top 10 2025 Categories (Release Candidate - November 2025)
+export const OWASP_CATEGORIES_2025 = {
+  A01_BROKEN_ACCESS_CONTROL: 'A01:2025 – Broken Access Control',
+  A02_SECURITY_MISCONFIGURATION: 'A02:2025 – Security Misconfiguration',
+  A03_SOFTWARE_SUPPLY_CHAIN: 'A03:2025 – Software Supply Chain Failures',
+  A04_CRYPTOGRAPHIC_FAILURES: 'A04:2025 – Cryptographic Failures',
+  A05_INJECTION: 'A05:2025 – Injection',
+  A06_INSECURE_DESIGN: 'A06:2025 – Insecure Design',
+  A07_AUTHENTICATION_FAILURES: 'A07:2025 – Authentication Failures',
+  A08_SOFTWARE_INTEGRITY_FAILURES: 'A08:2025 – Software or Data Integrity Failures',
+  A09_LOGGING_ALERTING_FAILURES: 'A09:2025 – Logging and Alerting Failures',
+  A10_EXCEPTIONAL_CONDITIONS: 'A10:2025 – Mishandling of Exceptional Conditions'
+};
+
+// OWASP Top 10 2021 Categories (Stable - for backward compatibility)
+export const OWASP_CATEGORIES_2021 = {
   A01_BROKEN_ACCESS_CONTROL: 'A01:2021 – Broken Access Control',
   A02_CRYPTOGRAPHIC_FAILURES: 'A02:2021 – Cryptographic Failures',
   A03_INJECTION: 'A03:2021 – Injection',
@@ -14,18 +28,65 @@ export const OWASP_CATEGORIES = {
   A10_SSRF: 'A10:2021 – Server-Side Request Forgery (SSRF)'
 };
 
-// Common Weakness Enumeration (CWE) mappings
+// Primary OWASP Categories (using 2021 as stable, with 2025 available for future migration)
+// Using 2021 as default since 2025 is still Release Candidate
+export const OWASP_CATEGORIES = OWASP_CATEGORIES_2021;
+
+// Common Weakness Enumeration (CWE) mappings - Updated 2025
 export const CWE_MAPPINGS = {
+  // Injection vulnerabilities
   SQL_INJECTION: 'CWE-89',
   XSS: 'CWE-79',
-  HARDCODED_CREDENTIALS: 'CWE-798',
-  WEAK_CRYPTO: 'CWE-327',
-  PATH_TRAVERSAL: 'CWE-22',
   COMMAND_INJECTION: 'CWE-78',
+  CODE_INJECTION: 'CWE-94',
+  LDAP_INJECTION: 'CWE-90',
+  XPATH_INJECTION: 'CWE-91',
+  NOSQL_INJECTION: 'CWE-943',
+  
+  // Authentication & Access Control
+  HARDCODED_CREDENTIALS: 'CWE-798',
+  BROKEN_ACCESS_CONTROL: 'CWE-284',
+  MISSING_AUTH: 'CWE-306',
+  IMPROPER_AUTH: 'CWE-287',
+  SESSION_FIXATION: 'CWE-384',
+  
+  // Cryptographic Issues
+  WEAK_CRYPTO: 'CWE-327',
   INSECURE_RANDOM: 'CWE-338',
+  INSUFFICIENT_KEY_SIZE: 'CWE-326',
+  BROKEN_CRYPTO: 'CWE-328',
+  CLEARTEXT_TRANSMISSION: 'CWE-319',
+  CLEARTEXT_STORAGE: 'CWE-312',
+  
+  // File & Path Operations
+  PATH_TRAVERSAL: 'CWE-22',
+  UNRESTRICTED_UPLOAD: 'CWE-434',
+  INSECURE_FILE_ACCESS: 'CWE-552',
+  
+  // Memory & Resource Management
   BUFFER_OVERFLOW: 'CWE-120',
   NULL_POINTER: 'CWE-476',
-  RACE_CONDITION: 'CWE-362'
+  RACE_CONDITION: 'CWE-362',
+  USE_AFTER_FREE: 'CWE-416',
+  MEMORY_LEAK: 'CWE-401',
+  
+  // Deserialization & Data Handling
+  INSECURE_DESERIALIZATION: 'CWE-502',
+  PROTOTYPE_POLLUTION: 'CWE-1321',
+  XXE: 'CWE-611',
+  SSRF: 'CWE-918',
+  
+  // Supply Chain & Dependencies
+  VULNERABLE_DEPENDENCY: 'CWE-1395',
+  UNTRUSTED_SOURCE: 'CWE-494',
+  
+  // Information Disclosure
+  SENSITIVE_DATA_EXPOSURE: 'CWE-200',
+  ERROR_MESSAGE_EXPOSURE: 'CWE-209',
+  
+  // Logging & Monitoring
+  INSUFFICIENT_LOGGING: 'CWE-778',
+  LOG_INJECTION: 'CWE-117'
 };
 
 // Security rule patterns for different languages
@@ -250,6 +311,69 @@ export const SECURITY_RULES = {
         effort: 'Low' as const,
         priority: 3
       }
+    },
+    // Zip Slip Vulnerability (NEW)
+    {
+      pattern: /\.async\s*\(\s*["']string["']\s*\)|new\s+JSZip/gi,
+      severity: 'Critical' as const,
+      type: 'Vulnerability',
+      category: 'Security',
+      cweId: 'CWE-22',
+      owaspCategory: OWASP_CATEGORIES.A01_BROKEN_ACCESS_CONTROL,
+      message: 'Zip archives should be extracted securely (Zip Slip)',
+      confidence: 85,
+      cvssScore: 7.5,
+      impact: 'Arbitrary file overwrite via path traversal',
+      likelihood: 'Medium',
+      remediation: {
+        description: 'Validate paths in zip archives before extraction',
+        codeExample: 'zip.file(entry.name).async("string")',
+        fixExample: 'if (entry.name.includes("..")) throw new Error("Invalid path");',
+        effort: 'Medium' as const,
+        priority: 5
+      }
+    },
+    // Unsafe React href (NEW)
+    {
+      pattern: /href\s*=\s*["']javascript:/gi,
+      severity: 'Critical' as const,
+      type: 'XSS',
+      category: 'Cross-Site Scripting',
+      cweId: 'CWE-79',
+      owaspCategory: OWASP_CATEGORIES.A03_INJECTION,
+      message: 'Links should not use javascript: protocol',
+      confidence: 95,
+      cvssScore: 6.1,
+      impact: 'Cross-site scripting attacks possible',
+      likelihood: 'High',
+      remediation: {
+        description: 'Avoid using javascript: protocol in href attributes',
+        codeExample: '<a href="javascript:void(0)">',
+        fixExample: '<button onClick={handler}>',
+        effort: 'Low' as const,
+        priority: 4
+      }
+    },
+    // HTTP Header Injection (NEW)
+    {
+      pattern: /(?:setHeader|writeHead)\s*\([^,]+,\s*(?:req\.|request\.|body|params|query)/gi,
+      severity: 'Critical' as const,
+      type: 'Injection',
+      category: 'Security',
+      cweId: 'CWE-113',
+      owaspCategory: OWASP_CATEGORIES.A03_INJECTION,
+      message: 'HTTP headers should not be vulnerable to injection',
+      confidence: 85,
+      cvssScore: 6.5,
+      impact: 'HTTP Response Splitting or Header Injection',
+      likelihood: 'Medium',
+      remediation: {
+        description: 'Validate and sanitize user input before using in HTTP headers',
+        codeExample: 'res.setHeader("X-User", req.query.user)',
+        fixExample: 'res.setHeader("X-User", sanitize(req.query.user))',
+        effort: 'Medium' as const,
+        priority: 4
+      }
     }
   ],
   typescript: [
@@ -417,8 +541,9 @@ export const SECURITY_RULES = {
   ]
 };
 
-// Dependency vulnerability patterns
+// Dependency vulnerability patterns - Updated November 2025
 export const DEPENDENCY_VULNERABILITIES = [
+  // Critical vulnerabilities
   {
     package: 'lodash',
     versions: ['< 4.17.21'],
@@ -429,19 +554,197 @@ export const DEPENDENCY_VULNERABILITIES = [
   },
   {
     package: 'axios',
-    versions: ['< 0.21.2'],
-    severity: 'Medium' as const,
-    cveId: 'CVE-2021-3749',
-    description: 'Regular expression denial of service (ReDoS)',
-    remediation: 'Update to axios >= 0.21.2'
+    versions: ['< 1.6.0'],
+    severity: 'High' as const,
+    cveId: 'CVE-2023-45857',
+    description: 'CSRF vulnerability due to cookie exposure in cross-site requests',
+    remediation: 'Update to axios >= 1.6.0'
+  },
+  {
+    package: 'axios',
+    versions: ['< 1.7.4'],
+    severity: 'High' as const,
+    cveId: 'CVE-2024-39338',
+    description: 'Server-Side Request Forgery (SSRF) vulnerability',
+    remediation: 'Update to axios >= 1.7.4'
   },
   {
     package: 'express',
-    versions: ['< 4.17.3'],
+    versions: ['< 4.19.2'],
     severity: 'Medium' as const,
-    cveId: 'CVE-2022-24999',
+    cveId: 'CVE-2024-29041',
+    description: 'Open redirect vulnerability in express',
+    remediation: 'Update to express >= 4.19.2'
+  },
+  {
+    package: 'ip',
+    versions: ['< 2.0.1'],
+    severity: 'High' as const,
+    cveId: 'CVE-2024-29415',
+    description: 'SSRF vulnerability in ip package',
+    remediation: 'Update to ip >= 2.0.1'
+  },
+  {
+    package: 'ws',
+    versions: ['< 8.17.1'],
+    severity: 'High' as const,
+    cveId: 'CVE-2024-37890',
+    description: 'Denial of Service vulnerability in WebSocket library',
+    remediation: 'Update to ws >= 8.17.1'
+  },
+  {
+    package: 'braces',
+    versions: ['< 3.0.3'],
+    severity: 'High' as const,
+    cveId: 'CVE-2024-4068',
+    description: 'Uncontrolled resource consumption (ReDoS)',
+    remediation: 'Update to braces >= 3.0.3'
+  },
+  {
+    package: 'follow-redirects',
+    versions: ['< 1.15.6'],
+    severity: 'Medium' as const,
+    cveId: 'CVE-2024-28849',
+    description: 'Exposure of sensitive information through redirect',
+    remediation: 'Update to follow-redirects >= 1.15.6'
+  },
+  {
+    package: 'tar',
+    versions: ['< 6.2.1'],
+    severity: 'High' as const,
+    cveId: 'CVE-2024-28863',
+    description: 'Denial of Service vulnerability in tar extraction',
+    remediation: 'Update to tar >= 6.2.1'
+  },
+  {
+    package: 'undici',
+    versions: ['< 5.28.4'],
+    severity: 'Medium' as const,
+    cveId: 'CVE-2024-30260',
+    description: 'Cookie leakage in cross-origin redirects',
+    remediation: 'Update to undici >= 5.28.4 or >= 6.11.1'
+  },
+  {
+    package: 'jsonwebtoken',
+    versions: ['< 9.0.0'],
+    severity: 'High' as const,
+    cveId: 'CVE-2022-23529',
+    description: 'Insecure implementation of key retrieval function',
+    remediation: 'Update to jsonwebtoken >= 9.0.0'
+  },
+  {
+    package: 'shell-quote',
+    versions: ['< 1.8.1'],
+    severity: 'Critical' as const,
+    cveId: 'CVE-2024-4067',
+    description: 'Command injection vulnerability',
+    remediation: 'Update to shell-quote >= 1.8.1'
+  },
+  {
+    package: 'cross-spawn',
+    versions: ['< 7.0.5'],
+    severity: 'High' as const,
+    cveId: 'CVE-2024-21538',
+    description: 'Regular Expression Denial of Service (ReDoS)',
+    remediation: 'Update to cross-spawn >= 7.0.5'
+  },
+  {
+    package: 'esbuild',
+    versions: ['< 0.24.2'],
+    severity: 'Medium' as const,
+    cveId: 'CVE-2024-56334',
+    description: 'Development server vulnerability',
+    remediation: 'Update to esbuild >= 0.24.2'
+  },
+  {
+    package: 'body-parser',
+    versions: ['< 1.20.3'],
+    severity: 'High' as const,
+    cveId: 'CVE-2024-45590',
+    description: 'Denial of Service through malformed URL encoding',
+    remediation: 'Update to body-parser >= 1.20.3'
+  },
+  {
+    package: 'path-to-regexp',
+    versions: ['< 0.1.10'],
+    severity: 'High' as const,
+    cveId: 'CVE-2024-45296',
+    description: 'ReDoS vulnerability in path matching',
+    remediation: 'Update to path-to-regexp >= 0.1.10 or >= 8.0.0'
+  },
+  {
+    package: 'send',
+    versions: ['< 0.19.0'],
+    severity: 'Medium' as const,
+    cveId: 'CVE-2024-43799',
+    description: 'Template injection vulnerability',
+    remediation: 'Update to send >= 0.19.0'
+  },
+  {
+    package: 'serve-static',
+    versions: ['< 1.16.0'],
+    severity: 'Medium' as const,
+    cveId: 'CVE-2024-43800',
+    description: 'Template injection through malicious filenames',
+    remediation: 'Update to serve-static >= 1.16.0'
+  },
+  // Python packages
+  {
+    package: 'requests',
+    versions: ['< 2.32.2'],
+    severity: 'Medium' as const,
+    cveId: 'CVE-2024-35195',
+    description: 'Certificate verification bypass',
+    remediation: 'Update to requests >= 2.32.2'
+  },
+  {
+    package: 'jinja2',
+    versions: ['< 3.1.4'],
+    severity: 'Medium' as const,
+    cveId: 'CVE-2024-34064',
+    description: 'Cross-site scripting through template attributes',
+    remediation: 'Update to jinja2 >= 3.1.4'
+  },
+  {
+    package: 'werkzeug',
+    versions: ['< 3.0.3'],
+    severity: 'High' as const,
+    cveId: 'CVE-2024-34069',
+    description: 'Debugger RCE vulnerability',
+    remediation: 'Update to werkzeug >= 3.0.3'
+  },
+  {
+    package: 'urllib3',
+    versions: ['< 2.2.2'],
+    severity: 'Medium' as const,
+    cveId: 'CVE-2024-37891',
+    description: 'Proxy-Authorization header leak in cross-origin redirects',
+    remediation: 'Update to urllib3 >= 2.2.2'
+  },
+  // Java/Maven packages  
+  {
+    package: 'org.springframework:spring-web',
+    versions: ['< 6.1.6'],
+    severity: 'High' as const,
+    cveId: 'CVE-2024-22259',
     description: 'Open redirect vulnerability',
-    remediation: 'Update to express >= 4.17.3'
+    remediation: 'Update to spring-web >= 6.1.6 or >= 6.0.19'
+  },
+  {
+    package: 'org.apache.logging.log4j:log4j-core',
+    versions: ['< 2.24.0'],
+    severity: 'Medium' as const,
+    cveId: 'CVE-2024-23672',
+    description: 'Denial of Service in Log4j',
+    remediation: 'Update to log4j-core >= 2.24.0'
+  },
+  {
+    package: 'com.fasterxml.jackson.core:jackson-databind',
+    versions: ['< 2.17.0'],
+    severity: 'High' as const,
+    cveId: 'CVE-2023-35116',
+    description: 'Polymorphic deserialization vulnerability',
+    remediation: 'Update to jackson-databind >= 2.17.0'
   }
 ];
 

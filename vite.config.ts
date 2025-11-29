@@ -56,11 +56,17 @@ export default defineConfig({
           // Core React libraries - loaded first
           'react-vendor': ['react', 'react-dom', 'react/jsx-runtime'],
           // UI libraries
-          'ui-vendor': ['@radix-ui/react-dialog', '@radix-ui/react-tabs', '@radix-ui/react-toast', '@radix-ui/react-slot'],
+          'ui-vendor': ['@radix-ui/react-dialog', '@radix-ui/react-tabs', '@radix-ui/react-toast', '@radix-ui/react-slot', 'sonner'],
           // Chart libraries
           'charts': ['recharts'],
           // Icons and animations
-          'icons': ['lucide-react', 'framer-motion']
+          'icons': ['lucide-react', 'framer-motion'],
+          // Firebase
+          'firebase-vendor': ['firebase/app', 'firebase/auth', 'firebase/firestore', 'firebase/analytics', 'firebase/performance'],
+          // PDF generation
+          'pdf-vendor': ['jspdf', 'html2canvas'],
+          // Syntax parsing
+          'parser-vendor': ['@babel/parser', '@babel/traverse', '@babel/types', 'esprima', 'esquery', 'acorn', 'web-tree-sitter']
         },
 
         // Professional file naming
