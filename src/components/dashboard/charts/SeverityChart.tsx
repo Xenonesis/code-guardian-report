@@ -8,6 +8,7 @@ interface SeverityData {
   count: number;
   percentage: string;
   fill: string;
+  [key: string]: string | number;
 }
 
 interface SeverityChartProps {
@@ -32,7 +33,7 @@ export const SeverityChart: React.FC<SeverityChartProps> = ({ data }) => {
               cx="50%"
               cy="50%"
               labelLine={false}
-              label={({ severity, percentage }) => `${severity}: ${percentage}%`}
+              label={(props: { payload?: SeverityData }) => props.payload ? `${props.payload.severity}: ${props.payload.percentage}%` : ''}
               outerRadius={80}
               fill="#8884d8"
               dataKey="count"

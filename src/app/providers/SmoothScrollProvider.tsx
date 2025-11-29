@@ -1,5 +1,5 @@
 import { useEffect, createContext, useRef as useReactRef } from "react";
-import Lenis from '@studio-freight/lenis';
+import Lenis from 'lenis';
 
 const LenisContext = createContext<Lenis | null>(null);
 
