@@ -81,7 +81,7 @@ const SinglePageApp = () => {
       )}
       
       {/* Page Content - Handled by PageRouter */}
-      <PageRouter isDarkMode={isDarkMode} />
+      <PageRouter theme={theme} />
 
       {/* Footer */}
       <div>

@@ -317,7 +317,7 @@ export class AIService {
   }
 
   async generateSummary(issues: SecurityIssue[]): Promise<string> {
-    logger.debug('Generating summary for', issues.length, 'issues');
+    logger.debug(`Generating summary for ${issues.length} issues`);
     
     if (!issues || issues.length === 0) {
       throw new Error('No issues provided for summary generation');

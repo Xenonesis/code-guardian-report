@@ -18,7 +18,7 @@ const Index = () => {
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [showStorageStatus, setShowStorageStatus] = useState(false);
   const [showHistoryModal, setShowHistoryModal] = useState(false);
-  const { isDarkMode, toggleDarkMode } = useDarkMode();
+  const { theme, setTheme } = useDarkMode();
   
   const {
     analysisResults,
@@ -64,8 +64,8 @@ const Index = () => {
 
   return (
     <PageLayout
-      isDarkMode={isDarkMode}
-      toggleDarkMode={toggleDarkMode}
+      theme={theme}
+      onThemeChange={setTheme}
     >
       <HomeHero onStartAnalysis={handleStartAnalysis} />
 

@@ -94,7 +94,7 @@ export const RepositoryComparisonTool: React.FC<RepositoryComparisonToolProps> =
     },
     {
       label: 'Last Analyzed',
-      getValue: (repo) => repo.lastAnalyzed,
+      getValue: (repo) => repo.lastAnalyzed.getTime(),
       format: (val) => new Date(val).toLocaleDateString(),
       icon: <TrendingUp className="w-4 h-4" />
     }

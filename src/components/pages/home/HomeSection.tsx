@@ -8,6 +8,7 @@ import { useEnhancedAnalysis } from '@/hooks/useEnhancedAnalysis';
 import { AnalysisResults } from '@/hooks/useAnalysis';
 import { useNavigation } from '@/lib/navigation-context';
 import { logger } from '@/utils/logger';
+import type { Theme } from '@/hooks/useDarkMode';
 
 // Lazy load heavy components for better performance
 const FloatingChatBot = lazy(() => import('@/components/ai/FloatingChatBot'));
@@ -15,10 +16,10 @@ const StorageStatus = lazy(() => import('@/components/firebase/StorageStatus'));
 const AnalysisHistoryModal = lazy(() => import('@/components/analysis/AnalysisHistoryModal'));
 
 interface HomeSectionProps {
-  isDarkMode: boolean;
+  theme?: Theme;
 }
 
-export const HomeSection: React.FC<HomeSectionProps> = ({ isDarkMode }) => {
+export const HomeSection: React.FC<HomeSectionProps> = ({ theme = 'system' }) => {
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [showStorageStatus, setShowStorageStatus] = useState(false);
   const [showHistoryModal, setShowHistoryModal] = useState(false);
@@ -100,7 +101,7 @@ export const HomeSection: React.FC<HomeSectionProps> = ({ isDarkMode }) => {
   return (
     <section id="home" className="min-h-screen">
       <PageLayout
-        isDarkMode={isDarkMode}
+        theme={theme}
         showNavigation={false}
       >
         <HomeHero onStartAnalysis={handleStartAnalysis} />

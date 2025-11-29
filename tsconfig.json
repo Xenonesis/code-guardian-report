@@ -42,6 +42,8 @@
     "node_modules",
     "dist",
     "build",
-    "coverage"
+    "coverage",
+    "src/tests/**/*.test.ts",
+    "src/tests/**/*.test.tsx"
   ]
 }

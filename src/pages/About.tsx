@@ -18,14 +18,14 @@ import MultiLanguageSupportDisplay from '@/components/language/MultiLanguageSupp
 import { useDarkMode } from '@/hooks/useDarkMode';
 
 const About = () => {
-  const { isDarkMode, toggleDarkMode } = useDarkMode();
+  const { theme, setTheme } = useDarkMode();
 
   return (
     <div className="min-h-screen relative overflow-hidden">
       <AnimatedBackground />
       
       {/* Navigation - spans full width above everything */}
-      <AboutPageLayout isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} showNavigation={true} noContainer={true}>
+      <AboutPageLayout theme={theme} onThemeChange={setTheme} showNavigation={true} noContainer={true}>
         {/* Main Content */}
         <div className="pt-16">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">

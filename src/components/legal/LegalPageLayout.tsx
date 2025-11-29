@@ -20,10 +20,10 @@ export const LegalPageLayout: React.FC<LegalPageLayoutProps> = ({
   children,
   icon = <Scale className="h-8 w-8" />
 }) => {
-  const { isDarkMode, toggleDarkMode } = useDarkMode();
+  const { theme, setTheme } = useDarkMode();
 
   return (
-    <PageLayout isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode}>
+    <PageLayout theme={theme} onThemeChange={setTheme}>
       {/* Enhanced Background */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-indigo-500/10 rounded-full blur-3xl float-animation"></div>

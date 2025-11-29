@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from 'react';
 import { useNavigation } from '@/lib/navigation-context';
 import { useEnhancedAnalysis } from '@/hooks/useEnhancedAnalysis';
 import { type FirebaseAnalysisData } from '@/services/storage/firebaseAnalysisStorage';
+import type { Theme } from '@/hooks/useDarkMode';
 
 // Page loading spinner component
 const PageLoadingSpinner: React.FC = () => (
@@ -22,10 +23,10 @@ const AccountConflictDemo = lazy(() => import('@/pages/AccountConflictDemo').the
 const TestAuthConflict = lazy(() => import('@/pages/TestAuthConflict').then(m => ({ default: m.TestAuthConflict })));
 
 interface PageRouterProps {
-  isDarkMode: boolean;
+  theme?: Theme;
 }
 
-export const PageRouter: React.FC<PageRouterProps> = ({ isDarkMode }) => {
+export const PageRouter: React.FC<PageRouterProps> = ({ theme = 'system' }) => {
   const { currentSection, navigateTo } = useNavigation();
   const { restoreFromHistory } = useEnhancedAnalysis();
 
@@ -54,7 +55,7 @@ export const PageRouter: React.FC<PageRouterProps> = ({ isDarkMode }) => {
       case 'home':
         return (
           <Suspense fallback={<PageLoadingSpinner />}>
-            <HomeSection isDarkMode={isDarkMode} />
+            <HomeSection theme={theme} />
           </Suspense>
         );
 

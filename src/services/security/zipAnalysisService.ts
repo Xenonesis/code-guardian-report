@@ -132,6 +132,12 @@ export interface ZipAnalysisResult {
     toolVersion: string;
     rulesVersion: string;
   };
+  /** Optional extracted file contents for detailed analysis */
+  files?: Array<{
+    name: string;
+    content: string;
+    language?: string;
+  }>;
 }
 
 export class ZipAnalysisService {

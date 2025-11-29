@@ -7,7 +7,7 @@ import { useDarkMode } from "@/hooks/useDarkMode";
 
 import { logger } from '@/utils/logger';
 const NotFound = () => {
-  const { isDarkMode, toggleDarkMode } = useDarkMode();
+  const { theme, setTheme } = useDarkMode();
 
   useEffect(() => {
     logger.error(
@@ -17,7 +17,7 @@ const NotFound = () => {
   }, []);
 
   return (
-    <PageLayout isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} showNavigation={false}>
+    <PageLayout theme={theme} onThemeChange={setTheme} showNavigation={false}>
       <div className="min-h-[80vh] flex items-center justify-center">
         <Card className="w-full max-w-2xl bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm border-0 shadow-2xl animate-fade-in">
         <CardHeader className="text-center pb-6">

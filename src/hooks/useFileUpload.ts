@@ -38,7 +38,7 @@ export const useFileUpload = ({ onFileSelect, onAnalysisComplete }: UseFileUploa
 
     try {
       const arrayBuffer = await file.arrayBuffer();
-      logger.debug('File size:', arrayBuffer.byteLength, 'bytes');
+      logger.debug(`File size: ${arrayBuffer.byteLength} bytes`);
 
       try {
         const analysisResults = await analysisEngine.analyzeCodebase(file);

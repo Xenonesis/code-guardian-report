@@ -1,6 +1,7 @@
 // components/user-dashboard.tsx
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/lib/auth-context';
+import { useNavigation } from '@/lib/navigation-context';
 import { collection, query, where, getDocs, addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { useGitHubRepositories } from '@/hooks/useGitHubRepositories';
@@ -182,7 +183,7 @@ const UserDashboard: React.FC = () => {
     toast.info('You can connect your GitHub account later from settings.');
   };
 
-  const { navigateTo, setCurrentSection, setCurrentTab } = useNavigation() as any;
+  const { navigateTo, setCurrentSection, setCurrentTab } = useNavigation();
 
   const handleAnalyzeRepository = async (repoUrl: string, repoName: string) => {
     try {

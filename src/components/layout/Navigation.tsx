@@ -148,9 +148,9 @@ export const Navigation: React.FC<NavigationProps> = ({ theme, onThemeChange }) 
                 <span>{item.label}</span>
                 
                 {/* Badge for new features */}
-                {'badge' in item && item.badge && (
+                {'badge' in item && (item as { badge?: string }).badge && (
                   <span className="ml-1 px-1.5 py-0.5 text-[10px] font-semibold bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-full animate-pulse">
-                    {item.badge}
+                    {(item as { badge?: string }).badge}
                   </span>
                 )}
                 

@@ -81,7 +81,7 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
         throw new Error('No issues available to summarize');
       }
       
-      logger.debug('Generating summary for', issues.length, 'issues');
+      logger.debug(`Generating summary for ${issues.length} issues`);
       
       const summary = await aiService.generateSummary(issues);
       logger.debug('Summary generated successfully:', summary.substring(0, 100) + '...');

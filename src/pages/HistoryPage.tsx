@@ -66,7 +66,7 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
       logger.debug('🔧 Firebase service user ID set');
       
       const history = await firebaseAnalysisStorage.getUserAnalysisHistory(currentUser.uid);
-      logger.debug('📈 Retrieved history:', history.length, 'analyses');
+      logger.debug(`📈 Retrieved history: ${history.length} analyses`);
       logger.debug('📋 History data:', history);
       
       // Deduplicate history entries based on fileName and fileHash
@@ -78,7 +78,7 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
         return index === firstOccurrence;
       });
       
-      logger.debug('🔄 Deduplicated history:', deduplicatedHistory.length, 'unique analyses');
+      logger.debug(`🔄 Deduplicated history: ${deduplicatedHistory.length} unique analyses`);
       
       setAnalysisHistory(deduplicatedHistory);
       
@@ -298,7 +298,7 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
       
       return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
     } catch (error) {
-      logger.error('Error formatting date:', error, timestamp);
+      logger.error('Error formatting date:', { error, timestamp });
       return 'Invalid Date';
     }
   };

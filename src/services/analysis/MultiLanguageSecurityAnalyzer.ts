@@ -4,8 +4,25 @@
  * Supports: JavaScript, TypeScript, Python, Java, C++, Go, Rust, PHP, C#
  */
 
-import { SecurityIssue } from '@/hooks/useAnalysis';
 import { MultiLanguageParser, SupportedLanguage, ParsedAST } from './MultiLanguageParser';
+
+/**
+ * Security issue returned by the multi-language analyzer
+ */
+export interface MultiLanguageSecurityIssue {
+  id: string;
+  type: string;
+  severity: 'Critical' | 'High' | 'Medium' | 'Low';
+  title: string;
+  description: string;
+  line: number;
+  column?: number;
+  file: string;
+  recommendation?: string;
+  cwe?: string;
+  owasp?: string;
+  codeSnippet?: string;
+}
 
 export interface LanguageSecurityRule {
   id: string;
@@ -631,8 +648,8 @@ export class MultiLanguageSecurityAnalyzer {
   /**
    * Analyze code for security issues based on language
    */
-  public analyzeCode(code: string, filename: string): SecurityIssue[] {
-    const issues: SecurityIssue[] = [];
+  public analyzeCode(code: string, filename: string): MultiLanguageSecurityIssue[] {
+    const issues: MultiLanguageSecurityIssue[] = [];
     
     // Detect language
     const language = this.parser.detectLanguageFromFilename(filename);
@@ -684,8 +701,8 @@ export class MultiLanguageSecurityAnalyzer {
   /**
    * Perform AST-based security analysis
    */
-  private performASTAnalysis(parsed: ParsedAST, filename: string, language: SupportedLanguage): SecurityIssue[] {
-    const issues: SecurityIssue[] = [];
+  private performASTAnalysis(parsed: ParsedAST, filename: string, language: SupportedLanguage): MultiLanguageSecurityIssue[] {
+    const issues: MultiLanguageSecurityIssue[] = [];
 
     switch (language) {
       case 'python':
@@ -723,8 +740,8 @@ export class MultiLanguageSecurityAnalyzer {
   /**
    * Analyze Python AST for security issues
    */
-  private analyzePythonAST(ast: any, filename: string): SecurityIssue[] {
-    const issues: SecurityIssue[] = [];
+  private analyzePythonAST(ast: any, filename: string): MultiLanguageSecurityIssue[] {
+    const issues: MultiLanguageSecurityIssue[] = [];
 
     // Check for dangerous imports
     const dangerousImports = ['pickle', 'marshal', 'shelve', 'exec', 'eval'];
@@ -758,8 +775,8 @@ export class MultiLanguageSecurityAnalyzer {
   /**
    * Analyze Java AST for security issues
    */
-  private analyzeJavaAST(ast: any, filename: string): SecurityIssue[] {
-    const issues: SecurityIssue[] = [];
+  private analyzeJavaAST(ast: any, filename: string): MultiLanguageSecurityIssue[] {
+    const issues: MultiLanguageSecurityIssue[] = [];
 
     // Check for dangerous imports
     const dangerousImports = ['java.io.Serializable', 'java.lang.Runtime', 'java.lang.ProcessBuilder'];
@@ -786,8 +803,8 @@ export class MultiLanguageSecurityAnalyzer {
   /**
    * Analyze Go AST for security issues
    */
-  private analyzeGoAST(ast: any, filename: string): SecurityIssue[] {
-    const issues: SecurityIssue[] = [];
+  private analyzeGoAST(ast: any, filename: string): MultiLanguageSecurityIssue[] {
+    const issues: MultiLanguageSecurityIssue[] = [];
 
     // Check for dangerous imports
     const dangerousImports = ['os/exec', 'unsafe', 'reflect'];
@@ -814,8 +831,8 @@ export class MultiLanguageSecurityAnalyzer {
   /**
    * Analyze Rust AST for security issues
    */
-  private analyzeRustAST(ast: any, filename: string): SecurityIssue[] {
-    const issues: SecurityIssue[] = [];
+  private analyzeRustAST(ast: any, filename: string): MultiLanguageSecurityIssue[] {
+    const issues: MultiLanguageSecurityIssue[] = [];
 
     // Check for unsafe usage in function names
     for (const func of ast.functions || []) {
@@ -841,8 +858,8 @@ export class MultiLanguageSecurityAnalyzer {
   /**
    * Analyze PHP AST for security issues
    */
-  private analyzePHPAST(ast: any, filename: string): SecurityIssue[] {
-    const issues: SecurityIssue[] = [];
+  private analyzePHPAST(ast: any, filename: string): MultiLanguageSecurityIssue[] {
+    const issues: MultiLanguageSecurityIssue[] = [];
 
     // Check for global variable usage in functions
     for (const func of ast.functions || []) {
@@ -868,8 +885,8 @@ export class MultiLanguageSecurityAnalyzer {
   /**
    * Analyze C# AST for security issues
    */
-  private analyzeCSharpAST(ast: any, filename: string): SecurityIssue[] {
-    const issues: SecurityIssue[] = [];
+  private analyzeCSharpAST(ast: any, filename: string): MultiLanguageSecurityIssue[] {
+    const issues: MultiLanguageSecurityIssue[] = [];
 
     // Check for dangerous using statements
     const dangerousUsings = ['System.Runtime.Serialization.Formatters.Binary', 'System.Web.Script.Serialization'];
@@ -911,8 +928,8 @@ export class MultiLanguageSecurityAnalyzer {
   /**
    * Analyze Ruby AST for security issues
    */
-  private analyzeRubyAST(ast: any, filename: string): SecurityIssue[] {
-    const issues: SecurityIssue[] = [];
+  private analyzeRubyAST(ast: any, filename: string): MultiLanguageSecurityIssue[] {
+    const issues: MultiLanguageSecurityIssue[] = [];
 
     // Check for dangerous requires
     const dangerousRequires = ['open-uri', 'net/http', 'socket'];
@@ -939,8 +956,8 @@ export class MultiLanguageSecurityAnalyzer {
   /**
    * Analyze Swift AST for security issues
    */
-  private analyzeSwiftAST(ast: any, filename: string): SecurityIssue[] {
-    const issues: SecurityIssue[] = [];
+  private analyzeSwiftAST(ast: any, filename: string): MultiLanguageSecurityIssue[] {
+    const issues: MultiLanguageSecurityIssue[] = [];
 
     // Check for sensitive imports
     const sensitiveImports = ['Security', 'CryptoKit'];
@@ -967,8 +984,8 @@ export class MultiLanguageSecurityAnalyzer {
   /**
    * Analyze Kotlin AST for security issues
    */
-  private analyzeKotlinAST(ast: any, filename: string): SecurityIssue[] {
-    const issues: SecurityIssue[] = [];
+  private analyzeKotlinAST(ast: any, filename: string): MultiLanguageSecurityIssue[] {
+    const issues: MultiLanguageSecurityIssue[] = [];
 
     // Check for Android-specific security issues
     const androidImports = ['android.webkit.WebView', 'android.content.Intent'];
@@ -1009,3 +1026,4 @@ export class MultiLanguageSecurityAnalyzer {
 
 // Singleton instance
 export const multiLanguageSecurityAnalyzer = new MultiLanguageSecurityAnalyzer();
+

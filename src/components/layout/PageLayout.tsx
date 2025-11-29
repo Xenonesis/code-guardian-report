@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Shield, Github, Twitter } from 'lucide-react';
 import { Navigation } from '@/components/layout/Navigation';
 import { FeatureGrid } from '@/components/features/FeatureGrid';
+import type { Theme } from '@/hooks/useDarkMode';
 
 interface Feature {
   icon: React.ReactNode;
@@ -13,8 +14,8 @@ interface Feature {
 
 interface PageLayoutProps {
   children: React.ReactNode;
-  isDarkMode?: boolean;
-  toggleDarkMode?: () => void;
+  theme?: Theme;
+  onThemeChange?: (theme: Theme) => void;
   showNavigation?: boolean;
   className?: string;
   features?: Feature[];
@@ -23,8 +24,8 @@ interface PageLayoutProps {
 
 export const PageLayout: React.FC<PageLayoutProps> = ({
   children,
-  isDarkMode = false,
-  toggleDarkMode,
+  theme = 'system',
+  onThemeChange,
   showNavigation = true,
   className = '',
   features,
@@ -39,8 +40,8 @@ export const PageLayout: React.FC<PageLayoutProps> = ({
         <div className="absolute bottom-0 right-1/4 w-48 h-48 sm:w-80 sm:h-80 bg-gradient-to-r from-emerald-400/5 sm:from-emerald-400/10 via-teal-400/5 sm:via-teal-400/10 to-cyan-400/5 sm:to-cyan-400/10 rounded-full blur-3xl animate-float-delayed"></div>
         <div className="hidden sm:block absolute top-1/2 left-0 w-64 h-64 bg-gradient-to-r from-orange-400/10 to-red-400/10 rounded-full blur-3xl animate-pulse-slow"></div>
       </div>
-      {showNavigation && toggleDarkMode && (
-        <Navigation isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
+      {showNavigation && onThemeChange && (
+        <Navigation theme={theme} onThemeChange={onThemeChange} />
       )}
 
       <main className="relative z-10">

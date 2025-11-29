@@ -483,9 +483,9 @@ export class EnhancedFileAnalysisService {
           line: issue.line,
           column: issue.column,
           evidence: issue.codeSnippet || '',
-          recommendation: issue.recommendation,
-          cwe: issue.cweId,
-          owasp: issue.owaspCategory
+          recommendation: issue.recommendation || 'Review and fix this security issue',
+          cwe: issue.cwe,
+          owasp: issue.owasp
         });
       }
     }

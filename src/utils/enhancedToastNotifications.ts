@@ -319,31 +319,35 @@ export const enhancedNotifications = {
   },
 
   // Generic messages with smart categorization
-  success: (message: string, options?: { category?: NotificationCategory; action?: { label: string; onClick: () => void } }) => {
-    notify.success(message, {
-      priority: 'normal',
+  success: (title: string, options?: { message?: string; category?: NotificationCategory; priority?: NotificationPriority; action?: { label: string; onClick: () => void } }) => {
+    notify.success(title, {
+      message: options?.message,
+      priority: options?.priority || 'normal',
       category: options?.category || 'general',
       action: options?.action,
     });
   },
 
-  error: (message: string, options?: { category?: NotificationCategory; priority?: NotificationPriority }) => {
-    notify.error(message, {
+  error: (title: string, options?: { message?: string; category?: NotificationCategory; priority?: NotificationPriority }) => {
+    notify.error(title, {
+      message: options?.message,
       priority: options?.priority || 'high',
       category: options?.category || 'general',
     });
   },
 
-  warning: (message: string, options?: { category?: NotificationCategory; priority?: NotificationPriority }) => {
-    notify.warning(message, {
+  warning: (title: string, options?: { message?: string; category?: NotificationCategory; priority?: NotificationPriority }) => {
+    notify.warning(title, {
+      message: options?.message,
       priority: options?.priority || 'normal',
       category: options?.category || 'general',
     });
   },
 
-  info: (message: string, options?: { category?: NotificationCategory }) => {
-    notify.info(message, {
-      priority: 'normal',
+  info: (title: string, options?: { message?: string; category?: NotificationCategory; priority?: NotificationPriority }) => {
+    notify.info(title, {
+      message: options?.message,
+      priority: options?.priority || 'normal',
       category: options?.category || 'general',
     });
   },
