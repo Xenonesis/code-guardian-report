@@ -23,9 +23,10 @@ export const NavigationProvider: React.FC<NavigationProviderProps> = ({ children
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   useEffect(() => {
+    // Use instant scroll - Lenis will handle the smooth animation
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: 'instant'
     });
   }, [currentSection]);
 

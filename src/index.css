@@ -10,12 +10,12 @@
 @tailwind utilities;
 @layer base {
     html {
-        scroll-behavior: smooth;
+        scroll-behavior: auto; /* Let Lenis handle smooth scrolling for better performance */
         -webkit-overflow-scrolling: touch;
-        transition: background 0.5s cubic-bezier(0.4, 0, 0.2, 1), color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: background 0.3s ease-out, color 0.3s ease-out;
     }
     body {
-        transition: background 0.5s cubic-bezier(0.4, 0, 0.2, 1), color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: background 0.3s ease-out, color 0.3s ease-out;
         will-change: background, color;
     }
      :root {
@@ -203,7 +203,7 @@
         }
     }
     html {
-        scroll-behavior: smooth;
+        scroll-behavior: auto; /* Lenis handles smooth scrolling */
     }
     /* Performance optimizations */
     * {
@@ -1215,7 +1215,7 @@
         overflow-x: hidden;
     }
     .mobile-smooth-scroll {
-        scroll-behavior: smooth;
+        scroll-behavior: auto; /* Lenis handles this */
         -webkit-overflow-scrolling: touch;
         overscroll-behavior-y: contain;
     }
@@ -2221,7 +2221,7 @@
   /* Better scrollbar for navigation */
   scrollbar-width: thin;
   scrollbar-color: rgb(148 163 184) transparent;
-  scroll-behavior: smooth;
+  scroll-behavior: auto; /* Lenis handles smooth scrolling */
   -webkit-overflow-scrolling: touch;
 }
 

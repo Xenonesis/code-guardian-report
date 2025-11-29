@@ -54,9 +54,10 @@ export const Navigation: React.FC<NavigationProps> = ({ theme, onThemeChange }) 
     navigateTo(sectionId);
     setIsMobileMenuOpen(false);
 
+    // Instant scroll - Lenis handles smooth animation
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: 'instant'
     });
   };
 
