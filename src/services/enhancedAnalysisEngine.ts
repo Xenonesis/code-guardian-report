@@ -228,3 +228,9 @@ export class EnhancedAnalysisEngine {
     }
   }
 }
+
+// Convenience function for direct analysis
+export async function analyzeCode(zipFile: { arrayBuffer: () => Promise<ArrayBuffer> }): Promise<AnalysisResults> {
+  const engine = new EnhancedAnalysisEngine();
+  return engine.analyzeCodebase(zipFile);
+}

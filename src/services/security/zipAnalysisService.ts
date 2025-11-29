@@ -787,3 +787,9 @@ export class ZipAnalysisService {
     return (hash >>> 0).toString(16);
   }
 }
+
+// Convenience function for direct ZIP analysis
+export async function analyzeZipFile(file: ZipInputFile): Promise<ZipAnalysisResult> {
+  const service = new ZipAnalysisService();
+  return service.analyzeZipFile(file);
+}

@@ -383,3 +383,6 @@ class GitHubRepositoryService {
 
 export const githubRepositoryService = new GitHubRepositoryService();
 
+// Export the class for direct instantiation
+export { GitHubRepositoryService };
+
