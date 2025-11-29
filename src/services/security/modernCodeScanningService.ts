@@ -263,7 +263,7 @@ export class ModernCodeScanningService {
       
       // Prototype Pollution (NEW)
       {
-        id: 'typescript:S5145',
+        id: 'typescript:S5149',
         name: 'Prototype pollution vulnerabilities should be prevented',
         description: 'Object merge operations with user input can lead to prototype pollution.',
         severity: 'Critical',
@@ -589,6 +589,40 @@ export class ModernCodeScanningService {
         debtRemediationTime: '30min',
         cwe: ['CWE-113'],
         owaspTop10: [OWASP_2025.A05]
+      },
+
+      // Reverse Tabnabbing (NEW)
+      {
+        id: 'typescript:S5148',
+        name: 'Links with target="_blank" should have rel="noopener noreferrer"',
+        description: 'Using target="_blank" without rel="noopener noreferrer" exposes the page to Reverse Tabnabbing attacks.',
+        severity: 'Major',
+        type: 'Vulnerability',
+        ruleType: 'Security',
+        pattern: /target\s*=\s*["']_blank["'](?![^>]*rel\s*=\s*["'][^"']*(?:noopener|noreferrer)[^"']*["'])/gi,
+        languages: ['javascript', 'typescript', 'html'],
+        tags: ['xss', 'tabnabbing', 'owasp-2025'],
+        remediationEffort: 5,
+        debtRemediationTime: '5min',
+        cwe: ['CWE-1022'],
+        owaspTop10: [OWASP_2025.A01]
+      },
+
+      // AWS Access Key (NEW)
+      {
+        id: 'typescript:S6001',
+        name: 'AWS Access Keys should not be hardcoded',
+        description: 'Hardcoded AWS Access Keys can lead to cloud account compromise.',
+        severity: 'Blocker',
+        type: 'Vulnerability',
+        ruleType: 'Security',
+        pattern: /(?:AKIA|ASIA)[0-9A-Z]{16}/g,
+        languages: ['javascript', 'typescript', 'python', 'java'],
+        tags: ['secrets', 'aws', 'owasp-2025'],
+        remediationEffort: 20,
+        debtRemediationTime: '20min',
+        cwe: ['CWE-798'],
+        owaspTop10: [OWASP_2025.A07]
       }
     ];
   }

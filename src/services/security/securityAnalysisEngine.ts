@@ -374,6 +374,153 @@ export const SECURITY_RULES = {
         effort: 'Medium' as const,
         priority: 4
       }
+    },
+    // NoSQL Injection (NEW)
+    {
+      pattern: /\$where\s*:|\.find\s*\([^)]*\$|\$regex\s*:/gi,
+      severity: 'Critical' as const,
+      type: 'NoSQL Injection',
+      category: 'Injection',
+      cweId: 'CWE-943',
+      owaspCategory: OWASP_CATEGORIES.A03_INJECTION,
+      message: 'NoSQL injection vulnerability detected',
+      confidence: 90,
+      cvssScore: 9.5,
+      impact: 'Database compromise and data leakage',
+      likelihood: 'High',
+      remediation: {
+        description: 'Sanitize user input and avoid using $where or $regex with user input',
+        codeExample: 'db.users.find({ $where: "this.age > " + input })',
+        fixExample: 'db.users.find({ age: { $gt: parseInt(input) } })',
+        effort: 'Medium' as const,
+        priority: 5
+      }
+    },
+    // SSRF (NEW)
+    {
+      pattern: /(?:fetch|axios|request|http\.get|https\.get)\s*\([^)]*(?:\+|`\$\{)/gi,
+      severity: 'Critical' as const,
+      type: 'SSRF',
+      category: 'Server-Side Request Forgery',
+      cweId: 'CWE-918',
+      owaspCategory: OWASP_CATEGORIES.A10_SSRF,
+      message: 'Potential Server-Side Request Forgery (SSRF)',
+      confidence: 85,
+      cvssScore: 8.5,
+      impact: 'Internal network scanning and unauthorized access',
+      likelihood: 'Medium',
+      remediation: {
+        description: 'Validate and whitelist URLs before making requests',
+        codeExample: 'fetch(userInput)',
+        fixExample: 'if (allowedUrls.includes(userInput)) fetch(userInput)',
+        effort: 'Medium' as const,
+        priority: 5
+      }
+    },
+    // Prototype Pollution (NEW)
+    {
+      pattern: /Object\.assign\s*\([^,]+,\s*(?:req\.|request\.|body|params|query)|\.\.\.(?:req\.|request\.|body|params|query)/gi,
+      severity: 'Critical' as const,
+      type: 'Prototype Pollution',
+      category: 'Injection',
+      cweId: 'CWE-1321',
+      owaspCategory: OWASP_CATEGORIES.A03_INJECTION,
+      message: 'Potential Prototype Pollution vulnerability',
+      confidence: 80,
+      cvssScore: 7.5,
+      impact: 'Denial of service or remote code execution',
+      likelihood: 'Low',
+      remediation: {
+        description: 'Avoid merging user input directly into objects, use deep merge libraries with protection',
+        codeExample: 'Object.assign(target, req.body)',
+        fixExample: 'const safeMerge = require("deepmerge"); safeMerge(target, req.body)',
+        effort: 'Medium' as const,
+        priority: 4
+      }
+    },
+    // Insecure Deserialization (NEW)
+    {
+      pattern: /(?:JSON\.parse|unserialize|deserialize|yaml\.load)\s*\([^)]*(?:req\.|request\.|body|user)/gi,
+      severity: 'Critical' as const,
+      type: 'Insecure Deserialization',
+      category: 'Serialization',
+      cweId: 'CWE-502',
+      owaspCategory: OWASP_CATEGORIES.A08_SOFTWARE_INTEGRITY_FAILURES,
+      message: 'Unsafe deserialization of user input',
+      confidence: 85,
+      cvssScore: 8.8,
+      impact: 'Remote code execution',
+      likelihood: 'Medium',
+      remediation: {
+        description: 'Verify data integrity before deserialization',
+        codeExample: 'JSON.parse(req.body.data)',
+        fixExample: 'if (verifySignature(req.body.data)) JSON.parse(req.body.data)',
+        effort: 'High' as const,
+        priority: 5
+      }
+    },
+    // Logging Sensitive Data (NEW)
+    {
+      pattern: /console\.(?:log|info|debug|warn|error)\s*\([^)]*(?:password|token|secret|apiKey|api_key|authorization)/gi,
+      severity: 'High' as const,
+      type: 'Sensitive Data Exposure',
+      category: 'Logging',
+      cweId: 'CWE-532',
+      owaspCategory: OWASP_CATEGORIES.A09_LOGGING_FAILURES,
+      message: 'Potential logging of sensitive data',
+      confidence: 95,
+      cvssScore: 7.5,
+      impact: 'Exposure of sensitive credentials in logs',
+      likelihood: 'High',
+      remediation: {
+        description: 'Remove logging of sensitive information',
+        codeExample: 'console.log("User password:", password)',
+        fixExample: 'console.log("User authenticated")',
+        effort: 'Low' as const,
+        priority: 4
+      }
+    },
+    // Reverse Tabnabbing (NEW)
+    {
+      pattern: /target\s*=\s*["']_blank["'](?![^>]*rel\s*=\s*["'][^"']*(?:noopener|noreferrer)[^"']*["'])/gi,
+      severity: 'Medium' as const,
+      type: 'Reverse Tabnabbing',
+      category: 'XSS',
+      cweId: 'CWE-1022',
+      owaspCategory: OWASP_CATEGORIES.A01_BROKEN_ACCESS_CONTROL,
+      message: 'target="_blank" without rel="noopener noreferrer"',
+      confidence: 90,
+      cvssScore: 6.1,
+      impact: 'Phishing attacks via window.opener',
+      likelihood: 'Medium',
+      remediation: {
+        description: 'Add rel="noopener noreferrer" to links with target="_blank"',
+        codeExample: '<a href="..." target="_blank">',
+        fixExample: '<a href="..." target="_blank" rel="noopener noreferrer">',
+        effort: 'Low' as const,
+        priority: 3
+      }
+    },
+    // AWS Access Key (NEW)
+    {
+      pattern: /(?:AKIA|ASIA)[0-9A-Z]{16}/g,
+      severity: 'Critical' as const,
+      type: 'Hardcoded Secret',
+      category: 'Secrets',
+      cweId: 'CWE-798',
+      owaspCategory: OWASP_CATEGORIES.A07_IDENTIFICATION_FAILURES,
+      message: 'Hardcoded AWS Access Key detected',
+      confidence: 99,
+      cvssScore: 9.0,
+      impact: 'Cloud account compromise',
+      likelihood: 'High',
+      remediation: {
+        description: 'Remove hardcoded keys and use environment variables',
+        codeExample: 'const awsKey = "AKIA..."',
+        fixExample: 'const awsKey = process.env.AWS_ACCESS_KEY_ID',
+        effort: 'Low' as const,
+        priority: 5
+      }
     }
   ],
   typescript: [
