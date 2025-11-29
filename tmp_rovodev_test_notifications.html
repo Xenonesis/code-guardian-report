@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Notification System Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .notification {
+            animation: slideIn 0.3s ease-out;
+        }
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        .fade-out {
+            animation: fadeOut 0.3s ease-out forwards;
+        }
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold mb-6">🔔 Real-Time Notification System Test</h1>
+        
+        <!-- Test Controls -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-xl font-semibold mb-4">Test Controls</h2>
+            
+            <div class="grid grid-cols-2 gap-4 mb-4">
+                <!-- Basic Notifications -->
+                <div class="border rounded p-4">
+                    <h3 class="font-semibold mb-3">Basic Notifications</h3>
+                    <div class="space-y-2">
+                        <button onclick="testNotification('success')" class="w-full bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">
+                            ✓ Success
+                        </button>
+                        <button onclick="testNotification('error')" class="w-full bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">
+                            ✕ Error
+                        </button>
+                        <button onclick="testNotification('warning')" class="w-full bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded">
+                            ⚠ Warning
+                        </button>
+                        <button onclick="testNotification('info')" class="w-full bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
+                            ℹ Info
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Priority Notifications -->
+                <div class="border rounded p-4">
+                    <h3 class="font-semibold mb-3">Priority Levels</h3>
+                    <div class="space-y-2">
+                        <button onclick="testPriority('urgent')" class="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded">
+                            🚨 Urgent
+                        </button>
+                        <button onclick="testPriority('high')" class="w-full bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded">
+                            ⚡ High
+                        </button>
+                        <button onclick="testPriority('normal')" class="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+                            📌 Normal
+                        </button>
+                        <button onclick="testPriority('low')" class="w-full bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded">
+                            📋 Low
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Advanced Tests -->
+            <div class="grid grid-cols-2 gap-4 mb-4">
+                <button onclick="testBatching()" class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded">
+                    📦 Test Batching (5 notifications)
+                </button>
+                <button onclick="testWithAction()" class="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded">
+                    🎯 Notification with Action
+                </button>
+                <button onclick="testRealTimeUpdate()" class="bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded">
+                    🔄 Real-Time Updates (10s)
+                </button>
+                <button onclick="testStressTest()" class="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded">
+                    💪 Stress Test (20 notifications)
+                </button>
+            </div>
+
+            <!-- Category Tests -->
+            <div class="border rounded p-4 mb-4">
+                <h3 class="font-semibold mb-3">Category Tests</h3>
+                <div class="grid grid-cols-4 gap-2">
+                    <button onclick="testCategory('system')" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-2 rounded text-sm">
+                        System
+                    </button>
+                    <button onclick="testCategory('analysis')" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded text-sm">
+                        Analysis
+                    </button>
+                    <button onclick="testCategory('security')" class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded text-sm">
+                        Security
+                    </button>
+                    <button onclick="testCategory('storage')" class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-2 rounded text-sm">
+                        Storage
+                    </button>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="flex gap-2">
+                <button onclick="clearAllNotifications()" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">
+                    🗑️ Clear All
+                </button>
+                <button onclick="showStats()" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
+                    📊 Show Stats
+                </button>
+                <button onclick="togglePreferences()" class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded">
+                    ⚙️ Preferences
+                </button>
+            </div>
+        </div>
+
+        <!-- Preferences Panel -->
+        <div id="preferences-panel" class="bg-white rounded-lg shadow-lg p-6 mb-6 hidden">
+            <h2 class="text-xl font-semibold mb-4">Notification Preferences</h2>
+            <div class="space-y-4">
+                <label class="flex items-center">
+                    <input type="checkbox" id="pref-enabled" checked class="mr-2">
+                    <span>Enable Notifications</span>
+                </label>
+                <label class="flex items-center">
+                    <input type="checkbox" id="pref-batching" checked class="mr-2">
+                    <span>Enable Batching</span>
+                </label>
+                <label class="flex items-center">
+                    <input type="checkbox" id="pref-browser" class="mr-2">
+                    <span>Browser Notifications (requires permission)</span>
+                </label>
+                <label class="flex items-center">
+                    <input type="checkbox" id="pref-sound" class="mr-2">
+                    <span>Play Sound</span>
+                </label>
+                <div>
+                    <label class="block mb-2">Batching Delay (ms)</label>
+                    <input type="number" id="pref-delay" value="2000" class="border rounded px-3 py-2 w-full">
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistics -->
+        <div id="stats-panel" class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-xl font-semibold mb-4">📊 Real-Time Statistics</h2>
+            <div class="grid grid-cols-4 gap-4">
+                <div class="bg-blue-50 p-4 rounded text-center">
+                    <div class="text-3xl font-bold text-blue-600" id="stat-total">0</div>
+                    <div class="text-sm text-gray-600">Total</div>
+                </div>
+                <div class="bg-green-50 p-4 rounded text-center">
+                    <div class="text-3xl font-bold text-green-600" id="stat-success">0</div>
+                    <div class="text-sm text-gray-600">Success</div>
+                </div>
+                <div class="bg-red-50 p-4 rounded text-center">
+                    <div class="text-3xl font-bold text-red-600" id="stat-error">0</div>
+                    <div class="text-sm text-gray-600">Errors</div>
+                </div>
+                <div class="bg-orange-50 p-4 rounded text-center">
+                    <div class="text-3xl font-bold text-orange-600" id="stat-unread">0</div>
+                    <div class="text-sm text-gray-600">Unread</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notification Area -->
+        <div id="notification-area" class="fixed top-4 right-4 space-y-2 z-50 max-w-md">
+            <!-- Notifications will appear here -->
+        </div>
+
+        <!-- Event Log -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-xl font-semibold mb-4">📝 Event Log</h2>
+            <div id="event-log" class="bg-gray-50 rounded p-4 max-h-64 overflow-y-auto font-mono text-sm">
+                <div class="text-gray-500">Waiting for events...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple Notification Manager Implementation
+        class SimpleNotificationManager {
+            constructor() {
+                this.notifications = [];
+                this.listeners = new Set();
+                this.preferences = {
+                    enabled: true,
+                    batching: true,
+                    batchingDelay: 2000,
+                    maxPerBatch: 3,
+                    browser: false,
+                    sound: false
+                };
+                this.batchQueue = [];
+                this.batchTimeout = null;
+                this.loadFromLocalStorage();
+            }
+
+            loadFromLocalStorage() {
+                try {
+                    const stored = localStorage.getItem('test-notifications');
+                    if (stored) {
+                        this.notifications = JSON.parse(stored);
+                        this.notifyListeners();
+                    }
+                } catch (e) {
+                    console.error('Failed to load notifications:', e);
+                }
+            }
+
+            saveToLocalStorage() {
+                try {
+                    localStorage.setItem('test-notifications', JSON.stringify(this.notifications));
+                } catch (e) {
+                    console.error('Failed to save notifications:', e);
+                }
+            }
+
+            generateId() {
+                return `notif-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+            }
+
+            notify(type, title, options = {}) {
+                const notification = {
+                    id: this.generateId(),
+                    type,
+                    title,
+                    message: options.message,
+                    priority: options.priority || 'normal',
+                    category: options.category || 'general',
+                    timestamp: Date.now(),
+                    read: false,
+                    dismissed: false,
+                    action: options.action
+                };
+
+                this.notifications.push(notification);
+                this.saveToLocalStorage();
+                this.notifyListeners();
+                this.logEvent(`Created ${type} notification: ${title}`);
+
+                if (!this.preferences.enabled) {
+                    return notification.id;
+                }
+
+                if (this.preferences.batching && notification.priority !== 'urgent') {
+                    this.addToBatch(notification);
+                } else {
+                    this.showNotification(notification);
+                }
+
+                return notification.id;
+            }
+
+            addToBatch(notification) {
+                this.batchQueue.push(notification);
+                if (this.batchTimeout) clearTimeout(this.batchTimeout);
+                
+                this.batchTimeout = setTimeout(() => {
+                    this.processBatch();
+                }, this.preferences.batchingDelay);
+            }
+
+            processBatch() {
+                if (this.batchQueue.length === 0) return;
+
+                const priorityOrder = { urgent: 0, high: 1, normal: 2, low: 3 };
+                this.batchQueue.sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
+
+                const toShow = this.batchQueue.slice(0, this.preferences.maxPerBatch);
+                toShow.forEach(n => this.showNotification(n));
+
+                if (this.batchQueue.length > this.preferences.maxPerBatch) {
+                    const remaining = this.batchQueue.length - this.preferences.maxPerBatch;
+                    this.logEvent(`Batched ${toShow.length} notifications, ${remaining} queued`);
+                }
+
+                this.batchQueue = [];
+                this.batchTimeout = null;
+            }
+
+            showNotification(notification) {
+                const area = document.getElementById('notification-area');
+                const el = document.createElement('div');
+                el.className = `notification bg-white rounded-lg shadow-lg p-4 border-l-4 ${this.getBorderColor(notification.type)}`;
+                el.innerHTML = `
+                    <div class="flex items-start gap-3">
+                        <div class="flex-shrink-0 text-2xl">${this.getIcon(notification.type)}</div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-start justify-between gap-2">
+                                <h4 class="font-semibold text-sm">${notification.title}</h4>
+                                ${notification.priority !== 'normal' ? `<span class="text-xs px-2 py-1 rounded bg-${this.getPriorityColor(notification.priority)}-100 text-${this.getPriorityColor(notification.priority)}-700">${notification.priority}</span>` : ''}
+                            </div>
+                            ${notification.message ? `<p class="text-sm text-gray-600 mt-1">${notification.message}</p>` : ''}
+                            <div class="text-xs text-gray-500 mt-1">${notification.category} • ${this.formatTime(notification.timestamp)}</div>
+                            ${notification.action ? `<button onclick="handleAction('${notification.id}')" class="text-sm text-blue-600 hover:text-blue-700 mt-2">${notification.action.label}</button>` : ''}
+                        </div>
+                        <button onclick="dismissNotification('${notification.id}', this)" class="flex-shrink-0 text-gray-400 hover:text-gray-600">✕</button>
+                    </div>
+                `;
+                area.appendChild(el);
+
+                // Auto dismiss based on priority
+                const duration = this.getDuration(notification.priority);
+                setTimeout(() => {
+                    el.classList.add('fade-out');
+                    setTimeout(() => el.remove(), 300);
+                }, duration);
+
+                // Browser notification
+                if (this.preferences.browser && 'Notification' in window && Notification.permission === 'granted') {
+                    new Notification(notification.title, {
+                        body: notification.message,
+                        icon: '/icon-192.png'
+                    });
+                }
+            }
+
+            getDuration(priority) {
+                const durations = { urgent: 10000, high: 6000, normal: 4000, low: 3000 };
+                return durations[priority] || 4000;
+            }
+
+            getBorderColor(type) {
+                const colors = {
+                    success: 'border-green-500',
+                    error: 'border-red-500',
+                    warning: 'border-orange-500',
+                    info: 'border-blue-500'
+                };
+                return colors[type] || 'border-gray-500';
+            }
+
+            getIcon(type) {
+                const icons = { success: '✓', error: '✕', warning: '⚠', info: 'ℹ' };
+                return icons[type] || 'ℹ';
+            }
+
+            getPriorityColor(priority) {
+                const colors = { urgent: 'red', high: 'orange', normal: 'blue', low: 'gray' };
+                return colors[priority] || 'blue';
+            }
+
+            formatTime(timestamp) {
+                const seconds = Math.floor((Date.now() - timestamp) / 1000);
+                if (seconds < 60) return 'Just now';
+                const minutes = Math.floor(seconds / 60);
+                if (minutes < 60) return `${minutes}m ago`;
+                const hours = Math.floor(minutes / 60);
+                return `${hours}h ago`;
+            }
+
+            subscribe(listener) {
+                this.listeners.add(listener);
+                listener(this.notifications);
+                return () => this.listeners.delete(listener);
+            }
+
+            notifyListeners() {
+                this.listeners.forEach(l => l([...this.notifications]));
+            }
+
+            getStats() {
+                return {
+                    total: this.notifications.length,
+                    unread: this.notifications.filter(n => !n.read && !n.dismissed).length,
+                    byType: {
+                        success: this.notifications.filter(n => n.type === 'success').length,
+                        error: this.notifications.filter(n => n.type === 'error').length,
+                        warning: this.notifications.filter(n => n.type === 'warning').length,
+                        info: this.notifications.filter(n => n.type === 'info').length,
+                    }
+                };
+            }
+
+            clearAll() {
+                this.notifications = [];
+                this.saveToLocalStorage();
+                this.notifyListeners();
+                this.logEvent('Cleared all notifications');
+            }
+
+            markAsRead(id) {
+                const notif = this.notifications.find(n => n.id === id);
+                if (notif) {
+                    notif.read = true;
+                    this.saveToLocalStorage();
+                    this.notifyListeners();
+                }
+            }
+
+            logEvent(message) {
+                const log = document.getElementById('event-log');
+                const time = new Date().toLocaleTimeString();
+                const entry = document.createElement('div');
+                entry.className = 'text-green-600 mb-1';
+                entry.textContent = `[${time}] ${message}`;
+                log.insertBefore(entry, log.firstChild);
+                
+                // Keep only last 50 entries
+                while (log.children.length > 50) {
+                    log.removeChild(log.lastChild);
+                }
+            }
+        }
+
+        const manager = new SimpleNotificationManager();
+
+        // Subscribe to updates
+        manager.subscribe(notifications => {
+            const stats = manager.getStats();
+            document.getElementById('stat-total').textContent = stats.total;
+            document.getElementById('stat-success').textContent = stats.byType.success;
+            document.getElementById('stat-error').textContent = stats.byType.error;
+            document.getElementById('stat-unread').textContent = stats.unread;
+        });
+
+        // Test Functions
+        function testNotification(type) {
+            const messages = {
+                success: 'Operation completed successfully!',
+                error: 'An error occurred during processing.',
+                warning: 'Please review your settings.',
+                info: 'New update available.'
+            };
+            manager.notify(type, messages[type], {
+                message: `This is a ${type} notification test at ${new Date().toLocaleTimeString()}`,
+                category: 'general'
+            });
+        }
+
+        function testPriority(priority) {
+            manager.notify('info', `${priority.toUpperCase()} Priority Test`, {
+                message: `Testing ${priority} priority notification`,
+                priority: priority,
+                category: 'system'
+            });
+        }
+
+        function testBatching() {
+            manager.logEvent('Starting batch test with 5 notifications');
+            for (let i = 1; i <= 5; i++) {
+                setTimeout(() => {
+                    manager.notify('info', `Batch Notification ${i}`, {
+                        message: `This is notification ${i} of 5`,
+                        priority: 'normal'
+                    });
+                }, i * 100);
+            }
+        }
+
+        function testWithAction() {
+            manager.notify('info', 'Action Required', {
+                message: 'Click the button to perform an action',
+                action: {
+                    label: 'Click Me',
+                    onClick: () => alert('Action executed!')
+                }
+            });
+        }
+
+        function testRealTimeUpdate() {
+            manager.logEvent('Starting 10-second real-time update test');
+            let count = 0;
+            const interval = setInterval(() => {
+                count++;
+                manager.notify('info', `Update ${count}`, {
+                    message: `Real-time update at ${new Date().toLocaleTimeString()}`,
+                    priority: 'low'
+                });
+                if (count >= 10) {
+                    clearInterval(interval);
+                    manager.logEvent('Real-time test completed');
+                }
+            }, 1000);
+        }
+
+        function testStressTest() {
+            manager.logEvent('Starting stress test with 20 notifications');
+            const types = ['success', 'error', 'warning', 'info'];
+            const priorities = ['urgent', 'high', 'normal', 'low'];
+            
+            for (let i = 1; i <= 20; i++) {
+                setTimeout(() => {
+                    const type = types[Math.floor(Math.random() * types.length)];
+                    const priority = priorities[Math.floor(Math.random() * priorities.length)];
+                    manager.notify(type, `Stress Test ${i}`, {
+                        message: `Random notification ${i} of 20`,
+                        priority: priority
+                    });
+                }, i * 150);
+            }
+        }
+
+        function testCategory(category) {
+            manager.notify('info', `${category.toUpperCase()} Category`, {
+                message: `Testing ${category} category notification`,
+                category: category
+            });
+        }
+
+        function clearAllNotifications() {
+            manager.clearAll();
+            document.getElementById('notification-area').innerHTML = '';
+        }
+
+        function showStats() {
+            const stats = manager.getStats();
+            alert(`Statistics:\nTotal: ${stats.total}\nUnread: ${stats.unread}\nSuccess: ${stats.byType.success}\nErrors: ${stats.byType.error}\nWarnings: ${stats.byType.warning}\nInfo: ${stats.byType.info}`);
+        }
+
+        function togglePreferences() {
+            const panel = document.getElementById('preferences-panel');
+            panel.classList.toggle('hidden');
+        }
+
+        function dismissNotification(id, button) {
+            manager.markAsRead(id);
+            const notificationEl = button.closest('.notification');
+            notificationEl.classList.add('fade-out');
+            setTimeout(() => notificationEl.remove(), 300);
+        }
+
+        function handleAction(id) {
+            const notif = manager.notifications.find(n => n.id === id);
+            if (notif && notif.action && notif.action.onClick) {
+                notif.action.onClick();
+            }
+        }
+
+        // Update preferences
+        ['enabled', 'batching', 'browser', 'sound'].forEach(pref => {
+            document.getElementById(`pref-${pref}`).addEventListener('change', (e) => {
+                manager.preferences[pref] = e.target.checked;
+                manager.logEvent(`Preference ${pref} set to ${e.target.checked}`);
+                
+                if (pref === 'browser' && e.target.checked) {
+                    if ('Notification' in window) {
+                        Notification.requestPermission().then(permission => {
+                            manager.logEvent(`Browser notification permission: ${permission}`);
+                        });
+                    }
+                }
+            });
+        });
+
+        document.getElementById('pref-delay').addEventListener('change', (e) => {
+            manager.preferences.batchingDelay = parseInt(e.target.value);
+            manager.logEvent(`Batching delay set to ${e.target.value}ms`);
+        });
+
+        // Initial log
+        manager.logEvent('Notification system initialized');
+        manager.notify('success', 'Test System Ready', {
+            message: 'Real-time notification system is now active',
+            priority: 'normal'
+        });
+    </script>
+</body>
+</html>
