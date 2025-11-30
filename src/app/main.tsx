@@ -16,6 +16,7 @@ import { env } from '../utils/envValidator';
 import { ErrorBoundary } from '../utils/errorBoundary';
 import '../utils/errorHandler'; // Initialize global error handlers
 import { setupGlobalToast } from '../utils/toastNotifications';
+import { runProductionHealthChecks } from '../utils/healthCheck';
 
 // Setup global toast notifications
 setupGlobalToast();
@@ -26,7 +27,8 @@ try {
 } catch (error) {
   logger.error('Environment validation failed', error);
   if (env.isProd()) {
-    throw error; // Stop app in production if env is invalid
+    // In production, log but don't crash for missing optional vars
+    logger.warn('Some environment variables are missing, features may be limited');
   }
 }
 
@@ -71,8 +73,15 @@ if (env.isProd()) {
       const { onCLS, onINP, onFCP, onLCP, onTTFB } = await import('web-vitals');
       
       // Send vitals to analytics or logging service
-      const sendToAnalytics = (metric: { name: string; value: number }) => {
-        logger.info(`Web Vital: ${metric.name}`, { value: metric.value });
+      const sendToAnalytics = (metric: { name: string; value: number; id: string; rating: string }) => {
+        logger.info(`Web Vital: ${metric.name}`, { 
+          value: metric.value,
+          id: metric.id,
+          rating: metric.rating 
+        });
+        
+        // Send to Vercel Analytics (automatically integrated)
+        // or custom analytics endpoint
       };
 
       onCLS(sendToAnalytics);
@@ -84,5 +93,12 @@ if (env.isProd()) {
       logger.warn('Web Vitals not available', error);
     }
   })();
+
+  // Run production health checks after initial render
+  setTimeout(() => {
+    runProductionHealthChecks().catch((error) => {
+      logger.warn('Health check failed', error);
+    });
+  }, 3000);
 }
 

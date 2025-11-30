@@ -15,7 +15,8 @@ import {
   fetchSignInMethodsForEmail,
   signInWithEmailAndPassword,
   AuthError,
-  AuthCredential
+  AuthCredential,
+  UserCredential
 } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 import { AccountConflictModal } from './AccountConflictModal';
@@ -46,7 +47,7 @@ export const AuthWithConflictHandling: React.FC = () => {
   /**
    * Handle Google Sign-In with conflict detection
    */
-  const handleGoogleSignIn = async () => {
+  const handleGoogleSignIn = async (): Promise<UserCredential | undefined> => {
     try {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
@@ -54,13 +55,14 @@ export const AuthWithConflictHandling: React.FC = () => {
       return result;
     } catch (error: any) {
       handleAuthError(error, 'google.com');
+      return undefined;
     }
   };
 
   /**
    * Handle GitHub Sign-In with conflict detection
    */
-  const handleGitHubSignIn = async () => {
+  const handleGitHubSignIn = async (): Promise<UserCredential | undefined> => {
     try {
       const provider = new GithubAuthProvider();
       const result = await signInWithPopup(auth, provider);
@@ -68,6 +70,7 @@ export const AuthWithConflictHandling: React.FC = () => {
       return result;
     } catch (error: any) {
       handleAuthError(error, 'github.com');
+      return undefined;
     }
   };
 

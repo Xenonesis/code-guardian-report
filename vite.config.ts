@@ -1,6 +1,10 @@
-import { defineConfig } from 'vite';
+import { defineConfig, type UserConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import path from 'path';
+
+// Production configuration
+const isProduction = process.env.NODE_ENV === 'production';
+const isAnalyze = process.env.ANALYZE === 'true';
 
 export default defineConfig({
   plugins: [
@@ -34,31 +38,57 @@ export default defineConfig({
       overlay: true
     }
   },
-  // Preview server configuration
+  // Preview server configuration (production-like)
   preview: {
     port: 4173,
     host: true,
-    cors: true
+    cors: true,
+    headers: {
+      'X-Content-Type-Options': 'nosniff',
+      'X-Frame-Options': 'DENY',
+      'X-XSS-Protection': '1; mode=block',
+      'Referrer-Policy': 'strict-origin-when-cross-origin',
+      'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
+      'Cache-Control': 'public, max-age=31536000, immutable'
+    }
   },
-  // Professional build configuration
+  // Professional production build configuration
   build: {
     target: ['es2020', 'edge88', 'firefox78', 'chrome87', 'safari14'],
-    minify: 'terser',
-    terserOptions: {
+    outDir: 'dist',
+    emptyOutDir: true,
+    minify: isProduction ? 'terser' : 'esbuild',
+    terserOptions: isProduction ? {
       compress: {
         drop_console: true,
         drop_debugger: true,
-        pure_funcs: ['console.log', 'console.debug', 'console.info']
+        pure_funcs: ['console.log', 'console.debug', 'console.info', 'console.trace'],
+        passes: 2,
+        ecma: 2020,
+        module: true,
+        toplevel: true,
+        unsafe_arrows: true,
+        unsafe_methods: true
+      },
+      mangle: {
+        safari10: true,
+        properties: false
       },
       format: {
-        comments: false
-      }
-    },
-    sourcemap: false,
-    chunkSizeWarningLimit: 1000,
+        comments: false,
+        ecma: 2020
+      },
+      safari10: true
+    } : undefined,
+    sourcemap: isProduction ? false : 'inline',
+    chunkSizeWarningLimit: 500, // Strict limit for performance
     cssCodeSplit: true,
+    cssMinify: 'esbuild',
     assetsInlineLimit: 4096,
     reportCompressedSize: true,
+    modulePreload: {
+      polyfill: true
+    },
     rollupOptions: {
       output: {
         // Conservative chunk splitting to avoid circular dependencies on Vercel
@@ -110,11 +140,9 @@ export default defineConfig({
         propertyReadSideEffects: true,
         unknownGlobalSideEffects: true
       }
-    },
-    // CSS optimization - use esbuild for Vercel compatibility
-    cssMinify: 'esbuild'
+    }
   },
-  // Dependency optimization
+  // Dependency optimization for faster dev startup
   optimizeDeps: {
     include: [
       'react',
@@ -133,20 +161,31 @@ export default defineConfig({
       sourcemap: false // Disable source maps during dependency pre-bundling
     }
   },
-  // Environment variables
+  // Environment variables - Production safe
   define: {
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
-    __APP_VERSION__: JSON.stringify(process.env.npm_package_version || '4.5.0'),
-    __BUILD_TIME__: JSON.stringify(new Date().toISOString())
+    __APP_VERSION__: JSON.stringify(process.env.npm_package_version || '9.0.0'),
+    __BUILD_TIME__: JSON.stringify(new Date().toISOString()),
+    __IS_PRODUCTION__: isProduction,
+    __COMMIT_HASH__: JSON.stringify(process.env.VERCEL_GIT_COMMIT_SHA || 'local')
   },
   // ESBuild configuration
   esbuild: {
     target: 'es2020',
     legalComments: 'none',
-    minifyIdentifiers: false, // Prevent React scheduler mangling
+    minifyIdentifiers: isProduction,
     minifySyntax: true,
     minifyWhitespace: true,
-    keepNames: true, // Preserve function names for React
-    sourcemap: false // Disable source maps to avoid corrupted map files
+    keepNames: true, // Preserve function names for React error boundaries
+    sourcemap: !isProduction,
+    treeShaking: true
+  },
+  // Production-specific JSON handling
+  json: {
+    stringify: true // Better performance for large JSON imports
+  },
+  // Worker configuration
+  worker: {
+    format: 'es'
   }
-});
+}) satisfies UserConfig;

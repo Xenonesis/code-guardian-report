@@ -32,7 +32,7 @@ export class ErrorBoundary extends Component<Props, State> {
     };
   }
 
-  componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
+  override componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
     // Log error to production monitoring service
     logger.error('React Error Boundary caught an error', {
       error: error.message,
@@ -46,7 +46,7 @@ export class ErrorBoundary extends Component<Props, State> {
     }
   }
 
-  render(): ReactNode {
+  override render(): ReactNode {
     if (this.state.hasError) {
       // Use custom fallback if provided
       if (this.props.fallback) {

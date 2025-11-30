@@ -312,6 +312,7 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
 
       return () => clearTimeout(timer);
     }
+    return undefined;
   }, [aiFeatureStatus.hasApiKeys, results.issues.length, securityInsights.content, securityInsights.isLoading, generateSecurityInsights]);
 
   const generateRemediationStrategy = async () => {

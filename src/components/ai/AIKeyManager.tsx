@@ -309,11 +309,11 @@ export const AIKeyManager: React.FC = () => {
       }, 1000); // Wait 1 second after user stops typing
 
       return () => clearTimeout(timeoutId);
-    } else {
-      // Clear discovered models if key is cleared or too short
-      setDiscoveredModels([]);
-      setScanStatus(null);
     }
+    // Clear discovered models if key is cleared or too short
+    setDiscoveredModels([]);
+    setScanStatus(null);
+    return undefined;
   }, [newKey.provider, newKey.key]);
 
   const getKeyPlaceholder = (providerId: string) => {

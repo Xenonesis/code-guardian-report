@@ -11,6 +11,7 @@ export enum LogLevel {
   INFO = 'INFO',
   WARN = 'WARN',
   ERROR = 'ERROR',
+  FATAL = 'FATAL',
 }
 
 interface LogEntry {
@@ -19,15 +20,28 @@ interface LogEntry {
   timestamp: string;
   data?: unknown;
   stack?: string;
+  sessionId?: string;
+  userId?: string;
+  url?: string;
+  userAgent?: string;
 }
+
+// Generate a session ID for tracking
+const SESSION_ID = typeof crypto !== 'undefined' 
+  ? crypto.randomUUID?.() || Math.random().toString(36).substring(2)
+  : Math.random().toString(36).substring(2);
 
 class Logger {
   private static instance: Logger;
   private logBuffer: LogEntry[] = [];
   private maxBufferSize = 100;
+  private flushInterval: ReturnType<typeof setInterval> | null = null;
 
   private constructor() {
-    // Singleton pattern
+    // Start periodic flush for production
+    if (IS_PROD && typeof window !== 'undefined') {
+      this.flushInterval = setInterval(() => this.flush(), 30000); // Flush every 30 seconds
+    }
   }
 
   static getInstance(): Logger {
@@ -43,7 +57,10 @@ class Logger {
       message,
       timestamp: new Date().toISOString(),
       data,
-      stack: level === LogLevel.ERROR ? new Error().stack : undefined,
+      stack: level === LogLevel.ERROR || level === LogLevel.FATAL ? new Error().stack : undefined,
+      sessionId: SESSION_ID,
+      url: typeof window !== 'undefined' ? window.location.href : undefined,
+      userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : undefined,
     };
   }
 
@@ -91,15 +108,65 @@ class Logger {
       console.error(`[ERROR] ${message}`, error || '');
     }
 
-    // In production, could send to error tracking service (e.g., Sentry)
+    // In production, send to error tracking service
     if (IS_PROD) {
       this.sendToErrorTracking(entry);
     }
   }
 
+  fatal(message: string, error?: unknown): void {
+    const entry = this.createLogEntry(LogLevel.FATAL, message, error);
+    this.addToBuffer(entry);
+    
+    // Always log fatal errors
+    console.error(`[FATAL] ${message}`, error || '');
+
+    // Send immediately to error tracking
+    this.sendToErrorTracking(entry);
+  }
+
   private sendToErrorTracking(_entry: LogEntry): void {
-    // TODO: Integrate with error tracking service (Sentry, LogRocket, etc.)
-    // Example: Sentry.captureException(entry);
+    // Production error tracking integration
+    // Uncomment and configure one of the following:
+    
+    // Sentry Integration:
+    // if (typeof Sentry !== 'undefined') {
+    //   Sentry.captureException(new Error(_entry.message), {
+    //     extra: { ..._entry }
+    //   });
+    // }
+    
+    // Vercel Analytics Error Tracking:
+    // This is automatically handled by @vercel/analytics
+    
+    // Custom error endpoint:
+    // fetch('/api/errors', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify(_entry)
+    // }).catch(() => {});
+  }
+
+  /**
+   * Flush logs to remote service
+   */
+  flush(): void {
+    if (this.logBuffer.length === 0) return;
+    
+    // In production, could send buffered logs to analytics
+    // const logs = [...this.logBuffer];
+    // this.logBuffer = [];
+    // fetch('/api/logs', { ... })
+  }
+
+  /**
+   * Cleanup on unmount
+   */
+  destroy(): void {
+    if (this.flushInterval) {
+      clearInterval(this.flushInterval);
+    }
+    this.flush();
   }
 
   getRecentLogs(count: number = 20): LogEntry[] {

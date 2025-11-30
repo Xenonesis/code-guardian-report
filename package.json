@@ -5,19 +5,28 @@
     "type": "module",
     "scripts": {
         "dev": "vite --host",
-        "build": "vite build",
+        "build": "tsc --noEmit && vite build",
         "build:production": "NODE_ENV=production npm run build",
+        "build:analyze": "ANALYZE=true vite build",
         "preview": "vite preview --host",
         "type-check": "tsc --noEmit",
+        "lint": "eslint . --ext .ts,.tsx,.js,.jsx --report-unused-disable-directives --max-warnings 0",
+        "lint:fix": "eslint . --ext .ts,.tsx,.js,.jsx --fix",
         "start": "npm run dev",
         "serve": "npm run preview",
+        "clean": "rimraf dist node_modules/.vite",
+        "prepare": "node scripts/setup-git-hooks.js",
+        "prebuild": "npm run type-check",
+        "postbuild": "echo Build completed successfully!",
         "update-contributors": "node scripts/update-contributors.js",
         "setup-git-hooks": "node scripts/setup-git-hooks.js",
         "test-automation": "node scripts/test-automation.js",
         "test:e2e-zip": "tsx scripts/e2e-zip-analysis.ts",
         "test:multi-language": "tsx src/tests/multiLanguageAnalysis.test.ts",
         "test:multi-language-auto": "node scripts/run-multi-language-tests.js",
-        "ci:multi-language-check": "node scripts/ci-multi-language-check.js"
+        "ci:multi-language-check": "node scripts/ci-multi-language-check.js",
+        "size": "size-limit",
+        "size:analyze": "size-limit --why"
     },
     "dependencies": {
         "@babel/parser": "^7.28.5",
@@ -70,6 +79,7 @@
         "web-vitals": "^5.1.0"
     },
     "devDependencies": {
+        "@size-limit/preset-app": "^11.2.0",
         "@types/node": "^24.10.1",
         "@types/react": "^19.2.7",
         "@types/react-dom": "^19.2.3",
@@ -79,7 +89,31 @@
         "@eslint/markdown": "^7.5.1",
         "eslint-plugin-react": "^7.37.5",
         "eslint-plugin-react-hooks": "^7.0.1",
+        "rimraf": "^6.0.1",
+        "size-limit": "^11.2.0",
         "terser": "^5.44.1",
         "tsx": "^4.20.6"
+    },
+    "size-limit": [
+        {
+            "path": "dist/assets/js/*.js",
+            "limit": "500 KB"
+        }
+    ],
+    "engines": {
+        "node": ">=18.0.0",
+        "npm": ">=9.0.0"
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
     }
 }

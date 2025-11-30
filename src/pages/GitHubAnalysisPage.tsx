@@ -110,6 +110,7 @@ export const GitHubAnalysisPage: React.FC = () => {
       const timer = setTimeout(() => setShowPermissionModal(true), 2000);
       return () => clearTimeout(timer);
     }
+    return undefined;
   }, [hasGitHubAccount, permissionGranted, permissionDenied, isGitHubUser, user]);
 
   // Show username input logic
@@ -124,6 +125,7 @@ export const GitHubAnalysisPage: React.FC = () => {
         return () => clearTimeout(timer);
       }
     }
+    return undefined;
   }, [hasGitHubAccount, permissionGranted, permissionDenied, isGitHubUser, user, userProfile?.email]);
 
   const handleAllowGitHubAccess = async () => {

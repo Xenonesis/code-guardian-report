@@ -3,6 +3,8 @@
  * Provides security headers and CSP rules
  */
 
+const IS_PRODUCTION = import.meta.env.PROD;
+
 export const SECURITY_HEADERS = {
   // Prevent clickjacking attacks
   'X-Frame-Options': 'DENY',
@@ -16,8 +18,11 @@ export const SECURITY_HEADERS = {
   // Referrer policy
   'Referrer-Policy': 'strict-origin-when-cross-origin',
   
-  // Permissions policy
-  'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
+  // Permissions policy - Disable unnecessary browser features
+  'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), interest-cohort=()',
+  
+  // HSTS - Force HTTPS
+  'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
 };
 
 /**
@@ -28,10 +33,11 @@ export const CSP_DIRECTIVES = {
   'default-src': ['\'self\''],
   'script-src': [
     '\'self\'',
-    '\'unsafe-inline\'', // Required for Vite dev server
-    '\'unsafe-eval\'', // Required for some Firebase features
+    ...(IS_PRODUCTION ? [] : ['\'unsafe-inline\'', '\'unsafe-eval\'']), // Only in dev
     'https://www.googletagmanager.com',
     'https://www.google-analytics.com',
+    'https://vercel.live',
+    'https://vitals.vercel-insights.com',
   ],
   'style-src': [
     '\'self\'',
@@ -55,6 +61,8 @@ export const CSP_DIRECTIVES = {
     'https://*.googleapis.com',
     'https://*.firebase.com',
     'https://*.google-analytics.com',
+    'https://vercel.live',
+    'https://vitals.vercel-insights.com',
     'wss://*.firebaseio.com',
   ],
   'worker-src': [
@@ -65,6 +73,7 @@ export const CSP_DIRECTIVES = {
   'frame-ancestors': ['\'none\''],
   'base-uri': ['\'self\''],
   'form-action': ['\'self\''],
+  'upgrade-insecure-requests': [],
 };
 
 /**
@@ -112,17 +121,30 @@ export const PRODUCTION_CONFIG = {
 
   // Input validation
   maxFileSize: 100 * 1024 * 1024, // 100MB
-  allowedFileTypes: ['.zip', '.jar', '.war', '.ear'],
+  allowedFileTypes: ['.zip', '.jar', '.war', '.ear', '.tar', '.gz', '.tar.gz'],
+  allowedCodeExtensions: [
+    '.js', '.jsx', '.ts', '.tsx', '.py', '.java', '.c', '.cpp', '.h', '.hpp',
+    '.cs', '.go', '.rs', '.rb', '.php', '.swift', '.kt', '.scala', '.vue',
+    '.svelte', '.html', '.css', '.scss', '.sass', '.less', '.json', '.xml',
+    '.yaml', '.yml', '.md', '.sql', '.sh', '.bash', '.ps1', '.dockerfile'
+  ],
   maxFilesPerUpload: 10,
+  maxFilesInZip: 10000,
 
   // Session security
   sessionTimeout: 30 * 60 * 1000, // 30 minutes
   tokenExpiry: 60 * 60 * 1000, // 1 hour
+  refreshTokenExpiry: 7 * 24 * 60 * 60 * 1000, // 7 days
 
   // API security
   apiTimeout: 30000, // 30 seconds
   maxRetries: 3,
   retryDelay: 1000,
+  
+  // Analysis limits
+  maxCodeLinesPerFile: 50000,
+  maxTotalCodeLines: 500000,
+  analysisTimeout: 5 * 60 * 1000, // 5 minutes
 };
 
 /**

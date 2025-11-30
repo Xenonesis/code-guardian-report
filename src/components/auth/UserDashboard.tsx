@@ -138,6 +138,7 @@ const UserDashboard: React.FC = () => {
       }, 2000);
       return () => clearTimeout(timer);
     }
+    return undefined;
   }, [hasGitHubAccount, permissionGranted, permissionDenied, userProfile?.isGitHubUser]);
 
   // Show username input if no GitHub account detected but user wants to connect
@@ -153,6 +154,7 @@ const UserDashboard: React.FC = () => {
         return () => clearTimeout(timer);
       }
     }
+    return undefined;
   }, [hasGitHubAccount, permissionGranted, permissionDenied, userProfile?.isGitHubUser, userProfile?.email]);
 
   const handleAllowGitHubAccess = async () => {
