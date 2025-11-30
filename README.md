@@ -2689,3 +2689,3204 @@ Run internal table-top exercises quarterly to validate the incident workflows do
 - 🔗 [scripts/run-all-tests.ts](scripts/run-all-tests.ts)
 
 > **Tip:** Bookmark this extended hub so onboarding engineers can self-serve the majority of answers before opening a support ticket.
+---
+## 📡 API Reference & Integration Contracts
+
+The public API surface is intentionally compact so that organizations can audit every payload that leaves their networks. All routes are implemented inside the Vercel api/ directory and share a common authentication middleware with support for PATs, signed JWTs, or HMAC headers. The contract described here mirrors the code paths you will find in api/analytics.ts, api/analytics/pwa.ts, and api/push/*.
+
+### REST Endpoint Overview
+
+| Method | Path | Description | Auth | Related Script |
+|--------|------|-------------|------|----------------|
+| POST | `/api/analyze` | Kick off an analysis run from a ZIP upload, repo URL, or inline snippet. | Bearer token or signed webhook secret. | `scripts/e2e-zip-analysis.ts` |
+| GET | `/api/report/{id}` | Retrieve normalized findings, metadata, and export links. | Same as analysis token. | `scripts/run-all-tests.ts` |
+| POST | `/api/insights/fix` | Generate AI-backed remediation advice for a specific finding ID. | Requires AI provider key mapping. | `src/components/ai` |
+| POST | `/api/webhooks/github` | Optional relay to enrich PRs with Code Guardian context. | GitHub `x-hub-signature` validation. | `scripts/run-accuracy-test.ts` |
+| POST | `/api/webhooks/custom` | Generic webhook for SIEM/SOAR ingestion. | Shared secret header x-code-guardian-signature. | `api/push/subscribe.ts` |
+
+### Request Lifecycle
+
+1. **Inbound validation** handled by the shared zod schema located in src/utils/validation (tree-shaken into the API bundle via Vite).
+2. **Analysis dispatch** chooses between local workers, Firebase Functions, or AI pipelines depending on payload size.
+3. **Artifact persistence** stores redacted summaries inside IndexedDB (browser) and optionally Firestore (cloud) using the keys defined in src/config/security.ts.
+4. **Notification fan-out** occurs through api/push/send.ts, ensuring mobile devices receive actionable prompts.
+
+### Sample `POST /api/analyze`
+
+```http
+POST /api/analyze HTTP/1.1
+Host: example.codeguardian.internal
+Authorization: Bearer cg-live-123
+Content-Type: application/json
+x-code-guardian-correlation: 8c87d4f4-7a4a-46d5-b8f7-1d1c55b60df0
+
+{
+  "source": {
+    "type": "github",
+    "url": "https://github.com/Xenonesis/code-guardian-report",
+    "ref": "improve/mobile-ux"
+  },
+  "filters": {
+    "include": ["src/**", "api/**"],
+    "exclude": ["public/**", "**/*.md"]
+  },
+  "aiProviders": ["openai", "anthropic"],
+  "export": {
+    "formats": ["json", "sarif", "pdf"],
+    "includeEvidenceBundle": true
+  }
+}
+```
+
+#### Sample Response
+
+```json
+{
+  "analysisId": "cg-anl-2025-001",
+  "status": "queued",
+  "etaSeconds": 42,
+  "links": {
+    "dashboard": "https://code-guardian-report.vercel.app/results/cg-anl-2025-001",
+    "webhook": "https://example.soc.local/webhooks/code-guardian"
+  },
+  "ai": {
+    "providers": [
+      { "name": "openai", "model": "gpt-4.1-mini" },
+      { "name": "anthropic", "model": "claude-3.5-sonnet" }
+    ]
+  }
+}
+```
+
+### Error Envelope
+
+```json
+{
+  "status": 422,
+  "error": "VALIDATION_FAILED",
+  "message": "filters.include[1] must target a subdirectory",
+  "correlationId": "8c87d4f4-7a4a-46d5-b8f7-1d1c55b60df0",
+  "docs": "https://code-guardian-report.vercel.app/docs/errors#VALIDATION_FAILED"
+}
+```
+
+### GraphQL Bridge (beta)
+
+A lightweight GraphQL schema exposes dashboard widgets for internal portals. The resolver layer mirrors src/components/dashboard so that KPIs stay consistent across experiences.
+
+```graphql
+query RecentFindings($limit: Int = 20!) {
+  findings(limit: $limit) {
+    id
+    severity
+    ruleId
+    filePath
+    aiSummary
+    recommendedFix
+  }
+  aggregate {
+    highSeverityCount
+    secretLeakCount
+    averageRemediationTimeHours
+  }
+}
+```
+
+## 🧰 CLI & Automation Recipes
+
+Leverage the scripts under /scripts to orchestrate Code Guardian in any CI/CD provider:
+
+| Command | Description | Best When |
+|---------|-------------|-----------|
+| `node scripts/e2e-zip-analysis.ts --zip build.zip --out report.json` | Analyze build outputs before deployment. | Artifact scanning pipelines. |
+| `tsx scripts/run-all-tests.ts --providers openai,claude` | Execute every regression pack plus AI explainers. | Nightly regression suites. |
+| `node scripts/run-multi-language-tests.js --languages js,py,go` | Validate detection coverage per language. | Multi-language monorepos. |
+| `bun scripts/run-accuracy-test.ts --threshold 0.93` | Measure model performance against golden datasets. | AI model evaluation. |
+| `node scripts/update-contributors.js` | Refresh README contributor grid. | Release preparation. |
+
+**Automation tips**
+
+- Pass `--mask-secrets` to any script to avoid printing tokens in CI logs.
+- Use CI=1 environment flag to force non-interactive progress bars.
+- Cache the .guardian-cache directory between jobs to reuse AST + AI embeddings.
+
+## ☁️ Multi-Cloud Deployment Guides
+
+### AWS Reference Stack
+
+1. Store static assets in S3 with CloudFront caching; use the provided public/ headers for strict security policies.
+2. Deploy Firebase Functions analogs to AWS Lambda via the CDK or Terraform sample below.
+3. Use EventBridge to forward Code Guardian webhooks into AWS Security Hub.
+4. Pin outbound AI requests through VPC endpoints to satisfy egress policies.
+
+### Azure Reference Stack
+
+1. Host the frontend on Azure Static Web Apps or Azure Front Door + Storage.
+2. Run background jobs on Azure Functions using the same TypeScript sources from functions/src/index.ts.
+3. Route diagnostics to Azure Monitor with workbooks mirroring the dashboard widgets documented earlier.
+4. Integrate Azure AD for SSO; map roles to the RBAC guidance in md/CONTRIBUTING.md.
+
+### Google Cloud Reference Stack
+
+1. Serve the SPA via Firebase Hosting or Cloud Run's static mode.
+2. Replace Firebase Functions with Cloud Functions (2nd gen) using the same build pipeline.
+3. Export BigQuery-friendly datasets using the JSON schema stored in Appendix C.
+4. Hook Chronicle or SIEM integrations through Pub/Sub push endpoints subscribed to Code Guardian webhooks.
+
+### On-Prem / Air-Gapped Deployment
+
+- Build the project with `npm run build -- --base=/guardian` to support non-root hosting.
+- Use Docker Compose or Kubernetes manifests in Appendices F and G to ship static assets behind Nginx.
+- Mirror AI providers through approved gateways; update VITE_*_API_URL variables accordingly.
+- Publish SARIF artifacts to internal GitHub Enterprise servers for persistent evidence.
+
+## 🔎 Observability & Telemetry
+
+| Layer | Signal | Tooling |
+|-------|--------|---------|
+| Frontend | Core Web Vitals, user interactions, toast latency. | Vercel Analytics, custom window.guardianMetrics hook. |
+| Functions | Cold starts, queue depth, retries. | Firebase console, CloudWatch, or Azure Monitor depending on platform. |
+| Webhooks | Delivery success, retry counts, auth failures. | api/push/schedule.ts logs, SIEM dashboards. |
+| AI Providers | Cost, token usage, fallback frequency. | api/analytics.ts instrumentation + vendor billing exports. |
+
+Recommended action items:
+
+1. Emit OpenTelemetry spans using the wrapper in src/lib/telemetry (add-on) so traces link browser + server events.
+2. Push logs to the same index patterns documented in the Security Operations Guide for faster triage.
+3. Set SLOs for analysis.completed under 3 minutes for medium repositories; alert when breaches occur twice consecutively.
+
+## 🧪 Validation Matrix
+
+| Validation Layer | Tool / Script | Cadence | Owner |
+|------------------|---------------|---------|-------|
+| Unit tests | `npm run test` (Vitest) | Per commit | Feature teams |
+| Integration | tmp_rovodev_integration_test.ts | Nightly | Platform QA |
+| Accessibility | `npm run lint -- --max-warnings=0` + Axe scans | Weekly | Design systems |
+| Performance | `npm run build` + Lighthouse CI | Release candidate | DX guild |
+| Security Regression | scripts/run-multi-language-tests.js | Nightly + pre-release | AppSec |
+| AI Benchmarking | scripts/run-accuracy-test.ts | Weekly or on model change | AI Steering Committee |
+
+## 🔐 Policy as Code Highlights
+
+- **Role Mapping**: The policy engine associates Firebase auth claims (or custom headers) with GuardRails (viewer, contributor, admin). Customize the mapping in src/components/auth.
+- **Branch Enforcement**: Example GitHub Actions workflow (Appendix D) blocks merges if severity ≥ high.
+- **Data Classification**: Findings inherit tags such as confidential, restricted, public according to src/config/security.ts.
+- **Retention**: JSON exports auto-expire after 30 days unless archived via the CLI.
+
+## 📈 KPI Workbook
+
+| KPI | Calculation | Widget |
+|-----|-------------|--------|
+| Mean Time To Remediate (MTTR) | resolved_at - detected_at aggregated weekly. | Trendline inside ResultsOverviewCard. |
+| Findings per KLOC | totalFindings / (linesOfCode / 1000) | Sparkline inside EnhancedAnalyticsDashboard. |
+| Secret Exposure Velocity | Count of leaked secrets in last 7 days vs previous 7 days. | Dual-axis chart in src/components/analysis/SecretTrends. |
+| AI Assist Acceptance Rate | Accepted AI patches / total AI suggestions. | Stacked bar chart in AI panel. |
+
+Export KPIs to CSV or plug them into PowerBI/Tableau using Appendix C as the canonical schema.
+
+## 🚑 Incident Runbooks
+
+1. **Critical Finding Escalation**
+   - Confirm alert details in the notification center.
+   - Page the on-call AppSec engineer; attach JSON export.
+   - Create tracking issue referencing analysisId and severity.
+2. **AI Provider Outage**
+   - Switch to the fallback provider list in settings.
+   - Reduce concurrency via feature toggle in src/components/ai/AiSettingsPanel.
+   - File an incident report capturing timestamps and impact.
+3. **Webhook Replay Storm**
+   - Inspect logs for repeated 500s.
+   - Temporarily disable the webhook from the dashboard.
+   - Patch the consumer and re-enable; Code Guardian auto-replays buffered events.
+
+## 🧠 Training Plans
+
+| Session | Audience | Duration | Outcomes |
+|---------|----------|----------|----------|
+| Foundations | New contributors | 90 min | Understand repo layout, run dev server, perform first scan. |
+| Deep Dive | Security champions | 2 hrs | Build custom detection rules, interpret AI explainers, export SARIF. |
+| Operator Lab | DevOps + SRE | 2 hrs | Deploy multi-cloud, integrate observability, automate rollbacks. |
+| Executive Readout | Directors / VPs | 30 min | Review KPIs, roadmap, and investment asks. |
+
+Each training module references assets tracked in tmp_rovodev_QUICK_START.md and tmp_rovodev_FINAL_REPORT.md so lessons remain consistent.
+
+## 🛡️ Appendix A: Control Catalogue
+
+#### Control CG-SQL-JS
+- **Title:** Parameterized Query Enforcement (JavaScript)
+- **Threat Mitigated:** Attackers inject SQL via unsanitized string concatenation or template literals.
+- **Detection Signal:** AST visitors flag concatenated statements plus risky ORM calls surfaced in scripts/test-pattern.js.
+- **Recommended Fix:** Adopt parameterized statements and centralized repositories; align with database-specific escaping. Leverage Prisma, Knex conventions for JavaScript deployments.
+- **Automation Level:** Auto-fix templates shipped with AI patch preview plus lint rule hints.
+- **Validation Steps:** Re-run scripts/e2e-zip-analysis.ts targeting database/** modules.
+
+
+#### Control CG-SQL-TS
+- **Title:** Parameterized Query Enforcement (TypeScript)
+- **Threat Mitigated:** Attackers inject SQL via unsanitized string concatenation or template literals.
+- **Detection Signal:** AST visitors flag concatenated statements plus risky ORM calls surfaced in scripts/test-pattern.js.
+- **Recommended Fix:** Adopt parameterized statements and centralized repositories; align with database-specific escaping. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
+- **Automation Level:** Auto-fix templates shipped with AI patch preview plus lint rule hints.
+- **Validation Steps:** Re-run scripts/e2e-zip-analysis.ts targeting database/** modules.
+
+
+#### Control CG-SQL-PY
+- **Title:** Parameterized Query Enforcement (Python)
+- **Threat Mitigated:** Attackers inject SQL via unsanitized string concatenation or template literals.
+- **Detection Signal:** AST visitors flag concatenated statements plus risky ORM calls surfaced in scripts/test-pattern.js.
+- **Recommended Fix:** Adopt parameterized statements and centralized repositories; align with database-specific escaping. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
+- **Automation Level:** Auto-fix templates shipped with AI patch preview plus lint rule hints.
+- **Validation Steps:** Re-run scripts/e2e-zip-analysis.ts targeting database/** modules.
+
+
+#### Control CG-SQL-JAVA
+- **Title:** Parameterized Query Enforcement (Java)
+- **Threat Mitigated:** Attackers inject SQL via unsanitized string concatenation or template literals.
+- **Detection Signal:** AST visitors flag concatenated statements plus risky ORM calls surfaced in scripts/test-pattern.js.
+- **Recommended Fix:** Adopt parameterized statements and centralized repositories; align with database-specific escaping. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
+- **Automation Level:** Auto-fix templates shipped with AI patch preview plus lint rule hints.
+- **Validation Steps:** Re-run scripts/e2e-zip-analysis.ts targeting database/** modules.
+
+
+#### Control CG-SQL-GO
+- **Title:** Parameterized Query Enforcement (Go)
+- **Threat Mitigated:** Attackers inject SQL via unsanitized string concatenation or template literals.
+- **Detection Signal:** AST visitors flag concatenated statements plus risky ORM calls surfaced in scripts/test-pattern.js.
+- **Recommended Fix:** Adopt parameterized statements and centralized repositories; align with database-specific escaping. Leverage GORM, pgx conventions for Go deployments.
+- **Automation Level:** Auto-fix templates shipped with AI patch preview plus lint rule hints.
+- **Validation Steps:** Re-run scripts/e2e-zip-analysis.ts targeting database/** modules.
+
+
+#### Control CG-SQL-RST
+- **Title:** Parameterized Query Enforcement (Rust)
+- **Threat Mitigated:** Attackers inject SQL via unsanitized string concatenation or template literals.
+- **Detection Signal:** AST visitors flag concatenated statements plus risky ORM calls surfaced in scripts/test-pattern.js.
+- **Recommended Fix:** Adopt parameterized statements and centralized repositories; align with database-specific escaping. Leverage SQLx, Diesel conventions for Rust deployments.
+- **Automation Level:** Auto-fix templates shipped with AI patch preview plus lint rule hints.
+- **Validation Steps:** Re-run scripts/e2e-zip-analysis.ts targeting database/** modules.
+
+
+#### Control CG-SQL-PHP
+- **Title:** Parameterized Query Enforcement (PHP)
+- **Threat Mitigated:** Attackers inject SQL via unsanitized string concatenation or template literals.
+- **Detection Signal:** AST visitors flag concatenated statements plus risky ORM calls surfaced in scripts/test-pattern.js.
+- **Recommended Fix:** Adopt parameterized statements and centralized repositories; align with database-specific escaping. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
+- **Automation Level:** Auto-fix templates shipped with AI patch preview plus lint rule hints.
+- **Validation Steps:** Re-run scripts/e2e-zip-analysis.ts targeting database/** modules.
+
+
+#### Control CG-SQL-CS
+- **Title:** Parameterized Query Enforcement (C#)
+- **Threat Mitigated:** Attackers inject SQL via unsanitized string concatenation or template literals.
+- **Detection Signal:** AST visitors flag concatenated statements plus risky ORM calls surfaced in scripts/test-pattern.js.
+- **Recommended Fix:** Adopt parameterized statements and centralized repositories; align with database-specific escaping. Leverage Entity Framework, Dapper conventions for C# deployments.
+- **Automation Level:** Auto-fix templates shipped with AI patch preview plus lint rule hints.
+- **Validation Steps:** Re-run scripts/e2e-zip-analysis.ts targeting database/** modules.
+
+
+#### Control CG-CMD-JS
+- **Title:** Command Injection Guardrails (JavaScript)
+- **Threat Mitigated:** User-controlled arguments reach exec, spawn, or shell wrappers.
+- **Detection Signal:** Data-flow tracing links tainted inputs to process execution utilities in src/utils.
+- **Recommended Fix:** Whitelist commands, avoid shell interpretation, and enforce argument escaping. Leverage Prisma, Knex conventions for JavaScript deployments.
+- **Automation Level:** Risk scoring surfaces in SecurityMetricsDashboard with autofill mitigations.
+- **Validation Steps:** Execute tests/modernCodeScanning.test.ts case command-injection.
+
+
+#### Control CG-CMD-TS
+- **Title:** Command Injection Guardrails (TypeScript)
+- **Threat Mitigated:** User-controlled arguments reach exec, spawn, or shell wrappers.
+- **Detection Signal:** Data-flow tracing links tainted inputs to process execution utilities in src/utils.
+- **Recommended Fix:** Whitelist commands, avoid shell interpretation, and enforce argument escaping. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
+- **Automation Level:** Risk scoring surfaces in SecurityMetricsDashboard with autofill mitigations.
+- **Validation Steps:** Execute tests/modernCodeScanning.test.ts case command-injection.
+
+
+#### Control CG-CMD-PY
+- **Title:** Command Injection Guardrails (Python)
+- **Threat Mitigated:** User-controlled arguments reach exec, spawn, or shell wrappers.
+- **Detection Signal:** Data-flow tracing links tainted inputs to process execution utilities in src/utils.
+- **Recommended Fix:** Whitelist commands, avoid shell interpretation, and enforce argument escaping. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
+- **Automation Level:** Risk scoring surfaces in SecurityMetricsDashboard with autofill mitigations.
+- **Validation Steps:** Execute tests/modernCodeScanning.test.ts case command-injection.
+
+
+#### Control CG-CMD-JAVA
+- **Title:** Command Injection Guardrails (Java)
+- **Threat Mitigated:** User-controlled arguments reach exec, spawn, or shell wrappers.
+- **Detection Signal:** Data-flow tracing links tainted inputs to process execution utilities in src/utils.
+- **Recommended Fix:** Whitelist commands, avoid shell interpretation, and enforce argument escaping. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
+- **Automation Level:** Risk scoring surfaces in SecurityMetricsDashboard with autofill mitigations.
+- **Validation Steps:** Execute tests/modernCodeScanning.test.ts case command-injection.
+
+
+#### Control CG-CMD-GO
+- **Title:** Command Injection Guardrails (Go)
+- **Threat Mitigated:** User-controlled arguments reach exec, spawn, or shell wrappers.
+- **Detection Signal:** Data-flow tracing links tainted inputs to process execution utilities in src/utils.
+- **Recommended Fix:** Whitelist commands, avoid shell interpretation, and enforce argument escaping. Leverage GORM, pgx conventions for Go deployments.
+- **Automation Level:** Risk scoring surfaces in SecurityMetricsDashboard with autofill mitigations.
+- **Validation Steps:** Execute tests/modernCodeScanning.test.ts case command-injection.
+
+
+#### Control CG-CMD-RST
+- **Title:** Command Injection Guardrails (Rust)
+- **Threat Mitigated:** User-controlled arguments reach exec, spawn, or shell wrappers.
+- **Detection Signal:** Data-flow tracing links tainted inputs to process execution utilities in src/utils.
+- **Recommended Fix:** Whitelist commands, avoid shell interpretation, and enforce argument escaping. Leverage SQLx, Diesel conventions for Rust deployments.
+- **Automation Level:** Risk scoring surfaces in SecurityMetricsDashboard with autofill mitigations.
+- **Validation Steps:** Execute tests/modernCodeScanning.test.ts case command-injection.
+
+
+#### Control CG-CMD-PHP
+- **Title:** Command Injection Guardrails (PHP)
+- **Threat Mitigated:** User-controlled arguments reach exec, spawn, or shell wrappers.
+- **Detection Signal:** Data-flow tracing links tainted inputs to process execution utilities in src/utils.
+- **Recommended Fix:** Whitelist commands, avoid shell interpretation, and enforce argument escaping. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
+- **Automation Level:** Risk scoring surfaces in SecurityMetricsDashboard with autofill mitigations.
+- **Validation Steps:** Execute tests/modernCodeScanning.test.ts case command-injection.
+
+
+#### Control CG-CMD-CS
+- **Title:** Command Injection Guardrails (C#)
+- **Threat Mitigated:** User-controlled arguments reach exec, spawn, or shell wrappers.
+- **Detection Signal:** Data-flow tracing links tainted inputs to process execution utilities in src/utils.
+- **Recommended Fix:** Whitelist commands, avoid shell interpretation, and enforce argument escaping. Leverage Entity Framework, Dapper conventions for C# deployments.
+- **Automation Level:** Risk scoring surfaces in SecurityMetricsDashboard with autofill mitigations.
+- **Validation Steps:** Execute tests/modernCodeScanning.test.ts case command-injection.
+
+
+#### Control CG-SSRF-JS
+- **Title:** Server-Side Request Forgery Mitigation (JavaScript)
+- **Threat Mitigated:** Untrusted URLs are fetched from backend contexts leading to data exfiltration.
+- **Detection Signal:** Pattern engine inspects fetch, axios, and native HTTP clients for missing allowlists.
+- **Recommended Fix:** Enforce hostname/IP allowlists and signed requests, reject link-local addresses. Leverage Prisma, Knex conventions for JavaScript deployments.
+- **Automation Level:** Suggested fixes include sample proxy validators distributed with the AI assistant.
+- **Validation Steps:** Replay suspicious URLs via tmp_rovodev_runtime_test.ts.
+
+
+#### Control CG-SSRF-TS
+- **Title:** Server-Side Request Forgery Mitigation (TypeScript)
+- **Threat Mitigated:** Untrusted URLs are fetched from backend contexts leading to data exfiltration.
+- **Detection Signal:** Pattern engine inspects fetch, axios, and native HTTP clients for missing allowlists.
+- **Recommended Fix:** Enforce hostname/IP allowlists and signed requests, reject link-local addresses. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
+- **Automation Level:** Suggested fixes include sample proxy validators distributed with the AI assistant.
+- **Validation Steps:** Replay suspicious URLs via tmp_rovodev_runtime_test.ts.
+
+
+#### Control CG-SSRF-PY
+- **Title:** Server-Side Request Forgery Mitigation (Python)
+- **Threat Mitigated:** Untrusted URLs are fetched from backend contexts leading to data exfiltration.
+- **Detection Signal:** Pattern engine inspects fetch, axios, and native HTTP clients for missing allowlists.
+- **Recommended Fix:** Enforce hostname/IP allowlists and signed requests, reject link-local addresses. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
+- **Automation Level:** Suggested fixes include sample proxy validators distributed with the AI assistant.
+- **Validation Steps:** Replay suspicious URLs via tmp_rovodev_runtime_test.ts.
+
+
+#### Control CG-SSRF-JAVA
+- **Title:** Server-Side Request Forgery Mitigation (Java)
+- **Threat Mitigated:** Untrusted URLs are fetched from backend contexts leading to data exfiltration.
+- **Detection Signal:** Pattern engine inspects fetch, axios, and native HTTP clients for missing allowlists.
+- **Recommended Fix:** Enforce hostname/IP allowlists and signed requests, reject link-local addresses. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
+- **Automation Level:** Suggested fixes include sample proxy validators distributed with the AI assistant.
+- **Validation Steps:** Replay suspicious URLs via tmp_rovodev_runtime_test.ts.
+
+
+#### Control CG-SSRF-GO
+- **Title:** Server-Side Request Forgery Mitigation (Go)
+- **Threat Mitigated:** Untrusted URLs are fetched from backend contexts leading to data exfiltration.
+- **Detection Signal:** Pattern engine inspects fetch, axios, and native HTTP clients for missing allowlists.
+- **Recommended Fix:** Enforce hostname/IP allowlists and signed requests, reject link-local addresses. Leverage GORM, pgx conventions for Go deployments.
+- **Automation Level:** Suggested fixes include sample proxy validators distributed with the AI assistant.
+- **Validation Steps:** Replay suspicious URLs via tmp_rovodev_runtime_test.ts.
+
+
+#### Control CG-SSRF-RST
+- **Title:** Server-Side Request Forgery Mitigation (Rust)
+- **Threat Mitigated:** Untrusted URLs are fetched from backend contexts leading to data exfiltration.
+- **Detection Signal:** Pattern engine inspects fetch, axios, and native HTTP clients for missing allowlists.
+- **Recommended Fix:** Enforce hostname/IP allowlists and signed requests, reject link-local addresses. Leverage SQLx, Diesel conventions for Rust deployments.
+- **Automation Level:** Suggested fixes include sample proxy validators distributed with the AI assistant.
+- **Validation Steps:** Replay suspicious URLs via tmp_rovodev_runtime_test.ts.
+
+
+#### Control CG-SSRF-PHP
+- **Title:** Server-Side Request Forgery Mitigation (PHP)
+- **Threat Mitigated:** Untrusted URLs are fetched from backend contexts leading to data exfiltration.
+- **Detection Signal:** Pattern engine inspects fetch, axios, and native HTTP clients for missing allowlists.
+- **Recommended Fix:** Enforce hostname/IP allowlists and signed requests, reject link-local addresses. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
+- **Automation Level:** Suggested fixes include sample proxy validators distributed with the AI assistant.
+- **Validation Steps:** Replay suspicious URLs via tmp_rovodev_runtime_test.ts.
+
+
+#### Control CG-SSRF-CS
+- **Title:** Server-Side Request Forgery Mitigation (C#)
+- **Threat Mitigated:** Untrusted URLs are fetched from backend contexts leading to data exfiltration.
+- **Detection Signal:** Pattern engine inspects fetch, axios, and native HTTP clients for missing allowlists.
+- **Recommended Fix:** Enforce hostname/IP allowlists and signed requests, reject link-local addresses. Leverage Entity Framework, Dapper conventions for C# deployments.
+- **Automation Level:** Suggested fixes include sample proxy validators distributed with the AI assistant.
+- **Validation Steps:** Replay suspicious URLs via tmp_rovodev_runtime_test.ts.
+
+
+#### Control CG-XSS-JS
+- **Title:** Cross-Site Scripting Neutralization (JavaScript)
+- **Threat Mitigated:** Unescaped content is rendered into DOM nodes or templating outputs.
+- **Detection Signal:** React lint rules plus static HTML parsers detect dangerouslySetInnerHTML misuse.
+- **Recommended Fix:** Prefer component props, sanitize HTML, and rely on design-system safe renderers. Leverage Prisma, Knex conventions for JavaScript deployments.
+- **Automation Level:** UI components auto-escape when using the latest src/components/ui primitives.
+- **Validation Steps:** Run npm run build with the security bundle analyzer to confirm zero warnings.
+
+
+#### Control CG-XSS-TS
+- **Title:** Cross-Site Scripting Neutralization (TypeScript)
+- **Threat Mitigated:** Unescaped content is rendered into DOM nodes or templating outputs.
+- **Detection Signal:** React lint rules plus static HTML parsers detect dangerouslySetInnerHTML misuse.
+- **Recommended Fix:** Prefer component props, sanitize HTML, and rely on design-system safe renderers. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
+- **Automation Level:** UI components auto-escape when using the latest src/components/ui primitives.
+- **Validation Steps:** Run npm run build with the security bundle analyzer to confirm zero warnings.
+
+
+#### Control CG-XSS-PY
+- **Title:** Cross-Site Scripting Neutralization (Python)
+- **Threat Mitigated:** Unescaped content is rendered into DOM nodes or templating outputs.
+- **Detection Signal:** React lint rules plus static HTML parsers detect dangerouslySetInnerHTML misuse.
+- **Recommended Fix:** Prefer component props, sanitize HTML, and rely on design-system safe renderers. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
+- **Automation Level:** UI components auto-escape when using the latest src/components/ui primitives.
+- **Validation Steps:** Run npm run build with the security bundle analyzer to confirm zero warnings.
+
+
+#### Control CG-XSS-JAVA
+- **Title:** Cross-Site Scripting Neutralization (Java)
+- **Threat Mitigated:** Unescaped content is rendered into DOM nodes or templating outputs.
+- **Detection Signal:** React lint rules plus static HTML parsers detect dangerouslySetInnerHTML misuse.
+- **Recommended Fix:** Prefer component props, sanitize HTML, and rely on design-system safe renderers. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
+- **Automation Level:** UI components auto-escape when using the latest src/components/ui primitives.
+- **Validation Steps:** Run npm run build with the security bundle analyzer to confirm zero warnings.
+
+
+#### Control CG-XSS-GO
+- **Title:** Cross-Site Scripting Neutralization (Go)
+- **Threat Mitigated:** Unescaped content is rendered into DOM nodes or templating outputs.
+- **Detection Signal:** React lint rules plus static HTML parsers detect dangerouslySetInnerHTML misuse.
+- **Recommended Fix:** Prefer component props, sanitize HTML, and rely on design-system safe renderers. Leverage GORM, pgx conventions for Go deployments.
+- **Automation Level:** UI components auto-escape when using the latest src/components/ui primitives.
+- **Validation Steps:** Run npm run build with the security bundle analyzer to confirm zero warnings.
+
+
+#### Control CG-XSS-RST
+- **Title:** Cross-Site Scripting Neutralization (Rust)
+- **Threat Mitigated:** Unescaped content is rendered into DOM nodes or templating outputs.
+- **Detection Signal:** React lint rules plus static HTML parsers detect dangerouslySetInnerHTML misuse.
+- **Recommended Fix:** Prefer component props, sanitize HTML, and rely on design-system safe renderers. Leverage SQLx, Diesel conventions for Rust deployments.
+- **Automation Level:** UI components auto-escape when using the latest src/components/ui primitives.
+- **Validation Steps:** Run npm run build with the security bundle analyzer to confirm zero warnings.
+
+
+#### Control CG-XSS-PHP
+- **Title:** Cross-Site Scripting Neutralization (PHP)
+- **Threat Mitigated:** Unescaped content is rendered into DOM nodes or templating outputs.
+- **Detection Signal:** React lint rules plus static HTML parsers detect dangerouslySetInnerHTML misuse.
+- **Recommended Fix:** Prefer component props, sanitize HTML, and rely on design-system safe renderers. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
+- **Automation Level:** UI components auto-escape when using the latest src/components/ui primitives.
+- **Validation Steps:** Run npm run build with the security bundle analyzer to confirm zero warnings.
+
+
+#### Control CG-XSS-CS
+- **Title:** Cross-Site Scripting Neutralization (C#)
+- **Threat Mitigated:** Unescaped content is rendered into DOM nodes or templating outputs.
+- **Detection Signal:** React lint rules plus static HTML parsers detect dangerouslySetInnerHTML misuse.
+- **Recommended Fix:** Prefer component props, sanitize HTML, and rely on design-system safe renderers. Leverage Entity Framework, Dapper conventions for C# deployments.
+- **Automation Level:** UI components auto-escape when using the latest src/components/ui primitives.
+- **Validation Steps:** Run npm run build with the security bundle analyzer to confirm zero warnings.
+
+
+#### Control CG-PATH-JS
+- **Title:** Directory Traversal Prevention (JavaScript)
+- **Threat Mitigated:** Relative paths like ../../etc/passwd slip into file system accessors.
+- **Detection Signal:** Regex + AST heuristics inspect fs calls for unsanitized path joins.
+- **Recommended Fix:** Resolve paths against whitelisted roots and drop .. segments before use. Leverage Prisma, Knex conventions for JavaScript deployments.
+- **Automation Level:** Auto-fix suggestions wrap user input with sandbox helpers defined in src/utils/fs.
+- **Validation Steps:** Trigger scripts/test-pattern.js --rule traversal after patching.
+
+
+#### Control CG-PATH-TS
+- **Title:** Directory Traversal Prevention (TypeScript)
+- **Threat Mitigated:** Relative paths like ../../etc/passwd slip into file system accessors.
+- **Detection Signal:** Regex + AST heuristics inspect fs calls for unsanitized path joins.
+- **Recommended Fix:** Resolve paths against whitelisted roots and drop .. segments before use. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
+- **Automation Level:** Auto-fix suggestions wrap user input with sandbox helpers defined in src/utils/fs.
+- **Validation Steps:** Trigger scripts/test-pattern.js --rule traversal after patching.
+
+
+#### Control CG-PATH-PY
+- **Title:** Directory Traversal Prevention (Python)
+- **Threat Mitigated:** Relative paths like ../../etc/passwd slip into file system accessors.
+- **Detection Signal:** Regex + AST heuristics inspect fs calls for unsanitized path joins.
+- **Recommended Fix:** Resolve paths against whitelisted roots and drop .. segments before use. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
+- **Automation Level:** Auto-fix suggestions wrap user input with sandbox helpers defined in src/utils/fs.
+- **Validation Steps:** Trigger scripts/test-pattern.js --rule traversal after patching.
+
+
+#### Control CG-PATH-JAVA
+- **Title:** Directory Traversal Prevention (Java)
+- **Threat Mitigated:** Relative paths like ../../etc/passwd slip into file system accessors.
+- **Detection Signal:** Regex + AST heuristics inspect fs calls for unsanitized path joins.
+- **Recommended Fix:** Resolve paths against whitelisted roots and drop .. segments before use. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
+- **Automation Level:** Auto-fix suggestions wrap user input with sandbox helpers defined in src/utils/fs.
+- **Validation Steps:** Trigger scripts/test-pattern.js --rule traversal after patching.
+
+
+#### Control CG-PATH-GO
+- **Title:** Directory Traversal Prevention (Go)
+- **Threat Mitigated:** Relative paths like ../../etc/passwd slip into file system accessors.
+- **Detection Signal:** Regex + AST heuristics inspect fs calls for unsanitized path joins.
+- **Recommended Fix:** Resolve paths against whitelisted roots and drop .. segments before use. Leverage GORM, pgx conventions for Go deployments.
+- **Automation Level:** Auto-fix suggestions wrap user input with sandbox helpers defined in src/utils/fs.
+- **Validation Steps:** Trigger scripts/test-pattern.js --rule traversal after patching.
+
+
+#### Control CG-PATH-RST
+- **Title:** Directory Traversal Prevention (Rust)
+- **Threat Mitigated:** Relative paths like ../../etc/passwd slip into file system accessors.
+- **Detection Signal:** Regex + AST heuristics inspect fs calls for unsanitized path joins.
+- **Recommended Fix:** Resolve paths against whitelisted roots and drop .. segments before use. Leverage SQLx, Diesel conventions for Rust deployments.
+- **Automation Level:** Auto-fix suggestions wrap user input with sandbox helpers defined in src/utils/fs.
+- **Validation Steps:** Trigger scripts/test-pattern.js --rule traversal after patching.
+
+
+#### Control CG-PATH-PHP
+- **Title:** Directory Traversal Prevention (PHP)
+- **Threat Mitigated:** Relative paths like ../../etc/passwd slip into file system accessors.
+- **Detection Signal:** Regex + AST heuristics inspect fs calls for unsanitized path joins.
+- **Recommended Fix:** Resolve paths against whitelisted roots and drop .. segments before use. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
+- **Automation Level:** Auto-fix suggestions wrap user input with sandbox helpers defined in src/utils/fs.
+- **Validation Steps:** Trigger scripts/test-pattern.js --rule traversal after patching.
+
+
+#### Control CG-PATH-CS
+- **Title:** Directory Traversal Prevention (C#)
+- **Threat Mitigated:** Relative paths like ../../etc/passwd slip into file system accessors.
+- **Detection Signal:** Regex + AST heuristics inspect fs calls for unsanitized path joins.
+- **Recommended Fix:** Resolve paths against whitelisted roots and drop .. segments before use. Leverage Entity Framework, Dapper conventions for C# deployments.
+- **Automation Level:** Auto-fix suggestions wrap user input with sandbox helpers defined in src/utils/fs.
+- **Validation Steps:** Trigger scripts/test-pattern.js --rule traversal after patching.
+
+
+#### Control CG-AUTH-JS
+- **Title:** Broken Authentication Hardening (JavaScript)
+- **Threat Mitigated:** Weak session controls allow credential stuffing or privilege abuse.
+- **Detection Signal:** Rules inspect auth middleware for missing MFA toggles and insecure cookie flags.
+- **Recommended Fix:** Enable HTTPOnly + Secure cookies, enforce MFA, throttle login attempts. Leverage Prisma, Knex conventions for JavaScript deployments.
+- **Automation Level:** Policy templates stored in src/components/auth update UI toggles.
+- **Validation Steps:** Run scripts/test-automation.js --scenario auth to confirm controls.
+
+
+#### Control CG-AUTH-TS
+- **Title:** Broken Authentication Hardening (TypeScript)
+- **Threat Mitigated:** Weak session controls allow credential stuffing or privilege abuse.
+- **Detection Signal:** Rules inspect auth middleware for missing MFA toggles and insecure cookie flags.
+- **Recommended Fix:** Enable HTTPOnly + Secure cookies, enforce MFA, throttle login attempts. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
+- **Automation Level:** Policy templates stored in src/components/auth update UI toggles.
+- **Validation Steps:** Run scripts/test-automation.js --scenario auth to confirm controls.
+
+
+#### Control CG-AUTH-PY
+- **Title:** Broken Authentication Hardening (Python)
+- **Threat Mitigated:** Weak session controls allow credential stuffing or privilege abuse.
+- **Detection Signal:** Rules inspect auth middleware for missing MFA toggles and insecure cookie flags.
+- **Recommended Fix:** Enable HTTPOnly + Secure cookies, enforce MFA, throttle login attempts. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
+- **Automation Level:** Policy templates stored in src/components/auth update UI toggles.
+- **Validation Steps:** Run scripts/test-automation.js --scenario auth to confirm controls.
+
+
+#### Control CG-AUTH-JAVA
+- **Title:** Broken Authentication Hardening (Java)
+- **Threat Mitigated:** Weak session controls allow credential stuffing or privilege abuse.
+- **Detection Signal:** Rules inspect auth middleware for missing MFA toggles and insecure cookie flags.
+- **Recommended Fix:** Enable HTTPOnly + Secure cookies, enforce MFA, throttle login attempts. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
+- **Automation Level:** Policy templates stored in src/components/auth update UI toggles.
+- **Validation Steps:** Run scripts/test-automation.js --scenario auth to confirm controls.
+
+
+#### Control CG-AUTH-GO
+- **Title:** Broken Authentication Hardening (Go)
+- **Threat Mitigated:** Weak session controls allow credential stuffing or privilege abuse.
+- **Detection Signal:** Rules inspect auth middleware for missing MFA toggles and insecure cookie flags.
+- **Recommended Fix:** Enable HTTPOnly + Secure cookies, enforce MFA, throttle login attempts. Leverage GORM, pgx conventions for Go deployments.
+- **Automation Level:** Policy templates stored in src/components/auth update UI toggles.
+- **Validation Steps:** Run scripts/test-automation.js --scenario auth to confirm controls.
+
+
+#### Control CG-AUTH-RST
+- **Title:** Broken Authentication Hardening (Rust)
+- **Threat Mitigated:** Weak session controls allow credential stuffing or privilege abuse.
+- **Detection Signal:** Rules inspect auth middleware for missing MFA toggles and insecure cookie flags.
+- **Recommended Fix:** Enable HTTPOnly + Secure cookies, enforce MFA, throttle login attempts. Leverage SQLx, Diesel conventions for Rust deployments.
+- **Automation Level:** Policy templates stored in src/components/auth update UI toggles.
+- **Validation Steps:** Run scripts/test-automation.js --scenario auth to confirm controls.
+
+
+#### Control CG-AUTH-PHP
+- **Title:** Broken Authentication Hardening (PHP)
+- **Threat Mitigated:** Weak session controls allow credential stuffing or privilege abuse.
+- **Detection Signal:** Rules inspect auth middleware for missing MFA toggles and insecure cookie flags.
+- **Recommended Fix:** Enable HTTPOnly + Secure cookies, enforce MFA, throttle login attempts. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
+- **Automation Level:** Policy templates stored in src/components/auth update UI toggles.
+- **Validation Steps:** Run scripts/test-automation.js --scenario auth to confirm controls.
+
+
+#### Control CG-AUTH-CS
+- **Title:** Broken Authentication Hardening (C#)
+- **Threat Mitigated:** Weak session controls allow credential stuffing or privilege abuse.
+- **Detection Signal:** Rules inspect auth middleware for missing MFA toggles and insecure cookie flags.
+- **Recommended Fix:** Enable HTTPOnly + Secure cookies, enforce MFA, throttle login attempts. Leverage Entity Framework, Dapper conventions for C# deployments.
+- **Automation Level:** Policy templates stored in src/components/auth update UI toggles.
+- **Validation Steps:** Run scripts/test-automation.js --scenario auth to confirm controls.
+
+
+#### Control CG-TOKEN-JS
+- **Title:** Secret Exposure Controls (JavaScript)
+- **Threat Mitigated:** API keys, JWTs, or certificates leak through logs or source control.
+- **Detection Signal:** Entropy scanners, regex signatures, and ML classifiers cross-check with test-vulnerabilities.js.
+- **Recommended Fix:** Rotate keys, move to secret managers, scrub history. Leverage Prisma, Knex conventions for JavaScript deployments.
+- **Automation Level:** Auto-created tickets include rotation checklists plus CLI commands.
+- **Validation Steps:** Execute scripts/test-firebase-storage-fix.js to ensure rotation scripts run.
+
+
+#### Control CG-TOKEN-TS
+- **Title:** Secret Exposure Controls (TypeScript)
+- **Threat Mitigated:** API keys, JWTs, or certificates leak through logs or source control.
+- **Detection Signal:** Entropy scanners, regex signatures, and ML classifiers cross-check with test-vulnerabilities.js.
+- **Recommended Fix:** Rotate keys, move to secret managers, scrub history. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
+- **Automation Level:** Auto-created tickets include rotation checklists plus CLI commands.
+- **Validation Steps:** Execute scripts/test-firebase-storage-fix.js to ensure rotation scripts run.
+
+
+#### Control CG-TOKEN-PY
+- **Title:** Secret Exposure Controls (Python)
+- **Threat Mitigated:** API keys, JWTs, or certificates leak through logs or source control.
+- **Detection Signal:** Entropy scanners, regex signatures, and ML classifiers cross-check with test-vulnerabilities.js.
+- **Recommended Fix:** Rotate keys, move to secret managers, scrub history. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
+- **Automation Level:** Auto-created tickets include rotation checklists plus CLI commands.
+- **Validation Steps:** Execute scripts/test-firebase-storage-fix.js to ensure rotation scripts run.
+
+
+#### Control CG-TOKEN-JAVA
+- **Title:** Secret Exposure Controls (Java)
+- **Threat Mitigated:** API keys, JWTs, or certificates leak through logs or source control.
+- **Detection Signal:** Entropy scanners, regex signatures, and ML classifiers cross-check with test-vulnerabilities.js.
+- **Recommended Fix:** Rotate keys, move to secret managers, scrub history. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
+- **Automation Level:** Auto-created tickets include rotation checklists plus CLI commands.
+- **Validation Steps:** Execute scripts/test-firebase-storage-fix.js to ensure rotation scripts run.
+
+
+#### Control CG-TOKEN-GO
+- **Title:** Secret Exposure Controls (Go)
+- **Threat Mitigated:** API keys, JWTs, or certificates leak through logs or source control.
+- **Detection Signal:** Entropy scanners, regex signatures, and ML classifiers cross-check with test-vulnerabilities.js.
+- **Recommended Fix:** Rotate keys, move to secret managers, scrub history. Leverage GORM, pgx conventions for Go deployments.
+- **Automation Level:** Auto-created tickets include rotation checklists plus CLI commands.
+- **Validation Steps:** Execute scripts/test-firebase-storage-fix.js to ensure rotation scripts run.
+
+
+#### Control CG-TOKEN-RST
+- **Title:** Secret Exposure Controls (Rust)
+- **Threat Mitigated:** API keys, JWTs, or certificates leak through logs or source control.
+- **Detection Signal:** Entropy scanners, regex signatures, and ML classifiers cross-check with test-vulnerabilities.js.
+- **Recommended Fix:** Rotate keys, move to secret managers, scrub history. Leverage SQLx, Diesel conventions for Rust deployments.
+- **Automation Level:** Auto-created tickets include rotation checklists plus CLI commands.
+- **Validation Steps:** Execute scripts/test-firebase-storage-fix.js to ensure rotation scripts run.
+
+
+#### Control CG-TOKEN-PHP
+- **Title:** Secret Exposure Controls (PHP)
+- **Threat Mitigated:** API keys, JWTs, or certificates leak through logs or source control.
+- **Detection Signal:** Entropy scanners, regex signatures, and ML classifiers cross-check with test-vulnerabilities.js.
+- **Recommended Fix:** Rotate keys, move to secret managers, scrub history. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
+- **Automation Level:** Auto-created tickets include rotation checklists plus CLI commands.
+- **Validation Steps:** Execute scripts/test-firebase-storage-fix.js to ensure rotation scripts run.
+
+
+#### Control CG-TOKEN-CS
+- **Title:** Secret Exposure Controls (C#)
+- **Threat Mitigated:** API keys, JWTs, or certificates leak through logs or source control.
+- **Detection Signal:** Entropy scanners, regex signatures, and ML classifiers cross-check with test-vulnerabilities.js.
+- **Recommended Fix:** Rotate keys, move to secret managers, scrub history. Leverage Entity Framework, Dapper conventions for C# deployments.
+- **Automation Level:** Auto-created tickets include rotation checklists plus CLI commands.
+- **Validation Steps:** Execute scripts/test-firebase-storage-fix.js to ensure rotation scripts run.
+
+
+#### Control CG-CORS-JS
+- **Title:** Cross-Origin Resource Sharing Policy (JavaScript)
+- **Threat Mitigated:** Overly permissive CORS allows credentialed cross-site requests.
+- **Detection Signal:** Config linters read public/manifest.json and serverless headers for wildcard origins.
+- **Recommended Fix:** Constrain origins per environment and enforce preflight validation. Leverage Prisma, Knex conventions for JavaScript deployments.
+- **Automation Level:** Dashboard surfaces warnings when more than five origins are allowed.
+- **Validation Steps:** Use scripts/run-accuracy-test.ts --check cors for regression evidence.
+
+
+#### Control CG-CORS-TS
+- **Title:** Cross-Origin Resource Sharing Policy (TypeScript)
+- **Threat Mitigated:** Overly permissive CORS allows credentialed cross-site requests.
+- **Detection Signal:** Config linters read public/manifest.json and serverless headers for wildcard origins.
+- **Recommended Fix:** Constrain origins per environment and enforce preflight validation. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
+- **Automation Level:** Dashboard surfaces warnings when more than five origins are allowed.
+- **Validation Steps:** Use scripts/run-accuracy-test.ts --check cors for regression evidence.
+
+
+#### Control CG-CORS-PY
+- **Title:** Cross-Origin Resource Sharing Policy (Python)
+- **Threat Mitigated:** Overly permissive CORS allows credentialed cross-site requests.
+- **Detection Signal:** Config linters read public/manifest.json and serverless headers for wildcard origins.
+- **Recommended Fix:** Constrain origins per environment and enforce preflight validation. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
+- **Automation Level:** Dashboard surfaces warnings when more than five origins are allowed.
+- **Validation Steps:** Use scripts/run-accuracy-test.ts --check cors for regression evidence.
+
+
+#### Control CG-CORS-JAVA
+- **Title:** Cross-Origin Resource Sharing Policy (Java)
+- **Threat Mitigated:** Overly permissive CORS allows credentialed cross-site requests.
+- **Detection Signal:** Config linters read public/manifest.json and serverless headers for wildcard origins.
+- **Recommended Fix:** Constrain origins per environment and enforce preflight validation. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
+- **Automation Level:** Dashboard surfaces warnings when more than five origins are allowed.
+- **Validation Steps:** Use scripts/run-accuracy-test.ts --check cors for regression evidence.
+
+
+#### Control CG-CORS-GO
+- **Title:** Cross-Origin Resource Sharing Policy (Go)
+- **Threat Mitigated:** Overly permissive CORS allows credentialed cross-site requests.
+- **Detection Signal:** Config linters read public/manifest.json and serverless headers for wildcard origins.
+- **Recommended Fix:** Constrain origins per environment and enforce preflight validation. Leverage GORM, pgx conventions for Go deployments.
+- **Automation Level:** Dashboard surfaces warnings when more than five origins are allowed.
+- **Validation Steps:** Use scripts/run-accuracy-test.ts --check cors for regression evidence.
+
+
+#### Control CG-CORS-RST
+- **Title:** Cross-Origin Resource Sharing Policy (Rust)
+- **Threat Mitigated:** Overly permissive CORS allows credentialed cross-site requests.
+- **Detection Signal:** Config linters read public/manifest.json and serverless headers for wildcard origins.
+- **Recommended Fix:** Constrain origins per environment and enforce preflight validation. Leverage SQLx, Diesel conventions for Rust deployments.
+- **Automation Level:** Dashboard surfaces warnings when more than five origins are allowed.
+- **Validation Steps:** Use scripts/run-accuracy-test.ts --check cors for regression evidence.
+
+
+#### Control CG-CORS-PHP
+- **Title:** Cross-Origin Resource Sharing Policy (PHP)
+- **Threat Mitigated:** Overly permissive CORS allows credentialed cross-site requests.
+- **Detection Signal:** Config linters read public/manifest.json and serverless headers for wildcard origins.
+- **Recommended Fix:** Constrain origins per environment and enforce preflight validation. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
+- **Automation Level:** Dashboard surfaces warnings when more than five origins are allowed.
+- **Validation Steps:** Use scripts/run-accuracy-test.ts --check cors for regression evidence.
+
+
+#### Control CG-CORS-CS
+- **Title:** Cross-Origin Resource Sharing Policy (C#)
+- **Threat Mitigated:** Overly permissive CORS allows credentialed cross-site requests.
+- **Detection Signal:** Config linters read public/manifest.json and serverless headers for wildcard origins.
+- **Recommended Fix:** Constrain origins per environment and enforce preflight validation. Leverage Entity Framework, Dapper conventions for C# deployments.
+- **Automation Level:** Dashboard surfaces warnings when more than five origins are allowed.
+- **Validation Steps:** Use scripts/run-accuracy-test.ts --check cors for regression evidence.
+
+
+#### Control CG-TLS-JS
+- **Title:** Transport Security Posture (JavaScript)
+- **Threat Mitigated:** HTTP-only endpoints or legacy cipher suites expose data in transit.
+- **Detection Signal:** Deployment checks inspect vercel.json, public/robots.txt, and headers for TLS posture.
+- **Recommended Fix:** Force HTTPS redirects, enable HSTS, and adopt modern cipher suites. Leverage Prisma, Knex conventions for JavaScript deployments.
+- **Automation Level:** CI enforces TLS readiness before promoting builds.
+- **Validation Steps:** Scan via scripts/e2e-zip-analysis.ts --include security-headers.
+
+
+#### Control CG-TLS-TS
+- **Title:** Transport Security Posture (TypeScript)
+- **Threat Mitigated:** HTTP-only endpoints or legacy cipher suites expose data in transit.
+- **Detection Signal:** Deployment checks inspect vercel.json, public/robots.txt, and headers for TLS posture.
+- **Recommended Fix:** Force HTTPS redirects, enable HSTS, and adopt modern cipher suites. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
+- **Automation Level:** CI enforces TLS readiness before promoting builds.
+- **Validation Steps:** Scan via scripts/e2e-zip-analysis.ts --include security-headers.
+
+
+#### Control CG-TLS-PY
+- **Title:** Transport Security Posture (Python)
+- **Threat Mitigated:** HTTP-only endpoints or legacy cipher suites expose data in transit.
+- **Detection Signal:** Deployment checks inspect vercel.json, public/robots.txt, and headers for TLS posture.
+- **Recommended Fix:** Force HTTPS redirects, enable HSTS, and adopt modern cipher suites. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
+- **Automation Level:** CI enforces TLS readiness before promoting builds.
+- **Validation Steps:** Scan via scripts/e2e-zip-analysis.ts --include security-headers.
+
+
+#### Control CG-TLS-JAVA
+- **Title:** Transport Security Posture (Java)
+- **Threat Mitigated:** HTTP-only endpoints or legacy cipher suites expose data in transit.
+- **Detection Signal:** Deployment checks inspect vercel.json, public/robots.txt, and headers for TLS posture.
+- **Recommended Fix:** Force HTTPS redirects, enable HSTS, and adopt modern cipher suites. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
+- **Automation Level:** CI enforces TLS readiness before promoting builds.
+- **Validation Steps:** Scan via scripts/e2e-zip-analysis.ts --include security-headers.
+
+
+#### Control CG-TLS-GO
+- **Title:** Transport Security Posture (Go)
+- **Threat Mitigated:** HTTP-only endpoints or legacy cipher suites expose data in transit.
+- **Detection Signal:** Deployment checks inspect vercel.json, public/robots.txt, and headers for TLS posture.
+- **Recommended Fix:** Force HTTPS redirects, enable HSTS, and adopt modern cipher suites. Leverage GORM, pgx conventions for Go deployments.
+- **Automation Level:** CI enforces TLS readiness before promoting builds.
+- **Validation Steps:** Scan via scripts/e2e-zip-analysis.ts --include security-headers.
+
+
+#### Control CG-TLS-RST
+- **Title:** Transport Security Posture (Rust)
+- **Threat Mitigated:** HTTP-only endpoints or legacy cipher suites expose data in transit.
+- **Detection Signal:** Deployment checks inspect vercel.json, public/robots.txt, and headers for TLS posture.
+- **Recommended Fix:** Force HTTPS redirects, enable HSTS, and adopt modern cipher suites. Leverage SQLx, Diesel conventions for Rust deployments.
+- **Automation Level:** CI enforces TLS readiness before promoting builds.
+- **Validation Steps:** Scan via scripts/e2e-zip-analysis.ts --include security-headers.
+
+
+#### Control CG-TLS-PHP
+- **Title:** Transport Security Posture (PHP)
+- **Threat Mitigated:** HTTP-only endpoints or legacy cipher suites expose data in transit.
+- **Detection Signal:** Deployment checks inspect vercel.json, public/robots.txt, and headers for TLS posture.
+- **Recommended Fix:** Force HTTPS redirects, enable HSTS, and adopt modern cipher suites. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
+- **Automation Level:** CI enforces TLS readiness before promoting builds.
+- **Validation Steps:** Scan via scripts/e2e-zip-analysis.ts --include security-headers.
+
+
+#### Control CG-TLS-CS
+- **Title:** Transport Security Posture (C#)
+- **Threat Mitigated:** HTTP-only endpoints or legacy cipher suites expose data in transit.
+- **Detection Signal:** Deployment checks inspect vercel.json, public/robots.txt, and headers for TLS posture.
+- **Recommended Fix:** Force HTTPS redirects, enable HSTS, and adopt modern cipher suites. Leverage Entity Framework, Dapper conventions for C# deployments.
+- **Automation Level:** CI enforces TLS readiness before promoting builds.
+- **Validation Steps:** Scan via scripts/e2e-zip-analysis.ts --include security-headers.
+
+
+#### Control CG-S3-JS
+- **Title:** Bucket Access Lockdown (JavaScript)
+- **Threat Mitigated:** Misconfigured storage buckets leak artifacts or secrets.
+- **Detection Signal:** Infrastructure as code parsers look for public-read ACLs and missing encryption.
+- **Recommended Fix:** Apply least privilege IAM policies and default encryption. Leverage Prisma, Knex conventions for JavaScript deployments.
+- **Automation Level:** Terraform sample includes secure defaults that pass these checks.
+- **Validation Steps:** Run terraform validate plus scripts/test-automation.js --scenario storage.
+
+
+#### Control CG-S3-TS
+- **Title:** Bucket Access Lockdown (TypeScript)
+- **Threat Mitigated:** Misconfigured storage buckets leak artifacts or secrets.
+- **Detection Signal:** Infrastructure as code parsers look for public-read ACLs and missing encryption.
+- **Recommended Fix:** Apply least privilege IAM policies and default encryption. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
+- **Automation Level:** Terraform sample includes secure defaults that pass these checks.
+- **Validation Steps:** Run terraform validate plus scripts/test-automation.js --scenario storage.
+
+
+#### Control CG-S3-PY
+- **Title:** Bucket Access Lockdown (Python)
+- **Threat Mitigated:** Misconfigured storage buckets leak artifacts or secrets.
+- **Detection Signal:** Infrastructure as code parsers look for public-read ACLs and missing encryption.
+- **Recommended Fix:** Apply least privilege IAM policies and default encryption. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
+- **Automation Level:** Terraform sample includes secure defaults that pass these checks.
+- **Validation Steps:** Run terraform validate plus scripts/test-automation.js --scenario storage.
+
+
+#### Control CG-S3-JAVA
+- **Title:** Bucket Access Lockdown (Java)
+- **Threat Mitigated:** Misconfigured storage buckets leak artifacts or secrets.
+- **Detection Signal:** Infrastructure as code parsers look for public-read ACLs and missing encryption.
+- **Recommended Fix:** Apply least privilege IAM policies and default encryption. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
+- **Automation Level:** Terraform sample includes secure defaults that pass these checks.
+- **Validation Steps:** Run terraform validate plus scripts/test-automation.js --scenario storage.
+
+
+#### Control CG-S3-GO
+- **Title:** Bucket Access Lockdown (Go)
+- **Threat Mitigated:** Misconfigured storage buckets leak artifacts or secrets.
+- **Detection Signal:** Infrastructure as code parsers look for public-read ACLs and missing encryption.
+- **Recommended Fix:** Apply least privilege IAM policies and default encryption. Leverage GORM, pgx conventions for Go deployments.
+- **Automation Level:** Terraform sample includes secure defaults that pass these checks.
+- **Validation Steps:** Run terraform validate plus scripts/test-automation.js --scenario storage.
+
+
+#### Control CG-S3-RST
+- **Title:** Bucket Access Lockdown (Rust)
+- **Threat Mitigated:** Misconfigured storage buckets leak artifacts or secrets.
+- **Detection Signal:** Infrastructure as code parsers look for public-read ACLs and missing encryption.
+- **Recommended Fix:** Apply least privilege IAM policies and default encryption. Leverage SQLx, Diesel conventions for Rust deployments.
+- **Automation Level:** Terraform sample includes secure defaults that pass these checks.
+- **Validation Steps:** Run terraform validate plus scripts/test-automation.js --scenario storage.
+
+
+#### Control CG-S3-PHP
+- **Title:** Bucket Access Lockdown (PHP)
+- **Threat Mitigated:** Misconfigured storage buckets leak artifacts or secrets.
+- **Detection Signal:** Infrastructure as code parsers look for public-read ACLs and missing encryption.
+- **Recommended Fix:** Apply least privilege IAM policies and default encryption. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
+- **Automation Level:** Terraform sample includes secure defaults that pass these checks.
+- **Validation Steps:** Run terraform validate plus scripts/test-automation.js --scenario storage.
+
+
+#### Control CG-S3-CS
+- **Title:** Bucket Access Lockdown (C#)
+- **Threat Mitigated:** Misconfigured storage buckets leak artifacts or secrets.
+- **Detection Signal:** Infrastructure as code parsers look for public-read ACLs and missing encryption.
+- **Recommended Fix:** Apply least privilege IAM policies and default encryption. Leverage Entity Framework, Dapper conventions for C# deployments.
+- **Automation Level:** Terraform sample includes secure defaults that pass these checks.
+- **Validation Steps:** Run terraform validate plus scripts/test-automation.js --scenario storage.
+
+
+#### Control CG-JWT-JS
+- **Title:** JWT Integrity Protections (JavaScript)
+- **Threat Mitigated:** Unsigned tokens or weak algorithms compromise session trust.
+- **Detection Signal:** Static scans parse auth helpers for none or symmetric HS256 keys in public repos.
+- **Recommended Fix:** Enforce RSA-based signing, rotate keys, and validate aud, iss, exp claims. Leverage Prisma, Knex conventions for JavaScript deployments.
+- **Automation Level:** AI patch suggestions include sample jwks responses.
+- **Validation Steps:** Use scripts/run-multi-language-tests.js --rule jwt.
+
+
+#### Control CG-JWT-TS
+- **Title:** JWT Integrity Protections (TypeScript)
+- **Threat Mitigated:** Unsigned tokens or weak algorithms compromise session trust.
+- **Detection Signal:** Static scans parse auth helpers for none or symmetric HS256 keys in public repos.
+- **Recommended Fix:** Enforce RSA-based signing, rotate keys, and validate aud, iss, exp claims. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
+- **Automation Level:** AI patch suggestions include sample jwks responses.
+- **Validation Steps:** Use scripts/run-multi-language-tests.js --rule jwt.
+
+
+#### Control CG-JWT-PY
+- **Title:** JWT Integrity Protections (Python)
+- **Threat Mitigated:** Unsigned tokens or weak algorithms compromise session trust.
+- **Detection Signal:** Static scans parse auth helpers for none or symmetric HS256 keys in public repos.
+- **Recommended Fix:** Enforce RSA-based signing, rotate keys, and validate aud, iss, exp claims. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
+- **Automation Level:** AI patch suggestions include sample jwks responses.
+- **Validation Steps:** Use scripts/run-multi-language-tests.js --rule jwt.
+
+
+#### Control CG-JWT-JAVA
+- **Title:** JWT Integrity Protections (Java)
+- **Threat Mitigated:** Unsigned tokens or weak algorithms compromise session trust.
+- **Detection Signal:** Static scans parse auth helpers for none or symmetric HS256 keys in public repos.
+- **Recommended Fix:** Enforce RSA-based signing, rotate keys, and validate aud, iss, exp claims. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
+- **Automation Level:** AI patch suggestions include sample jwks responses.
+- **Validation Steps:** Use scripts/run-multi-language-tests.js --rule jwt.
+
+
+#### Control CG-JWT-GO
+- **Title:** JWT Integrity Protections (Go)
+- **Threat Mitigated:** Unsigned tokens or weak algorithms compromise session trust.
+- **Detection Signal:** Static scans parse auth helpers for none or symmetric HS256 keys in public repos.
+- **Recommended Fix:** Enforce RSA-based signing, rotate keys, and validate aud, iss, exp claims. Leverage GORM, pgx conventions for Go deployments.
+- **Automation Level:** AI patch suggestions include sample jwks responses.
+- **Validation Steps:** Use scripts/run-multi-language-tests.js --rule jwt.
+
+
+#### Control CG-JWT-RST
+- **Title:** JWT Integrity Protections (Rust)
+- **Threat Mitigated:** Unsigned tokens or weak algorithms compromise session trust.
+- **Detection Signal:** Static scans parse auth helpers for none or symmetric HS256 keys in public repos.
+- **Recommended Fix:** Enforce RSA-based signing, rotate keys, and validate aud, iss, exp claims. Leverage SQLx, Diesel conventions for Rust deployments.
+- **Automation Level:** AI patch suggestions include sample jwks responses.
+- **Validation Steps:** Use scripts/run-multi-language-tests.js --rule jwt.
+
+
+#### Control CG-JWT-PHP
+- **Title:** JWT Integrity Protections (PHP)
+- **Threat Mitigated:** Unsigned tokens or weak algorithms compromise session trust.
+- **Detection Signal:** Static scans parse auth helpers for none or symmetric HS256 keys in public repos.
+- **Recommended Fix:** Enforce RSA-based signing, rotate keys, and validate aud, iss, exp claims. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
+- **Automation Level:** AI patch suggestions include sample jwks responses.
+- **Validation Steps:** Use scripts/run-multi-language-tests.js --rule jwt.
+
+
+#### Control CG-JWT-CS
+- **Title:** JWT Integrity Protections (C#)
+- **Threat Mitigated:** Unsigned tokens or weak algorithms compromise session trust.
+- **Detection Signal:** Static scans parse auth helpers for none or symmetric HS256 keys in public repos.
+- **Recommended Fix:** Enforce RSA-based signing, rotate keys, and validate aud, iss, exp claims. Leverage Entity Framework, Dapper conventions for C# deployments.
+- **Automation Level:** AI patch suggestions include sample jwks responses.
+- **Validation Steps:** Use scripts/run-multi-language-tests.js --rule jwt.
+
+
+#### Control CG-SSO-JS
+- **Title:** SSO Configuration Health (JavaScript)
+- **Threat Mitigated:** Mismatched redirect URIs or disabled PKCE create account takeover vectors.
+- **Detection Signal:** Config analyzers parse .env and provider manifests for SSO toggles.
+- **Recommended Fix:** Enable PKCE, limit redirect hosts, enforce signed assertions. Leverage Prisma, Knex conventions for JavaScript deployments.
+- **Automation Level:** Setup wizard surfaces live validation as values are entered.
+- **Validation Steps:** Perform login smoke tests across providers documented in Appendix D.
+
+
+#### Control CG-SSO-TS
+- **Title:** SSO Configuration Health (TypeScript)
+- **Threat Mitigated:** Mismatched redirect URIs or disabled PKCE create account takeover vectors.
+- **Detection Signal:** Config analyzers parse .env and provider manifests for SSO toggles.
+- **Recommended Fix:** Enable PKCE, limit redirect hosts, enforce signed assertions. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
+- **Automation Level:** Setup wizard surfaces live validation as values are entered.
+- **Validation Steps:** Perform login smoke tests across providers documented in Appendix D.
+
+
+#### Control CG-SSO-PY
+- **Title:** SSO Configuration Health (Python)
+- **Threat Mitigated:** Mismatched redirect URIs or disabled PKCE create account takeover vectors.
+- **Detection Signal:** Config analyzers parse .env and provider manifests for SSO toggles.
+- **Recommended Fix:** Enable PKCE, limit redirect hosts, enforce signed assertions. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
+- **Automation Level:** Setup wizard surfaces live validation as values are entered.
+- **Validation Steps:** Perform login smoke tests across providers documented in Appendix D.
+
+
+#### Control CG-SSO-JAVA
+- **Title:** SSO Configuration Health (Java)
+- **Threat Mitigated:** Mismatched redirect URIs or disabled PKCE create account takeover vectors.
+- **Detection Signal:** Config analyzers parse .env and provider manifests for SSO toggles.
+- **Recommended Fix:** Enable PKCE, limit redirect hosts, enforce signed assertions. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
+- **Automation Level:** Setup wizard surfaces live validation as values are entered.
+- **Validation Steps:** Perform login smoke tests across providers documented in Appendix D.
+
+
+#### Control CG-SSO-GO
+- **Title:** SSO Configuration Health (Go)
+- **Threat Mitigated:** Mismatched redirect URIs or disabled PKCE create account takeover vectors.
+- **Detection Signal:** Config analyzers parse .env and provider manifests for SSO toggles.
+- **Recommended Fix:** Enable PKCE, limit redirect hosts, enforce signed assertions. Leverage GORM, pgx conventions for Go deployments.
+- **Automation Level:** Setup wizard surfaces live validation as values are entered.
+- **Validation Steps:** Perform login smoke tests across providers documented in Appendix D.
+
+
+#### Control CG-SSO-RST
+- **Title:** SSO Configuration Health (Rust)
+- **Threat Mitigated:** Mismatched redirect URIs or disabled PKCE create account takeover vectors.
+- **Detection Signal:** Config analyzers parse .env and provider manifests for SSO toggles.
+- **Recommended Fix:** Enable PKCE, limit redirect hosts, enforce signed assertions. Leverage SQLx, Diesel conventions for Rust deployments.
+- **Automation Level:** Setup wizard surfaces live validation as values are entered.
+- **Validation Steps:** Perform login smoke tests across providers documented in Appendix D.
+
+
+#### Control CG-SSO-PHP
+- **Title:** SSO Configuration Health (PHP)
+- **Threat Mitigated:** Mismatched redirect URIs or disabled PKCE create account takeover vectors.
+- **Detection Signal:** Config analyzers parse .env and provider manifests for SSO toggles.
+- **Recommended Fix:** Enable PKCE, limit redirect hosts, enforce signed assertions. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
+- **Automation Level:** Setup wizard surfaces live validation as values are entered.
+- **Validation Steps:** Perform login smoke tests across providers documented in Appendix D.
+
+
+#### Control CG-SSO-CS
+- **Title:** SSO Configuration Health (C#)
+- **Threat Mitigated:** Mismatched redirect URIs or disabled PKCE create account takeover vectors.
+- **Detection Signal:** Config analyzers parse .env and provider manifests for SSO toggles.
+- **Recommended Fix:** Enable PKCE, limit redirect hosts, enforce signed assertions. Leverage Entity Framework, Dapper conventions for C# deployments.
+- **Automation Level:** Setup wizard surfaces live validation as values are entered.
+- **Validation Steps:** Perform login smoke tests across providers documented in Appendix D.
+
+
+#### Control CG-RBAC-JS
+- **Title:** Role-Based Access Control Precision (JavaScript)
+- **Threat Mitigated:** Overbroad roles expose sensitive reports.
+- **Detection Signal:** Policy diffing ensures mapping in src/components/auth matches documented personas.
+- **Recommended Fix:** Scope roles per workspace and enforce read vs admin separation. Leverage Prisma, Knex conventions for JavaScript deployments.
+- **Automation Level:** Dashboard heatmaps highlight overly permissive grants.
+- **Validation Steps:** Use feature flag toggles inside src/components/features and retest.
+
+
+#### Control CG-RBAC-TS
+- **Title:** Role-Based Access Control Precision (TypeScript)
+- **Threat Mitigated:** Overbroad roles expose sensitive reports.
+- **Detection Signal:** Policy diffing ensures mapping in src/components/auth matches documented personas.
+- **Recommended Fix:** Scope roles per workspace and enforce read vs admin separation. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
+- **Automation Level:** Dashboard heatmaps highlight overly permissive grants.
+- **Validation Steps:** Use feature flag toggles inside src/components/features and retest.
+
+
+#### Control CG-RBAC-PY
+- **Title:** Role-Based Access Control Precision (Python)
+- **Threat Mitigated:** Overbroad roles expose sensitive reports.
+- **Detection Signal:** Policy diffing ensures mapping in src/components/auth matches documented personas.
+- **Recommended Fix:** Scope roles per workspace and enforce read vs admin separation. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
+- **Automation Level:** Dashboard heatmaps highlight overly permissive grants.
+- **Validation Steps:** Use feature flag toggles inside src/components/features and retest.
+
+
+#### Control CG-RBAC-JAVA
+- **Title:** Role-Based Access Control Precision (Java)
+- **Threat Mitigated:** Overbroad roles expose sensitive reports.
+- **Detection Signal:** Policy diffing ensures mapping in src/components/auth matches documented personas.
+- **Recommended Fix:** Scope roles per workspace and enforce read vs admin separation. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
+- **Automation Level:** Dashboard heatmaps highlight overly permissive grants.
+- **Validation Steps:** Use feature flag toggles inside src/components/features and retest.
+
+
+#### Control CG-RBAC-GO
+- **Title:** Role-Based Access Control Precision (Go)
+- **Threat Mitigated:** Overbroad roles expose sensitive reports.
+- **Detection Signal:** Policy diffing ensures mapping in src/components/auth matches documented personas.
+- **Recommended Fix:** Scope roles per workspace and enforce read vs admin separation. Leverage GORM, pgx conventions for Go deployments.
+- **Automation Level:** Dashboard heatmaps highlight overly permissive grants.
+- **Validation Steps:** Use feature flag toggles inside src/components/features and retest.
+
+
+#### Control CG-RBAC-RST
+- **Title:** Role-Based Access Control Precision (Rust)
+- **Threat Mitigated:** Overbroad roles expose sensitive reports.
+- **Detection Signal:** Policy diffing ensures mapping in src/components/auth matches documented personas.
+- **Recommended Fix:** Scope roles per workspace and enforce read vs admin separation. Leverage SQLx, Diesel conventions for Rust deployments.
+- **Automation Level:** Dashboard heatmaps highlight overly permissive grants.
+- **Validation Steps:** Use feature flag toggles inside src/components/features and retest.
+
+
+#### Control CG-RBAC-PHP
+- **Title:** Role-Based Access Control Precision (PHP)
+- **Threat Mitigated:** Overbroad roles expose sensitive reports.
+- **Detection Signal:** Policy diffing ensures mapping in src/components/auth matches documented personas.
+- **Recommended Fix:** Scope roles per workspace and enforce read vs admin separation. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
+- **Automation Level:** Dashboard heatmaps highlight overly permissive grants.
+- **Validation Steps:** Use feature flag toggles inside src/components/features and retest.
+
+
+#### Control CG-RBAC-CS
+- **Title:** Role-Based Access Control Precision (C#)
+- **Threat Mitigated:** Overbroad roles expose sensitive reports.
+- **Detection Signal:** Policy diffing ensures mapping in src/components/auth matches documented personas.
+- **Recommended Fix:** Scope roles per workspace and enforce read vs admin separation. Leverage Entity Framework, Dapper conventions for C# deployments.
+- **Automation Level:** Dashboard heatmaps highlight overly permissive grants.
+- **Validation Steps:** Use feature flag toggles inside src/components/features and retest.
+
+
+#### Control CG-SBOM-JS
+- **Title:** Software Bill of Materials Accuracy (JavaScript)
+- **Threat Mitigated:** Outdated dependency inventories hide vulnerable packages.
+- **Detection Signal:** Analyzer compares package-lock snapshots with latest advisories.
+- **Recommended Fix:** Regenerate SBOM per build, upgrade dependencies, document exceptions. Leverage Prisma, Knex conventions for JavaScript deployments.
+- **Automation Level:** CI uploads SPDX/SBOM attachments with each artifact.
+- **Validation Steps:** Use scripts/run-all-tests.ts --sbom true.
+
+
+#### Control CG-SBOM-TS
+- **Title:** Software Bill of Materials Accuracy (TypeScript)
+- **Threat Mitigated:** Outdated dependency inventories hide vulnerable packages.
+- **Detection Signal:** Analyzer compares package-lock snapshots with latest advisories.
+- **Recommended Fix:** Regenerate SBOM per build, upgrade dependencies, document exceptions. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
+- **Automation Level:** CI uploads SPDX/SBOM attachments with each artifact.
+- **Validation Steps:** Use scripts/run-all-tests.ts --sbom true.
+
+
+#### Control CG-SBOM-PY
+- **Title:** Software Bill of Materials Accuracy (Python)
+- **Threat Mitigated:** Outdated dependency inventories hide vulnerable packages.
+- **Detection Signal:** Analyzer compares package-lock snapshots with latest advisories.
+- **Recommended Fix:** Regenerate SBOM per build, upgrade dependencies, document exceptions. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
+- **Automation Level:** CI uploads SPDX/SBOM attachments with each artifact.
+- **Validation Steps:** Use scripts/run-all-tests.ts --sbom true.
+
+
+#### Control CG-SBOM-JAVA
+- **Title:** Software Bill of Materials Accuracy (Java)
+- **Threat Mitigated:** Outdated dependency inventories hide vulnerable packages.
+- **Detection Signal:** Analyzer compares package-lock snapshots with latest advisories.
+- **Recommended Fix:** Regenerate SBOM per build, upgrade dependencies, document exceptions. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
+- **Automation Level:** CI uploads SPDX/SBOM attachments with each artifact.
+- **Validation Steps:** Use scripts/run-all-tests.ts --sbom true.
+
+
+#### Control CG-SBOM-GO
+- **Title:** Software Bill of Materials Accuracy (Go)
+- **Threat Mitigated:** Outdated dependency inventories hide vulnerable packages.
+- **Detection Signal:** Analyzer compares package-lock snapshots with latest advisories.
+- **Recommended Fix:** Regenerate SBOM per build, upgrade dependencies, document exceptions. Leverage GORM, pgx conventions for Go deployments.
+- **Automation Level:** CI uploads SPDX/SBOM attachments with each artifact.
+- **Validation Steps:** Use scripts/run-all-tests.ts --sbom true.
+
+
+#### Control CG-SBOM-RST
+- **Title:** Software Bill of Materials Accuracy (Rust)
+- **Threat Mitigated:** Outdated dependency inventories hide vulnerable packages.
+- **Detection Signal:** Analyzer compares package-lock snapshots with latest advisories.
+- **Recommended Fix:** Regenerate SBOM per build, upgrade dependencies, document exceptions. Leverage SQLx, Diesel conventions for Rust deployments.
+- **Automation Level:** CI uploads SPDX/SBOM attachments with each artifact.
+- **Validation Steps:** Use scripts/run-all-tests.ts --sbom true.
+
+
+#### Control CG-SBOM-PHP
+- **Title:** Software Bill of Materials Accuracy (PHP)
+- **Threat Mitigated:** Outdated dependency inventories hide vulnerable packages.
+- **Detection Signal:** Analyzer compares package-lock snapshots with latest advisories.
+- **Recommended Fix:** Regenerate SBOM per build, upgrade dependencies, document exceptions. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
+- **Automation Level:** CI uploads SPDX/SBOM attachments with each artifact.
+- **Validation Steps:** Use scripts/run-all-tests.ts --sbom true.
+
+
+#### Control CG-SBOM-CS
+- **Title:** Software Bill of Materials Accuracy (C#)
+- **Threat Mitigated:** Outdated dependency inventories hide vulnerable packages.
+- **Detection Signal:** Analyzer compares package-lock snapshots with latest advisories.
+- **Recommended Fix:** Regenerate SBOM per build, upgrade dependencies, document exceptions. Leverage Entity Framework, Dapper conventions for C# deployments.
+- **Automation Level:** CI uploads SPDX/SBOM attachments with each artifact.
+- **Validation Steps:** Use scripts/run-all-tests.ts --sbom true.
+
+
+#### Control CG-LLM-JS
+- **Title:** LLM Prompt Injection Defenses (JavaScript)
+- **Threat Mitigated:** Malicious repositories try to hijack AI instructions inside prompt templates.
+- **Detection Signal:** Sanitizers review context windows and remove policy-violating content before inference.
+- **Recommended Fix:** Apply allowlisted instruction set, encode prompts, and sandbox AI output. Leverage Prisma, Knex conventions for JavaScript deployments.
+- **Automation Level:** src/components/ai enforces guardrails before sending to providers.
+- **Validation Steps:** Replay adversarial prompts via tmp_rovodev_comprehensive_test.ts.
+
+
+#### Control CG-LLM-TS
+- **Title:** LLM Prompt Injection Defenses (TypeScript)
+- **Threat Mitigated:** Malicious repositories try to hijack AI instructions inside prompt templates.
+- **Detection Signal:** Sanitizers review context windows and remove policy-violating content before inference.
+- **Recommended Fix:** Apply allowlisted instruction set, encode prompts, and sandbox AI output. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
+- **Automation Level:** src/components/ai enforces guardrails before sending to providers.
+- **Validation Steps:** Replay adversarial prompts via tmp_rovodev_comprehensive_test.ts.
+
+
+#### Control CG-LLM-PY
+- **Title:** LLM Prompt Injection Defenses (Python)
+- **Threat Mitigated:** Malicious repositories try to hijack AI instructions inside prompt templates.
+- **Detection Signal:** Sanitizers review context windows and remove policy-violating content before inference.
+- **Recommended Fix:** Apply allowlisted instruction set, encode prompts, and sandbox AI output. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
+- **Automation Level:** src/components/ai enforces guardrails before sending to providers.
+- **Validation Steps:** Replay adversarial prompts via tmp_rovodev_comprehensive_test.ts.
+
+
+#### Control CG-LLM-JAVA
+- **Title:** LLM Prompt Injection Defenses (Java)
+- **Threat Mitigated:** Malicious repositories try to hijack AI instructions inside prompt templates.
+- **Detection Signal:** Sanitizers review context windows and remove policy-violating content before inference.
+- **Recommended Fix:** Apply allowlisted instruction set, encode prompts, and sandbox AI output. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
+- **Automation Level:** src/components/ai enforces guardrails before sending to providers.
+- **Validation Steps:** Replay adversarial prompts via tmp_rovodev_comprehensive_test.ts.
+
+
+#### Control CG-LLM-GO
+- **Title:** LLM Prompt Injection Defenses (Go)
+- **Threat Mitigated:** Malicious repositories try to hijack AI instructions inside prompt templates.
+- **Detection Signal:** Sanitizers review context windows and remove policy-violating content before inference.
+- **Recommended Fix:** Apply allowlisted instruction set, encode prompts, and sandbox AI output. Leverage GORM, pgx conventions for Go deployments.
+- **Automation Level:** src/components/ai enforces guardrails before sending to providers.
+- **Validation Steps:** Replay adversarial prompts via tmp_rovodev_comprehensive_test.ts.
+
+
+#### Control CG-LLM-RST
+- **Title:** LLM Prompt Injection Defenses (Rust)
+- **Threat Mitigated:** Malicious repositories try to hijack AI instructions inside prompt templates.
+- **Detection Signal:** Sanitizers review context windows and remove policy-violating content before inference.
+- **Recommended Fix:** Apply allowlisted instruction set, encode prompts, and sandbox AI output. Leverage SQLx, Diesel conventions for Rust deployments.
+- **Automation Level:** src/components/ai enforces guardrails before sending to providers.
+- **Validation Steps:** Replay adversarial prompts via tmp_rovodev_comprehensive_test.ts.
+
+
+#### Control CG-LLM-PHP
+- **Title:** LLM Prompt Injection Defenses (PHP)
+- **Threat Mitigated:** Malicious repositories try to hijack AI instructions inside prompt templates.
+- **Detection Signal:** Sanitizers review context windows and remove policy-violating content before inference.
+- **Recommended Fix:** Apply allowlisted instruction set, encode prompts, and sandbox AI output. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
+- **Automation Level:** src/components/ai enforces guardrails before sending to providers.
+- **Validation Steps:** Replay adversarial prompts via tmp_rovodev_comprehensive_test.ts.
+
+
+#### Control CG-LLM-CS
+- **Title:** LLM Prompt Injection Defenses (C#)
+- **Threat Mitigated:** Malicious repositories try to hijack AI instructions inside prompt templates.
+- **Detection Signal:** Sanitizers review context windows and remove policy-violating content before inference.
+- **Recommended Fix:** Apply allowlisted instruction set, encode prompts, and sandbox AI output. Leverage Entity Framework, Dapper conventions for C# deployments.
+- **Automation Level:** src/components/ai enforces guardrails before sending to providers.
+- **Validation Steps:** Replay adversarial prompts via tmp_rovodev_comprehensive_test.ts.
+
+
+#### Control CG-CACHE-JS
+- **Title:** Sensitive Data Caching Controls (JavaScript)
+- **Threat Mitigated:** Secrets or tokens cached by browsers/CDNs linger beyond retention policies.
+- **Detection Signal:** Header analyzers ensure Cache-Control + Pragma directives accompany API responses.
+- **Recommended Fix:** Disable caching for sensitive routes; leverage service worker cache busting. Leverage Prisma, Knex conventions for JavaScript deployments.
+- **Automation Level:** public/sw.js contains rule templates that can be toggled per env.
+- **Validation Steps:** Inspect network tab during npm run dev plus automated tests.
+
+
+#### Control CG-CACHE-TS
+- **Title:** Sensitive Data Caching Controls (TypeScript)
+- **Threat Mitigated:** Secrets or tokens cached by browsers/CDNs linger beyond retention policies.
+- **Detection Signal:** Header analyzers ensure Cache-Control + Pragma directives accompany API responses.
+- **Recommended Fix:** Disable caching for sensitive routes; leverage service worker cache busting. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
+- **Automation Level:** public/sw.js contains rule templates that can be toggled per env.
+- **Validation Steps:** Inspect network tab during npm run dev plus automated tests.
+
+
+#### Control CG-CACHE-PY
+- **Title:** Sensitive Data Caching Controls (Python)
+- **Threat Mitigated:** Secrets or tokens cached by browsers/CDNs linger beyond retention policies.
+- **Detection Signal:** Header analyzers ensure Cache-Control + Pragma directives accompany API responses.
+- **Recommended Fix:** Disable caching for sensitive routes; leverage service worker cache busting. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
+- **Automation Level:** public/sw.js contains rule templates that can be toggled per env.
+- **Validation Steps:** Inspect network tab during npm run dev plus automated tests.
+
+
+#### Control CG-CACHE-JAVA
+- **Title:** Sensitive Data Caching Controls (Java)
+- **Threat Mitigated:** Secrets or tokens cached by browsers/CDNs linger beyond retention policies.
+- **Detection Signal:** Header analyzers ensure Cache-Control + Pragma directives accompany API responses.
+- **Recommended Fix:** Disable caching for sensitive routes; leverage service worker cache busting. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
+- **Automation Level:** public/sw.js contains rule templates that can be toggled per env.
+- **Validation Steps:** Inspect network tab during npm run dev plus automated tests.
+
+
+#### Control CG-CACHE-GO
+- **Title:** Sensitive Data Caching Controls (Go)
+- **Threat Mitigated:** Secrets or tokens cached by browsers/CDNs linger beyond retention policies.
+- **Detection Signal:** Header analyzers ensure Cache-Control + Pragma directives accompany API responses.
+- **Recommended Fix:** Disable caching for sensitive routes; leverage service worker cache busting. Leverage GORM, pgx conventions for Go deployments.
+- **Automation Level:** public/sw.js contains rule templates that can be toggled per env.
+- **Validation Steps:** Inspect network tab during npm run dev plus automated tests.
+
+
+#### Control CG-CACHE-RST
+- **Title:** Sensitive Data Caching Controls (Rust)
+- **Threat Mitigated:** Secrets or tokens cached by browsers/CDNs linger beyond retention policies.
+- **Detection Signal:** Header analyzers ensure Cache-Control + Pragma directives accompany API responses.
+- **Recommended Fix:** Disable caching for sensitive routes; leverage service worker cache busting. Leverage SQLx, Diesel conventions for Rust deployments.
+- **Automation Level:** public/sw.js contains rule templates that can be toggled per env.
+- **Validation Steps:** Inspect network tab during npm run dev plus automated tests.
+
+
+#### Control CG-CACHE-PHP
+- **Title:** Sensitive Data Caching Controls (PHP)
+- **Threat Mitigated:** Secrets or tokens cached by browsers/CDNs linger beyond retention policies.
+- **Detection Signal:** Header analyzers ensure Cache-Control + Pragma directives accompany API responses.
+- **Recommended Fix:** Disable caching for sensitive routes; leverage service worker cache busting. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
+- **Automation Level:** public/sw.js contains rule templates that can be toggled per env.
+- **Validation Steps:** Inspect network tab during npm run dev plus automated tests.
+
+
+#### Control CG-CACHE-CS
+- **Title:** Sensitive Data Caching Controls (C#)
+- **Threat Mitigated:** Secrets or tokens cached by browsers/CDNs linger beyond retention policies.
+- **Detection Signal:** Header analyzers ensure Cache-Control + Pragma directives accompany API responses.
+- **Recommended Fix:** Disable caching for sensitive routes; leverage service worker cache busting. Leverage Entity Framework, Dapper conventions for C# deployments.
+- **Automation Level:** public/sw.js contains rule templates that can be toggled per env.
+- **Validation Steps:** Inspect network tab during npm run dev plus automated tests.
+
+
+#### Control CG-GRAPH-JS
+- **Title:** GraphQL Introspection Lockdown (JavaScript)
+- **Threat Mitigated:** Production schemas expose internal types enabling targeted attacks.
+- **Detection Signal:** GraphQL AST parser spots introspection: true flags outside dev mode.
+- **Recommended Fix:** Disable introspection in prod, add allowlisted queries, monitor query cost. Leverage Prisma, Knex conventions for JavaScript deployments.
+- **Automation Level:** AI assistant offers persisted query templates.
+- **Validation Steps:** Invoke GraphQL bridge with introspection queries to verify rejection.
+
+
+#### Control CG-GRAPH-TS
+- **Title:** GraphQL Introspection Lockdown (TypeScript)
+- **Threat Mitigated:** Production schemas expose internal types enabling targeted attacks.
+- **Detection Signal:** GraphQL AST parser spots introspection: true flags outside dev mode.
+- **Recommended Fix:** Disable introspection in prod, add allowlisted queries, monitor query cost. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
+- **Automation Level:** AI assistant offers persisted query templates.
+- **Validation Steps:** Invoke GraphQL bridge with introspection queries to verify rejection.
+
+
+#### Control CG-GRAPH-PY
+- **Title:** GraphQL Introspection Lockdown (Python)
+- **Threat Mitigated:** Production schemas expose internal types enabling targeted attacks.
+- **Detection Signal:** GraphQL AST parser spots introspection: true flags outside dev mode.
+- **Recommended Fix:** Disable introspection in prod, add allowlisted queries, monitor query cost. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
+- **Automation Level:** AI assistant offers persisted query templates.
+- **Validation Steps:** Invoke GraphQL bridge with introspection queries to verify rejection.
+
+
+#### Control CG-GRAPH-JAVA
+- **Title:** GraphQL Introspection Lockdown (Java)
+- **Threat Mitigated:** Production schemas expose internal types enabling targeted attacks.
+- **Detection Signal:** GraphQL AST parser spots introspection: true flags outside dev mode.
+- **Recommended Fix:** Disable introspection in prod, add allowlisted queries, monitor query cost. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
+- **Automation Level:** AI assistant offers persisted query templates.
+- **Validation Steps:** Invoke GraphQL bridge with introspection queries to verify rejection.
+
+
+#### Control CG-GRAPH-GO
+- **Title:** GraphQL Introspection Lockdown (Go)
+- **Threat Mitigated:** Production schemas expose internal types enabling targeted attacks.
+- **Detection Signal:** GraphQL AST parser spots introspection: true flags outside dev mode.
+- **Recommended Fix:** Disable introspection in prod, add allowlisted queries, monitor query cost. Leverage GORM, pgx conventions for Go deployments.
+- **Automation Level:** AI assistant offers persisted query templates.
+- **Validation Steps:** Invoke GraphQL bridge with introspection queries to verify rejection.
+
+
+#### Control CG-GRAPH-RST
+- **Title:** GraphQL Introspection Lockdown (Rust)
+- **Threat Mitigated:** Production schemas expose internal types enabling targeted attacks.
+- **Detection Signal:** GraphQL AST parser spots introspection: true flags outside dev mode.
+- **Recommended Fix:** Disable introspection in prod, add allowlisted queries, monitor query cost. Leverage SQLx, Diesel conventions for Rust deployments.
+- **Automation Level:** AI assistant offers persisted query templates.
+- **Validation Steps:** Invoke GraphQL bridge with introspection queries to verify rejection.
+
+
+#### Control CG-GRAPH-PHP
+- **Title:** GraphQL Introspection Lockdown (PHP)
+- **Threat Mitigated:** Production schemas expose internal types enabling targeted attacks.
+- **Detection Signal:** GraphQL AST parser spots introspection: true flags outside dev mode.
+- **Recommended Fix:** Disable introspection in prod, add allowlisted queries, monitor query cost. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
+- **Automation Level:** AI assistant offers persisted query templates.
+- **Validation Steps:** Invoke GraphQL bridge with introspection queries to verify rejection.
+
+
+#### Control CG-GRAPH-CS
+- **Title:** GraphQL Introspection Lockdown (C#)
+- **Threat Mitigated:** Production schemas expose internal types enabling targeted attacks.
+- **Detection Signal:** GraphQL AST parser spots introspection: true flags outside dev mode.
+- **Recommended Fix:** Disable introspection in prod, add allowlisted queries, monitor query cost. Leverage Entity Framework, Dapper conventions for C# deployments.
+- **Automation Level:** AI assistant offers persisted query templates.
+- **Validation Steps:** Invoke GraphQL bridge with introspection queries to verify rejection.
+
+
+#### Control CG-RATE-JS
+- **Title:** Rate Limiting & Throttling (JavaScript)
+- **Threat Mitigated:** Aggressive clients exhaust compute or brute-force credentials.
+- **Detection Signal:** Policy files and serverless handlers inspected for missing limiter middleware.
+- **Recommended Fix:** Adopt token bucket or sliding window algorithms; return 429 with retry hints. Leverage Prisma, Knex conventions for JavaScript deployments.
+- **Automation Level:** Sample limiter middleware shipped in src/lib.
+- **Validation Steps:** Load-test using scripts/test-firebase-history.js.
+
+
+#### Control CG-RATE-TS
+- **Title:** Rate Limiting & Throttling (TypeScript)
+- **Threat Mitigated:** Aggressive clients exhaust compute or brute-force credentials.
+- **Detection Signal:** Policy files and serverless handlers inspected for missing limiter middleware.
+- **Recommended Fix:** Adopt token bucket or sliding window algorithms; return 429 with retry hints. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
+- **Automation Level:** Sample limiter middleware shipped in src/lib.
+- **Validation Steps:** Load-test using scripts/test-firebase-history.js.
+
+
+#### Control CG-RATE-PY
+- **Title:** Rate Limiting & Throttling (Python)
+- **Threat Mitigated:** Aggressive clients exhaust compute or brute-force credentials.
+- **Detection Signal:** Policy files and serverless handlers inspected for missing limiter middleware.
+- **Recommended Fix:** Adopt token bucket or sliding window algorithms; return 429 with retry hints. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
+- **Automation Level:** Sample limiter middleware shipped in src/lib.
+- **Validation Steps:** Load-test using scripts/test-firebase-history.js.
+
+
+#### Control CG-RATE-JAVA
+- **Title:** Rate Limiting & Throttling (Java)
+- **Threat Mitigated:** Aggressive clients exhaust compute or brute-force credentials.
+- **Detection Signal:** Policy files and serverless handlers inspected for missing limiter middleware.
+- **Recommended Fix:** Adopt token bucket or sliding window algorithms; return 429 with retry hints. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
+- **Automation Level:** Sample limiter middleware shipped in src/lib.
+- **Validation Steps:** Load-test using scripts/test-firebase-history.js.
+
+
+#### Control CG-RATE-GO
+- **Title:** Rate Limiting & Throttling (Go)
+- **Threat Mitigated:** Aggressive clients exhaust compute or brute-force credentials.
+- **Detection Signal:** Policy files and serverless handlers inspected for missing limiter middleware.
+- **Recommended Fix:** Adopt token bucket or sliding window algorithms; return 429 with retry hints. Leverage GORM, pgx conventions for Go deployments.
+- **Automation Level:** Sample limiter middleware shipped in src/lib.
+- **Validation Steps:** Load-test using scripts/test-firebase-history.js.
+
+
+#### Control CG-RATE-RST
+- **Title:** Rate Limiting & Throttling (Rust)
+- **Threat Mitigated:** Aggressive clients exhaust compute or brute-force credentials.
+- **Detection Signal:** Policy files and serverless handlers inspected for missing limiter middleware.
+- **Recommended Fix:** Adopt token bucket or sliding window algorithms; return 429 with retry hints. Leverage SQLx, Diesel conventions for Rust deployments.
+- **Automation Level:** Sample limiter middleware shipped in src/lib.
+- **Validation Steps:** Load-test using scripts/test-firebase-history.js.
+
+
+#### Control CG-RATE-PHP
+- **Title:** Rate Limiting & Throttling (PHP)
+- **Threat Mitigated:** Aggressive clients exhaust compute or brute-force credentials.
+- **Detection Signal:** Policy files and serverless handlers inspected for missing limiter middleware.
+- **Recommended Fix:** Adopt token bucket or sliding window algorithms; return 429 with retry hints. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
+- **Automation Level:** Sample limiter middleware shipped in src/lib.
+- **Validation Steps:** Load-test using scripts/test-firebase-history.js.
+
+
+#### Control CG-RATE-CS
+- **Title:** Rate Limiting & Throttling (C#)
+- **Threat Mitigated:** Aggressive clients exhaust compute or brute-force credentials.
+- **Detection Signal:** Policy files and serverless handlers inspected for missing limiter middleware.
+- **Recommended Fix:** Adopt token bucket or sliding window algorithms; return 429 with retry hints. Leverage Entity Framework, Dapper conventions for C# deployments.
+- **Automation Level:** Sample limiter middleware shipped in src/lib.
+- **Validation Steps:** Load-test using scripts/test-firebase-history.js.
+
+
+#### Control CG-LINT-JS
+- **Title:** Secure Lint Configuration (JavaScript)
+- **Threat Mitigated:** Disabled ESLint/TSLint rules hide insecure patterns.
+- **Detection Signal:** eslint.config.js audited for overrides, ensures security plugins stay enabled.
+- **Recommended Fix:** Re-enable critical rules or adopt custom rule packs. Leverage Prisma, Knex conventions for JavaScript deployments.
+- **Automation Level:** CI fails when eslint reports new warnings beyond baseline.
+- **Validation Steps:** Run npm run lint locally; share screenshot in PR.
+
+
+#### Control CG-LINT-TS
+- **Title:** Secure Lint Configuration (TypeScript)
+- **Threat Mitigated:** Disabled ESLint/TSLint rules hide insecure patterns.
+- **Detection Signal:** eslint.config.js audited for overrides, ensures security plugins stay enabled.
+- **Recommended Fix:** Re-enable critical rules or adopt custom rule packs. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
+- **Automation Level:** CI fails when eslint reports new warnings beyond baseline.
+- **Validation Steps:** Run npm run lint locally; share screenshot in PR.
+
+
+#### Control CG-LINT-PY
+- **Title:** Secure Lint Configuration (Python)
+- **Threat Mitigated:** Disabled ESLint/TSLint rules hide insecure patterns.
+- **Detection Signal:** eslint.config.js audited for overrides, ensures security plugins stay enabled.
+- **Recommended Fix:** Re-enable critical rules or adopt custom rule packs. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
+- **Automation Level:** CI fails when eslint reports new warnings beyond baseline.
+- **Validation Steps:** Run npm run lint locally; share screenshot in PR.
+
+
+#### Control CG-LINT-JAVA
+- **Title:** Secure Lint Configuration (Java)
+- **Threat Mitigated:** Disabled ESLint/TSLint rules hide insecure patterns.
+- **Detection Signal:** eslint.config.js audited for overrides, ensures security plugins stay enabled.
+- **Recommended Fix:** Re-enable critical rules or adopt custom rule packs. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
+- **Automation Level:** CI fails when eslint reports new warnings beyond baseline.
+- **Validation Steps:** Run npm run lint locally; share screenshot in PR.
+
+
+#### Control CG-LINT-GO
+- **Title:** Secure Lint Configuration (Go)
+- **Threat Mitigated:** Disabled ESLint/TSLint rules hide insecure patterns.
+- **Detection Signal:** eslint.config.js audited for overrides, ensures security plugins stay enabled.
+- **Recommended Fix:** Re-enable critical rules or adopt custom rule packs. Leverage GORM, pgx conventions for Go deployments.
+- **Automation Level:** CI fails when eslint reports new warnings beyond baseline.
+- **Validation Steps:** Run npm run lint locally; share screenshot in PR.
+
+
+#### Control CG-LINT-RST
+- **Title:** Secure Lint Configuration (Rust)
+- **Threat Mitigated:** Disabled ESLint/TSLint rules hide insecure patterns.
+- **Detection Signal:** eslint.config.js audited for overrides, ensures security plugins stay enabled.
+- **Recommended Fix:** Re-enable critical rules or adopt custom rule packs. Leverage SQLx, Diesel conventions for Rust deployments.
+- **Automation Level:** CI fails when eslint reports new warnings beyond baseline.
+- **Validation Steps:** Run npm run lint locally; share screenshot in PR.
+
+
+#### Control CG-LINT-PHP
+- **Title:** Secure Lint Configuration (PHP)
+- **Threat Mitigated:** Disabled ESLint/TSLint rules hide insecure patterns.
+- **Detection Signal:** eslint.config.js audited for overrides, ensures security plugins stay enabled.
+- **Recommended Fix:** Re-enable critical rules or adopt custom rule packs. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
+- **Automation Level:** CI fails when eslint reports new warnings beyond baseline.
+- **Validation Steps:** Run npm run lint locally; share screenshot in PR.
+
+
+#### Control CG-LINT-CS
+- **Title:** Secure Lint Configuration (C#)
+- **Threat Mitigated:** Disabled ESLint/TSLint rules hide insecure patterns.
+- **Detection Signal:** eslint.config.js audited for overrides, ensures security plugins stay enabled.
+- **Recommended Fix:** Re-enable critical rules or adopt custom rule packs. Leverage Entity Framework, Dapper conventions for C# deployments.
+- **Automation Level:** CI fails when eslint reports new warnings beyond baseline.
+- **Validation Steps:** Run npm run lint locally; share screenshot in PR.
+
+
+#### Control CG-LOG-JS
+- **Title:** Log Redaction & Privacy (JavaScript)
+- **Threat Mitigated:** PII or secrets land in console/server logs.
+- **Detection Signal:** Logger wrapper ensures structured levels and pattern-based scrubbing.
+- **Recommended Fix:** Adopt central logger, categorize fields, drop payload dumps. Leverage Prisma, Knex conventions for JavaScript deployments.
+- **Automation Level:** src/components/common surfaces log health metrics.
+- **Validation Steps:** Use scripts/test-firebase-storage-fix.js --logs to sample outputs.
+
+
+#### Control CG-LOG-TS
+- **Title:** Log Redaction & Privacy (TypeScript)
+- **Threat Mitigated:** PII or secrets land in console/server logs.
+- **Detection Signal:** Logger wrapper ensures structured levels and pattern-based scrubbing.
+- **Recommended Fix:** Adopt central logger, categorize fields, drop payload dumps. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
+- **Automation Level:** src/components/common surfaces log health metrics.
+- **Validation Steps:** Use scripts/test-firebase-storage-fix.js --logs to sample outputs.
+
+
+#### Control CG-LOG-PY
+- **Title:** Log Redaction & Privacy (Python)
+- **Threat Mitigated:** PII or secrets land in console/server logs.
+- **Detection Signal:** Logger wrapper ensures structured levels and pattern-based scrubbing.
+- **Recommended Fix:** Adopt central logger, categorize fields, drop payload dumps. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
+- **Automation Level:** src/components/common surfaces log health metrics.
+- **Validation Steps:** Use scripts/test-firebase-storage-fix.js --logs to sample outputs.
+
+
+#### Control CG-LOG-JAVA
+- **Title:** Log Redaction & Privacy (Java)
+- **Threat Mitigated:** PII or secrets land in console/server logs.
+- **Detection Signal:** Logger wrapper ensures structured levels and pattern-based scrubbing.
+- **Recommended Fix:** Adopt central logger, categorize fields, drop payload dumps. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
+- **Automation Level:** src/components/common surfaces log health metrics.
+- **Validation Steps:** Use scripts/test-firebase-storage-fix.js --logs to sample outputs.
+
+
+#### Control CG-LOG-GO
+- **Title:** Log Redaction & Privacy (Go)
+- **Threat Mitigated:** PII or secrets land in console/server logs.
+- **Detection Signal:** Logger wrapper ensures structured levels and pattern-based scrubbing.
+- **Recommended Fix:** Adopt central logger, categorize fields, drop payload dumps. Leverage GORM, pgx conventions for Go deployments.
+- **Automation Level:** src/components/common surfaces log health metrics.
+- **Validation Steps:** Use scripts/test-firebase-storage-fix.js --logs to sample outputs.
+
+
+#### Control CG-LOG-RST
+- **Title:** Log Redaction & Privacy (Rust)
+- **Threat Mitigated:** PII or secrets land in console/server logs.
+- **Detection Signal:** Logger wrapper ensures structured levels and pattern-based scrubbing.
+- **Recommended Fix:** Adopt central logger, categorize fields, drop payload dumps. Leverage SQLx, Diesel conventions for Rust deployments.
+- **Automation Level:** src/components/common surfaces log health metrics.
+- **Validation Steps:** Use scripts/test-firebase-storage-fix.js --logs to sample outputs.
+
+
+#### Control CG-LOG-PHP
+- **Title:** Log Redaction & Privacy (PHP)
+- **Threat Mitigated:** PII or secrets land in console/server logs.
+- **Detection Signal:** Logger wrapper ensures structured levels and pattern-based scrubbing.
+- **Recommended Fix:** Adopt central logger, categorize fields, drop payload dumps. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
+- **Automation Level:** src/components/common surfaces log health metrics.
+- **Validation Steps:** Use scripts/test-firebase-storage-fix.js --logs to sample outputs.
+
+
+#### Control CG-LOG-CS
+- **Title:** Log Redaction & Privacy (C#)
+- **Threat Mitigated:** PII or secrets land in console/server logs.
+- **Detection Signal:** Logger wrapper ensures structured levels and pattern-based scrubbing.
+- **Recommended Fix:** Adopt central logger, categorize fields, drop payload dumps. Leverage Entity Framework, Dapper conventions for C# deployments.
+- **Automation Level:** src/components/common surfaces log health metrics.
+- **Validation Steps:** Use scripts/test-firebase-storage-fix.js --logs to sample outputs.
+
+
+#### Control CG-PDF-JS
+- **Title:** Report Export Hardening (JavaScript)
+- **Threat Mitigated:** Malicious SVG/HTML injection inside PDF exports.
+- **Detection Signal:** Export service neutralizes embedded scripts before rendering.
+- **Recommended Fix:** Sanitize Markdown -> HTML conversions, block inline scripts. Leverage Prisma, Knex conventions for JavaScript deployments.
+- **Automation Level:** Export workers run in isolated iframe contexts.
+- **Validation Steps:** Review tmp_rovodev_svg_fix_summary.txt regression log.
+
+
+#### Control CG-PDF-TS
+- **Title:** Report Export Hardening (TypeScript)
+- **Threat Mitigated:** Malicious SVG/HTML injection inside PDF exports.
+- **Detection Signal:** Export service neutralizes embedded scripts before rendering.
+- **Recommended Fix:** Sanitize Markdown -> HTML conversions, block inline scripts. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
+- **Automation Level:** Export workers run in isolated iframe contexts.
+- **Validation Steps:** Review tmp_rovodev_svg_fix_summary.txt regression log.
+
+
+#### Control CG-PDF-PY
+- **Title:** Report Export Hardening (Python)
+- **Threat Mitigated:** Malicious SVG/HTML injection inside PDF exports.
+- **Detection Signal:** Export service neutralizes embedded scripts before rendering.
+- **Recommended Fix:** Sanitize Markdown -> HTML conversions, block inline scripts. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
+- **Automation Level:** Export workers run in isolated iframe contexts.
+- **Validation Steps:** Review tmp_rovodev_svg_fix_summary.txt regression log.
+
+
+#### Control CG-PDF-JAVA
+- **Title:** Report Export Hardening (Java)
+- **Threat Mitigated:** Malicious SVG/HTML injection inside PDF exports.
+- **Detection Signal:** Export service neutralizes embedded scripts before rendering.
+- **Recommended Fix:** Sanitize Markdown -> HTML conversions, block inline scripts. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
+- **Automation Level:** Export workers run in isolated iframe contexts.
+- **Validation Steps:** Review tmp_rovodev_svg_fix_summary.txt regression log.
+
+
+#### Control CG-PDF-GO
+- **Title:** Report Export Hardening (Go)
+- **Threat Mitigated:** Malicious SVG/HTML injection inside PDF exports.
+- **Detection Signal:** Export service neutralizes embedded scripts before rendering.
+- **Recommended Fix:** Sanitize Markdown -> HTML conversions, block inline scripts. Leverage GORM, pgx conventions for Go deployments.
+- **Automation Level:** Export workers run in isolated iframe contexts.
+- **Validation Steps:** Review tmp_rovodev_svg_fix_summary.txt regression log.
+
+
+#### Control CG-PDF-RST
+- **Title:** Report Export Hardening (Rust)
+- **Threat Mitigated:** Malicious SVG/HTML injection inside PDF exports.
+- **Detection Signal:** Export service neutralizes embedded scripts before rendering.
+- **Recommended Fix:** Sanitize Markdown -> HTML conversions, block inline scripts. Leverage SQLx, Diesel conventions for Rust deployments.
+- **Automation Level:** Export workers run in isolated iframe contexts.
+- **Validation Steps:** Review tmp_rovodev_svg_fix_summary.txt regression log.
+
+
+#### Control CG-PDF-PHP
+- **Title:** Report Export Hardening (PHP)
+- **Threat Mitigated:** Malicious SVG/HTML injection inside PDF exports.
+- **Detection Signal:** Export service neutralizes embedded scripts before rendering.
+- **Recommended Fix:** Sanitize Markdown -> HTML conversions, block inline scripts. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
+- **Automation Level:** Export workers run in isolated iframe contexts.
+- **Validation Steps:** Review tmp_rovodev_svg_fix_summary.txt regression log.
+
+
+#### Control CG-PDF-CS
+- **Title:** Report Export Hardening (C#)
+- **Threat Mitigated:** Malicious SVG/HTML injection inside PDF exports.
+- **Detection Signal:** Export service neutralizes embedded scripts before rendering.
+- **Recommended Fix:** Sanitize Markdown -> HTML conversions, block inline scripts. Leverage Entity Framework, Dapper conventions for C# deployments.
+- **Automation Level:** Export workers run in isolated iframe contexts.
+- **Validation Steps:** Review tmp_rovodev_svg_fix_summary.txt regression log.
+
+
+#### Control CG-AIEXP-JS
+- **Title:** AI Explanation Quality Gates (JavaScript)
+- **Threat Mitigated:** Hallucinated remediation advice causes regressions.
+- **Detection Signal:** BLEU/ROUGE comparison inside scripts/run-accuracy-test.ts flags low-quality output.
+- **Recommended Fix:** Retrain prompts, include repo context, require reviewer acks. Leverage Prisma, Knex conventions for JavaScript deployments.
+- **Automation Level:** Confidence scores overlayed in results view.
+- **Validation Steps:** Spot-check via tmp_rovodev_FINAL_REPORT.md template.
+
+
+#### Control CG-AIEXP-TS
+- **Title:** AI Explanation Quality Gates (TypeScript)
+- **Threat Mitigated:** Hallucinated remediation advice causes regressions.
+- **Detection Signal:** BLEU/ROUGE comparison inside scripts/run-accuracy-test.ts flags low-quality output.
+- **Recommended Fix:** Retrain prompts, include repo context, require reviewer acks. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
+- **Automation Level:** Confidence scores overlayed in results view.
+- **Validation Steps:** Spot-check via tmp_rovodev_FINAL_REPORT.md template.
+
+
+#### Control CG-AIEXP-PY
+- **Title:** AI Explanation Quality Gates (Python)
+- **Threat Mitigated:** Hallucinated remediation advice causes regressions.
+- **Detection Signal:** BLEU/ROUGE comparison inside scripts/run-accuracy-test.ts flags low-quality output.
+- **Recommended Fix:** Retrain prompts, include repo context, require reviewer acks. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
+- **Automation Level:** Confidence scores overlayed in results view.
+- **Validation Steps:** Spot-check via tmp_rovodev_FINAL_REPORT.md template.
+
+
+#### Control CG-AIEXP-JAVA
+- **Title:** AI Explanation Quality Gates (Java)
+- **Threat Mitigated:** Hallucinated remediation advice causes regressions.
+- **Detection Signal:** BLEU/ROUGE comparison inside scripts/run-accuracy-test.ts flags low-quality output.
+- **Recommended Fix:** Retrain prompts, include repo context, require reviewer acks. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
+- **Automation Level:** Confidence scores overlayed in results view.
+- **Validation Steps:** Spot-check via tmp_rovodev_FINAL_REPORT.md template.
+
+
+#### Control CG-AIEXP-GO
+- **Title:** AI Explanation Quality Gates (Go)
+- **Threat Mitigated:** Hallucinated remediation advice causes regressions.
+- **Detection Signal:** BLEU/ROUGE comparison inside scripts/run-accuracy-test.ts flags low-quality output.
+- **Recommended Fix:** Retrain prompts, include repo context, require reviewer acks. Leverage GORM, pgx conventions for Go deployments.
+- **Automation Level:** Confidence scores overlayed in results view.
+- **Validation Steps:** Spot-check via tmp_rovodev_FINAL_REPORT.md template.
+
+
+#### Control CG-AIEXP-RST
+- **Title:** AI Explanation Quality Gates (Rust)
+- **Threat Mitigated:** Hallucinated remediation advice causes regressions.
+- **Detection Signal:** BLEU/ROUGE comparison inside scripts/run-accuracy-test.ts flags low-quality output.
+- **Recommended Fix:** Retrain prompts, include repo context, require reviewer acks. Leverage SQLx, Diesel conventions for Rust deployments.
+- **Automation Level:** Confidence scores overlayed in results view.
+- **Validation Steps:** Spot-check via tmp_rovodev_FINAL_REPORT.md template.
+
+
+#### Control CG-AIEXP-PHP
+- **Title:** AI Explanation Quality Gates (PHP)
+- **Threat Mitigated:** Hallucinated remediation advice causes regressions.
+- **Detection Signal:** BLEU/ROUGE comparison inside scripts/run-accuracy-test.ts flags low-quality output.
+- **Recommended Fix:** Retrain prompts, include repo context, require reviewer acks. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
+- **Automation Level:** Confidence scores overlayed in results view.
+- **Validation Steps:** Spot-check via tmp_rovodev_FINAL_REPORT.md template.
+
+
+#### Control CG-AIEXP-CS
+- **Title:** AI Explanation Quality Gates (C#)
+- **Threat Mitigated:** Hallucinated remediation advice causes regressions.
+- **Detection Signal:** BLEU/ROUGE comparison inside scripts/run-accuracy-test.ts flags low-quality output.
+- **Recommended Fix:** Retrain prompts, include repo context, require reviewer acks. Leverage Entity Framework, Dapper conventions for C# deployments.
+- **Automation Level:** Confidence scores overlayed in results view.
+- **Validation Steps:** Spot-check via tmp_rovodev_FINAL_REPORT.md template.
+
+
+#### Control CG-MOBILE-JS
+- **Title:** Mobile Responsiveness & Security (JavaScript)
+- **Threat Mitigated:** Hidden buttons or truncated notifications cause missed alerts.
+- **Detection Signal:** Vite test harness checks viewport-specific CSS under src/index.css.
+- **Recommended Fix:** Adopt responsive grids, accessible touch targets, secure gestures. Leverage Prisma, Knex conventions for JavaScript deployments.
+- **Automation Level:** Storybook-style screenshots validated in CI.
+- **Validation Steps:** Use tmp_rovodev_functional_test.html with device emulators.
+
+
+#### Control CG-MOBILE-TS
+- **Title:** Mobile Responsiveness & Security (TypeScript)
+- **Threat Mitigated:** Hidden buttons or truncated notifications cause missed alerts.
+- **Detection Signal:** Vite test harness checks viewport-specific CSS under src/index.css.
+- **Recommended Fix:** Adopt responsive grids, accessible touch targets, secure gestures. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
+- **Automation Level:** Storybook-style screenshots validated in CI.
+- **Validation Steps:** Use tmp_rovodev_functional_test.html with device emulators.
+
+
+#### Control CG-MOBILE-PY
+- **Title:** Mobile Responsiveness & Security (Python)
+- **Threat Mitigated:** Hidden buttons or truncated notifications cause missed alerts.
+- **Detection Signal:** Vite test harness checks viewport-specific CSS under src/index.css.
+- **Recommended Fix:** Adopt responsive grids, accessible touch targets, secure gestures. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
+- **Automation Level:** Storybook-style screenshots validated in CI.
+- **Validation Steps:** Use tmp_rovodev_functional_test.html with device emulators.
+
+
+#### Control CG-MOBILE-JAVA
+- **Title:** Mobile Responsiveness & Security (Java)
+- **Threat Mitigated:** Hidden buttons or truncated notifications cause missed alerts.
+- **Detection Signal:** Vite test harness checks viewport-specific CSS under src/index.css.
+- **Recommended Fix:** Adopt responsive grids, accessible touch targets, secure gestures. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
+- **Automation Level:** Storybook-style screenshots validated in CI.
+- **Validation Steps:** Use tmp_rovodev_functional_test.html with device emulators.
+
+
+#### Control CG-MOBILE-GO
+- **Title:** Mobile Responsiveness & Security (Go)
+- **Threat Mitigated:** Hidden buttons or truncated notifications cause missed alerts.
+- **Detection Signal:** Vite test harness checks viewport-specific CSS under src/index.css.
+- **Recommended Fix:** Adopt responsive grids, accessible touch targets, secure gestures. Leverage GORM, pgx conventions for Go deployments.
+- **Automation Level:** Storybook-style screenshots validated in CI.
+- **Validation Steps:** Use tmp_rovodev_functional_test.html with device emulators.
+
+
+#### Control CG-MOBILE-RST
+- **Title:** Mobile Responsiveness & Security (Rust)
+- **Threat Mitigated:** Hidden buttons or truncated notifications cause missed alerts.
+- **Detection Signal:** Vite test harness checks viewport-specific CSS under src/index.css.
+- **Recommended Fix:** Adopt responsive grids, accessible touch targets, secure gestures. Leverage SQLx, Diesel conventions for Rust deployments.
+- **Automation Level:** Storybook-style screenshots validated in CI.
+- **Validation Steps:** Use tmp_rovodev_functional_test.html with device emulators.
+
+
+#### Control CG-MOBILE-PHP
+- **Title:** Mobile Responsiveness & Security (PHP)
+- **Threat Mitigated:** Hidden buttons or truncated notifications cause missed alerts.
+- **Detection Signal:** Vite test harness checks viewport-specific CSS under src/index.css.
+- **Recommended Fix:** Adopt responsive grids, accessible touch targets, secure gestures. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
+- **Automation Level:** Storybook-style screenshots validated in CI.
+- **Validation Steps:** Use tmp_rovodev_functional_test.html with device emulators.
+
+
+#### Control CG-MOBILE-CS
+- **Title:** Mobile Responsiveness & Security (C#)
+- **Threat Mitigated:** Hidden buttons or truncated notifications cause missed alerts.
+- **Detection Signal:** Vite test harness checks viewport-specific CSS under src/index.css.
+- **Recommended Fix:** Adopt responsive grids, accessible touch targets, secure gestures. Leverage Entity Framework, Dapper conventions for C# deployments.
+- **Automation Level:** Storybook-style screenshots validated in CI.
+- **Validation Steps:** Use tmp_rovodev_functional_test.html with device emulators.
+
+
+#### Control CG-PWA-JS
+- **Title:** PWA Offline Safety (JavaScript)
+- **Threat Mitigated:** Cached stale data or unencrypted storage leads to leaks.
+- **Detection Signal:** Service worker audits ensure caches purge sensitive assets per build.
+- **Recommended Fix:** Version caches, encrypt IndexedDB snapshots, require biometric unlock on installable apps. Leverage Prisma, Knex conventions for JavaScript deployments.
+- **Automation Level:** public/sw.js exposes lifecycle hooks to expire sensitive responses.
+- **Validation Steps:** Log offline sessions and verify re-auth prompts occur.
+
+
+#### Control CG-PWA-TS
+- **Title:** PWA Offline Safety (TypeScript)
+- **Threat Mitigated:** Cached stale data or unencrypted storage leads to leaks.
+- **Detection Signal:** Service worker audits ensure caches purge sensitive assets per build.
+- **Recommended Fix:** Version caches, encrypt IndexedDB snapshots, require biometric unlock on installable apps. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
+- **Automation Level:** public/sw.js exposes lifecycle hooks to expire sensitive responses.
+- **Validation Steps:** Log offline sessions and verify re-auth prompts occur.
+
+
+#### Control CG-PWA-PY
+- **Title:** PWA Offline Safety (Python)
+- **Threat Mitigated:** Cached stale data or unencrypted storage leads to leaks.
+- **Detection Signal:** Service worker audits ensure caches purge sensitive assets per build.
+- **Recommended Fix:** Version caches, encrypt IndexedDB snapshots, require biometric unlock on installable apps. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
+- **Automation Level:** public/sw.js exposes lifecycle hooks to expire sensitive responses.
+- **Validation Steps:** Log offline sessions and verify re-auth prompts occur.
+
+
+#### Control CG-PWA-JAVA
+- **Title:** PWA Offline Safety (Java)
+- **Threat Mitigated:** Cached stale data or unencrypted storage leads to leaks.
+- **Detection Signal:** Service worker audits ensure caches purge sensitive assets per build.
+- **Recommended Fix:** Version caches, encrypt IndexedDB snapshots, require biometric unlock on installable apps. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
+- **Automation Level:** public/sw.js exposes lifecycle hooks to expire sensitive responses.
+- **Validation Steps:** Log offline sessions and verify re-auth prompts occur.
+
+
+#### Control CG-PWA-GO
+- **Title:** PWA Offline Safety (Go)
+- **Threat Mitigated:** Cached stale data or unencrypted storage leads to leaks.
+- **Detection Signal:** Service worker audits ensure caches purge sensitive assets per build.
+- **Recommended Fix:** Version caches, encrypt IndexedDB snapshots, require biometric unlock on installable apps. Leverage GORM, pgx conventions for Go deployments.
+- **Automation Level:** public/sw.js exposes lifecycle hooks to expire sensitive responses.
+- **Validation Steps:** Log offline sessions and verify re-auth prompts occur.
+
+
+#### Control CG-PWA-RST
+- **Title:** PWA Offline Safety (Rust)
+- **Threat Mitigated:** Cached stale data or unencrypted storage leads to leaks.
+- **Detection Signal:** Service worker audits ensure caches purge sensitive assets per build.
+- **Recommended Fix:** Version caches, encrypt IndexedDB snapshots, require biometric unlock on installable apps. Leverage SQLx, Diesel conventions for Rust deployments.
+- **Automation Level:** public/sw.js exposes lifecycle hooks to expire sensitive responses.
+- **Validation Steps:** Log offline sessions and verify re-auth prompts occur.
+
+
+#### Control CG-PWA-PHP
+- **Title:** PWA Offline Safety (PHP)
+- **Threat Mitigated:** Cached stale data or unencrypted storage leads to leaks.
+- **Detection Signal:** Service worker audits ensure caches purge sensitive assets per build.
+- **Recommended Fix:** Version caches, encrypt IndexedDB snapshots, require biometric unlock on installable apps. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
+- **Automation Level:** public/sw.js exposes lifecycle hooks to expire sensitive responses.
+- **Validation Steps:** Log offline sessions and verify re-auth prompts occur.
+
+
+#### Control CG-PWA-CS
+- **Title:** PWA Offline Safety (C#)
+- **Threat Mitigated:** Cached stale data or unencrypted storage leads to leaks.
+- **Detection Signal:** Service worker audits ensure caches purge sensitive assets per build.
+- **Recommended Fix:** Version caches, encrypt IndexedDB snapshots, require biometric unlock on installable apps. Leverage Entity Framework, Dapper conventions for C# deployments.
+- **Automation Level:** public/sw.js exposes lifecycle hooks to expire sensitive responses.
+- **Validation Steps:** Log offline sessions and verify re-auth prompts occur.
+
+
+#### Control CG-PDFX-JS
+- **Title:** Export Accessibility QC (JavaScript)
+- **Threat Mitigated:** Screen readers cannot parse exported audit packages.
+- **Detection Signal:** HTML-to-PDF pipeline verifies semantic tags + headings.
+- **Recommended Fix:** Inject ARIA labels, add table summaries, follow WCAG techniques. Leverage Prisma, Knex conventions for JavaScript deployments.
+- **Automation Level:** Accessibility tests run before shipping templates.
+- **Validation Steps:** Use tests/modernCodeScanning.test.ts a11y snapshot comparisons.
+
+
+#### Control CG-PDFX-TS
+- **Title:** Export Accessibility QC (TypeScript)
+- **Threat Mitigated:** Screen readers cannot parse exported audit packages.
+- **Detection Signal:** HTML-to-PDF pipeline verifies semantic tags + headings.
+- **Recommended Fix:** Inject ARIA labels, add table summaries, follow WCAG techniques. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
+- **Automation Level:** Accessibility tests run before shipping templates.
+- **Validation Steps:** Use tests/modernCodeScanning.test.ts a11y snapshot comparisons.
+
+
+#### Control CG-PDFX-PY
+- **Title:** Export Accessibility QC (Python)
+- **Threat Mitigated:** Screen readers cannot parse exported audit packages.
+- **Detection Signal:** HTML-to-PDF pipeline verifies semantic tags + headings.
+- **Recommended Fix:** Inject ARIA labels, add table summaries, follow WCAG techniques. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
+- **Automation Level:** Accessibility tests run before shipping templates.
+- **Validation Steps:** Use tests/modernCodeScanning.test.ts a11y snapshot comparisons.
+
+
+#### Control CG-PDFX-JAVA
+- **Title:** Export Accessibility QC (Java)
+- **Threat Mitigated:** Screen readers cannot parse exported audit packages.
+- **Detection Signal:** HTML-to-PDF pipeline verifies semantic tags + headings.
+- **Recommended Fix:** Inject ARIA labels, add table summaries, follow WCAG techniques. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
+- **Automation Level:** Accessibility tests run before shipping templates.
+- **Validation Steps:** Use tests/modernCodeScanning.test.ts a11y snapshot comparisons.
+
+
+#### Control CG-PDFX-GO
+- **Title:** Export Accessibility QC (Go)
+- **Threat Mitigated:** Screen readers cannot parse exported audit packages.
+- **Detection Signal:** HTML-to-PDF pipeline verifies semantic tags + headings.
+- **Recommended Fix:** Inject ARIA labels, add table summaries, follow WCAG techniques. Leverage GORM, pgx conventions for Go deployments.
+- **Automation Level:** Accessibility tests run before shipping templates.
+- **Validation Steps:** Use tests/modernCodeScanning.test.ts a11y snapshot comparisons.
+
+
+#### Control CG-PDFX-RST
+- **Title:** Export Accessibility QC (Rust)
+- **Threat Mitigated:** Screen readers cannot parse exported audit packages.
+- **Detection Signal:** HTML-to-PDF pipeline verifies semantic tags + headings.
+- **Recommended Fix:** Inject ARIA labels, add table summaries, follow WCAG techniques. Leverage SQLx, Diesel conventions for Rust deployments.
+- **Automation Level:** Accessibility tests run before shipping templates.
+- **Validation Steps:** Use tests/modernCodeScanning.test.ts a11y snapshot comparisons.
+
+
+#### Control CG-PDFX-PHP
+- **Title:** Export Accessibility QC (PHP)
+- **Threat Mitigated:** Screen readers cannot parse exported audit packages.
+- **Detection Signal:** HTML-to-PDF pipeline verifies semantic tags + headings.
+- **Recommended Fix:** Inject ARIA labels, add table summaries, follow WCAG techniques. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
+- **Automation Level:** Accessibility tests run before shipping templates.
+- **Validation Steps:** Use tests/modernCodeScanning.test.ts a11y snapshot comparisons.
+
+
+#### Control CG-PDFX-CS
+- **Title:** Export Accessibility QC (C#)
+- **Threat Mitigated:** Screen readers cannot parse exported audit packages.
+- **Detection Signal:** HTML-to-PDF pipeline verifies semantic tags + headings.
+- **Recommended Fix:** Inject ARIA labels, add table summaries, follow WCAG techniques. Leverage Entity Framework, Dapper conventions for C# deployments.
+- **Automation Level:** Accessibility tests run before shipping templates.
+- **Validation Steps:** Use tests/modernCodeScanning.test.ts a11y snapshot comparisons.
+
+
+#### Control CG-SBX-JS
+- **Title:** Sandbox Escape Prevention (JavaScript)
+- **Threat Mitigated:** Untrusted code tries to escape analysis sandboxes.
+- **Detection Signal:** Execution harness monitors syscalls and network attempts.
+- **Recommended Fix:** Limit syscalls, drop filesystem permissions, disable outbound network. Leverage Prisma, Knex conventions for JavaScript deployments.
+- **Automation Level:** Runtime guardrails configured in tmp_rovodev_runtime_test.ts.
+- **Validation Steps:** Stress test with fuzzers referenced in test-pattern.js.
+
+
+#### Control CG-SBX-TS
+- **Title:** Sandbox Escape Prevention (TypeScript)
+- **Threat Mitigated:** Untrusted code tries to escape analysis sandboxes.
+- **Detection Signal:** Execution harness monitors syscalls and network attempts.
+- **Recommended Fix:** Limit syscalls, drop filesystem permissions, disable outbound network. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
+- **Automation Level:** Runtime guardrails configured in tmp_rovodev_runtime_test.ts.
+- **Validation Steps:** Stress test with fuzzers referenced in test-pattern.js.
+
+
+#### Control CG-SBX-PY
+- **Title:** Sandbox Escape Prevention (Python)
+- **Threat Mitigated:** Untrusted code tries to escape analysis sandboxes.
+- **Detection Signal:** Execution harness monitors syscalls and network attempts.
+- **Recommended Fix:** Limit syscalls, drop filesystem permissions, disable outbound network. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
+- **Automation Level:** Runtime guardrails configured in tmp_rovodev_runtime_test.ts.
+- **Validation Steps:** Stress test with fuzzers referenced in test-pattern.js.
+
+
+#### Control CG-SBX-JAVA
+- **Title:** Sandbox Escape Prevention (Java)
+- **Threat Mitigated:** Untrusted code tries to escape analysis sandboxes.
+- **Detection Signal:** Execution harness monitors syscalls and network attempts.
+- **Recommended Fix:** Limit syscalls, drop filesystem permissions, disable outbound network. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
+- **Automation Level:** Runtime guardrails configured in tmp_rovodev_runtime_test.ts.
+- **Validation Steps:** Stress test with fuzzers referenced in test-pattern.js.
+
+
+#### Control CG-SBX-GO
+- **Title:** Sandbox Escape Prevention (Go)
+- **Threat Mitigated:** Untrusted code tries to escape analysis sandboxes.
+- **Detection Signal:** Execution harness monitors syscalls and network attempts.
+- **Recommended Fix:** Limit syscalls, drop filesystem permissions, disable outbound network. Leverage GORM, pgx conventions for Go deployments.
+- **Automation Level:** Runtime guardrails configured in tmp_rovodev_runtime_test.ts.
+- **Validation Steps:** Stress test with fuzzers referenced in test-pattern.js.
+
+
+#### Control CG-SBX-RST
+- **Title:** Sandbox Escape Prevention (Rust)
+- **Threat Mitigated:** Untrusted code tries to escape analysis sandboxes.
+- **Detection Signal:** Execution harness monitors syscalls and network attempts.
+- **Recommended Fix:** Limit syscalls, drop filesystem permissions, disable outbound network. Leverage SQLx, Diesel conventions for Rust deployments.
+- **Automation Level:** Runtime guardrails configured in tmp_rovodev_runtime_test.ts.
+- **Validation Steps:** Stress test with fuzzers referenced in test-pattern.js.
+
+
+#### Control CG-SBX-PHP
+- **Title:** Sandbox Escape Prevention (PHP)
+- **Threat Mitigated:** Untrusted code tries to escape analysis sandboxes.
+- **Detection Signal:** Execution harness monitors syscalls and network attempts.
+- **Recommended Fix:** Limit syscalls, drop filesystem permissions, disable outbound network. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
+- **Automation Level:** Runtime guardrails configured in tmp_rovodev_runtime_test.ts.
+- **Validation Steps:** Stress test with fuzzers referenced in test-pattern.js.
+
+
+#### Control CG-SBX-CS
+- **Title:** Sandbox Escape Prevention (C#)
+- **Threat Mitigated:** Untrusted code tries to escape analysis sandboxes.
+- **Detection Signal:** Execution harness monitors syscalls and network attempts.
+- **Recommended Fix:** Limit syscalls, drop filesystem permissions, disable outbound network. Leverage Entity Framework, Dapper conventions for C# deployments.
+- **Automation Level:** Runtime guardrails configured in tmp_rovodev_runtime_test.ts.
+- **Validation Steps:** Stress test with fuzzers referenced in test-pattern.js.
+
+
+#### Control CG-CICD-JS
+- **Title:** Pipeline Credential Hygiene (JavaScript)
+- **Threat Mitigated:** Long-lived CI tokens leak via logs or artifacts.
+- **Detection Signal:** Workflow scanners read .github/workflows and scripts for plaintext secrets.
+- **Recommended Fix:** Adopt OIDC, use short-lived tokens, store secrets in platform vaults. Leverage Prisma, Knex conventions for JavaScript deployments.
+- **Automation Level:** Templates in Appendix D show recommended setup.
+- **Validation Steps:** Dry-run workflows with redacted tokens before merging.
+
+
+#### Control CG-CICD-TS
+- **Title:** Pipeline Credential Hygiene (TypeScript)
+- **Threat Mitigated:** Long-lived CI tokens leak via logs or artifacts.
+- **Detection Signal:** Workflow scanners read .github/workflows and scripts for plaintext secrets.
+- **Recommended Fix:** Adopt OIDC, use short-lived tokens, store secrets in platform vaults. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
+- **Automation Level:** Templates in Appendix D show recommended setup.
+- **Validation Steps:** Dry-run workflows with redacted tokens before merging.
+
+
+#### Control CG-CICD-PY
+- **Title:** Pipeline Credential Hygiene (Python)
+- **Threat Mitigated:** Long-lived CI tokens leak via logs or artifacts.
+- **Detection Signal:** Workflow scanners read .github/workflows and scripts for plaintext secrets.
+- **Recommended Fix:** Adopt OIDC, use short-lived tokens, store secrets in platform vaults. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
+- **Automation Level:** Templates in Appendix D show recommended setup.
+- **Validation Steps:** Dry-run workflows with redacted tokens before merging.
+
+
+#### Control CG-CICD-JAVA
+- **Title:** Pipeline Credential Hygiene (Java)
+- **Threat Mitigated:** Long-lived CI tokens leak via logs or artifacts.
+- **Detection Signal:** Workflow scanners read .github/workflows and scripts for plaintext secrets.
+- **Recommended Fix:** Adopt OIDC, use short-lived tokens, store secrets in platform vaults. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
+- **Automation Level:** Templates in Appendix D show recommended setup.
+- **Validation Steps:** Dry-run workflows with redacted tokens before merging.
+
+
+#### Control CG-CICD-GO
+- **Title:** Pipeline Credential Hygiene (Go)
+- **Threat Mitigated:** Long-lived CI tokens leak via logs or artifacts.
+- **Detection Signal:** Workflow scanners read .github/workflows and scripts for plaintext secrets.
+- **Recommended Fix:** Adopt OIDC, use short-lived tokens, store secrets in platform vaults. Leverage GORM, pgx conventions for Go deployments.
+- **Automation Level:** Templates in Appendix D show recommended setup.
+- **Validation Steps:** Dry-run workflows with redacted tokens before merging.
+
+
+#### Control CG-CICD-RST
+- **Title:** Pipeline Credential Hygiene (Rust)
+- **Threat Mitigated:** Long-lived CI tokens leak via logs or artifacts.
+- **Detection Signal:** Workflow scanners read .github/workflows and scripts for plaintext secrets.
+- **Recommended Fix:** Adopt OIDC, use short-lived tokens, store secrets in platform vaults. Leverage SQLx, Diesel conventions for Rust deployments.
+- **Automation Level:** Templates in Appendix D show recommended setup.
+- **Validation Steps:** Dry-run workflows with redacted tokens before merging.
+
+
+#### Control CG-CICD-PHP
+- **Title:** Pipeline Credential Hygiene (PHP)
+- **Threat Mitigated:** Long-lived CI tokens leak via logs or artifacts.
+- **Detection Signal:** Workflow scanners read .github/workflows and scripts for plaintext secrets.
+- **Recommended Fix:** Adopt OIDC, use short-lived tokens, store secrets in platform vaults. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
+- **Automation Level:** Templates in Appendix D show recommended setup.
+- **Validation Steps:** Dry-run workflows with redacted tokens before merging.
+
+
+#### Control CG-CICD-CS
+- **Title:** Pipeline Credential Hygiene (C#)
+- **Threat Mitigated:** Long-lived CI tokens leak via logs or artifacts.
+- **Detection Signal:** Workflow scanners read .github/workflows and scripts for plaintext secrets.
+- **Recommended Fix:** Adopt OIDC, use short-lived tokens, store secrets in platform vaults. Leverage Entity Framework, Dapper conventions for C# deployments.
+- **Automation Level:** Templates in Appendix D show recommended setup.
+- **Validation Steps:** Dry-run workflows with redacted tokens before merging.
+
+
+#### Control CG-MLSEC-JS
+- **Title:** Model Input/Output Sanitization (JavaScript)
+- **Threat Mitigated:** Binary files or large payloads crash AI pipelines.
+- **Detection Signal:** Queue processors enforce max size, MIME filters, and compression thresholds.
+- **Recommended Fix:** Split large archives, limit file types, add fallback heuristics. Leverage Prisma, Knex conventions for JavaScript deployments.
+- **Automation Level:** Scheduler in api/push/schedule.ts batches safe workloads.
+- **Validation Steps:** Replay heavy datasets using tmp_rovodev_comprehensive_test.ts.
+
+
+#### Control CG-MLSEC-TS
+- **Title:** Model Input/Output Sanitization (TypeScript)
+- **Threat Mitigated:** Binary files or large payloads crash AI pipelines.
+- **Detection Signal:** Queue processors enforce max size, MIME filters, and compression thresholds.
+- **Recommended Fix:** Split large archives, limit file types, add fallback heuristics. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
+- **Automation Level:** Scheduler in api/push/schedule.ts batches safe workloads.
+- **Validation Steps:** Replay heavy datasets using tmp_rovodev_comprehensive_test.ts.
+
+
+#### Control CG-MLSEC-PY
+- **Title:** Model Input/Output Sanitization (Python)
+- **Threat Mitigated:** Binary files or large payloads crash AI pipelines.
+- **Detection Signal:** Queue processors enforce max size, MIME filters, and compression thresholds.
+- **Recommended Fix:** Split large archives, limit file types, add fallback heuristics. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
+- **Automation Level:** Scheduler in api/push/schedule.ts batches safe workloads.
+- **Validation Steps:** Replay heavy datasets using tmp_rovodev_comprehensive_test.ts.
+
+
+#### Control CG-MLSEC-JAVA
+- **Title:** Model Input/Output Sanitization (Java)
+- **Threat Mitigated:** Binary files or large payloads crash AI pipelines.
+- **Detection Signal:** Queue processors enforce max size, MIME filters, and compression thresholds.
+- **Recommended Fix:** Split large archives, limit file types, add fallback heuristics. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
+- **Automation Level:** Scheduler in api/push/schedule.ts batches safe workloads.
+- **Validation Steps:** Replay heavy datasets using tmp_rovodev_comprehensive_test.ts.
+
+
+#### Control CG-MLSEC-GO
+- **Title:** Model Input/Output Sanitization (Go)
+- **Threat Mitigated:** Binary files or large payloads crash AI pipelines.
+- **Detection Signal:** Queue processors enforce max size, MIME filters, and compression thresholds.
+- **Recommended Fix:** Split large archives, limit file types, add fallback heuristics. Leverage GORM, pgx conventions for Go deployments.
+- **Automation Level:** Scheduler in api/push/schedule.ts batches safe workloads.
+- **Validation Steps:** Replay heavy datasets using tmp_rovodev_comprehensive_test.ts.
+
+
+#### Control CG-MLSEC-RST
+- **Title:** Model Input/Output Sanitization (Rust)
+- **Threat Mitigated:** Binary files or large payloads crash AI pipelines.
+- **Detection Signal:** Queue processors enforce max size, MIME filters, and compression thresholds.
+- **Recommended Fix:** Split large archives, limit file types, add fallback heuristics. Leverage SQLx, Diesel conventions for Rust deployments.
+- **Automation Level:** Scheduler in api/push/schedule.ts batches safe workloads.
+- **Validation Steps:** Replay heavy datasets using tmp_rovodev_comprehensive_test.ts.
+
+
+#### Control CG-MLSEC-PHP
+- **Title:** Model Input/Output Sanitization (PHP)
+- **Threat Mitigated:** Binary files or large payloads crash AI pipelines.
+- **Detection Signal:** Queue processors enforce max size, MIME filters, and compression thresholds.
+- **Recommended Fix:** Split large archives, limit file types, add fallback heuristics. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
+- **Automation Level:** Scheduler in api/push/schedule.ts batches safe workloads.
+- **Validation Steps:** Replay heavy datasets using tmp_rovodev_comprehensive_test.ts.
+
+
+#### Control CG-MLSEC-CS
+- **Title:** Model Input/Output Sanitization (C#)
+- **Threat Mitigated:** Binary files or large payloads crash AI pipelines.
+- **Detection Signal:** Queue processors enforce max size, MIME filters, and compression thresholds.
+- **Recommended Fix:** Split large archives, limit file types, add fallback heuristics. Leverage Entity Framework, Dapper conventions for C# deployments.
+- **Automation Level:** Scheduler in api/push/schedule.ts batches safe workloads.
+- **Validation Steps:** Replay heavy datasets using tmp_rovodev_comprehensive_test.ts.
+
+
+#### Control CG-IAST-JS
+- **Title:** Interactive AST Guardrails (JavaScript)
+- **Threat Mitigated:** Malformed ASTs or edge syntax break parsers.
+- **Detection Signal:** Parser workers watch for recursion depth, fallback to tolerant.parsers.
+- **Recommended Fix:** Upgrade parser libs, chunk files, sanitize tokens before visiting. Leverage Prisma, Knex conventions for JavaScript deployments.
+- **Automation Level:** scripts/test-pattern.js --mode ast ensures coverage.
+- **Validation Steps:** Monitor telemetry counters for parser fallbacks.
+
+
+#### Control CG-IAST-TS
+- **Title:** Interactive AST Guardrails (TypeScript)
+- **Threat Mitigated:** Malformed ASTs or edge syntax break parsers.
+- **Detection Signal:** Parser workers watch for recursion depth, fallback to tolerant.parsers.
+- **Recommended Fix:** Upgrade parser libs, chunk files, sanitize tokens before visiting. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
+- **Automation Level:** scripts/test-pattern.js --mode ast ensures coverage.
+- **Validation Steps:** Monitor telemetry counters for parser fallbacks.
+
+
+#### Control CG-IAST-PY
+- **Title:** Interactive AST Guardrails (Python)
+- **Threat Mitigated:** Malformed ASTs or edge syntax break parsers.
+- **Detection Signal:** Parser workers watch for recursion depth, fallback to tolerant.parsers.
+- **Recommended Fix:** Upgrade parser libs, chunk files, sanitize tokens before visiting. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
+- **Automation Level:** scripts/test-pattern.js --mode ast ensures coverage.
+- **Validation Steps:** Monitor telemetry counters for parser fallbacks.
+
+
+#### Control CG-IAST-JAVA
+- **Title:** Interactive AST Guardrails (Java)
+- **Threat Mitigated:** Malformed ASTs or edge syntax break parsers.
+- **Detection Signal:** Parser workers watch for recursion depth, fallback to tolerant.parsers.
+- **Recommended Fix:** Upgrade parser libs, chunk files, sanitize tokens before visiting. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
+- **Automation Level:** scripts/test-pattern.js --mode ast ensures coverage.
+- **Validation Steps:** Monitor telemetry counters for parser fallbacks.
+
+
+#### Control CG-IAST-GO
+- **Title:** Interactive AST Guardrails (Go)
+- **Threat Mitigated:** Malformed ASTs or edge syntax break parsers.
+- **Detection Signal:** Parser workers watch for recursion depth, fallback to tolerant.parsers.
+- **Recommended Fix:** Upgrade parser libs, chunk files, sanitize tokens before visiting. Leverage GORM, pgx conventions for Go deployments.
+- **Automation Level:** scripts/test-pattern.js --mode ast ensures coverage.
+- **Validation Steps:** Monitor telemetry counters for parser fallbacks.
+
+
+#### Control CG-IAST-RST
+- **Title:** Interactive AST Guardrails (Rust)
+- **Threat Mitigated:** Malformed ASTs or edge syntax break parsers.
+- **Detection Signal:** Parser workers watch for recursion depth, fallback to tolerant.parsers.
+- **Recommended Fix:** Upgrade parser libs, chunk files, sanitize tokens before visiting. Leverage SQLx, Diesel conventions for Rust deployments.
+- **Automation Level:** scripts/test-pattern.js --mode ast ensures coverage.
+- **Validation Steps:** Monitor telemetry counters for parser fallbacks.
+
+
+#### Control CG-IAST-PHP
+- **Title:** Interactive AST Guardrails (PHP)
+- **Threat Mitigated:** Malformed ASTs or edge syntax break parsers.
+- **Detection Signal:** Parser workers watch for recursion depth, fallback to tolerant.parsers.
+- **Recommended Fix:** Upgrade parser libs, chunk files, sanitize tokens before visiting. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
+- **Automation Level:** scripts/test-pattern.js --mode ast ensures coverage.
+- **Validation Steps:** Monitor telemetry counters for parser fallbacks.
+
+
+#### Control CG-IAST-CS
+- **Title:** Interactive AST Guardrails (C#)
+- **Threat Mitigated:** Malformed ASTs or edge syntax break parsers.
+- **Detection Signal:** Parser workers watch for recursion depth, fallback to tolerant.parsers.
+- **Recommended Fix:** Upgrade parser libs, chunk files, sanitize tokens before visiting. Leverage Entity Framework, Dapper conventions for C# deployments.
+- **Automation Level:** scripts/test-pattern.js --mode ast ensures coverage.
+- **Validation Steps:** Monitor telemetry counters for parser fallbacks.
+
+## 📜 Appendix B: OpenAPI 3.1 Snapshot
+
+```yaml
+openapi: 3.1.0
+info:
+  title: Code Guardian API
+  version: 1.0.0
+  description: >-
+    Official specification for orchestrating analyses, retrieving findings, and ingesting webhook events.
+servers:
+  - url: https://code-guardian-report.vercel.app
+  - url: https://staging.codeguardian.internal
+  - url: https://localhost:5173
+paths:
+  /api/analyze:
+    post:
+      summary: Start a new analysis
+      operationId: startAnalysis
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnalysisRequest'
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnalysisQueued'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /api/report/{analysisId}:
+    get:
+      summary: Fetch report by analysisId
+      operationId: getReport
+      parameters:
+        - in: path
+          name: analysisId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Report payload
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportResponse'
+        '404':
+          description: Not found
+  /api/insights/fix:
+    post:
+      summary: Generate remediation guidance
+      operationId: generateFix
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FixRequest'
+      responses:
+        '200':
+          description: Fix suggestions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FixResponse'
+  /api/webhooks/github:
+    post:
+      summary: GitHub webhook bridge
+      operationId: githubWebhook
+      security:
+        - webhookSignature: []
+      responses:
+        '200':
+          description: Acknowledge receipt
+  /api/webhooks/custom:
+    post:
+      summary: Custom webhook
+      operationId: customWebhook
+      responses:
+        '200':
+          description: Accepted
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    webhookSignature:
+      type: apiKey
+      in: header
+      name: x-code-guardian-signature
+  responses:
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Missing or invalid token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    RateLimited:
+      description: Too many requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    ServerError:
+      description: Unexpected server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  schemas:
+    AnalysisRequest:
+      type: object
+      properties:
+        source:
+          $ref: '#/components/schemas/Source'
+        filters:
+          $ref: '#/components/schemas/Filters'
+        aiProviders:
+          type: array
+          items:
+            type: string
+        export:
+          $ref: '#/components/schemas/ExportOptions'
+      required: [source]
+    Source:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: [github, zip, snippet]
+        url:
+          type: string
+        ref:
+          type: string
+        archive:
+          type: string
+          description: Base64 encoded zip when using snippet mode.
+    Filters:
+      type: object
+      properties:
+        include:
+          type: array
+          items:
+            type: string
+        exclude:
+          type: array
+          items:
+            type: string
+    ExportOptions:
+      type: object
+      properties:
+        formats:
+          type: array
+          items:
+            type: string
+        includeEvidenceBundle:
+          type: boolean
+    AnalysisQueued:
+      type: object
+      properties:
+        analysisId:
+          type: string
+        status:
+          type: string
+        etaSeconds:
+          type: integer
+        links:
+          type: object
+          additionalProperties:
+            type: string
+    ReportResponse:
+      type: object
+      properties:
+        analysisId:
+          type: string
+        status:
+          type: string
+        findings:
+          type: array
+          items:
+            $ref: '#/components/schemas/Finding'
+        secrets:
+          type: array
+          items:
+            $ref: '#/components/schemas/SecretFinding'
+        exports:
+          type: array
+          items:
+            type: string
+    Finding:
+      type: object
+      properties:
+        id:
+          type: string
+        ruleId:
+          type: string
+        severity:
+          type: string
+        filePath:
+          type: string
+        startLine:
+          type: integer
+        endLine:
+          type: integer
+        aiSummary:
+          type: string
+        recommendation:
+          type: string
+    SecretFinding:
+      type: object
+      properties:
+        id:
+          type: string
+        secretType:
+          type: string
+        filePath:
+          type: string
+        entropy:
+          type: number
+        action:
+          type: string
+    FixRequest:
+      type: object
+      properties:
+        analysisId:
+          type: string
+        findingId:
+          type: string
+        preferredProvider:
+          type: string
+        codeContext:
+          type: string
+    FixResponse:
+      type: object
+      properties:
+        findingId:
+          type: string
+        suggestions:
+          type: array
+          items:
+            $ref: '#/components/schemas/FixSuggestion'
+    FixSuggestion:
+      type: object
+      properties:
+        provider:
+          type: string
+        title:
+          type: string
+        patch:
+          type: string
+        confidence:
+          type: number
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+        error:
+          type: string
+        message:
+          type: string
+        correlationId:
+          type: string
+```
+
+## 📦 Appendix C: Sample Analysis Artifact (JSON)
+
+```json
+{
+  "analysisId": "cg-anl-2025-042",
+  "status": "completed",
+  "startedAt": "2025-01-15T10:05:12.100Z",
+  "completedAt": "2025-01-15T10:06:42.880Z",
+  "targets": {
+    "repository": "github.com/Xenonesis/code-guardian-report",
+    "commit": "b7ab2e4",
+    "branch": "improve/mobile-ux"
+  },
+  "summary": {
+    "totalFindings": 12,
+    "high": 2,
+    "medium": 5,
+    "low": 5,
+    "secrets": 1,
+    "aiSuggestions": 9,
+    "evidenceBundle": true
+  },
+  "findings": [
+    {
+      "id": "CG-SQL-001",
+      "rule": "SQL Injection",
+      "severity": "high",
+      "filePath": "src/services/reporting.ts",
+      "startLine": 118,
+      "endLine": 141,
+      "snippet": "const rows = await db.raw(`SELECT * FROM reports WHERE id = ${id}`);",
+      "aiSummary": "User input id is concatenated into a SQL statement allowing injection.",
+      "recommendation": "Use parameterized queries with placeholders and strict type coercion.",
+      "tickets": ["SEC-5421"],
+      "tags": ["OWASP-A03", "CWE-89"],
+      "links": {
+        "dashboard": "https://code-guardian-report.vercel.app/results/cg-anl-2025-042/findings/CG-SQL-001",
+        "sarif": "https://storage.example.com/cg-anl-2025-042/CG-SQL-001.sarif"
+      }
+    },
+    {
+      "id": "CG-SECRET-009",
+      "rule": "Hardcoded Secret",
+      "severity": "medium",
+      "filePath": "src/config/constants.ts",
+      "startLine": 12,
+      "endLine": 19,
+      "snippet": "const FIREBASE_KEY = 'AIzaSyExample123';",
+      "aiSummary": "An API key is committed directly in source control.",
+      "recommendation": "Move keys to environment variables or secret managers.",
+      "tags": ["SECRET", "Compliance"],
+      "links": {
+        "dashboard": "https://code-guardian-report.vercel.app/results/cg-anl-2025-042/findings/CG-SECRET-009"
+      }
+    }
+  ],
+  "secrets": [
+    {
+      "id": "secret-aws-001",
+      "secretType": "AWS Access Key",
+      "filePath": "src/utils/deploy.ts",
+      "entropy": 4.9,
+      "evidence": "AKIAIOSFODNN7EXAMPLE",
+      "action": "rotate",
+      "owner": "platform@company.com"
+    }
+  ],
+  "exports": {
+    "json": "https://storage.example.com/cg-anl-2025-042/report.json",
+    "pdf": "https://storage.example.com/cg-anl-2025-042/report.pdf",
+    "sarif": "https://storage.example.com/cg-anl-2025-042/report.sarif"
+  },
+  "history": [
+    {
+      "timestamp": "2025-01-15T10:05:12.150Z",
+      "state": "queued",
+      "context": "analysis-request-received"
+    },
+    {
+      "timestamp": "2025-01-15T10:05:40.011Z",
+      "state": "analyzing",
+      "context": "phase=data-flow"
+    },
+    {
+      "timestamp": "2025-01-15T10:06:33.400Z",
+      "state": "ai-enhancing",
+      "context": "provider=openai"
+    },
+    {
+      "timestamp": "2025-01-15T10:06:42.880Z",
+      "state": "completed",
+      "context": "exports-ready"
+    }
+  ]
+}
+```
+
+## 🧬 Appendix D: GitHub Actions Workflow (Hardened)
+
+```yaml
+name: code-guardian
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 3 * * *'
+
+permissions:
+  contents: read
+  security-events: write
+  pull-requests: write
+
+concurrency:
+  group: code-guardian-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 9
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+  analyze:
+    needs: install
+    runs-on: ubuntu-latest
+    env:
+      VITE_OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      VITE_FIREBASE_API_KEY: ${{ secrets.FIREBASE_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 9
+      - name: Restore cache
+        uses: actions/cache@v4
+        with:
+          path: .guardian-cache
+          key: guardian-${{ runner.os }}-${{ github.sha }}
+      - name: Install deps
+        run: pnpm install --frozen-lockfile
+      - name: Run unit tests
+        run: pnpm test -- --runInBand
+      - name: Run Code Guardian analysis
+        run: node scripts/e2e-zip-analysis.ts --zip $(git ls-files -z | tr ' ' '
+' | zip -@q build.zip) --out report.sarif
+      - name: Upload SARIF
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: report.sarif
+      - name: Upload artifact bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: guardian-report
+          path: |
+            report.sarif
+            dist
+            .guardian-cache
+
+  nightly-benchmark:
+    if: github.event_name == 'schedule'
+    needs: analyze
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run AI accuracy suite
+        run: node scripts/run-accuracy-test.ts --threshold 0.94 --providers openai,anthropic,gemini
+      - name: Publish dashboard comment
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          recreate: true
+          path: tmp_rovodev_FINAL_REPORT.md
+```
+
+## ☁️ Appendix E: Terraform Starter (AWS + Vercel Hybrid)
+
+```hcl
+terraform {
+  required_version = ">= 1.6.0"
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+    vercel = {
+      source  = "vercel/vercel"
+      version = "~> 1.4"
+    }
+  }
+}
+
+provider "aws" {
+  region = var.aws_region
+}
+
+provider "vercel" {
+  api_token = var.vercel_token
+}
+
+module "guardian_static" {
+  source = "terraform-aws-modules/s3-bucket/aws"
+  bucket = var.bucket_name
+  acl    = "private"
+  versioning = {
+    enabled = true
+  }
+  server_side_encryption_configuration = {
+    rule = {
+      apply_server_side_encryption_by_default = {
+        sse_algorithm = "aws:kms"
+      }
+    }
+  }
+}
+
+resource "vercel_project" "guardian" {
+  name      = var.vercel_project
+  framework = "vite"
+}
+
+resource "vercel_project_domain" "primary" {
+  project_id = vercel_project.guardian.id
+  domain     = var.primary_domain
+}
+
+resource "aws_cloudfront_distribution" "cdn" {
+  enabled             = true
+  is_ipv6_enabled     = true
+  default_root_object = "index.html"
+
+  origin {
+    domain_name = module.guardian_static.s3_bucket_bucket_domain_name
+    origin_id   = "guardian-static"
+    s3_origin_config {
+      origin_access_identity = aws_cloudfront_origin_access_identity.oai.cloudfront_access_identity_path
+    }
+  }
+
+  default_cache_behavior {
+    allowed_methods  = ["GET", "HEAD"]
+    cached_methods   = ["GET", "HEAD"]
+    target_origin_id = "guardian-static"
+    viewer_protocol_policy = "redirect-to-https"
+    min_ttl                = 0
+    default_ttl            = 3600
+    max_ttl                = 86400
+    forwarded_values {
+      query_string = false
+      cookies {
+        forward = "none"
+      }
+    }
+  }
+
+  viewer_certificate {
+    acm_certificate_arn      = var.acm_cert
+    ssl_support_method       = "sni-only"
+    minimum_protocol_version = "TLSv1.2_2021"
+  }
+}
+
+resource "aws_cloudfront_origin_access_identity" "oai" {
+  comment = "OAI for Code Guardian"
+}
+
+resource "aws_route53_record" "cdn" {
+  zone_id = var.zone_id
+  name    = var.primary_domain
+  type    = "A"
+
+  alias {
+    name                   = aws_cloudfront_distribution.cdn.domain_name
+    zone_id                = aws_cloudfront_distribution.cdn.hosted_zone_id
+    evaluate_target_health = false
+  }
+}
+
+variable "aws_region" { default = "us-east-1" }
+variable "bucket_name" {}
+variable "vercel_token" {}
+variable "vercel_project" {}
+variable "primary_domain" {}
+variable "acm_cert" {}
+variable "zone_id" {}
+```
+
+## 🌀 Appendix F: Kubernetes Bundle
+
+```yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: code-guardian
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: guardian-config
+  namespace: code-guardian
+data:
+  VITE_APP_NAME: "Code Guardian Report"
+  VITE_LOG_LEVEL: "info"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: guardian-web
+  namespace: code-guardian
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: guardian-web
+  template:
+    metadata:
+      labels:
+        app: guardian-web
+    spec:
+      containers:
+        - name: web
+          image: ghcr.io/xenonesis/code-guardian-web:latest
+          ports:
+            - containerPort: 4173
+          envFrom:
+            - configMapRef:
+                name: guardian-config
+            - secretRef:
+                name: guardian-secrets
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 4173
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 4173
+            initialDelaySeconds: 20
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: "200m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: guardian-web-hpa
+  namespace: code-guardian
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: guardian-web
+  minReplicas: 3
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 60
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: guardian-web
+  namespace: code-guardian
+spec:
+  selector:
+    app: guardian-web
+  ports:
+    - port: 80
+      targetPort: 4173
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: guardian-web
+  namespace: code-guardian
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      add_header Strict-Transport-Security "max-age=63072000; includeSubDomains" always;
+      add_header Content-Security-Policy "default-src 'self'";
+spec:
+  rules:
+    - host: guardian.example.com
+      http:
+        paths:
+          - path: /(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: guardian-web
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - guardian.example.com
+      secretName: guardian-tls
+```
+
+## 🧱 Appendix G: Docker Compose Reference
+
+```yaml
+version: '3.9'
+services:
+  guardian-web:
+    image: ghcr.io/xenonesis/code-guardian-web:latest
+    container_name: guardian-web
+    restart: unless-stopped
+    ports:
+      - "8080:4173"
+    environment:
+      - VITE_LOG_LEVEL=info
+      - VITE_OPENAI_API_URL=http://guardian-proxy.internal/v1
+    volumes:
+      - ./dist:/usr/share/nginx/html:ro
+  guardian-proxy:
+    image: envoyproxy/envoy:v1.31-latest
+    container_name: guardian-proxy
+    volumes:
+      - ./ops/envoy.yaml:/etc/envoy/envoy.yaml
+    ports:
+      - "8443:8443"
+  firebase-emulator:
+    image: codeguardian/firebase-emulator
+    environment:
+      - FIREBASE_AUTH_EMULATOR_HOST=0.0.0.0:9099
+      - FIRESTORE_EMULATOR_HOST=0.0.0.0:8082
+    ports:
+      - "9099:9099"
+      - "8082:8082"
+networks:
+  default:
+    name: guardian-net
+```
+
+## ✅ Appendix H: Compliance Checklist
+
+| Control | Status | Evidence | Automation |
+|---------|--------|----------|------------|
+| OWASP Top 10 coverage | ✅ | tests/modernCodeScanning.test.ts | Automated |
+| CWE mapping | ✅ | README tables + exports | Automated |
+| SOC 2 logging | 🟡 | Log forwarding instructions | Partial |
+| GDPR data minimization | ✅ | Redaction defaults, limited retention | Policy-driven |
+| PCI token handling | ✅ | Secret scanner + tokenization guidance | Automated |
+| FedRAMP boundary | 🟡 | Requires dedicated tenant | Manual |
+| ISO 27001 asset inventory | ✅ | README inventory + asset tags | Manual |
+| Accessibility (WCAG 2.1 AA) | ✅ | Automated axe scan + manual QA | Automated + Manual |
+| Disaster Recovery | 🟡 | Documented runbook; backup automation optional | Manual |
+| Business Continuity | ✅ | Multi-region deploy plan | Manual |
+
+Document completion of each control inside tmp_rovodev_FINAL_REPORT.md to maintain a single source of truth.
+
+## 📚 Appendix I: Data Dictionary
+
+| Field | Type | Source | Description |
+|-------|------|--------|-------------|
+| analysisId | string | api/analyze | Unique identifier assigned to each scan; referenced throughout the dashboard. |
+| status | enum | firestore + local cache | Represents lifecycle states: queued, analyzing, ai-enhancing, completed, failed. |
+| severity | enum | detection engine | Normalized severity (info, low, medium, high, critical). |
+| ruleId | string | rule catalog | Identifier mapping to CG-* controls defined above. |
+| filePath | string | parser output | Relative workspace path (POSIX) to the flagged file. |
+| startLine | number | parser output | Starting line of matched snippet. |
+| endLine | number | parser output | Ending line inclusive. |
+| aiSummary | string | ai providers | Human-readable explanation generated by GPT-4.1, Claude 3.5, or Gemini. |
+| recommendation | string | ai providers + heuristics | Concrete fix instruction referencing docs links. |
+| tags | array[string] | detection metadata | Additional labels such as CWE, OWASP, data classification. |
+| secretType | string | secret scanner | Pattern classification (e.g., aws_access_key, firebase_token). |
+| entropy | float | secret scanner | Shannon entropy used to rank suspected credentials. |
+| action | string | orchestration | Suggested action (rotate, revoke, monitor). |
+| exports | object | storage orchestrator | Map of downloadable artifact URLs (json, pdf, sarif, csv). |
+| aiConfidence | float | ai providers | Normalized 0-1 confidence score for explanation accuracy. |
+| mttrHours | float | analytics | Calculated remediation time fed into KPI workbook. |
+| workspace | string | auth context | Multi-tenant workspace slug to support RBAC segregation. |
+| queueDepth | number | telemetry | Real-time count of pending jobs, surfaced inside observability widgets. |
+
+> Tip: extend this dictionary by committing additional markdown rows. The detection UI auto-links to any field documented here.
+
+## 🧭 Appendix J: Scenario Playbooks
+
+### 1. Blocking Production Release
+1. Trigger `scripts/run-all-tests.ts --providers openai,anthropic`.
+2. Review SARIF upload in the GitHub Security tab and ensure annotations render inside pull requests.
+3. Use the `SecurityMetricsDashboard` to confirm no high severity findings remain.
+4. Update release notes with references to `analysisId` and attach PDF exports for audit.
+
+### 2. Greenfield Onboarding
+1. Import repository via the Upload wizard located in `src/components/upload/UploadForm`.
+2. Run quick scans with default rules; expect completion under 90 seconds for <5k LOC projects.
+3. Configure SSO + RBAC per Appendix H to keep access limited while onboarding.
+4. Schedule recurring scans using `scripts/run-automation.js` (add cron to preferred CI system).
+
+### 3. Incident Response Retrospective
+1. Export JSON + evidence bundle via the results page.
+2. Feed JSON into Appendix C schema-aware notebook to slice data by severity, team, or file path.
+3. Populate `tmp_rovodev_FINAL_REPORT.md` using the runbook checklists.
+4. File improvement issues referencing module owners listed in README earlier.
+
+### 4. Compliance Audit (SOC 2 / ISO)
+1. Provide auditors with read-only dashboard access plus SARIF exports.
+2. Demonstrate automated controls listed in Appendix A by replaying relevant tests.
+3. Share `README_FIRST.txt` to explain local development constraints.
+4. Reference Appendix H to show completion evidence for each mandated control.
+
+## 🌐 Appendix K: Environment Variables
+
+| Variable | Location | Required | Description |
+|----------|----------|----------|-------------|
+| VITE_OPENAI_API_KEY | .env.local / CI secret | Optional | Needed when enabling GPT-based explainers. |
+| VITE_ANTHROPIC_API_KEY | Secret manager | Optional | Alternative AI provider. |
+| VITE_GEMINI_API_KEY | Secret manager | Optional | Google Gemini integration toggle. |
+| VITE_FIREBASE_API_KEY | Firebase console | Optional | Enables Firestore persistence + Auth. |
+| VITE_FIREBASE_AUTH_DOMAIN | Firebase console | Optional | Maps to Firebase auth tenant. |
+| VITE_FIREBASE_PROJECT_ID | Firebase console | Optional | Required for Firestore + storage. |
+| VITE_FIREBASE_STORAGE_BUCKET | Firebase console | Optional | Storage bucket for exports if not using Vercel. |
+| VITE_FIREBASE_MESSAGING_SENDER_ID | Firebase console | Optional | Enables push notifications. |
+| VITE_FIREBASE_APP_ID | Firebase console | Optional | Ties config to proper Firebase app. |
+| VITE_FIREBASE_MEASUREMENT_ID | Firebase console | Optional | Analytics instrumentation toggle. |
+| VITE_GITHUB_APP_ID | GitHub settings | Optional | Required for GitHub App integration. |
+| VITE_GITHUB_APP_PRIVATE_KEY | Secret manager | Optional | PEM data for GitHub App. |
+| VITE_ALLOWED_ORIGINS | .env.local | Recommended | Comma-separated CORS list for self-hosting. |
+| VITE_BASE_PATH | build command | Optional | Set when hosting under sub-path (e.g., /guardian). |
+| VITE_WEBHOOK_SECRET | secret manager | Recommended | Shared secret for custom webhook ingestion. |
+| VITE_ENCRYPTION_KEY | secret manager | Recommended | AES key used for evidence bundle encryption. |
+
+Export sanitized templates via `npm run build:config` (custom script) to avoid leaking secrets when sharing sample environments.
+
+## 🔄 Appendix L: Migration Checklist
+
+1. **Pre-migration Assessment**
+   - Run `npm run lint && npm run test` to capture current health.
+   - Document existing environment variables and feature flags.
+   - Snapshot KPIs from `EnhancedAnalyticsDashboard` for baseline comparison.
+2. **Infrastructure Update**
+   - Apply Appendix E Terraform or Appendix F Kubernetes manifests.
+   - Rotate secrets and update environment variable table above.
+3. **Data Migration**
+   - Export existing findings, acknowledgements, and playbooks to JSON.
+   - Import via `/api/analyze` seed mode or via Firestore import scripts.
+4. **Validation**
+   - Execute `scripts/run-multi-language-tests.js` to ensure detection parity.
+   - Re-run Appendix D workflow in dry-run mode to ensure CI parity.
+5. **Cutover**
+   - Flip DNS / CDN to new environment, monitor observability dashboards.
+   - Keep old environment in read-only mode for 1-2 sprints.
+6. **Post-migration Review**
+   - Capture new KPIs and compare to baseline.
+   - Close migration tasks in `tmp_rovodev_svg_fix_summary.txt` backlog.
+
+## 🧾 Appendix M: Sample Compliance Report Snippet
+
+```markdown
+# Code Guardian Operational Evidence (Excerpt)
+
+- **Organization:** Example Fintech Inc.
+- **Assessment Window:** 2025-01-01 → 2025-03-31
+- **Primary Contacts:**
+  - AppSec Lead: gloria@example.com
+  - SRE Lead: priya@example.com
+
+## Control Mapping
+
+| Control | Evidence | Notes |
+|---------|----------|-------|
+| CC8.1 (Change Management) | GitHub Actions workflow in Appendix D | Blocking checks enforce security gates pre-merge. |
+| CC7.2 (Vulnerability Management) | Automated scans + AI explainers | Nightly schedule documented; evidence stored in SARIF. |
+| A1.2 (Asset Inventory) | README architecture + data dictionary | Updated quarterly via `scripts/update-contributors.js`. |
+| A1.3 (Access Control) | RBAC mapping + SSO enforcement | Appendix H + auth module references. |
+
+## Findings Overview
+
+- Total Scans This Quarter: **48**
+- Average Completion Time: **2m 31s**
+- High Severity Findings: **3 (all remediated within 4 hours)**
+- Secret Leaks: **1 (credential rotated immediately)**
+
+## Remediation Narrative
+
+1. `CG-SQL-044` detected concatenated SQL in `src/services/reporting.ts`. Patch merged in PR #214 after AI-assisted fix plus manual review.
+2. `CG-SECRET-009` flagged Firebase key; rotated via secret manager and added detection rule.
+3. `CG-CORS-002` discovered wildcard origin; tightened via configuration update referencing Appendix K.
+
+## Next Steps
+
+- Expand custom rule packs covering GraphQL schema validations.
+- Deploy multi-region redundancy described in Appendix F.
+- Continue measuring AI explanation acceptance rate, aiming for ≥80% by next quarter.
+```
