@@ -313,9 +313,9 @@ ${suggestion.testingRecommendations.map((rec, i) => `${i + 1}. ${rec}`).join('\n
 
         {/* Issues List */}
         <div className="p-6 space-y-4">
-          {otherIssues.map((issue) => (
+          {otherIssues.map((issue, index) => (
             <SecurityIssueItem
-              key={issue.id}
+              key={`${issue.id}_${index}`}
               issue={issue}
               isExpanded={expandedIssues.has(issue.id)}
               onToggle={() => toggleIssueExpansion(issue.id)}

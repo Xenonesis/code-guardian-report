@@ -108,21 +108,22 @@ export const useFileUpload = ({ onFileSelect, onAnalysisComplete }: UseFileUploa
       { name: 'Generating report', duration: 0.1 }
     ];
     
+    // Start with phase 1 immediately
     setAnalysisProgress({
       phase: phases[0].name,
       phaseNumber: 1,
       totalPhases: phases.length,
       estimatedTimeRemaining: Math.round(totalTime),
       elapsedTime: 0,
-      percentComplete: 0
+      percentComplete: 2 // Start with small visible progress
     });
     
     let lastPhaseNumber = 1;
     
-    // Update progress every 250ms for smoother updates
+    // Update progress every 200ms for smoother updates
     progressInterval.current = setInterval(() => {
       const elapsed = (Date.now() - analysisStartTime.current) / 1000;
-      const progressRatio = elapsed / estimatedTotalTime.current;
+      const progressRatio = Math.min(elapsed / estimatedTotalTime.current, 0.95); // Cap at 95%
       
       // Determine current phase based on progress
       let cumulativeDuration = 0;
@@ -163,8 +164,8 @@ export const useFileUpload = ({ onFileSelect, onAnalysisComplete }: UseFileUploa
       // Calculate remaining time with smoothing
       const remaining = Math.max(0, estimatedTotalTime.current - elapsed);
       
-      // Progress percentage: cap at 95% until actually complete
-      const percentComplete = Math.min(95, progressRatio * 100);
+      // Progress percentage: ensure visible progress, cap at 95% until complete
+      const percentComplete = Math.max(2, Math.min(95, progressRatio * 100));
       
       setAnalysisProgress({
         phase: currentPhase.name,
@@ -174,7 +175,7 @@ export const useFileUpload = ({ onFileSelect, onAnalysisComplete }: UseFileUploa
         elapsedTime: Math.round(elapsed),
         percentComplete: Math.round(percentComplete)
       });
-    }, 250);
+    }, 200);
   }, []);
   
   const stopProgressTracking = useCallback(() => {

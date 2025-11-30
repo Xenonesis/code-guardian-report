@@ -79,34 +79,48 @@ export const FileStatus: React.FC<FileStatusProps> = ({
       )}
 
       {isAnalyzing && (
-        <div className="space-y-3 sm:space-y-4 p-4 sm:p-6 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/40 dark:to-pink-900/40 rounded-xl border border-purple-200 dark:border-purple-600 animate-fade-in">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-            <span className="text-sm font-semibold text-purple-900 dark:text-purple-100 flex items-center gap-2">
-              <Sparkles className="h-4 w-4 animate-pulse" aria-hidden="true" />
-              Analyzing real code content...
-            </span>
-            <div className="flex items-center gap-2 flex-wrap">
-              {analysisProgress && (
-                <span className="text-xs font-semibold text-white bg-purple-600 dark:bg-purple-500 px-2.5 py-1 rounded-full shadow-sm">
+        <div className="space-y-4 p-4 sm:p-6 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/50 dark:to-pink-900/50 rounded-xl border border-purple-200 dark:border-purple-500 animate-fade-in">
+          {/* Header Row */}
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center gap-2">
+              <Sparkles className="h-5 w-5 text-purple-600 dark:text-purple-300 animate-pulse flex-shrink-0" aria-hidden="true" />
+              <span className="text-base font-bold text-purple-900 dark:text-purple-50">
+                Analyzing real code content...
+              </span>
+            </div>
+            <div className="flex items-center gap-3 flex-wrap">
+              {analysisProgress && analysisProgress.phaseNumber > 0 && (
+                <span className="text-xs font-bold text-white bg-purple-600 dark:bg-purple-500 px-3 py-1.5 rounded-full shadow-md border border-purple-400 dark:border-purple-400">
                   Step {analysisProgress.phaseNumber}/{analysisProgress.totalPhases}
                 </span>
               )}
-              <span className="text-sm font-medium text-purple-800 dark:text-purple-200">
+              <span className="text-sm font-semibold text-purple-700 dark:text-purple-200 bg-purple-100 dark:bg-purple-800/50 px-3 py-1 rounded-lg">
                 {analysisProgress?.phase || 'Extracting & scanning'}
               </span>
             </div>
           </div>
-          <Progress 
-            value={analysisProgress?.percentComplete} 
-            className="w-full h-2 sm:h-3 bg-purple-200 dark:bg-purple-800" 
-          />
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-            <p className="text-xs text-purple-700 dark:text-purple-300">
+          
+          {/* Progress Bar */}
+          <div className="relative">
+            <Progress 
+              value={analysisProgress?.percentComplete ?? 0} 
+              className="w-full h-3 sm:h-4 bg-purple-200 dark:bg-purple-800 rounded-full overflow-hidden" 
+            />
+            {analysisProgress && analysisProgress.percentComplete > 0 && (
+              <span className="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-bold text-purple-900 dark:text-white drop-shadow-sm">
+                {Math.round(analysisProgress.percentComplete)}%
+              </span>
+            )}
+          </div>
+          
+          {/* Footer Row */}
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-xs sm:text-sm text-purple-600 dark:text-purple-300 font-medium leading-relaxed">
               Extracting files from ZIP • Running security pattern matching • Analyzing code quality • Detecting vulnerabilities
             </p>
             {analysisProgress && analysisProgress.estimatedTimeRemaining > 0 && (
-              <div className="flex items-center gap-1.5 text-xs font-semibold text-white bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-500 dark:to-pink-500 px-3 py-1.5 rounded-full shadow-md whitespace-nowrap">
-                <Clock className="h-3.5 w-3.5" aria-hidden="true" />
+              <div className="flex items-center gap-2 text-xs font-bold text-white bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-500 dark:to-pink-500 px-4 py-2 rounded-full shadow-lg whitespace-nowrap border border-purple-400/50">
+                <Clock className="h-4 w-4" aria-hidden="true" />
                 <span>{formatTimeRemaining(analysisProgress.estimatedTimeRemaining)}</span>
               </div>
             )}
