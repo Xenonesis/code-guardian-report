@@ -177,66 +177,38 @@ export const SecurityIssueItem: React.FC<SecurityIssueItemProps> = ({
       {isExpanded && (
         <div className="border-t border-slate-700/50 p-3 sm:p-4">
           <Tabs defaultValue="summary" className="w-full">
-            <TabsList className="grid w-full grid-cols-3 h-auto bg-slate-800 p-1 rounded-lg gap-1 mb-4">
+            <TabsList className="flex w-full overflow-x-auto bg-slate-800 p-1 rounded-lg gap-1 mb-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] sm:flex sm:flex-wrap sm:justify-start">
               <TabsTrigger 
                 value="summary" 
-                className="flex items-center justify-center gap-1.5 text-xs sm:text-sm py-2.5 sm:py-3 px-2 sm:px-3 rounded-md text-slate-300 data-[state=active]:bg-blue-500 data-[state=active]:text-white transition-all touch-target"
+                className="flex-shrink-0 min-w-[100px] sm:w-auto flex items-center justify-center gap-1.5 text-xs sm:text-sm py-2 px-3 rounded-md text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white transition-all touch-target"
               >
                 <MessageSquare className="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0" />
-                <span className="hidden xs:inline">Summary</span>
-                <span className="xs:hidden">Info</span>
+                <span>Summary</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="details" 
-                className="flex items-center justify-center text-xs sm:text-sm py-2.5 sm:py-3 px-2 sm:px-3 rounded-md text-slate-300 data-[state=active]:bg-blue-500 data-[state=active]:text-white transition-all touch-target"
+                className="flex-shrink-0 min-w-[100px] sm:w-auto flex items-center justify-center text-xs sm:text-sm py-2 px-3 rounded-md text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white transition-all touch-target"
               >
-                <span className="hidden xs:inline">Technical</span>
-                <span className="xs:hidden">Tech</span>
+                <span>Technical</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="remediation" 
-                className="flex items-center justify-center text-xs sm:text-sm py-2.5 sm:py-3 px-2 sm:px-3 rounded-md text-slate-300 data-[state=active]:bg-blue-500 data-[state=active]:text-white transition-all touch-target"
+                className="flex-shrink-0 min-w-[100px] sm:w-auto flex items-center justify-center text-xs sm:text-sm py-2 px-3 rounded-md text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white transition-all touch-target"
               >
-                <span className="hidden xs:inline">Fix Guide</span>
-                <span className="xs:hidden">Fix</span>
+                <span>Fix Guide</span>
               </TabsTrigger>
-            </TabsList>
-
-            {/* Mobile-only secondary tabs */}
-            <div className="sm:hidden grid grid-cols-2 gap-2 mb-4">
-              <TabsList className="grid w-full grid-cols-1 h-auto bg-slate-800 p-1 rounded-lg">
-                <TabsTrigger 
-                  value="ai-fixes" 
-                  className="flex items-center justify-center gap-1.5 text-xs py-2.5 px-2 rounded-md text-slate-300 data-[state=active]:bg-blue-500 data-[state=active]:text-white transition-all touch-target"
-                >
-                  <Brain className="h-3.5 w-3.5 flex-shrink-0" />
-                  AI Fixes
-                </TabsTrigger>
-              </TabsList>
-              <TabsList className="grid w-full grid-cols-1 h-auto bg-slate-800 p-1 rounded-lg">
-                <TabsTrigger 
-                  value="references" 
-                  className="flex items-center justify-center text-xs py-2.5 px-2 rounded-md text-slate-300 data-[state=active]:bg-blue-500 data-[state=active]:text-white transition-all touch-target"
-                >
-                  References
-                </TabsTrigger>
-              </TabsList>
-            </div>
-
-            {/* Desktop tabs row */}
-            <TabsList className="hidden sm:grid w-full grid-cols-2 h-auto bg-slate-800 p-1 rounded-lg gap-1 mb-4">
               <TabsTrigger 
                 value="ai-fixes" 
-                className="flex items-center justify-center gap-1.5 text-sm py-3 px-3 rounded-md text-slate-300 data-[state=active]:bg-blue-500 data-[state=active]:text-white transition-all"
+                className="flex-shrink-0 min-w-[100px] sm:w-auto flex items-center justify-center gap-1.5 text-xs sm:text-sm py-2 px-3 rounded-md text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white transition-all touch-target"
               >
-                <Brain className="h-4 w-4 flex-shrink-0" />
-                AI Fixes
+                <Brain className="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0" />
+                <span>AI Fixes</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="references" 
-                className="flex items-center justify-center text-sm py-3 px-3 rounded-md text-slate-300 data-[state=active]:bg-blue-500 data-[state=active]:text-white transition-all"
+                className="flex-shrink-0 min-w-[100px] sm:w-auto flex items-center justify-center text-xs sm:text-sm py-2 px-3 rounded-md text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white transition-all touch-target"
               >
-                References
+                <span>References</span>
               </TabsTrigger>
             </TabsList>
 
