@@ -64,7 +64,7 @@ export const GitHubAnalysisPage: React.FC = () => {
           loading: false
         });
       } catch (error) {
-        console.error('Failed to load dashboard stats:', error);
+        logger.error('Failed to load dashboard stats:', error);
         setDashboardStats(prev => ({ ...prev, loading: false }));
       }
     };
@@ -188,7 +188,7 @@ export const GitHubAnalysisPage: React.FC = () => {
             repoDetails = await githubRepositoryService.getRepositoryInfo(repoInfo.owner, repoInfo.repo);
             branch = repoDetails.defaultBranch;
           } catch (err) {
-            console.warn('Failed to fetch repo info, defaulting to main', err);
+            logger.warn('Failed to fetch repo info, defaulting to main', err);
             branch = 'main';
           }
         }

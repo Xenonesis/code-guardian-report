@@ -15,7 +15,6 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ onStartAnalysis }) => {
   return (
     <HeroSection
       title=""
-      subtitle="Revolutionary code analysis powered by advanced artificial intelligence"
       description="Transform your development workflow with enterprise-grade security analysis that detects vulnerabilities, bugs, and quality issues in real-time with unprecedented accuracy."
       variant="gradient"
       className="relative min-h-[50vh] sm:min-h-[55vh] flex items-center justify-center px-4 sm:px-6"

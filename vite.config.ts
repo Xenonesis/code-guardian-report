@@ -44,6 +44,16 @@ export default defineConfig({
   build: {
     target: ['es2020', 'edge88', 'firefox78', 'chrome87', 'safari14'],
     minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+        pure_funcs: ['console.log', 'console.debug', 'console.info']
+      },
+      format: {
+        comments: false
+      }
+    },
     sourcemap: false,
     chunkSizeWarningLimit: 1000,
     cssCodeSplit: true,

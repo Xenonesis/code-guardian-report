@@ -76,16 +76,20 @@ class Logger {
     const entry = this.createLogEntry(LogLevel.WARN, message, data);
     this.addToBuffer(entry);
     
-    // Always show warnings, even in production
-    console.warn(`[WARN] ${message}`, data || '');
+    // Only show warnings in development
+    if (IS_DEV) {
+      console.warn(`[WARN] ${message}`, data || '');
+    }
   }
 
   error(message: string, error?: unknown): void {
     const entry = this.createLogEntry(LogLevel.ERROR, message, error);
     this.addToBuffer(entry);
     
-    // Always show errors, even in production
-    console.error(`[ERROR] ${message}`, error || '');
+    // Only show errors in development, in production send to tracking service
+    if (IS_DEV) {
+      console.error(`[ERROR] ${message}`, error || '');
+    }
 
     // In production, could send to error tracking service (e.g., Sentry)
     if (IS_PROD) {
@@ -108,13 +112,13 @@ class Logger {
 
   // Group logs for better organization (only in dev)
   group(label: string): void {
-    if (IS_DEV) {
+    if (IS_DEV && typeof console.group === 'function') {
       console.group(label);
     }
   }
 
   groupEnd(): void {
-    if (IS_DEV) {
+    if (IS_DEV && typeof console.groupEnd === 'function') {
       console.groupEnd();
     }
   }

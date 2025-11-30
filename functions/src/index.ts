@@ -121,7 +121,7 @@ export const processWebhook = functions.https.onRequest(async (req, res) => {
       rulesTriggered: rulesToExecute.length,
     });
   } catch (error) {
-    console.error('Webhook processing error:', error);
+    functions.logger.error('Webhook processing error:', error);
     res.status(500).send('Internal server error');
   }
 });
@@ -154,7 +154,7 @@ export const processWebhookTask = functions.firestore
         completedAt: admin.firestore.FieldValue.serverTimestamp(),
       });
     } catch (error) {
-      console.error('Task processing error:', error);
+      functions.logger.error('Task processing error:', error);
       
       // Mark task as failed
       await snap.ref.update({
@@ -186,7 +186,7 @@ export const cleanupWebhookLogs = functions.pubsub
     });
 
     await batch.commit();
-    console.log(`Cleaned up ${snapshot.size} old webhook logs`);
+    functions.logger.info(`Cleaned up ${snapshot.size} old webhook logs`);
   });
 
 /**
@@ -210,7 +210,7 @@ export const cleanupCompletedTasks = functions.pubsub
     });
 
     await batch.commit();
-    console.log(`Cleaned up ${snapshot.size} completed tasks`);
+    functions.logger.info(`Cleaned up ${snapshot.size} completed tasks`);
   });
 
 /**
@@ -245,7 +245,7 @@ function parseWebhookEvent(payload: any, provider: string): any | null {
     }
     return null;
   } catch (error) {
-    console.error('Failed to parse webhook event:', error);
+    functions.logger.error('Failed to parse webhook event:', error);
     return null;
   }
 }
@@ -427,16 +427,16 @@ async function executeRuleActions(rule: any, event: any): Promise<void> {
     // Block PR (would require GitHub API integration)
     if (actions.blockPR && event.pullRequest) {
       // This would integrate with GitHub/GitLab API to add a blocking status
-      console.log('PR blocking requested:', event.pullRequest.url);
+      functions.logger.info('PR blocking requested:', event.pullRequest.url);
     }
 
     // Create issue (would require GitHub API integration)
     if (actions.createIssue) {
       // This would integrate with GitHub/GitLab API to create an issue
-      console.log('Issue creation requested for:', event.repository.name);
+      functions.logger.info('Issue creation requested for:', event.repository.name);
     }
   } catch (error) {
-    console.error('Failed to execute rule actions:', error);
+    functions.logger.error('Failed to execute rule actions:', error);
     throw error;
   }
 }

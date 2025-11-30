@@ -243,7 +243,7 @@ api_key = "sk-1234567890abcdefghijklmnopqrstuvwx"
    * Run a single test case
    */
   private async runTestCase(testCase: TestCase): Promise<void> {
-    console.group(`🧪 ${testCase.name}`);
+    logger.group(`🧪 ${testCase.name}`);
     logger.debug(`📝 ${testCase.description}`);
     logger.debug(`📄 Filename: ${testCase.filename}`);
     logger.debug(`📋 Test Code:\n${testCase.code}`);
@@ -346,7 +346,7 @@ api_key = "sk-1234567890abcdefghijklmnopqrstuvwx"
         expectedMin: testCase.expectedIssues.minCount
       });
       logger.debug(`   ✅ Test PASSED`);
-      console.groupEnd();
+      logger.groupEnd();
 
     } catch (error) {
       this.results.failed++;
@@ -358,7 +358,7 @@ api_key = "sk-1234567890abcdefghijklmnopqrstuvwx"
       });
       this.results.errors.push(`${testCase.name}: ${errorMsg}`);
       logger.error(`   ❌ Test FAILED:`, errorMsg);
-      console.groupEnd();
+      logger.groupEnd();
     }
   }
 
