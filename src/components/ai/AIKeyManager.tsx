@@ -13,10 +13,64 @@ import { setLocalStorageItem, removeLocalStorageItem } from '@/utils/storageEven
 import { discoverModels, validateAPIKey, AIModel } from '@/services/ai/modelDiscoveryService';
 
 import { logger } from '@/utils/logger';
+
+// Real AI Provider Icons
+const OpenAIIcon = () => (
+  <svg viewBox="0 0 24 24" className="w-6 h-6" fill="currentColor">
+    <path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z"/>
+  </svg>
+);
+
+const GeminiIcon = () => (
+  <svg viewBox="0 0 24 24" className="w-6 h-6" fill="currentColor">
+    <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0zm0 3.6c2.4 0 4.5 1.2 5.7 3.1-.3.3-.7.7-1.1 1.1-1-1.5-2.7-2.4-4.6-2.4-3.1 0-5.6 2.5-5.6 5.6 0 3.1 2.5 5.6 5.6 5.6 1.9 0 3.6-.9 4.6-2.4.4.4.8.8 1.1 1.1-1.2 1.9-3.3 3.1-5.7 3.1-3.9 0-7.2-3.2-7.2-7.2S8.1 3.6 12 3.6z"/>
+    <path d="M12 7.2c-2.4 0-4.3 1.9-4.3 4.3s1.9 4.3 4.3 4.3c1.5 0 2.8-.8 3.6-1.9l3.6 3.6c.7-.8 1.3-1.7 1.7-2.7l-4.2-4.2c.2-.5.3-1 .3-1.6 0-2.4-1.9-4.3-4.3-4.3-.6 0-1.2.1-1.7.4l4.3 4.3c.4.7.6 1.4.6 2.2 0 .8-.2 1.5-.6 2.2l-4.3-4.3c.5-.3 1.1-.4 1.7-.4 1.5 0 2.7 1.2 2.7 2.7s-1.2 2.7-2.7 2.7c-.9 0-1.8-.5-2.3-1.2L8 11.8c.4-.7 1.2-1.2 2-1.2.8 0 1.5.3 2 .9l-2 2z"/>
+  </svg>
+);
+
+const ClaudeIcon = () => (
+  <svg viewBox="0 0 24 24" className="w-6 h-6" fill="currentColor">
+    <path d="M17.28 8.72a.75.75 0 00-1.06-1.06l-7.5 7.5a.75.75 0 101.06 1.06l7.5-7.5z"/>
+    <path fillRule="evenodd" clipRule="evenodd" d="M12 1C5.925 1 1 5.925 1 12s4.925 11 11 11 11-4.925 11-11S18.075 1 12 1zM3.5 12a8.5 8.5 0 1117 0 8.5 8.5 0 01-17 0z"/>
+  </svg>
+);
+
+const MistralIcon = () => (
+  <svg viewBox="0 0 24 24" className="w-6 h-6" fill="currentColor">
+    <path d="M3 3h4v4H3zm7 0h4v4h-4zm7 0h4v4h-4zM3 10h4v4H3zm7 0h4v4h-4zm7 0h4v4h-4zM3 17h4v4H3zm7 0h4v4h-4zm7 0h4v4h-4z"/>
+  </svg>
+);
+
+const LlamaIcon = () => (
+  <svg viewBox="0 0 24 24" className="w-6 h-6" fill="currentColor">
+    <path d="M12 2L4 6v12l8 4 8-4V6l-8-4zm0 2.18l5.55 2.77L12 9.73 6.45 6.95 12 4.18zM6 8.26l5 2.5v7.42l-5-2.5V8.26zm12 0v7.42l-5 2.5v-7.42l5-2.5z"/>
+  </svg>
+);
+
+const CohereIcon = () => (
+  <svg viewBox="0 0 24 24" className="w-6 h-6" fill="currentColor">
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
+    <path d="M12 6c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"/>
+    <circle cx="12" cy="12" r="2"/>
+  </svg>
+);
+
+const PerplexityIcon = () => (
+  <svg viewBox="0 0 24 24" className="w-6 h-6" fill="currentColor">
+    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+  </svg>
+);
+
+const GroqIcon = () => (
+  <svg viewBox="0 0 24 24" className="w-6 h-6" fill="currentColor">
+    <path d="M13 3L4 14h7l-2 7 9-11h-7l2-7z"/>
+  </svg>
+);
+
 interface AIProvider {
   id: string;
   name: string;
-  icon: string;
+  icon: React.ReactNode;
   description: string;
   keyPrefix: string;
   keyPlaceholder: string;
@@ -33,7 +87,7 @@ const aiProviders: AIProvider[] = [
   {
     id: 'openai',
     name: 'OpenAI',
-    icon: '🤖',
+    icon: <OpenAIIcon />,
     description: 'GPT-4 powered analysis',
     keyPrefix: 'sk-',
     keyPlaceholder: 'sk-... (starts with sk-)',
@@ -42,7 +96,7 @@ const aiProviders: AIProvider[] = [
   {
     id: 'gemini',
     name: 'Google Gemini',
-    icon: '💎',
+    icon: <GeminiIcon />,
     description: 'Advanced code understanding',
     keyPrefix: 'AIza',
     keyPlaceholder: 'AIza... (starts with AIza)',
@@ -51,7 +105,7 @@ const aiProviders: AIProvider[] = [
   {
     id: 'claude',
     name: 'Anthropic Claude',
-    icon: '🧠',
+    icon: <ClaudeIcon />,
     description: 'Detailed security insights',
     keyPrefix: 'sk-ant-',
     keyPlaceholder: 'sk-ant-... (starts with sk-ant-)',
@@ -60,7 +114,7 @@ const aiProviders: AIProvider[] = [
   {
     id: 'mistral',
     name: 'Mistral AI',
-    icon: '⚡',
+    icon: <MistralIcon />,
     description: 'Fast and efficient analysis',
     keyPrefix: '',
     keyPlaceholder: 'Your Mistral API key',
@@ -69,7 +123,7 @@ const aiProviders: AIProvider[] = [
   {
     id: 'llama',
     name: 'Meta Llama',
-    icon: '🦙',
+    icon: <LlamaIcon />,
     description: 'Open-weight models',
     keyPrefix: '',
     keyPlaceholder: 'Your Llama API key',
@@ -78,7 +132,7 @@ const aiProviders: AIProvider[] = [
   {
     id: 'cohere',
     name: 'Cohere',
-    icon: '🌀',
+    icon: <CohereIcon />,
     description: 'Enterprise-focused models',
     keyPrefix: '',
     keyPlaceholder: 'Your Cohere API key',
@@ -87,7 +141,7 @@ const aiProviders: AIProvider[] = [
   {
     id: 'perplexity',
     name: 'Perplexity',
-    icon: '❓',
+    icon: <PerplexityIcon />,
     description: 'Fast online models',
     keyPrefix: 'pplx-',
     keyPlaceholder: 'pplx-... (Perplexity API key)',
@@ -96,7 +150,7 @@ const aiProviders: AIProvider[] = [
   {
     id: 'groq',
     name: 'Groq',
-    icon: '🚀',
+    icon: <GroqIcon />,
     description: 'Extremely fast inference',
     keyPrefix: 'gsk-',
     keyPlaceholder: 'gsk-... (Groq API key)',
@@ -402,7 +456,7 @@ export const AIKeyManager: React.FC = () => {
                   )}
                   <CardHeader className="pb-3">
                     <div className="flex items-center gap-3">
-                      <div className="text-2xl p-2 bg-white/50 dark:bg-black/20 rounded-xl border border-white/30 dark:border-white/10 group-hover:scale-110 transition-transform duration-200">
+                      <div className="p-2 bg-white/50 dark:bg-black/20 rounded-xl border border-white/30 dark:border-white/10 group-hover:scale-110 transition-transform duration-200 text-slate-700 dark:text-slate-200">
                         {provider.icon}
                       </div>
                       <div className="flex-1 min-w-0">
@@ -648,7 +702,7 @@ export const AIKeyManager: React.FC = () => {
                         {aiProviders.map((provider) => (
                           <SelectItem key={provider.id} value={provider.id} className="rounded-lg my-1 hover:bg-slate-50 dark:hover:bg-slate-700/50">
                             <div className="flex items-center gap-3 py-1">
-                              <div className="text-xl">{provider.icon}</div>
+                              <div className="text-slate-700 dark:text-slate-200">{provider.icon}</div>
                               <div>
                                 <div className="font-medium">{provider.name}</div>
                                 <div className="text-xs text-slate-500 dark:text-slate-400">{provider.description}</div>
