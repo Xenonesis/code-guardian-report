@@ -279,7 +279,7 @@ const UserDashboard: React.FC = () => {
 
   if (!user || !userProfile) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-black text-white">
+      <div className="flex items-center justify-center min-h-screen bg-white dark:bg-black text-gray-900 dark:text-white">
         <div className="text-center">
           <h2 className="text-2xl font-bold mb-4">Access Denied</h2>
           <p>Please sign in to view your dashboard.</p>
@@ -289,7 +289,7 @@ const UserDashboard: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0d0d1f] via-[#1b1b3a] to-[#0d0d1f] text-gray-100">
+    <div className="min-h-screen bg-gray-50 dark:bg-gradient-to-br dark:from-[#0d0d1f] dark:via-[#1b1b3a] dark:to-[#0d0d1f] text-gray-900 dark:text-gray-100">
       {/* GitHub Permission Modal */}
       <GitHubRepositoryPermissionModal
         isOpen={showPermissionModal}
@@ -308,12 +308,12 @@ const UserDashboard: React.FC = () => {
         onClose={() => setShowUsernameInput(false)}
       />
 
-      <header className="bg-[#1e1e2f] shadow border-b border-gray-700">
+      <header className="bg-white dark:bg-[#1e1e2f] shadow border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div>
-              <h1 className="text-2xl font-bold text-white">Dashboard</h1>
-              <p className="text-gray-400">Welcome back, {userProfile.displayName}!</p>
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
+              <p className="text-gray-500 dark:text-gray-400">Welcome back, {userProfile.displayName}!</p>
             </div>
             <button
               onClick={handleLogout}
@@ -331,15 +331,15 @@ const UserDashboard: React.FC = () => {
           <div className="mb-8">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
-                <Github className="w-6 h-6 text-purple-400" />
-                <h2 className="text-xl font-bold text-white">Your GitHub Repositories</h2>
-                <span className="px-2 py-1 text-xs bg-purple-500/20 text-purple-300 rounded-full">
+                <Github className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+                <h2 className="text-xl font-bold text-gray-900 dark:text-white">Your GitHub Repositories</h2>
+                <span className="px-2 py-1 text-xs bg-purple-100 dark:bg-purple-500/20 text-purple-700 dark:text-purple-300 rounded-full">
                   {repositories.length} repos
                 </span>
               </div>
               <button
                 onClick={() => setShowGitHubRepos(!showGitHubRepos)}
-                className="text-sm text-purple-400 hover:text-purple-300 transition-colors"
+                className="text-sm text-purple-600 dark:text-purple-400 hover:text-purple-500 dark:hover:text-purple-300 transition-colors"
               >
                 {showGitHubRepos ? 'Hide' : 'Show'}
               </button>
@@ -358,34 +358,34 @@ const UserDashboard: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Profile and Stats */}
           <div className="lg:col-span-1 space-y-6">
-            <div className="bg-[#252538] rounded-lg shadow p-6">
-              <h2 className="text-lg font-semibold text-white mb-4">Profile Information</h2>
+            <div className="bg-white dark:bg-[#252538] rounded-lg shadow p-6 border border-gray-200 dark:border-transparent">
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Profile Information</h2>
               <div className="space-y-3">
                 <div>
-                  <p className="text-sm font-medium text-gray-400">Display Name</p>
-                  <p className="text-white">{userProfile.displayName}</p>
+                  <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Display Name</p>
+                  <p className="text-gray-900 dark:text-white">{userProfile.displayName}</p>
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-gray-400">Email</p>
-                  <p className="text-white">{userProfile.email}</p>
+                  <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Email</p>
+                  <p className="text-gray-900 dark:text-white">{userProfile.email}</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-[#252538] rounded-lg shadow p-6">
-              <h2 className="text-lg font-semibold text-white mb-4">Task Statistics</h2>
+            <div className="bg-white dark:bg-[#252538] rounded-lg shadow p-6 border border-gray-200 dark:border-transparent">
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Task Statistics</h2>
               <div className="space-y-3">
-                <div className="flex justify-between text-gray-300">
+                <div className="flex justify-between text-gray-600 dark:text-gray-300">
                   <span>Total Tasks</span>
                   <span className="font-semibold">{tasks.length}</span>
                 </div>
-                <div className="flex justify-between text-green-400">
+                <div className="flex justify-between text-green-600 dark:text-green-400">
                   <span>Completed</span>
                   <span className="font-semibold">
                     {tasks.filter(task => task.completed).length}
                   </span>
                 </div>
-                <div className="flex justify-between text-yellow-400">
+                <div className="flex justify-between text-yellow-600 dark:text-yellow-400">
                   <span>Pending</span>
                   <span className="font-semibold">
                     {tasks.filter(task => !task.completed).length}
@@ -397,13 +397,13 @@ const UserDashboard: React.FC = () => {
 
           {/* Tasks Manager */}
           <div className="lg:col-span-2">
-            <div className="bg-[#252538] rounded-lg shadow p-6">
-              <h2 className="text-lg font-semibold text-white mb-4">Task Manager</h2>
+            <div className="bg-white dark:bg-[#252538] rounded-lg shadow p-6 border border-gray-200 dark:border-transparent">
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Task Manager</h2>
 
-              <form onSubmit={addTask} className="mb-6 p-4 bg-[#1e1e2f] rounded-lg border border-gray-700">
+              <form onSubmit={addTask} className="mb-6 p-4 bg-gray-50 dark:bg-[#1e1e2f] rounded-lg border border-gray-200 dark:border-gray-700">
                 <div className="grid grid-cols-1 gap-4">
                   <div>
-                    <label htmlFor="taskTitle" className="block text-sm font-medium text-gray-300 mb-1">
+                    <label htmlFor="taskTitle" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                       Task Title
                     </label>
                     <input
@@ -411,20 +411,20 @@ const UserDashboard: React.FC = () => {
                       id="taskTitle"
                       value={newTaskTitle}
                       onChange={(e) => setNewTaskTitle(e.target.value)}
-                      className="w-full px-3 py-2 bg-[#2c2c3e] text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      className="w-full px-3 py-2 bg-white dark:bg-[#2c2c3e] text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                       placeholder="Enter task title..."
                       required
                     />
                   </div>
                   <div>
-                    <label htmlFor="taskDescription" className="block text-sm font-medium text-gray-300 mb-1">
+                    <label htmlFor="taskDescription" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                       Description (Optional)
                     </label>
                     <textarea
                       id="taskDescription"
                       value={newTaskDescription}
                       onChange={(e) => setNewTaskDescription(e.target.value)}
-                      className="w-full px-3 py-2 bg-[#2c2c3e] text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      className="w-full px-3 py-2 bg-white dark:bg-[#2c2c3e] text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
                       placeholder="Enter task description..."
                       rows={3}
                     />
@@ -441,7 +441,7 @@ const UserDashboard: React.FC = () => {
 
               <div className="space-y-3">
                 {tasks.length === 0 ? (
-                  <p className="text-gray-400 text-center py-8">
+                  <p className="text-gray-500 dark:text-gray-400 text-center py-8">
                     No tasks yet. Add your first task above!
                   </p>
                 ) : (
@@ -450,8 +450,8 @@ const UserDashboard: React.FC = () => {
                       key={task.id}
                       className={`p-4 border rounded-lg ${
                         task.completed
-                          ? 'bg-green-900/30 border-green-600'
-                          : 'bg-[#2a2a3d] border-gray-600'
+                          ? 'bg-green-50 dark:bg-green-900/30 border-green-200 dark:border-green-600'
+                          : 'bg-white dark:bg-[#2a2a3d] border-gray-200 dark:border-gray-600'
                       }`}
                     >
                       <div className="flex items-start justify-between">
@@ -464,13 +464,13 @@ const UserDashboard: React.FC = () => {
                           />
                           <div>
                             <h3 className={`font-medium ${
-                              task.completed ? 'text-gray-400 line-through' : 'text-white'
+                              task.completed ? 'text-gray-500 dark:text-gray-400 line-through' : 'text-gray-900 dark:text-white'
                             }`}>
                               {task.title}
                             </h3>
                             {task.description && (
                               <p className={`text-sm mt-1 ${
-                                task.completed ? 'text-gray-500' : 'text-gray-300'
+                                task.completed ? 'text-gray-500' : 'text-gray-600 dark:text-gray-300'
                               }`}>
                                 {task.description}
                               </p>
