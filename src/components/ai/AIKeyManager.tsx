@@ -35,9 +35,11 @@ const GeminiIcon = () => (
 );
 
 const ClaudeIcon = () => (
-  <svg viewBox="0 0 46 32" className="w-6 h-6" fill="currentColor">
-    <path d="M13.954 5.095L24.677 27.14h-5.63L8.32 5.095h5.634zm17.326 0L20.553 27.14h5.63L36.91 5.095h-5.63zm-17.96 0h5.997l5.36 11.937L30.035 5.095h5.997L24.677 27.14h-5.63L7.69 5.095h5.63z"/>
-  </svg>
+  <img 
+    src="https://img.icons8.com/?size=100&id=H5H0mqCCr5AV&format=png&color=000000" 
+    alt="Claude" 
+    className="w-6 h-6"
+  />
 );
 
 const MistralIcon = () => (
