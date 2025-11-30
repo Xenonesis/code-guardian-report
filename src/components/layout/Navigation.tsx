@@ -8,6 +8,7 @@ import { useAuth } from '@/lib/auth-context';
 import { useNavigation } from '@/lib/navigation-context';
 import { AuthModal } from '@/components/auth/AuthModal';
 import NotificationCenter from '@/components/notifications/NotificationCenter';
+import { PWAQuickActions } from '@/components/pwa/PWAQuickActions';
 import type { Theme } from '@/hooks/useDarkMode';
 
 interface NavigationProps {
@@ -292,6 +293,9 @@ export const Navigation: React.FC<NavigationProps> = ({ theme, onThemeChange }) 
 
             {/* Notification Center */}
             <NotificationCenter className="h-9 w-9 sm:h-10 sm:w-10 rounded-full bg-slate-100/80 dark:bg-slate-800/50 hover:bg-slate-200/80 dark:hover:bg-slate-700/50 transition-all duration-200" />
+
+            {/* PWA Quick Actions */}
+            <PWAQuickActions className="hidden sm:flex h-9 w-9 sm:h-10 sm:w-10 rounded-full bg-slate-100/80 dark:bg-slate-800/50 hover:bg-slate-200/80 dark:hover:bg-slate-700/50 transition-all duration-200" />
 
             {/* Theme Toggle */}
             <ThemeToggle theme={theme} onThemeChange={onThemeChange} className="h-9 w-9 sm:h-10 sm:w-10 rounded-full bg-slate-100/80 dark:bg-slate-800/50 hover:bg-slate-200/80 dark:hover:bg-slate-700/50 transition-all duration-200" />
