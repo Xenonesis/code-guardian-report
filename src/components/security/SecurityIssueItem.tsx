@@ -177,36 +177,36 @@ export const SecurityIssueItem: React.FC<SecurityIssueItemProps> = ({
       {isExpanded && (
         <div className="border-t border-slate-700/50 p-3 sm:p-4">
           <Tabs defaultValue="summary" className="w-full">
-            <TabsList className="flex w-full overflow-x-auto bg-slate-800 p-1 rounded-lg gap-1 mb-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] sm:flex sm:flex-wrap sm:justify-start">
+            <TabsList className="flex w-full overflow-x-auto bg-slate-800 p-1 rounded-lg gap-1 mb-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] sm:flex sm:flex-wrap sm:justify-start snap-x snap-mandatory">
               <TabsTrigger 
                 value="summary" 
-                className="flex-shrink-0 min-w-[100px] sm:w-auto flex items-center justify-center gap-1.5 text-xs sm:text-sm py-2 px-3 rounded-md text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white transition-all touch-target"
+                className="flex-shrink-0 min-w-[90px] sm:w-auto flex items-center justify-center gap-1.5 text-xs sm:text-sm py-2 px-3 rounded-md text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white transition-all touch-target snap-center"
               >
                 <MessageSquare className="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0" />
                 <span>Summary</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="details" 
-                className="flex-shrink-0 min-w-[100px] sm:w-auto flex items-center justify-center text-xs sm:text-sm py-2 px-3 rounded-md text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white transition-all touch-target"
+                className="flex-shrink-0 min-w-[90px] sm:w-auto flex items-center justify-center text-xs sm:text-sm py-2 px-3 rounded-md text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white transition-all touch-target snap-center"
               >
                 <span>Technical</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="remediation" 
-                className="flex-shrink-0 min-w-[100px] sm:w-auto flex items-center justify-center text-xs sm:text-sm py-2 px-3 rounded-md text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white transition-all touch-target"
+                className="flex-shrink-0 min-w-[90px] sm:w-auto flex items-center justify-center text-xs sm:text-sm py-2 px-3 rounded-md text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white transition-all touch-target snap-center"
               >
                 <span>Fix Guide</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="ai-fixes" 
-                className="flex-shrink-0 min-w-[100px] sm:w-auto flex items-center justify-center gap-1.5 text-xs sm:text-sm py-2 px-3 rounded-md text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white transition-all touch-target"
+                className="flex-shrink-0 min-w-[90px] sm:w-auto flex items-center justify-center gap-1.5 text-xs sm:text-sm py-2 px-3 rounded-md text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white transition-all touch-target snap-center"
               >
                 <Brain className="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0" />
                 <span>AI Fixes</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="references" 
-                className="flex-shrink-0 min-w-[100px] sm:w-auto flex items-center justify-center text-xs sm:text-sm py-2 px-3 rounded-md text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white transition-all touch-target"
+                className="flex-shrink-0 min-w-[90px] sm:w-auto flex items-center justify-center text-xs sm:text-sm py-2 px-3 rounded-md text-slate-300 data-[state=active]:bg-blue-600 data-[state=active]:text-white transition-all touch-target snap-center"
               >
                 <span>References</span>
               </TabsTrigger>
