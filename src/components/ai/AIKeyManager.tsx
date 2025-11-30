@@ -58,9 +58,11 @@ const MistralIcon = () => (
 );
 
 const LlamaIcon = () => (
-  <svg viewBox="0 0 24 24" className="w-6 h-6" fill="currentColor">
-    <path d="M12 2L4 6v12l8 4 8-4V6l-8-4zm0 2.18l5.55 2.77L12 9.73 6.45 6.95 12 4.18zM6 8.26l5 2.5v7.42l-5-2.5V8.26zm12 0v7.42l-5 2.5v-7.42l5-2.5z"/>
-  </svg>
+  <img 
+    src="https://img.icons8.com/?size=100&id=YvJvKjqgeHtR&format=png&color=000000" 
+    alt="Meta Llama" 
+    className="w-6 h-6"
+  />
 );
 
 const CohereIcon = () => (
