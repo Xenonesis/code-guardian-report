@@ -5,7 +5,7 @@ import { validateZipFile } from '@/utils/fileValidation';
 import { ZipAnalysisService } from '@/services/security/zipAnalysisService';
 import { DependencyVulnerabilityScanner } from '@/services/security/dependencyVulnerabilityScanner';
 import JSZip from 'jszip';
-
+import { toast } from '@/hooks/use-toast';
 import { logger } from '@/utils/logger';
 
 // Analysis time estimation based on file size (in bytes)
@@ -82,12 +82,19 @@ export const useFileUpload = ({ onFileSelect, onAnalysisComplete }: UseFileUploa
   const progressInterval = useRef<NodeJS.Timeout | null>(null);
   const lastPhaseChangeTime = useRef<number>(0);
   const actualPhaseDurations = useRef<number[]>([]);
+  
+  // AbortController for cancelling analysis
+  const abortControllerRef = useRef<AbortController | null>(null);
 
   // Cleanup interval on unmount
   useEffect(() => {
     return () => {
       if (progressInterval.current) {
         clearInterval(progressInterval.current);
+      }
+      // Abort any ongoing analysis when component unmounts
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
       }
     };
   }, []);
@@ -198,17 +205,42 @@ export const useFileUpload = ({ onFileSelect, onAnalysisComplete }: UseFileUploa
       return;
     }
     
+    // Cancel any previous analysis
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+    
+    // Create new AbortController for this analysis
+    abortControllerRef.current = new AbortController();
+    const signal = abortControllerRef.current.signal;
+    
     logger.debug('Starting enhanced security analysis for:', file.name);
     setCurrentAnalysisFile(file.name);
     setIsAnalyzing(true);
     startProgressTracking(file.size);
 
     try {
+      // Check if cancelled before starting
+      if (signal.aborted) {
+        throw new DOMException('Analysis cancelled', 'AbortError');
+      }
+      
       const arrayBuffer = await file.arrayBuffer();
       logger.debug(`File size: ${arrayBuffer.byteLength} bytes`);
+      
+      // Check if cancelled after file read
+      if (signal.aborted) {
+        throw new DOMException('Analysis cancelled', 'AbortError');
+      }
 
       try {
         const analysisResults = await analysisEngine.analyzeCodebase(file);
+        
+        // Check if cancelled after analysis
+        if (signal.aborted) {
+          throw new DOMException('Analysis cancelled', 'AbortError');
+        }
+        
         logger.debug('Enhanced analysis complete:', {
           totalIssues: analysisResults.issues.length,
           totalFiles: analysisResults.totalFiles,
@@ -257,6 +289,20 @@ export const useFileUpload = ({ onFileSelect, onAnalysisComplete }: UseFileUploa
         setCurrentAnalysisFile(null);
         onAnalysisComplete(finalResults, file);
       } catch (analysisError) {
+        // Handle cancellation gracefully
+        if (analysisError instanceof DOMException && analysisError.name === 'AbortError') {
+          logger.debug('Analysis was cancelled');
+          stopProgressTracking();
+          setIsAnalyzing(false);
+          setCurrentAnalysisFile(null);
+          toast({
+            title: 'Analysis Cancelled',
+            description: 'The analysis was cancelled.',
+            variant: 'default'
+          });
+          return;
+        }
+        
         logger.error('Analysis engine error:', analysisError);
         stopProgressTracking();
         setIsAnalyzing(false);
@@ -299,6 +345,15 @@ export const useFileUpload = ({ onFileSelect, onAnalysisComplete }: UseFileUploa
         onAnalysisComplete(emptyResults, file);
       }
     } catch (error) {
+      // Handle cancellation in outer catch
+      if (error instanceof DOMException && error.name === 'AbortError') {
+        logger.debug('Analysis was cancelled');
+        stopProgressTracking();
+        setIsAnalyzing(false);
+        setCurrentAnalysisFile(null);
+        return;
+      }
+      
       logger.error('Error processing file:', error);
       stopProgressTracking();
       setIsAnalyzing(false);
@@ -379,6 +434,12 @@ export const useFileUpload = ({ onFileSelect, onAnalysisComplete }: UseFileUploa
   }, [processFile]);
 
   const removeFile = () => {
+    // Cancel any ongoing analysis
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
+    
     stopProgressTracking();
     setSelectedFile(null);
     setUploadProgress(0);
@@ -386,6 +447,7 @@ export const useFileUpload = ({ onFileSelect, onAnalysisComplete }: UseFileUploa
     setIsAnalyzing(false);
     setUploadComplete(false);
     setError(null);
+    setCurrentAnalysisFile(null);
     lastPhaseChangeTime.current = 0;
     actualPhaseDurations.current = [];
     setAnalysisProgress({
@@ -397,6 +459,25 @@ export const useFileUpload = ({ onFileSelect, onAnalysisComplete }: UseFileUploa
       percentComplete: 0
     });
   };
+
+  // Cancel ongoing analysis without removing file
+  const cancelAnalysis = useCallback(() => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
+    stopProgressTracking();
+    setIsAnalyzing(false);
+    setCurrentAnalysisFile(null);
+    setAnalysisProgress({
+      phase: 'Cancelled',
+      phaseNumber: 0,
+      totalPhases: 5,
+      estimatedTimeRemaining: 0,
+      elapsedTime: 0,
+      percentComplete: 0
+    });
+  }, [stopProgressTracking]);
 
   // Direct file processing method for programmatically created files (e.g., from GitHub)
   const processFileDirectly = useCallback((file: File) => {
@@ -417,6 +498,7 @@ export const useFileUpload = ({ onFileSelect, onAnalysisComplete }: UseFileUploa
     handleDrop,
     handleFileInput,
     removeFile,
+    cancelAnalysis,
     processFileDirectly
   };
 };

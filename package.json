@@ -6,8 +6,8 @@
     "scripts": {
         "dev": "vite --host",
         "build": "tsc --noEmit && vite build",
-        "build:production": "NODE_ENV=production npm run build",
-        "build:analyze": "ANALYZE=true vite build",
+        "build:production": "cross-env NODE_ENV=production npm run build",
+        "build:analyze": "cross-env ANALYZE=true vite build",
         "preview": "vite preview --host",
         "type-check": "tsc --noEmit",
         "lint": "eslint . --ext .ts,.tsx,.js,.jsx --report-unused-disable-directives --max-warnings 0",
@@ -95,6 +95,7 @@
         "@types/react-dom": "^19.2.3",
         "@typescript-eslint/eslint-plugin": "^8.48.0",
         "@typescript-eslint/parser": "^8.48.0",
+        "cross-env": "^10.1.0",
         "eslint": "^9.39.1",
         "eslint-plugin-react": "^7.37.5",
         "eslint-plugin-react-hooks": "^7.0.1",
