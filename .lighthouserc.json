@@ -1,0 +1,70 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nicholasbraun/lighthouse-ci/main/packages/utils/src/lighthouserc-schema.json",
+  "ci": {
+    "collect": {
+      "url": [
+        "http://localhost:4173/",
+        "http://localhost:4173/about",
+        "http://localhost:4173/privacy"
+      ],
+      "startServerCommand": "npm run preview",
+      "startServerReadyPattern": "Local",
+      "startServerReadyTimeout": 30000,
+      "numberOfRuns": 3,
+      "settings": {
+        "preset": "desktop",
+        "throttling": {
+          "cpuSlowdownMultiplier": 1
+        },
+        "screenEmulation": {
+          "disabled": true
+        }
+      }
+    },
+    "assert": {
+      "assertions": {
+        "categories:performance": ["warn", { "minScore": 0.8 }],
+        "categories:accessibility": ["error", { "minScore": 0.9 }],
+        "categories:best-practices": ["warn", { "minScore": 0.9 }],
+        "categories:seo": ["warn", { "minScore": 0.9 }],
+        "first-contentful-paint": ["warn", { "maxNumericValue": 2000 }],
+        "largest-contentful-paint": ["warn", { "maxNumericValue": 3000 }],
+        "cumulative-layout-shift": ["warn", { "maxNumericValue": 0.1 }],
+        "total-blocking-time": ["warn", { "maxNumericValue": 300 }],
+        "interactive": ["warn", { "maxNumericValue": 5000 }],
+        "speed-index": ["warn", { "maxNumericValue": 3500 }],
+        "uses-text-compression": "warn",
+        "uses-responsive-images": "warn",
+        "uses-optimized-images": "warn",
+        "render-blocking-resources": "warn",
+        "unminified-css": "error",
+        "unminified-javascript": "error",
+        "no-document-write": "error",
+        "uses-http2": "warn",
+        "uses-long-cache-ttl": "warn",
+        "dom-size": ["warn", { "maxNumericValue": 1500 }],
+        "bootup-time": ["warn", { "maxNumericValue": 3000 }],
+        "mainthread-work-breakdown": ["warn", { "maxNumericValue": 4000 }],
+        "color-contrast": "error",
+        "image-alt": "error",
+        "label": "error",
+        "meta-viewport": "error",
+        "document-title": "error",
+        "html-has-lang": "error",
+        "meta-description": "warn",
+        "http-status-code": "error",
+        "is-crawlable": "error",
+        "robots-txt": "warn",
+        "viewport": "error",
+        "errors-in-console": "warn",
+        "deprecations": "warn",
+        "doctype": "error",
+        "charset": "error",
+        "valid-source-maps": "warn"
+      }
+    },
+    "upload": {
+      "target": "temporary-public-storage"
+    }
+  }
+}
