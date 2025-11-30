@@ -5890,3 +5890,61 @@ Export sanitized templates via `npm run build:config` (custom script) to avoid l
 - Deploy multi-region redundancy described in Appendix F.
 - Continue measuring AI explanation acceptance rate, aiming for ≥80% by next quarter.
 ```
+
+## 🛠️ Appendix N: Quick Reference Commands
+
+| Use Case | Command | Notes |
+|----------|---------|-------|
+| Install deps | `pnpm install --frozen-lockfile` | Matches CI workflow; ensures lockfile fidelity. |
+| Dev server | `pnpm dev --host --open` | Launches Vite dev server with LAN exposure for device testing. |
+| Unit tests | `pnpm test -- --runInBand` | Serializes execution to reduce flake when running locally. |
+| Linting | `pnpm lint -- --max-warnings=0` | Mirrors CI gate; surfaces security plugin output. |
+| Format | `pnpm format` | Applies Prettier + Tailwind class sorting. |
+| Storybook snapshots | `pnpm storybook:test` | Optional add-on capturing responsive states. |
+| Build artifacts | `pnpm build` | Generates dist/ for static hosting or Docker copy. |
+| Firebase emulators | `pnpm firebase:emulators` | Reads configuration from firebase.json + firestore.rules. |
+| All-in-one scan | `node scripts/run-all-tests.ts --providers openai,anthropic,gemini` | Aggregates coverage metrics and AI explainers. |
+| Zip analysis | `node scripts/e2e-zip-analysis.ts --zip build.zip --out report.json` | Ideal for scanning compiled artifacts before shipping. |
+
+> Commands assume Node 20+, pnpm 9, and PowerShell core on Windows. Adjust according to local tooling standards.
+
+## 🗓️ Appendix O: Sample Release Timeline
+
+```text
+Week -4: Requirements review, finalize detection scope, confirm AI provider budgets.
+Week -3: Implement prioritized dashboards, wire feature flags via src/components/features.
+Week -2: Lock infrastructure templates (Appendix E/F) and rehearse failover.
+Week -1: Execute full regression matrix; publish readiness report to leadership.
+Week  0: Deploy via GitHub Actions pipeline, monitor observability dashboards hourly.
+Week +1: Collect user feedback, triage enhancements, document lessons learned.
+Week +2: Close launch epic after verifying KPIs improved vs baseline.
+```
+
+## ♻ Appendix P: Glossary Refresh
+
+| Term | Definition |
+|------|------------|
+| Adaptive Analyzer | The rule engine that blends AST parsing, ML heuristics, and AI explainers. |
+| Evidence Bundle | Redacted set of snippets, SARIF entries, and metadata zipped for auditors. |
+| Guardian Cache | Local directory storing parsed ASTs and embeddings to speed up re-runs. |
+| Insight Card | UI component in src/components/dashboard presenting KPI deltas. |
+| Landing Zone | Hardened cloud environment described in Appendix E/F for production rollouts. |
+| Prompt Firewall | Filters applied to AI context windows to mitigate prompt injection (see Appendix A). |
+| Sensor Pack | Optional collectors deployed inside CI jobs to gather additional telemetry. |
+| Signal-to-Noise Ratio | Metric comparing actionable findings vs informational noise per scan. |
+| Workspace | Multi-tenant boundary isolating datasets, secrets, and role assignments. |
+| Zero Retention Mode | Configuration that disables persistence beyond browser session for regulated environments. |
+
+These definitions keep enablement decks, onboarding docs, and dashboards aligned on shared vocabulary. Extend the table whenever new modules graduate from experimental to GA status.
+
+## 📇 Appendix Q: Contact Roster
+
+| Role | Name | Contact | Responsibilities |
+|------|------|---------|------------------|
+| Product Lead | Mira K. | mira@example.com | Prioritizes roadmap, approves KPI targets. |
+| AppSec Lead | Devon L. | devon@example.com | Owns detection rules and compliance evidence. |
+| AI Steward | Lian P. | lian@example.com | Manages provider budgets, prompt hygiene, evaluation suites. |
+| SRE Captain | Priya S. | priya@example.com | Maintains hosting stack, observability, and incident escalation. |
+| Developer Advocate | Ren F. | ren@example.com | Curates samples, runs enablement sessions, updates README. |
+
+Escalation order mirrors the Incident Runbooks section—escalate within 15 minutes for high severity findings.

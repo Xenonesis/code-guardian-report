@@ -35,15 +35,24 @@ const GeminiIcon = () => (
 );
 
 const ClaudeIcon = () => (
-  <svg viewBox="0 0 24 24" className="w-6 h-6" fill="currentColor">
-    <path d="M17.28 8.72a.75.75 0 00-1.06-1.06l-7.5 7.5a.75.75 0 101.06 1.06l7.5-7.5z"/>
-    <path fillRule="evenodd" clipRule="evenodd" d="M12 1C5.925 1 1 5.925 1 12s4.925 11 11 11 11-4.925 11-11S18.075 1 12 1zM3.5 12a8.5 8.5 0 1117 0 8.5 8.5 0 01-17 0z"/>
+  <svg viewBox="0 0 46 32" className="w-6 h-6" fill="currentColor">
+    <path d="M13.954 5.095L24.677 27.14h-5.63L8.32 5.095h5.634zm17.326 0L20.553 27.14h5.63L36.91 5.095h-5.63zm-17.96 0h5.997l5.36 11.937L30.035 5.095h5.997L24.677 27.14h-5.63L7.69 5.095h5.63z"/>
   </svg>
 );
 
 const MistralIcon = () => (
-  <svg viewBox="0 0 24 24" className="w-6 h-6" fill="currentColor">
-    <path d="M3 3h4v4H3zm7 0h4v4h-4zm7 0h4v4h-4zM3 10h4v4H3zm7 0h4v4h-4zm7 0h4v4h-4zM3 17h4v4H3zm7 0h4v4h-4zm7 0h4v4h-4z"/>
+  <svg viewBox="0 0 36 32" className="w-6 h-6">
+    <rect x="0" y="0" width="8" height="8" fill="#000000"/>
+    <rect x="14" y="0" width="8" height="8" fill="#F7D046"/>
+    <rect x="28" y="0" width="8" height="8" fill="#000000"/>
+    <rect x="0" y="12" width="8" height="8" fill="#000000"/>
+    <rect x="7" y="12" width="8" height="8" fill="#F7D046"/>
+    <rect x="14" y="12" width="8" height="8" fill="#000000"/>
+    <rect x="21" y="12" width="8" height="8" fill="#F7D046"/>
+    <rect x="28" y="12" width="8" height="8" fill="#000000"/>
+    <rect x="0" y="24" width="8" height="8" fill="#000000"/>
+    <rect x="14" y="24" width="8" height="8" fill="#F2542D"/>
+    <rect x="28" y="24" width="8" height="8" fill="#000000"/>
   </svg>
 );
 
