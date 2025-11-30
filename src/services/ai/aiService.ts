@@ -1,8 +1,9 @@
 
 
 import { SecurityIssue, AnalysisResults } from '@/hooks/useAnalysis';
-
+import { secureStorage, StoredAPIKey } from '@/utils/secureStorage';
 import { logger } from '@/utils/logger';
+
 interface AIProvider {
   id: string;
   name: string;
@@ -10,56 +11,104 @@ interface AIProvider {
   model?: string;
 }
 
-// Interface for the actual stored API key format
-interface StoredAPIKey {
-  id: string;
-  provider: string;
-  key: string;
-  name: string;
-  model: string;
-}
-
 interface ChatMessage {
   role: 'user' | 'assistant' | 'system';
   content: string;
 }
 
-// Using SecurityIssue from useAnalysis hook instead
-
-interface AnalysisSummary {
-  securityScore?: number;
-  qualityScore?: number;
-  criticalIssues?: number;
-  highIssues?: number;
-  mediumIssues?: number;
-  lowIssues?: number;
+// Rate limiting configuration
+interface RateLimitConfig {
+  maxRequests: number;
+  windowMs: number;
 }
 
-interface AnalysisMetrics {
-  vulnerabilityDensity?: number;
-  technicalDebt?: string;
-}
-
-interface AnalysisDependencies {
-  total: number;
-  vulnerable: number;
-  outdated: number;
+interface RateLimitState {
+  requests: number[];
+  lastReset: number;
 }
 
 // AnalysisResults is imported from @/hooks/useAnalysis - no need to redefine
 
 export class AIService {
-  private getStoredAPIKeys(): AIProvider[] {
+  private rateLimitState: Map<string, RateLimitState> = new Map();
+  private rateLimitConfig: RateLimitConfig = {
+    maxRequests: 10, // 10 requests per minute per provider
+    windowMs: 60000, // 1 minute window
+  };
+
+  /**
+   * Check and enforce rate limiting
+   */
+  private checkRateLimit(providerId: string): void {
+    const now = Date.now();
+    let state = this.rateLimitState.get(providerId);
+
+    if (!state) {
+      state = { requests: [], lastReset: now };
+      this.rateLimitState.set(providerId, state);
+    }
+
+    // Remove old requests outside the window
+    state.requests = state.requests.filter(
+      time => now - time < this.rateLimitConfig.windowMs
+    );
+
+    if (state.requests.length >= this.rateLimitConfig.maxRequests) {
+      const oldestRequest = state.requests[0];
+      const waitTime = Math.ceil((this.rateLimitConfig.windowMs - (now - oldestRequest)) / 1000);
+      throw new Error(
+        `Rate limit exceeded for ${providerId}. Please wait ${waitTime} seconds before trying again.`
+      );
+    }
+
+    // Add current request
+    state.requests.push(now);
+  }
+
+  /**
+   * Get stored API keys using secure storage
+   */
+  private async getStoredAPIKeysAsync(): Promise<AIProvider[]> {
     try {
-      const keys = localStorage.getItem('aiApiKeys');
-      const storedKeys: any[] = keys ? JSON.parse(keys) : [];
+      const storedKeys = await secureStorage.getAPIKeys();
 
       // Convert stored format to expected format
       return storedKeys.map(key => ({
         id: key.provider,
         name: key.name,
         apiKey: key.key,
-        model: key.model || this.getDefaultModel(key.provider) // Include the model or use default
+        model: key.model || this.getDefaultModel(key.provider)
+      }));
+    } catch (error) {
+      logger.error('Error retrieving stored API keys:', error);
+      return [];
+    }
+  }
+
+  /**
+   * Legacy sync method for backward compatibility
+   * @deprecated Use getStoredAPIKeysAsync instead
+   */
+  private getStoredAPIKeys(): AIProvider[] {
+    try {
+      // First try secure storage (sync fallback)
+      const secureKeys = localStorage.getItem('cg_secure_api_keys');
+      if (secureKeys) {
+        // Keys are encrypted, return empty and let async method handle it
+        logger.debug('Secure keys found, use async method for decryption');
+        return [];
+      }
+
+      // Fallback to legacy unencrypted storage
+      const keys = localStorage.getItem('aiApiKeys');
+      const storedKeys: StoredAPIKey[] = keys ? JSON.parse(keys) : [];
+
+      // Convert stored format to expected format
+      return storedKeys.map(key => ({
+        id: key.provider,
+        name: key.name,
+        apiKey: key.key,
+        model: key.model || this.getDefaultModel(key.provider)
       }));
     } catch (error) {
       logger.error('Error parsing stored API keys:', error);
@@ -278,7 +327,14 @@ export class AIService {
   }
 
   async generateResponse(messages: ChatMessage[]): Promise<string> {
-    const apiKeys = this.getStoredAPIKeys();
+    // Try async secure storage first, fall back to sync method
+    let apiKeys = await this.getStoredAPIKeysAsync();
+    
+    if (apiKeys.length === 0) {
+      // Fallback to legacy sync method
+      apiKeys = this.getStoredAPIKeys();
+    }
+
     logger.debug('Available API keys:', apiKeys.map(k => ({ id: k.id, name: k.name, model: k.model })));
     
     if (apiKeys.length === 0) {
@@ -290,6 +346,9 @@ export class AIService {
     // Try each API key until one works
     for (const provider of apiKeys) {
       try {
+        // Check rate limit before making request
+        this.checkRateLimit(provider.id);
+        
         logger.debug(`Trying provider: ${provider.name} (${provider.id}) with model: ${provider.model || 'default'}`);
         
         switch (provider.id) {
