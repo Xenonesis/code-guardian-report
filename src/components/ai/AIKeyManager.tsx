@@ -59,7 +59,7 @@ const MistralIcon = () => (
 
 const LlamaIcon = () => (
   <img 
-    src="https://img.icons8.com/?size=100&id=YvJvKjqgeHtR&format=png&color=000000" 
+    src="https://static.xx.fbcdn.net/rsrc.php/y9/r/tL_v571NdZ0.svg" 
     alt="Meta Llama" 
     className="w-6 h-6"
   />
