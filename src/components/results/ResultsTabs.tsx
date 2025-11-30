@@ -30,49 +30,47 @@ export const ResultsTabs: React.FC<ResultsTabsProps> = ({ results }) => {
         <div className="sticky top-0 z-30 py-3 mb-6 md:mb-8">
           <div className="flex justify-center px-2 sm:px-4">
             <div className="relative w-full sm:w-auto">
-              <div className="pointer-events-none absolute inset-y-1 left-1 w-8 rounded-l-3xl bg-gradient-to-r from-slate-950 via-slate-950/70 to-transparent dark:from-slate-900 dark:via-slate-900/70 dark:to-transparent sm:hidden" />
-              <div className="pointer-events-none absolute inset-y-1 right-1 w-8 rounded-r-3xl bg-gradient-to-l from-slate-950 via-slate-950/70 to-transparent dark:from-slate-900 dark:via-slate-900/70 dark:to-transparent sm:hidden" />
-              <TabsList className="flex w-full sm:w-auto gap-1 sm:gap-1.5 bg-slate-900/90 dark:bg-slate-950/80 backdrop-blur-2xl border border-slate-700/60 dark:border-slate-800/70 shadow-lg shadow-black/20 rounded-2xl sm:rounded-full px-2 py-1.5 sm:px-2 sm:py-1.5 overflow-x-auto sm:overflow-visible scroll-smooth snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
+              <TabsList className="grid grid-cols-5 sm:flex sm:flex-nowrap sm:gap-1.5 bg-slate-900/90 dark:bg-slate-950/80 backdrop-blur-2xl border border-slate-700/60 dark:border-slate-800/70 shadow-inner sm:shadow-lg shadow-black/10 rounded-3xl sm:rounded-full px-1.5 py-1 sm:px-2 sm:py-1.5 gap-1">
                 <TabsTrigger
                   value="overview"
-                  className="flex-shrink-0 min-w-[110px] sm:min-w-0 sm:flex-1 inline-flex items-center justify-center gap-1.5 sm:gap-2 py-2 px-2.5 sm:px-4 md:px-5 text-xs sm:text-sm font-medium text-slate-300 hover:text-white data-[state=active]:bg-blue-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-blue-500/30 transition-all duration-200 rounded-2xl sm:rounded-full focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 focus-visible:outline-none whitespace-nowrap snap-center"
+                  className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 py-2 px-1.5 sm:px-4 text-[11px] sm:text-sm font-medium text-slate-300 hover:text-white data-[state=active]:bg-blue-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-blue-500/30 transition-all duration-200 rounded-2xl focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none"
                 >
                   <Shield className="h-4 w-4 flex-shrink-0" />
-                  <span>Overview</span>
+                  <span className="hidden sm:inline">Overview</span>
                 </TabsTrigger>
 
                 {hasLanguageDetection && (
                   <TabsTrigger
                     value="language-detection"
-                    className="flex-shrink-0 min-w-[110px] sm:min-w-0 sm:flex-1 inline-flex items-center justify-center gap-1.5 sm:gap-2 py-2 px-2.5 sm:px-4 md:px-5 text-xs sm:text-sm font-medium text-slate-300 hover:text-white data-[state=active]:bg-purple-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-purple-500/30 transition-all duration-200 rounded-2xl sm:rounded-full focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 focus-visible:outline-none whitespace-nowrap snap-center"
+                    className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 py-2 px-1.5 sm:px-4 text-[11px] sm:text-sm font-medium text-slate-300 hover:text-white data-[state=active]:bg-purple-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-purple-500/30 transition-all duration-200 rounded-2xl focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:outline-none"
                   >
                     <FileCode className="h-4 w-4 flex-shrink-0" />
-                    <span>Languages</span>
+                    <span className="hidden sm:inline">Languages</span>
                   </TabsTrigger>
                 )}
 
                 <TabsTrigger
                   value="dependency-analysis"
-                  className="flex-shrink-0 min-w-[110px] sm:min-w-0 sm:flex-1 inline-flex items-center justify-center gap-1.5 sm:gap-2 py-2 px-2.5 sm:px-4 md:px-5 text-xs sm:text-sm font-medium text-slate-300 hover:text-white data-[state=active]:bg-green-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-green-500/30 transition-all duration-200 rounded-2xl sm:rounded-full focus-visible:ring-2 focus-visible:ring-green-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 focus-visible:outline-none whitespace-nowrap snap-center"
+                  className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 py-2 px-1.5 sm:px-4 text-[11px] sm:text-sm font-medium text-slate-300 hover:text-white data-[state=active]:bg-green-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-green-500/30 transition-all duration-200 rounded-2xl focus-visible:ring-2 focus-visible:ring-green-400 focus-visible:outline-none"
                 >
                   <Package className="h-4 w-4 flex-shrink-0" />
-                  <span>Dependencies</span>
+                  <span className="hidden sm:inline">Dependencies</span>
                 </TabsTrigger>
 
                 <TabsTrigger
                   value="ai-insights"
-                  className="flex-shrink-0 min-w-[110px] sm:min-w-0 sm:flex-1 inline-flex items-center justify-center gap-1.5 sm:gap-2 py-2 px-2.5 sm:px-4 md:px-5 text-xs sm:text-sm font-medium text-slate-300 hover:text-white data-[state=active]:bg-orange-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-orange-500/30 transition-all duration-200 rounded-2xl sm:rounded-full focus-visible:ring-2 focus-visible:ring-orange-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 focus-visible:outline-none whitespace-nowrap snap-center"
+                  className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 py-2 px-1.5 sm:px-4 text-[11px] sm:text-sm font-medium text-slate-300 hover:text-white data-[state=active]:bg-orange-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-orange-500/30 transition-all duration-200 rounded-2xl focus-visible:ring-2 focus-visible:ring-orange-400 focus-visible:outline-none"
                 >
                   <Sparkles className="h-4 w-4 flex-shrink-0" />
-                  <span>AI Insights</span>
+                  <span className="hidden sm:inline">AI Insights</span>
                 </TabsTrigger>
 
                 <TabsTrigger
                   value="metrics"
-                  className="flex-shrink-0 min-w-[110px] sm:min-w-0 sm:flex-1 inline-flex items-center justify-center gap-1.5 sm:gap-2 py-2 px-2.5 sm:px-4 md:px-5 text-xs sm:text-sm font-medium text-slate-300 hover:text-white data-[state=active]:bg-emerald-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-emerald-500/30 transition-all duration-200 rounded-2xl sm:rounded-full focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 focus-visible:outline-none whitespace-nowrap snap-center"
+                  className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 py-2 px-1.5 sm:px-4 text-[11px] sm:text-sm font-medium text-slate-300 hover:text-white data-[state=active]:bg-emerald-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-emerald-500/30 transition-all duration-200 rounded-2xl focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:outline-none"
                 >
                   <BarChart3 className="h-4 w-4 flex-shrink-0" />
-                  <span>Metrics</span>
+                  <span className="hidden sm:inline">Metrics</span>
                 </TabsTrigger>
               </TabsList>
             </div>
