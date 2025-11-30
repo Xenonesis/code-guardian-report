@@ -61,7 +61,7 @@ const LlamaIcon = () => (
   <img 
     src="https://static.xx.fbcdn.net/rsrc.php/y9/r/tL_v571NdZ0.svg" 
     alt="Meta Llama" 
-    className="w-6 h-6"
+    className="w-6 h-6 dark:invert dark:brightness-200"
   />
 );
 
@@ -69,7 +69,7 @@ const CohereIcon = () => (
   <img 
     src="https://cohere.com/logo.svg" 
     alt="Cohere" 
-    className="w-6 h-6"
+    className="w-6 h-6 dark:invert dark:brightness-200"
   />
 );
 
