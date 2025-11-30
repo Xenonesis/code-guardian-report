@@ -17,8 +17,8 @@ export const ResultsTabs: React.FC<ResultsTabsProps> = ({ results }) => {
 
   // Calculate grid columns based on available features (Dependencies tab is always shown)
   const getGridCols = () => {
-    if (hasLanguageDetection) return 'grid-cols-2 sm:grid-cols-5';
-    return 'grid-cols-1 sm:grid-cols-4';
+    if (hasLanguageDetection) return 'sm:grid-cols-5';
+    return 'sm:grid-cols-4';
   };
 
   return (
@@ -27,46 +27,54 @@ export const ResultsTabs: React.FC<ResultsTabsProps> = ({ results }) => {
       <UnifiedMetricsHeader results={results} />
 
       <Tabs defaultValue="overview" className="w-full">
-        <div className="sticky top-0 z-20 bg-gradient-to-b from-white via-white/98 to-white/95 dark:from-slate-900 dark:via-slate-900/98 dark:to-slate-900/95 backdrop-blur-2xl pb-6 mb-8 border-b border-slate-200/50 dark:border-slate-700/50">
-          <TabsList className={`grid w-full gap-2 bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-900 backdrop-blur-xl border-2 border-slate-200/80 dark:border-slate-700/80 shadow-xl rounded-2xl p-2 ${getGridCols()}`}>
-            <TabsTrigger
-              value="overview"
-              className="flex flex-col sm:flex-row items-center justify-center gap-2 py-3 sm:py-4 px-3 sm:px-4 text-xs sm:text-sm font-bold data-[state=active]:bg-gradient-to-br data-[state=active]:from-blue-500 data-[state=active]:via-blue-600 data-[state=active]:to-indigo-600 data-[state=active]:text-white data-[state=active]:shadow-xl hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-all duration-300 rounded-xl group"
-            >
-              <Shield className="h-4 w-4 sm:h-5 sm:w-5 group-data-[state=active]:animate-pulse" />
-              <span className="text-center leading-tight">Security Overview</span>
-            </TabsTrigger>
-            {hasLanguageDetection && (
-              <TabsTrigger
-                value="language-detection"
-                className="flex flex-col sm:flex-row items-center justify-center gap-2 py-3 sm:py-4 px-3 sm:px-4 text-xs sm:text-sm font-bold data-[state=active]:bg-gradient-to-br data-[state=active]:from-purple-500 data-[state=active]:via-purple-600 data-[state=active]:to-pink-600 data-[state=active]:text-white data-[state=active]:shadow-xl hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-all duration-300 rounded-xl group"
-              >
-                <FileCode className="h-4 w-4 sm:h-5 sm:w-5 group-data-[state=active]:animate-pulse" />
-                <span className="text-center leading-tight">Language Detection</span>
-              </TabsTrigger>
-            )}
-            <TabsTrigger
-                value="dependency-analysis"
-                className="flex flex-col sm:flex-row items-center justify-center gap-2 py-3 sm:py-4 px-3 sm:px-4 text-xs sm:text-sm font-bold data-[state=active]:bg-gradient-to-br data-[state=active]:from-green-500 data-[state=active]:via-green-600 data-[state=active]:to-emerald-600 data-[state=active]:text-white data-[state=active]:shadow-xl hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-all duration-300 rounded-xl group"
-              >
-                <Package className="h-4 w-4 sm:h-5 sm:w-5 group-data-[state=active]:animate-pulse" />
-                <span className="text-center leading-tight">Dependencies</span>
-              </TabsTrigger>
-            <TabsTrigger
-              value="ai-insights"
-              className="flex flex-col sm:flex-row items-center justify-center gap-2 py-3 sm:py-4 px-3 sm:px-4 text-xs sm:text-sm font-bold data-[state=active]:bg-gradient-to-br data-[state=active]:from-orange-500 data-[state=active]:via-orange-600 data-[state=active]:to-red-600 data-[state=active]:text-white data-[state=active]:shadow-xl hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-all duration-300 rounded-xl group"
-            >
-              <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 group-data-[state=active]:animate-pulse" />
-              <span className="text-center leading-tight">AI Insights</span>
-            </TabsTrigger>
-            <TabsTrigger
-              value="metrics"
-              className="flex flex-col sm:flex-row items-center justify-center gap-2 py-3 sm:py-4 px-3 sm:px-4 text-xs sm:text-sm font-bold data-[state=active]:bg-gradient-to-br data-[state=active]:from-emerald-500 data-[state=active]:via-emerald-600 data-[state=active]:to-teal-600 data-[state=active]:text-white data-[state=active]:shadow-xl hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-all duration-300 rounded-xl group"
-            >
-              <BarChart3 className="h-4 w-4 sm:h-5 sm:w-5 group-data-[state=active]:animate-pulse" />
-              <span className="text-center leading-tight">Detailed Metrics</span>
-            </TabsTrigger>
-          </TabsList>
+        <div className="sticky top-0 z-30 py-3 mb-6 md:mb-8">
+          <div className="flex justify-center px-2 sm:px-4">
+            <div className="relative w-full sm:w-auto">
+              <TabsList className="grid grid-cols-5 sm:flex sm:flex-nowrap sm:gap-1.5 bg-slate-900/90 dark:bg-slate-950/80 backdrop-blur-2xl border border-slate-700/60 dark:border-slate-800/70 shadow-inner sm:shadow-lg shadow-black/10 rounded-3xl sm:rounded-full px-1.5 py-1 sm:px-2 sm:py-1.5 gap-1">
+                <TabsTrigger
+                  value="overview"
+                  className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 py-2 px-1.5 sm:px-4 text-[11px] sm:text-sm font-medium text-slate-300 hover:text-white data-[state=active]:bg-blue-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-blue-500/30 transition-all duration-200 rounded-2xl focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:outline-none"
+                >
+                  <Shield className="h-4 w-4 flex-shrink-0" />
+                  <span className="hidden sm:inline">Overview</span>
+                </TabsTrigger>
+
+                {hasLanguageDetection && (
+                  <TabsTrigger
+                    value="language-detection"
+                    className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 py-2 px-1.5 sm:px-4 text-[11px] sm:text-sm font-medium text-slate-300 hover:text-white data-[state=active]:bg-purple-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-purple-500/30 transition-all duration-200 rounded-2xl focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:outline-none"
+                  >
+                    <FileCode className="h-4 w-4 flex-shrink-0" />
+                    <span className="hidden sm:inline">Languages</span>
+                  </TabsTrigger>
+                )}
+
+                <TabsTrigger
+                  value="dependency-analysis"
+                  className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 py-2 px-1.5 sm:px-4 text-[11px] sm:text-sm font-medium text-slate-300 hover:text-white data-[state=active]:bg-green-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-green-500/30 transition-all duration-200 rounded-2xl focus-visible:ring-2 focus-visible:ring-green-400 focus-visible:outline-none"
+                >
+                  <Package className="h-4 w-4 flex-shrink-0" />
+                  <span className="hidden sm:inline">Dependencies</span>
+                </TabsTrigger>
+
+                <TabsTrigger
+                  value="ai-insights"
+                  className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 py-2 px-1.5 sm:px-4 text-[11px] sm:text-sm font-medium text-slate-300 hover:text-white data-[state=active]:bg-orange-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-orange-500/30 transition-all duration-200 rounded-2xl focus-visible:ring-2 focus-visible:ring-orange-400 focus-visible:outline-none"
+                >
+                  <Sparkles className="h-4 w-4 flex-shrink-0" />
+                  <span className="hidden sm:inline">AI Insights</span>
+                </TabsTrigger>
+
+                <TabsTrigger
+                  value="metrics"
+                  className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 py-2 px-1.5 sm:px-4 text-[11px] sm:text-sm font-medium text-slate-300 hover:text-white data-[state=active]:bg-emerald-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-emerald-500/30 transition-all duration-200 rounded-2xl focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:outline-none"
+                >
+                  <BarChart3 className="h-4 w-4 flex-shrink-0" />
+                  <span className="hidden sm:inline">Metrics</span>
+                </TabsTrigger>
+              </TabsList>
+            </div>
+          </div>
         </div>
 
         <TabsContent value="overview" className="space-y-6 mt-0">

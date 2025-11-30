@@ -966,7 +966,7 @@ export class ModernCodeScanningService {
     detectedIssues: DetectedIssue[],
     filename: string
   ): SecurityIssue[] {
-    return detectedIssues.map(issue => {
+    return detectedIssues.map((issue, index) => {
       const sonarSeverityToStandard = (severity: ScanSeverity): 'Critical' | 'High' | 'Medium' | 'Low' => {
         switch (severity) {
           case 'Blocker':
@@ -985,8 +985,9 @@ export class ModernCodeScanningService {
 
       const severity = sonarSeverityToStandard(issue.rule.severity);
 
+      // Include line, column, and index to ensure unique IDs even when multiple issues occur on the same line
       return {
-        id: `sonar_${issue.rule.id}_${issue.line}`,
+        id: `sonar_${issue.rule.id}_${issue.line}_${issue.column}_${index}`,
         line: issue.line,
         column: issue.column,
         tool: 'SonarQube Analysis',

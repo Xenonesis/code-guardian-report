@@ -11,8 +11,21 @@
 
 import { AnalysisResults } from '@/hooks/useAnalysis';
 import { setLocalStorageItem, removeLocalStorageItem, createStorageChangeListener } from '@/utils/storageEvents';
-
 import { logger } from '@/utils/logger';
+import { toast } from '@/hooks/use-toast';
+
+// Custom error class for storage-related errors
+export class StorageError extends Error {
+  constructor(
+    message: string,
+    public readonly code: 'QUOTA_EXCEEDED' | 'PARSE_ERROR' | 'VERSION_MISMATCH' | 'NOT_FOUND' | 'UNKNOWN',
+    public readonly recoverable: boolean = true
+  ) {
+    super(message);
+    this.name = 'StorageError';
+  }
+}
+
 interface StoredAnalysisData {
   id: string;
   timestamp: number;
@@ -95,8 +108,22 @@ export class AnalysisStorageService {
         analysisData.results = this.compressResults(results);
       }
 
-      // Store current analysis
-      setLocalStorageItem(AnalysisStorageService.STORAGE_KEY, JSON.stringify(analysisData));
+      // Store current analysis with quota error handling
+      try {
+        setLocalStorageItem(AnalysisStorageService.STORAGE_KEY, JSON.stringify(analysisData));
+      } catch (storageError) {
+        // Check if it's a quota exceeded error
+        if (storageError instanceof Error && 
+            (storageError.name === 'QuotaExceededError' || 
+             storageError.message.includes('quota'))) {
+          logger.warn('Storage quota exceeded, attempting cleanup...');
+          await this.optimizeStorage();
+          // Retry after cleanup
+          setLocalStorageItem(AnalysisStorageService.STORAGE_KEY, JSON.stringify(analysisData));
+        } else {
+          throw storageError;
+        }
+      }
 
       // Update history
       await this.updateAnalysisHistory(analysisData);
@@ -104,9 +131,16 @@ export class AnalysisStorageService {
       // Notify listeners
       this.notifyListeners(analysisData);
 
+      logger.debug('✅ Analysis results stored successfully');
+
     } catch (error) {
       logger.error('❌ Failed to store analysis results:', error);
-      throw new Error('Failed to store analysis results');
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      throw new StorageError(
+        `Failed to store analysis results: ${errorMessage}`,
+        errorMessage.includes('quota') ? 'QUOTA_EXCEEDED' : 'UNKNOWN',
+        true
+      );
     }
   }
 
@@ -127,12 +161,22 @@ export class AnalysisStorageService {
 
       // Validate version compatibility
       if (!this.isVersionCompatible(data.version)) {
+        toast({
+          title: 'Version Mismatch',
+          description: 'Your stored data is from an older version and will be refreshed.',
+          variant: 'destructive',
+        });
         this.clearCurrentAnalysis();
         return null;
       }
 
       return data;
     } catch (error) {
+      toast({
+        title: 'Data Corrupted',
+        description: 'Unable to read stored analysis data. Starting fresh.',
+        variant: 'destructive',
+      });
       this.clearCurrentAnalysis();
       return null;
     }
@@ -180,6 +224,11 @@ export class AnalysisStorageService {
         currentAnalysis: this.getCurrentAnalysis(),
       };
     } catch (error) {
+      toast({
+        title: 'Storage Error',
+        description: 'Unable to retrieve analysis history.',
+        variant: 'destructive',
+      });
       return this.createEmptyHistory();
     }
   }

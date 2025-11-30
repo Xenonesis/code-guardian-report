@@ -24,6 +24,7 @@ export const UploadForm: React.FC<UploadFormProps> = ({ onFileSelect, onAnalysis
     isAnalyzing,
     uploadComplete,
     error,
+    analysisProgress,
     handleDragOver,
     handleDragLeave,
     handleDrop,
@@ -92,6 +93,7 @@ export const UploadForm: React.FC<UploadFormProps> = ({ onFileSelect, onAnalysis
             uploadComplete={uploadComplete}
             uploadProgress={uploadProgress}
             onRemoveFile={removeFile}
+            analysisProgress={analysisProgress}
           />
         )}
         

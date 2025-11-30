@@ -1,7 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 310 310" width="310" height="310">
   <defs>
     <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#2563eb;stop-opacity:1" /> <!-- blue-600 -->
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" /> <!-- blue-500 -->
+      <stop offset="50%" style="stop-color:#2563eb;stop-opacity:1" /> <!-- blue-600 -->
       <stop offset="100%" style="stop-color:#4f46e5;stop-opacity:1" /> <!-- indigo-600 -->
     </linearGradient>
     <linearGradient id="highlightGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -16,5 +17,5 @@
   <path d="M155 130 L135 140 L135 160 Q135 170 155 180 Q175 170 175 160 L175 140 Z" fill="white" />
   
   <!-- Highlight overlay for 3D effect -->
-  <rect x="120" y="120" width="70" height="70" rx="15" fill="url(#highlightGrad)" opacity="0" />
+  <rect x="15" y="15" width="70" height="70" rx="15" fill="url(#highlightGrad)" />
 </svg>

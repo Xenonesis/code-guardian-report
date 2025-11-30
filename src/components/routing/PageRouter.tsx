@@ -22,6 +22,7 @@ const GitHubAnalysisPage = lazy(() => import('@/pages/GitHubAnalysisPage').then(
 const AccountConflictDemo = lazy(() => import('@/pages/AccountConflictDemo').then(m => ({ default: m.AccountConflictDemo })));
 const TestAuthConflict = lazy(() => import('@/pages/TestAuthConflict').then(m => ({ default: m.TestAuthConflict })));
 const NotificationTest = lazy(() => import('@/pages/NotificationTest'));
+const PWASettingsPage = lazy(() => import('@/pages/PWASettingsPage').then(m => ({ default: m.PWASettingsPage })));
 
 interface PageRouterProps {
   theme?: Theme;
@@ -127,6 +128,13 @@ export const PageRouter: React.FC<PageRouterProps> = ({ theme = 'system' }) => {
         return (
           <Suspense fallback={<PageLoadingSpinner />}>
             <NotificationTest />
+          </Suspense>
+        );
+
+      case 'pwa-settings':
+        return (
+          <Suspense fallback={<PageLoadingSpinner />}>
+            <PWASettingsPage />
           </Suspense>
         );
 

@@ -27,7 +27,7 @@ export function analyzeFirestoreError(error: any): FirestoreErrorInfo {
           code: error.code,
           message: error.message,
           isRetryable: false,
-          userMessage: 'You don\'t have permission to access this data.',
+          userMessage: 'Please sign in to save your changes.',
           suggestedAction: 'login'
         };
       
@@ -73,7 +73,7 @@ export function analyzeFirestoreError(error: any): FirestoreErrorInfo {
           code: error.code,
           message: error.message,
           isRetryable: true,
-          userMessage: 'An unexpected error occurred. Please try again.',
+          userMessage: 'Something went wrong. Please try again.',
           suggestedAction: 'retry'
         };
     }
@@ -124,7 +124,7 @@ export function analyzeFirestoreError(error: any): FirestoreErrorInfo {
     code: 'unknown',
     message: error.message || 'Unknown error',
     isRetryable: false,
-    userMessage: 'An unexpected error occurred. Please refresh the page and try again.',
+    userMessage: 'Something went wrong. Please try again.',
     suggestedAction: 'refresh'
   };
 }

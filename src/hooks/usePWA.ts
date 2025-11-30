@@ -1,9 +1,19 @@
 // React hooks for PWA functionality
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { pwaIntegrationService, PWAStatus } from '../services/pwa/pwaIntegration';
+import { getCacheSize, formatBytes } from '../utils/pwaUtils';
 
 import { logger } from '@/utils/logger';
+
+export interface PWAMetrics {
+  cacheSize: number;
+  cacheSizeFormatted: string;
+  pendingSyncs: number;
+  lastSyncTime: Date | null;
+  offlineDataCount: number;
+}
+
 export function usePWA() {
   const [status, setStatus] = useState<PWAStatus>({
     isInstalled: false,
@@ -15,6 +25,32 @@ export function usePWA() {
   });
 
   const [notifications, setNotifications] = useState<any[]>([]);
+  const [isUpdateAvailable, setIsUpdateAvailable] = useState(false);
+  const [metrics, setMetrics] = useState<PWAMetrics>({
+    cacheSize: 0,
+    cacheSizeFormatted: '0 Bytes',
+    pendingSyncs: 0,
+    lastSyncTime: null,
+    offlineDataCount: 0
+  });
+
+  // Refresh metrics
+  const refreshMetrics = useCallback(async () => {
+    try {
+      const cacheSize = await getCacheSize();
+      const analytics = await pwaIntegrationService.getAnalytics();
+      
+      setMetrics({
+        cacheSize,
+        cacheSizeFormatted: formatBytes(cacheSize),
+        pendingSyncs: analytics?.pendingSyncs || 0,
+        lastSyncTime: analytics?.lastSyncTime ? new Date(analytics.lastSyncTime) : null,
+        offlineDataCount: analytics?.offlineDataCount || 0
+      });
+    } catch (error) {
+      logger.warn('Failed to refresh PWA metrics', error);
+    }
+  }, []);
 
   useEffect(() => {
     // Initialize PWA service
@@ -27,7 +63,13 @@ export function usePWA() {
 
     // Listen for PWA notifications
     const handleNotification = (event: CustomEvent) => {
-      setNotifications(prev => [...prev, event.detail]);
+      const notificationData = event.detail;
+      setNotifications(prev => [...prev, notificationData]);
+      
+      // Check for update available notification
+      if (notificationData.type === 'updateAvailable') {
+        setIsUpdateAvailable(true);
+      }
     };
 
     window.addEventListener('pwaStatusUpdate', handleStatusUpdate as EventListener);
@@ -35,12 +77,17 @@ export function usePWA() {
 
     // Get initial status
     setStatus(pwaIntegrationService.getStatus());
+    
+    // Refresh metrics initially and periodically
+    refreshMetrics();
+    const metricsInterval = setInterval(refreshMetrics, 60000); // Every minute
 
     return () => {
       window.removeEventListener('pwaStatusUpdate', handleStatusUpdate as EventListener);
       window.removeEventListener('pwaNotification', handleNotification as EventListener);
+      clearInterval(metricsInterval);
     };
-  }, []);
+  }, [refreshMetrics]);
 
   const promptInstall = useCallback(async () => {
     return await pwaIntegrationService.promptInstall();
@@ -64,6 +111,7 @@ export function usePWA() {
 
   const updateApp = useCallback(async () => {
     await pwaIntegrationService.updateServiceWorker();
+    setIsUpdateAvailable(false);
   }, []);
 
   const clearNotification = useCallback((index: number) => {
@@ -74,14 +122,55 @@ export function usePWA() {
     setNotifications([]);
   }, []);
 
+  // Save data for offline use
+  const saveOfflineData = useCallback(async (type: string, data: any) => {
+    const id = await pwaIntegrationService.saveOfflineData(type, data);
+    await refreshMetrics();
+    return id;
+  }, [refreshMetrics]);
+
+  // Get offline data
+  const getOfflineData = useCallback(async (type: string) => {
+    return await pwaIntegrationService.getOfflineData(type);
+  }, []);
+
+  // Clear cache
+  const clearCache = useCallback(async (cacheName?: string) => {
+    await pwaIntegrationService.clearCache(cacheName);
+    await refreshMetrics();
+  }, [refreshMetrics]);
+
+  // Preload routes for faster navigation
+  const preloadRoutes = useCallback(async (routes: string[]) => {
+    await pwaIntegrationService.preloadRoutes(routes);
+  }, []);
+
+  // Export analytics
+  const exportAnalytics = useCallback(async () => {
+    return await pwaIntegrationService.exportAnalytics();
+  }, []);
+
   return {
+    // Status
     status,
     isInstalled: status.isInstalled,
     isOnline: status.isOnline,
     isInstallable: status.installPromptAvailable,
-    isUpdateAvailable: false, // TODO: Track update availability
+    isUpdateAvailable,
     hasNotificationPermission: status.hasNotificationPermission,
+    isServiceWorkerReady: status.serviceWorkerReady,
+    isBackgroundSyncSupported: status.backgroundSyncSupported,
+    
+    // Metrics
+    metrics,
+    refreshMetrics,
+    
+    // Notifications
     notifications,
+    clearNotification,
+    clearAllNotifications,
+    
+    // Actions
     promptInstall,
     installApp: promptInstall, // Alias for compatibility
     enableNotifications,
@@ -90,16 +179,29 @@ export function usePWA() {
     sendTestNotification,
     shareContent,
     updateApp,
-    clearNotification,
-    clearAllNotifications
+    
+    // Data management
+    saveOfflineData,
+    getOfflineData,
+    clearCache,
+    preloadRoutes,
+    exportAnalytics
   };
 }
 
 export function useOfflineStorage() {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
+  const [pendingChanges, setPendingChanges] = useState(0);
 
   useEffect(() => {
-    const handleOnline = () => setIsOnline(true);
+    const handleOnline = () => {
+      setIsOnline(true);
+      // Trigger sync when back online
+      pwaIntegrationService.getAnalytics().then(analytics => {
+        setPendingChanges(analytics?.pendingSyncs || 0);
+      });
+    };
+    
     const handleOffline = () => setIsOnline(false);
 
     window.addEventListener('online', handleOnline);
@@ -112,7 +214,9 @@ export function useOfflineStorage() {
   }, []);
 
   const saveData = useCallback(async (type: string, data: any) => {
-    return await pwaIntegrationService.saveOfflineData(type, data);
+    const id = await pwaIntegrationService.saveOfflineData(type, data);
+    setPendingChanges(prev => prev + 1);
+    return id;
   }, []);
 
   const getData = useCallback(async (type: string) => {
@@ -121,6 +225,7 @@ export function useOfflineStorage() {
 
   return {
     isOnline,
+    pendingChanges,
     saveData,
     getData
   };
@@ -129,12 +234,19 @@ export function useOfflineStorage() {
 export function useFileUpload() {
   const [uploadQueue, setUploadQueue] = useState<any[]>([]);
   const [isUploading, setIsUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState<Record<string, number>>({});
 
   const uploadFile = useCallback(async (file: File) => {
     setIsUploading(true);
     try {
       const taskId = await pwaIntegrationService.uploadFile(file);
-      setUploadQueue(prev => [...prev, { id: taskId, file, status: 'queued' }]);
+      setUploadQueue(prev => [...prev, { 
+        id: taskId, 
+        file, 
+        status: 'queued',
+        progress: 0,
+        timestamp: Date.now()
+      }]);
       return taskId;
     } finally {
       setIsUploading(false);
@@ -147,20 +259,40 @@ export function useFileUpload() {
     return await Promise.all(promises);
   }, [uploadFile]);
 
+  const clearCompleted = useCallback(() => {
+    setUploadQueue(prev => prev.filter(item => item.status !== 'completed'));
+  }, []);
+
+  const retryFailed = useCallback(async () => {
+    const failedUploads = uploadQueue.filter(item => item.status === 'failed');
+    for (const upload of failedUploads) {
+      await uploadFile(upload.file);
+    }
+  }, [uploadQueue, uploadFile]);
+
   return {
     uploadQueue,
     isUploading,
+    uploadProgress,
     uploadFile,
-    uploadFiles
+    uploadFiles,
+    clearCompleted,
+    retryFailed
   };
 }
 
 export function usePWAAnalytics() {
   const [analytics, setAnalytics] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const refreshAnalytics = useCallback(async () => {
-    const data = await pwaIntegrationService.getAnalytics();
-    setAnalytics(data);
+    setIsLoading(true);
+    try {
+      const data = await pwaIntegrationService.getAnalytics();
+      setAnalytics(data);
+    } finally {
+      setIsLoading(false);
+    }
   }, []);
 
   const exportAnalytics = useCallback(async () => {
@@ -168,7 +300,6 @@ export function usePWAAnalytics() {
   }, []);
 
   const trackFeature = useCallback((feature: string) => {
-    // This would be handled by the analytics service internally
     logger.debug('Feature tracked:', feature);
   }, []);
 
@@ -178,6 +309,7 @@ export function usePWAAnalytics() {
 
   return {
     analytics,
+    isLoading,
     refreshAnalytics,
     exportAnalytics,
     trackFeature
@@ -185,8 +317,7 @@ export function usePWAAnalytics() {
 }
 
 export function usePWACapabilities() {
-  const [capabilities] = useState(() => {
-    // Get capabilities from the service
+  const capabilities = useMemo(() => {
     let backgroundSyncSupported = false;
     try {
       backgroundSyncSupported = 'sync' in ServiceWorkerRegistration.prototype;
@@ -198,9 +329,62 @@ export function usePWACapabilities() {
       install: 'serviceWorker' in navigator,
       notifications: 'Notification' in window,
       backgroundSync: backgroundSyncSupported,
-      share: 'share' in navigator
+      share: 'share' in navigator,
+      clipboard: 'clipboard' in navigator,
+      vibration: 'vibrate' in navigator,
+      bluetooth: 'bluetooth' in navigator,
+      usb: 'usb' in navigator,
+      geolocation: 'geolocation' in navigator,
+      camera: 'mediaDevices' in navigator,
+      storage: 'storage' in navigator,
+      indexedDB: 'indexedDB' in window,
+      cacheAPI: 'caches' in window,
+      webWorkers: 'Worker' in window,
+      webSockets: 'WebSocket' in window
     };
-  });
+  }, []);
 
   return capabilities;
+}
+
+// Hook for monitoring network quality
+export function useNetworkStatus() {
+  const [networkStatus, setNetworkStatus] = useState({
+    isOnline: navigator.onLine,
+    effectiveType: (navigator as any).connection?.effectiveType || 'unknown',
+    downlink: (navigator as any).connection?.downlink || 0,
+    rtt: (navigator as any).connection?.rtt || 0,
+    saveData: (navigator as any).connection?.saveData || false
+  });
+
+  useEffect(() => {
+    const updateNetworkStatus = () => {
+      const connection = (navigator as any).connection;
+      setNetworkStatus({
+        isOnline: navigator.onLine,
+        effectiveType: connection?.effectiveType || 'unknown',
+        downlink: connection?.downlink || 0,
+        rtt: connection?.rtt || 0,
+        saveData: connection?.saveData || false
+      });
+    };
+
+    window.addEventListener('online', updateNetworkStatus);
+    window.addEventListener('offline', updateNetworkStatus);
+    
+    const connection = (navigator as any).connection;
+    if (connection) {
+      connection.addEventListener('change', updateNetworkStatus);
+    }
+
+    return () => {
+      window.removeEventListener('online', updateNetworkStatus);
+      window.removeEventListener('offline', updateNetworkStatus);
+      if (connection) {
+        connection.removeEventListener('change', updateNetworkStatus);
+      }
+    };
+  }, []);
+
+  return networkStatus;
 }

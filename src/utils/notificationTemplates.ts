@@ -79,4 +79,93 @@ export const NotificationTemplates = {
     title: 'Export Failed',
     description: 'Unable to export results. Please try again.',
   }),
+
+  // Storage-related notifications
+  storageError: (operation: string) => ({
+    type: 'error' as const,
+    title: 'Storage Error',
+    description: `Failed to ${operation} analysis data. Your browser storage may be full.`,
+    action: {
+      label: 'Clear Old Data',
+      onClick: () => {
+        // This will be handled by the component
+      },
+    },
+  }),
+
+  storageFull: () => ({
+    type: 'warning' as const,
+    title: 'Storage Almost Full',
+    description: 'Your storage is running low. Consider clearing old analysis history.',
+  }),
+
+  dataRestored: (fileName: string) => ({
+    type: 'success' as const,
+    title: 'Analysis Restored',
+    description: `Successfully restored analysis for "${fileName}".`,
+  }),
+
+  dataCleared: () => ({
+    type: 'info' as const,
+    title: 'Data Cleared',
+    description: 'All stored analysis data has been cleared.',
+  }),
+
+  // AI-related notifications
+  rateLimitExceeded: (waitTime: number) => ({
+    type: 'warning' as const,
+    title: 'Rate Limit Reached',
+    description: `Too many requests. Please wait ${waitTime} seconds before trying again.`,
+  }),
+
+  aiProviderError: (provider: string, error: string) => ({
+    type: 'error' as const,
+    title: `${provider} Error`,
+    description: error,
+  }),
+
+  aiKeyMissing: () => ({
+    type: 'warning' as const,
+    title: 'API Key Required',
+    description: 'Please configure an AI API key to use this feature.',
+  }),
+
+  // Security notifications
+  securityKeyMigrated: () => ({
+    type: 'success' as const,
+    title: 'Keys Secured',
+    description: 'Your API keys have been migrated to encrypted storage.',
+  }),
+
+  // GitHub notifications
+  githubRateLimited: () => ({
+    type: 'warning' as const,
+    title: 'GitHub Rate Limited',
+    description: 'Too many requests to GitHub. Please try again later.',
+  }),
+
+  githubRepoNotFound: (repo: string) => ({
+    type: 'error' as const,
+    title: 'Repository Not Found',
+    description: `Could not find repository "${repo}". Check the URL and try again.`,
+  }),
+
+  // Connection notifications
+  offlineMode: () => ({
+    type: 'info' as const,
+    title: 'Offline Mode',
+    description: 'You\'re working offline. Some features may be limited.',
+  }),
+
+  backOnline: () => ({
+    type: 'success' as const,
+    title: 'Back Online',
+    description: 'Your connection has been restored.',
+  }),
+
+  firebaseDisconnected: () => ({
+    type: 'warning' as const,
+    title: 'Cloud Sync Unavailable',
+    description: 'Using local storage only. Your data will sync when connected.',
+  }),
 };

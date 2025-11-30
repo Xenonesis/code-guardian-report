@@ -2,18 +2,37 @@ import { Toaster } from 'sonner';
 import { useDarkMode } from '@/hooks/useDarkMode';
 import { useEnhancedAnalysis } from '@/hooks/useEnhancedAnalysis';
 import { Navigation } from '@/components/layout/Navigation';
-import { SidebarNavigation } from '@/components/SidebarNavigation';
 import { BreadcrumbContainer } from '@/components/BreadcrumbContainer';
-import { useNavigation } from '@/lib/navigation-context';
 import { Footer } from '@/components/layout/Footer';
 import { ConnectionStatusBanner, useConnectionStatus } from '@/components/common/ConnectionStatusBanner';
 import { PageRouter } from '@/components/routing/PageRouter';
 
 /**
+ * SkipLink - Accessibility component for keyboard navigation
+ * Allows users to skip directly to main content
+ */
+const SkipLink = () => (
+  <a
+    href="#main-content"
+    className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-blue-600 focus:text-white focus:rounded-lg focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-600"
+    onClick={(e) => {
+      e.preventDefault();
+      const mainContent = document.getElementById('main-content');
+      if (mainContent) {
+        mainContent.focus();
+        mainContent.scrollIntoView({ behavior: 'smooth' });
+      }
+    }}
+  >
+    Skip to main content
+  </a>
+);
+
+/**
  * SinglePageApp - Main application component
  * 
  * This component handles:
- * - Global layout (navigation, sidebar, footer)
+ * - Global layout (navigation, footer)
  * - Theme management
  * - Connection status monitoring
  * - Toast notifications
@@ -28,13 +47,15 @@ import { PageRouter } from '@/components/routing/PageRouter';
  */
 const SinglePageApp = () => {
   const { theme, isDarkMode, setTheme } = useDarkMode();
-  const { currentSection, currentTab, navigateTo, isSidebarCollapsed, toggleSidebar } = useNavigation();
   const { online, firebaseConnected, usingMockData } = useConnectionStatus();
   const { analysisResults } = useEnhancedAnalysis();
 
   return (
-    <div className="min-h-screen">
-      {/* Toast Notifications */}
+    <div className="min-h-screen" role="application" aria-label="Code Guardian Security Analysis Application">
+      {/* Skip Link for Accessibility */}
+      <SkipLink />
+
+      {/* Toast Notifications - announced to screen readers */}
       <Toaster 
         position="top-right"
         expand={false}
@@ -43,50 +64,55 @@ const SinglePageApp = () => {
         theme={isDarkMode ? 'dark' : 'light'}
       />
       
-      {/* Connection Status Banners */}
-      <ConnectionStatusBanner 
-        show={!online} 
-        type="offline"
-        message="You are currently offline. Some features may be limited."
-      />
-      <ConnectionStatusBanner 
-        show={!firebaseConnected && online} 
-        type="firebase-error"
-        message="Unable to connect to Firebase. Using local storage only."
-      />
-      {/* Only show mock data warning in development */}
-      {import.meta.env.DEV && (
+      {/* Connection Status Banners - live region for status updates */}
+      <div role="status" aria-live="polite" aria-atomic="true">
         <ConnectionStatusBanner 
-          show={usingMockData} 
-          type="mock-data"
-          message="Displaying sample data for testing. Connect to see your real data."
+          show={!online} 
+          type="offline"
+          message="You are currently offline. Some features may be limited."
         />
-      )}
+        <ConnectionStatusBanner 
+          show={!firebaseConnected && online} 
+          type="firebase-error"
+          message="Unable to connect to Firebase. Using local storage only."
+        />
+        {/* Only show mock data warning in development */}
+        {import.meta.env.DEV && (
+          <ConnectionStatusBanner 
+            show={usingMockData} 
+            type="mock-data"
+            message="Displaying sample data for testing. Connect to see your real data."
+          />
+        )}
+      </div>
       
       {/* Navigation */}
-      <Navigation theme={theme} onThemeChange={setTheme} />
-      
-      {/* Sidebar Navigation */}
-      <SidebarNavigation
-        currentSection={currentSection}
-        currentTab={currentTab}
-        onNavigate={navigateTo}
-        isCollapsed={isSidebarCollapsed}
-        onToggleCollapse={toggleSidebar}
-      />
+      <header role="banner">
+        <Navigation theme={theme} onThemeChange={setTheme} />
+      </header>
       
       {/* Breadcrumb Container - Only show when there are analysis results */}
       {analysisResults && (
-        <BreadcrumbContainer analysisResults={analysisResults} />
+        <nav aria-label="Breadcrumb">
+          <BreadcrumbContainer analysisResults={analysisResults} />
+        </nav>
       )}
       
       {/* Page Content - Handled by PageRouter */}
-      <PageRouter theme={theme} />
+      <main 
+        id="main-content" 
+        role="main" 
+        tabIndex={-1}
+        aria-label="Main content"
+        className="focus:outline-none"
+      >
+        <PageRouter theme={theme} />
+      </main>
 
       {/* Footer */}
-      <div>
+      <footer role="contentinfo">
         <Footer />
-      </div>
+      </footer>
     </div>
   );
 };
