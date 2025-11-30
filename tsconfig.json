@@ -62,7 +62,6 @@
   "include": [
     "src/**/*",
     "vite.config.ts",
-    "vitest.config.ts",
     "tailwind.config.ts"
   ],
   "exclude": [
@@ -70,8 +69,10 @@
     "dist",
     "build",
     "coverage",
-    "src/tests/**/*.test.ts",
-    "src/tests/**/*.test.tsx",
+    "vitest.config.ts",
+    "src/tests",
+    "**/*.test.ts",
+    "**/*.test.tsx",
     "**/*.spec.ts",
     "**/*.spec.tsx"
   ]
