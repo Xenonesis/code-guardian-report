@@ -364,57 +364,7 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
         </div>
       </div>
 
-      {/* User Stats */}
-      {userStats && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <Card>
-            <CardContent className="pt-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-muted-foreground">Total Analyses</p>
-                  <p className="text-2xl font-bold">{userStats.totalAnalyses || 0}</p>
-                </div>
-                <FileText className="h-6 w-6 text-blue-600" />
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="pt-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-muted-foreground">Issues Found</p>
-                  <p className="text-2xl font-bold">{userStats.totalIssuesFound || 0}</p>
-                </div>
-                <Bug className="h-6 w-6 text-red-600" />
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="pt-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-muted-foreground">Files Analyzed</p>
-                  <p className="text-2xl font-bold">{userStats.totalFilesAnalyzed || 0}</p>
-                </div>
-                <Database className="h-6 w-6 text-green-600" />
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="pt-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-muted-foreground">Avg Security Score</p>
-                  <p className="text-2xl font-bold">
-                    {userStats.averageSecurityScore ? Math.round(userStats.averageSecurityScore) : '--'}
-                  </p>
-                </div>
-                <Shield className="h-6 w-6 text-purple-600" />
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      )}
+
 
       {/* Filters */}
       <Card>

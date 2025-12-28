@@ -134,53 +134,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ onStartAnalysis }) => {
           </div>
         </div>
         
-        {/* Revolutionary Stats */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mt-8 sm:mt-10 pt-6 sm:pt-8 border-t border-gradient-to-r from-blue-500/30 via-purple-500/30 to-pink-500/30">
-          <div className="text-center group hover:scale-110 transition-all duration-500 relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
-            <div className="relative p-6 rounded-3xl bg-gradient-to-r from-white/10 to-white/5 dark:from-black/10 dark:to-black/5 backdrop-blur-xl border border-white/20 dark:border-white/10">
-              <div className="text-4xl sm:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent mb-2 sm:mb-3 animate-pulse">
-                100M+
-              </div>
-              <div className="text-sm sm:text-base text-slate-600 dark:text-slate-400 font-semibold">
-                Lines Analyzed
-              </div>
-            </div>
-          </div>
-          <div className="text-center group hover:scale-110 transition-all duration-500 relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
-            <div className="relative p-6 rounded-3xl bg-gradient-to-r from-white/10 to-white/5 dark:from-black/10 dark:to-black/5 backdrop-blur-xl border border-white/20 dark:border-white/10">
-              <div className="text-4xl sm:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent mb-2 sm:mb-3 animate-pulse">
-                500K+
-              </div>
-              <div className="text-sm sm:text-base text-slate-600 dark:text-slate-400 font-semibold">
-                Threats Detected
-              </div>
-            </div>
-          </div>
-          <div className="text-center group hover:scale-110 transition-all duration-500 relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
-            <div className="relative p-6 rounded-3xl bg-gradient-to-r from-white/10 to-white/5 dark:from-black/10 dark:to-black/5 backdrop-blur-xl border border-white/20 dark:border-white/10">
-              <div className="text-4xl sm:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-rose-400 bg-clip-text text-transparent mb-2 sm:mb-3 animate-pulse">
-                99.9%
-              </div>
-              <div className="text-sm sm:text-base text-slate-600 dark:text-slate-400 font-semibold">
-                Accuracy Rate
-              </div>
-            </div>
-          </div>
-          <div className="text-center group hover:scale-110 transition-all duration-500 relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 to-red-500/10 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
-            <div className="relative p-6 rounded-3xl bg-gradient-to-r from-white/10 to-white/5 dark:from-black/10 dark:to-black/5 backdrop-blur-xl border border-white/20 dark:border-white/10">
-              <div className="text-4xl sm:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-orange-400 via-red-400 to-pink-400 bg-clip-text text-transparent mb-2 sm:mb-3 animate-pulse">
-                10K+
-              </div>
-              <div className="text-sm sm:text-base text-slate-600 dark:text-slate-400 font-semibold">
-                Enterprise Users
-              </div>
-            </div>
-          </div>
-        </div>
+
       </div>
     </HeroSection>
   );
