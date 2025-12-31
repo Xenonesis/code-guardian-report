@@ -226,38 +226,39 @@
 <div align="center">
 
 <!-- Animated Flow Diagram -->
+
 ```mermaid
 %%{init: {'theme':'dark', 'themeVariables': { 'primaryColor':'#6366f1','primaryTextColor':'#fff','primaryBorderColor':'#4f46e5','lineColor':'#8b5cf6','secondaryColor':'#ec4899','tertiaryColor':'#10b981'}}}%%
 graph TB
     Start([📁 Code Upload]) -->|ZIP/GitHub/Direct| Analysis[🔍 Analysis Engine]
-    
+
     Analysis --> Pattern[🎯 Pattern Detection]
     Analysis --> AST[🌳 AST Analysis]
     Analysis --> DataFlow[🔄 Data Flow Analysis]
     Analysis --> Secret[🔐 Secret Detection]
-    
+
     Pattern --> OWASP[🛡️ OWASP/CWE Mapping]
     AST --> OWASP
     DataFlow --> OWASP
     Secret --> OWASP
-    
+
     OWASP --> AI[🤖 AI Enhancement]
     AI --> GPT[OpenAI GPT-4]
     AI --> Claude[Anthropic Claude]
     AI --> Gemini[Google Gemini]
-    
+
     GPT --> Results[✨ Smart Results]
     Claude --> Results
     Gemini --> Results
-    
+
     Results --> Report[📊 Reports & Insights]
     Results --> Fixes[🔧 Auto-Fix Suggestions]
     Results --> Export[📤 Export Options]
-    
+
     Report --> Dashboard[📈 Dashboard]
     Fixes --> Preview[👁️ Preview & Apply]
     Export --> PDF[📄 PDF/JSON/SARIF]
-    
+
     style Start fill:#6366f1,stroke:#4f46e5,stroke-width:3px,color:#fff
     style Analysis fill:#8b5cf6,stroke:#7c3aed,stroke-width:3px,color:#fff
     style OWASP fill:#ec4899,stroke:#db2777,stroke-width:3px,color:#fff
@@ -384,24 +385,28 @@ graph TB
 <tr>
 <td width="50%" valign="top">
 
-### 🚀 **Production Readiness Enhancements**
+### 🚀 Production Readiness Enhancements
 
 <img src="https://user-images.githubusercontent.com/74038190/212257454-16e3712e-945a-4ca2-b238-408ad0bf87e6.gif" width="25" height="25"/> **Production-Safe Logging**
+
 - Replaced 373 console statements with enterprise logger service
 - Structured logging with severity levels
 - Production-ready error handling
 
 <img src="https://user-images.githubusercontent.com/74038190/212257472-08e52665-c503-4bd9-aa20-f5a4dae769b5.gif" width="25" height="25"/> **Zero Debug Statements**
+
 - Complete production code quality verification
 - No development artifacts in production build
 - Clean, professional codebase
 
 <img src="https://user-images.githubusercontent.com/74038190/212257465-7ce8d493-cac5-494e-982a-5a9deb852c4b.gif" width="25" height="25"/> **Build Optimization**
+
 - 20.93s build time with zero errors
 - Tree-shaking and code splitting
 - Optimized bundle size (~3MB)
 
 <img src="https://user-images.githubusercontent.com/74038190/212257460-738ff738-247f-4445-a718-cdd0ca76e2db.gif" width="25" height="25"/> **Comprehensive Testing**
+
 - All 100+ functionalities verified as working
 - Real implementation (no mocks)
 - End-to-end test coverage
@@ -409,24 +414,28 @@ graph TB
 </td>
 <td width="50%" valign="top">
 
-### 🤖 **AI-Powered Features**
+### 🤖 AI-Powered Features
 
 <img src="https://user-images.githubusercontent.com/74038190/212257467-871d32b7-e401-42e8-a166-fcfd7baa4c6b.gif" width="25" height="25"/> **Multi-Model Orchestration**
+
 - OpenAI GPT-4, Anthropic Claude, Google Gemini
 - Automatic provider failover
 - Load balancing across models
 
 <img src="https://user-images.githubusercontent.com/74038190/212257468-1e9a91f1-b626-4baa-b15d-5c385dfa7ed2.gif" width="25" height="25"/> **AI Patch Preview**
+
 - Unified diff visualization
 - Risk scoring for changes
 - One-click apply functionality
 
 <img src="https://user-images.githubusercontent.com/74038190/212257463-4d082cb4-7483-4eaf-bc25-6dde2628aabd.gif" width="25" height="25"/> **Context-Aware Analysis**
+
 - In-context learning for repo-aware suggestions
 - Embeddings cache for performance
 - Smart pattern recognition
 
 <img src="https://user-images.githubusercontent.com/74038190/212257465-7ce8d493-cac5-494e-982a-5a9deb852c4b.gif" width="25" height="25"/> **SARIF Integration**
+
 - Standard output format
 - CI/CD pipeline integration
 - GitHub Code Scanning support
@@ -441,28 +450,28 @@ graph TB
 
 <br>
 
-### 🔐 **Enhanced Security Features**
+### 🔐 Enhanced Security Features
 
 - **Secret Detection**: 9 pattern types including API keys, tokens, certificates
 - **Dependency Scanning**: CVE database with 100+ vulnerability mappings
 - **Code Provenance**: Track code origins and licensing
 - **Zero-Day Protection**: Real-time vulnerability database updates
 
-### 📊 **Advanced Analytics**
+### 📊 Advanced Analytics
 
 - **GitHub Repository Analytics**: Commit history, contributor insights
 - **Vulnerability Trends**: Time-series analysis of security issues
 - **Quality Metrics**: Code complexity, maintainability index
 - **Performance Monitoring**: Real-time dashboard with Vercel Analytics
 
-### 🎯 **Developer Experience**
+### 🎯 Developer Experience
 
 - **PWA Support**: Install as desktop/mobile app
 - **Offline Mode**: Full functionality without internet
 - **Dark Mode**: System-aware theme switching
 - **Keyboard Shortcuts**: Power user productivity features
 
-### 🌐 **Multi-Language Support**
+### 🌐 Multi-Language Support
 
 - **8+ Languages**: JavaScript, TypeScript, Python, Java, C++, Go, Rust, PHP, C#
 - **17+ Patterns per Language**: Language-specific security checks
@@ -522,7 +531,7 @@ graph TB
 </tr>
 </table>
 
-### 🎨 **Enhanced User Experience**
+### 🎨 Enhanced User Experience
 
 - Redesigned navigation with keyboard-first flows and progressive disclosure
 - New compact density mode (+ grid density persistence)
@@ -652,7 +661,7 @@ graph TB
 </tr>
 </table>
 
-### 🚀 **Platform Capabilities & Performance**
+### 🚀 Platform Capabilities & Performance
 
 <div align="center">
 
@@ -667,29 +676,29 @@ pie title Security Detection Categories
 
 ### 📊 Technical Specifications
 
-| Category | Metric | Value |
-|----------|--------|-------|
-| **Languages** | Supported | JavaScript, TypeScript, Python, Java, PHP, Ruby, Go, C# |
-| **Detection** | Security Patterns | 100+ (17+ per language) |
-| **Detection** | Secret Types | AWS, GitHub, JWT, Slack, Stripe, Google API, Private Keys, DB Creds |
-| **Detection** | Entropy Analysis | High-entropy string detection with confidence scoring |
-| **Analysis** | Phases | 4-phase (Pattern → AST → Data Flow → Dependencies) |
-| **Analysis** | OWASP Coverage | Top 10 + 90+ additional patterns |
-| **Analysis** | CWE Mapping | Full CWE identification |
-| **Analysis** | CVSS Scoring | Automatic risk scoring |
-| **Build** | Production Build | 20.93s |
-| **Build** | TypeScript Files | 257 files |
-| **Build** | Lines of Code | 57,397 |
-| **Build** | Bundle Size | ~3MB (code-split) |
-| **Storage** | Local Storage | IndexedDB support |
-| **Storage** | Cloud Storage | Firebase Firestore |
-| **AI** | Providers | OpenAI GPT-4, Claude, Google Gemini |
-| **AI** | Features | Fix suggestions, descriptions, chat bot |
-| **Integration** | GitHub | Direct repository analysis |
-| **Integration** | Webhooks | GitHub, GitLab, Bitbucket |
-| **Export** | Formats | PDF, JSON, XML, CSV |
-| **PWA** | Offline Support | Yes |
-| **PWA** | Service Worker | Active |
+| Category        | Metric            | Value                                                               |
+| --------------- | ----------------- | ------------------------------------------------------------------- |
+| **Languages**   | Supported         | JavaScript, TypeScript, Python, Java, PHP, Ruby, Go, C#             |
+| **Detection**   | Security Patterns | 100+ (17+ per language)                                             |
+| **Detection**   | Secret Types      | AWS, GitHub, JWT, Slack, Stripe, Google API, Private Keys, DB Creds |
+| **Detection**   | Entropy Analysis  | High-entropy string detection with confidence scoring               |
+| **Analysis**    | Phases            | 4-phase (Pattern → AST → Data Flow → Dependencies)                  |
+| **Analysis**    | OWASP Coverage    | Top 10 + 90+ additional patterns                                    |
+| **Analysis**    | CWE Mapping       | Full CWE identification                                             |
+| **Analysis**    | CVSS Scoring      | Automatic risk scoring                                              |
+| **Build**       | Production Build  | 20.93s                                                              |
+| **Build**       | TypeScript Files  | 257 files                                                           |
+| **Build**       | Lines of Code     | 57,397                                                              |
+| **Build**       | Bundle Size       | ~3MB (code-split)                                                   |
+| **Storage**     | Local Storage     | IndexedDB support                                                   |
+| **Storage**     | Cloud Storage     | Firebase Firestore                                                  |
+| **AI**          | Providers         | OpenAI GPT-4, Claude, Google Gemini                                 |
+| **AI**          | Features          | Fix suggestions, descriptions, chat bot                             |
+| **Integration** | GitHub            | Direct repository analysis                                          |
+| **Integration** | Webhooks          | GitHub, GitLab, Bitbucket                                           |
+| **Export**      | Formats           | PDF, JSON, XML, CSV                                                 |
+| **PWA**         | Offline Support   | Yes                                                                 |
+| **PWA**         | Service Worker    | Active                                                              |
 
 </div>
 
@@ -706,7 +715,7 @@ graph TB
         A --> C[Results Dashboard]
         A --> D[AI Chat Bot]
     end
-    
+
     subgraph "Analysis Engine"
         B --> E[Enhanced Analysis Engine]
         E --> F[Phase 1: Pattern Detection]
@@ -714,7 +723,7 @@ graph TB
         E --> H[Phase 3: Data Flow]
         E --> I[Phase 4: Dependencies]
     end
-    
+
     subgraph "Detection Services"
         F --> J[Security Analyzer]
         F --> K[Secret Detection]
@@ -722,27 +731,27 @@ graph TB
         H --> M[Data Flow Analyzer]
         I --> N[Dependency Scanner]
     end
-    
+
     subgraph "AI Integration"
         J --> O[AI Service]
         O --> P[OpenAI GPT-4]
         O --> Q[Claude]
         O --> R[Google Gemini]
     end
-    
+
     subgraph "Storage & Persistence"
         C --> S[Local Storage]
         C --> T[Firebase Firestore]
         S --> U[IndexedDB]
     end
-    
+
     subgraph "External Integrations"
         V[GitHub API] --> B
         W[Webhooks] --> E
         C --> X[Export Services]
         X --> Y[PDF/JSON/XML]
     end
-    
+
     style A fill:#61dafb
     style E fill:#f0db4f
     style O fill:#9C27B0
@@ -759,7 +768,7 @@ sequenceDiagram
     participant Scanner
     participant AI
     participant Storage
-    
+
     User->>UI: Upload ZIP/GitHub URL
     UI->>Engine: Start Analysis
     Engine->>Scanner: Run Security Scan
@@ -848,17 +857,17 @@ mindmap
 
 ### 🔐 Secret Detection Patterns
 
-| Secret Type | Pattern Example | Confidence |
-|-------------|----------------|------------|
-| 🔑 AWS Access Key | `AKIA[0-9A-Z]{16}` | 95% |
-| 🐙 GitHub Token | `ghp_[A-Za-z0-9]{36}` | 95% |
-| 🔐 JWT Token | `eyJ[A-Za-z0-9_-]*\.eyJ...` | 90% |
-| 💬 Slack Token | `xox[bpars]-[0-9A-Za-z]{12}` | 95% |
-| 💳 Stripe Key | `sk_test_xxxx...` | 90% |
-| 🌐 Google API | `AIza[0-9A-Za-z_-]{35}` | 90% |
-| 🔒 Private Key | `-----BEGIN.*PRIVATE KEY-----` | 95% |
-| 🗄️ DB Connection | `mongodb://`, `postgres://` | 85% |
-| 🎲 High Entropy | Shannon entropy > 4.5 | 70% |
+| Secret Type       | Pattern Example                | Confidence |
+| ----------------- | ------------------------------ | ---------- |
+| 🔑 AWS Access Key | `AKIA[0-9A-Z]{16}`             | 95%        |
+| 🐙 GitHub Token   | `ghp_[A-Za-z0-9]{36}`          | 95%        |
+| 🔐 JWT Token      | `eyJ[A-Za-z0-9_-]*\.eyJ...`    | 90%        |
+| 💬 Slack Token    | `xox[bpars]-[0-9A-Za-z]{12}`   | 95%        |
+| 💳 Stripe Key     | `sk_test_xxxx...`              | 90%        |
+| 🌐 Google API     | `AIza[0-9A-Za-z_-]{35}`        | 90%        |
+| 🔒 Private Key    | `-----BEGIN.*PRIVATE KEY-----` | 95%        |
+| 🗄️ DB Connection  | `mongodb://`, `postgres://`    | 85%        |
+| 🎲 High Entropy   | Shannon entropy > 4.5          | 70%        |
 
 ### 📊 Language-Specific Detection
 
@@ -867,28 +876,28 @@ gantt
     title Detection Coverage by Language
     dateFormat X
     axisFormat %s
-    
+
     section JavaScript
     17 Patterns :0, 17
-    
+
     section TypeScript
     17 Patterns :0, 17
-    
+
     section Python
     15 Patterns :0, 15
-    
+
     section Java
     14 Patterns :0, 14
-    
+
     section PHP
     13 Patterns :0, 13
-    
+
     section Ruby
     12 Patterns :0, 12
-    
+
     section Go
     11 Patterns :0, 11
-    
+
     section C#
     11 Patterns :0, 11
 ```
@@ -936,7 +945,7 @@ gantt
 </tr>
 </table>
 
-### 🎭 **Interactive Demo Features**
+### 🎭 Interactive Demo Features
 
 <div align="center">
   <table>
@@ -980,7 +989,7 @@ gantt
   </table>
 </div>
 
-### 🏆 **Awards & Recognition**
+### 🏆 Awards & Recognition
 
 <div align="center">
   <div style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); padding: 25px; border-radius: 20px; margin: 20px 0;">
@@ -1013,7 +1022,7 @@ gantt
   </div>
 </div>
 
-### 🎮 **Interactive Elements & Animations**
+### 🎮 Interactive Elements & Animations
 
 <div align="center">
   <img src="https://img.shields.io/badge/🎨%20Interactive%20Experience-Smooth%20Animations%20&%20Micro%20Interactions-9C27B0?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="Interactive Experience"/>
@@ -1054,7 +1063,7 @@ gantt
 </tr>
 </table>
 
-### 🎨 **Visual Design System**
+### 🎨 Visual Design System
 
 <div align="center">
   <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 30px; border-radius: 20px; margin: 20px 0;">
@@ -1095,7 +1104,7 @@ gantt
   </div>
 </div>
 
-### 🚀 **Performance Optimization Features**
+### 🚀 Performance Optimization Features
 
 <div style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); padding: 30px; border-radius: 20px; margin: 20px 0;">
   <h3 style="color: white; margin-bottom: 25px; text-align: center;">⚡ **Lightning Fast Performance**</h3>
@@ -1134,7 +1143,7 @@ gantt
   </table>
 </div>
 
-### 🎪 **Interactive Demo Playground**
+### 🎪 Interactive Demo Playground
 
 <div align="center">
   <div style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); padding: 30px; border-radius: 20px; margin: 20px 0;">
@@ -1185,7 +1194,8 @@ gantt
 <tr>
 <td width="50%">
 
-### 🔍 **Advanced Code Analysis**
+### 🔍 Advanced Code Analysis
+
 - 🛡️ **Security Vulnerability Detection**
   - OWASP Top 10 compliance checking
   - Injection flaw identification
@@ -1205,25 +1215,26 @@ gantt
   - Vulnerability alternatives and best practices
   - Interactive code examples with explanations
 - 🛡️ **Code Provenance & Tampering Detection** ⭐ NEW
- - File integrity monitoring with SHA-256 checksums
-  - Real-time change detection and alerts
- - Security-critical file identification
-  - Comprehensive audit trail and reporting
-  - Database credential exposure detection
-  - ML-powered entropy analysis for unknown secrets
-  - Pattern matching with 95%+ accuracy
+- File integrity monitoring with SHA-256 checksums
+- Real-time change detection and alerts
+- Security-critical file identification
+- Comprehensive audit trail and reporting
+- Database credential exposure detection
+- ML-powered entropy analysis for unknown secrets
+- Pattern matching with 95%+ accuracy
 - 🐛 **Intelligent Bug Detection**
   - Logic error identification
   - Null pointer exception prevention
- - Memory leak detection
-  - Performance bottleneck analysis
+- Memory leak detection
+- Performance bottleneck analysis
 - 📏 **Code Quality Assessment**
   - Code smell detection
   - Complexity analysis (Cyclomatic, Cognitive)
   - Maintainability scoring
   - Technical debt calculation
 
-### 🤖 **AI-Powered Intelligence**
+### 🤖 AI-Powered Intelligence
+
 - 🧠 **Natural Language Processing**
   - Human-readable issue explanations
   - Context-aware recommendations
@@ -1240,11 +1251,12 @@ gantt
 </td>
 <td width="50%">
 
-### 📊 **Rich Analytics Dashboard**
+### 📊 Rich Analytics Dashboard
+
 - 📈 **Interactive Visualizations**
   - Real-time charts with Recharts
- - Responsive design across devices
-  - Customizable dashboard layouts
+- Responsive design across devices
+- Customizable dashboard layouts
 - 🎯 **Risk Assessment Matrix**
   - Severity-based issue categorization
   - Security posture scoring
@@ -1254,11 +1266,12 @@ gantt
   - Custom report templates
   - Automated report generation
 
-### 🎨 **Modern User Experience**
+### 🎨 Modern User Experience
+
 - 📱 **Mobile-First Design**
   - Responsive across all screen sizes
- - Touch-optimized interactions
-  - Progressive Web App capabilities
+- Touch-optimized interactions
+- Progressive Web App capabilities
 - 🌓 **Adaptive Theming**
   - Dark/Light mode with system detection
   - Custom theme creation
@@ -1266,12 +1279,12 @@ gantt
 - ♿ **Accessibility Excellence**
   - WCAG 2.1 AA compliance
   - Screen reader optimization
- - Keyboard navigation support
-  - High contrast mode
+- Keyboard navigation support
+- High contrast mode
 - ✨ **Smooth Interactions**
   - Hardware-accelerated animations
   - Glass morphism effects
- - Micro-interactions for better UX
+- Micro-interactions for better UX
 
 </td>
 </tr>
@@ -1281,9 +1294,9 @@ gantt
 
 - REST Endpoints (beta):
   - POST /api/analyze: Submit archive URL or Git URL for analysis
- - GET /api/report/:id: Retrieve normalized analysis result
- - POST /api/insights/fix: Generate AI fix suggestions
-  - Authentication: Bearer token (JWT) or API Key header
+- GET /api/report/:id: Retrieve normalized analysis result
+- POST /api/insights/fix: Generate AI fix suggestions
+- Authentication: Bearer token (JWT) or API Key header
 - Webhooks:
   - analysis.completed, analysis.failed, secret.detected, provenance.alert
 - SARIF Export: Supported for GitHub code scanning ingestion
@@ -1314,16 +1327,16 @@ gantt
 
 ### Core Technologies
 
-| Category | Technology | Version | Purpose |
-|----------|------------|---------|---------|
-| **Frontend** | React | 18.3.1 | Component-based UI library |
-| **Language** | TypeScript | 5.9 | Type-safe development |
-| **Build Tool** | Vite | 7.0.5 | Lightning-fast bundling |
-| **Styling** | Tailwind CSS | 3.4.11 | Utility-first CSS framework |
+| Category       | Technology   | Version | Purpose                     |
+| -------------- | ------------ | ------- | --------------------------- |
+| **Frontend**   | React        | 18.3.1  | Component-based UI library  |
+| **Language**   | TypeScript   | 5.9     | Type-safe development       |
+| **Build Tool** | Vite         | 7.0.5   | Lightning-fast bundling     |
+| **Styling**    | Tailwind CSS | 3.4.11  | Utility-first CSS framework |
 
 </div>
 
-### 🎨 **UI & Design System**
+### 🎨 UI & Design System
 
 - 🎯 **Radix UI**: 12+ accessible, unstyled component primitives (Dialog, Tabs, Toast, etc.)
 - 🎨 **shadcn/ui**: Beautiful, customizable component library with dark/light themes
@@ -1331,14 +1344,14 @@ gantt
 - ✨ **Tailwind CSS 3.4.11**: Utility-first styling with custom design tokens
 - 🌈 **Framer Motion 12.23.0**: Smooth animations and micro-interactions
 
-### 📊 **Data & State Management**
+### 📊 Data & State Management
 
 - 📈 **Recharts 2.15.3**: Interactive data visualization and charts
 - 🎨 **React Router DOM 6.26.2**: Client-side routing with lazy loading
 - 🔄 **React State**: Built-in state management with hooks and context
 - 📊 **Vercel Analytics 1.5.0**: Real-time user analytics and insights
 
-### 🛠️ **Development Tools**
+### 🛠️ Development Tools
 
 - 🎯 **TypeScript 5.9**: Advanced type checking and IntelliSense
 - 🎨 **PostCSS 8.47**: CSS post-processing with autoprefixer
@@ -1346,7 +1359,8 @@ gantt
 - 📦 **Advanced Code Splitting**: Intelligent chunk optimization
 - 🔧 **Path Aliases**: Clean imports with @ syntax
 
-### 🔧 **Build & Optimization**
+### 🔧 Build & Optimization
+
 - **⚡ Lightning Fast Builds**: Vite 7.0.5 with SWC for sub-second rebuilds
 - **📦 Smart Bundling**: Advanced manual chunk splitting for React, Radix UI, and vendor libraries
 - **🎯 Performance**: Optimized asset handling with intelligent file naming
@@ -1363,6 +1377,7 @@ gantt
 <td width="50%">
 
 **Required:**
+
 - 🟢 **Node.js** v18.0.0+ ([Download](https://nodejs.org/))
 - 📦 **Package Manager**: npm, yarn, or bun
 - 🌐 **Modern Browser**: Chrome 90+, Firefox 88+, Safari 14+
@@ -1371,6 +1386,7 @@ gantt
 <td width="50%">
 
 **Recommended:**
+
 - 💻 **VS Code** with TypeScript extension
 - 🔧 **Git** for version control
 - 🚀 **Bun** for faster package management
@@ -1442,21 +1458,21 @@ graph LR
     A[npm run dev] -->|Development| B[localhost:5173]
     C[npm run build] -->|Production| D[dist/]
     E[npm run preview] -->|Test Build| F[localhost:4173]
-    
+
     style A fill:#10B981
     style C fill:#3B82F6
     style E fill:#F59E0B
 ```
 
-| Command | Description | Usage |
-|---------|-------------|-------|
-| `dev` | Start development server | `npm run dev` |
-| `build` | Build for production | `npm run build` |
-| `preview` | Preview production build | `npm run preview` |
+| Command            | Description                         | Usage                      |
+| ------------------ | ----------------------------------- | -------------------------- |
+| `dev`              | Start development server            | `npm run dev`              |
+| `build`            | Build for production                | `npm run build`            |
+| `preview`          | Preview production build            | `npm run preview`          |
 | `build:production` | Build with production optimizations | `npm run build:production` |
-| `type-check` | Run TypeScript type checking | `npm run type-check` |
-| `start` | Alias for dev command | `npm start` |
-| `serve` | Alias for preview command | `npm run serve` |
+| `type-check`       | Run TypeScript type checking        | `npm run type-check`       |
+| `start`            | Alias for dev command               | `npm start`                |
+| `serve`            | Alias for preview command           | `npm run serve`            |
 
 ### 🔧 Environment Setup
 
@@ -1501,7 +1517,7 @@ Add a workflow at .github/workflows/code-guardian.yml:
 name: Code Guardian
 on:
   pull_request:
-    branches: [ main ]
+    branches: [main]
 jobs:
   analyze:
     runs-on: ubuntu-latest
@@ -1531,7 +1547,7 @@ curl -H "Authorization: Bearer $TOKEN" \
   https://your-host/api/report/ANALYSIS_ID
 ```
 
-### **🚀 Getting Started in 3 Steps**
+### 🚀 Getting Started in 3 Steps
 
 <div align="center">
 
@@ -1560,35 +1576,35 @@ curl -H "Authorization: Bearer $TOKEN" \
 
 </div>
 
-### **🎯 Key Features Overview**
+### 🎯 Key Features Overview
 
 <div align="center">
 
-| Feature | Description | Details |
-|---------|-------------|---------|
-| 🔗 **GitHub Analysis** | Direct repository analysis from URL | Public repos, all branches, automatic ZIP packaging |
-| 📁 **File Upload** | Drag & drop ZIP file analysis | Intelligent parsing, progress tracking, validation |
-| 🔍 **Multi-Language** | 8+ programming languages | JavaScript, TypeScript, Python, Java, PHP, Ruby, Go, C# |
-| 🛡️ **Security Detection** | 100+ vulnerability patterns | SQL Injection, XSS, Code Injection, Command Injection, etc. |
-| 🔐 **Secret Scanning** | 9 secret detection types | API keys, tokens, credentials, private keys, entropy analysis |
-| 🎯 **OWASP & CWE** | Industry standard mapping | Top 10 + 90+ additional patterns with CWE IDs |
-| 🤖 **AI Integration** | Multi-model AI support | OpenAI GPT-4, Claude, Google Gemini with failover |
-| 📊 **4-Phase Analysis** | Comprehensive scanning | Pattern → AST → Data Flow → Dependencies |
-| 💾 **Dual Storage** | Local + Cloud persistence | IndexedDB for local, Firebase for cloud sync |
-| 📈 **Real-time Results** | Interactive dashboard | Sortable, filterable, exportable reports |
-| 🔔 **Notifications** | Smart alert system | Priority-based, batched, browser notifications |
-| 🪝 **Webhook Support** | CI/CD integration | GitHub, GitLab, Bitbucket webhooks |
-| 📄 **Export Options** | Multiple formats | PDF, JSON, XML, CSV with compression |
-| 📱 **PWA Ready** | Progressive Web App | Offline support, installable, service worker |
-| 🎨 **Dark Mode** | Theme switching | Persistent user preference |
-| 🔒 **Authentication** | Secure OAuth | Google and GitHub sign-in with Firebase |
-| 🔐 **Secret Detection** | AI-powered secret and credential detection | `API Keys`, `JWT Tokens`, `DB Credentials`, `Private Keys` |
-| 🧠 **AI Fix Suggestions** | Intelligent vulnerability remediation with code patches | `Multiple approaches`, `Confidence scoring`, `Risk assessment` |
-| 🔍 **Secure Code Search** | Comprehensive database of secure coding patterns | `Secure examples`, `Vulnerability alternatives`, `Best practices` |
-| 🛡️ **Code Provenance** | File integrity monitoring and tampering detection | `SHA-256 checksums`, `Change tracking`, `Alert system` |
-| 📊 **Quality Metrics** | Comprehensive code quality assessment | `Complexity`, `Maintainability`, `Technical Debt` |
-| 🤖 **AI Insights** | Intelligent recommendations and fixes | `GPT-4`, `Claude-3`, `Gemini`, `Custom Models` |
-| 📤 **Export Options** | Multiple export formats for reports | `JSON`, `CSV`, `PDF`, `HTML`, `XML` |
+| Feature                   | Description                                             | Details                                                           |
+| ------------------------- | ------------------------------------------------------- | ----------------------------------------------------------------- |
+| 🔗 **GitHub Analysis**    | Direct repository analysis from URL                     | Public repos, all branches, automatic ZIP packaging               |
+| 📁 **File Upload**        | Drag & drop ZIP file analysis                           | Intelligent parsing, progress tracking, validation                |
+| 🔍 **Multi-Language**     | 8+ programming languages                                | JavaScript, TypeScript, Python, Java, PHP, Ruby, Go, C#           |
+| 🛡️ **Security Detection** | 100+ vulnerability patterns                             | SQL Injection, XSS, Code Injection, Command Injection, etc.       |
+| 🔐 **Secret Scanning**    | 9 secret detection types                                | API keys, tokens, credentials, private keys, entropy analysis     |
+| 🎯 **OWASP & CWE**        | Industry standard mapping                               | Top 10 + 90+ additional patterns with CWE IDs                     |
+| 🤖 **AI Integration**     | Multi-model AI support                                  | OpenAI GPT-4, Claude, Google Gemini with failover                 |
+| 📊 **4-Phase Analysis**   | Comprehensive scanning                                  | Pattern → AST → Data Flow → Dependencies                          |
+| 💾 **Dual Storage**       | Local + Cloud persistence                               | IndexedDB for local, Firebase for cloud sync                      |
+| 📈 **Real-time Results**  | Interactive dashboard                                   | Sortable, filterable, exportable reports                          |
+| 🔔 **Notifications**      | Smart alert system                                      | Priority-based, batched, browser notifications                    |
+| 🪝 **Webhook Support**    | CI/CD integration                                       | GitHub, GitLab, Bitbucket webhooks                                |
+| 📄 **Export Options**     | Multiple formats                                        | PDF, JSON, XML, CSV with compression                              |
+| 📱 **PWA Ready**          | Progressive Web App                                     | Offline support, installable, service worker                      |
+| 🎨 **Dark Mode**          | Theme switching                                         | Persistent user preference                                        |
+| 🔒 **Authentication**     | Secure OAuth                                            | Google and GitHub sign-in with Firebase                           |
+| 🔐 **Secret Detection**   | AI-powered secret and credential detection              | `API Keys`, `JWT Tokens`, `DB Credentials`, `Private Keys`        |
+| 🧠 **AI Fix Suggestions** | Intelligent vulnerability remediation with code patches | `Multiple approaches`, `Confidence scoring`, `Risk assessment`    |
+| 🔍 **Secure Code Search** | Comprehensive database of secure coding patterns        | `Secure examples`, `Vulnerability alternatives`, `Best practices` |
+| 🛡️ **Code Provenance**    | File integrity monitoring and tampering detection       | `SHA-256 checksums`, `Change tracking`, `Alert system`            |
+| 📊 **Quality Metrics**    | Comprehensive code quality assessment                   | `Complexity`, `Maintainability`, `Technical Debt`                 |
+| 🤖 **AI Insights**        | Intelligent recommendations and fixes                   | `GPT-4`, `Claude-3`, `Gemini`, `Custom Models`                    |
+| 📤 **Export Options**     | Multiple export formats for reports                     | `JSON`, `CSV`, `PDF`, `HTML`, `XML`                               |
 
 </div>
 
@@ -1643,7 +1659,7 @@ curl -H "Authorization: Bearer $TOKEN" \
 </tbody>
 </table>
 
-### **🔧 Advanced Tools & Integrations**
+### 🔧 Advanced Tools & Integrations
 
 <div align="center">
 
@@ -1680,7 +1696,7 @@ curl -H "Authorization: Bearer $TOKEN" \
   <img src="https://img.shields.io/badge/📱%20Visual%20Experience-Interactive%20Screenshots%20&%20Live%20Demo-FF6B6B?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="Visual Experience"/>
 </div>
 
-### 🎬 **Live Demo & Interactive Features**
+### 🎬 Live Demo & Interactive Features
 
 <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 20px; margin: 20px 0;">
   <div align="center">
@@ -1724,7 +1740,7 @@ curl -H "Authorization: Bearer $TOKEN" \
   </div>
 </div>
 
-### 🎨 **Feature Comparison Matrix**
+### 🎨 Feature Comparison Matrix
 
 <div align="center">
   <table style="border-collapse: collapse; margin: 20px auto; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
@@ -1790,11 +1806,11 @@ curl -H "Authorization: Bearer $TOKEN" \
 </div>
 
 ![Mermaid Diagram](./mermaid_diagram.png)
-*Interactive Mermaid diagram of system flow*
+_Interactive Mermaid diagram of system flow_
 
 <div align="center">
 
-### 🖥️ **Desktop Experience**
+### 🖥️ Desktop Experience
 
 <table>
 <tr>
@@ -1823,14 +1839,14 @@ curl -H "Authorization: Bearer $TOKEN" \
 </tr>
 </table>
 
-### 📱 **Mobile Experience**
+### 📱 Mobile Experience
 
 <div align="center">
   <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=300&h=600&fit=crop&auto=format&q=80" alt="Mobile View" style="border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.15);" width="300"/>
   <p><em>Fully responsive design optimized for mobile devices</em></p>
 </div>
 
-### 🎨 **Theme Showcase**
+### 🎨 Theme Showcase
 
 <table>
 <tr>
@@ -1850,6 +1866,7 @@ curl -H "Authorization: Bearer $TOKEN" \
 ## 🔧 Configuration
 
 ### Customization Options
+
 - **Theme Configuration**: Modify `tailwind.config.ts` for custom colors and styles
 - **Component Customization**: Update `components.json` for shadcn/ui component paths
 - **Analysis Rules**: Configure analysis tool settings in the upload form
@@ -1857,31 +1874,36 @@ curl -H "Authorization: Bearer $TOKEN" \
 ## 🚀 Deployment
 
 ### Build for Production
+
 ```bash
 npm run build
 ```
 
 ### Deploy to Popular Platforms
 
-#### **Vercel** (Recommended)
+#### Vercel (Recommended)
+
 ```bash
 npm install -g vercel
 vercel --prod
 ```
 
-#### **Netlify**
+#### Netlify
+
 ```bash
 npm run build
 # Upload dist/ folder to Netlify
 ```
 
-#### **GitHub Pages**
+#### GitHub Pages
+
 ```bash
 npm run build
 # Configure GitHub Actions for automatic deployment
 ```
 
 ### Performance Optimizations
+
 - **Code Splitting**: Automatic route-based splitting
 - **Lazy Loading**: Components loaded on demand
 - **Asset Optimization**: Images and icons optimized for web
@@ -1890,18 +1912,21 @@ npm run build
 ## 🛡️ Security & Privacy
 
 ### Compliance and Controls
+
 - OWASP ASVS Level 2 alignment for web features
 - SOC 2 readiness checklist (policy, logging, incident response)
 - SBOM generation (experimental) with license and vulnerability summary
 - Supply-chain hardening: lockfile integrity, subresource integrity for CDN assets
 
-### **Data Protection**
+### Data Protection
+
 - **Local Processing**: Code analysis performed client-side when possible
 - **Secure Transmission**: All API communications use HTTPS
 - **No Permanent Storage**: Files automatically deleted after processing
 - **Privacy-First**: No tracking or analytics without consent
 
-### **API Key Security**
+### API Key Security
+
 - **Encrypted Storage**: API keys stored securely in browser
 - **No Server Storage**: Keys never transmitted to our servers
 - **Easy Management**: Add, remove, and update keys safely
@@ -1909,18 +1934,21 @@ npm run build
 
 ## 📋 Browser Support
 
-### **Fully Supported**
+### Fully Supported
+
 - Chrome 90+
 - Firefox 88+
 - Safari 14+
 - Edge 90+
 
-### **Mobile Support**
+### Mobile Support
+
 - iOS Safari 14+
 - Chrome Mobile 90+
 - Samsung Internet 14+
 
-### **Accessibility Features**
+### Accessibility Features
+
 - **WCAG 2.1 AA Compliant**: Full accessibility standards compliance
 - **Screen Reader Support**: Optimized for NVDA, JAWS, and VoiceOver
 - **Keyboard Navigation**: Complete keyboard accessibility
@@ -1940,6 +1968,7 @@ We welcome contributions! Please follow these steps:
 7. **Open a Pull Request**
 
 ### Development Guidelines
+
 - Follow TypeScript best practices
 - Maintain accessibility standards
 - Add tests for new features
@@ -1948,11 +1977,11 @@ We welcome contributions! Please follow these steps:
 
 ## 📊 Performance Metrics
 
-### **🏆 Performance Metrics**
+### 🏆 Performance Metrics
 
 <div align="center">
 
-#### **Lighthouse Scores**
+#### Lighthouse Scores
 
 <table>
 <tr>
@@ -1975,7 +2004,7 @@ We welcome contributions! Please follow these steps:
 </tr>
 </table>
 
-#### **Core Web Vitals**
+#### Core Web Vitals
 
 <table>
 <tr>
@@ -2007,6 +2036,7 @@ We welcome contributions! Please follow these steps:
 ## 📈 Changelog
 
 ### 🔄 Version 8.6.0 - Current Release ⭐
+
 - New API and CI/CD documentation; added SARIF export guidance
 - Expanded environment configuration with multi-provider keys
 - UX improvements: command palette, compact mode, better error states
@@ -2014,6 +2044,7 @@ We welcome contributions! Please follow these steps:
 - Self-hosting section with optional Firebase and push setup
 
 ### 🔄 Version 8.5.0
+
 - 🔄 **Version Synchronization**: Updated all version references across the entire project for consistency
 - 📦 **Dependency Alignment**: Synchronized package.json, manifest, and service worker versions
 - 🛠️ **Build Optimization**: Enhanced Vite configuration with advanced chunk splitting strategies
@@ -2026,10 +2057,10 @@ See [changelogs.md](./changelogs.md) for the full version history.
 
 <div align="center">
 
-### **🚀 Development Timeline**
+### 🚀 Development Timeline
 
 ![UML Class Diagram](./UML%20class%20Diagram.png)
-*UML Class Diagram of the system*
+_UML Class Diagram of the system_
 
 ```mermaid
 gantt
@@ -2054,19 +2085,21 @@ gantt
 <details>
 <summary><b>🎯 Detailed Feature Breakdown</b></summary>
 
-### **🌟 Next Release (v3.9.0) - Q1 2025**
+### 🌟 Next Release (v3.9.0) - Q1 2025
 
 <table>
 <tr>
 <td width="50%">
 
 **🌍 Internationalization**
+
 - [ ] Support for 15+ languages
 - [ ] RTL language support
 - [ ] Cultural date/time formatting
 - [ ] Localized error messages
 
 **📱 Progressive Web App**
+
 - [ ] Offline functionality
 - [ ] App-like experience
 - [ ] Push notifications
@@ -2076,12 +2109,14 @@ gantt
 <td width="50%">
 
 **🔗 Git Integration**
+
 - [ ] GitHub direct integration
 - [ ] GitLab CI/CD support
 - [ ] Bitbucket pipelines
 - [ ] Automated PR analysis
 
 **👥 Team Features**
+
 - [ ] Shared workspaces
 - [ ] Role-based permissions
 - [ ] Team analytics
@@ -2091,7 +2126,7 @@ gantt
 </tr>
 </table>
 
-### **🚀 Future Releases (v4.6.0+) - 2025 and Beyond**
+### 🚀 Future Releases (v4.6.0+) - 2025 and Beyond
 
 - 🤖 **AI Model Marketplace**: Integrate and deploy custom AI models
 - 🎤 **Voice Commands**: Voice-controlled navigation and file upload
@@ -2112,15 +2147,17 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 ## 👤 Author
 
 **Aditya Kumar Tiwari**
+
 - 🎓 BCA in Cybersecurity, Sushant University
 - 💼 Cybersecurity Enthusiast | Full-Stack Developer | Lifelong Learner
 - 📧 Email: [itisaddy7@gmail.com](mailto:itisaddy7@gmail.com)
 - 🐙 GitHub: [@Xenonesis](https://github.com/Xenonesis)
 - 💼 LinkedIn: [Aditya Kumar Tiwari](https://linkedin.com/in/itisaddy)
-- 📸 Instagram: [@i__aditya7](https://instagram.com/i__aditya7)
+- 📸 Instagram: [@i\_\_aditya7](https://instagram.com/i__aditya7)
 - 🌐 Portfolio: [iaddy.netlify.app](https://iaddy.netlify.app)
 
 ### 🚀 About the Developer
+
 Passionate about the intersection of cybersecurity and development, Aditya specializes in creating secure and scalable solutions. Currently pursuing BCA in Cybersecurity with expertise in Python, JavaScript, Linux, and Cloud Computing. Committed to building impactful digital experiences that prioritize security and innovation.
 
 ## 🙏 Acknowledgments
@@ -2164,7 +2201,7 @@ If you encounter any issues or have questions:
 
 <div align="center">
 
-### **👥 Our Amazing Community**
+### 👥 Our Amazing Community
 
 <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 20px; margin: 20px 0;">
   <h3 style="color: white; margin-bottom: 20px;">📊 **Repository Statistics** 📊</h3>
@@ -2203,7 +2240,7 @@ If you encounter any issues or have questions:
   </table>
 </div>
 
-### **🤝 Core Contributors**
+### 🤝 Core Contributors
 
 <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 30px; border-radius: 20px; margin: 20px 0;">
   <h3 style="color: white; margin-bottom: 20px;">💻 **Top Contributors** 💻</h3>
@@ -2222,7 +2259,7 @@ If you encounter any issues or have questions:
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">178 commits</span>
         </div>
       </td>
-    
+
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/186174121?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
@@ -2234,7 +2271,7 @@ If you encounter any issues or have questions:
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">5 commits</span>
         </div>
       </td>
-    
+
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/164482191?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
@@ -2246,7 +2283,7 @@ If you encounter any issues or have questions:
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">4 commits</span>
         </div>
       </td>
-    
+
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/176881379?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
@@ -2258,8 +2295,9 @@ If you encounter any issues or have questions:
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">3 commits</span>
         </div>
       </td>
-    
+
     </tr>
+
 <tr>
 
       <td align="center" style="padding: 20px;">
@@ -2272,7 +2310,7 @@ If you encounter any issues or have questions:
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">3 commits</span>
         </div>
       </td>
-    
+
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/180313267?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
@@ -2284,7 +2322,7 @@ If you encounter any issues or have questions:
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">2 commits</span>
         </div>
       </td>
-    
+
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/180231504?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
@@ -2296,7 +2334,7 @@ If you encounter any issues or have questions:
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">2 commits</span>
         </div>
       </td>
-    
+
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/189628930?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
@@ -2308,12 +2346,13 @@ If you encounter any issues or have questions:
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">1 commits</span>
         </div>
       </td>
-    
+
     </tr>
+
   </table>
 </div>
 
-### **🏅 All Contributors**
+### 🏅 All Contributors
 
 <div style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); padding: 25px; border-radius: 20px; margin: 20px 0;">
   <h3 style="color: #333; margin-bottom: 20px;">🌟 **Thank You to All Contributors** 🌟</h3>
@@ -2360,7 +2399,7 @@ If you encounter any issues or have questions:
 
 <div align="center">
 
-### **💖 Love Code Guardian? Here's how you can help:**
+### 💖 Love Code Guardian? Here's how you can help:
 
 <table>
 <tr>
@@ -2502,12 +2541,12 @@ This section consolidates the most requested enablement assets so that security 
 
 ### 1. Strategic Overview
 
-| Focus Area | Why It Matters | Repository Tie-in | Owner Persona |
-|------------|----------------|-------------------|---------------|
-| Secure AI Analysis | Ensures AI-generated insights never bypass enterprise guardrails. | `src/components/ai`, `api/analytics` | AI Platform Lead |
-| Continuous Scanning | Keeps every pull request and artifact aligned with OWASP + CWE. | `scripts/run-all-tests.ts`, `tests/modernCodeScanning.test.ts` | Security Engineering |
-| Enterprise Dashboards | Exposes actionable KPIs for execs without leaving the browser. | `src/components/dashboard`, `src/components/SecurityMetricsDashboard.tsx` | Product Leadership |
-| Deployment Automation | Reduces toil by automating repeatable rollouts across clouds. | `scripts/setup-git-hooks.js`, `functions/src/index.ts` | DevOps |
+| Focus Area            | Why It Matters                                                    | Repository Tie-in                                                         | Owner Persona        |
+| --------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------- | -------------------- |
+| Secure AI Analysis    | Ensures AI-generated insights never bypass enterprise guardrails. | `src/components/ai`, `api/analytics`                                      | AI Platform Lead     |
+| Continuous Scanning   | Keeps every pull request and artifact aligned with OWASP + CWE.   | `scripts/run-all-tests.ts`, `tests/modernCodeScanning.test.ts`            | Security Engineering |
+| Enterprise Dashboards | Exposes actionable KPIs for execs without leaving the browser.    | `src/components/dashboard`, `src/components/SecurityMetricsDashboard.tsx` | Product Leadership   |
+| Deployment Automation | Reduces toil by automating repeatable rollouts across clouds.     | `scripts/setup-git-hooks.js`, `functions/src/index.ts`                    | DevOps               |
 
 #### Outcome Statements
 
@@ -2517,41 +2556,50 @@ This section consolidates the most requested enablement assets so that security 
 
 ### 2. Persona Playbooks
 
-| Persona | 30-Day Objective | Success Metrics | Suggested Features |
-|---------|-----------------|----------------|--------------------|
-| AppSec Lead | Baseline every service for OWASP Top 10 coverage. | 100% repos scanned weekly; zero critical regressions. | `SecurityMetricsDashboard`, secret detection matrix, policy engine. |
-| SRE / Platform | Harden pipelines and push security evidence into existing observability stacks. | < 5 min MTTR for false positives; automatic SARIF uploads. | Webhook bridge, `scripts/run-all-tests.ts`, log forwarding hooks. |
-| AI Engineer | Validate LLM-generated patches safely. | 95%+ patch approval rate; drift-free SBOMs. | AI patch preview, diff risk scoring, provenance tracker. |
-| Engineering Manager | Communicate security posture to leadership. | Single weekly executive report; tracked KPIs in Vercel Analytics. | Dashboard exports, KPI widgets, performance metrics table. |
+| Persona             | 30-Day Objective                                                                | Success Metrics                                                   | Suggested Features                                                  |
+| ------------------- | ------------------------------------------------------------------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------- |
+| AppSec Lead         | Baseline every service for OWASP Top 10 coverage.                               | 100% repos scanned weekly; zero critical regressions.             | `SecurityMetricsDashboard`, secret detection matrix, policy engine. |
+| SRE / Platform      | Harden pipelines and push security evidence into existing observability stacks. | < 5 min MTTR for false positives; automatic SARIF uploads.        | Webhook bridge, `scripts/run-all-tests.ts`, log forwarding hooks.   |
+| AI Engineer         | Validate LLM-generated patches safely.                                          | 95%+ patch approval rate; drift-free SBOMs.                       | AI patch preview, diff risk scoring, provenance tracker.            |
+| Engineering Manager | Communicate security posture to leadership.                                     | Single weekly executive report; tracked KPIs in Vercel Analytics. | Dashboard exports, KPI widgets, performance metrics table.          |
 
 ### 3. Use Case Catalog
 
 1. **Secure ZIP Uploads for Vendor Code**
-  - Drop archives into the UploadForm component and route them through JSZip + AST phases.
-  - Combine AI explainers with manual approval gates for high-risk vendors.
+
+- Drop archives into the UploadForm component and route them through JSZip + AST phases.
+- Combine AI explainers with manual approval gates for high-risk vendors.
+
 2. **GitHub PR Gatekeeping**
-  - Pair `scripts/run-accuracy-test.ts` with SARIF exports to comment on pull requests.
-  - Enforce minimum score thresholds via GitHub required checks.
+
+- Pair `scripts/run-accuracy-test.ts` with SARIF exports to comment on pull requests.
+- Enforce minimum score thresholds via GitHub required checks.
+
 3. **Internal Red-Teaming Sandbox**
-  - Utilize `tmp_rovodev_*` test harnesses to simulate malicious payloads.
-  - Feed anomalies back into `api/analytics/pwa.ts` for trending.
+
+- Utilize `tmp_rovodev_*` test harnesses to simulate malicious payloads.
+- Feed anomalies back into `api/analytics/pwa.ts` for trending.
+
 4. **PWA Security Operations Center**
-  - Deploy the PWA on managed tablets for field engineers needing offline mode.
-  - Sync queue data through Firebase functions hosted in `functions/src/index.ts`.
+
+- Deploy the PWA on managed tablets for field engineers needing offline mode.
+- Sync queue data through Firebase functions hosted in `functions/src/index.ts`.
+
 5. **Enterprise Secret Sweeps**
-  - Schedule `scripts/test-automation.js` nightly to hunt for secrets across languages.
-  - Notify owners using the notifications hub inside `src/components/notifications`.
+
+- Schedule `scripts/test-automation.js` nightly to hunt for secrets across languages.
+- Notify owners using the notifications hub inside `src/components/notifications`.
 
 Each scenario above maps to tracked OKRs stored in `md/changelogs.md`, ensuring roadmap alignment.
 
 ### 4. Reference Implementation Journey
 
-| Phase | Goal | Checklist |
-|-------|------|-----------|
-| Discovery | Understand target repositories, data residency, and AI providers. | ✅ Inventory source control, ✅ confirm legal posture, ✅ map AI credits. |
-| Prototype | Stand up dev tenants and align sample workflows. | 🚧 Configure `.env.local`, 🚧 seed Firebase emulators, 🚧 test webhooks. |
-| Hardening | Bake in observability, RBAC, and policy guardrails. | 🔐 Enable audit logging, 🔐 wire SARIF uploads, 🔐 configure backup rotations. |
-| Production | Roll out to org-wide engineering teams. | 🚀 Tag release in git, 🚀 publish changelog, 🚀 schedule Brown Bag training. |
+| Phase      | Goal                                                              | Checklist                                                                      |
+| ---------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| Discovery  | Understand target repositories, data residency, and AI providers. | ✅ Inventory source control, ✅ confirm legal posture, ✅ map AI credits.      |
+| Prototype  | Stand up dev tenants and align sample workflows.                  | 🚧 Configure `.env.local`, 🚧 seed Firebase emulators, 🚧 test webhooks.       |
+| Hardening  | Bake in observability, RBAC, and policy guardrails.               | 🔐 Enable audit logging, 🔐 wire SARIF uploads, 🔐 configure backup rotations. |
+| Production | Roll out to org-wide engineering teams.                           | 🚀 Tag release in git, 🚀 publish changelog, 🚀 schedule Brown Bag training.   |
 
 ### 5. Architecture Deep Dive
 
@@ -2564,16 +2612,16 @@ Each scenario above maps to tracked OKRs stored in `md/changelogs.md`, ensuring 
 
 ### 6. Module Catalogue
 
-| Directory | Description | Highlights |
-|-----------|-------------|------------|
-| `api/analytics` | Vercel edge analytics entry points and helpers. | Real-time dashboard counters, health pings. |
-| `api/push` | Push notification orchestration for PWA reminders. | Subscribe/Unsubscribe endpoints, schedule queue. |
-| `src/components/analysis` | Visual + textual insights for vulnerability findings. | Timeline components, AI chat surfaces. |
-| `src/components/security` | Rule badges, severity visualizers, posture cards. | Works in concert with `SecurityMetricsDashboard`. |
-| `scripts` | Developer automation, CI glue, and regression harnesses. | `run-all-tests.ts`, `update-contributors.js`, `ci-multi-language-check.js`. |
-| `tests` + `tests/modernCodeScanning.test.ts` | Vitest/Jest layer covering core scanning logic. | Ensures regressions trigger GitHub annotations. |
-| `functions` | Firebase Functions package, version-pinned via its own `package.json`. | Schedules cleanups, handles Firestore writes. |
-| `public` | Icons, manifests, and browser config for PWA experiences. | `manifest.json`, `sw.js`, `browserconfig.xml`. |
+| Directory                                    | Description                                                            | Highlights                                                                  |
+| -------------------------------------------- | ---------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| `api/analytics`                              | Vercel edge analytics entry points and helpers.                        | Real-time dashboard counters, health pings.                                 |
+| `api/push`                                   | Push notification orchestration for PWA reminders.                     | Subscribe/Unsubscribe endpoints, schedule queue.                            |
+| `src/components/analysis`                    | Visual + textual insights for vulnerability findings.                  | Timeline components, AI chat surfaces.                                      |
+| `src/components/security`                    | Rule badges, severity visualizers, posture cards.                      | Works in concert with `SecurityMetricsDashboard`.                           |
+| `scripts`                                    | Developer automation, CI glue, and regression harnesses.               | `run-all-tests.ts`, `update-contributors.js`, `ci-multi-language-check.js`. |
+| `tests` + `tests/modernCodeScanning.test.ts` | Vitest/Jest layer covering core scanning logic.                        | Ensures regressions trigger GitHub annotations.                             |
+| `functions`                                  | Firebase Functions package, version-pinned via its own `package.json`. | Schedules cleanups, handles Firestore writes.                               |
+| `public`                                     | Icons, manifests, and browser config for PWA experiences.              | `manifest.json`, `sw.js`, `browserconfig.xml`.                              |
 
 ### 7. Deployment Blueprints
 
@@ -2603,14 +2651,14 @@ Each scenario above maps to tracked OKRs stored in `md/changelogs.md`, ensuring 
 
 ### 8. Configuration & Secrets Reference
 
-| Variable | Required | Purpose | Notes |
-|----------|----------|---------|-------|
-| `VITE_OPENAI_API_KEY` | Optional | Enables OpenAI-backed AI explanations. | Store in platform secret manager; redact logs. |
-| `VITE_ANTHROPIC_API_KEY` | Optional | Claude inference provider. | Supports failover rotation. |
-| `VITE_GEMINI_API_KEY` | Optional | Google Gemini provider. | Required for hybrid analysis. |
-| `VITE_FIREBASE_*` | Optional | Enables sync with Firestore + Auth. | Use emulator values locally. |
-| `VITE_GITHUB_TOKEN` | Optional | GitHub repo introspection. | PAT scopes: `repo:read`, `code:read`. |
-| `VITE_LOG_LEVEL` | Optional | Overrides default `info` logging. | Accepts `trace|debug|info|warn|error`. |
+| Variable                 | Required | Purpose                                | Notes                                          |
+| ------------------------ | -------- | -------------------------------------- | ---------------------------------------------- | ----- | ---- | ---- | ------- |
+| `VITE_OPENAI_API_KEY`    | Optional | Enables OpenAI-backed AI explanations. | Store in platform secret manager; redact logs. |
+| `VITE_ANTHROPIC_API_KEY` | Optional | Claude inference provider.             | Supports failover rotation.                    |
+| `VITE_GEMINI_API_KEY`    | Optional | Google Gemini provider.                | Required for hybrid analysis.                  |
+| `VITE_FIREBASE_*`        | Optional | Enables sync with Firestore + Auth.    | Use emulator values locally.                   |
+| `VITE_GITHUB_TOKEN`      | Optional | GitHub repo introspection.             | PAT scopes: `repo:read`, `code:read`.          |
+| `VITE_LOG_LEVEL`         | Optional | Overrides default `info` logging.      | Accepts `trace                                 | debug | info | warn | error`. |
 
 Secrets should be injected via your deployment platform. Never commit `.env.local`—the template in this repo is intentionally blank.
 
@@ -2623,12 +2671,12 @@ Secrets should be injected via your deployment platform. Never commit `.env.loca
 
 ### 10. Observability & Reliability Playbook
 
-| Signal | Source | Action |
-|--------|--------|--------|
-| Frontend errors | `public/sw.js` + Vercel Analytics | Investigate via Replay, pipe stack traces into Sentry or Azure Monitor. |
-| Function latency | `functions/src/index.ts` logs | Tune concurrency limits or cache layers. |
-| Secret leak alerts | Notification center | Kick off `scripts/test-firebase-storage-fix.js` to rotate credentials. |
-| Build regressions | Vite build output | Use `npm run build -- --watch` locally; check chunk visualizer. |
+| Signal             | Source                            | Action                                                                  |
+| ------------------ | --------------------------------- | ----------------------------------------------------------------------- |
+| Frontend errors    | `public/sw.js` + Vercel Analytics | Investigate via Replay, pipe stack traces into Sentry or Azure Monitor. |
+| Function latency   | `functions/src/index.ts` logs     | Tune concurrency limits or cache layers.                                |
+| Secret leak alerts | Notification center               | Kick off `scripts/test-firebase-storage-fix.js` to rotate credentials.  |
+| Build regressions  | Vite build output                 | Use `npm run build -- --watch` locally; check chunk visualizer.         |
 
 ### 11. QA & Testing Strategy
 
@@ -2647,11 +2695,11 @@ Secrets should be injected via your deployment platform. Never commit `.env.loca
 
 ### 13. Adoption & Training
 
-| Artifact | Audience | Description |
-|---------|----------|-------------|
-| Enablement deck | Engineering directors | 15-slide overview with KPI map and ROI calculator. |
-| Live demo script | Developer advocates | 20-min flow referencing Upload → Analysis → Fix apply. |
-| Runbook | Support engineers | Markdown runbook stored in `md/` for on-call scenarios. |
+| Artifact         | Audience              | Description                                             |
+| ---------------- | --------------------- | ------------------------------------------------------- |
+| Enablement deck  | Engineering directors | 15-slide overview with KPI map and ROI calculator.      |
+| Live demo script | Developer advocates   | 20-min flow referencing Upload → Analysis → Fix apply.  |
+| Runbook          | Support engineers     | Markdown runbook stored in `md/` for on-call scenarios. |
 
 Run internal table-top exercises quarterly to validate the incident workflows documented here.
 
@@ -2665,13 +2713,13 @@ Run internal table-top exercises quarterly to validate the incident workflows do
 
 ### 15. Troubleshooting Matrix (Condensed)
 
-| Symptom | Possible Cause | Resolution |
-|---------|----------------|-----------|
-| `npm run dev` shows blank screen | Missing env vars or ad blockers stripping GraphQL. | Check `.env.local`, disable privacy extensions for localhost. |
-| AI providers returning 429 | Shared quota exhaustion. | Enable provider fallback or reduce concurrency via settings modal. |
-| Firebase deploy fails | Functions dependency mismatch. | Run `cd functions && npm install`, redeploy. |
-| Webhooks time out | Corporate firewall blocking Vercel IP ranges. | Add Vercel IPs to allow list or use self-hosted reverse proxy. |
-| SARIF rejected by GitHub | Schema version mismatch. | Ensure export uses SARIF 2.1.0 (default) or update workflow accordingly. |
+| Symptom                          | Possible Cause                                     | Resolution                                                               |
+| -------------------------------- | -------------------------------------------------- | ------------------------------------------------------------------------ |
+| `npm run dev` shows blank screen | Missing env vars or ad blockers stripping GraphQL. | Check `.env.local`, disable privacy extensions for localhost.            |
+| AI providers returning 429       | Shared quota exhaustion.                           | Enable provider fallback or reduce concurrency via settings modal.       |
+| Firebase deploy fails            | Functions dependency mismatch.                     | Run `cd functions && npm install`, redeploy.                             |
+| Webhooks time out                | Corporate firewall blocking Vercel IP ranges.      | Add Vercel IPs to allow list or use self-hosted reverse proxy.           |
+| SARIF rejected by GitHub         | Schema version mismatch.                           | Ensure export uses SARIF 2.1.0 (default) or update workflow accordingly. |
 
 ### 16. FAQ (Quick)
 
@@ -2708,20 +2756,22 @@ Run internal table-top exercises quarterly to validate the incident workflows do
 - 🔗 [scripts/run-all-tests.ts](scripts/run-all-tests.ts)
 
 > **Tip:** Bookmark this extended hub so onboarding engineers can self-serve the majority of answers before opening a support ticket.
+
 ---
+
 ## 📡 API Reference & Integration Contracts
 
-The public API surface is intentionally compact so that organizations can audit every payload that leaves their networks. All routes are implemented inside the Vercel api/ directory and share a common authentication middleware with support for PATs, signed JWTs, or HMAC headers. The contract described here mirrors the code paths you will find in api/analytics.ts, api/analytics/pwa.ts, and api/push/*.
+The public API surface is intentionally compact so that organizations can audit every payload that leaves their networks. All routes are implemented inside the Vercel api/ directory and share a common authentication middleware with support for PATs, signed JWTs, or HMAC headers. The contract described here mirrors the code paths you will find in api/analytics.ts, api/analytics/pwa.ts, and api/push/\*.
 
 ### REST Endpoint Overview
 
-| Method | Path | Description | Auth | Related Script |
-|--------|------|-------------|------|----------------|
-| POST | `/api/analyze` | Kick off an analysis run from a ZIP upload, repo URL, or inline snippet. | Bearer token or signed webhook secret. | `scripts/e2e-zip-analysis.ts` |
-| GET | `/api/report/{id}` | Retrieve normalized findings, metadata, and export links. | Same as analysis token. | `scripts/run-all-tests.ts` |
-| POST | `/api/insights/fix` | Generate AI-backed remediation advice for a specific finding ID. | Requires AI provider key mapping. | `src/components/ai` |
-| POST | `/api/webhooks/github` | Optional relay to enrich PRs with Code Guardian context. | GitHub `x-hub-signature` validation. | `scripts/run-accuracy-test.ts` |
-| POST | `/api/webhooks/custom` | Generic webhook for SIEM/SOAR ingestion. | Shared secret header x-code-guardian-signature. | `api/push/subscribe.ts` |
+| Method | Path                   | Description                                                              | Auth                                            | Related Script                 |
+| ------ | ---------------------- | ------------------------------------------------------------------------ | ----------------------------------------------- | ------------------------------ |
+| POST   | `/api/analyze`         | Kick off an analysis run from a ZIP upload, repo URL, or inline snippet. | Bearer token or signed webhook secret.          | `scripts/e2e-zip-analysis.ts`  |
+| GET    | `/api/report/{id}`     | Retrieve normalized findings, metadata, and export links.                | Same as analysis token.                         | `scripts/run-all-tests.ts`     |
+| POST   | `/api/insights/fix`    | Generate AI-backed remediation advice for a specific finding ID.         | Requires AI provider key mapping.               | `src/components/ai`            |
+| POST   | `/api/webhooks/github` | Optional relay to enrich PRs with Code Guardian context.                 | GitHub `x-hub-signature` validation.            | `scripts/run-accuracy-test.ts` |
+| POST   | `/api/webhooks/custom` | Generic webhook for SIEM/SOAR ingestion.                                 | Shared secret header x-code-guardian-signature. | `api/push/subscribe.ts`        |
 
 ### Request Lifecycle
 
@@ -2815,13 +2865,13 @@ query RecentFindings($limit: Int = 20!) {
 
 Leverage the scripts under /scripts to orchestrate Code Guardian in any CI/CD provider:
 
-| Command | Description | Best When |
-|---------|-------------|-----------|
-| `node scripts/e2e-zip-analysis.ts --zip build.zip --out report.json` | Analyze build outputs before deployment. | Artifact scanning pipelines. |
-| `tsx scripts/run-all-tests.ts --providers openai,claude` | Execute every regression pack plus AI explainers. | Nightly regression suites. |
-| `node scripts/run-multi-language-tests.js --languages js,py,go` | Validate detection coverage per language. | Multi-language monorepos. |
-| `bun scripts/run-accuracy-test.ts --threshold 0.93` | Measure model performance against golden datasets. | AI model evaluation. |
-| `node scripts/update-contributors.js` | Refresh README contributor grid. | Release preparation. |
+| Command                                                              | Description                                        | Best When                    |
+| -------------------------------------------------------------------- | -------------------------------------------------- | ---------------------------- |
+| `node scripts/e2e-zip-analysis.ts --zip build.zip --out report.json` | Analyze build outputs before deployment.           | Artifact scanning pipelines. |
+| `tsx scripts/run-all-tests.ts --providers openai,claude`             | Execute every regression pack plus AI explainers.  | Nightly regression suites.   |
+| `node scripts/run-multi-language-tests.js --languages js,py,go`      | Validate detection coverage per language.          | Multi-language monorepos.    |
+| `bun scripts/run-accuracy-test.ts --threshold 0.93`                  | Measure model performance against golden datasets. | AI model evaluation.         |
+| `node scripts/update-contributors.js`                                | Refresh README contributor grid.                   | Release preparation.         |
 
 **Automation tips**
 
@@ -2856,17 +2906,17 @@ Leverage the scripts under /scripts to orchestrate Code Guardian in any CI/CD pr
 
 - Build the project with `npm run build -- --base=/guardian` to support non-root hosting.
 - Use Docker Compose or Kubernetes manifests in Appendices F and G to ship static assets behind Nginx.
-- Mirror AI providers through approved gateways; update VITE_*_API_URL variables accordingly.
+- Mirror AI providers through approved gateways; update VITE\_\*\_API_URL variables accordingly.
 - Publish SARIF artifacts to internal GitHub Enterprise servers for persistent evidence.
 
 ## 🔎 Observability & Telemetry
 
-| Layer | Signal | Tooling |
-|-------|--------|---------|
-| Frontend | Core Web Vitals, user interactions, toast latency. | Vercel Analytics, custom window.guardianMetrics hook. |
-| Functions | Cold starts, queue depth, retries. | Firebase console, CloudWatch, or Azure Monitor depending on platform. |
-| Webhooks | Delivery success, retry counts, auth failures. | api/push/schedule.ts logs, SIEM dashboards. |
-| AI Providers | Cost, token usage, fallback frequency. | api/analytics.ts instrumentation + vendor billing exports. |
+| Layer        | Signal                                             | Tooling                                                               |
+| ------------ | -------------------------------------------------- | --------------------------------------------------------------------- |
+| Frontend     | Core Web Vitals, user interactions, toast latency. | Vercel Analytics, custom window.guardianMetrics hook.                 |
+| Functions    | Cold starts, queue depth, retries.                 | Firebase console, CloudWatch, or Azure Monitor depending on platform. |
+| Webhooks     | Delivery success, retry counts, auth failures.     | api/push/schedule.ts logs, SIEM dashboards.                           |
+| AI Providers | Cost, token usage, fallback frequency.             | api/analytics.ts instrumentation + vendor billing exports.            |
 
 Recommended action items:
 
@@ -2876,14 +2926,14 @@ Recommended action items:
 
 ## 🧪 Validation Matrix
 
-| Validation Layer | Tool / Script | Cadence | Owner |
-|------------------|---------------|---------|-------|
-| Unit tests | `npm run test` (Vitest) | Per commit | Feature teams |
-| Integration | tmp_rovodev_integration_test.ts | Nightly | Platform QA |
-| Accessibility | `npm run lint -- --max-warnings=0` + Axe scans | Weekly | Design systems |
-| Performance | `npm run build` + Lighthouse CI | Release candidate | DX guild |
-| Security Regression | scripts/run-multi-language-tests.js | Nightly + pre-release | AppSec |
-| AI Benchmarking | scripts/run-accuracy-test.ts | Weekly or on model change | AI Steering Committee |
+| Validation Layer    | Tool / Script                                  | Cadence                   | Owner                 |
+| ------------------- | ---------------------------------------------- | ------------------------- | --------------------- |
+| Unit tests          | `npm run test` (Vitest)                        | Per commit                | Feature teams         |
+| Integration         | tmp_rovodev_integration_test.ts                | Nightly                   | Platform QA           |
+| Accessibility       | `npm run lint -- --max-warnings=0` + Axe scans | Weekly                    | Design systems        |
+| Performance         | `npm run build` + Lighthouse CI                | Release candidate         | DX guild              |
+| Security Regression | scripts/run-multi-language-tests.js            | Nightly + pre-release     | AppSec                |
+| AI Benchmarking     | scripts/run-accuracy-test.ts                   | Weekly or on model change | AI Steering Committee |
 
 ## 🔐 Policy as Code Highlights
 
@@ -2894,12 +2944,12 @@ Recommended action items:
 
 ## 📈 KPI Workbook
 
-| KPI | Calculation | Widget |
-|-----|-------------|--------|
-| Mean Time To Remediate (MTTR) | resolved_at - detected_at aggregated weekly. | Trendline inside ResultsOverviewCard. |
-| Findings per KLOC | totalFindings / (linesOfCode / 1000) | Sparkline inside EnhancedAnalyticsDashboard. |
-| Secret Exposure Velocity | Count of leaked secrets in last 7 days vs previous 7 days. | Dual-axis chart in src/components/analysis/SecretTrends. |
-| AI Assist Acceptance Rate | Accepted AI patches / total AI suggestions. | Stacked bar chart in AI panel. |
+| KPI                           | Calculation                                                | Widget                                                   |
+| ----------------------------- | ---------------------------------------------------------- | -------------------------------------------------------- |
+| Mean Time To Remediate (MTTR) | resolved_at - detected_at aggregated weekly.               | Trendline inside ResultsOverviewCard.                    |
+| Findings per KLOC             | totalFindings / (linesOfCode / 1000)                       | Sparkline inside EnhancedAnalyticsDashboard.             |
+| Secret Exposure Velocity      | Count of leaked secrets in last 7 days vs previous 7 days. | Dual-axis chart in src/components/analysis/SecretTrends. |
+| AI Assist Acceptance Rate     | Accepted AI patches / total AI suggestions.                | Stacked bar chart in AI panel.                           |
 
 Export KPIs to CSV or plug them into PowerBI/Tableau using Appendix C as the canonical schema.
 
@@ -2920,90 +2970,91 @@ Export KPIs to CSV or plug them into PowerBI/Tableau using Appendix C as the can
 
 ## 🧠 Training Plans
 
-| Session | Audience | Duration | Outcomes |
-|---------|----------|----------|----------|
-| Foundations | New contributors | 90 min | Understand repo layout, run dev server, perform first scan. |
-| Deep Dive | Security champions | 2 hrs | Build custom detection rules, interpret AI explainers, export SARIF. |
-| Operator Lab | DevOps + SRE | 2 hrs | Deploy multi-cloud, integrate observability, automate rollbacks. |
-| Executive Readout | Directors / VPs | 30 min | Review KPIs, roadmap, and investment asks. |
+| Session           | Audience           | Duration | Outcomes                                                             |
+| ----------------- | ------------------ | -------- | -------------------------------------------------------------------- |
+| Foundations       | New contributors   | 90 min   | Understand repo layout, run dev server, perform first scan.          |
+| Deep Dive         | Security champions | 2 hrs    | Build custom detection rules, interpret AI explainers, export SARIF. |
+| Operator Lab      | DevOps + SRE       | 2 hrs    | Deploy multi-cloud, integrate observability, automate rollbacks.     |
+| Executive Readout | Directors / VPs    | 30 min   | Review KPIs, roadmap, and investment asks.                           |
 
 Each training module references assets tracked in tmp_rovodev_QUICK_START.md and tmp_rovodev_FINAL_REPORT.md so lessons remain consistent.
 
 ## 🛡️ Appendix A: Control Catalogue
 
 #### Control CG-SQL-JS
+
 - **Title:** Parameterized Query Enforcement (JavaScript)
 - **Threat Mitigated:** Attackers inject SQL via unsanitized string concatenation or template literals.
 - **Detection Signal:** AST visitors flag concatenated statements plus risky ORM calls surfaced in scripts/test-pattern.js.
 - **Recommended Fix:** Adopt parameterized statements and centralized repositories; align with database-specific escaping. Leverage Prisma, Knex conventions for JavaScript deployments.
 - **Automation Level:** Auto-fix templates shipped with AI patch preview plus lint rule hints.
-- **Validation Steps:** Re-run scripts/e2e-zip-analysis.ts targeting database/** modules.
-
+- **Validation Steps:** Re-run scripts/e2e-zip-analysis.ts targeting database/\*\* modules.
 
 #### Control CG-SQL-TS
+
 - **Title:** Parameterized Query Enforcement (TypeScript)
 - **Threat Mitigated:** Attackers inject SQL via unsanitized string concatenation or template literals.
 - **Detection Signal:** AST visitors flag concatenated statements plus risky ORM calls surfaced in scripts/test-pattern.js.
 - **Recommended Fix:** Adopt parameterized statements and centralized repositories; align with database-specific escaping. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
 - **Automation Level:** Auto-fix templates shipped with AI patch preview plus lint rule hints.
-- **Validation Steps:** Re-run scripts/e2e-zip-analysis.ts targeting database/** modules.
-
+- **Validation Steps:** Re-run scripts/e2e-zip-analysis.ts targeting database/\*\* modules.
 
 #### Control CG-SQL-PY
+
 - **Title:** Parameterized Query Enforcement (Python)
 - **Threat Mitigated:** Attackers inject SQL via unsanitized string concatenation or template literals.
 - **Detection Signal:** AST visitors flag concatenated statements plus risky ORM calls surfaced in scripts/test-pattern.js.
 - **Recommended Fix:** Adopt parameterized statements and centralized repositories; align with database-specific escaping. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
 - **Automation Level:** Auto-fix templates shipped with AI patch preview plus lint rule hints.
-- **Validation Steps:** Re-run scripts/e2e-zip-analysis.ts targeting database/** modules.
-
+- **Validation Steps:** Re-run scripts/e2e-zip-analysis.ts targeting database/\*\* modules.
 
 #### Control CG-SQL-JAVA
+
 - **Title:** Parameterized Query Enforcement (Java)
 - **Threat Mitigated:** Attackers inject SQL via unsanitized string concatenation or template literals.
 - **Detection Signal:** AST visitors flag concatenated statements plus risky ORM calls surfaced in scripts/test-pattern.js.
 - **Recommended Fix:** Adopt parameterized statements and centralized repositories; align with database-specific escaping. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
 - **Automation Level:** Auto-fix templates shipped with AI patch preview plus lint rule hints.
-- **Validation Steps:** Re-run scripts/e2e-zip-analysis.ts targeting database/** modules.
-
+- **Validation Steps:** Re-run scripts/e2e-zip-analysis.ts targeting database/\*\* modules.
 
 #### Control CG-SQL-GO
+
 - **Title:** Parameterized Query Enforcement (Go)
 - **Threat Mitigated:** Attackers inject SQL via unsanitized string concatenation or template literals.
 - **Detection Signal:** AST visitors flag concatenated statements plus risky ORM calls surfaced in scripts/test-pattern.js.
 - **Recommended Fix:** Adopt parameterized statements and centralized repositories; align with database-specific escaping. Leverage GORM, pgx conventions for Go deployments.
 - **Automation Level:** Auto-fix templates shipped with AI patch preview plus lint rule hints.
-- **Validation Steps:** Re-run scripts/e2e-zip-analysis.ts targeting database/** modules.
-
+- **Validation Steps:** Re-run scripts/e2e-zip-analysis.ts targeting database/\*\* modules.
 
 #### Control CG-SQL-RST
+
 - **Title:** Parameterized Query Enforcement (Rust)
 - **Threat Mitigated:** Attackers inject SQL via unsanitized string concatenation or template literals.
 - **Detection Signal:** AST visitors flag concatenated statements plus risky ORM calls surfaced in scripts/test-pattern.js.
 - **Recommended Fix:** Adopt parameterized statements and centralized repositories; align with database-specific escaping. Leverage SQLx, Diesel conventions for Rust deployments.
 - **Automation Level:** Auto-fix templates shipped with AI patch preview plus lint rule hints.
-- **Validation Steps:** Re-run scripts/e2e-zip-analysis.ts targeting database/** modules.
-
+- **Validation Steps:** Re-run scripts/e2e-zip-analysis.ts targeting database/\*\* modules.
 
 #### Control CG-SQL-PHP
+
 - **Title:** Parameterized Query Enforcement (PHP)
 - **Threat Mitigated:** Attackers inject SQL via unsanitized string concatenation or template literals.
 - **Detection Signal:** AST visitors flag concatenated statements plus risky ORM calls surfaced in scripts/test-pattern.js.
 - **Recommended Fix:** Adopt parameterized statements and centralized repositories; align with database-specific escaping. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
 - **Automation Level:** Auto-fix templates shipped with AI patch preview plus lint rule hints.
-- **Validation Steps:** Re-run scripts/e2e-zip-analysis.ts targeting database/** modules.
-
+- **Validation Steps:** Re-run scripts/e2e-zip-analysis.ts targeting database/\*\* modules.
 
 #### Control CG-SQL-CS
+
 - **Title:** Parameterized Query Enforcement (C#)
 - **Threat Mitigated:** Attackers inject SQL via unsanitized string concatenation or template literals.
 - **Detection Signal:** AST visitors flag concatenated statements plus risky ORM calls surfaced in scripts/test-pattern.js.
 - **Recommended Fix:** Adopt parameterized statements and centralized repositories; align with database-specific escaping. Leverage Entity Framework, Dapper conventions for C# deployments.
 - **Automation Level:** Auto-fix templates shipped with AI patch preview plus lint rule hints.
-- **Validation Steps:** Re-run scripts/e2e-zip-analysis.ts targeting database/** modules.
-
+- **Validation Steps:** Re-run scripts/e2e-zip-analysis.ts targeting database/\*\* modules.
 
 #### Control CG-CMD-JS
+
 - **Title:** Command Injection Guardrails (JavaScript)
 - **Threat Mitigated:** User-controlled arguments reach exec, spawn, or shell wrappers.
 - **Detection Signal:** Data-flow tracing links tainted inputs to process execution utilities in src/utils.
@@ -3011,8 +3062,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Risk scoring surfaces in SecurityMetricsDashboard with autofill mitigations.
 - **Validation Steps:** Execute tests/modernCodeScanning.test.ts case command-injection.
 
-
 #### Control CG-CMD-TS
+
 - **Title:** Command Injection Guardrails (TypeScript)
 - **Threat Mitigated:** User-controlled arguments reach exec, spawn, or shell wrappers.
 - **Detection Signal:** Data-flow tracing links tainted inputs to process execution utilities in src/utils.
@@ -3020,8 +3071,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Risk scoring surfaces in SecurityMetricsDashboard with autofill mitigations.
 - **Validation Steps:** Execute tests/modernCodeScanning.test.ts case command-injection.
 
-
 #### Control CG-CMD-PY
+
 - **Title:** Command Injection Guardrails (Python)
 - **Threat Mitigated:** User-controlled arguments reach exec, spawn, or shell wrappers.
 - **Detection Signal:** Data-flow tracing links tainted inputs to process execution utilities in src/utils.
@@ -3029,8 +3080,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Risk scoring surfaces in SecurityMetricsDashboard with autofill mitigations.
 - **Validation Steps:** Execute tests/modernCodeScanning.test.ts case command-injection.
 
-
 #### Control CG-CMD-JAVA
+
 - **Title:** Command Injection Guardrails (Java)
 - **Threat Mitigated:** User-controlled arguments reach exec, spawn, or shell wrappers.
 - **Detection Signal:** Data-flow tracing links tainted inputs to process execution utilities in src/utils.
@@ -3038,8 +3089,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Risk scoring surfaces in SecurityMetricsDashboard with autofill mitigations.
 - **Validation Steps:** Execute tests/modernCodeScanning.test.ts case command-injection.
 
-
 #### Control CG-CMD-GO
+
 - **Title:** Command Injection Guardrails (Go)
 - **Threat Mitigated:** User-controlled arguments reach exec, spawn, or shell wrappers.
 - **Detection Signal:** Data-flow tracing links tainted inputs to process execution utilities in src/utils.
@@ -3047,8 +3098,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Risk scoring surfaces in SecurityMetricsDashboard with autofill mitigations.
 - **Validation Steps:** Execute tests/modernCodeScanning.test.ts case command-injection.
 
-
 #### Control CG-CMD-RST
+
 - **Title:** Command Injection Guardrails (Rust)
 - **Threat Mitigated:** User-controlled arguments reach exec, spawn, or shell wrappers.
 - **Detection Signal:** Data-flow tracing links tainted inputs to process execution utilities in src/utils.
@@ -3056,8 +3107,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Risk scoring surfaces in SecurityMetricsDashboard with autofill mitigations.
 - **Validation Steps:** Execute tests/modernCodeScanning.test.ts case command-injection.
 
-
 #### Control CG-CMD-PHP
+
 - **Title:** Command Injection Guardrails (PHP)
 - **Threat Mitigated:** User-controlled arguments reach exec, spawn, or shell wrappers.
 - **Detection Signal:** Data-flow tracing links tainted inputs to process execution utilities in src/utils.
@@ -3065,8 +3116,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Risk scoring surfaces in SecurityMetricsDashboard with autofill mitigations.
 - **Validation Steps:** Execute tests/modernCodeScanning.test.ts case command-injection.
 
-
 #### Control CG-CMD-CS
+
 - **Title:** Command Injection Guardrails (C#)
 - **Threat Mitigated:** User-controlled arguments reach exec, spawn, or shell wrappers.
 - **Detection Signal:** Data-flow tracing links tainted inputs to process execution utilities in src/utils.
@@ -3074,8 +3125,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Risk scoring surfaces in SecurityMetricsDashboard with autofill mitigations.
 - **Validation Steps:** Execute tests/modernCodeScanning.test.ts case command-injection.
 
-
 #### Control CG-SSRF-JS
+
 - **Title:** Server-Side Request Forgery Mitigation (JavaScript)
 - **Threat Mitigated:** Untrusted URLs are fetched from backend contexts leading to data exfiltration.
 - **Detection Signal:** Pattern engine inspects fetch, axios, and native HTTP clients for missing allowlists.
@@ -3083,8 +3134,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Suggested fixes include sample proxy validators distributed with the AI assistant.
 - **Validation Steps:** Replay suspicious URLs via tmp_rovodev_runtime_test.ts.
 
-
 #### Control CG-SSRF-TS
+
 - **Title:** Server-Side Request Forgery Mitigation (TypeScript)
 - **Threat Mitigated:** Untrusted URLs are fetched from backend contexts leading to data exfiltration.
 - **Detection Signal:** Pattern engine inspects fetch, axios, and native HTTP clients for missing allowlists.
@@ -3092,8 +3143,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Suggested fixes include sample proxy validators distributed with the AI assistant.
 - **Validation Steps:** Replay suspicious URLs via tmp_rovodev_runtime_test.ts.
 
-
 #### Control CG-SSRF-PY
+
 - **Title:** Server-Side Request Forgery Mitigation (Python)
 - **Threat Mitigated:** Untrusted URLs are fetched from backend contexts leading to data exfiltration.
 - **Detection Signal:** Pattern engine inspects fetch, axios, and native HTTP clients for missing allowlists.
@@ -3101,8 +3152,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Suggested fixes include sample proxy validators distributed with the AI assistant.
 - **Validation Steps:** Replay suspicious URLs via tmp_rovodev_runtime_test.ts.
 
-
 #### Control CG-SSRF-JAVA
+
 - **Title:** Server-Side Request Forgery Mitigation (Java)
 - **Threat Mitigated:** Untrusted URLs are fetched from backend contexts leading to data exfiltration.
 - **Detection Signal:** Pattern engine inspects fetch, axios, and native HTTP clients for missing allowlists.
@@ -3110,8 +3161,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Suggested fixes include sample proxy validators distributed with the AI assistant.
 - **Validation Steps:** Replay suspicious URLs via tmp_rovodev_runtime_test.ts.
 
-
 #### Control CG-SSRF-GO
+
 - **Title:** Server-Side Request Forgery Mitigation (Go)
 - **Threat Mitigated:** Untrusted URLs are fetched from backend contexts leading to data exfiltration.
 - **Detection Signal:** Pattern engine inspects fetch, axios, and native HTTP clients for missing allowlists.
@@ -3119,8 +3170,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Suggested fixes include sample proxy validators distributed with the AI assistant.
 - **Validation Steps:** Replay suspicious URLs via tmp_rovodev_runtime_test.ts.
 
-
 #### Control CG-SSRF-RST
+
 - **Title:** Server-Side Request Forgery Mitigation (Rust)
 - **Threat Mitigated:** Untrusted URLs are fetched from backend contexts leading to data exfiltration.
 - **Detection Signal:** Pattern engine inspects fetch, axios, and native HTTP clients for missing allowlists.
@@ -3128,8 +3179,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Suggested fixes include sample proxy validators distributed with the AI assistant.
 - **Validation Steps:** Replay suspicious URLs via tmp_rovodev_runtime_test.ts.
 
-
 #### Control CG-SSRF-PHP
+
 - **Title:** Server-Side Request Forgery Mitigation (PHP)
 - **Threat Mitigated:** Untrusted URLs are fetched from backend contexts leading to data exfiltration.
 - **Detection Signal:** Pattern engine inspects fetch, axios, and native HTTP clients for missing allowlists.
@@ -3137,8 +3188,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Suggested fixes include sample proxy validators distributed with the AI assistant.
 - **Validation Steps:** Replay suspicious URLs via tmp_rovodev_runtime_test.ts.
 
-
 #### Control CG-SSRF-CS
+
 - **Title:** Server-Side Request Forgery Mitigation (C#)
 - **Threat Mitigated:** Untrusted URLs are fetched from backend contexts leading to data exfiltration.
 - **Detection Signal:** Pattern engine inspects fetch, axios, and native HTTP clients for missing allowlists.
@@ -3146,8 +3197,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Suggested fixes include sample proxy validators distributed with the AI assistant.
 - **Validation Steps:** Replay suspicious URLs via tmp_rovodev_runtime_test.ts.
 
-
 #### Control CG-XSS-JS
+
 - **Title:** Cross-Site Scripting Neutralization (JavaScript)
 - **Threat Mitigated:** Unescaped content is rendered into DOM nodes or templating outputs.
 - **Detection Signal:** React lint rules plus static HTML parsers detect dangerouslySetInnerHTML misuse.
@@ -3155,8 +3206,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** UI components auto-escape when using the latest src/components/ui primitives.
 - **Validation Steps:** Run npm run build with the security bundle analyzer to confirm zero warnings.
 
-
 #### Control CG-XSS-TS
+
 - **Title:** Cross-Site Scripting Neutralization (TypeScript)
 - **Threat Mitigated:** Unescaped content is rendered into DOM nodes or templating outputs.
 - **Detection Signal:** React lint rules plus static HTML parsers detect dangerouslySetInnerHTML misuse.
@@ -3164,8 +3215,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** UI components auto-escape when using the latest src/components/ui primitives.
 - **Validation Steps:** Run npm run build with the security bundle analyzer to confirm zero warnings.
 
-
 #### Control CG-XSS-PY
+
 - **Title:** Cross-Site Scripting Neutralization (Python)
 - **Threat Mitigated:** Unescaped content is rendered into DOM nodes or templating outputs.
 - **Detection Signal:** React lint rules plus static HTML parsers detect dangerouslySetInnerHTML misuse.
@@ -3173,8 +3224,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** UI components auto-escape when using the latest src/components/ui primitives.
 - **Validation Steps:** Run npm run build with the security bundle analyzer to confirm zero warnings.
 
-
 #### Control CG-XSS-JAVA
+
 - **Title:** Cross-Site Scripting Neutralization (Java)
 - **Threat Mitigated:** Unescaped content is rendered into DOM nodes or templating outputs.
 - **Detection Signal:** React lint rules plus static HTML parsers detect dangerouslySetInnerHTML misuse.
@@ -3182,8 +3233,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** UI components auto-escape when using the latest src/components/ui primitives.
 - **Validation Steps:** Run npm run build with the security bundle analyzer to confirm zero warnings.
 
-
 #### Control CG-XSS-GO
+
 - **Title:** Cross-Site Scripting Neutralization (Go)
 - **Threat Mitigated:** Unescaped content is rendered into DOM nodes or templating outputs.
 - **Detection Signal:** React lint rules plus static HTML parsers detect dangerouslySetInnerHTML misuse.
@@ -3191,8 +3242,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** UI components auto-escape when using the latest src/components/ui primitives.
 - **Validation Steps:** Run npm run build with the security bundle analyzer to confirm zero warnings.
 
-
 #### Control CG-XSS-RST
+
 - **Title:** Cross-Site Scripting Neutralization (Rust)
 - **Threat Mitigated:** Unescaped content is rendered into DOM nodes or templating outputs.
 - **Detection Signal:** React lint rules plus static HTML parsers detect dangerouslySetInnerHTML misuse.
@@ -3200,8 +3251,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** UI components auto-escape when using the latest src/components/ui primitives.
 - **Validation Steps:** Run npm run build with the security bundle analyzer to confirm zero warnings.
 
-
 #### Control CG-XSS-PHP
+
 - **Title:** Cross-Site Scripting Neutralization (PHP)
 - **Threat Mitigated:** Unescaped content is rendered into DOM nodes or templating outputs.
 - **Detection Signal:** React lint rules plus static HTML parsers detect dangerouslySetInnerHTML misuse.
@@ -3209,8 +3260,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** UI components auto-escape when using the latest src/components/ui primitives.
 - **Validation Steps:** Run npm run build with the security bundle analyzer to confirm zero warnings.
 
-
 #### Control CG-XSS-CS
+
 - **Title:** Cross-Site Scripting Neutralization (C#)
 - **Threat Mitigated:** Unescaped content is rendered into DOM nodes or templating outputs.
 - **Detection Signal:** React lint rules plus static HTML parsers detect dangerouslySetInnerHTML misuse.
@@ -3218,8 +3269,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** UI components auto-escape when using the latest src/components/ui primitives.
 - **Validation Steps:** Run npm run build with the security bundle analyzer to confirm zero warnings.
 
-
 #### Control CG-PATH-JS
+
 - **Title:** Directory Traversal Prevention (JavaScript)
 - **Threat Mitigated:** Relative paths like ../../etc/passwd slip into file system accessors.
 - **Detection Signal:** Regex + AST heuristics inspect fs calls for unsanitized path joins.
@@ -3227,8 +3278,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Auto-fix suggestions wrap user input with sandbox helpers defined in src/utils/fs.
 - **Validation Steps:** Trigger scripts/test-pattern.js --rule traversal after patching.
 
-
 #### Control CG-PATH-TS
+
 - **Title:** Directory Traversal Prevention (TypeScript)
 - **Threat Mitigated:** Relative paths like ../../etc/passwd slip into file system accessors.
 - **Detection Signal:** Regex + AST heuristics inspect fs calls for unsanitized path joins.
@@ -3236,8 +3287,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Auto-fix suggestions wrap user input with sandbox helpers defined in src/utils/fs.
 - **Validation Steps:** Trigger scripts/test-pattern.js --rule traversal after patching.
 
-
 #### Control CG-PATH-PY
+
 - **Title:** Directory Traversal Prevention (Python)
 - **Threat Mitigated:** Relative paths like ../../etc/passwd slip into file system accessors.
 - **Detection Signal:** Regex + AST heuristics inspect fs calls for unsanitized path joins.
@@ -3245,8 +3296,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Auto-fix suggestions wrap user input with sandbox helpers defined in src/utils/fs.
 - **Validation Steps:** Trigger scripts/test-pattern.js --rule traversal after patching.
 
-
 #### Control CG-PATH-JAVA
+
 - **Title:** Directory Traversal Prevention (Java)
 - **Threat Mitigated:** Relative paths like ../../etc/passwd slip into file system accessors.
 - **Detection Signal:** Regex + AST heuristics inspect fs calls for unsanitized path joins.
@@ -3254,8 +3305,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Auto-fix suggestions wrap user input with sandbox helpers defined in src/utils/fs.
 - **Validation Steps:** Trigger scripts/test-pattern.js --rule traversal after patching.
 
-
 #### Control CG-PATH-GO
+
 - **Title:** Directory Traversal Prevention (Go)
 - **Threat Mitigated:** Relative paths like ../../etc/passwd slip into file system accessors.
 - **Detection Signal:** Regex + AST heuristics inspect fs calls for unsanitized path joins.
@@ -3263,8 +3314,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Auto-fix suggestions wrap user input with sandbox helpers defined in src/utils/fs.
 - **Validation Steps:** Trigger scripts/test-pattern.js --rule traversal after patching.
 
-
 #### Control CG-PATH-RST
+
 - **Title:** Directory Traversal Prevention (Rust)
 - **Threat Mitigated:** Relative paths like ../../etc/passwd slip into file system accessors.
 - **Detection Signal:** Regex + AST heuristics inspect fs calls for unsanitized path joins.
@@ -3272,8 +3323,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Auto-fix suggestions wrap user input with sandbox helpers defined in src/utils/fs.
 - **Validation Steps:** Trigger scripts/test-pattern.js --rule traversal after patching.
 
-
 #### Control CG-PATH-PHP
+
 - **Title:** Directory Traversal Prevention (PHP)
 - **Threat Mitigated:** Relative paths like ../../etc/passwd slip into file system accessors.
 - **Detection Signal:** Regex + AST heuristics inspect fs calls for unsanitized path joins.
@@ -3281,8 +3332,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Auto-fix suggestions wrap user input with sandbox helpers defined in src/utils/fs.
 - **Validation Steps:** Trigger scripts/test-pattern.js --rule traversal after patching.
 
-
 #### Control CG-PATH-CS
+
 - **Title:** Directory Traversal Prevention (C#)
 - **Threat Mitigated:** Relative paths like ../../etc/passwd slip into file system accessors.
 - **Detection Signal:** Regex + AST heuristics inspect fs calls for unsanitized path joins.
@@ -3290,8 +3341,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Auto-fix suggestions wrap user input with sandbox helpers defined in src/utils/fs.
 - **Validation Steps:** Trigger scripts/test-pattern.js --rule traversal after patching.
 
-
 #### Control CG-AUTH-JS
+
 - **Title:** Broken Authentication Hardening (JavaScript)
 - **Threat Mitigated:** Weak session controls allow credential stuffing or privilege abuse.
 - **Detection Signal:** Rules inspect auth middleware for missing MFA toggles and insecure cookie flags.
@@ -3299,8 +3350,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Policy templates stored in src/components/auth update UI toggles.
 - **Validation Steps:** Run scripts/test-automation.js --scenario auth to confirm controls.
 
-
 #### Control CG-AUTH-TS
+
 - **Title:** Broken Authentication Hardening (TypeScript)
 - **Threat Mitigated:** Weak session controls allow credential stuffing or privilege abuse.
 - **Detection Signal:** Rules inspect auth middleware for missing MFA toggles and insecure cookie flags.
@@ -3308,8 +3359,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Policy templates stored in src/components/auth update UI toggles.
 - **Validation Steps:** Run scripts/test-automation.js --scenario auth to confirm controls.
 
-
 #### Control CG-AUTH-PY
+
 - **Title:** Broken Authentication Hardening (Python)
 - **Threat Mitigated:** Weak session controls allow credential stuffing or privilege abuse.
 - **Detection Signal:** Rules inspect auth middleware for missing MFA toggles and insecure cookie flags.
@@ -3317,8 +3368,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Policy templates stored in src/components/auth update UI toggles.
 - **Validation Steps:** Run scripts/test-automation.js --scenario auth to confirm controls.
 
-
 #### Control CG-AUTH-JAVA
+
 - **Title:** Broken Authentication Hardening (Java)
 - **Threat Mitigated:** Weak session controls allow credential stuffing or privilege abuse.
 - **Detection Signal:** Rules inspect auth middleware for missing MFA toggles and insecure cookie flags.
@@ -3326,8 +3377,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Policy templates stored in src/components/auth update UI toggles.
 - **Validation Steps:** Run scripts/test-automation.js --scenario auth to confirm controls.
 
-
 #### Control CG-AUTH-GO
+
 - **Title:** Broken Authentication Hardening (Go)
 - **Threat Mitigated:** Weak session controls allow credential stuffing or privilege abuse.
 - **Detection Signal:** Rules inspect auth middleware for missing MFA toggles and insecure cookie flags.
@@ -3335,8 +3386,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Policy templates stored in src/components/auth update UI toggles.
 - **Validation Steps:** Run scripts/test-automation.js --scenario auth to confirm controls.
 
-
 #### Control CG-AUTH-RST
+
 - **Title:** Broken Authentication Hardening (Rust)
 - **Threat Mitigated:** Weak session controls allow credential stuffing or privilege abuse.
 - **Detection Signal:** Rules inspect auth middleware for missing MFA toggles and insecure cookie flags.
@@ -3344,8 +3395,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Policy templates stored in src/components/auth update UI toggles.
 - **Validation Steps:** Run scripts/test-automation.js --scenario auth to confirm controls.
 
-
 #### Control CG-AUTH-PHP
+
 - **Title:** Broken Authentication Hardening (PHP)
 - **Threat Mitigated:** Weak session controls allow credential stuffing or privilege abuse.
 - **Detection Signal:** Rules inspect auth middleware for missing MFA toggles and insecure cookie flags.
@@ -3353,8 +3404,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Policy templates stored in src/components/auth update UI toggles.
 - **Validation Steps:** Run scripts/test-automation.js --scenario auth to confirm controls.
 
-
 #### Control CG-AUTH-CS
+
 - **Title:** Broken Authentication Hardening (C#)
 - **Threat Mitigated:** Weak session controls allow credential stuffing or privilege abuse.
 - **Detection Signal:** Rules inspect auth middleware for missing MFA toggles and insecure cookie flags.
@@ -3362,8 +3413,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Policy templates stored in src/components/auth update UI toggles.
 - **Validation Steps:** Run scripts/test-automation.js --scenario auth to confirm controls.
 
-
 #### Control CG-TOKEN-JS
+
 - **Title:** Secret Exposure Controls (JavaScript)
 - **Threat Mitigated:** API keys, JWTs, or certificates leak through logs or source control.
 - **Detection Signal:** Entropy scanners, regex signatures, and ML classifiers cross-check with test-vulnerabilities.js.
@@ -3371,8 +3422,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Auto-created tickets include rotation checklists plus CLI commands.
 - **Validation Steps:** Execute scripts/test-firebase-storage-fix.js to ensure rotation scripts run.
 
-
 #### Control CG-TOKEN-TS
+
 - **Title:** Secret Exposure Controls (TypeScript)
 - **Threat Mitigated:** API keys, JWTs, or certificates leak through logs or source control.
 - **Detection Signal:** Entropy scanners, regex signatures, and ML classifiers cross-check with test-vulnerabilities.js.
@@ -3380,8 +3431,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Auto-created tickets include rotation checklists plus CLI commands.
 - **Validation Steps:** Execute scripts/test-firebase-storage-fix.js to ensure rotation scripts run.
 
-
 #### Control CG-TOKEN-PY
+
 - **Title:** Secret Exposure Controls (Python)
 - **Threat Mitigated:** API keys, JWTs, or certificates leak through logs or source control.
 - **Detection Signal:** Entropy scanners, regex signatures, and ML classifiers cross-check with test-vulnerabilities.js.
@@ -3389,8 +3440,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Auto-created tickets include rotation checklists plus CLI commands.
 - **Validation Steps:** Execute scripts/test-firebase-storage-fix.js to ensure rotation scripts run.
 
-
 #### Control CG-TOKEN-JAVA
+
 - **Title:** Secret Exposure Controls (Java)
 - **Threat Mitigated:** API keys, JWTs, or certificates leak through logs or source control.
 - **Detection Signal:** Entropy scanners, regex signatures, and ML classifiers cross-check with test-vulnerabilities.js.
@@ -3398,8 +3449,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Auto-created tickets include rotation checklists plus CLI commands.
 - **Validation Steps:** Execute scripts/test-firebase-storage-fix.js to ensure rotation scripts run.
 
-
 #### Control CG-TOKEN-GO
+
 - **Title:** Secret Exposure Controls (Go)
 - **Threat Mitigated:** API keys, JWTs, or certificates leak through logs or source control.
 - **Detection Signal:** Entropy scanners, regex signatures, and ML classifiers cross-check with test-vulnerabilities.js.
@@ -3407,8 +3458,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Auto-created tickets include rotation checklists plus CLI commands.
 - **Validation Steps:** Execute scripts/test-firebase-storage-fix.js to ensure rotation scripts run.
 
-
 #### Control CG-TOKEN-RST
+
 - **Title:** Secret Exposure Controls (Rust)
 - **Threat Mitigated:** API keys, JWTs, or certificates leak through logs or source control.
 - **Detection Signal:** Entropy scanners, regex signatures, and ML classifiers cross-check with test-vulnerabilities.js.
@@ -3416,8 +3467,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Auto-created tickets include rotation checklists plus CLI commands.
 - **Validation Steps:** Execute scripts/test-firebase-storage-fix.js to ensure rotation scripts run.
 
-
 #### Control CG-TOKEN-PHP
+
 - **Title:** Secret Exposure Controls (PHP)
 - **Threat Mitigated:** API keys, JWTs, or certificates leak through logs or source control.
 - **Detection Signal:** Entropy scanners, regex signatures, and ML classifiers cross-check with test-vulnerabilities.js.
@@ -3425,8 +3476,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Auto-created tickets include rotation checklists plus CLI commands.
 - **Validation Steps:** Execute scripts/test-firebase-storage-fix.js to ensure rotation scripts run.
 
-
 #### Control CG-TOKEN-CS
+
 - **Title:** Secret Exposure Controls (C#)
 - **Threat Mitigated:** API keys, JWTs, or certificates leak through logs or source control.
 - **Detection Signal:** Entropy scanners, regex signatures, and ML classifiers cross-check with test-vulnerabilities.js.
@@ -3434,8 +3485,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Auto-created tickets include rotation checklists plus CLI commands.
 - **Validation Steps:** Execute scripts/test-firebase-storage-fix.js to ensure rotation scripts run.
 
-
 #### Control CG-CORS-JS
+
 - **Title:** Cross-Origin Resource Sharing Policy (JavaScript)
 - **Threat Mitigated:** Overly permissive CORS allows credentialed cross-site requests.
 - **Detection Signal:** Config linters read public/manifest.json and serverless headers for wildcard origins.
@@ -3443,8 +3494,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Dashboard surfaces warnings when more than five origins are allowed.
 - **Validation Steps:** Use scripts/run-accuracy-test.ts --check cors for regression evidence.
 
-
 #### Control CG-CORS-TS
+
 - **Title:** Cross-Origin Resource Sharing Policy (TypeScript)
 - **Threat Mitigated:** Overly permissive CORS allows credentialed cross-site requests.
 - **Detection Signal:** Config linters read public/manifest.json and serverless headers for wildcard origins.
@@ -3452,8 +3503,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Dashboard surfaces warnings when more than five origins are allowed.
 - **Validation Steps:** Use scripts/run-accuracy-test.ts --check cors for regression evidence.
 
-
 #### Control CG-CORS-PY
+
 - **Title:** Cross-Origin Resource Sharing Policy (Python)
 - **Threat Mitigated:** Overly permissive CORS allows credentialed cross-site requests.
 - **Detection Signal:** Config linters read public/manifest.json and serverless headers for wildcard origins.
@@ -3461,8 +3512,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Dashboard surfaces warnings when more than five origins are allowed.
 - **Validation Steps:** Use scripts/run-accuracy-test.ts --check cors for regression evidence.
 
-
 #### Control CG-CORS-JAVA
+
 - **Title:** Cross-Origin Resource Sharing Policy (Java)
 - **Threat Mitigated:** Overly permissive CORS allows credentialed cross-site requests.
 - **Detection Signal:** Config linters read public/manifest.json and serverless headers for wildcard origins.
@@ -3470,8 +3521,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Dashboard surfaces warnings when more than five origins are allowed.
 - **Validation Steps:** Use scripts/run-accuracy-test.ts --check cors for regression evidence.
 
-
 #### Control CG-CORS-GO
+
 - **Title:** Cross-Origin Resource Sharing Policy (Go)
 - **Threat Mitigated:** Overly permissive CORS allows credentialed cross-site requests.
 - **Detection Signal:** Config linters read public/manifest.json and serverless headers for wildcard origins.
@@ -3479,8 +3530,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Dashboard surfaces warnings when more than five origins are allowed.
 - **Validation Steps:** Use scripts/run-accuracy-test.ts --check cors for regression evidence.
 
-
 #### Control CG-CORS-RST
+
 - **Title:** Cross-Origin Resource Sharing Policy (Rust)
 - **Threat Mitigated:** Overly permissive CORS allows credentialed cross-site requests.
 - **Detection Signal:** Config linters read public/manifest.json and serverless headers for wildcard origins.
@@ -3488,8 +3539,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Dashboard surfaces warnings when more than five origins are allowed.
 - **Validation Steps:** Use scripts/run-accuracy-test.ts --check cors for regression evidence.
 
-
 #### Control CG-CORS-PHP
+
 - **Title:** Cross-Origin Resource Sharing Policy (PHP)
 - **Threat Mitigated:** Overly permissive CORS allows credentialed cross-site requests.
 - **Detection Signal:** Config linters read public/manifest.json and serverless headers for wildcard origins.
@@ -3497,8 +3548,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Dashboard surfaces warnings when more than five origins are allowed.
 - **Validation Steps:** Use scripts/run-accuracy-test.ts --check cors for regression evidence.
 
-
 #### Control CG-CORS-CS
+
 - **Title:** Cross-Origin Resource Sharing Policy (C#)
 - **Threat Mitigated:** Overly permissive CORS allows credentialed cross-site requests.
 - **Detection Signal:** Config linters read public/manifest.json and serverless headers for wildcard origins.
@@ -3506,8 +3557,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Dashboard surfaces warnings when more than five origins are allowed.
 - **Validation Steps:** Use scripts/run-accuracy-test.ts --check cors for regression evidence.
 
-
 #### Control CG-TLS-JS
+
 - **Title:** Transport Security Posture (JavaScript)
 - **Threat Mitigated:** HTTP-only endpoints or legacy cipher suites expose data in transit.
 - **Detection Signal:** Deployment checks inspect vercel.json, public/robots.txt, and headers for TLS posture.
@@ -3515,8 +3566,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** CI enforces TLS readiness before promoting builds.
 - **Validation Steps:** Scan via scripts/e2e-zip-analysis.ts --include security-headers.
 
-
 #### Control CG-TLS-TS
+
 - **Title:** Transport Security Posture (TypeScript)
 - **Threat Mitigated:** HTTP-only endpoints or legacy cipher suites expose data in transit.
 - **Detection Signal:** Deployment checks inspect vercel.json, public/robots.txt, and headers for TLS posture.
@@ -3524,8 +3575,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** CI enforces TLS readiness before promoting builds.
 - **Validation Steps:** Scan via scripts/e2e-zip-analysis.ts --include security-headers.
 
-
 #### Control CG-TLS-PY
+
 - **Title:** Transport Security Posture (Python)
 - **Threat Mitigated:** HTTP-only endpoints or legacy cipher suites expose data in transit.
 - **Detection Signal:** Deployment checks inspect vercel.json, public/robots.txt, and headers for TLS posture.
@@ -3533,8 +3584,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** CI enforces TLS readiness before promoting builds.
 - **Validation Steps:** Scan via scripts/e2e-zip-analysis.ts --include security-headers.
 
-
 #### Control CG-TLS-JAVA
+
 - **Title:** Transport Security Posture (Java)
 - **Threat Mitigated:** HTTP-only endpoints or legacy cipher suites expose data in transit.
 - **Detection Signal:** Deployment checks inspect vercel.json, public/robots.txt, and headers for TLS posture.
@@ -3542,8 +3593,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** CI enforces TLS readiness before promoting builds.
 - **Validation Steps:** Scan via scripts/e2e-zip-analysis.ts --include security-headers.
 
-
 #### Control CG-TLS-GO
+
 - **Title:** Transport Security Posture (Go)
 - **Threat Mitigated:** HTTP-only endpoints or legacy cipher suites expose data in transit.
 - **Detection Signal:** Deployment checks inspect vercel.json, public/robots.txt, and headers for TLS posture.
@@ -3551,8 +3602,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** CI enforces TLS readiness before promoting builds.
 - **Validation Steps:** Scan via scripts/e2e-zip-analysis.ts --include security-headers.
 
-
 #### Control CG-TLS-RST
+
 - **Title:** Transport Security Posture (Rust)
 - **Threat Mitigated:** HTTP-only endpoints or legacy cipher suites expose data in transit.
 - **Detection Signal:** Deployment checks inspect vercel.json, public/robots.txt, and headers for TLS posture.
@@ -3560,8 +3611,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** CI enforces TLS readiness before promoting builds.
 - **Validation Steps:** Scan via scripts/e2e-zip-analysis.ts --include security-headers.
 
-
 #### Control CG-TLS-PHP
+
 - **Title:** Transport Security Posture (PHP)
 - **Threat Mitigated:** HTTP-only endpoints or legacy cipher suites expose data in transit.
 - **Detection Signal:** Deployment checks inspect vercel.json, public/robots.txt, and headers for TLS posture.
@@ -3569,8 +3620,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** CI enforces TLS readiness before promoting builds.
 - **Validation Steps:** Scan via scripts/e2e-zip-analysis.ts --include security-headers.
 
-
 #### Control CG-TLS-CS
+
 - **Title:** Transport Security Posture (C#)
 - **Threat Mitigated:** HTTP-only endpoints or legacy cipher suites expose data in transit.
 - **Detection Signal:** Deployment checks inspect vercel.json, public/robots.txt, and headers for TLS posture.
@@ -3578,8 +3629,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** CI enforces TLS readiness before promoting builds.
 - **Validation Steps:** Scan via scripts/e2e-zip-analysis.ts --include security-headers.
 
-
 #### Control CG-S3-JS
+
 - **Title:** Bucket Access Lockdown (JavaScript)
 - **Threat Mitigated:** Misconfigured storage buckets leak artifacts or secrets.
 - **Detection Signal:** Infrastructure as code parsers look for public-read ACLs and missing encryption.
@@ -3587,8 +3638,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Terraform sample includes secure defaults that pass these checks.
 - **Validation Steps:** Run terraform validate plus scripts/test-automation.js --scenario storage.
 
-
 #### Control CG-S3-TS
+
 - **Title:** Bucket Access Lockdown (TypeScript)
 - **Threat Mitigated:** Misconfigured storage buckets leak artifacts or secrets.
 - **Detection Signal:** Infrastructure as code parsers look for public-read ACLs and missing encryption.
@@ -3596,8 +3647,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Terraform sample includes secure defaults that pass these checks.
 - **Validation Steps:** Run terraform validate plus scripts/test-automation.js --scenario storage.
 
-
 #### Control CG-S3-PY
+
 - **Title:** Bucket Access Lockdown (Python)
 - **Threat Mitigated:** Misconfigured storage buckets leak artifacts or secrets.
 - **Detection Signal:** Infrastructure as code parsers look for public-read ACLs and missing encryption.
@@ -3605,8 +3656,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Terraform sample includes secure defaults that pass these checks.
 - **Validation Steps:** Run terraform validate plus scripts/test-automation.js --scenario storage.
 
-
 #### Control CG-S3-JAVA
+
 - **Title:** Bucket Access Lockdown (Java)
 - **Threat Mitigated:** Misconfigured storage buckets leak artifacts or secrets.
 - **Detection Signal:** Infrastructure as code parsers look for public-read ACLs and missing encryption.
@@ -3614,8 +3665,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Terraform sample includes secure defaults that pass these checks.
 - **Validation Steps:** Run terraform validate plus scripts/test-automation.js --scenario storage.
 
-
 #### Control CG-S3-GO
+
 - **Title:** Bucket Access Lockdown (Go)
 - **Threat Mitigated:** Misconfigured storage buckets leak artifacts or secrets.
 - **Detection Signal:** Infrastructure as code parsers look for public-read ACLs and missing encryption.
@@ -3623,8 +3674,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Terraform sample includes secure defaults that pass these checks.
 - **Validation Steps:** Run terraform validate plus scripts/test-automation.js --scenario storage.
 
-
 #### Control CG-S3-RST
+
 - **Title:** Bucket Access Lockdown (Rust)
 - **Threat Mitigated:** Misconfigured storage buckets leak artifacts or secrets.
 - **Detection Signal:** Infrastructure as code parsers look for public-read ACLs and missing encryption.
@@ -3632,8 +3683,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Terraform sample includes secure defaults that pass these checks.
 - **Validation Steps:** Run terraform validate plus scripts/test-automation.js --scenario storage.
 
-
 #### Control CG-S3-PHP
+
 - **Title:** Bucket Access Lockdown (PHP)
 - **Threat Mitigated:** Misconfigured storage buckets leak artifacts or secrets.
 - **Detection Signal:** Infrastructure as code parsers look for public-read ACLs and missing encryption.
@@ -3641,8 +3692,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Terraform sample includes secure defaults that pass these checks.
 - **Validation Steps:** Run terraform validate plus scripts/test-automation.js --scenario storage.
 
-
 #### Control CG-S3-CS
+
 - **Title:** Bucket Access Lockdown (C#)
 - **Threat Mitigated:** Misconfigured storage buckets leak artifacts or secrets.
 - **Detection Signal:** Infrastructure as code parsers look for public-read ACLs and missing encryption.
@@ -3650,8 +3701,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Terraform sample includes secure defaults that pass these checks.
 - **Validation Steps:** Run terraform validate plus scripts/test-automation.js --scenario storage.
 
-
 #### Control CG-JWT-JS
+
 - **Title:** JWT Integrity Protections (JavaScript)
 - **Threat Mitigated:** Unsigned tokens or weak algorithms compromise session trust.
 - **Detection Signal:** Static scans parse auth helpers for none or symmetric HS256 keys in public repos.
@@ -3659,8 +3710,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** AI patch suggestions include sample jwks responses.
 - **Validation Steps:** Use scripts/run-multi-language-tests.js --rule jwt.
 
-
 #### Control CG-JWT-TS
+
 - **Title:** JWT Integrity Protections (TypeScript)
 - **Threat Mitigated:** Unsigned tokens or weak algorithms compromise session trust.
 - **Detection Signal:** Static scans parse auth helpers for none or symmetric HS256 keys in public repos.
@@ -3668,8 +3719,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** AI patch suggestions include sample jwks responses.
 - **Validation Steps:** Use scripts/run-multi-language-tests.js --rule jwt.
 
-
 #### Control CG-JWT-PY
+
 - **Title:** JWT Integrity Protections (Python)
 - **Threat Mitigated:** Unsigned tokens or weak algorithms compromise session trust.
 - **Detection Signal:** Static scans parse auth helpers for none or symmetric HS256 keys in public repos.
@@ -3677,8 +3728,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** AI patch suggestions include sample jwks responses.
 - **Validation Steps:** Use scripts/run-multi-language-tests.js --rule jwt.
 
-
 #### Control CG-JWT-JAVA
+
 - **Title:** JWT Integrity Protections (Java)
 - **Threat Mitigated:** Unsigned tokens or weak algorithms compromise session trust.
 - **Detection Signal:** Static scans parse auth helpers for none or symmetric HS256 keys in public repos.
@@ -3686,8 +3737,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** AI patch suggestions include sample jwks responses.
 - **Validation Steps:** Use scripts/run-multi-language-tests.js --rule jwt.
 
-
 #### Control CG-JWT-GO
+
 - **Title:** JWT Integrity Protections (Go)
 - **Threat Mitigated:** Unsigned tokens or weak algorithms compromise session trust.
 - **Detection Signal:** Static scans parse auth helpers for none or symmetric HS256 keys in public repos.
@@ -3695,8 +3746,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** AI patch suggestions include sample jwks responses.
 - **Validation Steps:** Use scripts/run-multi-language-tests.js --rule jwt.
 
-
 #### Control CG-JWT-RST
+
 - **Title:** JWT Integrity Protections (Rust)
 - **Threat Mitigated:** Unsigned tokens or weak algorithms compromise session trust.
 - **Detection Signal:** Static scans parse auth helpers for none or symmetric HS256 keys in public repos.
@@ -3704,8 +3755,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** AI patch suggestions include sample jwks responses.
 - **Validation Steps:** Use scripts/run-multi-language-tests.js --rule jwt.
 
-
 #### Control CG-JWT-PHP
+
 - **Title:** JWT Integrity Protections (PHP)
 - **Threat Mitigated:** Unsigned tokens or weak algorithms compromise session trust.
 - **Detection Signal:** Static scans parse auth helpers for none or symmetric HS256 keys in public repos.
@@ -3713,8 +3764,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** AI patch suggestions include sample jwks responses.
 - **Validation Steps:** Use scripts/run-multi-language-tests.js --rule jwt.
 
-
 #### Control CG-JWT-CS
+
 - **Title:** JWT Integrity Protections (C#)
 - **Threat Mitigated:** Unsigned tokens or weak algorithms compromise session trust.
 - **Detection Signal:** Static scans parse auth helpers for none or symmetric HS256 keys in public repos.
@@ -3722,8 +3773,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** AI patch suggestions include sample jwks responses.
 - **Validation Steps:** Use scripts/run-multi-language-tests.js --rule jwt.
 
-
 #### Control CG-SSO-JS
+
 - **Title:** SSO Configuration Health (JavaScript)
 - **Threat Mitigated:** Mismatched redirect URIs or disabled PKCE create account takeover vectors.
 - **Detection Signal:** Config analyzers parse .env and provider manifests for SSO toggles.
@@ -3731,8 +3782,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Setup wizard surfaces live validation as values are entered.
 - **Validation Steps:** Perform login smoke tests across providers documented in Appendix D.
 
-
 #### Control CG-SSO-TS
+
 - **Title:** SSO Configuration Health (TypeScript)
 - **Threat Mitigated:** Mismatched redirect URIs or disabled PKCE create account takeover vectors.
 - **Detection Signal:** Config analyzers parse .env and provider manifests for SSO toggles.
@@ -3740,8 +3791,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Setup wizard surfaces live validation as values are entered.
 - **Validation Steps:** Perform login smoke tests across providers documented in Appendix D.
 
-
 #### Control CG-SSO-PY
+
 - **Title:** SSO Configuration Health (Python)
 - **Threat Mitigated:** Mismatched redirect URIs or disabled PKCE create account takeover vectors.
 - **Detection Signal:** Config analyzers parse .env and provider manifests for SSO toggles.
@@ -3749,8 +3800,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Setup wizard surfaces live validation as values are entered.
 - **Validation Steps:** Perform login smoke tests across providers documented in Appendix D.
 
-
 #### Control CG-SSO-JAVA
+
 - **Title:** SSO Configuration Health (Java)
 - **Threat Mitigated:** Mismatched redirect URIs or disabled PKCE create account takeover vectors.
 - **Detection Signal:** Config analyzers parse .env and provider manifests for SSO toggles.
@@ -3758,8 +3809,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Setup wizard surfaces live validation as values are entered.
 - **Validation Steps:** Perform login smoke tests across providers documented in Appendix D.
 
-
 #### Control CG-SSO-GO
+
 - **Title:** SSO Configuration Health (Go)
 - **Threat Mitigated:** Mismatched redirect URIs or disabled PKCE create account takeover vectors.
 - **Detection Signal:** Config analyzers parse .env and provider manifests for SSO toggles.
@@ -3767,8 +3818,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Setup wizard surfaces live validation as values are entered.
 - **Validation Steps:** Perform login smoke tests across providers documented in Appendix D.
 
-
 #### Control CG-SSO-RST
+
 - **Title:** SSO Configuration Health (Rust)
 - **Threat Mitigated:** Mismatched redirect URIs or disabled PKCE create account takeover vectors.
 - **Detection Signal:** Config analyzers parse .env and provider manifests for SSO toggles.
@@ -3776,8 +3827,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Setup wizard surfaces live validation as values are entered.
 - **Validation Steps:** Perform login smoke tests across providers documented in Appendix D.
 
-
 #### Control CG-SSO-PHP
+
 - **Title:** SSO Configuration Health (PHP)
 - **Threat Mitigated:** Mismatched redirect URIs or disabled PKCE create account takeover vectors.
 - **Detection Signal:** Config analyzers parse .env and provider manifests for SSO toggles.
@@ -3785,8 +3836,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Setup wizard surfaces live validation as values are entered.
 - **Validation Steps:** Perform login smoke tests across providers documented in Appendix D.
 
-
 #### Control CG-SSO-CS
+
 - **Title:** SSO Configuration Health (C#)
 - **Threat Mitigated:** Mismatched redirect URIs or disabled PKCE create account takeover vectors.
 - **Detection Signal:** Config analyzers parse .env and provider manifests for SSO toggles.
@@ -3794,8 +3845,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Setup wizard surfaces live validation as values are entered.
 - **Validation Steps:** Perform login smoke tests across providers documented in Appendix D.
 
-
 #### Control CG-RBAC-JS
+
 - **Title:** Role-Based Access Control Precision (JavaScript)
 - **Threat Mitigated:** Overbroad roles expose sensitive reports.
 - **Detection Signal:** Policy diffing ensures mapping in src/components/auth matches documented personas.
@@ -3803,8 +3854,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Dashboard heatmaps highlight overly permissive grants.
 - **Validation Steps:** Use feature flag toggles inside src/components/features and retest.
 
-
 #### Control CG-RBAC-TS
+
 - **Title:** Role-Based Access Control Precision (TypeScript)
 - **Threat Mitigated:** Overbroad roles expose sensitive reports.
 - **Detection Signal:** Policy diffing ensures mapping in src/components/auth matches documented personas.
@@ -3812,8 +3863,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Dashboard heatmaps highlight overly permissive grants.
 - **Validation Steps:** Use feature flag toggles inside src/components/features and retest.
 
-
 #### Control CG-RBAC-PY
+
 - **Title:** Role-Based Access Control Precision (Python)
 - **Threat Mitigated:** Overbroad roles expose sensitive reports.
 - **Detection Signal:** Policy diffing ensures mapping in src/components/auth matches documented personas.
@@ -3821,8 +3872,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Dashboard heatmaps highlight overly permissive grants.
 - **Validation Steps:** Use feature flag toggles inside src/components/features and retest.
 
-
 #### Control CG-RBAC-JAVA
+
 - **Title:** Role-Based Access Control Precision (Java)
 - **Threat Mitigated:** Overbroad roles expose sensitive reports.
 - **Detection Signal:** Policy diffing ensures mapping in src/components/auth matches documented personas.
@@ -3830,8 +3881,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Dashboard heatmaps highlight overly permissive grants.
 - **Validation Steps:** Use feature flag toggles inside src/components/features and retest.
 
-
 #### Control CG-RBAC-GO
+
 - **Title:** Role-Based Access Control Precision (Go)
 - **Threat Mitigated:** Overbroad roles expose sensitive reports.
 - **Detection Signal:** Policy diffing ensures mapping in src/components/auth matches documented personas.
@@ -3839,8 +3890,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Dashboard heatmaps highlight overly permissive grants.
 - **Validation Steps:** Use feature flag toggles inside src/components/features and retest.
 
-
 #### Control CG-RBAC-RST
+
 - **Title:** Role-Based Access Control Precision (Rust)
 - **Threat Mitigated:** Overbroad roles expose sensitive reports.
 - **Detection Signal:** Policy diffing ensures mapping in src/components/auth matches documented personas.
@@ -3848,8 +3899,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Dashboard heatmaps highlight overly permissive grants.
 - **Validation Steps:** Use feature flag toggles inside src/components/features and retest.
 
-
 #### Control CG-RBAC-PHP
+
 - **Title:** Role-Based Access Control Precision (PHP)
 - **Threat Mitigated:** Overbroad roles expose sensitive reports.
 - **Detection Signal:** Policy diffing ensures mapping in src/components/auth matches documented personas.
@@ -3857,8 +3908,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Dashboard heatmaps highlight overly permissive grants.
 - **Validation Steps:** Use feature flag toggles inside src/components/features and retest.
 
-
 #### Control CG-RBAC-CS
+
 - **Title:** Role-Based Access Control Precision (C#)
 - **Threat Mitigated:** Overbroad roles expose sensitive reports.
 - **Detection Signal:** Policy diffing ensures mapping in src/components/auth matches documented personas.
@@ -3866,8 +3917,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Dashboard heatmaps highlight overly permissive grants.
 - **Validation Steps:** Use feature flag toggles inside src/components/features and retest.
 
-
 #### Control CG-SBOM-JS
+
 - **Title:** Software Bill of Materials Accuracy (JavaScript)
 - **Threat Mitigated:** Outdated dependency inventories hide vulnerable packages.
 - **Detection Signal:** Analyzer compares package-lock snapshots with latest advisories.
@@ -3875,8 +3926,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** CI uploads SPDX/SBOM attachments with each artifact.
 - **Validation Steps:** Use scripts/run-all-tests.ts --sbom true.
 
-
 #### Control CG-SBOM-TS
+
 - **Title:** Software Bill of Materials Accuracy (TypeScript)
 - **Threat Mitigated:** Outdated dependency inventories hide vulnerable packages.
 - **Detection Signal:** Analyzer compares package-lock snapshots with latest advisories.
@@ -3884,8 +3935,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** CI uploads SPDX/SBOM attachments with each artifact.
 - **Validation Steps:** Use scripts/run-all-tests.ts --sbom true.
 
-
 #### Control CG-SBOM-PY
+
 - **Title:** Software Bill of Materials Accuracy (Python)
 - **Threat Mitigated:** Outdated dependency inventories hide vulnerable packages.
 - **Detection Signal:** Analyzer compares package-lock snapshots with latest advisories.
@@ -3893,8 +3944,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** CI uploads SPDX/SBOM attachments with each artifact.
 - **Validation Steps:** Use scripts/run-all-tests.ts --sbom true.
 
-
 #### Control CG-SBOM-JAVA
+
 - **Title:** Software Bill of Materials Accuracy (Java)
 - **Threat Mitigated:** Outdated dependency inventories hide vulnerable packages.
 - **Detection Signal:** Analyzer compares package-lock snapshots with latest advisories.
@@ -3902,8 +3953,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** CI uploads SPDX/SBOM attachments with each artifact.
 - **Validation Steps:** Use scripts/run-all-tests.ts --sbom true.
 
-
 #### Control CG-SBOM-GO
+
 - **Title:** Software Bill of Materials Accuracy (Go)
 - **Threat Mitigated:** Outdated dependency inventories hide vulnerable packages.
 - **Detection Signal:** Analyzer compares package-lock snapshots with latest advisories.
@@ -3911,8 +3962,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** CI uploads SPDX/SBOM attachments with each artifact.
 - **Validation Steps:** Use scripts/run-all-tests.ts --sbom true.
 
-
 #### Control CG-SBOM-RST
+
 - **Title:** Software Bill of Materials Accuracy (Rust)
 - **Threat Mitigated:** Outdated dependency inventories hide vulnerable packages.
 - **Detection Signal:** Analyzer compares package-lock snapshots with latest advisories.
@@ -3920,8 +3971,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** CI uploads SPDX/SBOM attachments with each artifact.
 - **Validation Steps:** Use scripts/run-all-tests.ts --sbom true.
 
-
 #### Control CG-SBOM-PHP
+
 - **Title:** Software Bill of Materials Accuracy (PHP)
 - **Threat Mitigated:** Outdated dependency inventories hide vulnerable packages.
 - **Detection Signal:** Analyzer compares package-lock snapshots with latest advisories.
@@ -3929,8 +3980,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** CI uploads SPDX/SBOM attachments with each artifact.
 - **Validation Steps:** Use scripts/run-all-tests.ts --sbom true.
 
-
 #### Control CG-SBOM-CS
+
 - **Title:** Software Bill of Materials Accuracy (C#)
 - **Threat Mitigated:** Outdated dependency inventories hide vulnerable packages.
 - **Detection Signal:** Analyzer compares package-lock snapshots with latest advisories.
@@ -3938,8 +3989,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** CI uploads SPDX/SBOM attachments with each artifact.
 - **Validation Steps:** Use scripts/run-all-tests.ts --sbom true.
 
-
 #### Control CG-LLM-JS
+
 - **Title:** LLM Prompt Injection Defenses (JavaScript)
 - **Threat Mitigated:** Malicious repositories try to hijack AI instructions inside prompt templates.
 - **Detection Signal:** Sanitizers review context windows and remove policy-violating content before inference.
@@ -3947,8 +3998,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** src/components/ai enforces guardrails before sending to providers.
 - **Validation Steps:** Replay adversarial prompts via tmp_rovodev_comprehensive_test.ts.
 
-
 #### Control CG-LLM-TS
+
 - **Title:** LLM Prompt Injection Defenses (TypeScript)
 - **Threat Mitigated:** Malicious repositories try to hijack AI instructions inside prompt templates.
 - **Detection Signal:** Sanitizers review context windows and remove policy-violating content before inference.
@@ -3956,8 +4007,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** src/components/ai enforces guardrails before sending to providers.
 - **Validation Steps:** Replay adversarial prompts via tmp_rovodev_comprehensive_test.ts.
 
-
 #### Control CG-LLM-PY
+
 - **Title:** LLM Prompt Injection Defenses (Python)
 - **Threat Mitigated:** Malicious repositories try to hijack AI instructions inside prompt templates.
 - **Detection Signal:** Sanitizers review context windows and remove policy-violating content before inference.
@@ -3965,8 +4016,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** src/components/ai enforces guardrails before sending to providers.
 - **Validation Steps:** Replay adversarial prompts via tmp_rovodev_comprehensive_test.ts.
 
-
 #### Control CG-LLM-JAVA
+
 - **Title:** LLM Prompt Injection Defenses (Java)
 - **Threat Mitigated:** Malicious repositories try to hijack AI instructions inside prompt templates.
 - **Detection Signal:** Sanitizers review context windows and remove policy-violating content before inference.
@@ -3974,8 +4025,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** src/components/ai enforces guardrails before sending to providers.
 - **Validation Steps:** Replay adversarial prompts via tmp_rovodev_comprehensive_test.ts.
 
-
 #### Control CG-LLM-GO
+
 - **Title:** LLM Prompt Injection Defenses (Go)
 - **Threat Mitigated:** Malicious repositories try to hijack AI instructions inside prompt templates.
 - **Detection Signal:** Sanitizers review context windows and remove policy-violating content before inference.
@@ -3983,8 +4034,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** src/components/ai enforces guardrails before sending to providers.
 - **Validation Steps:** Replay adversarial prompts via tmp_rovodev_comprehensive_test.ts.
 
-
 #### Control CG-LLM-RST
+
 - **Title:** LLM Prompt Injection Defenses (Rust)
 - **Threat Mitigated:** Malicious repositories try to hijack AI instructions inside prompt templates.
 - **Detection Signal:** Sanitizers review context windows and remove policy-violating content before inference.
@@ -3992,8 +4043,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** src/components/ai enforces guardrails before sending to providers.
 - **Validation Steps:** Replay adversarial prompts via tmp_rovodev_comprehensive_test.ts.
 
-
 #### Control CG-LLM-PHP
+
 - **Title:** LLM Prompt Injection Defenses (PHP)
 - **Threat Mitigated:** Malicious repositories try to hijack AI instructions inside prompt templates.
 - **Detection Signal:** Sanitizers review context windows and remove policy-violating content before inference.
@@ -4001,8 +4052,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** src/components/ai enforces guardrails before sending to providers.
 - **Validation Steps:** Replay adversarial prompts via tmp_rovodev_comprehensive_test.ts.
 
-
 #### Control CG-LLM-CS
+
 - **Title:** LLM Prompt Injection Defenses (C#)
 - **Threat Mitigated:** Malicious repositories try to hijack AI instructions inside prompt templates.
 - **Detection Signal:** Sanitizers review context windows and remove policy-violating content before inference.
@@ -4010,8 +4061,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** src/components/ai enforces guardrails before sending to providers.
 - **Validation Steps:** Replay adversarial prompts via tmp_rovodev_comprehensive_test.ts.
 
-
 #### Control CG-CACHE-JS
+
 - **Title:** Sensitive Data Caching Controls (JavaScript)
 - **Threat Mitigated:** Secrets or tokens cached by browsers/CDNs linger beyond retention policies.
 - **Detection Signal:** Header analyzers ensure Cache-Control + Pragma directives accompany API responses.
@@ -4019,8 +4070,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** public/sw.js contains rule templates that can be toggled per env.
 - **Validation Steps:** Inspect network tab during npm run dev plus automated tests.
 
-
 #### Control CG-CACHE-TS
+
 - **Title:** Sensitive Data Caching Controls (TypeScript)
 - **Threat Mitigated:** Secrets or tokens cached by browsers/CDNs linger beyond retention policies.
 - **Detection Signal:** Header analyzers ensure Cache-Control + Pragma directives accompany API responses.
@@ -4028,8 +4079,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** public/sw.js contains rule templates that can be toggled per env.
 - **Validation Steps:** Inspect network tab during npm run dev plus automated tests.
 
-
 #### Control CG-CACHE-PY
+
 - **Title:** Sensitive Data Caching Controls (Python)
 - **Threat Mitigated:** Secrets or tokens cached by browsers/CDNs linger beyond retention policies.
 - **Detection Signal:** Header analyzers ensure Cache-Control + Pragma directives accompany API responses.
@@ -4037,8 +4088,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** public/sw.js contains rule templates that can be toggled per env.
 - **Validation Steps:** Inspect network tab during npm run dev plus automated tests.
 
-
 #### Control CG-CACHE-JAVA
+
 - **Title:** Sensitive Data Caching Controls (Java)
 - **Threat Mitigated:** Secrets or tokens cached by browsers/CDNs linger beyond retention policies.
 - **Detection Signal:** Header analyzers ensure Cache-Control + Pragma directives accompany API responses.
@@ -4046,8 +4097,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** public/sw.js contains rule templates that can be toggled per env.
 - **Validation Steps:** Inspect network tab during npm run dev plus automated tests.
 
-
 #### Control CG-CACHE-GO
+
 - **Title:** Sensitive Data Caching Controls (Go)
 - **Threat Mitigated:** Secrets or tokens cached by browsers/CDNs linger beyond retention policies.
 - **Detection Signal:** Header analyzers ensure Cache-Control + Pragma directives accompany API responses.
@@ -4055,8 +4106,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** public/sw.js contains rule templates that can be toggled per env.
 - **Validation Steps:** Inspect network tab during npm run dev plus automated tests.
 
-
 #### Control CG-CACHE-RST
+
 - **Title:** Sensitive Data Caching Controls (Rust)
 - **Threat Mitigated:** Secrets or tokens cached by browsers/CDNs linger beyond retention policies.
 - **Detection Signal:** Header analyzers ensure Cache-Control + Pragma directives accompany API responses.
@@ -4064,8 +4115,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** public/sw.js contains rule templates that can be toggled per env.
 - **Validation Steps:** Inspect network tab during npm run dev plus automated tests.
 
-
 #### Control CG-CACHE-PHP
+
 - **Title:** Sensitive Data Caching Controls (PHP)
 - **Threat Mitigated:** Secrets or tokens cached by browsers/CDNs linger beyond retention policies.
 - **Detection Signal:** Header analyzers ensure Cache-Control + Pragma directives accompany API responses.
@@ -4073,8 +4124,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** public/sw.js contains rule templates that can be toggled per env.
 - **Validation Steps:** Inspect network tab during npm run dev plus automated tests.
 
-
 #### Control CG-CACHE-CS
+
 - **Title:** Sensitive Data Caching Controls (C#)
 - **Threat Mitigated:** Secrets or tokens cached by browsers/CDNs linger beyond retention policies.
 - **Detection Signal:** Header analyzers ensure Cache-Control + Pragma directives accompany API responses.
@@ -4082,8 +4133,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** public/sw.js contains rule templates that can be toggled per env.
 - **Validation Steps:** Inspect network tab during npm run dev plus automated tests.
 
-
 #### Control CG-GRAPH-JS
+
 - **Title:** GraphQL Introspection Lockdown (JavaScript)
 - **Threat Mitigated:** Production schemas expose internal types enabling targeted attacks.
 - **Detection Signal:** GraphQL AST parser spots introspection: true flags outside dev mode.
@@ -4091,8 +4142,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** AI assistant offers persisted query templates.
 - **Validation Steps:** Invoke GraphQL bridge with introspection queries to verify rejection.
 
-
 #### Control CG-GRAPH-TS
+
 - **Title:** GraphQL Introspection Lockdown (TypeScript)
 - **Threat Mitigated:** Production schemas expose internal types enabling targeted attacks.
 - **Detection Signal:** GraphQL AST parser spots introspection: true flags outside dev mode.
@@ -4100,8 +4151,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** AI assistant offers persisted query templates.
 - **Validation Steps:** Invoke GraphQL bridge with introspection queries to verify rejection.
 
-
 #### Control CG-GRAPH-PY
+
 - **Title:** GraphQL Introspection Lockdown (Python)
 - **Threat Mitigated:** Production schemas expose internal types enabling targeted attacks.
 - **Detection Signal:** GraphQL AST parser spots introspection: true flags outside dev mode.
@@ -4109,8 +4160,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** AI assistant offers persisted query templates.
 - **Validation Steps:** Invoke GraphQL bridge with introspection queries to verify rejection.
 
-
 #### Control CG-GRAPH-JAVA
+
 - **Title:** GraphQL Introspection Lockdown (Java)
 - **Threat Mitigated:** Production schemas expose internal types enabling targeted attacks.
 - **Detection Signal:** GraphQL AST parser spots introspection: true flags outside dev mode.
@@ -4118,8 +4169,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** AI assistant offers persisted query templates.
 - **Validation Steps:** Invoke GraphQL bridge with introspection queries to verify rejection.
 
-
 #### Control CG-GRAPH-GO
+
 - **Title:** GraphQL Introspection Lockdown (Go)
 - **Threat Mitigated:** Production schemas expose internal types enabling targeted attacks.
 - **Detection Signal:** GraphQL AST parser spots introspection: true flags outside dev mode.
@@ -4127,8 +4178,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** AI assistant offers persisted query templates.
 - **Validation Steps:** Invoke GraphQL bridge with introspection queries to verify rejection.
 
-
 #### Control CG-GRAPH-RST
+
 - **Title:** GraphQL Introspection Lockdown (Rust)
 - **Threat Mitigated:** Production schemas expose internal types enabling targeted attacks.
 - **Detection Signal:** GraphQL AST parser spots introspection: true flags outside dev mode.
@@ -4136,8 +4187,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** AI assistant offers persisted query templates.
 - **Validation Steps:** Invoke GraphQL bridge with introspection queries to verify rejection.
 
-
 #### Control CG-GRAPH-PHP
+
 - **Title:** GraphQL Introspection Lockdown (PHP)
 - **Threat Mitigated:** Production schemas expose internal types enabling targeted attacks.
 - **Detection Signal:** GraphQL AST parser spots introspection: true flags outside dev mode.
@@ -4145,8 +4196,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** AI assistant offers persisted query templates.
 - **Validation Steps:** Invoke GraphQL bridge with introspection queries to verify rejection.
 
-
 #### Control CG-GRAPH-CS
+
 - **Title:** GraphQL Introspection Lockdown (C#)
 - **Threat Mitigated:** Production schemas expose internal types enabling targeted attacks.
 - **Detection Signal:** GraphQL AST parser spots introspection: true flags outside dev mode.
@@ -4154,8 +4205,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** AI assistant offers persisted query templates.
 - **Validation Steps:** Invoke GraphQL bridge with introspection queries to verify rejection.
 
-
 #### Control CG-RATE-JS
+
 - **Title:** Rate Limiting & Throttling (JavaScript)
 - **Threat Mitigated:** Aggressive clients exhaust compute or brute-force credentials.
 - **Detection Signal:** Policy files and serverless handlers inspected for missing limiter middleware.
@@ -4163,8 +4214,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Sample limiter middleware shipped in src/lib.
 - **Validation Steps:** Load-test using scripts/test-firebase-history.js.
 
-
 #### Control CG-RATE-TS
+
 - **Title:** Rate Limiting & Throttling (TypeScript)
 - **Threat Mitigated:** Aggressive clients exhaust compute or brute-force credentials.
 - **Detection Signal:** Policy files and serverless handlers inspected for missing limiter middleware.
@@ -4172,8 +4223,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Sample limiter middleware shipped in src/lib.
 - **Validation Steps:** Load-test using scripts/test-firebase-history.js.
 
-
 #### Control CG-RATE-PY
+
 - **Title:** Rate Limiting & Throttling (Python)
 - **Threat Mitigated:** Aggressive clients exhaust compute or brute-force credentials.
 - **Detection Signal:** Policy files and serverless handlers inspected for missing limiter middleware.
@@ -4181,8 +4232,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Sample limiter middleware shipped in src/lib.
 - **Validation Steps:** Load-test using scripts/test-firebase-history.js.
 
-
 #### Control CG-RATE-JAVA
+
 - **Title:** Rate Limiting & Throttling (Java)
 - **Threat Mitigated:** Aggressive clients exhaust compute or brute-force credentials.
 - **Detection Signal:** Policy files and serverless handlers inspected for missing limiter middleware.
@@ -4190,8 +4241,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Sample limiter middleware shipped in src/lib.
 - **Validation Steps:** Load-test using scripts/test-firebase-history.js.
 
-
 #### Control CG-RATE-GO
+
 - **Title:** Rate Limiting & Throttling (Go)
 - **Threat Mitigated:** Aggressive clients exhaust compute or brute-force credentials.
 - **Detection Signal:** Policy files and serverless handlers inspected for missing limiter middleware.
@@ -4199,8 +4250,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Sample limiter middleware shipped in src/lib.
 - **Validation Steps:** Load-test using scripts/test-firebase-history.js.
 
-
 #### Control CG-RATE-RST
+
 - **Title:** Rate Limiting & Throttling (Rust)
 - **Threat Mitigated:** Aggressive clients exhaust compute or brute-force credentials.
 - **Detection Signal:** Policy files and serverless handlers inspected for missing limiter middleware.
@@ -4208,8 +4259,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Sample limiter middleware shipped in src/lib.
 - **Validation Steps:** Load-test using scripts/test-firebase-history.js.
 
-
 #### Control CG-RATE-PHP
+
 - **Title:** Rate Limiting & Throttling (PHP)
 - **Threat Mitigated:** Aggressive clients exhaust compute or brute-force credentials.
 - **Detection Signal:** Policy files and serverless handlers inspected for missing limiter middleware.
@@ -4217,8 +4268,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Sample limiter middleware shipped in src/lib.
 - **Validation Steps:** Load-test using scripts/test-firebase-history.js.
 
-
 #### Control CG-RATE-CS
+
 - **Title:** Rate Limiting & Throttling (C#)
 - **Threat Mitigated:** Aggressive clients exhaust compute or brute-force credentials.
 - **Detection Signal:** Policy files and serverless handlers inspected for missing limiter middleware.
@@ -4226,8 +4277,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Sample limiter middleware shipped in src/lib.
 - **Validation Steps:** Load-test using scripts/test-firebase-history.js.
 
-
 #### Control CG-LINT-JS
+
 - **Title:** Secure Lint Configuration (JavaScript)
 - **Threat Mitigated:** Disabled ESLint/TSLint rules hide insecure patterns.
 - **Detection Signal:** eslint.config.js audited for overrides, ensures security plugins stay enabled.
@@ -4235,8 +4286,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** CI fails when eslint reports new warnings beyond baseline.
 - **Validation Steps:** Run npm run lint locally; share screenshot in PR.
 
-
 #### Control CG-LINT-TS
+
 - **Title:** Secure Lint Configuration (TypeScript)
 - **Threat Mitigated:** Disabled ESLint/TSLint rules hide insecure patterns.
 - **Detection Signal:** eslint.config.js audited for overrides, ensures security plugins stay enabled.
@@ -4244,8 +4295,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** CI fails when eslint reports new warnings beyond baseline.
 - **Validation Steps:** Run npm run lint locally; share screenshot in PR.
 
-
 #### Control CG-LINT-PY
+
 - **Title:** Secure Lint Configuration (Python)
 - **Threat Mitigated:** Disabled ESLint/TSLint rules hide insecure patterns.
 - **Detection Signal:** eslint.config.js audited for overrides, ensures security plugins stay enabled.
@@ -4253,8 +4304,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** CI fails when eslint reports new warnings beyond baseline.
 - **Validation Steps:** Run npm run lint locally; share screenshot in PR.
 
-
 #### Control CG-LINT-JAVA
+
 - **Title:** Secure Lint Configuration (Java)
 - **Threat Mitigated:** Disabled ESLint/TSLint rules hide insecure patterns.
 - **Detection Signal:** eslint.config.js audited for overrides, ensures security plugins stay enabled.
@@ -4262,8 +4313,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** CI fails when eslint reports new warnings beyond baseline.
 - **Validation Steps:** Run npm run lint locally; share screenshot in PR.
 
-
 #### Control CG-LINT-GO
+
 - **Title:** Secure Lint Configuration (Go)
 - **Threat Mitigated:** Disabled ESLint/TSLint rules hide insecure patterns.
 - **Detection Signal:** eslint.config.js audited for overrides, ensures security plugins stay enabled.
@@ -4271,8 +4322,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** CI fails when eslint reports new warnings beyond baseline.
 - **Validation Steps:** Run npm run lint locally; share screenshot in PR.
 
-
 #### Control CG-LINT-RST
+
 - **Title:** Secure Lint Configuration (Rust)
 - **Threat Mitigated:** Disabled ESLint/TSLint rules hide insecure patterns.
 - **Detection Signal:** eslint.config.js audited for overrides, ensures security plugins stay enabled.
@@ -4280,8 +4331,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** CI fails when eslint reports new warnings beyond baseline.
 - **Validation Steps:** Run npm run lint locally; share screenshot in PR.
 
-
 #### Control CG-LINT-PHP
+
 - **Title:** Secure Lint Configuration (PHP)
 - **Threat Mitigated:** Disabled ESLint/TSLint rules hide insecure patterns.
 - **Detection Signal:** eslint.config.js audited for overrides, ensures security plugins stay enabled.
@@ -4289,8 +4340,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** CI fails when eslint reports new warnings beyond baseline.
 - **Validation Steps:** Run npm run lint locally; share screenshot in PR.
 
-
 #### Control CG-LINT-CS
+
 - **Title:** Secure Lint Configuration (C#)
 - **Threat Mitigated:** Disabled ESLint/TSLint rules hide insecure patterns.
 - **Detection Signal:** eslint.config.js audited for overrides, ensures security plugins stay enabled.
@@ -4298,8 +4349,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** CI fails when eslint reports new warnings beyond baseline.
 - **Validation Steps:** Run npm run lint locally; share screenshot in PR.
 
-
 #### Control CG-LOG-JS
+
 - **Title:** Log Redaction & Privacy (JavaScript)
 - **Threat Mitigated:** PII or secrets land in console/server logs.
 - **Detection Signal:** Logger wrapper ensures structured levels and pattern-based scrubbing.
@@ -4307,8 +4358,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** src/components/common surfaces log health metrics.
 - **Validation Steps:** Use scripts/test-firebase-storage-fix.js --logs to sample outputs.
 
-
 #### Control CG-LOG-TS
+
 - **Title:** Log Redaction & Privacy (TypeScript)
 - **Threat Mitigated:** PII or secrets land in console/server logs.
 - **Detection Signal:** Logger wrapper ensures structured levels and pattern-based scrubbing.
@@ -4316,8 +4367,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** src/components/common surfaces log health metrics.
 - **Validation Steps:** Use scripts/test-firebase-storage-fix.js --logs to sample outputs.
 
-
 #### Control CG-LOG-PY
+
 - **Title:** Log Redaction & Privacy (Python)
 - **Threat Mitigated:** PII or secrets land in console/server logs.
 - **Detection Signal:** Logger wrapper ensures structured levels and pattern-based scrubbing.
@@ -4325,8 +4376,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** src/components/common surfaces log health metrics.
 - **Validation Steps:** Use scripts/test-firebase-storage-fix.js --logs to sample outputs.
 
-
 #### Control CG-LOG-JAVA
+
 - **Title:** Log Redaction & Privacy (Java)
 - **Threat Mitigated:** PII or secrets land in console/server logs.
 - **Detection Signal:** Logger wrapper ensures structured levels and pattern-based scrubbing.
@@ -4334,8 +4385,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** src/components/common surfaces log health metrics.
 - **Validation Steps:** Use scripts/test-firebase-storage-fix.js --logs to sample outputs.
 
-
 #### Control CG-LOG-GO
+
 - **Title:** Log Redaction & Privacy (Go)
 - **Threat Mitigated:** PII or secrets land in console/server logs.
 - **Detection Signal:** Logger wrapper ensures structured levels and pattern-based scrubbing.
@@ -4343,8 +4394,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** src/components/common surfaces log health metrics.
 - **Validation Steps:** Use scripts/test-firebase-storage-fix.js --logs to sample outputs.
 
-
 #### Control CG-LOG-RST
+
 - **Title:** Log Redaction & Privacy (Rust)
 - **Threat Mitigated:** PII or secrets land in console/server logs.
 - **Detection Signal:** Logger wrapper ensures structured levels and pattern-based scrubbing.
@@ -4352,8 +4403,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** src/components/common surfaces log health metrics.
 - **Validation Steps:** Use scripts/test-firebase-storage-fix.js --logs to sample outputs.
 
-
 #### Control CG-LOG-PHP
+
 - **Title:** Log Redaction & Privacy (PHP)
 - **Threat Mitigated:** PII or secrets land in console/server logs.
 - **Detection Signal:** Logger wrapper ensures structured levels and pattern-based scrubbing.
@@ -4361,8 +4412,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** src/components/common surfaces log health metrics.
 - **Validation Steps:** Use scripts/test-firebase-storage-fix.js --logs to sample outputs.
 
-
 #### Control CG-LOG-CS
+
 - **Title:** Log Redaction & Privacy (C#)
 - **Threat Mitigated:** PII or secrets land in console/server logs.
 - **Detection Signal:** Logger wrapper ensures structured levels and pattern-based scrubbing.
@@ -4370,8 +4421,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** src/components/common surfaces log health metrics.
 - **Validation Steps:** Use scripts/test-firebase-storage-fix.js --logs to sample outputs.
 
-
 #### Control CG-PDF-JS
+
 - **Title:** Report Export Hardening (JavaScript)
 - **Threat Mitigated:** Malicious SVG/HTML injection inside PDF exports.
 - **Detection Signal:** Export service neutralizes embedded scripts before rendering.
@@ -4379,8 +4430,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Export workers run in isolated iframe contexts.
 - **Validation Steps:** Review tmp_rovodev_svg_fix_summary.txt regression log.
 
-
 #### Control CG-PDF-TS
+
 - **Title:** Report Export Hardening (TypeScript)
 - **Threat Mitigated:** Malicious SVG/HTML injection inside PDF exports.
 - **Detection Signal:** Export service neutralizes embedded scripts before rendering.
@@ -4388,8 +4439,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Export workers run in isolated iframe contexts.
 - **Validation Steps:** Review tmp_rovodev_svg_fix_summary.txt regression log.
 
-
 #### Control CG-PDF-PY
+
 - **Title:** Report Export Hardening (Python)
 - **Threat Mitigated:** Malicious SVG/HTML injection inside PDF exports.
 - **Detection Signal:** Export service neutralizes embedded scripts before rendering.
@@ -4397,8 +4448,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Export workers run in isolated iframe contexts.
 - **Validation Steps:** Review tmp_rovodev_svg_fix_summary.txt regression log.
 
-
 #### Control CG-PDF-JAVA
+
 - **Title:** Report Export Hardening (Java)
 - **Threat Mitigated:** Malicious SVG/HTML injection inside PDF exports.
 - **Detection Signal:** Export service neutralizes embedded scripts before rendering.
@@ -4406,8 +4457,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Export workers run in isolated iframe contexts.
 - **Validation Steps:** Review tmp_rovodev_svg_fix_summary.txt regression log.
 
-
 #### Control CG-PDF-GO
+
 - **Title:** Report Export Hardening (Go)
 - **Threat Mitigated:** Malicious SVG/HTML injection inside PDF exports.
 - **Detection Signal:** Export service neutralizes embedded scripts before rendering.
@@ -4415,8 +4466,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Export workers run in isolated iframe contexts.
 - **Validation Steps:** Review tmp_rovodev_svg_fix_summary.txt regression log.
 
-
 #### Control CG-PDF-RST
+
 - **Title:** Report Export Hardening (Rust)
 - **Threat Mitigated:** Malicious SVG/HTML injection inside PDF exports.
 - **Detection Signal:** Export service neutralizes embedded scripts before rendering.
@@ -4424,8 +4475,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Export workers run in isolated iframe contexts.
 - **Validation Steps:** Review tmp_rovodev_svg_fix_summary.txt regression log.
 
-
 #### Control CG-PDF-PHP
+
 - **Title:** Report Export Hardening (PHP)
 - **Threat Mitigated:** Malicious SVG/HTML injection inside PDF exports.
 - **Detection Signal:** Export service neutralizes embedded scripts before rendering.
@@ -4433,8 +4484,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Export workers run in isolated iframe contexts.
 - **Validation Steps:** Review tmp_rovodev_svg_fix_summary.txt regression log.
 
-
 #### Control CG-PDF-CS
+
 - **Title:** Report Export Hardening (C#)
 - **Threat Mitigated:** Malicious SVG/HTML injection inside PDF exports.
 - **Detection Signal:** Export service neutralizes embedded scripts before rendering.
@@ -4442,8 +4493,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Export workers run in isolated iframe contexts.
 - **Validation Steps:** Review tmp_rovodev_svg_fix_summary.txt regression log.
 
-
 #### Control CG-AIEXP-JS
+
 - **Title:** AI Explanation Quality Gates (JavaScript)
 - **Threat Mitigated:** Hallucinated remediation advice causes regressions.
 - **Detection Signal:** BLEU/ROUGE comparison inside scripts/run-accuracy-test.ts flags low-quality output.
@@ -4451,8 +4502,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Confidence scores overlayed in results view.
 - **Validation Steps:** Spot-check via tmp_rovodev_FINAL_REPORT.md template.
 
-
 #### Control CG-AIEXP-TS
+
 - **Title:** AI Explanation Quality Gates (TypeScript)
 - **Threat Mitigated:** Hallucinated remediation advice causes regressions.
 - **Detection Signal:** BLEU/ROUGE comparison inside scripts/run-accuracy-test.ts flags low-quality output.
@@ -4460,8 +4511,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Confidence scores overlayed in results view.
 - **Validation Steps:** Spot-check via tmp_rovodev_FINAL_REPORT.md template.
 
-
 #### Control CG-AIEXP-PY
+
 - **Title:** AI Explanation Quality Gates (Python)
 - **Threat Mitigated:** Hallucinated remediation advice causes regressions.
 - **Detection Signal:** BLEU/ROUGE comparison inside scripts/run-accuracy-test.ts flags low-quality output.
@@ -4469,8 +4520,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Confidence scores overlayed in results view.
 - **Validation Steps:** Spot-check via tmp_rovodev_FINAL_REPORT.md template.
 
-
 #### Control CG-AIEXP-JAVA
+
 - **Title:** AI Explanation Quality Gates (Java)
 - **Threat Mitigated:** Hallucinated remediation advice causes regressions.
 - **Detection Signal:** BLEU/ROUGE comparison inside scripts/run-accuracy-test.ts flags low-quality output.
@@ -4478,8 +4529,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Confidence scores overlayed in results view.
 - **Validation Steps:** Spot-check via tmp_rovodev_FINAL_REPORT.md template.
 
-
 #### Control CG-AIEXP-GO
+
 - **Title:** AI Explanation Quality Gates (Go)
 - **Threat Mitigated:** Hallucinated remediation advice causes regressions.
 - **Detection Signal:** BLEU/ROUGE comparison inside scripts/run-accuracy-test.ts flags low-quality output.
@@ -4487,8 +4538,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Confidence scores overlayed in results view.
 - **Validation Steps:** Spot-check via tmp_rovodev_FINAL_REPORT.md template.
 
-
 #### Control CG-AIEXP-RST
+
 - **Title:** AI Explanation Quality Gates (Rust)
 - **Threat Mitigated:** Hallucinated remediation advice causes regressions.
 - **Detection Signal:** BLEU/ROUGE comparison inside scripts/run-accuracy-test.ts flags low-quality output.
@@ -4496,8 +4547,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Confidence scores overlayed in results view.
 - **Validation Steps:** Spot-check via tmp_rovodev_FINAL_REPORT.md template.
 
-
 #### Control CG-AIEXP-PHP
+
 - **Title:** AI Explanation Quality Gates (PHP)
 - **Threat Mitigated:** Hallucinated remediation advice causes regressions.
 - **Detection Signal:** BLEU/ROUGE comparison inside scripts/run-accuracy-test.ts flags low-quality output.
@@ -4505,8 +4556,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Confidence scores overlayed in results view.
 - **Validation Steps:** Spot-check via tmp_rovodev_FINAL_REPORT.md template.
 
-
 #### Control CG-AIEXP-CS
+
 - **Title:** AI Explanation Quality Gates (C#)
 - **Threat Mitigated:** Hallucinated remediation advice causes regressions.
 - **Detection Signal:** BLEU/ROUGE comparison inside scripts/run-accuracy-test.ts flags low-quality output.
@@ -4514,8 +4565,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Confidence scores overlayed in results view.
 - **Validation Steps:** Spot-check via tmp_rovodev_FINAL_REPORT.md template.
 
-
 #### Control CG-MOBILE-JS
+
 - **Title:** Mobile Responsiveness & Security (JavaScript)
 - **Threat Mitigated:** Hidden buttons or truncated notifications cause missed alerts.
 - **Detection Signal:** Vite test harness checks viewport-specific CSS under src/index.css.
@@ -4523,8 +4574,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Storybook-style screenshots validated in CI.
 - **Validation Steps:** Use tmp_rovodev_functional_test.html with device emulators.
 
-
 #### Control CG-MOBILE-TS
+
 - **Title:** Mobile Responsiveness & Security (TypeScript)
 - **Threat Mitigated:** Hidden buttons or truncated notifications cause missed alerts.
 - **Detection Signal:** Vite test harness checks viewport-specific CSS under src/index.css.
@@ -4532,8 +4583,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Storybook-style screenshots validated in CI.
 - **Validation Steps:** Use tmp_rovodev_functional_test.html with device emulators.
 
-
 #### Control CG-MOBILE-PY
+
 - **Title:** Mobile Responsiveness & Security (Python)
 - **Threat Mitigated:** Hidden buttons or truncated notifications cause missed alerts.
 - **Detection Signal:** Vite test harness checks viewport-specific CSS under src/index.css.
@@ -4541,8 +4592,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Storybook-style screenshots validated in CI.
 - **Validation Steps:** Use tmp_rovodev_functional_test.html with device emulators.
 
-
 #### Control CG-MOBILE-JAVA
+
 - **Title:** Mobile Responsiveness & Security (Java)
 - **Threat Mitigated:** Hidden buttons or truncated notifications cause missed alerts.
 - **Detection Signal:** Vite test harness checks viewport-specific CSS under src/index.css.
@@ -4550,8 +4601,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Storybook-style screenshots validated in CI.
 - **Validation Steps:** Use tmp_rovodev_functional_test.html with device emulators.
 
-
 #### Control CG-MOBILE-GO
+
 - **Title:** Mobile Responsiveness & Security (Go)
 - **Threat Mitigated:** Hidden buttons or truncated notifications cause missed alerts.
 - **Detection Signal:** Vite test harness checks viewport-specific CSS under src/index.css.
@@ -4559,8 +4610,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Storybook-style screenshots validated in CI.
 - **Validation Steps:** Use tmp_rovodev_functional_test.html with device emulators.
 
-
 #### Control CG-MOBILE-RST
+
 - **Title:** Mobile Responsiveness & Security (Rust)
 - **Threat Mitigated:** Hidden buttons or truncated notifications cause missed alerts.
 - **Detection Signal:** Vite test harness checks viewport-specific CSS under src/index.css.
@@ -4568,8 +4619,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Storybook-style screenshots validated in CI.
 - **Validation Steps:** Use tmp_rovodev_functional_test.html with device emulators.
 
-
 #### Control CG-MOBILE-PHP
+
 - **Title:** Mobile Responsiveness & Security (PHP)
 - **Threat Mitigated:** Hidden buttons or truncated notifications cause missed alerts.
 - **Detection Signal:** Vite test harness checks viewport-specific CSS under src/index.css.
@@ -4577,8 +4628,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Storybook-style screenshots validated in CI.
 - **Validation Steps:** Use tmp_rovodev_functional_test.html with device emulators.
 
-
 #### Control CG-MOBILE-CS
+
 - **Title:** Mobile Responsiveness & Security (C#)
 - **Threat Mitigated:** Hidden buttons or truncated notifications cause missed alerts.
 - **Detection Signal:** Vite test harness checks viewport-specific CSS under src/index.css.
@@ -4586,8 +4637,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Storybook-style screenshots validated in CI.
 - **Validation Steps:** Use tmp_rovodev_functional_test.html with device emulators.
 
-
 #### Control CG-PWA-JS
+
 - **Title:** PWA Offline Safety (JavaScript)
 - **Threat Mitigated:** Cached stale data or unencrypted storage leads to leaks.
 - **Detection Signal:** Service worker audits ensure caches purge sensitive assets per build.
@@ -4595,8 +4646,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** public/sw.js exposes lifecycle hooks to expire sensitive responses.
 - **Validation Steps:** Log offline sessions and verify re-auth prompts occur.
 
-
 #### Control CG-PWA-TS
+
 - **Title:** PWA Offline Safety (TypeScript)
 - **Threat Mitigated:** Cached stale data or unencrypted storage leads to leaks.
 - **Detection Signal:** Service worker audits ensure caches purge sensitive assets per build.
@@ -4604,8 +4655,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** public/sw.js exposes lifecycle hooks to expire sensitive responses.
 - **Validation Steps:** Log offline sessions and verify re-auth prompts occur.
 
-
 #### Control CG-PWA-PY
+
 - **Title:** PWA Offline Safety (Python)
 - **Threat Mitigated:** Cached stale data or unencrypted storage leads to leaks.
 - **Detection Signal:** Service worker audits ensure caches purge sensitive assets per build.
@@ -4613,8 +4664,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** public/sw.js exposes lifecycle hooks to expire sensitive responses.
 - **Validation Steps:** Log offline sessions and verify re-auth prompts occur.
 
-
 #### Control CG-PWA-JAVA
+
 - **Title:** PWA Offline Safety (Java)
 - **Threat Mitigated:** Cached stale data or unencrypted storage leads to leaks.
 - **Detection Signal:** Service worker audits ensure caches purge sensitive assets per build.
@@ -4622,8 +4673,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** public/sw.js exposes lifecycle hooks to expire sensitive responses.
 - **Validation Steps:** Log offline sessions and verify re-auth prompts occur.
 
-
 #### Control CG-PWA-GO
+
 - **Title:** PWA Offline Safety (Go)
 - **Threat Mitigated:** Cached stale data or unencrypted storage leads to leaks.
 - **Detection Signal:** Service worker audits ensure caches purge sensitive assets per build.
@@ -4631,8 +4682,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** public/sw.js exposes lifecycle hooks to expire sensitive responses.
 - **Validation Steps:** Log offline sessions and verify re-auth prompts occur.
 
-
 #### Control CG-PWA-RST
+
 - **Title:** PWA Offline Safety (Rust)
 - **Threat Mitigated:** Cached stale data or unencrypted storage leads to leaks.
 - **Detection Signal:** Service worker audits ensure caches purge sensitive assets per build.
@@ -4640,8 +4691,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** public/sw.js exposes lifecycle hooks to expire sensitive responses.
 - **Validation Steps:** Log offline sessions and verify re-auth prompts occur.
 
-
 #### Control CG-PWA-PHP
+
 - **Title:** PWA Offline Safety (PHP)
 - **Threat Mitigated:** Cached stale data or unencrypted storage leads to leaks.
 - **Detection Signal:** Service worker audits ensure caches purge sensitive assets per build.
@@ -4649,8 +4700,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** public/sw.js exposes lifecycle hooks to expire sensitive responses.
 - **Validation Steps:** Log offline sessions and verify re-auth prompts occur.
 
-
 #### Control CG-PWA-CS
+
 - **Title:** PWA Offline Safety (C#)
 - **Threat Mitigated:** Cached stale data or unencrypted storage leads to leaks.
 - **Detection Signal:** Service worker audits ensure caches purge sensitive assets per build.
@@ -4658,8 +4709,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** public/sw.js exposes lifecycle hooks to expire sensitive responses.
 - **Validation Steps:** Log offline sessions and verify re-auth prompts occur.
 
-
 #### Control CG-PDFX-JS
+
 - **Title:** Export Accessibility QC (JavaScript)
 - **Threat Mitigated:** Screen readers cannot parse exported audit packages.
 - **Detection Signal:** HTML-to-PDF pipeline verifies semantic tags + headings.
@@ -4667,8 +4718,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Accessibility tests run before shipping templates.
 - **Validation Steps:** Use tests/modernCodeScanning.test.ts a11y snapshot comparisons.
 
-
 #### Control CG-PDFX-TS
+
 - **Title:** Export Accessibility QC (TypeScript)
 - **Threat Mitigated:** Screen readers cannot parse exported audit packages.
 - **Detection Signal:** HTML-to-PDF pipeline verifies semantic tags + headings.
@@ -4676,8 +4727,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Accessibility tests run before shipping templates.
 - **Validation Steps:** Use tests/modernCodeScanning.test.ts a11y snapshot comparisons.
 
-
 #### Control CG-PDFX-PY
+
 - **Title:** Export Accessibility QC (Python)
 - **Threat Mitigated:** Screen readers cannot parse exported audit packages.
 - **Detection Signal:** HTML-to-PDF pipeline verifies semantic tags + headings.
@@ -4685,8 +4736,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Accessibility tests run before shipping templates.
 - **Validation Steps:** Use tests/modernCodeScanning.test.ts a11y snapshot comparisons.
 
-
 #### Control CG-PDFX-JAVA
+
 - **Title:** Export Accessibility QC (Java)
 - **Threat Mitigated:** Screen readers cannot parse exported audit packages.
 - **Detection Signal:** HTML-to-PDF pipeline verifies semantic tags + headings.
@@ -4694,8 +4745,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Accessibility tests run before shipping templates.
 - **Validation Steps:** Use tests/modernCodeScanning.test.ts a11y snapshot comparisons.
 
-
 #### Control CG-PDFX-GO
+
 - **Title:** Export Accessibility QC (Go)
 - **Threat Mitigated:** Screen readers cannot parse exported audit packages.
 - **Detection Signal:** HTML-to-PDF pipeline verifies semantic tags + headings.
@@ -4703,8 +4754,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Accessibility tests run before shipping templates.
 - **Validation Steps:** Use tests/modernCodeScanning.test.ts a11y snapshot comparisons.
 
-
 #### Control CG-PDFX-RST
+
 - **Title:** Export Accessibility QC (Rust)
 - **Threat Mitigated:** Screen readers cannot parse exported audit packages.
 - **Detection Signal:** HTML-to-PDF pipeline verifies semantic tags + headings.
@@ -4712,8 +4763,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Accessibility tests run before shipping templates.
 - **Validation Steps:** Use tests/modernCodeScanning.test.ts a11y snapshot comparisons.
 
-
 #### Control CG-PDFX-PHP
+
 - **Title:** Export Accessibility QC (PHP)
 - **Threat Mitigated:** Screen readers cannot parse exported audit packages.
 - **Detection Signal:** HTML-to-PDF pipeline verifies semantic tags + headings.
@@ -4721,8 +4772,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Accessibility tests run before shipping templates.
 - **Validation Steps:** Use tests/modernCodeScanning.test.ts a11y snapshot comparisons.
 
-
 #### Control CG-PDFX-CS
+
 - **Title:** Export Accessibility QC (C#)
 - **Threat Mitigated:** Screen readers cannot parse exported audit packages.
 - **Detection Signal:** HTML-to-PDF pipeline verifies semantic tags + headings.
@@ -4730,8 +4781,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Accessibility tests run before shipping templates.
 - **Validation Steps:** Use tests/modernCodeScanning.test.ts a11y snapshot comparisons.
 
-
 #### Control CG-SBX-JS
+
 - **Title:** Sandbox Escape Prevention (JavaScript)
 - **Threat Mitigated:** Untrusted code tries to escape analysis sandboxes.
 - **Detection Signal:** Execution harness monitors syscalls and network attempts.
@@ -4739,8 +4790,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Runtime guardrails configured in tmp_rovodev_runtime_test.ts.
 - **Validation Steps:** Stress test with fuzzers referenced in test-pattern.js.
 
-
 #### Control CG-SBX-TS
+
 - **Title:** Sandbox Escape Prevention (TypeScript)
 - **Threat Mitigated:** Untrusted code tries to escape analysis sandboxes.
 - **Detection Signal:** Execution harness monitors syscalls and network attempts.
@@ -4748,8 +4799,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Runtime guardrails configured in tmp_rovodev_runtime_test.ts.
 - **Validation Steps:** Stress test with fuzzers referenced in test-pattern.js.
 
-
 #### Control CG-SBX-PY
+
 - **Title:** Sandbox Escape Prevention (Python)
 - **Threat Mitigated:** Untrusted code tries to escape analysis sandboxes.
 - **Detection Signal:** Execution harness monitors syscalls and network attempts.
@@ -4757,8 +4808,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Runtime guardrails configured in tmp_rovodev_runtime_test.ts.
 - **Validation Steps:** Stress test with fuzzers referenced in test-pattern.js.
 
-
 #### Control CG-SBX-JAVA
+
 - **Title:** Sandbox Escape Prevention (Java)
 - **Threat Mitigated:** Untrusted code tries to escape analysis sandboxes.
 - **Detection Signal:** Execution harness monitors syscalls and network attempts.
@@ -4766,8 +4817,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Runtime guardrails configured in tmp_rovodev_runtime_test.ts.
 - **Validation Steps:** Stress test with fuzzers referenced in test-pattern.js.
 
-
 #### Control CG-SBX-GO
+
 - **Title:** Sandbox Escape Prevention (Go)
 - **Threat Mitigated:** Untrusted code tries to escape analysis sandboxes.
 - **Detection Signal:** Execution harness monitors syscalls and network attempts.
@@ -4775,8 +4826,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Runtime guardrails configured in tmp_rovodev_runtime_test.ts.
 - **Validation Steps:** Stress test with fuzzers referenced in test-pattern.js.
 
-
 #### Control CG-SBX-RST
+
 - **Title:** Sandbox Escape Prevention (Rust)
 - **Threat Mitigated:** Untrusted code tries to escape analysis sandboxes.
 - **Detection Signal:** Execution harness monitors syscalls and network attempts.
@@ -4784,8 +4835,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Runtime guardrails configured in tmp_rovodev_runtime_test.ts.
 - **Validation Steps:** Stress test with fuzzers referenced in test-pattern.js.
 
-
 #### Control CG-SBX-PHP
+
 - **Title:** Sandbox Escape Prevention (PHP)
 - **Threat Mitigated:** Untrusted code tries to escape analysis sandboxes.
 - **Detection Signal:** Execution harness monitors syscalls and network attempts.
@@ -4793,8 +4844,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Runtime guardrails configured in tmp_rovodev_runtime_test.ts.
 - **Validation Steps:** Stress test with fuzzers referenced in test-pattern.js.
 
-
 #### Control CG-SBX-CS
+
 - **Title:** Sandbox Escape Prevention (C#)
 - **Threat Mitigated:** Untrusted code tries to escape analysis sandboxes.
 - **Detection Signal:** Execution harness monitors syscalls and network attempts.
@@ -4802,8 +4853,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Runtime guardrails configured in tmp_rovodev_runtime_test.ts.
 - **Validation Steps:** Stress test with fuzzers referenced in test-pattern.js.
 
-
 #### Control CG-CICD-JS
+
 - **Title:** Pipeline Credential Hygiene (JavaScript)
 - **Threat Mitigated:** Long-lived CI tokens leak via logs or artifacts.
 - **Detection Signal:** Workflow scanners read .github/workflows and scripts for plaintext secrets.
@@ -4811,8 +4862,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Templates in Appendix D show recommended setup.
 - **Validation Steps:** Dry-run workflows with redacted tokens before merging.
 
-
 #### Control CG-CICD-TS
+
 - **Title:** Pipeline Credential Hygiene (TypeScript)
 - **Threat Mitigated:** Long-lived CI tokens leak via logs or artifacts.
 - **Detection Signal:** Workflow scanners read .github/workflows and scripts for plaintext secrets.
@@ -4820,8 +4871,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Templates in Appendix D show recommended setup.
 - **Validation Steps:** Dry-run workflows with redacted tokens before merging.
 
-
 #### Control CG-CICD-PY
+
 - **Title:** Pipeline Credential Hygiene (Python)
 - **Threat Mitigated:** Long-lived CI tokens leak via logs or artifacts.
 - **Detection Signal:** Workflow scanners read .github/workflows and scripts for plaintext secrets.
@@ -4829,8 +4880,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Templates in Appendix D show recommended setup.
 - **Validation Steps:** Dry-run workflows with redacted tokens before merging.
 
-
 #### Control CG-CICD-JAVA
+
 - **Title:** Pipeline Credential Hygiene (Java)
 - **Threat Mitigated:** Long-lived CI tokens leak via logs or artifacts.
 - **Detection Signal:** Workflow scanners read .github/workflows and scripts for plaintext secrets.
@@ -4838,8 +4889,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Templates in Appendix D show recommended setup.
 - **Validation Steps:** Dry-run workflows with redacted tokens before merging.
 
-
 #### Control CG-CICD-GO
+
 - **Title:** Pipeline Credential Hygiene (Go)
 - **Threat Mitigated:** Long-lived CI tokens leak via logs or artifacts.
 - **Detection Signal:** Workflow scanners read .github/workflows and scripts for plaintext secrets.
@@ -4847,8 +4898,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Templates in Appendix D show recommended setup.
 - **Validation Steps:** Dry-run workflows with redacted tokens before merging.
 
-
 #### Control CG-CICD-RST
+
 - **Title:** Pipeline Credential Hygiene (Rust)
 - **Threat Mitigated:** Long-lived CI tokens leak via logs or artifacts.
 - **Detection Signal:** Workflow scanners read .github/workflows and scripts for plaintext secrets.
@@ -4856,8 +4907,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Templates in Appendix D show recommended setup.
 - **Validation Steps:** Dry-run workflows with redacted tokens before merging.
 
-
 #### Control CG-CICD-PHP
+
 - **Title:** Pipeline Credential Hygiene (PHP)
 - **Threat Mitigated:** Long-lived CI tokens leak via logs or artifacts.
 - **Detection Signal:** Workflow scanners read .github/workflows and scripts for plaintext secrets.
@@ -4865,8 +4916,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Templates in Appendix D show recommended setup.
 - **Validation Steps:** Dry-run workflows with redacted tokens before merging.
 
-
 #### Control CG-CICD-CS
+
 - **Title:** Pipeline Credential Hygiene (C#)
 - **Threat Mitigated:** Long-lived CI tokens leak via logs or artifacts.
 - **Detection Signal:** Workflow scanners read .github/workflows and scripts for plaintext secrets.
@@ -4874,8 +4925,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Templates in Appendix D show recommended setup.
 - **Validation Steps:** Dry-run workflows with redacted tokens before merging.
 
-
 #### Control CG-MLSEC-JS
+
 - **Title:** Model Input/Output Sanitization (JavaScript)
 - **Threat Mitigated:** Binary files or large payloads crash AI pipelines.
 - **Detection Signal:** Queue processors enforce max size, MIME filters, and compression thresholds.
@@ -4883,8 +4934,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Scheduler in api/push/schedule.ts batches safe workloads.
 - **Validation Steps:** Replay heavy datasets using tmp_rovodev_comprehensive_test.ts.
 
-
 #### Control CG-MLSEC-TS
+
 - **Title:** Model Input/Output Sanitization (TypeScript)
 - **Threat Mitigated:** Binary files or large payloads crash AI pipelines.
 - **Detection Signal:** Queue processors enforce max size, MIME filters, and compression thresholds.
@@ -4892,8 +4943,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Scheduler in api/push/schedule.ts batches safe workloads.
 - **Validation Steps:** Replay heavy datasets using tmp_rovodev_comprehensive_test.ts.
 
-
 #### Control CG-MLSEC-PY
+
 - **Title:** Model Input/Output Sanitization (Python)
 - **Threat Mitigated:** Binary files or large payloads crash AI pipelines.
 - **Detection Signal:** Queue processors enforce max size, MIME filters, and compression thresholds.
@@ -4901,8 +4952,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Scheduler in api/push/schedule.ts batches safe workloads.
 - **Validation Steps:** Replay heavy datasets using tmp_rovodev_comprehensive_test.ts.
 
-
 #### Control CG-MLSEC-JAVA
+
 - **Title:** Model Input/Output Sanitization (Java)
 - **Threat Mitigated:** Binary files or large payloads crash AI pipelines.
 - **Detection Signal:** Queue processors enforce max size, MIME filters, and compression thresholds.
@@ -4910,8 +4961,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Scheduler in api/push/schedule.ts batches safe workloads.
 - **Validation Steps:** Replay heavy datasets using tmp_rovodev_comprehensive_test.ts.
 
-
 #### Control CG-MLSEC-GO
+
 - **Title:** Model Input/Output Sanitization (Go)
 - **Threat Mitigated:** Binary files or large payloads crash AI pipelines.
 - **Detection Signal:** Queue processors enforce max size, MIME filters, and compression thresholds.
@@ -4919,8 +4970,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Scheduler in api/push/schedule.ts batches safe workloads.
 - **Validation Steps:** Replay heavy datasets using tmp_rovodev_comprehensive_test.ts.
 
-
 #### Control CG-MLSEC-RST
+
 - **Title:** Model Input/Output Sanitization (Rust)
 - **Threat Mitigated:** Binary files or large payloads crash AI pipelines.
 - **Detection Signal:** Queue processors enforce max size, MIME filters, and compression thresholds.
@@ -4928,8 +4979,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Scheduler in api/push/schedule.ts batches safe workloads.
 - **Validation Steps:** Replay heavy datasets using tmp_rovodev_comprehensive_test.ts.
 
-
 #### Control CG-MLSEC-PHP
+
 - **Title:** Model Input/Output Sanitization (PHP)
 - **Threat Mitigated:** Binary files or large payloads crash AI pipelines.
 - **Detection Signal:** Queue processors enforce max size, MIME filters, and compression thresholds.
@@ -4937,8 +4988,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Scheduler in api/push/schedule.ts batches safe workloads.
 - **Validation Steps:** Replay heavy datasets using tmp_rovodev_comprehensive_test.ts.
 
-
 #### Control CG-MLSEC-CS
+
 - **Title:** Model Input/Output Sanitization (C#)
 - **Threat Mitigated:** Binary files or large payloads crash AI pipelines.
 - **Detection Signal:** Queue processors enforce max size, MIME filters, and compression thresholds.
@@ -4946,8 +4997,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** Scheduler in api/push/schedule.ts batches safe workloads.
 - **Validation Steps:** Replay heavy datasets using tmp_rovodev_comprehensive_test.ts.
 
-
 #### Control CG-IAST-JS
+
 - **Title:** Interactive AST Guardrails (JavaScript)
 - **Threat Mitigated:** Malformed ASTs or edge syntax break parsers.
 - **Detection Signal:** Parser workers watch for recursion depth, fallback to tolerant.parsers.
@@ -4955,8 +5006,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** scripts/test-pattern.js --mode ast ensures coverage.
 - **Validation Steps:** Monitor telemetry counters for parser fallbacks.
 
-
 #### Control CG-IAST-TS
+
 - **Title:** Interactive AST Guardrails (TypeScript)
 - **Threat Mitigated:** Malformed ASTs or edge syntax break parsers.
 - **Detection Signal:** Parser workers watch for recursion depth, fallback to tolerant.parsers.
@@ -4964,8 +5015,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** scripts/test-pattern.js --mode ast ensures coverage.
 - **Validation Steps:** Monitor telemetry counters for parser fallbacks.
 
-
 #### Control CG-IAST-PY
+
 - **Title:** Interactive AST Guardrails (Python)
 - **Threat Mitigated:** Malformed ASTs or edge syntax break parsers.
 - **Detection Signal:** Parser workers watch for recursion depth, fallback to tolerant.parsers.
@@ -4973,8 +5024,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** scripts/test-pattern.js --mode ast ensures coverage.
 - **Validation Steps:** Monitor telemetry counters for parser fallbacks.
 
-
 #### Control CG-IAST-JAVA
+
 - **Title:** Interactive AST Guardrails (Java)
 - **Threat Mitigated:** Malformed ASTs or edge syntax break parsers.
 - **Detection Signal:** Parser workers watch for recursion depth, fallback to tolerant.parsers.
@@ -4982,8 +5033,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** scripts/test-pattern.js --mode ast ensures coverage.
 - **Validation Steps:** Monitor telemetry counters for parser fallbacks.
 
-
 #### Control CG-IAST-GO
+
 - **Title:** Interactive AST Guardrails (Go)
 - **Threat Mitigated:** Malformed ASTs or edge syntax break parsers.
 - **Detection Signal:** Parser workers watch for recursion depth, fallback to tolerant.parsers.
@@ -4991,8 +5042,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** scripts/test-pattern.js --mode ast ensures coverage.
 - **Validation Steps:** Monitor telemetry counters for parser fallbacks.
 
-
 #### Control CG-IAST-RST
+
 - **Title:** Interactive AST Guardrails (Rust)
 - **Threat Mitigated:** Malformed ASTs or edge syntax break parsers.
 - **Detection Signal:** Parser workers watch for recursion depth, fallback to tolerant.parsers.
@@ -5000,8 +5051,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** scripts/test-pattern.js --mode ast ensures coverage.
 - **Validation Steps:** Monitor telemetry counters for parser fallbacks.
 
-
 #### Control CG-IAST-PHP
+
 - **Title:** Interactive AST Guardrails (PHP)
 - **Threat Mitigated:** Malformed ASTs or edge syntax break parsers.
 - **Detection Signal:** Parser workers watch for recursion depth, fallback to tolerant.parsers.
@@ -5009,8 +5060,8 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** scripts/test-pattern.js --mode ast ensures coverage.
 - **Validation Steps:** Monitor telemetry counters for parser fallbacks.
 
-
 #### Control CG-IAST-CS
+
 - **Title:** Interactive AST Guardrails (C#)
 - **Threat Mitigated:** Malformed ASTs or edge syntax break parsers.
 - **Detection Signal:** Parser workers watch for recursion depth, fallback to tolerant.parsers.
@@ -5043,22 +5094,22 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AnalysisRequest'
+              $ref: "#/components/schemas/AnalysisRequest"
       responses:
-        '202':
+        "202":
           description: Accepted
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AnalysisQueued'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '429':
-          $ref: '#/components/responses/RateLimited'
-        '500':
-          $ref: '#/components/responses/ServerError'
+                $ref: "#/components/schemas/AnalysisQueued"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "429":
+          $ref: "#/components/responses/RateLimited"
+        "500":
+          $ref: "#/components/responses/ServerError"
   /api/report/{analysisId}:
     get:
       summary: Fetch report by analysisId
@@ -5070,13 +5121,13 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: Report payload
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ReportResponse'
-        '404':
+                $ref: "#/components/schemas/ReportResponse"
+        "404":
           description: Not found
   /api/insights/fix:
     post:
@@ -5087,14 +5138,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/FixRequest'
+              $ref: "#/components/schemas/FixRequest"
       responses:
-        '200':
+        "200":
           description: Fix suggestions
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FixResponse'
+                $ref: "#/components/schemas/FixResponse"
   /api/webhooks/github:
     post:
       summary: GitHub webhook bridge
@@ -5102,14 +5153,14 @@ paths:
       security:
         - webhookSignature: []
       responses:
-        '200':
+        "200":
           description: Acknowledge receipt
   /api/webhooks/custom:
     post:
       summary: Custom webhook
       operationId: customWebhook
       responses:
-        '200':
+        "200":
           description: Accepted
 components:
   securitySchemes:
@@ -5127,39 +5178,39 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ErrorResponse'
+            $ref: "#/components/schemas/ErrorResponse"
     Unauthorized:
       description: Missing or invalid token
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ErrorResponse'
+            $ref: "#/components/schemas/ErrorResponse"
     RateLimited:
       description: Too many requests
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ErrorResponse'
+            $ref: "#/components/schemas/ErrorResponse"
     ServerError:
       description: Unexpected server error
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ErrorResponse'
+            $ref: "#/components/schemas/ErrorResponse"
   schemas:
     AnalysisRequest:
       type: object
       properties:
         source:
-          $ref: '#/components/schemas/Source'
+          $ref: "#/components/schemas/Source"
         filters:
-          $ref: '#/components/schemas/Filters'
+          $ref: "#/components/schemas/Filters"
         aiProviders:
           type: array
           items:
             type: string
         export:
-          $ref: '#/components/schemas/ExportOptions'
+          $ref: "#/components/schemas/ExportOptions"
       required: [source]
     Source:
       type: object
@@ -5217,11 +5268,11 @@ components:
         findings:
           type: array
           items:
-            $ref: '#/components/schemas/Finding'
+            $ref: "#/components/schemas/Finding"
         secrets:
           type: array
           items:
-            $ref: '#/components/schemas/SecretFinding'
+            $ref: "#/components/schemas/SecretFinding"
         exports:
           type: array
           items:
@@ -5277,7 +5328,7 @@ components:
         suggestions:
           type: array
           items:
-            $ref: '#/components/schemas/FixSuggestion'
+            $ref: "#/components/schemas/FixSuggestion"
     FixSuggestion:
       type: object
       properties:
@@ -5409,7 +5460,7 @@ on:
   pull_request:
     branches: [main]
   schedule:
-    - cron: '0 3 * * *'
+    - cron: "0 3 * * *"
 
 permissions:
   contents: read
@@ -5454,516 +5505,5 @@ jobs:
       - name: Run unit tests
         run: pnpm test -- --runInBand
       - name: Run Code Guardian analysis
-        run: node scripts/e2e-zip-analysis.ts --zip $(git ls-files -z | tr ' ' '
-' | zip -@q build.zip) --out report.sarif
-      - name: Upload SARIF
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: report.sarif
-      - name: Upload artifact bundle
-        uses: actions/upload-artifact@v4
-        with:
-          name: guardian-report
-          path: |
-            report.sarif
-            dist
-            .guardian-cache
-
-  nightly-benchmark:
-    if: github.event_name == 'schedule'
-    needs: analyze
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Run AI accuracy suite
-        run: node scripts/run-accuracy-test.ts --threshold 0.94 --providers openai,anthropic,gemini
-      - name: Publish dashboard comment
-        uses: marocchino/sticky-pull-request-comment@v2
-        with:
-          recreate: true
-          path: tmp_rovodev_FINAL_REPORT.md
+        run: node scripts/e2e-zip-analysis.ts --zip $(git ls-files -z | tr '
 ```
-
-## ☁️ Appendix E: Terraform Starter (AWS + Vercel Hybrid)
-
-```hcl
-terraform {
-  required_version = ">= 1.6.0"
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 5.0"
-    }
-    vercel = {
-      source  = "vercel/vercel"
-      version = "~> 1.4"
-    }
-  }
-}
-
-provider "aws" {
-  region = var.aws_region
-}
-
-provider "vercel" {
-  api_token = var.vercel_token
-}
-
-module "guardian_static" {
-  source = "terraform-aws-modules/s3-bucket/aws"
-  bucket = var.bucket_name
-  acl    = "private"
-  versioning = {
-    enabled = true
-  }
-  server_side_encryption_configuration = {
-    rule = {
-      apply_server_side_encryption_by_default = {
-        sse_algorithm = "aws:kms"
-      }
-    }
-  }
-}
-
-resource "vercel_project" "guardian" {
-  name      = var.vercel_project
-  framework = "vite"
-}
-
-resource "vercel_project_domain" "primary" {
-  project_id = vercel_project.guardian.id
-  domain     = var.primary_domain
-}
-
-resource "aws_cloudfront_distribution" "cdn" {
-  enabled             = true
-  is_ipv6_enabled     = true
-  default_root_object = "index.html"
-
-  origin {
-    domain_name = module.guardian_static.s3_bucket_bucket_domain_name
-    origin_id   = "guardian-static"
-    s3_origin_config {
-      origin_access_identity = aws_cloudfront_origin_access_identity.oai.cloudfront_access_identity_path
-    }
-  }
-
-  default_cache_behavior {
-    allowed_methods  = ["GET", "HEAD"]
-    cached_methods   = ["GET", "HEAD"]
-    target_origin_id = "guardian-static"
-    viewer_protocol_policy = "redirect-to-https"
-    min_ttl                = 0
-    default_ttl            = 3600
-    max_ttl                = 86400
-    forwarded_values {
-      query_string = false
-      cookies {
-        forward = "none"
-      }
-    }
-  }
-
-  viewer_certificate {
-    acm_certificate_arn      = var.acm_cert
-    ssl_support_method       = "sni-only"
-    minimum_protocol_version = "TLSv1.2_2021"
-  }
-}
-
-resource "aws_cloudfront_origin_access_identity" "oai" {
-  comment = "OAI for Code Guardian"
-}
-
-resource "aws_route53_record" "cdn" {
-  zone_id = var.zone_id
-  name    = var.primary_domain
-  type    = "A"
-
-  alias {
-    name                   = aws_cloudfront_distribution.cdn.domain_name
-    zone_id                = aws_cloudfront_distribution.cdn.hosted_zone_id
-    evaluate_target_health = false
-  }
-}
-
-variable "aws_region" { default = "us-east-1" }
-variable "bucket_name" {}
-variable "vercel_token" {}
-variable "vercel_project" {}
-variable "primary_domain" {}
-variable "acm_cert" {}
-variable "zone_id" {}
-```
-
-## 🌀 Appendix F: Kubernetes Bundle
-
-```yaml
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: code-guardian
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: guardian-config
-  namespace: code-guardian
-data:
-  VITE_APP_NAME: "Code Guardian Report"
-  VITE_LOG_LEVEL: "info"
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: guardian-web
-  namespace: code-guardian
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: guardian-web
-  template:
-    metadata:
-      labels:
-        app: guardian-web
-    spec:
-      containers:
-        - name: web
-          image: ghcr.io/xenonesis/code-guardian-web:latest
-          ports:
-            - containerPort: 4173
-          envFrom:
-            - configMapRef:
-                name: guardian-config
-            - secretRef:
-                name: guardian-secrets
-          readinessProbe:
-            httpGet:
-              path: /
-              port: 4173
-            initialDelaySeconds: 5
-            periodSeconds: 10
-          livenessProbe:
-            httpGet:
-              path: /health
-              port: 4173
-            initialDelaySeconds: 20
-            periodSeconds: 20
-          resources:
-            requests:
-              cpu: "200m"
-              memory: "256Mi"
-            limits:
-              cpu: "500m"
-              memory: "512Mi"
----
-apiVersion: autoscaling/v2
-kind: HorizontalPodAutoscaler
-metadata:
-  name: guardian-web-hpa
-  namespace: code-guardian
-spec:
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: guardian-web
-  minReplicas: 3
-  maxReplicas: 10
-  metrics:
-    - type: Resource
-      resource:
-        name: cpu
-        target:
-          type: Utilization
-          averageUtilization: 60
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: guardian-web
-  namespace: code-guardian
-spec:
-  selector:
-    app: guardian-web
-  ports:
-    - port: 80
-      targetPort: 4173
-  type: ClusterIP
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: guardian-web
-  namespace: code-guardian
-  annotations:
-    kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/rewrite-target: /$1
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      add_header Strict-Transport-Security "max-age=63072000; includeSubDomains" always;
-      add_header Content-Security-Policy "default-src 'self'";
-spec:
-  rules:
-    - host: guardian.example.com
-      http:
-        paths:
-          - path: /(.*)
-            pathType: Prefix
-            backend:
-              service:
-                name: guardian-web
-                port:
-                  number: 80
-  tls:
-    - hosts:
-        - guardian.example.com
-      secretName: guardian-tls
-```
-
-## 🧱 Appendix G: Docker Compose Reference
-
-```yaml
-version: '3.9'
-services:
-  guardian-web:
-    image: ghcr.io/xenonesis/code-guardian-web:latest
-    container_name: guardian-web
-    restart: unless-stopped
-    ports:
-      - "8080:4173"
-    environment:
-      - VITE_LOG_LEVEL=info
-      - VITE_OPENAI_API_URL=http://guardian-proxy.internal/v1
-    volumes:
-      - ./dist:/usr/share/nginx/html:ro
-  guardian-proxy:
-    image: envoyproxy/envoy:v1.31-latest
-    container_name: guardian-proxy
-    volumes:
-      - ./ops/envoy.yaml:/etc/envoy/envoy.yaml
-    ports:
-      - "8443:8443"
-  firebase-emulator:
-    image: codeguardian/firebase-emulator
-    environment:
-      - FIREBASE_AUTH_EMULATOR_HOST=0.0.0.0:9099
-      - FIRESTORE_EMULATOR_HOST=0.0.0.0:8082
-    ports:
-      - "9099:9099"
-      - "8082:8082"
-networks:
-  default:
-    name: guardian-net
-```
-
-## ✅ Appendix H: Compliance Checklist
-
-| Control | Status | Evidence | Automation |
-|---------|--------|----------|------------|
-| OWASP Top 10 coverage | ✅ | tests/modernCodeScanning.test.ts | Automated |
-| CWE mapping | ✅ | README tables + exports | Automated |
-| SOC 2 logging | 🟡 | Log forwarding instructions | Partial |
-| GDPR data minimization | ✅ | Redaction defaults, limited retention | Policy-driven |
-| PCI token handling | ✅ | Secret scanner + tokenization guidance | Automated |
-| FedRAMP boundary | 🟡 | Requires dedicated tenant | Manual |
-| ISO 27001 asset inventory | ✅ | README inventory + asset tags | Manual |
-| Accessibility (WCAG 2.1 AA) | ✅ | Automated axe scan + manual QA | Automated + Manual |
-| Disaster Recovery | 🟡 | Documented runbook; backup automation optional | Manual |
-| Business Continuity | ✅ | Multi-region deploy plan | Manual |
-
-Document completion of each control inside tmp_rovodev_FINAL_REPORT.md to maintain a single source of truth.
-
-## 📚 Appendix I: Data Dictionary
-
-| Field | Type | Source | Description |
-|-------|------|--------|-------------|
-| analysisId | string | api/analyze | Unique identifier assigned to each scan; referenced throughout the dashboard. |
-| status | enum | firestore + local cache | Represents lifecycle states: queued, analyzing, ai-enhancing, completed, failed. |
-| severity | enum | detection engine | Normalized severity (info, low, medium, high, critical). |
-| ruleId | string | rule catalog | Identifier mapping to CG-* controls defined above. |
-| filePath | string | parser output | Relative workspace path (POSIX) to the flagged file. |
-| startLine | number | parser output | Starting line of matched snippet. |
-| endLine | number | parser output | Ending line inclusive. |
-| aiSummary | string | ai providers | Human-readable explanation generated by GPT-4.1, Claude 3.5, or Gemini. |
-| recommendation | string | ai providers + heuristics | Concrete fix instruction referencing docs links. |
-| tags | array[string] | detection metadata | Additional labels such as CWE, OWASP, data classification. |
-| secretType | string | secret scanner | Pattern classification (e.g., aws_access_key, firebase_token). |
-| entropy | float | secret scanner | Shannon entropy used to rank suspected credentials. |
-| action | string | orchestration | Suggested action (rotate, revoke, monitor). |
-| exports | object | storage orchestrator | Map of downloadable artifact URLs (json, pdf, sarif, csv). |
-| aiConfidence | float | ai providers | Normalized 0-1 confidence score for explanation accuracy. |
-| mttrHours | float | analytics | Calculated remediation time fed into KPI workbook. |
-| workspace | string | auth context | Multi-tenant workspace slug to support RBAC segregation. |
-| queueDepth | number | telemetry | Real-time count of pending jobs, surfaced inside observability widgets. |
-
-> Tip: extend this dictionary by committing additional markdown rows. The detection UI auto-links to any field documented here.
-
-## 🧭 Appendix J: Scenario Playbooks
-
-### 1. Blocking Production Release
-1. Trigger `scripts/run-all-tests.ts --providers openai,anthropic`.
-2. Review SARIF upload in the GitHub Security tab and ensure annotations render inside pull requests.
-3. Use the `SecurityMetricsDashboard` to confirm no high severity findings remain.
-4. Update release notes with references to `analysisId` and attach PDF exports for audit.
-
-### 2. Greenfield Onboarding
-1. Import repository via the Upload wizard located in `src/components/upload/UploadForm`.
-2. Run quick scans with default rules; expect completion under 90 seconds for <5k LOC projects.
-3. Configure SSO + RBAC per Appendix H to keep access limited while onboarding.
-4. Schedule recurring scans using `scripts/run-automation.js` (add cron to preferred CI system).
-
-### 3. Incident Response Retrospective
-1. Export JSON + evidence bundle via the results page.
-2. Feed JSON into Appendix C schema-aware notebook to slice data by severity, team, or file path.
-3. Populate `tmp_rovodev_FINAL_REPORT.md` using the runbook checklists.
-4. File improvement issues referencing module owners listed in README earlier.
-
-### 4. Compliance Audit (SOC 2 / ISO)
-1. Provide auditors with read-only dashboard access plus SARIF exports.
-2. Demonstrate automated controls listed in Appendix A by replaying relevant tests.
-3. Share `README_FIRST.txt` to explain local development constraints.
-4. Reference Appendix H to show completion evidence for each mandated control.
-
-## 🌐 Appendix K: Environment Variables
-
-| Variable | Location | Required | Description |
-|----------|----------|----------|-------------|
-| VITE_OPENAI_API_KEY | .env.local / CI secret | Optional | Needed when enabling GPT-based explainers. |
-| VITE_ANTHROPIC_API_KEY | Secret manager | Optional | Alternative AI provider. |
-| VITE_GEMINI_API_KEY | Secret manager | Optional | Google Gemini integration toggle. |
-| VITE_FIREBASE_API_KEY | Firebase console | Optional | Enables Firestore persistence + Auth. |
-| VITE_FIREBASE_AUTH_DOMAIN | Firebase console | Optional | Maps to Firebase auth tenant. |
-| VITE_FIREBASE_PROJECT_ID | Firebase console | Optional | Required for Firestore + storage. |
-| VITE_FIREBASE_STORAGE_BUCKET | Firebase console | Optional | Storage bucket for exports if not using Vercel. |
-| VITE_FIREBASE_MESSAGING_SENDER_ID | Firebase console | Optional | Enables push notifications. |
-| VITE_FIREBASE_APP_ID | Firebase console | Optional | Ties config to proper Firebase app. |
-| VITE_FIREBASE_MEASUREMENT_ID | Firebase console | Optional | Analytics instrumentation toggle. |
-| VITE_GITHUB_APP_ID | GitHub settings | Optional | Required for GitHub App integration. |
-| VITE_GITHUB_APP_PRIVATE_KEY | Secret manager | Optional | PEM data for GitHub App. |
-| VITE_ALLOWED_ORIGINS | .env.local | Recommended | Comma-separated CORS list for self-hosting. |
-| VITE_BASE_PATH | build command | Optional | Set when hosting under sub-path (e.g., /guardian). |
-| VITE_WEBHOOK_SECRET | secret manager | Recommended | Shared secret for custom webhook ingestion. |
-| VITE_ENCRYPTION_KEY | secret manager | Recommended | AES key used for evidence bundle encryption. |
-
-Export sanitized templates via `npm run build:config` (custom script) to avoid leaking secrets when sharing sample environments.
-
-## 🔄 Appendix L: Migration Checklist
-
-1. **Pre-migration Assessment**
-   - Run `npm run lint && npm run test` to capture current health.
-   - Document existing environment variables and feature flags.
-   - Snapshot KPIs from `EnhancedAnalyticsDashboard` for baseline comparison.
-2. **Infrastructure Update**
-   - Apply Appendix E Terraform or Appendix F Kubernetes manifests.
-   - Rotate secrets and update environment variable table above.
-3. **Data Migration**
-   - Export existing findings, acknowledgements, and playbooks to JSON.
-   - Import via `/api/analyze` seed mode or via Firestore import scripts.
-4. **Validation**
-   - Execute `scripts/run-multi-language-tests.js` to ensure detection parity.
-   - Re-run Appendix D workflow in dry-run mode to ensure CI parity.
-5. **Cutover**
-   - Flip DNS / CDN to new environment, monitor observability dashboards.
-   - Keep old environment in read-only mode for 1-2 sprints.
-6. **Post-migration Review**
-   - Capture new KPIs and compare to baseline.
-   - Close migration tasks in `tmp_rovodev_svg_fix_summary.txt` backlog.
-
-## 🧾 Appendix M: Sample Compliance Report Snippet
-
-```markdown
-# Code Guardian Operational Evidence (Excerpt)
-
-- **Organization:** Example Fintech Inc.
-- **Assessment Window:** 2025-01-01 → 2025-03-31
-- **Primary Contacts:**
-  - AppSec Lead: gloria@example.com
-  - SRE Lead: priya@example.com
-
-## Control Mapping
-
-| Control | Evidence | Notes |
-|---------|----------|-------|
-| CC8.1 (Change Management) | GitHub Actions workflow in Appendix D | Blocking checks enforce security gates pre-merge. |
-| CC7.2 (Vulnerability Management) | Automated scans + AI explainers | Nightly schedule documented; evidence stored in SARIF. |
-| A1.2 (Asset Inventory) | README architecture + data dictionary | Updated quarterly via `scripts/update-contributors.js`. |
-| A1.3 (Access Control) | RBAC mapping + SSO enforcement | Appendix H + auth module references. |
-
-## Findings Overview
-
-- Total Scans This Quarter: **48**
-- Average Completion Time: **2m 31s**
-- High Severity Findings: **3 (all remediated within 4 hours)**
-- Secret Leaks: **1 (credential rotated immediately)**
-
-## Remediation Narrative
-
-1. `CG-SQL-044` detected concatenated SQL in `src/services/reporting.ts`. Patch merged in PR #214 after AI-assisted fix plus manual review.
-2. `CG-SECRET-009` flagged Firebase key; rotated via secret manager and added detection rule.
-3. `CG-CORS-002` discovered wildcard origin; tightened via configuration update referencing Appendix K.
-
-## Next Steps
-
-- Expand custom rule packs covering GraphQL schema validations.
-- Deploy multi-region redundancy described in Appendix F.
-- Continue measuring AI explanation acceptance rate, aiming for ≥80% by next quarter.
-```
-
-## 🛠️ Appendix N: Quick Reference Commands
-
-| Use Case | Command | Notes |
-|----------|---------|-------|
-| Install deps | `pnpm install --frozen-lockfile` | Matches CI workflow; ensures lockfile fidelity. |
-| Dev server | `pnpm dev --host --open` | Launches Vite dev server with LAN exposure for device testing. |
-| Unit tests | `pnpm test -- --runInBand` | Serializes execution to reduce flake when running locally. |
-| Linting | `pnpm lint -- --max-warnings=0` | Mirrors CI gate; surfaces security plugin output. |
-| Format | `pnpm format` | Applies Prettier + Tailwind class sorting. |
-| Storybook snapshots | `pnpm storybook:test` | Optional add-on capturing responsive states. |
-| Build artifacts | `pnpm build` | Generates dist/ for static hosting or Docker copy. |
-| Firebase emulators | `pnpm firebase:emulators` | Reads configuration from firebase.json + firestore.rules. |
-| All-in-one scan | `node scripts/run-all-tests.ts --providers openai,anthropic,gemini` | Aggregates coverage metrics and AI explainers. |
-| Zip analysis | `node scripts/e2e-zip-analysis.ts --zip build.zip --out report.json` | Ideal for scanning compiled artifacts before shipping. |
-
-> Commands assume Node 20+, pnpm 9, and PowerShell core on Windows. Adjust according to local tooling standards.
-
-## 🗓️ Appendix O: Sample Release Timeline
-
-```text
-Week -4: Requirements review, finalize detection scope, confirm AI provider budgets.
-Week -3: Implement prioritized dashboards, wire feature flags via src/components/features.
-Week -2: Lock infrastructure templates (Appendix E/F) and rehearse failover.
-Week -1: Execute full regression matrix; publish readiness report to leadership.
-Week  0: Deploy via GitHub Actions pipeline, monitor observability dashboards hourly.
-Week +1: Collect user feedback, triage enhancements, document lessons learned.
-Week +2: Close launch epic after verifying KPIs improved vs baseline.
-```
-
-## ♻ Appendix P: Glossary Refresh
-
-| Term | Definition |
-|------|------------|
-| Adaptive Analyzer | The rule engine that blends AST parsing, ML heuristics, and AI explainers. |
-| Evidence Bundle | Redacted set of snippets, SARIF entries, and metadata zipped for auditors. |
-| Guardian Cache | Local directory storing parsed ASTs and embeddings to speed up re-runs. |
-| Insight Card | UI component in src/components/dashboard presenting KPI deltas. |
-| Landing Zone | Hardened cloud environment described in Appendix E/F for production rollouts. |
-| Prompt Firewall | Filters applied to AI context windows to mitigate prompt injection (see Appendix A). |
-| Sensor Pack | Optional collectors deployed inside CI jobs to gather additional telemetry. |
-| Signal-to-Noise Ratio | Metric comparing actionable findings vs informational noise per scan. |
-| Workspace | Multi-tenant boundary isolating datasets, secrets, and role assignments. |
-| Zero Retention Mode | Configuration that disables persistence beyond browser session for regulated environments. |
-
-These definitions keep enablement decks, onboarding docs, and dashboards aligned on shared vocabulary. Extend the table whenever new modules graduate from experimental to GA status.
-
-## 📇 Appendix Q: Contact Roster
-
-| Role | Name | Contact | Responsibilities |
-|------|------|---------|------------------|
-| Product Lead | Mira K. | mira@example.com | Prioritizes roadmap, approves KPI targets. |
-| AppSec Lead | Devon L. | devon@example.com | Owns detection rules and compliance evidence. |
-| AI Steward | Lian P. | lian@example.com | Manages provider budgets, prompt hygiene, evaluation suites. |
-| SRE Captain | Priya S. | priya@example.com | Maintains hosting stack, observability, and incident escalation. |
-| Developer Advocate | Ren F. | ren@example.com | Curates samples, runs enablement sessions, updates README. |
-
-Escalation order mirrors the Incident Runbooks section—escalate within 15 minutes for high severity findings.
