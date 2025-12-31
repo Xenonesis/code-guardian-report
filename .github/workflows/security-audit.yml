@@ -1,0 +1,110 @@
+# Security Audit Workflow
+# Runs npm audit on every push and pull request to catch vulnerabilities early
+
+name: "Security Audit"
+
+on:
+  push:
+    branches: ["main", "develop"]
+    paths:
+      - "package.json"
+      - "package-lock.json"
+      - "functions/package.json"
+      - "functions/package-lock.json"
+  pull_request:
+    branches: ["main", "develop"]
+    paths:
+      - "package.json"
+      - "package-lock.json"
+      - "functions/package.json"
+      - "functions/package-lock.json"
+  schedule:
+    # Run daily at 6:00 AM UTC to catch new CVEs
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  audit-main:
+    name: Audit Main Dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run security audit
+        run: npm audit --audit-level=moderate
+        continue-on-error: true
+
+      - name: Generate audit report
+        run: |
+          npm audit --json > audit-report.json || true
+          echo "## Security Audit Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -s audit-report.json ]; then
+            VULN_COUNT=$(cat audit-report.json | jq '.metadata.vulnerabilities.total // 0')
+            if [ "$VULN_COUNT" -gt 0 ]; then
+              echo "⚠️ Found $VULN_COUNT vulnerabilities" >> $GITHUB_STEP_SUMMARY
+              echo "" >> $GITHUB_STEP_SUMMARY
+              echo "| Severity | Count |" >> $GITHUB_STEP_SUMMARY
+              echo "|----------|-------|" >> $GITHUB_STEP_SUMMARY
+              echo "| Critical | $(cat audit-report.json | jq '.metadata.vulnerabilities.critical // 0') |" >> $GITHUB_STEP_SUMMARY
+              echo "| High | $(cat audit-report.json | jq '.metadata.vulnerabilities.high // 0') |" >> $GITHUB_STEP_SUMMARY
+              echo "| Moderate | $(cat audit-report.json | jq '.metadata.vulnerabilities.moderate // 0') |" >> $GITHUB_STEP_SUMMARY
+              echo "| Low | $(cat audit-report.json | jq '.metadata.vulnerabilities.low // 0') |" >> $GITHUB_STEP_SUMMARY
+            else
+              echo "✅ No vulnerabilities found!" >> $GITHUB_STEP_SUMMARY
+            fi
+          else
+            echo "✅ No vulnerabilities found!" >> $GITHUB_STEP_SUMMARY
+          fi
+
+  audit-functions:
+    name: Audit Firebase Functions Dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+
+      - name: Install dependencies
+        working-directory: ./functions
+        run: npm ci
+
+      - name: Run security audit
+        working-directory: ./functions
+        run: npm audit --audit-level=moderate
+        continue-on-error: true
+
+      - name: Generate audit report
+        working-directory: ./functions
+        run: |
+          npm audit --json > audit-report.json || true
+          echo "## Firebase Functions Security Audit Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -s audit-report.json ]; then
+            VULN_COUNT=$(cat audit-report.json | jq '.metadata.vulnerabilities.total // 0')
+            if [ "$VULN_COUNT" -gt 0 ]; then
+              echo "⚠️ Found $VULN_COUNT vulnerabilities in functions" >> $GITHUB_STEP_SUMMARY
+            else
+              echo "✅ No vulnerabilities found in functions!" >> $GITHUB_STEP_SUMMARY
+            fi
+          else
+            echo "✅ No vulnerabilities found in functions!" >> $GITHUB_STEP_SUMMARY
+          fi

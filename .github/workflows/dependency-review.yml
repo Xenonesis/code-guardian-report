@@ -1,0 +1,33 @@
+# Dependency Review Action
+# Scans pull requests for dependency changes and alerts on known vulnerabilities
+
+name: "Dependency Review"
+
+on:
+  pull_request:
+    branches: ["main", "develop"]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  dependency-review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Dependency Review
+        uses: actions/dependency-review-action@v4
+        with:
+          # Fail the workflow if vulnerabilities are found
+          fail-on-severity: moderate
+          # Allow specific licenses
+          allow-licenses: MIT, Apache-2.0, BSD-2-Clause, BSD-3-Clause, ISC, 0BSD, CC0-1.0, Unlicense
+          # Deny copyleft licenses that might cause issues
+          deny-licenses: GPL-3.0, AGPL-3.0
+          # Comment on pull requests with vulnerability summary
+          comment-summary-in-pr: always
+          # Warn about licenses that need review
+          warn-only: false
