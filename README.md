@@ -2170,30 +2170,31 @@ If you encounter any issues or have questions:
   <h3 style="color: white; margin-bottom: 20px;">📊 **Repository Statistics** 📊</h3>
   <p style="color: rgba(255,255,255,0.9); margin-bottom: 25px;">Thank you to our amazing community for making Code Guardian possible!</p>
   
+  
   <table style="margin: 0 auto;">
     <tr>
       <td align="center" style="padding: 15px;">
         <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px;">
-          <h4 style="color: white; margin: 0; font-size: 24px;">⭐ 18</h4>
+          <h4 style="color: white; margin: 0; font-size: 24px;">⭐ 45</h4>
           <p style="color: rgba(255,255,255,0.8); margin: 5px 0 0 0; font-size: 14px;">Stars</p>
         </div>
       </td>
       <td align="center" style="padding: 15px;">
         <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px;">
-          <h4 style="color: white; margin: 0; font-size: 24px;">🍴 20</h4>
-          <p style="color: rgba(255,255,0.8); margin: 5px 0 0 0; font-size: 14px;">Forks</p>
+          <h4 style="color: white; margin: 0; font-size: 24px;">🍴 33</h4>
+          <p style="color: rgba(255,255,255,0.8); margin: 5px 0 0 0; font-size: 14px;">Forks</p>
         </div>
       </td>
       <td align="center" style="padding: 15px;">
-        <div style="background: rgba(255,255,0.2); padding: 15px; border-radius: 10px;">
-          <h4 style="color: white; margin: 0; font-size: 24px;">👥 8</h4>
+        <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px;">
+          <h4 style="color: white; margin: 0; font-size: 24px;">👥 14</h4>
           <p style="color: rgba(255,255,255,0.8); margin: 5px 0 0 0; font-size: 14px;">Contributors</p>
         </div>
       </td>
       <td align="center" style="padding: 15px;">
         <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px;">
-          <h4 style="color: white; margin: 0; font-size: 24px;">👀 18</h4>
-          <p style="color: rgba(255,255,255,0.8); margin: 5px 0 0; font-size: 14px;">Watchers</p>
+          <h4 style="color: white; margin: 0; font-size: 24px;">👀 1</h4>
+          <p style="color: rgba(255,255,255,0.8); margin: 5px 0 0 0; font-size: 14px;">Watchers</p>
         </div>
       </td>
     </tr>
@@ -2208,51 +2209,72 @@ If you encounter any issues or have questions:
   
   <table style="margin: 0 auto;">
     <tr>
+
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/115968670?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
-        <br/><strong style="color: white; font-size: 16px;">_7adi;</strong>
-        <br/><span style="color: rgba(25,255,255,0.9); font-size: 14px;">@Xenonesis</span>
-        <br/><span style="background: rgba(25,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">🚀 Creator</span>
-        <br/><span style="color: rgba(255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Project Creator & Lead Developer</span>
+        <br/><strong style="color: white; font-size: 16px;">Xenonesis</strong>
+        <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@Xenonesis</span>
+        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">👤 Contributor</span>
+        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
         <div style="margin-top: 10px;">
-          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">47 commits</span>
+          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">178 commits</span>
         </div>
       </td>
+    
+
       <td align="center" style="padding: 20px;">
-        <img src="https://avatars.githubusercontent.com/u/186174121?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0.4);"/>
-        <br/><strong style="color: white; font-size: 16px;">Muneer Ali</strong>
-        <br/><span style="color: rgba(255,255,0.9); font-size: 14px;">@Muneerali199</span>
+        <img src="https://avatars.githubusercontent.com/u/186174121?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
+        <br/><strong style="color: white; font-size: 16px;">Muneerali199</strong>
+        <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@Muneerali199</span>
         <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">👤 Contributor</span>
-        <br/><span style="color: rgba(25,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
+        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
+        <div style="margin-top: 10px;">
+          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">5 commits</span>
+        </div>
+      </td>
+    
+
+      <td align="center" style="padding: 20px;">
+        <img src="https://avatars.githubusercontent.com/u/164482191?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
+        <br/><strong style="color: white; font-size: 16px;">sudharshanpaul</strong>
+        <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@sudharshanpaul</span>
+        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">👤 Contributor</span>
+        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
         <div style="margin-top: 10px;">
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">4 commits</span>
         </div>
       </td>
+    
+
       <td align="center" style="padding: 20px;">
-        <img src="https://avatars.githubusercontent.com/u/164482191?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0.4);"/>
-        <br/><strong style="color: white; font-size: 16px;">Sudharshan Paul</strong>
-        <br/><span style="color: rgba(255,255,0.9); font-size: 14px;">@sudharshanpaul</span>
+        <img src="https://avatars.githubusercontent.com/u/176881379?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
+        <br/><strong style="color: white; font-size: 16px;">Jils31</strong>
+        <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@Jils31</span>
         <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">👤 Contributor</span>
-        <br/><span style="color: rgba(255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
+        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
         <div style="margin-top: 10px;">
-          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">4 commits</span>
+          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">3 commits</span>
         </div>
       </td>
-      <td align="center" style="padding: 20px;">
-        <img src="https://avatars.githubusercontent.com/u/176881379?v=4" width="10" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
-        <br/><strong style="color: white; font-size: 16px;">Jils Patel</strong>
-        <br/><span style="color: rgba(255,255,0.9); font-size: 14px;">@Jils31</span>
-        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">👤 Contributor</span>
-        <br/><span style="color: rgba(255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
-        <div style="margin-top: 10px;">
-          <span style="background: rgba(25,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">3 commits</span>
-        </div>
-      </td>
+    
     </tr>
-    <tr>
+<tr>
+
       <td align="center" style="padding: 20px;">
-        <img src="https://avatars.githubusercontent.com/u/180313267?v=4" width="10" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
-        <br/><strong style="color: white; font-size: 16px;">Baranidharan</strong>
+        <img src="https://avatars.githubusercontent.com/u/118842369?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
+        <br/><strong style="color: white; font-size: 16px;">raghavendra-24</strong>
+        <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@raghavendra-24</span>
+        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">👤 Contributor</span>
+        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
+        <div style="margin-top: 10px;">
+          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">3 commits</span>
+        </div>
+      </td>
+    
+
+      <td align="center" style="padding: 20px;">
+        <img src="https://avatars.githubusercontent.com/u/180313267?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
+        <br/><strong style="color: white; font-size: 16px;">Baranidharanv06</strong>
         <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@Baranidharanv06</span>
         <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">👤 Contributor</span>
         <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
@@ -2260,36 +2282,31 @@ If you encounter any issues or have questions:
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">2 commits</span>
         </div>
       </td>
-      <td align="center" style="padding: 20px;">
-        <img src="https://avatars.githubusercontent.com/u/132596404?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0.4);"/>
-        <br/><strong style="color: white; font-size: 16px;">Pathan Mo. Faizan Khan</strong>
-        <br/><span style="color: rgba(25,255,255,0.9); font-size: 14px;">@pathan-07</span>
-        <br/><span style="background: rgba(25,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">👤 Contributor</span>
-        <br/><span style="color: rgba(25,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
-        <div style="margin-top: 10px;">
-          <span style="background: rgba(25,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">1 commits</span>
-        </div>
-      </td>
+    
+
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/180231504?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
-        <br/><strong style="color: white; font-size: 16px;">Shubhranshu Sahu</strong>
+        <br/><strong style="color: white; font-size: 16px;">shubhranshu-sahu</strong>
         <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@shubhranshu-sahu</span>
         <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">👤 Contributor</span>
         <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
         <div style="margin-top: 10px;">
-          <span style="background: rgba(25,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">1 commits</span>
+          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">2 commits</span>
         </div>
       </td>
+    
+
       <td align="center" style="padding: 20px;">
-        <img src="https://avatars.githubusercontent.com/u/200819625?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0.4);"/>
-        <br/><strong style="color: white; font-size: 16px;">Bhuvaneshwari Mallesh</strong>
-        <br/><span style="color: rgba(255,255,0.9); font-size: 14px;">@bhuvnaaaaaa</span>
-        <br/><span style="background: rgba(25,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">👤 Contributor</span>
-        <br/><span style="color: rgba(255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
+        <img src="https://avatars.githubusercontent.com/u/189628930?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
+        <br/><strong style="color: white; font-size: 16px;">DivyaJain09</strong>
+        <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@DivyaJain09</span>
+        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">👤 Contributor</span>
+        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
         <div style="margin-top: 10px;">
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">1 commits</span>
         </div>
       </td>
+    
     </tr>
   </table>
 </div>
