@@ -88,15 +88,22 @@ class NotificationManagerClass {
   private preferencesListeners: Set<(preferences: NotificationPreferences) => void> = new Set();
   
   constructor() {
-    this.preferences = this.loadPreferences();
-    this.loadHistory();
-    this.requestBrowserNotificationPermission();
+    this.preferences = DEFAULT_PREFERENCES;
+    // Only access browser APIs on client side
+    if (typeof window !== 'undefined') {
+      this.preferences = this.loadPreferences();
+      this.loadHistory();
+      this.requestBrowserNotificationPermission();
+    }
   }
 
   /**
    * Load preferences from localStorage
    */
   private loadPreferences(): NotificationPreferences {
+    // Guard for server-side rendering
+    if (typeof localStorage === 'undefined') return DEFAULT_PREFERENCES;
+    
     try {
       const stored = localStorage.getItem('notificationPreferences');
       if (stored) {
@@ -112,6 +119,9 @@ class NotificationManagerClass {
    * Save preferences to localStorage
    */
   private savePreferences(): void {
+    // Guard for server-side rendering
+    if (typeof localStorage === 'undefined') return;
+    
     try {
       localStorage.setItem('notificationPreferences', JSON.stringify(this.preferences));
       this.notifyPreferencesListeners();
@@ -124,6 +134,8 @@ class NotificationManagerClass {
    * Load notification history from localStorage
    */
   private loadHistory(): void {
+    // Guard for server-side rendering
+    if (typeof localStorage === 'undefined') return;
     if (!this.preferences.persistHistory) return;
     
     try {

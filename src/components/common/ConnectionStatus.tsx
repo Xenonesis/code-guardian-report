@@ -1,3 +1,5 @@
+"use client";
+
 // components/ConnectionStatus.tsx
 import React, { useState, useEffect } from 'react';
 import { AlertCircle, CheckCircle, Wifi, WifiOff, Database, AlertTriangle } from 'lucide-react';

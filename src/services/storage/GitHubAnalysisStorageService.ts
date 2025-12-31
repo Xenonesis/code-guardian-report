@@ -98,7 +98,7 @@ export class GitHubAnalysisStorageService {
       }
       
       // Return empty array instead of mock data in production
-      if (import.meta.env.PROD) {
+      if (process.env.NODE_ENV === 'production') {
         return [];
       }
       
@@ -163,7 +163,7 @@ export class GitHubAnalysisStorageService {
       }
       
       // Return empty array instead of mock data in production
-      if (import.meta.env.PROD) {
+      if (process.env.NODE_ENV === 'production') {
         return [];
       }
       
@@ -239,7 +239,7 @@ export class GitHubAnalysisStorageService {
       logger.error('Error fetching security trends:', error);
       logger.warn('⚠️ Using offline mode - Firebase unavailable.');
       // Return empty data in production
-      if (import.meta.env.PROD) {
+      if (process.env.NODE_ENV === 'production') {
         return {
           trends: [],
           stats: {
@@ -323,7 +323,7 @@ export class GitHubAnalysisStorageService {
       logger.error('Error fetching activity analytics:', error);
       logger.warn('⚠️ Using offline mode - Firebase unavailable.');
       // Return empty data in production
-      if (import.meta.env.PROD) {
+      if (process.env.NODE_ENV === 'production') {
         return {
           languageDistribution: [],
           stats: {

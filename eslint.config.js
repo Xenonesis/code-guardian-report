@@ -52,4 +52,11 @@ export default [
       'no-unused-expressions': 'off',
     },
   },
+  {
+    // Ignore markdown HTML linting errors - README uses valid HTML for formatting
+    files: ['**/*.md/**'],
+    rules: {
+      // Disable all rules for markdown code blocks
+    },
+  },
 ];

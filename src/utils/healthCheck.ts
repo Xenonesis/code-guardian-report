@@ -94,7 +94,7 @@ class ProductionHealthChecker {
   private async checkFirebaseConnection(): Promise<void> {
     try {
       // Check if Firebase is configured
-      const firebaseApiKey = env.get('VITE_FIREBASE_API_KEY');
+      const firebaseApiKey = env.get('NEXT_PUBLIC_FIREBASE_API_KEY');
       if (firebaseApiKey) {
         this.checks.push({
           name: 'Firebase Connection',

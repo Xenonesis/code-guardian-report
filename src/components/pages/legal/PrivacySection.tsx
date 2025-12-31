@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import { LegalSection, LegalSubsection, LegalList } from '@/components/legal/LegalSection';
 import { AnimatedBackground } from '@/components/pages/about/AnimatedBackground';

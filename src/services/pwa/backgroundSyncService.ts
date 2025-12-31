@@ -27,7 +27,10 @@ class BackgroundSyncService {
 
   constructor() {
     this.loadQueue();
-    this.setupEventListeners();
+    // Only setup browser-specific listeners on client
+    if (typeof window !== 'undefined') {
+      this.setupEventListeners();
+    }
   }
 
   // Add task to sync queue
@@ -125,7 +128,7 @@ class BackgroundSyncService {
     }
 
     // Skip API calls in development mode
-    if (import.meta.env.DEV) {
+    if (process.env.NODE_ENV === 'development') {
       logger.debug('File Upload (dev mode):', { formData: Array.from(formData.entries()) });
       this.notifyUser('File upload completed (dev mode)', 'Your files would be analyzed in production');
       return;
@@ -149,7 +152,7 @@ class BackgroundSyncService {
     const { analysisId, options } = task.data;
     
     // Skip API calls in development mode
-    if (import.meta.env.DEV) {
+    if (process.env.NODE_ENV === 'development') {
       logger.debug('Analysis Request (dev mode):', { analysisId, options });
       this.notifyUser('Analysis completed (dev mode)', 'Your security analysis would be updated in production');
       return;
@@ -175,7 +178,7 @@ class BackgroundSyncService {
     const { action, payload } = task.data;
     
     // Skip API calls in development mode
-    if (import.meta.env.DEV) {
+    if (process.env.NODE_ENV === 'development') {
       logger.debug('User Action Sync (dev mode):', { action, payload, timestamp: task.timestamp });
       return;
     }
@@ -240,6 +243,7 @@ class BackgroundSyncService {
   }
 
   private saveQueue(): void {
+    if (typeof window === 'undefined') return;
     try {
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.syncQueue));
     } catch (error) {
@@ -248,6 +252,7 @@ class BackgroundSyncService {
   }
 
   private loadQueue(): void {
+    if (typeof window === 'undefined') return;
     try {
       const stored = localStorage.getItem(this.STORAGE_KEY);
       if (stored) {
@@ -260,6 +265,7 @@ class BackgroundSyncService {
   }
 
   private async notifyUser(title: string, body: string): Promise<void> {
+    if (typeof window === 'undefined') return;
     if ('Notification' in window && Notification.permission === 'granted') {
       new Notification(title, {
         body,

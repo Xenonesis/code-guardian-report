@@ -10,6 +10,7 @@ export interface BeforeInstallPromptEvent extends Event {
 }
 
 export const isPWAInstalled = (): boolean => {
+  if (typeof window === 'undefined') return false;
   return (
     window.matchMedia('(display-mode: standalone)').matches ||
     window.matchMedia('(display-mode: fullscreen)').matches ||
@@ -18,14 +19,17 @@ export const isPWAInstalled = (): boolean => {
 };
 
 export const isPWASupported = (): boolean => {
+  if (typeof window === 'undefined' || typeof navigator === 'undefined') return false;
   return 'serviceWorker' in navigator && 'PushManager' in window;
 };
 
 export const canInstallPWA = (): boolean => {
+  if (typeof window === 'undefined') return false;
   return !isPWAInstalled() && isPWASupported();
 };
 
 export const getInstallationInstructions = (): string => {
+  if (typeof navigator === 'undefined') return '';
   const userAgent = navigator.userAgent.toLowerCase();
   
   if (userAgent.includes('chrome') && !userAgent.includes('edg')) {
@@ -42,6 +46,9 @@ export const getInstallationInstructions = (): string => {
 };
 
 export const registerForPushNotifications = async (): Promise<string | null> => {
+  if (typeof window === 'undefined' || typeof navigator === 'undefined') {
+    throw new Error('Push notifications not supported in this environment');
+  }
   if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
     throw new Error('Push notifications not supported');
   }
@@ -62,6 +69,9 @@ export const registerForPushNotifications = async (): Promise<string | null> => 
 };
 
 function urlBase64ToUint8Array(base64String: string): BufferSource {
+  if (typeof window === 'undefined') {
+    return new ArrayBuffer(0);
+  }
   const padding = '='.repeat((4 - base64String.length % 4) % 4);
   const base64 = (base64String + padding)
     .replace(/-/g, '+')
@@ -77,42 +87,42 @@ function urlBase64ToUint8Array(base64String: string): BufferSource {
 }
 
 export const scheduleBackgroundSync = async (tag: string): Promise<void> => {
-  if ('serviceWorker' in navigator && 'sync' in window.ServiceWorkerRegistration.prototype) {
+  if (typeof window === 'undefined' || typeof navigator === 'undefined') return;
+  if ('serviceWorker' in navigator && 'sync' in (window as any).ServiceWorkerRegistration?.prototype) {
     const registration = await navigator.serviceWorker.ready;
     await registration.sync.register(tag);
   }
 };
 
 export const getCacheSize = async (): Promise<number> => {
-  if ('caches' in window) {
-    const cacheNames = await caches.keys();
-    let totalSize = 0;
+  if (typeof window === 'undefined' || !('caches' in window)) return 0;
+  
+  const cacheNames = await caches.keys();
+  let totalSize = 0;
+  
+  for (const cacheName of cacheNames) {
+    const cache = await caches.open(cacheName);
+    const requests = await cache.keys();
     
-    for (const cacheName of cacheNames) {
-      const cache = await caches.open(cacheName);
-      const requests = await cache.keys();
-      
-      for (const request of requests) {
-        const response = await cache.match(request);
-        if (response) {
-          const blob = await response.blob();
-          totalSize += blob.size;
-        }
+    for (const request of requests) {
+      const response = await cache.match(request);
+      if (response) {
+        const blob = await response.blob();
+        totalSize += blob.size;
       }
     }
-    
-    return totalSize;
   }
-  return 0;
+  
+  return totalSize;
 };
 
 export const clearAppCache = async (): Promise<void> => {
-  if ('caches' in window) {
-    const cacheNames = await caches.keys();
-    await Promise.all(
-      cacheNames.map(cacheName => caches.delete(cacheName))
-    );
-  }
+  if (typeof window === 'undefined' || !('caches' in window)) return;
+  
+  const cacheNames = await caches.keys();
+  await Promise.all(
+    cacheNames.map(cacheName => caches.delete(cacheName))
+  );
 };
 
 export const formatBytes = (bytes: number): string => {

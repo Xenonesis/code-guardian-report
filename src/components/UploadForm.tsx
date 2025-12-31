@@ -24,6 +24,7 @@ export const UploadForm: React.FC<UploadFormProps> = ({ onFileSelect, onAnalysis
     isAnalyzing,
     uploadComplete,
     error,
+    analysisProgress,
     handleDragOver,
     handleDragLeave,
     handleDrop,
@@ -55,16 +56,42 @@ export const UploadForm: React.FC<UploadFormProps> = ({ onFileSelect, onAnalysis
       <CardContent className="space-y-4 sm:space-y-6 lg:space-y-8 px-3 sm:px-4 lg:px-6 pb-6 sm:pb-8">
         {!selectedFile && !error && (
           <Tabs value={uploadMethod} onValueChange={(value) => setUploadMethod(value as 'file' | 'github')} className="w-full">
-            <TabsList className="grid w-full grid-cols-2 mb-6 sm:mb-8 bg-gradient-to-br from-slate-100 to-slate-200/80 dark:from-slate-700 dark:to-slate-800 p-1 sm:p-1.5 rounded-lg sm:rounded-xl shadow-lg">
-              <TabsTrigger value="file" className="flex items-center gap-1.5 sm:gap-2 py-2.5 sm:py-3 px-2 sm:px-4 text-sm sm:text-base font-semibold data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-blue-600 data-[state=active]:text-white data-[state=active]:shadow-xl rounded-md sm:rounded-lg transition-all duration-300">
-                <Upload className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                <span className="hidden xs:inline">Upload ZIP</span>
-                <span className="xs:hidden">ZIP</span>
+            <TabsList className="grid w-full grid-cols-2 mb-6 sm:mb-8 bg-slate-900/90 dark:bg-slate-950/95 backdrop-blur-xl p-1.5 sm:p-2 rounded-2xl sm:rounded-3xl shadow-2xl shadow-black/20 border border-slate-700/50 dark:border-slate-600/30 ring-1 ring-white/5">
+              <TabsTrigger 
+                value="file" 
+                className="relative flex items-center justify-center gap-2 sm:gap-3 py-3.5 sm:py-4 px-4 sm:px-6 text-sm sm:text-base font-bold 
+                  text-slate-400 dark:text-slate-500 
+                  hover:text-slate-200 hover:bg-slate-800/50 
+                  data-[state=active]:text-white 
+                  data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:via-blue-600 data-[state=active]:to-cyan-500 
+                  data-[state=active]:shadow-[0_0_30px_rgba(59,130,246,0.5)] 
+                  data-[state=active]:ring-2 data-[state=active]:ring-blue-400/30
+                  rounded-xl sm:rounded-2xl 
+                  transition-all duration-300 ease-out
+                  group overflow-hidden"
+              >
+                <span className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-cyan-600/20 opacity-0 group-hover:opacity-100 data-[state=active]:opacity-0 transition-opacity duration-300 rounded-xl sm:rounded-2xl" />
+                <Upload className="h-4 w-4 sm:h-5 sm:w-5 group-hover:scale-110 transition-transform duration-300" />
+                <span className="hidden xs:inline tracking-wide">Upload ZIP</span>
+                <span className="xs:hidden font-semibold">ZIP</span>
               </TabsTrigger>
-              <TabsTrigger value="github" className="flex items-center gap-1.5 sm:gap-2 py-2.5 sm:py-3 px-2 sm:px-4 text-sm sm:text-base font-semibold data-[state=active]:bg-gradient-to-r data-[state=active]:from-indigo-500 data-[state=active]:to-purple-600 data-[state=active]:text-white data-[state=active]:shadow-xl rounded-md sm:rounded-lg transition-all duration-300">
-                <Github className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                <span className="hidden xs:inline">GitHub</span>
-                <span className="xs:hidden">GitHub</span>
+              <TabsTrigger 
+                value="github" 
+                className="relative flex items-center justify-center gap-2 sm:gap-3 py-3.5 sm:py-4 px-4 sm:px-6 text-sm sm:text-base font-bold 
+                  text-slate-400 dark:text-slate-500 
+                  hover:text-slate-200 hover:bg-slate-800/50 
+                  data-[state=active]:text-white 
+                  data-[state=active]:bg-gradient-to-r data-[state=active]:from-violet-500 data-[state=active]:via-purple-600 data-[state=active]:to-fuchsia-500 
+                  data-[state=active]:shadow-[0_0_30px_rgba(139,92,246,0.5)] 
+                  data-[state=active]:ring-2 data-[state=active]:ring-purple-400/30
+                  rounded-xl sm:rounded-2xl 
+                  transition-all duration-300 ease-out
+                  group overflow-hidden"
+              >
+                <span className="absolute inset-0 bg-gradient-to-r from-violet-600/20 to-fuchsia-600/20 opacity-0 group-hover:opacity-100 data-[state=active]:opacity-0 transition-opacity duration-300 rounded-xl sm:rounded-2xl" />
+                <Github className="h-4 w-4 sm:h-5 sm:w-5 group-hover:scale-110 transition-transform duration-300" />
+                <span className="hidden xs:inline tracking-wide">GitHub</span>
+                <span className="xs:hidden font-semibold">GitHub</span>
               </TabsTrigger>
             </TabsList>
 
@@ -92,6 +119,7 @@ export const UploadForm: React.FC<UploadFormProps> = ({ onFileSelect, onAnalysis
             uploadComplete={uploadComplete}
             uploadProgress={uploadProgress}
             onRemoveFile={removeFile}
+            analysisProgress={analysisProgress}
           />
         )}
         

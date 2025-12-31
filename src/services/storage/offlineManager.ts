@@ -23,16 +23,22 @@ class OfflineManager {
   private dbName = PWA_CONFIG.offlineStorage.dbName;
   private dbVersion = PWA_CONFIG.offlineStorage.dbVersion;
   private db: IDBDatabase | null = null;
-  private isOnline = navigator.onLine;
+  private isOnline = typeof navigator !== 'undefined' ? navigator.onLine : true;
   private syncQueue: string[] = [];
 
   async init(): Promise<void> {
+    // Guard for server-side rendering
+    if (typeof window === 'undefined') return;
+    
     await this.initDatabase();
     this.setupEventListeners();
     this.startPeriodicSync();
   }
 
   private async initDatabase(): Promise<void> {
+    // Guard for server-side rendering
+    if (typeof indexedDB === 'undefined') return Promise.resolve();
+    
     return new Promise((resolve, reject) => {
       const request = indexedDB.open(this.dbName, this.dbVersion);
       
@@ -68,6 +74,9 @@ class OfflineManager {
   }
 
   private setupEventListeners(): void {
+    // Guard for server-side rendering
+    if (typeof window === 'undefined') return;
+    
     window.addEventListener('online', () => {
       this.isOnline = true;
       this.syncPendingData();

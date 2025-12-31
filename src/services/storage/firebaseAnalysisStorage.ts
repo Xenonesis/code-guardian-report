@@ -736,5 +736,17 @@ export class FirebaseAnalysisStorageService {
   }
 }
 
-// Global instance
-export const firebaseAnalysisStorage = new FirebaseAnalysisStorageService();
+// Global instance - lazy initialization for SSR compatibility
+let _firebaseAnalysisStorage: FirebaseAnalysisStorageService | null = null;
+
+export const getFirebaseAnalysisStorage = (): FirebaseAnalysisStorageService => {
+  if (!_firebaseAnalysisStorage) {
+    _firebaseAnalysisStorage = new FirebaseAnalysisStorageService();
+  }
+  return _firebaseAnalysisStorage;
+};
+
+// For backward compatibility - use getter instead
+export const firebaseAnalysisStorage = typeof window !== 'undefined' 
+  ? getFirebaseAnalysisStorage() 
+  : (null as unknown as FirebaseAnalysisStorageService);

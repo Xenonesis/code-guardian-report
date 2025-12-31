@@ -18,7 +18,7 @@ if (typeof globalThis.performance === 'undefined') {
 if (typeof (globalThis as any).process === 'undefined') {
   (globalThis as any).process = {
     env: {
-      NODE_ENV: import.meta.env.MODE || 'production'
+      NODE_ENV: process.env.NODE_ENV || 'production'
     }
   };
 }

@@ -1,16 +1,27 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "lib": ["ES2022", "DOM", "DOM.Iterable", "WebWorker"],
+    "lib": [
+      "ES2022",
+      "DOM",
+      "DOM.Iterable",
+      "WebWorker"
+    ],
     "module": "ESNext",
     "skipLibCheck": true,
     "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
+    "allowImportingTsExtensions": false,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
-    
+    "jsx": "preserve",
+    "incremental": true,
+    /* Next.js Plugin */
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
     /* Strict Type Checking - Production Ready */
     "strict": true,
     "noImplicitAny": true,
@@ -21,7 +32,6 @@
     "noImplicitThis": true,
     "useUnknownInCatchVariables": true,
     "alwaysStrict": true,
-    
     /* Additional Checks */
     "noUnusedLocals": false,
     "noUnusedParameters": false,
@@ -31,47 +41,71 @@
     "noUncheckedIndexedAccess": false,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": false,
-    
     /* Module Resolution */
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "@app/*": ["./src/app/*"],
-      "@components/*": ["./src/components/*"],
-      "@services/*": ["./src/services/*"],
-      "@hooks/*": ["./src/hooks/*"],
-      "@utils/*": ["./src/utils/*"],
-      "@styles/*": ["./src/styles/*"],
-      "@lib/*": ["./src/lib/*"],
-      "@pages/*": ["./src/pages/*"],
-      "@types/*": ["./src/types/*"],
-      "@config/*": ["./src/config/*"]
+      "@/*": [
+        "./src/*"
+      ],
+      "@app/*": [
+        "./src/app/*"
+      ],
+      "@components/*": [
+        "./src/components/*"
+      ],
+      "@services/*": [
+        "./src/services/*"
+      ],
+      "@hooks/*": [
+        "./src/hooks/*"
+      ],
+      "@utils/*": [
+        "./src/utils/*"
+      ],
+      "@styles/*": [
+        "./src/styles/*"
+      ],
+      "@lib/*": [
+        "./src/lib/*"
+      ],
+      "@pages/*": [
+        "./src/views/*"
+      ],
+      "@types/*": [
+        "./src/types/*"
+      ],
+      "@config/*": [
+        "./src/config/*"
+      ]
     },
-    
     /* Interop Constraints */
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-    
     /* Emit */
     "declaration": false,
     "declarationMap": false,
     "sourceMap": false,
-    "inlineSources": false
+    "inlineSources": false,
+    "allowJs": true
   },
   "include": [
-    "src/**/*",
-    "vite.config.ts",
-    "vitest.config.ts",
-    "tailwind.config.ts"
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",
-    "dist",
-    "build",
+    ".next",
+    "out",
     "coverage",
-    "src/tests/**/*.test.ts",
-    "src/tests/**/*.test.tsx",
+    "functions",
+    "scripts",
+    "tests",
+    "src/app",
+    "**/*.test.ts",
+    "**/*.test.tsx",
     "**/*.spec.ts",
     "**/*.spec.tsx"
   ]

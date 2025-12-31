@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from 'react';
 import { Shield, Heart, Mail, Github, Globe, Scale, FileText, Code, Building2, Brain, Star, Users, Youtube, Linkedin, ExternalLink } from 'lucide-react';
 import { APP_VERSION_WITH_PREFIX } from '@/utils/version';

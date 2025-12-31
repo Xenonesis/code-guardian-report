@@ -25,10 +25,16 @@ class ConnectionManager {
   private isRecovering = false;
 
   constructor() {
-    this.initializeConnectionMonitoring();
+    // Only initialize in browser environment
+    if (typeof window !== 'undefined') {
+      this.initializeConnectionMonitoring();
+    }
   }
 
   private initializeConnectionMonitoring() {
+    // Guard for server-side rendering
+    if (typeof window === 'undefined') return;
+    
     // Listen to browser online/offline events
     window.addEventListener('online', this.handleOnline.bind(this));
     window.addEventListener('offline', this.handleOffline.bind(this));

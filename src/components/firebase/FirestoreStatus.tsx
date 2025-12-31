@@ -1,3 +1,5 @@
+"use client";
+
 // src/components/FirestoreStatus.tsx
 import React, { useState, useEffect } from 'react';
 import { connectionManager } from '../../lib/connection-manager';

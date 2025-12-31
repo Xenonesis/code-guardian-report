@@ -44,7 +44,7 @@ export const useFirebaseAnalysis = () => {
   const [hasLocalData, setHasLocalData] = useState(false);
   const [syncStatus, setSyncStatus] = useState<'synced' | 'pending' | 'error' | 'offline'>('offline');
   const [lastSyncTime, setLastSyncTime] = useState<Date | null>(null);
-  const [isOnline, setIsOnline] = useState(navigator.onLine);
+  const [isOnline, setIsOnline] = useState(typeof navigator !== 'undefined' ? navigator.onLine : true);
 
   // Initialize Firebase storage with user authentication
   useEffect(() => {

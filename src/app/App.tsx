@@ -1,5 +1,5 @@
 
-import SinglePageApp from "../pages/SinglePageApp";
+import SinglePageApp from "../views/SinglePageApp";
 import { AppProviders } from "./providers/AppProviders";
 
 const App = () => (

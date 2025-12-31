@@ -77,10 +77,10 @@ export const UnifiedMetricsHeader: React.FC<UnifiedMetricsHeaderProps> = ({ resu
           {/* Security Score */}
           <Tooltip>
             <TooltipTrigger asChild>
-              <Card className={`bg-white/95 dark:bg-slate-900/70 border border-slate-200/70 dark:border-slate-700/60 ${getScoreBgColor(results.summary.securityScore)} hover:shadow-md transition-shadow cursor-help group`}>
+              <Card className={`bg-white/95 dark:bg-slate-900/70 border border-slate-200/70 dark:border-slate-700/60 ${getScoreBgColor(results.summary.securityScore)} hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-help group`}>
                 <CardContent className="p-3 sm:p-4">
                   <div className="flex items-center justify-between">
-                    <div className={`flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-lg bg-gradient-to-br ${getScoreColor(results.summary.securityScore)} shadow-sm`}>
+                    <div className={`flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-lg bg-gradient-to-br ${getScoreColor(results.summary.securityScore)} shadow-sm group-hover:shadow-md transition-shadow`}>
                       <Shield className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
                     </div>
                     <p className={`text-lg sm:text-xl font-semibold ${getScoreTextColor(results.summary.securityScore)} tabular-nums`}>
@@ -108,10 +108,10 @@ export const UnifiedMetricsHeader: React.FC<UnifiedMetricsHeaderProps> = ({ resu
           {/* Critical & High Issues */}
           <Tooltip>
             <TooltipTrigger asChild>
-              <Card className="bg-white/95 dark:bg-slate-900/70 border border-slate-200/70 dark:border-slate-700/60 hover:shadow-md transition-shadow cursor-help group ring-1 ring-inset ring-red-200/60 dark:ring-red-900/40">
+              <Card className="bg-white/95 dark:bg-slate-900/70 border border-slate-200/70 dark:border-slate-700/60 hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-help group ring-1 ring-inset ring-red-200/60 dark:ring-red-900/40">
                 <CardContent className="p-3 sm:p-4">
                   <div className="flex items-center justify-between">
-                    <div className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-lg bg-gradient-to-br from-red-500 to-rose-500 shadow-sm">
+                    <div className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-lg bg-gradient-to-br from-red-500 to-rose-500 shadow-sm group-hover:shadow-md transition-shadow">
                       <AlertTriangle className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
                     </div>
                     <p className="text-lg sm:text-xl font-semibold text-red-700 dark:text-red-300 tabular-nums">
@@ -133,10 +133,10 @@ export const UnifiedMetricsHeader: React.FC<UnifiedMetricsHeaderProps> = ({ resu
           {/* Vulnerability Density */}
           <Tooltip>
             <TooltipTrigger asChild>
-              <Card className="bg-white/95 dark:bg-slate-900/70 border border-slate-200/70 dark:border-slate-700/60 hover:shadow-md transition-shadow cursor-help group ring-1 ring-inset ring-blue-200/60 dark:ring-blue-900/40">
+              <Card className="bg-white/95 dark:bg-slate-900/70 border border-slate-200/70 dark:border-slate-700/60 hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-help group ring-1 ring-inset ring-blue-200/60 dark:ring-blue-900/40">
                 <CardContent className="p-3 sm:p-4">
                   <div className="flex items-center justify-between">
-                    <div className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-indigo-500 shadow-sm">
+                    <div className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-indigo-500 shadow-sm group-hover:shadow-md transition-shadow">
                       <Target className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
                     </div>
                     <p className="text-lg sm:text-xl font-semibold text-blue-700 dark:text-blue-300 tabular-nums">
@@ -158,13 +158,13 @@ export const UnifiedMetricsHeader: React.FC<UnifiedMetricsHeaderProps> = ({ resu
           {/* Secrets Found */}
           <Tooltip>
             <TooltipTrigger asChild>
-              <Card className={`bg-white/95 dark:bg-slate-900/70 border border-slate-200/70 dark:border-slate-700/60 hover:shadow-md transition-shadow cursor-help group ring-1 ring-inset ${secretIssues.length > 0
+              <Card className={`bg-white/95 dark:bg-slate-900/70 border border-slate-200/70 dark:border-slate-700/60 hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-help group ring-1 ring-inset ${secretIssues.length > 0
                 ? 'border-orange-300 dark:border-orange-700 ring-amber-200/60 dark:ring-amber-900/40'
                 : 'border-emerald-300 dark:border-emerald-700 ring-emerald-200/60 dark:ring-emerald-900/40'
               }`}>
                 <CardContent className="p-3 sm:p-4">
                   <div className="flex items-center justify-between">
-                    <div className={`flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-lg bg-gradient-to-br ${secretIssues.length > 0 ? 'from-orange-500 to-amber-500' : 'from-green-500 to-emerald-500'} shadow-sm`}>
+                    <div className={`flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-lg bg-gradient-to-br ${secretIssues.length > 0 ? 'from-orange-500 to-amber-500' : 'from-green-500 to-emerald-500'} shadow-sm group-hover:shadow-md transition-shadow`}>
                       <Key className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
                     </div>
                     <p className={`text-lg sm:text-xl font-semibold ${secretIssues.length > 0
@@ -189,10 +189,10 @@ export const UnifiedMetricsHeader: React.FC<UnifiedMetricsHeaderProps> = ({ resu
           {/* Quality Score */}
           <Tooltip>
             <TooltipTrigger asChild>
-              <Card className={`bg-white/95 dark:bg-slate-900/70 border border-slate-200/70 dark:border-slate-700/60 ${getScoreBgColor(results.summary.qualityScore)} hover:shadow-md transition-shadow cursor-help group`}>
+              <Card className={`bg-white/95 dark:bg-slate-900/70 border border-slate-200/70 dark:border-slate-700/60 ${getScoreBgColor(results.summary.qualityScore)} hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-help group`}>
                 <CardContent className="p-3 sm:p-4">
                   <div className="flex items-center justify-between">
-                    <div className={`flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-lg bg-gradient-to-br ${getScoreColor(results.summary.qualityScore)} shadow-sm`}>
+                    <div className={`flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-lg bg-gradient-to-br ${getScoreColor(results.summary.qualityScore)} shadow-sm group-hover:shadow-md transition-shadow`}>
                       <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
                     </div>
                     <p className={`text-lg sm:text-xl font-semibold ${getScoreTextColor(results.summary.qualityScore)} tabular-nums`}>
@@ -214,10 +214,10 @@ export const UnifiedMetricsHeader: React.FC<UnifiedMetricsHeaderProps> = ({ resu
           {/* Total Issues */}
           <Tooltip>
             <TooltipTrigger asChild>
-              <Card className="bg-white/95 dark:bg-slate-900/70 border border-slate-200/70 dark:border-slate-700/60 hover:shadow-md transition-shadow cursor-help group ring-1 ring-inset ring-purple-200/60 dark:ring-purple-900/40">
+              <Card className="bg-white/95 dark:bg-slate-900/70 border border-slate-200/70 dark:border-slate-700/60 hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-help group ring-1 ring-inset ring-purple-200/60 dark:ring-purple-900/40">
                 <CardContent className="p-3 sm:p-4">
                   <div className="flex items-center justify-between">
-                    <div className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-lg bg-gradient-to-br from-purple-500 to-violet-600 shadow-sm">
+                    <div className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-lg bg-gradient-to-br from-purple-500 to-violet-600 shadow-sm group-hover:shadow-md transition-shadow">
                       <Info className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
                     </div>
                     <p className="text-lg sm:text-xl font-semibold text-purple-700 dark:text-purple-300 tabular-nums">

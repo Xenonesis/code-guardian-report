@@ -13,10 +13,82 @@ import { setLocalStorageItem, removeLocalStorageItem } from '@/utils/storageEven
 import { discoverModels, validateAPIKey, AIModel } from '@/services/ai/modelDiscoveryService';
 
 import { logger } from '@/utils/logger';
+
+// Real AI Provider Icons
+const OpenAIIcon = () => (
+  <svg viewBox="0 0 24 24" className="w-6 h-6" fill="currentColor">
+    <path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z"/>
+  </svg>
+);
+
+const GeminiIcon = () => (
+  <svg viewBox="0 0 28 28" className="w-6 h-6" fill="none">
+    <path d="M14 28C14 26.0633 13.6267 24.2433 12.88 22.54C12.1567 20.8367 11.165 19.355 9.905 18.095C8.645 16.835 7.16333 15.8433 5.46 15.12C3.75667 14.3733 1.93667 14 0 14C1.93667 14 3.75667 13.6383 5.46 12.915C7.16333 12.1683 8.645 11.165 9.905 9.905C11.165 8.645 12.1567 7.16333 12.88 5.46C13.6267 3.75667 14 1.93667 14 0C14 1.93667 14.3617 3.75667 15.085 5.46C15.8317 7.16333 16.835 8.645 18.095 9.905C19.355 11.165 20.8367 12.1683 22.54 12.915C24.2433 13.6383 26.0633 14 28 14C26.0633 14 24.2433 14.3733 22.54 15.12C20.8367 15.8433 19.355 16.835 18.095 18.095C16.835 19.355 15.8317 20.8367 15.085 22.54C14.3617 24.2433 14 26.0633 14 28Z" fill="url(#gemini-gradient)"/>
+    <defs>
+      <linearGradient id="gemini-gradient" x1="0" y1="14" x2="28" y2="14" gradientUnits="userSpaceOnUse">
+        <stop stopColor="#4285F4"/>
+        <stop offset="0.5" stopColor="#9B72CB"/>
+        <stop offset="1" stopColor="#D96570"/>
+      </linearGradient>
+    </defs>
+  </svg>
+);
+
+const ClaudeIcon = () => (
+  <img 
+    src="https://img.icons8.com/?size=100&id=H5H0mqCCr5AV&format=png&color=000000" 
+    alt="Claude" 
+    className="w-6 h-6"
+  />
+);
+
+const MistralIcon = () => (
+  <svg viewBox="0 0 365 258" className="w-6 h-6" fill="none">
+    <path d="M104.107 0H52.0525V51.57H104.107V0Z" fill="#FFD800"/>
+    <path d="M312.351 0H260.296V51.57H312.351V0Z" fill="#FFD800"/>
+    <path d="M156.161 51.5701H52.0525V103.14H156.161V51.5701Z" fill="#FFAF00"/>
+    <path d="M312.353 51.5701H208.244V103.14H312.353V51.5701Z" fill="#FFAF00"/>
+    <path d="M312.356 103.14H52.0525V154.71H312.356V103.14Z" fill="#FF8205"/>
+    <path d="M104.107 154.71H52.0525V206.28H104.107V154.71Z" fill="#FA500F"/>
+    <path d="M208.228 154.711H156.174V206.281H208.228V154.711Z" fill="#FA500F"/>
+    <path d="M312.351 154.711H260.296V206.281H312.351V154.711Z" fill="#FA500F"/>
+    <path d="M156.195 206.312H0V257.882H156.195V206.312Z" fill="#E10500"/>
+    <path d="M364.439 206.312H208.244V257.882H364.439V206.312Z" fill="#E10500"/>
+  </svg>
+);
+
+const LlamaIcon = () => (
+  <img 
+    src="https://static.xx.fbcdn.net/rsrc.php/y9/r/tL_v571NdZ0.svg" 
+    alt="Meta Llama" 
+    className="w-6 h-6 dark:invert dark:brightness-200"
+  />
+);
+
+const CohereIcon = () => (
+  <img 
+    src="https://cohere.com/logo.svg" 
+    alt="Cohere" 
+    className="w-6 h-6 dark:invert dark:brightness-200"
+  />
+);
+
+const PerplexityIcon = () => (
+  <svg viewBox="0 0 336 400" className="w-6 h-6" fill="currentColor">
+    <path fillRule="evenodd" clipRule="evenodd" d="M101.008 42L190.99 124.905V124.886V42.1913H208.506V125.276L298.891 42V136.524H336V272.866H299.005V357.035L208.506 277.525V357.948H190.99V278.836L101.11 358V272.866H64V136.524H101.008V42ZM177.785 153.826H81.5159V255.564H101.088V223.472L177.785 153.826ZM118.625 231.149V319.392L190.99 255.655V165.421L118.625 231.149ZM209.01 254.812V165.336L281.396 231.068V272.866H281.489V318.491L209.01 254.812ZM299.005 255.564H318.484V153.826H222.932L299.005 222.751V255.564ZM281.375 136.524V81.7983L221.977 136.524H281.375ZM177.921 136.524H118.524V81.7983L177.921 136.524Z"/>
+  </svg>
+);
+
+const GroqIcon = () => (
+  <svg viewBox="0 0 24 24" className="w-6 h-6" fill="currentColor">
+    <path d="M13 3L4 14h7l-2 7 9-11h-7l2-7z"/>
+  </svg>
+);
+
 interface AIProvider {
   id: string;
   name: string;
-  icon: string;
+  icon: React.ReactNode;
   description: string;
   keyPrefix: string;
   keyPlaceholder: string;
@@ -33,7 +105,7 @@ const aiProviders: AIProvider[] = [
   {
     id: 'openai',
     name: 'OpenAI',
-    icon: '🤖',
+    icon: <OpenAIIcon />,
     description: 'GPT-4 powered analysis',
     keyPrefix: 'sk-',
     keyPlaceholder: 'sk-... (starts with sk-)',
@@ -42,7 +114,7 @@ const aiProviders: AIProvider[] = [
   {
     id: 'gemini',
     name: 'Google Gemini',
-    icon: '💎',
+    icon: <GeminiIcon />,
     description: 'Advanced code understanding',
     keyPrefix: 'AIza',
     keyPlaceholder: 'AIza... (starts with AIza)',
@@ -51,7 +123,7 @@ const aiProviders: AIProvider[] = [
   {
     id: 'claude',
     name: 'Anthropic Claude',
-    icon: '🧠',
+    icon: <ClaudeIcon />,
     description: 'Detailed security insights',
     keyPrefix: 'sk-ant-',
     keyPlaceholder: 'sk-ant-... (starts with sk-ant-)',
@@ -60,7 +132,7 @@ const aiProviders: AIProvider[] = [
   {
     id: 'mistral',
     name: 'Mistral AI',
-    icon: '⚡',
+    icon: <MistralIcon />,
     description: 'Fast and efficient analysis',
     keyPrefix: '',
     keyPlaceholder: 'Your Mistral API key',
@@ -69,7 +141,7 @@ const aiProviders: AIProvider[] = [
   {
     id: 'llama',
     name: 'Meta Llama',
-    icon: '🦙',
+    icon: <LlamaIcon />,
     description: 'Open-weight models',
     keyPrefix: '',
     keyPlaceholder: 'Your Llama API key',
@@ -78,7 +150,7 @@ const aiProviders: AIProvider[] = [
   {
     id: 'cohere',
     name: 'Cohere',
-    icon: '🌀',
+    icon: <CohereIcon />,
     description: 'Enterprise-focused models',
     keyPrefix: '',
     keyPlaceholder: 'Your Cohere API key',
@@ -87,7 +159,7 @@ const aiProviders: AIProvider[] = [
   {
     id: 'perplexity',
     name: 'Perplexity',
-    icon: '❓',
+    icon: <PerplexityIcon />,
     description: 'Fast online models',
     keyPrefix: 'pplx-',
     keyPlaceholder: 'pplx-... (Perplexity API key)',
@@ -96,7 +168,7 @@ const aiProviders: AIProvider[] = [
   {
     id: 'groq',
     name: 'Groq',
-    icon: '🚀',
+    icon: <GroqIcon />,
     description: 'Extremely fast inference',
     keyPrefix: 'gsk-',
     keyPlaceholder: 'gsk-... (Groq API key)',
@@ -402,7 +474,7 @@ export const AIKeyManager: React.FC = () => {
                   )}
                   <CardHeader className="pb-3">
                     <div className="flex items-center gap-3">
-                      <div className="text-2xl p-2 bg-white/50 dark:bg-black/20 rounded-xl border border-white/30 dark:border-white/10 group-hover:scale-110 transition-transform duration-200">
+                      <div className="p-2 bg-white/50 dark:bg-black/20 rounded-xl border border-white/30 dark:border-white/10 group-hover:scale-110 transition-transform duration-200 text-slate-700 dark:text-slate-200">
                         {provider.icon}
                       </div>
                       <div className="flex-1 min-w-0">
@@ -648,7 +720,7 @@ export const AIKeyManager: React.FC = () => {
                         {aiProviders.map((provider) => (
                           <SelectItem key={provider.id} value={provider.id} className="rounded-lg my-1 hover:bg-slate-50 dark:hover:bg-slate-700/50">
                             <div className="flex items-center gap-3 py-1">
-                              <div className="text-xl">{provider.icon}</div>
+                              <div className="text-slate-700 dark:text-slate-200">{provider.icon}</div>
                               <div>
                                 <div className="font-medium">{provider.name}</div>
                                 <div className="text-xs text-slate-500 dark:text-slate-400">{provider.description}</div>

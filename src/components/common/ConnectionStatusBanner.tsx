@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from 'react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { WifiOff, AlertTriangle, X } from 'lucide-react';
@@ -86,12 +88,14 @@ export const useConnectionStatus = () => {
     firebaseConnected: boolean;
     usingMockData: boolean;
   }>({
-    online: navigator.onLine,
+    online: typeof navigator !== 'undefined' ? navigator.onLine : true,
     firebaseConnected: true,
     usingMockData: false
   });
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
     const handleOnline = () => setStatus(prev => ({ ...prev, online: true }));
     const handleOffline = () => setStatus(prev => ({ ...prev, online: false }));
 

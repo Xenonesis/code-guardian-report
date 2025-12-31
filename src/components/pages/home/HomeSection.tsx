@@ -1,3 +1,5 @@
+"use client";
+
 import { Suspense, lazy, useState, useCallback } from 'react';
 import { PageLayout } from '@/components/layout/PageLayout';
 import { HomeHero } from '@/components/pages/home/HomeHero';
@@ -10,8 +12,25 @@ import { useNavigation } from '@/lib/navigation-context';
 import { logger } from '@/utils/logger';
 import type { Theme } from '@/hooks/useDarkMode';
 
-// Lazy load heavy components for better performance
-const FloatingChatBot = lazy(() => import('@/components/ai/FloatingChatBot'));
+// Retry wrapper for dynamic imports that may fail during dev server startup
+const retryImport = <T,>(importFn: () => Promise<T>, retries = 3, delay = 1000): Promise<T> => {
+  return new Promise((resolve, reject) => {
+    importFn()
+      .then(resolve)
+      .catch((error) => {
+        if (retries > 0) {
+          setTimeout(() => {
+            retryImport(importFn, retries - 1, delay).then(resolve).catch(reject);
+          }, delay);
+        } else {
+          reject(error);
+        }
+      });
+  });
+};
+
+// Lazy load heavy components for better performance with retry logic
+const FloatingChatBot = lazy(() => retryImport(() => import('@/components/ai/FloatingChatBot')));
 const StorageStatus = lazy(() => import('@/components/firebase/StorageStatus'));
 const AnalysisHistoryModal = lazy(() => import('@/components/analysis/AnalysisHistoryModal'));
 

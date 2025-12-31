@@ -91,7 +91,7 @@ class PushNotificationService {
 
   private async sendSubscriptionToServer(subscription: PushSubscription): Promise<void> {
     // Skip API calls in development mode or when no backend is available
-    if (import.meta.env.DEV || window.location.hostname === 'localhost') {
+    if (process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost') {
       logger.debug('Push Subscription (dev mode):', {
         subscription: subscription.toJSON(),
         userAgent: navigator.userAgent,
@@ -121,7 +121,7 @@ class PushNotificationService {
     if (!this.subscription) return;
 
     // Skip API calls in development mode or when no backend is available
-    if (import.meta.env.DEV || window.location.hostname === 'localhost') {
+    if (process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost') {
       logger.debug('Push Unsubscribe (dev mode):', { endpoint: this.subscription.endpoint });
       return;
     }
@@ -159,7 +159,7 @@ class PushNotificationService {
     };
 
     // Skip API calls in development mode or when no backend is available
-    if (import.meta.env.DEV || window.location.hostname === 'localhost') {
+    if (process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost') {
       logger.debug('Test Notification (dev mode):', {
         subscription: this.subscription.toJSON(),
         payload
@@ -185,7 +185,7 @@ class PushNotificationService {
 
   async scheduleNotification(payload: NotificationPayload, delay: number): Promise<void> {
     // Skip API calls in development mode or when no backend is available
-    if (import.meta.env.DEV || window.location.hostname === 'localhost') {
+    if (process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost') {
       logger.debug('Schedule Notification (dev mode):', {
         subscription: this.subscription?.toJSON(),
         payload,

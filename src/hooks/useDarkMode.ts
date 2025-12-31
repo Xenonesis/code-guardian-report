@@ -19,6 +19,7 @@ const THEME_STORAGE_KEY = 'code-guardian-theme';
 export const useDarkMode = (): UseDarkModeReturn => {
   // Get initial theme from localStorage or default to 'system'
   const [theme, setThemeState] = useState<Theme>(() => {
+    if (typeof window === 'undefined') return 'system';
     try {
       const saved = localStorage.getItem(THEME_STORAGE_KEY);
       if (saved && ['light', 'dark', 'system'].includes(saved)) {
@@ -35,6 +36,7 @@ export const useDarkMode = (): UseDarkModeReturn => {
 
   // Get system preference
   const getSystemPreference = useCallback((): boolean => {
+    if (typeof window === 'undefined') return false;
     return window.matchMedia('(prefers-color-scheme: dark)').matches;
   }, []);
 
@@ -48,6 +50,7 @@ export const useDarkMode = (): UseDarkModeReturn => {
 
   // Apply theme to document
   const applyTheme = useCallback((shouldBeDark: boolean) => {
+    if (typeof document === 'undefined') return;
     const root = document.documentElement;
     if (shouldBeDark) {
       root.classList.add('dark');
@@ -76,6 +79,7 @@ export const useDarkMode = (): UseDarkModeReturn => {
   // Listen to system preference changes when theme is 'system'
   useEffect(() => {
     if (theme !== 'system') return;
+    if (typeof window === 'undefined') return;
 
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     

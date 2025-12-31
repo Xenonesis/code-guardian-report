@@ -54,8 +54,11 @@ class PWAAnalyticsService {
     this.sessionId = this.generateSessionId();
     this.sessionStart = Date.now();
     this.analytics = this.loadAnalytics();
-    this.setupEventListeners();
-    this.startPerformanceMonitoring();
+    // Only setup browser-specific listeners on client
+    if (typeof window !== 'undefined') {
+      this.setupEventListeners();
+      this.startPerformanceMonitoring();
+    }
   }
 
   // Track PWA installation
@@ -240,6 +243,9 @@ class PWAAnalyticsService {
 
   // Setup event listeners
   private setupEventListeners(): void {
+    // Guard for server-side rendering
+    if (typeof window === 'undefined' || typeof document === 'undefined') return;
+    
     // Track page visibility changes
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) {
@@ -267,6 +273,9 @@ class PWAAnalyticsService {
 
   // Start performance monitoring
   private startPerformanceMonitoring(): void {
+    // Guard for server-side rendering
+    if (typeof window === 'undefined' || typeof document === 'undefined') return;
+    
     // Track performance metrics every 30 seconds
     setInterval(() => {
       this.trackCachePerformance();
@@ -309,6 +318,9 @@ class PWAAnalyticsService {
   }
 
   private loadAnalytics(): PWAAnalytics {
+    if (typeof window === 'undefined') {
+      return this.createEmptyAnalytics();
+    }
     try {
       const stored = localStorage.getItem(this.STORAGE_KEY);
       if (stored) {
@@ -321,6 +333,7 @@ class PWAAnalyticsService {
   }
 
   private saveAnalytics(): void {
+    if (typeof window === 'undefined') return;
     try {
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.analytics));
     } catch (error) {
@@ -329,6 +342,7 @@ class PWAAnalyticsService {
   }
 
   private saveEvents(): void {
+    if (typeof window === 'undefined') return;
     try {
       // Keep only last 1000 events to prevent storage overflow
       const eventsToSave = this.events.slice(-1000);

@@ -16,16 +16,19 @@ interface PWAShareButtonProps {
 export function PWAShareButton({ 
   title = 'Code Guardian Enterprise',
   text = 'Check out this AI-powered security analysis platform',
-  url = window.location.href,
+  url,
   className,
   variant = 'outline',
   size = 'default'
 }: PWAShareButtonProps) {
   const { shareContent } = usePWA();
   const [copied, setCopied] = React.useState(false);
+  
+  // Get current URL on client side only
+  const shareUrl = url || (typeof window !== 'undefined' ? window.location.href : '');
 
   const handleShare = async () => {
-    const shareData = { title, text, url };
+    const shareData = { title, text, url: shareUrl };
     
     // Try native share first
     const shared = await shareContent(shareData);
@@ -33,7 +36,7 @@ export function PWAShareButton({
     if (!shared) {
       // Fallback to clipboard
       try {
-        await navigator.clipboard.writeText(url);
+        await navigator.clipboard.writeText(shareUrl);
         setCopied(true);
         toast.success('Link copied to clipboard!');
         setTimeout(() => setCopied(false), 2000);

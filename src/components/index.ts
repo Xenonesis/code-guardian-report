@@ -32,6 +32,10 @@ export { PWAStatus } from './pwa/PWAStatus';
 export { PWAFeatureShowcase } from './pwa/PWAFeatureShowcase';
 export { PWAShareButton } from './pwa/PWAShareButton';
 export { OfflineIndicator } from './pwa/OfflineIndicator';
+export { PWAManager } from './pwa/PWAManager';
+export { PWAMobileBanner } from './pwa/PWAMobileBanner';
+export { PWAQuickActions } from './pwa/PWAQuickActions';
+export { PWADashboard } from './pwa/PWADashboard';
 
 // Firebase components
 export { FirebaseAnalyticsDashboard } from './firebase/FirebaseAnalyticsDashboard';
