@@ -3,9 +3,13 @@
  * Handles webhook processing, background tasks, and scheduled jobs
  */
 
-import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import * as crypto from 'crypto';
+
+import { onRequest } from 'firebase-functions/v2/https';
+import { onDocumentCreated } from 'firebase-functions/v2/firestore';
+import { onSchedule } from 'firebase-functions/v2/scheduler';
+import * as logger from 'firebase-functions/logger';
 
 // Initialize Firebase Admin
 admin.initializeApp();
@@ -16,7 +20,7 @@ const db = admin.firestore();
  * Webhook Handler
  * Processes incoming webhooks from GitHub/GitLab
  */
-export const processWebhook = functions.https.onRequest(async (req, res) => {
+export const processWebhook = onRequest(async (req, res) => {
   // Only accept POST requests
   if (req.method !== 'POST') {
     res.status(405).send('Method Not Allowed');
@@ -121,7 +125,7 @@ export const processWebhook = functions.https.onRequest(async (req, res) => {
       rulesTriggered: rulesToExecute.length,
     });
   } catch (error) {
-    functions.logger.error('Webhook processing error:', error);
+    logger.error('Webhook processing error:', error);
     res.status(500).send('Internal server error');
   }
 });
@@ -130,11 +134,17 @@ export const processWebhook = functions.https.onRequest(async (req, res) => {
  * Background Task Processor
  * Processes webhook tasks (scans, notifications, etc.)
  */
-export const processWebhookTask = functions.firestore
-  .document('webhookTasks/{taskId}')
-  .onCreate(async (snap, context) => {
+export const processWebhookTask = onDocumentCreated('webhookTasks/{taskId}', async (event) => {
+    const snap = event.data;
+    if (!snap) {
+      logger.warn('processWebhookTask triggered with no snapshot data');
+      return;
+    }
+
     const task = snap.data();
-    const taskId = context.params.taskId;
+    // keep taskId available for debugging/logging
+    const taskId = event.params.taskId;
+    logger.debug('Processing webhook task', { taskId });
 
     try {
       // Update task status
@@ -154,7 +164,7 @@ export const processWebhookTask = functions.firestore
         completedAt: admin.firestore.FieldValue.serverTimestamp(),
       });
     } catch (error) {
-      functions.logger.error('Task processing error:', error);
+      logger.error('Task processing error:', error);
       
       // Mark task as failed
       await snap.ref.update({
@@ -169,10 +179,7 @@ export const processWebhookTask = functions.firestore
  * Scheduled cleanup of old webhook logs
  * Runs daily at midnight
  */
-export const cleanupWebhookLogs = functions.pubsub
-  .schedule('0 0 * * *')
-  .timeZone('UTC')
-  .onRun(async (context) => {
+export const cleanupWebhookLogs = onSchedule({ schedule: '0 0 * * *', timeZone: 'UTC' }, async () => {
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
@@ -186,17 +193,14 @@ export const cleanupWebhookLogs = functions.pubsub
     });
 
     await batch.commit();
-    functions.logger.info(`Cleaned up ${snapshot.size} old webhook logs`);
+    logger.info(`Cleaned up ${snapshot.size} old webhook logs`);
   });
 
 /**
  * Scheduled cleanup of completed tasks
  * Runs daily at 1 AM
  */
-export const cleanupCompletedTasks = functions.pubsub
-  .schedule('0 1 * * *')
-  .timeZone('UTC')
-  .onRun(async (context) => {
+export const cleanupCompletedTasks = onSchedule({ schedule: '0 1 * * *', timeZone: 'UTC' }, async () => {
     const sevenDaysAgo = new Date();
     sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 
@@ -210,7 +214,7 @@ export const cleanupCompletedTasks = functions.pubsub
     });
 
     await batch.commit();
-    functions.logger.info(`Cleaned up ${snapshot.size} completed tasks`);
+    logger.info(`Cleaned up ${snapshot.size} completed tasks`);
   });
 
 /**
@@ -245,7 +249,7 @@ function parseWebhookEvent(payload: any, provider: string): any | null {
     }
     return null;
   } catch (error) {
-    functions.logger.error('Failed to parse webhook event:', error);
+    logger.error('Failed to parse webhook event:', error);
     return null;
   }
 }
@@ -427,16 +431,16 @@ async function executeRuleActions(rule: any, event: any): Promise<void> {
     // Block PR (would require GitHub API integration)
     if (actions.blockPR && event.pullRequest) {
       // This would integrate with GitHub/GitLab API to add a blocking status
-      functions.logger.info('PR blocking requested:', event.pullRequest.url);
+      logger.info('PR blocking requested:', event.pullRequest.url);
     }
 
     // Create issue (would require GitHub API integration)
     if (actions.createIssue) {
       // This would integrate with GitHub/GitLab API to create an issue
-      functions.logger.info('Issue creation requested for:', event.repository.name);
+      logger.info('Issue creation requested for:', event.repository.name);
     }
   } catch (error) {
-    functions.logger.error('Failed to execute rule actions:', error);
+    logger.error('Failed to execute rule actions:', error);
     throw error;
   }
 }
