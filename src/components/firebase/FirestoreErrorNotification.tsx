@@ -1,3 +1,5 @@
+"use client";
+
 // src/components/FirestoreErrorNotification.tsx
 import React, { useState, useEffect, useCallback } from 'react';
 import { FirestoreErrorInfo, getErrorRecoveryAction } from '../../lib/firestore-error-handler';
@@ -186,7 +188,7 @@ export const FirestoreErrorNotification: React.FC = () => {
                   Error while {getOperationLabel(error.operation)}
                 </p>
                 {/* Only show technical details in development */}
-                {import.meta.env.DEV && (
+                {process.env.NODE_ENV === 'development' && (
                   <p className="text-xs mt-1.5 font-mono opacity-50 truncate text-gray-500 dark:text-gray-400">
                     {error.docPath}
                   </p>

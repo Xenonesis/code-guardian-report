@@ -105,7 +105,7 @@ export const toastNotifications = {
 
   // Mock data warning (development only)
   mockDataWarning: () => {
-    if (import.meta.env.DEV) {
+    if (process.env.NODE_ENV === 'development') {
       showToast('warning', 'Using Sample Data', 'Firebase unavailable. Displaying sample data for testing.', 6000);
     }
   },

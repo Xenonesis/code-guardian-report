@@ -1,3 +1,5 @@
+"use client";
+
 import { Suspense, lazy, useState, useCallback } from 'react';
 import { PageLayout } from '@/components/layout/PageLayout';
 import { HomeHero } from '@/components/pages/home/HomeHero';

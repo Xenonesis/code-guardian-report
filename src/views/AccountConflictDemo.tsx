@@ -11,7 +11,7 @@ type Provider = 'google.com' | 'github.com' | 'password' | 'facebook.com' | 'twi
 export const AccountConflictDemo: React.FC = () => {
   // Prevent access in production
   useEffect(() => {
-    if (import.meta.env.PROD) {
+    if (process.env.NODE_ENV === 'production') {
       logger.warn('⚠️ Demo pages are not available in production');
       window.location.href = '/';
     }

@@ -73,8 +73,10 @@ export class AnalysisStorageService {
 
   constructor() {
     this.sessionId = this.generateSessionId();
-    this.initializeStorage();
-    this.setupStorageListener();
+    if (typeof window !== 'undefined') {
+      this.initializeStorage();
+      this.setupStorageListener();
+    }
   }
 
   /**

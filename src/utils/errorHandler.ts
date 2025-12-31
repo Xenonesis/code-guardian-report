@@ -30,6 +30,9 @@ class ErrorHandler {
    * Setup global error handlers for uncaught errors
    */
   private setupGlobalErrorHandlers(): void {
+    // Guard for server-side rendering
+    if (typeof window === 'undefined') return;
+    
     // Handle uncaught promise rejections
     window.addEventListener('unhandledrejection', (event) => {
       logger.error('Unhandled Promise Rejection', {

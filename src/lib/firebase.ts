@@ -12,34 +12,32 @@ import {
 import { getAuth, GoogleAuthProvider, GithubAuthProvider, connectAuthEmulator } from "firebase/auth";
 import { logger } from '@/utils/logger';
 
-// Firebase configuration using .env.local variables
-const env = (import.meta as any).env || {};
-
+// Firebase configuration using environment variables
 const firebaseConfig = {
-  apiKey: env.VITE_FIREBASE_API_KEY || 'mock-api-key',
-  authDomain: env.VITE_FIREBASE_AUTH_DOMAIN || 'mock-auth-domain',
-  projectId: env.VITE_FIREBASE_PROJECT_ID || 'mock-project-id',
-  storageBucket: env.VITE_FIREBASE_STORAGE_BUCKET || 'mock-storage-bucket',
-  messagingSenderId: env.VITE_FIREBASE_MESSAGING_SENDER_ID || 'mock-sender-id',
-  appId: env.VITE_FIREBASE_APP_ID || 'mock-app-id',
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || 'mock-api-key',
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || 'mock-auth-domain',
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || 'mock-project-id',
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || 'mock-storage-bucket',
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || 'mock-sender-id',
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || 'mock-app-id',
 };
 
 // Validate Firebase configuration
 const requiredEnvVars = [
-  'VITE_FIREBASE_API_KEY',
-  'VITE_FIREBASE_AUTH_DOMAIN',
-  'VITE_FIREBASE_PROJECT_ID',
-  'VITE_FIREBASE_STORAGE_BUCKET',
-  'VITE_FIREBASE_MESSAGING_SENDER_ID',
-  'VITE_FIREBASE_APP_ID'
+  'NEXT_PUBLIC_FIREBASE_API_KEY',
+  'NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN',
+  'NEXT_PUBLIC_FIREBASE_PROJECT_ID',
+  'NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET',
+  'NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID',
+  'NEXT_PUBLIC_FIREBASE_APP_ID'
 ];
 
-const missingVars = requiredEnvVars.filter(varName => !env[varName]);
+const missingVars = requiredEnvVars.filter(varName => !process.env[varName]);
 // Only throw if we are not in a test environment (checking for mock values)
-if (missingVars.length > 0 && firebaseConfig.apiKey === 'mock-api-key' && env.NODE_ENV !== 'test' && !(global as any).window?.isTest) {
+if (missingVars.length > 0 && firebaseConfig.apiKey === 'mock-api-key' && process.env.NODE_ENV !== 'test' && typeof window !== 'undefined' && !(window as any).isTest) {
   // In test environment we might accept mocks, but let's log warning
   logger.warn('Missing Firebase environment variables, using mocks:', missingVars);
-} else if (missingVars.length > 0 && env.NODE_ENV !== 'test') {
+} else if (missingVars.length > 0 && process.env.NODE_ENV !== 'test') {
    // If we are not in test and not using mocks (which shouldn't happen with above logic but for safety)
    // Actually the above logic sets mocks if env is missing.
    // So we just log a warning if we are using mocks in what might be production?

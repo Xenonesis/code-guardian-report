@@ -21,7 +21,7 @@ class PWAIntegrationService {
   private installPrompt: any = null;
   private status: PWAStatus = {
     isInstalled: false,
-    isOnline: navigator.onLine,
+    isOnline: typeof navigator !== 'undefined' ? navigator.onLine : true,
     hasNotificationPermission: false,
     backgroundSyncSupported: false,
     serviceWorkerReady: false,
@@ -29,6 +29,9 @@ class PWAIntegrationService {
   };
 
   async init(): Promise<void> {
+    // Guard for server-side rendering
+    if (typeof window === 'undefined') return;
+    
     // Initialize all services
     await Promise.all([
       this.initServiceWorker(),
@@ -71,6 +74,9 @@ class PWAIntegrationService {
   }
 
   private setupEventListeners(): void {
+    // Guard for server-side rendering
+    if (typeof window === 'undefined') return;
+    
     // Install prompt
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
@@ -168,7 +174,7 @@ class PWAIntegrationService {
       const report = await pwaAnalyticsService.generateReport();
       
       // Skip API calls in development mode or when no backend is available
-      if (import.meta.env.DEV || window.location.hostname === 'localhost') {
+      if (process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost') {
         logger.debug('PWA Analytics Sync (dev mode):', report);
         return;
       }

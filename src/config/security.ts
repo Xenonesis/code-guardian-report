@@ -3,7 +3,7 @@
  * Provides security headers and CSP rules
  */
 
-const IS_PRODUCTION = import.meta.env.PROD;
+const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
 export const SECURITY_HEADERS = {
   // Prevent clickjacking attacks

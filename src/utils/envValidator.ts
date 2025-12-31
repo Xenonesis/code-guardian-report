@@ -7,16 +7,16 @@ import { logger } from './logger';
 
 interface EnvConfig {
   // Firebase Configuration (required for production)
-  VITE_FIREBASE_API_KEY?: string;
-  VITE_FIREBASE_AUTH_DOMAIN?: string;
-  VITE_FIREBASE_PROJECT_ID?: string;
-  VITE_FIREBASE_STORAGE_BUCKET?: string;
-  VITE_FIREBASE_MESSAGING_SENDER_ID?: string;
-  VITE_FIREBASE_APP_ID?: string;
-  VITE_FIREBASE_MEASUREMENT_ID?: string;
+  NEXT_PUBLIC_FIREBASE_API_KEY?: string;
+  NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN?: string;
+  NEXT_PUBLIC_FIREBASE_PROJECT_ID?: string;
+  NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET?: string;
+  NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID?: string;
+  NEXT_PUBLIC_FIREBASE_APP_ID?: string;
+  NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID?: string;
 
   // PWA Configuration (optional)
-  VITE_VAPID_PUBLIC_KEY?: string;
+  NEXT_PUBLIC_VAPID_PUBLIC_KEY?: string;
 
   // Environment flags
   DEV: boolean;
@@ -29,7 +29,19 @@ class EnvironmentValidator {
   private readonly config: EnvConfig;
 
   private constructor() {
-    this.config = import.meta.env as EnvConfig;
+    this.config = {
+      NEXT_PUBLIC_FIREBASE_API_KEY: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+      NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+      NEXT_PUBLIC_FIREBASE_PROJECT_ID: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+      NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+      NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+      NEXT_PUBLIC_FIREBASE_APP_ID: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+      NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
+      NEXT_PUBLIC_VAPID_PUBLIC_KEY: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
+      DEV: process.env.NODE_ENV === 'development',
+      PROD: process.env.NODE_ENV === 'production',
+      MODE: process.env.NODE_ENV || 'development',
+    };
   }
 
   static getInstance(): EnvironmentValidator {
@@ -48,12 +60,12 @@ class EnvironmentValidator {
     // Check critical Firebase variables in production
     if (this.config.PROD) {
       const requiredFirebaseVars = [
-        'VITE_FIREBASE_API_KEY',
-        'VITE_FIREBASE_AUTH_DOMAIN',
-        'VITE_FIREBASE_PROJECT_ID',
-        'VITE_FIREBASE_STORAGE_BUCKET',
-        'VITE_FIREBASE_MESSAGING_SENDER_ID',
-        'VITE_FIREBASE_APP_ID',
+        'NEXT_PUBLIC_FIREBASE_API_KEY',
+        'NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN',
+        'NEXT_PUBLIC_FIREBASE_PROJECT_ID',
+        'NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET',
+        'NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID',
+        'NEXT_PUBLIC_FIREBASE_APP_ID',
       ] as const;
 
       for (const varName of requiredFirebaseVars) {
@@ -64,8 +76,8 @@ class EnvironmentValidator {
     }
 
     // Log warnings for optional but recommended variables
-    if (!this.config.VITE_VAPID_PUBLIC_KEY && this.config.PROD) {
-      logger.warn('VITE_VAPID_PUBLIC_KEY not set - Push notifications will not work');
+    if (!this.config.NEXT_PUBLIC_VAPID_PUBLIC_KEY && this.config.PROD) {
+      logger.warn('NEXT_PUBLIC_VAPID_PUBLIC_KEY not set - Push notifications will not work');
     }
 
     // Throw error if any required variables are missing

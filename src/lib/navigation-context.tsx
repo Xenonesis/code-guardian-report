@@ -1,4 +1,7 @@
+"use client";
+
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
 
 interface NavigationContextType {
   currentSection: string;
@@ -17,21 +20,59 @@ interface NavigationProviderProps {
   children: ReactNode;
 }
 
+// Map section IDs to URL paths
+const sectionToPath: Record<string, string> = {
+  'home': '/',
+  'about': '/about',
+  'history': '/history',
+  'github-analysis': '/github-analysis',
+  'privacy': '/privacy',
+  'terms': '/terms',
+  'help': '/help',
+  'pwa-settings': '/pwa-settings',
+};
+
+// Map URL paths to section IDs
+const pathToSection: Record<string, string> = {
+  '/': 'home',
+  '/about': 'about',
+  '/history': 'history',
+  '/github-analysis': 'github-analysis',
+  '/privacy': 'privacy',
+  '/terms': 'terms',
+  '/help': 'help',
+  '/pwa-settings': 'pwa-settings',
+};
+
 export const NavigationProvider: React.FC<NavigationProviderProps> = ({ children }) => {
-  const [currentSection, setCurrentSection] = useState('home');
+  const router = useRouter();
+  const pathname = usePathname();
+  
+  // Derive currentSection from the URL path
+  const currentSection = pathToSection[pathname] || 'home';
   const [currentTab, setCurrentTab] = useState('upload');
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
+  // Scroll to top on route change
   useEffect(() => {
-    // Use instant scroll - Lenis will handle the smooth animation
-    window.scrollTo({
-      top: 0,
-      behavior: 'instant'
-    });
-  }, [currentSection]);
+    if (typeof window !== 'undefined') {
+      window.scrollTo({
+        top: 0,
+        behavior: 'instant'
+      });
+    }
+  }, [pathname]);
+
+  const setCurrentSection = (section: string) => {
+    // Navigate to the new section using Next.js router
+    const path = sectionToPath[section] || '/';
+    router.push(path);
+  };
 
   const navigateTo = (section: string, tab?: string) => {
-    setCurrentSection(section);
+    // Navigate to the new section using Next.js router
+    const path = sectionToPath[section] || '/';
+    router.push(path);
     if (tab) {
       setCurrentTab(tab);
     }

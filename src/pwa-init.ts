@@ -26,7 +26,7 @@ export async function initializePWA() {
 }
 
 // Auto-initialize when this module is imported (production only)
-if (typeof window !== 'undefined' && import.meta.env.PROD) {
+if (typeof window !== 'undefined' && process.env.NODE_ENV === 'production') {
   // Wait for DOM to be ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initializePWA);

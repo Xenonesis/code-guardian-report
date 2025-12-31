@@ -77,7 +77,7 @@ const SinglePageApp = () => {
           message="Unable to connect to Firebase. Using local storage only."
         />
         {/* Only show mock data warning in development */}
-        {import.meta.env.DEV && (
+        {process.env.NODE_ENV === 'development' && (
           <ConnectionStatusBanner 
             show={usingMockData} 
             type="mock-data"

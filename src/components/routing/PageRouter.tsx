@@ -17,12 +17,12 @@ const AboutSection = lazy(() => import('@/components/pages/about/AboutSection'))
 const PrivacySection = lazy(() => import('@/components/pages/legal/PrivacySection'));
 const TermsSection = lazy(() => import('@/components/pages/legal/TermsSection'));
 const HelpPage = lazy(() => import('@/components/HelpPage').then(m => ({ default: m.HelpPage })));
-const HistoryPage = lazy(() => import('@/pages/HistoryPage').then(m => ({ default: m.HistoryPage })));
-const GitHubAnalysisPage = lazy(() => import('@/pages/GitHubAnalysisPage').then(m => ({ default: m.GitHubAnalysisPage })));
-const AccountConflictDemo = lazy(() => import('@/pages/AccountConflictDemo').then(m => ({ default: m.AccountConflictDemo })));
-const TestAuthConflict = lazy(() => import('@/pages/TestAuthConflict').then(m => ({ default: m.TestAuthConflict })));
-const NotificationTest = lazy(() => import('@/pages/NotificationTest'));
-const PWASettingsPage = lazy(() => import('@/pages/PWASettingsPage').then(m => ({ default: m.PWASettingsPage })));
+const HistoryPage = lazy(() => import('@/views/HistoryPage').then(m => ({ default: m.HistoryPage })));
+const GitHubAnalysisPage = lazy(() => import('@/views/GitHubAnalysisPage').then(m => ({ default: m.GitHubAnalysisPage })));
+const AccountConflictDemo = lazy(() => import('@/views/AccountConflictDemo').then(m => ({ default: m.AccountConflictDemo })));
+const TestAuthConflict = lazy(() => import('@/views/TestAuthConflict').then(m => ({ default: m.TestAuthConflict })));
+const NotificationTest = lazy(() => import('@/views/NotificationTest'));
+const PWASettingsPage = lazy(() => import('@/views/PWASettingsPage').then(m => ({ default: m.PWASettingsPage })));
 
 interface PageRouterProps {
   theme?: Theme;

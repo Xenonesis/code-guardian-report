@@ -1,37 +1,56 @@
-import { useEffect, createContext, useRef as useReactRef } from "react";
-import Lenis from 'lenis';
+"use client";
 
-const LenisContext = createContext<Lenis | null>(null);
+import { useEffect, createContext, useRef as useReactRef, useState } from "react";
+import dynamic from "next/dynamic";
+
+// Dynamically import Lenis only on client
+const LenisContext = createContext<any | null>(null);
 
 interface SmoothScrollProviderProps {
   children: React.ReactNode;
 }
 
 export const SmoothScrollProvider = ({ children }: SmoothScrollProviderProps) => {
-  const lenisRef = useReactRef<Lenis | null>(null);
+  const lenisRef = useReactRef<any | null>(null);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const lenis = new Lenis({
-      lerp: 0.35, // Much higher lerp for faster response (0.35 = snappy, 0.1 = slow)
-      duration: 0.6, // Faster animation duration
-      smoothWheel: true,
-      wheelMultiplier: 1.2, // Increase wheel scroll speed
-      touchMultiplier: 2.0, // Faster touch scrolling on mobile
-      syncTouch: true,
-      infinite: false,
-      easing: (t: number) => 1 - Math.pow(1 - t, 3) // easeOutCubic - fast start, smooth end
+    setMounted(true);
+    
+    // Only load Lenis on client
+    if (typeof window === 'undefined') return;
+    
+    let lenis: any = null;
+    let animationId: number;
+
+    import('lenis').then(({ default: Lenis }) => {
+      lenis = new Lenis({
+        lerp: 0.35,
+        duration: 0.6,
+        smoothWheel: true,
+        wheelMultiplier: 1.2,
+        touchMultiplier: 2.0,
+        syncTouch: true,
+        infinite: false,
+        easing: (t: number) => 1 - Math.pow(1 - t, 3)
+      });
+      lenisRef.current = lenis;
+
+      function raf(time: number) {
+        lenis.raf(time);
+        animationId = requestAnimationFrame(raf);
+      }
+
+      animationId = requestAnimationFrame(raf);
     });
-    lenisRef.current = lenis;
-
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-
-    requestAnimationFrame(raf);
 
     return () => {
-      lenis.destroy();
+      if (lenis) {
+        lenis.destroy();
+      }
+      if (animationId) {
+        cancelAnimationFrame(animationId);
+      }
     };
   }, []);
 

@@ -3,8 +3,8 @@
  * Automatically removes console.log in production while preserving errors and warnings
  */
 
-const IS_DEV = (import.meta as any).env?.DEV ?? true;
-const IS_PROD = (import.meta as any).env?.PROD ?? false;
+const IS_DEV = process.env.NODE_ENV === 'development';
+const IS_PROD = process.env.NODE_ENV === 'production';
 
 export enum LogLevel {
   DEBUG = 'DEBUG',
@@ -26,10 +26,21 @@ interface LogEntry {
   userAgent?: string;
 }
 
-// Generate a session ID for tracking
-const SESSION_ID = typeof crypto !== 'undefined' 
-  ? crypto.randomUUID?.() || Math.random().toString(36).substring(2)
-  : Math.random().toString(36).substring(2);
+// Generate a session ID for tracking (lazy initialization)
+const getSessionId = (): string => {
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+    return crypto.randomUUID();
+  }
+  return Math.random().toString(36).substring(2);
+};
+
+let SESSION_ID: string | null = null;
+const getOrCreateSessionId = (): string => {
+  if (!SESSION_ID) {
+    SESSION_ID = getSessionId();
+  }
+  return SESSION_ID;
+};
 
 class Logger {
   private static instance: Logger;
@@ -58,7 +69,7 @@ class Logger {
       timestamp: new Date().toISOString(),
       data,
       stack: level === LogLevel.ERROR || level === LogLevel.FATAL ? new Error().stack : undefined,
-      sessionId: SESSION_ID,
+      sessionId: getOrCreateSessionId(),
       url: typeof window !== 'undefined' ? window.location.href : undefined,
       userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : undefined,
     };

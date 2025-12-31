@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * Analysis History Page
  * Shows user's personal analysis history from Firebase

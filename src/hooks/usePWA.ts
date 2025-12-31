@@ -17,7 +17,7 @@ export interface PWAMetrics {
 export function usePWA() {
   const [status, setStatus] = useState<PWAStatus>({
     isInstalled: false,
-    isOnline: navigator.onLine,
+    isOnline: typeof navigator !== 'undefined' ? navigator.onLine : true,
     hasNotificationPermission: false,
     backgroundSyncSupported: false,
     serviceWorkerReady: false,
@@ -190,10 +190,12 @@ export function usePWA() {
 }
 
 export function useOfflineStorage() {
-  const [isOnline, setIsOnline] = useState(navigator.onLine);
+  const [isOnline, setIsOnline] = useState(typeof navigator !== 'undefined' ? navigator.onLine : true);
   const [pendingChanges, setPendingChanges] = useState(0);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
     const handleOnline = () => {
       setIsOnline(true);
       // Trigger sync when back online
@@ -318,6 +320,27 @@ export function usePWAAnalytics() {
 
 export function usePWACapabilities() {
   const capabilities = useMemo(() => {
+    // SSR guard - return empty capabilities during server-side rendering
+    if (typeof window === 'undefined' || typeof navigator === 'undefined') {
+      return {
+        install: false,
+        notifications: false,
+        backgroundSync: false,
+        share: false,
+        clipboard: false,
+        vibration: false,
+        bluetooth: false,
+        usb: false,
+        geolocation: false,
+        camera: false,
+        storage: false,
+        indexedDB: false,
+        cacheAPI: false,
+        webWorkers: false,
+        webSockets: false
+      };
+    }
+    
     let backgroundSyncSupported = false;
     try {
       backgroundSyncSupported = 'sync' in ServiceWorkerRegistration.prototype;
@@ -350,14 +373,16 @@ export function usePWACapabilities() {
 // Hook for monitoring network quality
 export function useNetworkStatus() {
   const [networkStatus, setNetworkStatus] = useState({
-    isOnline: navigator.onLine,
-    effectiveType: (navigator as any).connection?.effectiveType || 'unknown',
-    downlink: (navigator as any).connection?.downlink || 0,
-    rtt: (navigator as any).connection?.rtt || 0,
-    saveData: (navigator as any).connection?.saveData || false
+    isOnline: typeof navigator !== 'undefined' ? navigator.onLine : true,
+    effectiveType: typeof navigator !== 'undefined' ? (navigator as any).connection?.effectiveType || 'unknown' : 'unknown',
+    downlink: typeof navigator !== 'undefined' ? (navigator as any).connection?.downlink || 0 : 0,
+    rtt: typeof navigator !== 'undefined' ? (navigator as any).connection?.rtt || 0 : 0,
+    saveData: typeof navigator !== 'undefined' ? (navigator as any).connection?.saveData || false : false
   });
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
     const updateNetworkStatus = () => {
       const connection = (navigator as any).connection;
       setNetworkStatus({

@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { Shield, Home, Menu, X, Info, Lock, Award, User, LogOut, History, Github, ChevronDown, Sparkles } from 'lucide-react';

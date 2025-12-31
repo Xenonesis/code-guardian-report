@@ -64,9 +64,11 @@ class PWAAnalyticsService {
   };
 
   private sessionStart = Date.now();
-  private isOnline = navigator.onLine;
+  private isOnline = typeof navigator !== 'undefined' ? navigator.onLine : true;
 
   async init(): Promise<void> {
+    if (typeof window === 'undefined') return;
+    
     this.loadStoredMetrics();
     this.setupEventListeners();
     this.trackLaunch();
@@ -349,7 +351,7 @@ class PWAAnalyticsService {
 
   private async sendAnalytics(event: string, data?: any): Promise<void> {
     // Skip API calls in development mode or when no backend is available
-    if (import.meta.env.DEV || window.location.hostname === 'localhost') {
+    if (process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost') {
       logger.debug('PWA Analytics (dev mode):', { event, data, timestamp: Date.now(), session: this.getSessionId() });
       return;
     }

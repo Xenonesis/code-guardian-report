@@ -27,10 +27,16 @@ class EnhancedBackgroundSyncService {
   private retryTimeouts: Map<string, NodeJS.Timeout> = new Map();
 
   constructor() {
-    this.initializeService();
+    // Only initialize on client side
+    if (typeof window !== 'undefined') {
+      this.initializeService();
+    }
   }
 
   private async initializeService() {
+    // Guard for SSR
+    if (typeof window === 'undefined') return;
+    
     // Load pending tasks from IndexedDB
     await this.loadPendingTasks();
     
@@ -320,7 +326,7 @@ class EnhancedBackgroundSyncService {
   // API calls for actual sync operations
   private async uploadChunk(chunk: any, index: number, taskId: string): Promise<void> {
     // Skip API calls in development mode
-    if (import.meta.env.DEV) {
+    if (process.env.NODE_ENV === 'development') {
       logger.debug('Upload Chunk (dev mode):', { chunk, index, taskId });
       return;
     }
@@ -338,7 +344,7 @@ class EnhancedBackgroundSyncService {
 
   private async finalizeFileUpload(taskId: string, metadata: any): Promise<void> {
     // Skip API calls in development mode
-    if (import.meta.env.DEV) {
+    if (process.env.NODE_ENV === 'development') {
       logger.debug('Finalize File Upload (dev mode):', { taskId, metadata });
       return;
     }
@@ -356,7 +362,7 @@ class EnhancedBackgroundSyncService {
 
   private async uploadAnalysisData(data: any): Promise<void> {
     // Skip API calls in development mode
-    if (import.meta.env.DEV) {
+    if (process.env.NODE_ENV === 'development') {
       logger.debug('Upload Analysis Data (dev mode):', data);
       return;
     }
@@ -374,7 +380,7 @@ class EnhancedBackgroundSyncService {
 
   private async uploadUserPreferences(preferences: any, deviceId: string): Promise<void> {
     // Skip API calls in development mode
-    if (import.meta.env.DEV) {
+    if (process.env.NODE_ENV === 'development') {
       logger.debug('Upload User Preferences (dev mode):', { preferences, deviceId });
       return;
     }
@@ -392,7 +398,7 @@ class EnhancedBackgroundSyncService {
 
   private async fetchServerData(id: string): Promise<any> {
     // Skip API calls in development mode
-    if (import.meta.env.DEV) {
+    if (process.env.NODE_ENV === 'development') {
       logger.debug('Fetch Server Data (dev mode):', { id });
       return null;
     }

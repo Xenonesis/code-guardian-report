@@ -18,7 +18,7 @@ interface TestPageProps {
 export const TestPage = ({ onBack }: TestPageProps) => {
   // Prevent access in production
   useEffect(() => {
-    if (import.meta.env.PROD) {
+    if (process.env.NODE_ENV === 'production') {
       logger.warn('⚠️ Test pages are not available in production');
       window.location.href = '/';
     }

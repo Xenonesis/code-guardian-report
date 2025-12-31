@@ -25,7 +25,7 @@ export const useErrorHandler = () => {
     });
 
     // In production, send to error tracking service
-    if (import.meta.env.PROD) {
+    if (process.env.NODE_ENV === 'production') {
       // Example: Sentry.captureException(error, { contexts: { custom: context } });
     }
   }, []);

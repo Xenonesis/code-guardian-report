@@ -27,11 +27,13 @@ export const FirebaseAnalyticsDashboard = ({
   
   const [analysisHistory, setAnalysisHistory] = useState<FirebaseAnalysisData[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [isOnline, setIsOnline] = useState(navigator.onLine);
+  const [isOnline, setIsOnline] = useState(typeof navigator !== 'undefined' ? navigator.onLine : true);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedAnalysis, setSelectedAnalysis] = useState<FirebaseAnalysisData | null>(null);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
     const handleOnline = () => setIsOnline(true);
     const handleOffline = () => setIsOnline(false);
     

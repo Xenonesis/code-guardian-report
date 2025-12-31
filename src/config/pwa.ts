@@ -1,6 +1,34 @@
 // PWA Configuration
 // Production-ready configuration for PWA features
 
+// Feature detection - must be a function to avoid SSR issues
+export const getPWAFeatures = () => {
+  if (typeof window === 'undefined') {
+    // SSR - return false for all features
+    return {
+      serviceWorker: false,
+      pushManager: false,
+      backgroundSync: false,
+      webShare: false,
+      notifications: false,
+      indexedDB: false,
+      cacheAPI: false,
+      persistentStorage: false,
+    };
+  }
+  
+  return {
+    serviceWorker: 'serviceWorker' in navigator,
+    pushManager: 'PushManager' in window,
+    backgroundSync: 'serviceWorker' in navigator && 'sync' in (window.ServiceWorkerRegistration?.prototype || {}),
+    webShare: 'share' in navigator,
+    notifications: 'Notification' in window,
+    indexedDB: 'indexedDB' in window,
+    cacheAPI: 'caches' in window,
+    persistentStorage: 'storage' in navigator && 'persist' in navigator.storage,
+  };
+};
+
 export const PWA_CONFIG = {
   // Service Worker
   serviceWorker: {
@@ -10,7 +38,7 @@ export const PWA_CONFIG = {
 
   // Push Notifications
   pushNotifications: {
-    vapidPublicKey: import.meta.env.VITE_VAPID_PUBLIC_KEY || '',
+    vapidPublicKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY || '',
     userVisibleOnly: true,
   },
 
@@ -57,16 +85,17 @@ export const PWA_CONFIG = {
     },
   },
 
-  // Feature Detection
+  // Feature Detection - NOTE: Use getPWAFeatures() function instead of this static property
+  // This is kept for backward compatibility but will always return false during SSR
   features: {
-    serviceWorker: 'serviceWorker' in navigator,
-    pushManager: 'PushManager' in window,
-    backgroundSync: 'serviceWorker' in navigator && 'sync' in window.ServiceWorkerRegistration.prototype,
-    webShare: 'share' in navigator,
-    notifications: 'Notification' in window,
-    indexedDB: 'indexedDB' in window,
-    cacheAPI: 'caches' in window,
-    persistentStorage: 'storage' in navigator && 'persist' in navigator.storage,
+    serviceWorker: false,
+    pushManager: false,
+    backgroundSync: false,
+    webShare: false,
+    notifications: false,
+    indexedDB: false,
+    cacheAPI: false,
+    persistentStorage: false,
   },
 } as const;
 

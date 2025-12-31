@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState, Suspense, lazy } from 'react';
 import { useAuth } from '@/lib/auth-context';
 import { useNavigation } from '@/lib/navigation-context';

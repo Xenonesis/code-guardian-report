@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import { AnimatedBackground } from '@/components/pages/about/AnimatedBackground';
 import { HeroSection } from '@/components/layout/HeroSection';

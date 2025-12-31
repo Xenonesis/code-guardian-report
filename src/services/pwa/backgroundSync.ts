@@ -23,6 +23,10 @@ class BackgroundSyncService {
   private db: IDBDatabase | null = null;
 
   async init(): Promise<void> {
+    if (typeof indexedDB === 'undefined') {
+      return; // SSR guard
+    }
+    
     return new Promise((resolve, reject) => {
       const request = indexedDB.open(this.dbName, this.dbVersion);
       

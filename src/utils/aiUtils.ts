@@ -20,6 +20,7 @@ interface StoredAPIKey {
  * Check if any AI API keys are configured
  */
 export function hasConfiguredApiKeys(): boolean {
+  if (typeof window === 'undefined') return false;
   try {
     const keys = localStorage.getItem('aiApiKeys');
     const parsedKeys: StoredAPIKey[] = keys ? JSON.parse(keys) : [];
@@ -33,6 +34,7 @@ export function hasConfiguredApiKeys(): boolean {
  * Get configured AI providers (converted to expected format)
  */
 export function getConfiguredProviders(): AIProvider[] {
+  if (typeof window === 'undefined') return [];
   try {
     const keys = localStorage.getItem('aiApiKeys');
     const storedKeys: StoredAPIKey[] = keys ? JSON.parse(keys) : [];
@@ -60,6 +62,7 @@ export function getPrimaryProvider(): AIProvider | null {
  * Check if a specific provider is configured
  */
 export function isProviderConfigured(providerId: string): boolean {
+  if (typeof window === 'undefined') return false;
   try {
     const keys = localStorage.getItem('aiApiKeys');
     const storedKeys: StoredAPIKey[] = keys ? JSON.parse(keys) : [];
@@ -140,6 +143,10 @@ export function truncateForTokenLimit(text: string, maxTokens: number): string {
  * Create a storage event listener for API key changes
  */
 export function createApiKeyChangeListener(callback: () => void): () => void {
+  if (typeof window === 'undefined') {
+    return () => {}; // No-op cleanup function for SSR
+  }
+  
   const handleStorageChange = (event: StorageEvent) => {
     if (event.key === 'aiApiKeys') {
       callback();
