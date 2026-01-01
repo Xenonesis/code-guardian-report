@@ -1,20 +1,37 @@
-import React, { useState, useCallback, useMemo } from 'react';
-import { Search, Filter, X, ChevronDown, SortAsc, SortDesc } from 'lucide-react';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import React, { useState, useCallback, useMemo } from "react";
+import {
+  Search,
+  Filter,
+  X,
+  ChevronDown,
+  SortAsc,
+  SortDesc,
+} from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 
 export interface SearchFilters {
   query: string;
   severity: string[];
   type: string[];
   file: string[];
-  sortBy: 'severity' | 'type' | 'file' | 'line';
-  sortOrder: 'asc' | 'desc';
+  sortBy: "severity" | "type" | "file" | "line";
+  sortOrder: "asc" | "desc";
 }
 
 interface AdvancedSearchProps {
@@ -32,79 +49,105 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
   onFiltersChange,
   availableFilters,
   resultCount,
-  className = '',
+  className = "",
 }) => {
   const [filters, setFilters] = useState<SearchFilters>({
-    query: '',
+    query: "",
     severity: [],
     type: [],
     file: [],
-    sortBy: 'severity',
-    sortOrder: 'desc',
+    sortBy: "severity",
+    sortOrder: "desc",
   });
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
 
-  const updateFilters = useCallback((newFilters: Partial<SearchFilters>) => {
-    const updatedFilters = { ...filters, ...newFilters };
-    setFilters(updatedFilters);
-    onFiltersChange(updatedFilters);
-  }, [filters, onFiltersChange]);
+  const updateFilters = useCallback(
+    (newFilters: Partial<SearchFilters>) => {
+      const updatedFilters = { ...filters, ...newFilters };
+      setFilters(updatedFilters);
+      onFiltersChange(updatedFilters);
+    },
+    [filters, onFiltersChange]
+  );
 
-  const handleQueryChange = useCallback((query: string) => {
-    updateFilters({ query });
-  }, [updateFilters]);
+  const handleQueryChange = useCallback(
+    (query: string) => {
+      updateFilters({ query });
+    },
+    [updateFilters]
+  );
 
-  const handleFilterToggle = useCallback((filterType: keyof Pick<SearchFilters, 'severity' | 'type' | 'file'>, value: string) => {
-    const currentValues = filters[filterType];
-    const newValues = currentValues.includes(value)
-      ? currentValues.filter(v => v !== value)
-      : [...currentValues, value];
-    
-    updateFilters({ [filterType]: newValues });
-  }, [filters, updateFilters]);
+  const handleFilterToggle = useCallback(
+    (
+      filterType: keyof Pick<SearchFilters, "severity" | "type" | "file">,
+      value: string
+    ) => {
+      const currentValues = filters[filterType];
+      const newValues = currentValues.includes(value)
+        ? currentValues.filter((v) => v !== value)
+        : [...currentValues, value];
 
-  const handleSortChange = useCallback((sortBy: SearchFilters['sortBy']) => {
-    updateFilters({ sortBy });
-  }, [updateFilters]);
+      updateFilters({ [filterType]: newValues });
+    },
+    [filters, updateFilters]
+  );
+
+  const handleSortChange = useCallback(
+    (sortBy: SearchFilters["sortBy"]) => {
+      updateFilters({ sortBy });
+    },
+    [updateFilters]
+  );
 
   const handleSortOrderToggle = useCallback(() => {
-    updateFilters({ sortOrder: filters.sortOrder === 'asc' ? 'desc' : 'asc' });
+    updateFilters({ sortOrder: filters.sortOrder === "asc" ? "desc" : "asc" });
   }, [filters.sortOrder, updateFilters]);
 
   const clearAllFilters = useCallback(() => {
     const clearedFilters: SearchFilters = {
-      query: '',
+      query: "",
       severity: [],
       type: [],
       file: [],
-      sortBy: 'severity',
-      sortOrder: 'desc',
+      sortBy: "severity",
+      sortOrder: "desc",
     };
     setFilters(clearedFilters);
     onFiltersChange(clearedFilters);
   }, [onFiltersChange]);
 
-  const removeFilter = useCallback((filterType: keyof Pick<SearchFilters, 'severity' | 'type' | 'file'>, value: string) => {
-    handleFilterToggle(filterType, value);
-  }, [handleFilterToggle]);
+  const removeFilter = useCallback(
+    (
+      filterType: keyof Pick<SearchFilters, "severity" | "type" | "file">,
+      value: string
+    ) => {
+      handleFilterToggle(filterType, value);
+    },
+    [handleFilterToggle]
+  );
 
   const activeFilterCount = useMemo(() => {
-    return filters.severity.length + filters.type.length + filters.file.length + (filters.query ? 1 : 0);
+    return (
+      filters.severity.length +
+      filters.type.length +
+      filters.file.length +
+      (filters.query ? 1 : 0)
+    );
   }, [filters]);
 
   const getSeverityColor = (severity: string) => {
     switch (severity.toLowerCase()) {
-      case 'critical':
-      case 'high':
-        return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200';
-      case 'medium':
-        return 'bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200';
-      case 'low':
-        return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
+      case "critical":
+      case "high":
+        return "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200";
+      case "medium":
+        return "bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200";
+      case "low":
+        return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200";
       default:
-        return 'bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-200';
+        return "bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-200";
     }
   };
 
@@ -112,12 +155,14 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
     <Card className={`w-full ${className}`}>
       <CardHeader className="pb-4">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <CardTitle className="text-lg font-semibold">Search & Filter</CardTitle>
+          <CardTitle className="text-lg font-semibold">
+            Search & Filter
+          </CardTitle>
           <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
             <span>{resultCount} results</span>
             {activeFilterCount > 0 && (
               <Badge variant="secondary" className="text-xs">
-                {activeFilterCount} filter{activeFilterCount !== 1 ? 's' : ''}
+                {activeFilterCount} filter{activeFilterCount !== 1 ? "s" : ""}
               </Badge>
             )}
           </div>
@@ -135,7 +180,7 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
             onFocus={() => setSearchFocused(true)}
             onBlur={() => setSearchFocused(false)}
             className={`pl-10 pr-4 transition-all duration-200 ${
-              searchFocused ? 'ring-2 ring-blue-500 border-blue-500' : ''
+              searchFocused ? "ring-2 ring-blue-500 border-blue-500" : ""
             }`}
             aria-label="Search issues"
           />
@@ -143,7 +188,7 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => handleQueryChange('')}
+              onClick={() => handleQueryChange("")}
               className="absolute right-2 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0"
               aria-label="Clear search"
             >
@@ -155,7 +200,9 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
         {/* Sort Controls */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
           <div className="flex items-center gap-2">
-            <span className="text-sm font-medium text-slate-700 dark:text-slate-300">Sort by:</span>
+            <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
+              Sort by:
+            </span>
             <Select value={filters.sortBy} onValueChange={handleSortChange}>
               <SelectTrigger className="w-32">
                 <SelectValue />
@@ -172,9 +219,9 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
               size="sm"
               onClick={handleSortOrderToggle}
               className="p-2"
-              aria-label={`Sort ${filters.sortOrder === 'asc' ? 'descending' : 'ascending'}`}
+              aria-label={`Sort ${filters.sortOrder === "asc" ? "descending" : "ascending"}`}
             >
-              {filters.sortOrder === 'asc' ? (
+              {filters.sortOrder === "asc" ? (
                 <SortAsc className="h-4 w-4" />
               ) : (
                 <SortDesc className="h-4 w-4" />
@@ -191,7 +238,9 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
             >
               <Filter className="h-4 w-4" />
               Filters
-              <ChevronDown className={`h-4 w-4 transition-transform ${isFilterOpen ? 'rotate-180' : ''}`} />
+              <ChevronDown
+                className={`h-4 w-4 transition-transform ${isFilterOpen ? "rotate-180" : ""}`}
+              />
             </Button>
             {activeFilterCount > 0 && (
               <Button
@@ -215,46 +264,57 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={() => handleQueryChange('')}
+                  onClick={() => handleQueryChange("")}
                   className="h-4 w-4 p-0 hover:bg-transparent"
                 >
                   <X className="h-3 w-3" />
                 </Button>
               </Badge>
             )}
-            {filters.severity.map(severity => (
-              <Badge key={severity} className={`flex items-center gap-1 ${getSeverityColor(severity)}`}>
+            {filters.severity.map((severity) => (
+              <Badge
+                key={severity}
+                className={`flex items-center gap-1 ${getSeverityColor(severity)}`}
+              >
                 {severity}
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={() => removeFilter('severity', severity)}
+                  onClick={() => removeFilter("severity", severity)}
                   className="h-4 w-4 p-0 hover:bg-transparent"
                 >
                   <X className="h-3 w-3" />
                 </Button>
               </Badge>
             ))}
-            {filters.type.map(type => (
-              <Badge key={type} variant="outline" className="flex items-center gap-1">
+            {filters.type.map((type) => (
+              <Badge
+                key={type}
+                variant="outline"
+                className="flex items-center gap-1"
+              >
                 {type}
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={() => removeFilter('type', type)}
+                  onClick={() => removeFilter("type", type)}
                   className="h-4 w-4 p-0 hover:bg-transparent"
                 >
                   <X className="h-3 w-3" />
                 </Button>
               </Badge>
             ))}
-            {filters.file.map(file => (
-              <Badge key={file} variant="outline" className="flex items-center gap-1">
+            {filters.file.map((file) => (
+              <Badge
+                key={file}
+                variant="outline"
+                className="flex items-center gap-1"
+              >
                 {file}
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={() => removeFilter('file', file)}
+                  onClick={() => removeFilter("file", file)}
                   className="h-4 w-4 p-0 hover:bg-transparent"
                 >
                   <X className="h-3 w-3" />
@@ -270,20 +330,27 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Severity Filters */}
               <div>
-                <h4 className="font-medium text-sm text-slate-700 dark:text-slate-300 mb-3">Severity</h4>
+                <h4 className="font-medium text-sm text-slate-700 dark:text-slate-300 mb-3">
+                  Severity
+                </h4>
                 <div className="space-y-2">
-                  {availableFilters.severities.map(severity => (
+                  {availableFilters.severities.map((severity) => (
                     <div key={severity} className="flex items-center space-x-2">
                       <Checkbox
                         id={`severity-${severity}`}
                         checked={filters.severity.includes(severity)}
-                        onCheckedChange={() => handleFilterToggle('severity', severity)}
+                        onCheckedChange={() =>
+                          handleFilterToggle("severity", severity)
+                        }
                       />
                       <label
                         htmlFor={`severity-${severity}`}
                         className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
                       >
-                        <Badge className={getSeverityColor(severity)} variant="secondary">
+                        <Badge
+                          className={getSeverityColor(severity)}
+                          variant="secondary"
+                        >
                           {severity}
                         </Badge>
                       </label>
@@ -294,14 +361,16 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
 
               {/* Type Filters */}
               <div>
-                <h4 className="font-medium text-sm text-slate-700 dark:text-slate-300 mb-3">Issue Type</h4>
+                <h4 className="font-medium text-sm text-slate-700 dark:text-slate-300 mb-3">
+                  Issue Type
+                </h4>
                 <div className="space-y-2">
-                  {availableFilters.types.map(type => (
+                  {availableFilters.types.map((type) => (
                     <div key={type} className="flex items-center space-x-2">
                       <Checkbox
                         id={`type-${type}`}
                         checked={filters.type.includes(type)}
-                        onCheckedChange={() => handleFilterToggle('type', type)}
+                        onCheckedChange={() => handleFilterToggle("type", type)}
                       />
                       <label
                         htmlFor={`type-${type}`}
@@ -316,14 +385,16 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
 
               {/* File Filters */}
               <div>
-                <h4 className="font-medium text-sm text-slate-700 dark:text-slate-300 mb-3">Files</h4>
+                <h4 className="font-medium text-sm text-slate-700 dark:text-slate-300 mb-3">
+                  Files
+                </h4>
                 <div className="space-y-2 max-h-40 overflow-y-auto">
-                  {availableFilters.files.map(file => (
+                  {availableFilters.files.map((file) => (
                     <div key={file} className="flex items-center space-x-2">
                       <Checkbox
                         id={`file-${file}`}
                         checked={filters.file.includes(file)}
-                        onCheckedChange={() => handleFilterToggle('file', file)}
+                        onCheckedChange={() => handleFilterToggle("file", file)}
                       />
                       <label
                         htmlFor={`file-${file}`}

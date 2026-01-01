@@ -1,7 +1,13 @@
 "use client";
 
-import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+} from "react";
+import { useRouter, usePathname } from "next/navigation";
 
 interface NavigationContextType {
   currentSection: string;
@@ -14,7 +20,9 @@ interface NavigationContextType {
   setSidebarCollapsed: (collapsed: boolean) => void;
 }
 
-const NavigationContext = createContext<NavigationContextType | undefined>(undefined);
+const NavigationContext = createContext<NavigationContextType | undefined>(
+  undefined
+);
 
 interface NavigationProviderProps {
   children: ReactNode;
@@ -22,56 +30,58 @@ interface NavigationProviderProps {
 
 // Map section IDs to URL paths
 const sectionToPath: Record<string, string> = {
-  'home': '/',
-  'about': '/about',
-  'history': '/history',
-  'github-analysis': '/github-analysis',
-  'privacy': '/privacy',
-  'terms': '/terms',
-  'help': '/help',
-  'pwa-settings': '/pwa-settings',
+  home: "/",
+  about: "/about",
+  history: "/history",
+  "github-analysis": "/github-analysis",
+  privacy: "/privacy",
+  terms: "/terms",
+  help: "/help",
+  "pwa-settings": "/pwa-settings",
 };
 
 // Map URL paths to section IDs
 const pathToSection: Record<string, string> = {
-  '/': 'home',
-  '/about': 'about',
-  '/history': 'history',
-  '/github-analysis': 'github-analysis',
-  '/privacy': 'privacy',
-  '/terms': 'terms',
-  '/help': 'help',
-  '/pwa-settings': 'pwa-settings',
+  "/": "home",
+  "/about": "about",
+  "/history": "history",
+  "/github-analysis": "github-analysis",
+  "/privacy": "privacy",
+  "/terms": "terms",
+  "/help": "help",
+  "/pwa-settings": "pwa-settings",
 };
 
-export const NavigationProvider: React.FC<NavigationProviderProps> = ({ children }) => {
+export const NavigationProvider: React.FC<NavigationProviderProps> = ({
+  children,
+}) => {
   const router = useRouter();
   const pathname = usePathname();
-  
+
   // Derive currentSection from the URL path
-  const currentSection = pathToSection[pathname] || 'home';
-  const [currentTab, setCurrentTab] = useState('upload');
+  const currentSection = pathToSection[pathname] || "home";
+  const [currentTab, setCurrentTab] = useState("upload");
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   // Scroll to top on route change
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       window.scrollTo({
         top: 0,
-        behavior: 'instant'
+        behavior: "instant",
       });
     }
   }, [pathname]);
 
   const setCurrentSection = (section: string) => {
     // Navigate to the new section using Next.js router
-    const path = sectionToPath[section] || '/';
+    const path = sectionToPath[section] || "/";
     router.push(path);
   };
 
   const navigateTo = (section: string, tab?: string) => {
     // Navigate to the new section using Next.js router
-    const path = sectionToPath[section] || '/';
+    const path = sectionToPath[section] || "/";
     router.push(path);
     if (tab) {
       setCurrentTab(tab);
@@ -94,7 +104,7 @@ export const NavigationProvider: React.FC<NavigationProviderProps> = ({ children
     setCurrentTab,
     navigateTo,
     toggleSidebar,
-    setSidebarCollapsed
+    setSidebarCollapsed,
   };
 
   return (
@@ -107,7 +117,7 @@ export const NavigationProvider: React.FC<NavigationProviderProps> = ({ children
 export const useNavigation = (): NavigationContextType => {
   const context = useContext(NavigationContext);
   if (context === undefined) {
-    throw new Error('useNavigation must be used within a NavigationProvider');
+    throw new Error("useNavigation must be used within a NavigationProvider");
   }
   return context;
-}; 
+};

@@ -3,46 +3,68 @@
  * Displays cloud-stored analysis results and history
  */
 
-import { useState, useEffect } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Cloud, CloudOff, RefreshCw, Download, Trash2, Search, Filter } from 'lucide-react';
-import { firebaseAnalysisStorage, FirebaseAnalysisData } from '../../services/storage/firebaseAnalysisStorage';
-import { useToast } from '@/hooks/use-toast';
+import { useState, useEffect } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Cloud,
+  CloudOff,
+  RefreshCw,
+  Download,
+  Trash2,
+  Search,
+  Filter,
+} from "lucide-react";
+import {
+  firebaseAnalysisStorage,
+  FirebaseAnalysisData,
+} from "../../services/storage/firebaseAnalysisStorage";
+import { useToast } from "@/hooks/use-toast";
 
-import { logger } from '@/utils/logger';
+import { logger } from "@/utils/logger";
 interface FirebaseAnalyticsDashboardProps {
   userId?: string;
   onAnalysisSelect?: (analysis: FirebaseAnalysisData) => void;
 }
 
-export const FirebaseAnalyticsDashboard = ({ 
-  userId, 
-  onAnalysisSelect 
+export const FirebaseAnalyticsDashboard = ({
+  userId,
+  onAnalysisSelect,
 }: FirebaseAnalyticsDashboardProps) => {
   const { toast } = useToast();
-  
-  const [analysisHistory, setAnalysisHistory] = useState<FirebaseAnalysisData[]>([]);
+
+  const [analysisHistory, setAnalysisHistory] = useState<
+    FirebaseAnalysisData[]
+  >([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [isOnline, setIsOnline] = useState(typeof navigator !== 'undefined' ? navigator.onLine : true);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedAnalysis, setSelectedAnalysis] = useState<FirebaseAnalysisData | null>(null);
+  const [isOnline, setIsOnline] = useState(
+    typeof navigator !== "undefined" ? navigator.onLine : true
+  );
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedAnalysis, setSelectedAnalysis] =
+    useState<FirebaseAnalysisData | null>(null);
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-    
+    if (typeof window === "undefined") return;
+
     const handleOnline = () => setIsOnline(true);
     const handleOffline = () => setIsOnline(false);
-    
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
-    
+
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
+
     return () => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
     };
   }, []);
 
@@ -58,14 +80,15 @@ export const FirebaseAnalyticsDashboard = ({
 
     setIsLoading(true);
     try {
-      const history = await firebaseAnalysisStorage.getUserAnalysisHistory(userId);
+      const history =
+        await firebaseAnalysisStorage.getUserAnalysisHistory(userId);
       setAnalysisHistory(history);
     } catch (error) {
-      logger.error('Error loading analysis history:', error);
+      logger.error("Error loading analysis history:", error);
       toast({
-        title: '❌ Failed to Load History',
-        description: 'Could not load analysis history from cloud storage.',
-        variant: 'destructive',
+        title: "❌ Failed to Load History",
+        description: "Could not load analysis history from cloud storage.",
+        variant: "destructive",
       });
     } finally {
       setIsLoading(false);
@@ -86,30 +109,30 @@ export const FirebaseAnalyticsDashboard = ({
   const handleRefresh = () => {
     loadAnalysisHistory();
     toast({
-      title: '🔄 Refreshing',
-      description: 'Updating analysis history...',
+      title: "🔄 Refreshing",
+      description: "Updating analysis history...",
     });
   };
 
   const handleDeleteAnalysis = async (analysisId: string) => {
     try {
       await firebaseAnalysisStorage.deleteAnalysisResults(analysisId);
-      setAnalysisHistory(prev => prev.filter(a => a.id !== analysisId));
-      
+      setAnalysisHistory((prev) => prev.filter((a) => a.id !== analysisId));
+
       if (selectedAnalysis?.id === analysisId) {
         setSelectedAnalysis(null);
       }
 
       toast({
-        title: '🗑️ Analysis Deleted',
-        description: 'Analysis has been deleted from cloud storage.',
+        title: "🗑️ Analysis Deleted",
+        description: "Analysis has been deleted from cloud storage.",
       });
     } catch (error) {
-      logger.error('Error deleting analysis:', error);
+      logger.error("Error deleting analysis:", error);
       toast({
-        title: '❌ Delete Failed',
-        description: 'Could not delete analysis. Please try again.',
-        variant: 'destructive',
+        title: "❌ Delete Failed",
+        description: "Could not delete analysis. Please try again.",
+        variant: "destructive",
       });
     }
   };
@@ -128,17 +151,17 @@ export const FirebaseAnalyticsDashboard = ({
     try {
       const results = await firebaseAnalysisStorage.searchAnalysis(searchTerm);
       setAnalysisHistory(results);
-      
+
       toast({
-        title: '🔍 Search Complete',
+        title: "🔍 Search Complete",
         description: `Found ${results.length} matching analyses.`,
       });
     } catch (error) {
-      logger.error('Error searching analysis:', error);
+      logger.error("Error searching analysis:", error);
       toast({
-        title: '❌ Search Failed',
-        description: 'Could not search analyses. Please try again.',
-        variant: 'destructive',
+        title: "❌ Search Failed",
+        description: "Could not search analyses. Please try again.",
+        variant: "destructive",
       });
     } finally {
       setIsLoading(false);
@@ -152,11 +175,16 @@ export const FirebaseAnalyticsDashboard = ({
 
   const getSeverityColor = (severity: string) => {
     switch (severity.toLowerCase()) {
-      case 'critical': return 'destructive';
-      case 'high': return 'destructive';
-      case 'medium': return 'default';
-      case 'low': return 'secondary';
-      default: return 'outline';
+      case "critical":
+        return "destructive";
+      case "high":
+        return "destructive";
+      case "medium":
+        return "default";
+      case "low":
+        return "secondary";
+      default:
+        return "outline";
     }
   };
 
@@ -185,7 +213,8 @@ export const FirebaseAnalyticsDashboard = ({
             Offline Mode
           </CardTitle>
           <CardDescription>
-            Cloud storage is unavailable while offline. Analysis history will sync when connection is restored.
+            Cloud storage is unavailable while offline. Analysis history will
+            sync when connection is restored.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -208,13 +237,15 @@ export const FirebaseAnalyticsDashboard = ({
               </CardDescription>
             </div>
             <div className="flex items-center gap-2">
-              <Button 
-                variant="outline" 
-                size="sm" 
+              <Button
+                variant="outline"
+                size="sm"
                 onClick={handleRefresh}
                 disabled={isLoading}
               >
-                <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
+                <RefreshCw
+                  className={`h-4 w-4 ${isLoading ? "animate-spin" : ""}`}
+                />
                 Refresh
               </Button>
             </div>
@@ -232,13 +263,13 @@ export const FirebaseAnalyticsDashboard = ({
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="flex-1 px-3 py-2 border rounded-md"
-              onKeyPress={(e) => e.key === 'Enter' && handleSearchAnalysis()}
+              onKeyPress={(e) => e.key === "Enter" && handleSearchAnalysis()}
             />
             <Button onClick={handleSearchAnalysis} disabled={isLoading}>
               <Search className="h-4 w-4" />
             </Button>
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               onClick={loadAnalysisHistory}
               disabled={isLoading}
             >
@@ -271,9 +302,12 @@ export const FirebaseAnalyticsDashboard = ({
               <CardContent className="pt-6">
                 <div className="text-center py-8">
                   <Cloud className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-                  <h3 className="text-lg font-semibold mb-2">No Analysis History</h3>
+                  <h3 className="text-lg font-semibold mb-2">
+                    No Analysis History
+                  </h3>
                   <p className="text-muted-foreground">
-                    Your analysis results will appear here once you start using the tool.
+                    Your analysis results will appear here once you start using
+                    the tool.
                   </p>
                 </div>
               </CardContent>
@@ -281,10 +315,12 @@ export const FirebaseAnalyticsDashboard = ({
           ) : (
             <div className="grid gap-4">
               {analysisHistory.map((analysis) => (
-                <Card 
-                  key={analysis.id} 
+                <Card
+                  key={analysis.id}
                   className={`cursor-pointer transition-colors hover:bg-muted/50 ${
-                    selectedAnalysis?.id === analysis.id ? 'ring-2 ring-primary' : ''
+                    selectedAnalysis?.id === analysis.id
+                      ? "ring-2 ring-primary"
+                      : ""
                   }`}
                   onClick={() => handleSelectAnalysis(analysis)}
                 >
@@ -293,7 +329,13 @@ export const FirebaseAnalyticsDashboard = ({
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-2">
                           <h3 className="font-semibold">{analysis.fileName}</h3>
-                          <Badge variant={analysis.syncStatus === 'synced' ? 'default' : 'secondary'}>
+                          <Badge
+                            variant={
+                              analysis.syncStatus === "synced"
+                                ? "default"
+                                : "secondary"
+                            }
+                          >
                             {analysis.syncStatus}
                           </Badge>
                           {analysis.compressed && (
@@ -302,10 +344,14 @@ export const FirebaseAnalyticsDashboard = ({
                             </Badge>
                           )}
                         </div>
-                        
+
                         <div className="flex items-center gap-4 text-sm text-muted-foreground mb-2">
-                          <span>📁 {(analysis.fileSize / 1024).toFixed(1)} KB</span>
-                          <span>🐛 {analysis.results.issues?.length || 0} issues</span>
+                          <span>
+                            📁 {(analysis.fileSize / 1024).toFixed(1)} KB
+                          </span>
+                          <span>
+                            🐛 {analysis.results.issues?.length || 0} issues
+                          </span>
                           <span>📄 {analysis.results.totalFiles} files</span>
                           <span>⏱️ {formatDate(analysis.createdAt)}</span>
                         </div>
@@ -313,7 +359,11 @@ export const FirebaseAnalyticsDashboard = ({
                         {analysis.tags && analysis.tags.length > 0 && (
                           <div className="flex gap-1 mb-2">
                             {analysis.tags.map((tag, index) => (
-                              <Badge key={index} variant="outline" className="text-xs">
+                              <Badge
+                                key={index}
+                                variant="outline"
+                                className="text-xs"
+                              >
                                 {tag}
                               </Badge>
                             ))}
@@ -321,32 +371,38 @@ export const FirebaseAnalyticsDashboard = ({
                         )}
 
                         {/* Issue severity breakdown */}
-                        {analysis.results.issues && analysis.results.issues.length > 0 && (
-                          <div className="flex gap-2 mt-2">
-                            {['critical', 'high', 'medium', 'low'].map((severity) => {
-                              const count = analysis.results.issues?.filter(
-                                issue => issue.severity.toLowerCase() === severity
-                              ).length || 0;
-                              
-                              if (count === 0) return null;
-                              
-                              return (
-                                <Badge 
-                                  key={severity} 
-                                  variant={getSeverityColor(severity)} 
-                                  className="text-xs"
-                                >
-                                  {severity}: {count}
-                                </Badge>
-                              );
-                            })}
-                          </div>
-                        )}
+                        {analysis.results.issues &&
+                          analysis.results.issues.length > 0 && (
+                            <div className="flex gap-2 mt-2">
+                              {["critical", "high", "medium", "low"].map(
+                                (severity) => {
+                                  const count =
+                                    analysis.results.issues?.filter(
+                                      (issue) =>
+                                        issue.severity.toLowerCase() ===
+                                        severity
+                                    ).length || 0;
+
+                                  if (count === 0) return null;
+
+                                  return (
+                                    <Badge
+                                      key={severity}
+                                      variant={getSeverityColor(severity)}
+                                      className="text-xs"
+                                    >
+                                      {severity}: {count}
+                                    </Badge>
+                                  );
+                                }
+                              )}
+                            </div>
+                          )}
                       </div>
 
                       <div className="flex items-center gap-2">
-                        <Button 
-                          variant="outline" 
+                        <Button
+                          variant="outline"
                           size="sm"
                           onClick={(e) => {
                             e.stopPropagation();
@@ -355,8 +411,8 @@ export const FirebaseAnalyticsDashboard = ({
                         >
                           <Download className="h-4 w-4" />
                         </Button>
-                        <Button 
-                          variant="outline" 
+                        <Button
+                          variant="outline"
                           size="sm"
                           onClick={(e) => {
                             e.stopPropagation();
@@ -378,7 +434,9 @@ export const FirebaseAnalyticsDashboard = ({
           {selectedAnalysis ? (
             <Card>
               <CardHeader>
-                <CardTitle>Analysis Details: {selectedAnalysis.fileName}</CardTitle>
+                <CardTitle>
+                  Analysis Details: {selectedAnalysis.fileName}
+                </CardTitle>
                 <CardDescription>
                   Detailed information about the selected analysis
                 </CardDescription>
@@ -388,19 +446,43 @@ export const FirebaseAnalyticsDashboard = ({
                   <div>
                     <h4 className="font-semibold mb-2">File Information</h4>
                     <div className="space-y-1 text-sm">
-                      <p><strong>Size:</strong> {(selectedAnalysis.fileSize / 1024).toFixed(1)} KB</p>
-                      <p><strong>Hash:</strong> {selectedAnalysis.fileHash.substring(0, 16)}...</p>
-                      <p><strong>Created:</strong> {formatDate(selectedAnalysis.createdAt)}</p>
-                      <p><strong>Updated:</strong> {formatDate(selectedAnalysis.updatedAt)}</p>
+                      <p>
+                        <strong>Size:</strong>{" "}
+                        {(selectedAnalysis.fileSize / 1024).toFixed(1)} KB
+                      </p>
+                      <p>
+                        <strong>Hash:</strong>{" "}
+                        {selectedAnalysis.fileHash.substring(0, 16)}...
+                      </p>
+                      <p>
+                        <strong>Created:</strong>{" "}
+                        {formatDate(selectedAnalysis.createdAt)}
+                      </p>
+                      <p>
+                        <strong>Updated:</strong>{" "}
+                        {formatDate(selectedAnalysis.updatedAt)}
+                      </p>
                     </div>
                   </div>
                   <div>
                     <h4 className="font-semibold mb-2">Analysis Results</h4>
                     <div className="space-y-1 text-sm">
-                      <p><strong>Total Issues:</strong> {selectedAnalysis.results.issues?.length || 0}</p>
-                      <p><strong>Files Analyzed:</strong> {selectedAnalysis.results.totalFiles}</p>
-                      <p><strong>Analysis Time:</strong> {selectedAnalysis.results.analysisTime}</p>
-                      <p><strong>Engine:</strong> {selectedAnalysis.metadata.analysisEngine}</p>
+                      <p>
+                        <strong>Total Issues:</strong>{" "}
+                        {selectedAnalysis.results.issues?.length || 0}
+                      </p>
+                      <p>
+                        <strong>Files Analyzed:</strong>{" "}
+                        {selectedAnalysis.results.totalFiles}
+                      </p>
+                      <p>
+                        <strong>Analysis Time:</strong>{" "}
+                        {selectedAnalysis.results.analysisTime}
+                      </p>
+                      <p>
+                        <strong>Engine:</strong>{" "}
+                        {selectedAnalysis.metadata.analysisEngine}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -413,19 +495,25 @@ export const FirebaseAnalyticsDashboard = ({
                         <div className="text-2xl font-bold text-red-600">
                           {selectedAnalysis.results.summary.criticalIssues}
                         </div>
-                        <div className="text-sm text-muted-foreground">Critical</div>
+                        <div className="text-sm text-muted-foreground">
+                          Critical
+                        </div>
                       </div>
                       <div className="text-center p-4 bg-muted rounded-lg">
                         <div className="text-2xl font-bold text-orange-600">
                           {selectedAnalysis.results.summary.highIssues}
                         </div>
-                        <div className="text-sm text-muted-foreground">High</div>
+                        <div className="text-sm text-muted-foreground">
+                          High
+                        </div>
                       </div>
                       <div className="text-center p-4 bg-muted rounded-lg">
                         <div className="text-2xl font-bold text-yellow-600">
                           {selectedAnalysis.results.summary.mediumIssues}
                         </div>
-                        <div className="text-sm text-muted-foreground">Medium</div>
+                        <div className="text-sm text-muted-foreground">
+                          Medium
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -456,20 +544,34 @@ export const FirebaseAnalyticsDashboard = ({
             <CardContent className="space-y-6">
               <div className="grid grid-cols-3 gap-4">
                 <div className="text-center p-4 bg-muted rounded-lg">
-                  <div className="text-2xl font-bold">{analysisHistory.length}</div>
-                  <div className="text-sm text-muted-foreground">Total Analyses</div>
+                  <div className="text-2xl font-bold">
+                    {analysisHistory.length}
+                  </div>
+                  <div className="text-sm text-muted-foreground">
+                    Total Analyses
+                  </div>
                 </div>
                 <div className="text-center p-4 bg-muted rounded-lg">
                   <div className="text-2xl font-bold">
-                    {analysisHistory.reduce((sum, a) => sum + (a.results.issues?.length || 0), 0)}
+                    {analysisHistory.reduce(
+                      (sum, a) => sum + (a.results.issues?.length || 0),
+                      0
+                    )}
                   </div>
-                  <div className="text-sm text-muted-foreground">Total Issues Found</div>
+                  <div className="text-sm text-muted-foreground">
+                    Total Issues Found
+                  </div>
                 </div>
                 <div className="text-center p-4 bg-muted rounded-lg">
                   <div className="text-2xl font-bold">
-                    {analysisHistory.reduce((sum, a) => sum + a.results.totalFiles, 0)}
+                    {analysisHistory.reduce(
+                      (sum, a) => sum + a.results.totalFiles,
+                      0
+                    )}
                   </div>
-                  <div className="text-sm text-muted-foreground">Total Files Analyzed</div>
+                  <div className="text-sm text-muted-foreground">
+                    Total Files Analyzed
+                  </div>
                 </div>
               </div>
 

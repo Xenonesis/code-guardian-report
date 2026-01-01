@@ -1,15 +1,15 @@
 // src/lib/firestore-config.ts
-import { 
+import {
   getFirestore,
   connectFirestoreEmulator,
   Firestore,
   initializeFirestore,
   persistentLocalCache,
-  persistentMultipleTabManager
-} from 'firebase/firestore';
-import { FirebaseApp } from 'firebase/app';
+  persistentMultipleTabManager,
+} from "firebase/firestore";
+import { FirebaseApp } from "firebase/app";
 
-import { logger } from '@/utils/logger';
+import { logger } from "@/utils/logger";
 export function createOptimizedFirestore(app: FirebaseApp): Firestore {
   let db: Firestore;
 
@@ -18,26 +18,32 @@ export function createOptimizedFirestore(app: FirebaseApp): Firestore {
     db = initializeFirestore(app, {
       experimentalForceLongPolling: true,
       localCache: persistentLocalCache({
-        tabManager: persistentMultipleTabManager()
-      })
+        tabManager: persistentMultipleTabManager(),
+      }),
     });
-    logger.debug('Firestore initialized with long polling and persistence');
+    logger.debug("Firestore initialized with long polling and persistence");
   } catch (error) {
     // Fallback if already initialized
-    logger.debug('Firestore already initialized, using existing instance', error);
+    logger.debug(
+      "Firestore already initialized, using existing instance",
+      error
+    );
     db = getFirestore(app);
   }
-  
+
   // Connect to emulator if in development
-  if (process.env.NODE_ENV === 'development' && process.env.NEXT_PUBLIC_USE_FIREBASE_EMULATOR === 'true') {
+  if (
+    process.env.NODE_ENV === "development" &&
+    process.env.NEXT_PUBLIC_USE_FIREBASE_EMULATOR === "true"
+  ) {
     try {
-      connectFirestoreEmulator(db, 'localhost', 8080);
-      logger.debug('Connected to Firestore emulator');
+      connectFirestoreEmulator(db, "localhost", 8080);
+      logger.debug("Connected to Firestore emulator");
     } catch (error) {
-      logger.debug('Firestore emulator not available, using production', error);
+      logger.debug("Firestore emulator not available, using production", error);
     }
   }
-  
+
   return db;
 }
 

@@ -1,5 +1,5 @@
-import React from 'react';
-import { Sparkles, Stars, Zap, Shield, Code, Bot } from 'lucide-react';
+import React from "react";
+import { Sparkles, Stars, Zap, Shield, Code, Bot } from "lucide-react";
 
 interface HeroSectionProps {
   title: string;
@@ -8,7 +8,7 @@ interface HeroSectionProps {
   children?: React.ReactNode;
   className?: string;
   titleId?: string;
-  variant?: 'default' | 'minimal' | 'gradient' | 'ultra';
+  variant?: "default" | "minimal" | "gradient" | "ultra";
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({
@@ -16,9 +16,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   subtitle,
   description,
   children,
-  className = '',
-  titleId = 'hero-title',
-  variant = 'default'
+  className = "",
+  titleId = "hero-title",
+  variant = "default",
 }) => {
   return (
     <section
@@ -63,9 +63,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           <h1
             id={titleId}
             className={`text-responsive-2xl font-bold mb-6 sm:mb-8 lg:mb-10 tracking-tight leading-tight px-4 sm:px-0 ${
-              variant === 'gradient' || variant === 'ultra'
-                ? 'gradient-text-animated text-ultra-gradient'
-                : 'text-slate-900 dark:text-white'
+              variant === "gradient" || variant === "ultra"
+                ? "gradient-text-animated text-ultra-gradient"
+                : "text-slate-900 dark:text-white"
             }`}
           >
             {title}

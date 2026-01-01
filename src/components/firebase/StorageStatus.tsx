@@ -3,24 +3,24 @@
  * Shows current storage status, analytics, and management options
  */
 
-import React from 'react';
-import { 
-  Database, 
-  Download, 
-  Upload, 
-  Trash2, 
-  History, 
+import React from "react";
+import {
+  Database,
+  Download,
+  Upload,
+  Trash2,
+  History,
   BarChart3,
   HardDrive,
   FileText,
-  Zap
-} from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Badge } from '@/components/ui/badge';
-import { type StoredAnalysisData } from '../../services/storage/analysisStorage';
+  Zap,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
+import { type StoredAnalysisData } from "../../services/storage/analysisStorage";
 
 interface StorageStatusProps {
   hasStoredData: boolean;
@@ -33,7 +33,7 @@ interface StorageStatusProps {
     compressionRatio?: number;
   };
   onClearData: () => void;
-  onExportAnalysis: (format: 'json' | 'compressed') => void;
+  onExportAnalysis: (format: "json" | "compressed") => void;
   onImportAnalysis: (data: string, compressed: boolean) => void;
   onOptimizeStorage: () => void;
   onShowHistory: () => void;
@@ -50,11 +50,11 @@ export const StorageStatus: React.FC<StorageStatusProps> = ({
   onShowHistory,
 }) => {
   const formatBytes = (bytes: number): string => {
-    if (bytes === 0) return '0 Bytes';
+    if (bytes === 0) return "0 Bytes";
     const k = 1024;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const sizes = ["Bytes", "KB", "MB", "GB"];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
   };
 
   const formatDate = (timestamp: number): string => {
@@ -62,15 +62,29 @@ export const StorageStatus: React.FC<StorageStatusProps> = ({
   };
 
   const getStorageStatusColor = (percentage: number): string => {
-    if (percentage < 50) return 'text-green-600 dark:text-green-400';
-    if (percentage < 80) return 'text-yellow-600 dark:text-yellow-400';
-    return 'text-red-600 dark:text-red-400';
+    if (percentage < 50) return "text-green-600 dark:text-green-400";
+    if (percentage < 80) return "text-yellow-600 dark:text-yellow-400";
+    return "text-red-600 dark:text-red-400";
   };
 
   const getStorageStatusBadge = (percentage: number): React.ReactNode => {
-    if (percentage < 50) return <Badge variant="outline" className="text-green-600 border-green-600">Good</Badge>;
-    if (percentage < 80) return <Badge variant="outline" className="text-yellow-600 border-yellow-600">Moderate</Badge>;
-    return <Badge variant="outline" className="text-red-600 border-red-600">High</Badge>;
+    if (percentage < 50)
+      return (
+        <Badge variant="outline" className="text-green-600 border-green-600">
+          Good
+        </Badge>
+      );
+    if (percentage < 80)
+      return (
+        <Badge variant="outline" className="text-yellow-600 border-yellow-600">
+          Moderate
+        </Badge>
+      );
+    return (
+      <Badge variant="outline" className="text-red-600 border-red-600">
+        High
+      </Badge>
+    );
   };
 
   const handleImportFile = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -79,11 +93,13 @@ export const StorageStatus: React.FC<StorageStatusProps> = ({
       const reader = new FileReader();
       reader.onload = (e) => {
         const content = e.target?.result as string;
-        const isCompressed = file.name.endsWith('.txt');
+        const isCompressed = file.name.endsWith(".txt");
         try {
           onImportAnalysis(content, isCompressed);
         } catch (error) {
-          alert('Failed to import analysis data. Please check the file format.');
+          alert(
+            "Failed to import analysis data. Please check the file format."
+          );
         }
       };
       reader.readAsText(file);
@@ -110,13 +126,27 @@ export const StorageStatus: React.FC<StorageStatusProps> = ({
                     Stored Analysis Available
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-blue-800 dark:text-blue-200">
-                    <div><strong>File:</strong> {storedAnalysis.fileName}</div>
-                    <div><strong>Size:</strong> {formatBytes(storedAnalysis.fileSize)}</div>
-                    <div><strong>Analyzed:</strong> {formatDate(storedAnalysis.timestamp)}</div>
-                    <div><strong>Issues:</strong> {storedAnalysis.results.issues.length}</div>
+                    <div>
+                      <strong>File:</strong> {storedAnalysis.fileName}
+                    </div>
+                    <div>
+                      <strong>Size:</strong>{" "}
+                      {formatBytes(storedAnalysis.fileSize)}
+                    </div>
+                    <div>
+                      <strong>Analyzed:</strong>{" "}
+                      {formatDate(storedAnalysis.timestamp)}
+                    </div>
+                    <div>
+                      <strong>Issues:</strong>{" "}
+                      {storedAnalysis.results.issues.length}
+                    </div>
                   </div>
                   {storedAnalysis.compressed && (
-                    <Badge variant="outline" className="text-blue-600 border-blue-600">
+                    <Badge
+                      variant="outline"
+                      className="text-blue-600 border-blue-600"
+                    >
                       <Zap className="h-3 w-3 mr-1" />
                       Compressed
                     </Badge>
@@ -129,7 +159,8 @@ export const StorageStatus: React.FC<StorageStatusProps> = ({
           <Alert className="border-l-4 border-l-gray-400 bg-gray-50 dark:bg-gray-950/20">
             <FileText className="h-4 w-4" />
             <AlertDescription className="text-gray-700 dark:text-gray-300">
-              No analysis data currently stored. Upload and analyze a file to enable persistent storage.
+              No analysis data currently stored. Upload and analyze a file to
+              enable persistent storage.
             </AlertDescription>
           </Alert>
         )}
@@ -143,20 +174,20 @@ export const StorageStatus: React.FC<StorageStatusProps> = ({
             </div>
             {getStorageStatusBadge(storageStats.usagePercentage)}
           </div>
-          
+
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
               <span className="text-slate-600 dark:text-slate-400">
-                {formatBytes(storageStats.currentSize)} / {formatBytes(storageStats.maxSize)}
+                {formatBytes(storageStats.currentSize)} /{" "}
+                {formatBytes(storageStats.maxSize)}
               </span>
-              <span className={`font-medium ${getStorageStatusColor(storageStats.usagePercentage)}`}>
+              <span
+                className={`font-medium ${getStorageStatusColor(storageStats.usagePercentage)}`}
+              >
                 {storageStats.usagePercentage.toFixed(1)}%
               </span>
             </div>
-            <Progress 
-              value={storageStats.usagePercentage} 
-              className="h-2"
-            />
+            <Progress value={storageStats.usagePercentage} className="h-2" />
           </div>
 
           <div className="grid grid-cols-2 gap-4 pt-2">
@@ -193,7 +224,7 @@ export const StorageStatus: React.FC<StorageStatusProps> = ({
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() => onExportAnalysis('json')}
+                  onClick={() => onExportAnalysis("json")}
                   disabled={!hasStoredData}
                   className="flex-1"
                 >
@@ -203,7 +234,7 @@ export const StorageStatus: React.FC<StorageStatusProps> = ({
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() => onExportAnalysis('compressed')}
+                  onClick={() => onExportAnalysis("compressed")}
                   disabled={!hasStoredData}
                   className="flex-1"
                 >
@@ -246,7 +277,7 @@ export const StorageStatus: React.FC<StorageStatusProps> = ({
               <History className="h-4 w-4" />
               View History ({storageStats.historyCount})
             </Button>
-            
+
             <Button
               variant="outline"
               size="sm"
@@ -257,7 +288,7 @@ export const StorageStatus: React.FC<StorageStatusProps> = ({
               <BarChart3 className="h-4 w-4" />
               Optimize Storage
             </Button>
-            
+
             <Button
               variant="outline"
               size="sm"
@@ -275,8 +306,9 @@ export const StorageStatus: React.FC<StorageStatusProps> = ({
         {storageStats.usagePercentage > 80 && (
           <Alert className="border-l-4 border-l-orange-500 bg-orange-50 dark:bg-orange-950/20">
             <AlertDescription className="text-orange-800 dark:text-orange-200">
-              <strong>Storage Warning:</strong> Storage usage is high ({storageStats.usagePercentage.toFixed(1)}%). 
-              Consider optimizing storage or clearing old data.
+              <strong>Storage Warning:</strong> Storage usage is high (
+              {storageStats.usagePercentage.toFixed(1)}%). Consider optimizing
+              storage or clearing old data.
             </AlertDescription>
           </Alert>
         )}
@@ -284,7 +316,8 @@ export const StorageStatus: React.FC<StorageStatusProps> = ({
         {storageStats.usagePercentage > 95 && (
           <Alert className="border-l-4 border-l-red-500 bg-red-50 dark:bg-red-950/20">
             <AlertDescription className="text-red-800 dark:text-red-200">
-              <strong>Storage Critical:</strong> Storage is nearly full. New analyses may fail to save.
+              <strong>Storage Critical:</strong> Storage is nearly full. New
+              analyses may fail to save.
             </AlertDescription>
           </Alert>
         )}

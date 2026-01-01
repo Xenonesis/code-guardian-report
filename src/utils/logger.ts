@@ -3,15 +3,15 @@
  * Automatically removes console.log in production while preserving errors and warnings
  */
 
-const IS_DEV = process.env.NODE_ENV === 'development';
-const IS_PROD = process.env.NODE_ENV === 'production';
+const IS_DEV = process.env.NODE_ENV === "development";
+const IS_PROD = process.env.NODE_ENV === "production";
 
 export enum LogLevel {
-  DEBUG = 'DEBUG',
-  INFO = 'INFO',
-  WARN = 'WARN',
-  ERROR = 'ERROR',
-  FATAL = 'FATAL',
+  DEBUG = "DEBUG",
+  INFO = "INFO",
+  WARN = "WARN",
+  ERROR = "ERROR",
+  FATAL = "FATAL",
 }
 
 interface LogEntry {
@@ -28,7 +28,10 @@ interface LogEntry {
 
 // Generate a session ID for tracking (lazy initialization)
 const getSessionId = (): string => {
-  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+  if (
+    typeof crypto !== "undefined" &&
+    typeof crypto.randomUUID === "function"
+  ) {
     return crypto.randomUUID();
   }
   return Math.random().toString(36).substring(2);
@@ -50,7 +53,7 @@ class Logger {
 
   private constructor() {
     // Start periodic flush for production
-    if (IS_PROD && typeof window !== 'undefined') {
+    if (IS_PROD && typeof window !== "undefined") {
       this.flushInterval = setInterval(() => this.flush(), 30000); // Flush every 30 seconds
     }
   }
@@ -62,16 +65,24 @@ class Logger {
     return Logger.instance;
   }
 
-  private createLogEntry(level: LogLevel, message: string, data?: unknown): LogEntry {
+  private createLogEntry(
+    level: LogLevel,
+    message: string,
+    data?: unknown
+  ): LogEntry {
     return {
       level,
       message,
       timestamp: new Date().toISOString(),
       data,
-      stack: level === LogLevel.ERROR || level === LogLevel.FATAL ? new Error().stack : undefined,
+      stack:
+        level === LogLevel.ERROR || level === LogLevel.FATAL
+          ? new Error().stack
+          : undefined,
       sessionId: getOrCreateSessionId(),
-      url: typeof window !== 'undefined' ? window.location.href : undefined,
-      userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : undefined,
+      url: typeof window !== "undefined" ? window.location.href : undefined,
+      userAgent:
+        typeof navigator !== "undefined" ? navigator.userAgent : undefined,
     };
   }
 
@@ -85,38 +96,38 @@ class Logger {
   debug(message: string, data?: unknown): void {
     const entry = this.createLogEntry(LogLevel.DEBUG, message, data);
     this.addToBuffer(entry);
-    
+
     if (IS_DEV) {
-      console.log(`[DEBUG] ${message}`, data || '');
+      console.log(`[DEBUG] ${message}`, data || "");
     }
   }
 
   info(message: string, data?: unknown): void {
     const entry = this.createLogEntry(LogLevel.INFO, message, data);
     this.addToBuffer(entry);
-    
+
     if (IS_DEV) {
-      console.info(`[INFO] ${message}`, data || '');
+      console.info(`[INFO] ${message}`, data || "");
     }
   }
 
   warn(message: string, data?: unknown): void {
     const entry = this.createLogEntry(LogLevel.WARN, message, data);
     this.addToBuffer(entry);
-    
+
     // Only show warnings in development
     if (IS_DEV) {
-      console.warn(`[WARN] ${message}`, data || '');
+      console.warn(`[WARN] ${message}`, data || "");
     }
   }
 
   error(message: string, error?: unknown): void {
     const entry = this.createLogEntry(LogLevel.ERROR, message, error);
     this.addToBuffer(entry);
-    
+
     // Only show errors in development, in production send to tracking service
     if (IS_DEV) {
-      console.error(`[ERROR] ${message}`, error || '');
+      console.error(`[ERROR] ${message}`, error || "");
     }
 
     // In production, send to error tracking service
@@ -128,9 +139,9 @@ class Logger {
   fatal(message: string, error?: unknown): void {
     const entry = this.createLogEntry(LogLevel.FATAL, message, error);
     this.addToBuffer(entry);
-    
+
     // Always log fatal errors
-    console.error(`[FATAL] ${message}`, error || '');
+    console.error(`[FATAL] ${message}`, error || "");
 
     // Send immediately to error tracking
     this.sendToErrorTracking(entry);
@@ -139,17 +150,14 @@ class Logger {
   private sendToErrorTracking(_entry: LogEntry): void {
     // Production error tracking integration
     // Uncomment and configure one of the following:
-    
     // Sentry Integration:
     // if (typeof Sentry !== 'undefined') {
     //   Sentry.captureException(new Error(_entry.message), {
     //     extra: { ..._entry }
     //   });
     // }
-    
     // Vercel Analytics Error Tracking:
     // This is automatically handled by @vercel/analytics
-    
     // Custom error endpoint:
     // fetch('/api/errors', {
     //   method: 'POST',
@@ -163,7 +171,7 @@ class Logger {
    */
   flush(): void {
     if (this.logBuffer.length === 0) return;
-    
+
     // In production, could send buffered logs to analytics
     // const logs = [...this.logBuffer];
     // this.logBuffer = [];
@@ -190,13 +198,13 @@ class Logger {
 
   // Group logs for better organization (only in dev)
   group(label: string): void {
-    if (IS_DEV && typeof console.group === 'function') {
+    if (IS_DEV && typeof console.group === "function") {
       console.group(label);
     }
   }
 
   groupEnd(): void {
-    if (IS_DEV && typeof console.groupEnd === 'function') {
+    if (IS_DEV && typeof console.groupEnd === "function") {
       console.groupEnd();
     }
   }

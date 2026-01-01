@@ -1,9 +1,9 @@
-import React from 'react';
-import { PageLayout } from '@/components/layout/PageLayout';
-import { HeroSection } from '@/components/layout/HeroSection';
-import { useDarkMode } from '@/hooks/useDarkMode';
-import { Shield, Scale, FileText, Calendar, Mail, Globe } from 'lucide-react';
-import { APP_VERSION_WITH_PREFIX } from '@/utils/version';
+import React from "react";
+import { PageLayout } from "@/components/layout/PageLayout";
+import { HeroSection } from "@/components/layout/HeroSection";
+import { useDarkMode } from "@/hooks/useDarkMode";
+import { Shield, Scale, FileText, Calendar, Mail, Globe } from "lucide-react";
+import { APP_VERSION_WITH_PREFIX } from "@/utils/version";
 
 interface LegalPageLayoutProps {
   title: string;
@@ -18,7 +18,7 @@ export const LegalPageLayout: React.FC<LegalPageLayoutProps> = ({
   subtitle,
   lastUpdated,
   children,
-  icon = <Scale className="h-8 w-8" />
+  icon = <Scale className="h-8 w-8" />,
 }) => {
   const { theme, setTheme } = useDarkMode();
 
@@ -46,27 +46,33 @@ export const LegalPageLayout: React.FC<LegalPageLayoutProps> = ({
                   {icon}
                   <div className="text-white text-lg font-bold">Legal</div>
                 </div>
-                
+
                 <div className="flex-1 space-y-3">
                   <div className="flex flex-col sm:flex-row items-center gap-4">
                     <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
                       <Calendar className="h-5 w-5 text-blue-500" />
-                      <span className="font-medium">Last Updated: {lastUpdated}</span>
+                      <span className="font-medium">
+                        Last Updated: {lastUpdated}
+                      </span>
                     </div>
                     <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
                       <Globe className="h-5 w-5 text-green-500" />
                       <span className="font-medium">Effective Globally</span>
                     </div>
                   </div>
-                  
+
                   <div className="flex flex-col sm:flex-row items-center gap-4">
                     <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
                       <Shield className="h-5 w-5 text-purple-500" />
-                      <span className="font-medium">Code Guardian {APP_VERSION_WITH_PREFIX}</span>
+                      <span className="font-medium">
+                        Code Guardian {APP_VERSION_WITH_PREFIX}
+                      </span>
                     </div>
                     <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
                       <Mail className="h-5 w-5 text-orange-500" />
-                      <span className="font-medium">Contact: itisaddy7@gmail.com</span>
+                      <span className="font-medium">
+                        Contact: itisaddy7@gmail.com
+                      </span>
                     </div>
                   </div>
                 </div>

@@ -1,7 +1,13 @@
-import React from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Target } from 'lucide-react';
+import React from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Target } from "lucide-react";
 
 interface RiskMetrics {
   overallRisk: number;
@@ -31,7 +37,9 @@ export const RiskAssessment: React.FC<RiskAssessmentProps> = ({ metrics }) => {
               <div className="text-4xl font-bold text-red-600 mb-2">
                 {metrics.overallRisk}%
               </div>
-              <p className="text-slate-600 dark:text-slate-400">Overall Risk Score</p>
+              <p className="text-slate-600 dark:text-slate-400">
+                Overall Risk Score
+              </p>
             </div>
             <div className="space-y-3">
               <div className="flex justify-between items-center">
@@ -59,19 +67,25 @@ export const RiskAssessment: React.FC<RiskAssessmentProps> = ({ metrics }) => {
         <CardContent>
           <div className="space-y-3">
             <div className="p-3 bg-red-50 dark:bg-red-950/20 rounded-lg border border-red-200 dark:border-red-800">
-              <h4 className="font-medium text-red-800 dark:text-red-200">High Priority</h4>
+              <h4 className="font-medium text-red-800 dark:text-red-200">
+                High Priority
+              </h4>
               <p className="text-sm text-red-600 dark:text-red-400">
                 Address {metrics.criticalIssues} critical issues immediately
               </p>
             </div>
             <div className="p-3 bg-amber-50 dark:bg-amber-950/20 rounded-lg border border-amber-200 dark:border-amber-800">
-              <h4 className="font-medium text-amber-800 dark:text-amber-200">Medium Priority</h4>
+              <h4 className="font-medium text-amber-800 dark:text-amber-200">
+                Medium Priority
+              </h4>
               <p className="text-sm text-amber-600 dark:text-amber-400">
                 Review {metrics.securityIssues} security vulnerabilities
               </p>
             </div>
             <div className="p-3 bg-blue-50 dark:bg-blue-950/20 rounded-lg border border-blue-200 dark:border-blue-800">
-              <h4 className="font-medium text-blue-800 dark:text-blue-200">Low Priority</h4>
+              <h4 className="font-medium text-blue-800 dark:text-blue-200">
+                Low Priority
+              </h4>
               <p className="text-sm text-blue-600 dark:text-blue-400">
                 Improve code quality and reduce technical debt
               </p>

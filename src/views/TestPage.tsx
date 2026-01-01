@@ -4,12 +4,18 @@
  * DEVELOPMENT ONLY - Not available in production
  */
 
-import { useEffect } from 'react';
-import { logger } from '@/utils/logger';
+import { useEffect } from "react";
+import { logger } from "@/utils/logger";
 // import { FirebaseTestPanel } from '@/components/FirebaseTestPanel'; // Not available
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { ArrowLeft, TestTube } from 'lucide-react';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft, TestTube } from "lucide-react";
 
 interface TestPageProps {
   onBack?: () => void;
@@ -18,9 +24,9 @@ interface TestPageProps {
 export const TestPage = ({ onBack }: TestPageProps) => {
   // Prevent access in production
   useEffect(() => {
-    if (process.env.NODE_ENV === 'production') {
-      logger.warn('⚠️ Test pages are not available in production');
-      window.location.href = '/';
+    if (process.env.NODE_ENV === "production") {
+      logger.warn("⚠️ Test pages are not available in production");
+      window.location.href = "/";
     }
   }, []);
   return (
@@ -30,9 +36,9 @@ export const TestPage = ({ onBack }: TestPageProps) => {
         <div className="mb-8">
           <div className="flex items-center gap-4 mb-6">
             {onBack && (
-              <Button 
-                variant="outline" 
-                size="sm" 
+              <Button
+                variant="outline"
+                size="sm"
                 onClick={onBack}
                 className="flex items-center gap-2"
               >
@@ -88,13 +94,17 @@ export const TestPage = ({ onBack }: TestPageProps) => {
                 </ul>
               </div>
             </div>
-            
+
             <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border">
               <h4 className="font-semibold mb-2 text-blue-800 dark:text-blue-200">
                 Access this page anytime:
               </h4>
               <p className="text-sm text-blue-700 dark:text-blue-300">
-                Add <code className="bg-blue-100 dark:bg-blue-800 px-1 rounded">?test=firebase</code> to the URL to access these tests
+                Add{" "}
+                <code className="bg-blue-100 dark:bg-blue-800 px-1 rounded">
+                  ?test=firebase
+                </code>{" "}
+                to the URL to access these tests
               </p>
             </div>
           </CardContent>

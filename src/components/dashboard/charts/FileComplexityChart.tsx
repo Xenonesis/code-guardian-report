@@ -1,7 +1,22 @@
-import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { FileText } from 'lucide-react';
+import React from "react";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { FileText } from "lucide-react";
 
 interface FileComplexityData {
   file: string;
@@ -16,7 +31,9 @@ interface FileComplexityChartProps {
   data: FileComplexityData[];
 }
 
-export const FileComplexityChart: React.FC<FileComplexityChartProps> = ({ data }) => {
+export const FileComplexityChart: React.FC<FileComplexityChartProps> = ({
+  data,
+}) => {
   return (
     <Card className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm border-0 shadow-xl">
       <CardHeader>
@@ -24,7 +41,9 @@ export const FileComplexityChart: React.FC<FileComplexityChartProps> = ({ data }
           <FileText className="h-5 w-5 text-indigo-600" />
           File Complexity Analysis
         </CardTitle>
-        <CardDescription>Files ranked by issue complexity and risk</CardDescription>
+        <CardDescription>
+          Files ranked by issue complexity and risk
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <ResponsiveContainer width="100%" height={400}>

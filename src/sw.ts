@@ -1,12 +1,12 @@
 // Service Worker for Serwist PWA in Next.js
 /// <reference lib="webworker" />
 import type { PrecacheEntry, SerwistGlobalConfig } from "serwist";
-import { 
-  Serwist, 
-  NetworkFirst, 
-  StaleWhileRevalidate, 
-  CacheFirst, 
-  ExpirationPlugin 
+import {
+  Serwist,
+  NetworkFirst,
+  StaleWhileRevalidate,
+  CacheFirst,
+  ExpirationPlugin,
 } from "serwist";
 
 // This declares the value of `injectionPoint` to TypeScript.
@@ -27,7 +27,8 @@ const serwist = new Serwist({
   runtimeCaching: [
     {
       // Cache page navigations
-      matcher: ({ request }: { request: Request }) => request.mode === "navigate",
+      matcher: ({ request }: { request: Request }) =>
+        request.mode === "navigate",
       handler: new NetworkFirst({
         cacheName: "pages-cache",
         plugins: [
@@ -56,7 +57,8 @@ const serwist = new Serwist({
     },
     {
       // Cache images
-      matcher: ({ request }: { request: Request }) => request.destination === "image",
+      matcher: ({ request }: { request: Request }) =>
+        request.destination === "image",
       handler: new CacheFirst({
         cacheName: "image-cache",
         plugins: [
@@ -90,7 +92,7 @@ self.addEventListener("message", (event) => {
   if (event.data && event.data.type === "SKIP_WAITING") {
     self.skipWaiting();
   }
-  
+
   if (event.data && event.data.type === "CLEAR_CACHE") {
     const cacheName = event.data.cacheName;
     if (cacheName) {
@@ -101,7 +103,7 @@ self.addEventListener("message", (event) => {
       });
     }
   }
-  
+
   if (event.data && event.data.type === "PRELOAD_ROUTES") {
     const routes = event.data.routes as string[];
     routes.forEach((route) => {
@@ -126,7 +128,7 @@ self.addEventListener("push", (event) => {
       tag: payload.tag || "code-guardian-notification",
       requireInteraction: payload.requireInteraction || false,
     };
-    
+
     event.waitUntil(self.registration.showNotification(title, options));
   }
 });
@@ -134,10 +136,10 @@ self.addEventListener("push", (event) => {
 // Handle notification click
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
-  
+
   const action = event.action;
   const data = event.notification.data;
-  
+
   if (action === "view" || !action) {
     const urlToOpen = data?.url || "/";
     event.waitUntil(
@@ -170,7 +172,7 @@ self.addEventListener("sync", (event: SyncEvent) => {
       })
     );
   }
-  
+
   if (event.tag === "sync-offline-data") {
     event.waitUntil(
       self.clients.matchAll().then((clients) => {
@@ -180,7 +182,7 @@ self.addEventListener("sync", (event: SyncEvent) => {
       })
     );
   }
-  
+
   if (event.tag === "sync-analytics") {
     event.waitUntil(
       self.clients.matchAll().then((clients) => {

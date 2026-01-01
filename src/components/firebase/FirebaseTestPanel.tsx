@@ -3,24 +3,33 @@
  * Interactive component to test Firebase integration
  */
 
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
-import { 
-  Play, 
-  CheckCircle, 
-  XCircle, 
-  Clock, 
-  Database, 
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import {
+  Play,
+  CheckCircle,
+  XCircle,
+  Clock,
+  Database,
   Cloud,
   Zap,
-  AlertCircle
-} from 'lucide-react';
-import { testFirebaseIntegration, testFirebaseConnection } from '@/tests/firebaseIntegrationTest';
+  AlertCircle,
+} from "lucide-react";
+import {
+  testFirebaseIntegration,
+  testFirebaseConnection,
+} from "@/tests/firebaseIntegrationTest";
 
-import { logger } from '@/utils/logger';
+import { logger } from "@/utils/logger";
 interface TestResult {
   success: boolean;
   results: {
@@ -35,7 +44,9 @@ interface TestResult {
 export const FirebaseTestPanel = () => {
   const [isRunning, setIsRunning] = useState(false);
   const [testResult, setTestResult] = useState<TestResult | null>(null);
-  const [connectionStatus, setConnectionStatus] = useState<boolean | null>(null);
+  const [connectionStatus, setConnectionStatus] = useState<boolean | null>(
+    null
+  );
 
   const runConnectionTest = async () => {
     setConnectionStatus(null);
@@ -43,7 +54,7 @@ export const FirebaseTestPanel = () => {
       const result = await testFirebaseConnection();
       setConnectionStatus(result);
     } catch (error) {
-      logger.error('Connection test error:', error);
+      logger.error("Connection test error:", error);
       setConnectionStatus(false);
     }
   };
@@ -51,22 +62,22 @@ export const FirebaseTestPanel = () => {
   const runIntegrationTests = async () => {
     setIsRunning(true);
     setTestResult(null);
-    
+
     try {
-      logger.debug('🚀 Starting Firebase integration tests...');
+      logger.debug("🚀 Starting Firebase integration tests...");
       const result = await testFirebaseIntegration();
       setTestResult(result);
     } catch (error) {
-      logger.error('Test execution error:', error);
+      logger.error("Test execution error:", error);
       setTestResult({
         success: false,
         results: {
           total: 1,
           passed: 0,
           failed: 1,
-          errors: [error instanceof Error ? error.message : 'Unknown error']
+          errors: [error instanceof Error ? error.message : "Unknown error"],
         },
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
     } finally {
       setIsRunning(false);
@@ -80,15 +91,15 @@ export const FirebaseTestPanel = () => {
   };
 
   const getStatusText = (status: boolean | null) => {
-    if (status === null) return 'Not tested';
-    if (status) return 'Connected';
-    return 'Failed';
+    if (status === null) return "Not tested";
+    if (status) return "Connected";
+    return "Failed";
   };
 
   const getStatusBadgeVariant = (status: boolean | null) => {
-    if (status === null) return 'outline';
-    if (status) return 'default';
-    return 'destructive';
+    if (status === null) return "outline";
+    if (status) return "default";
+    return "destructive";
   };
 
   return (
@@ -125,11 +136,7 @@ export const FirebaseTestPanel = () => {
                 {getStatusText(connectionStatus)}
               </Badge>
             </div>
-            <Button 
-              onClick={runConnectionTest}
-              variant="outline"
-              size="sm"
-            >
+            <Button onClick={runConnectionTest} variant="outline" size="sm">
               Test Connection
             </Button>
           </div>
@@ -149,7 +156,7 @@ export const FirebaseTestPanel = () => {
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="flex items-center gap-4">
-            <Button 
+            <Button
               onClick={runIntegrationTests}
               disabled={isRunning}
               className="min-w-[140px]"
@@ -166,7 +173,7 @@ export const FirebaseTestPanel = () => {
                 </>
               )}
             </Button>
-            
+
             {testResult && (
               <div className="flex items-center gap-2">
                 {testResult.success ? (
@@ -175,7 +182,9 @@ export const FirebaseTestPanel = () => {
                   <XCircle className="h-5 w-5 text-red-500" />
                 )}
                 <span className="font-medium">
-                  {testResult.success ? 'All tests passed!' : 'Some tests failed'}
+                  {testResult.success
+                    ? "All tests passed!"
+                    : "Some tests failed"}
                 </span>
               </div>
             )}
@@ -205,7 +214,11 @@ export const FirebaseTestPanel = () => {
                 </div>
                 <div className="text-center p-3 bg-gray-50 rounded-lg">
                   <div className="text-2xl font-bold text-gray-600">
-                    {((testResult.results.passed / testResult.results.total) * 100).toFixed(0)}%
+                    {(
+                      (testResult.results.passed / testResult.results.total) *
+                      100
+                    ).toFixed(0)}
+                    %
                   </div>
                   <div className="text-sm text-gray-700">Success Rate</div>
                 </div>
@@ -213,8 +226,10 @@ export const FirebaseTestPanel = () => {
 
               <div>
                 <div className="mb-2 text-sm font-medium">Progress</div>
-                <Progress 
-                  value={(testResult.results.passed / testResult.results.total) * 100} 
+                <Progress
+                  value={
+                    (testResult.results.passed / testResult.results.total) * 100
+                  }
                   className="w-full"
                 />
               </div>
@@ -223,7 +238,9 @@ export const FirebaseTestPanel = () => {
                 <div className="p-4 bg-red-50 rounded-lg border border-red-200">
                   <div className="flex items-center gap-2 mb-2">
                     <AlertCircle className="h-4 w-4 text-red-500" />
-                    <span className="font-medium text-red-700">Test Errors</span>
+                    <span className="font-medium text-red-700">
+                      Test Errors
+                    </span>
                   </div>
                   <ul className="space-y-1">
                     {testResult.results.errors.map((error, index) => (
@@ -236,7 +253,8 @@ export const FirebaseTestPanel = () => {
               )}
 
               <div className="text-xs text-gray-500">
-                Test completed at: {new Date(testResult.timestamp).toLocaleString()}
+                Test completed at:{" "}
+                {new Date(testResult.timestamp).toLocaleString()}
               </div>
             </div>
           )}
@@ -252,21 +270,38 @@ export const FirebaseTestPanel = () => {
           <div className="text-sm">
             <p className="mb-2 font-medium">What these tests verify:</p>
             <ul className="space-y-1 ml-4 text-gray-600">
-              <li>• <strong>Connection Test:</strong> Firebase configuration and connectivity</li>
-              <li>• <strong>Storage Service:</strong> Initialization of storage services</li>
-              <li>• <strong>Local Storage:</strong> Anonymous user data storage</li>
-              <li>• <strong>Firebase Storage:</strong> Authenticated user cloud storage</li>
-              <li>• <strong>Data Retrieval:</strong> Reading stored analysis results</li>
-              <li>• <strong>Integration Methods:</strong> Service methods and utilities</li>
+              <li>
+                • <strong>Connection Test:</strong> Firebase configuration and
+                connectivity
+              </li>
+              <li>
+                • <strong>Storage Service:</strong> Initialization of storage
+                services
+              </li>
+              <li>
+                • <strong>Local Storage:</strong> Anonymous user data storage
+              </li>
+              <li>
+                • <strong>Firebase Storage:</strong> Authenticated user cloud
+                storage
+              </li>
+              <li>
+                • <strong>Data Retrieval:</strong> Reading stored analysis
+                results
+              </li>
+              <li>
+                • <strong>Integration Methods:</strong> Service methods and
+                utilities
+              </li>
             </ul>
           </div>
-          
+
           <div className="p-3 bg-blue-50 rounded-lg border border-blue-200">
             <div className="text-sm">
               <p className="font-medium text-blue-700 mb-1">Note:</p>
               <p className="text-blue-600">
-                Firebase tests may show warnings if authentication isn't configured. 
-                Local storage tests should pass regardless.
+                Firebase tests may show warnings if authentication isn't
+                configured. Local storage tests should pass regardless.
               </p>
             </div>
           </div>

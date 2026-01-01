@@ -3,26 +3,61 @@
  * UI for managing repository webhooks and monitoring rules
  */
 
-import React, { useState, useEffect } from 'react';
-import { WebhookManager, WebhookConfig, MonitoringRule, WebhookEvent } from '@/services/monitoring/WebhookManager';
-import { useAuth } from '@/lib/auth-context';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Switch } from '@/components/ui/switch';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Webhook, Plus, Trash2, Settings, Activity, Bell, Shield, Code } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import React, { useState, useEffect } from "react";
+import {
+  WebhookManager,
+  WebhookConfig,
+  MonitoringRule,
+  WebhookEvent,
+} from "@/services/monitoring/WebhookManager";
+import { useAuth } from "@/lib/auth-context";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Webhook,
+  Plus,
+  Trash2,
+  Settings,
+  Activity,
+  Bell,
+  Shield,
+  Code,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
 
-import { logger } from '@/utils/logger';
+import { logger } from "@/utils/logger";
 const WebhookManagement: React.FC = () => {
   const { user } = useAuth();
   const [webhooks, setWebhooks] = useState<WebhookConfig[]>([]);
-  const [selectedWebhook, setSelectedWebhook] = useState<WebhookConfig | null>(null);
+  const [selectedWebhook, setSelectedWebhook] = useState<WebhookConfig | null>(
+    null
+  );
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -34,20 +69,20 @@ const WebhookManagement: React.FC = () => {
 
   const loadWebhooks = async () => {
     if (!user) return;
-    
+
     setIsLoading(true);
     try {
       const data = await WebhookManager.getWebhooks(user.uid);
       setWebhooks(data);
     } catch (error) {
-      logger.error('Failed to load webhooks:', error);
+      logger.error("Failed to load webhooks:", error);
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleCreateWebhook = async (data: {
-    provider: 'github' | 'gitlab';
+    provider: "github" | "gitlab";
     repositoryName: string;
     repositoryUrl: string;
     events: WebhookEvent[];
@@ -58,7 +93,7 @@ const WebhookManagement: React.FC = () => {
       await WebhookManager.createWebhook({
         userId: user.uid,
         provider: data.provider,
-        repositoryId: data.repositoryName.toLowerCase().replace(/\s+/g, '-'),
+        repositoryId: data.repositoryName.toLowerCase().replace(/\s+/g, "-"),
         repositoryName: data.repositoryName,
         repositoryUrl: data.repositoryUrl,
         events: data.events,
@@ -68,7 +103,7 @@ const WebhookManagement: React.FC = () => {
       await loadWebhooks();
       setIsCreateDialogOpen(false);
     } catch (error) {
-      logger.error('Failed to create webhook:', error);
+      logger.error("Failed to create webhook:", error);
     }
   };
 
@@ -77,18 +112,18 @@ const WebhookManagement: React.FC = () => {
       await WebhookManager.updateWebhook(webhookId, { active });
       await loadWebhooks();
     } catch (error) {
-      logger.error('Failed to toggle webhook:', error);
+      logger.error("Failed to toggle webhook:", error);
     }
   };
 
   const handleDeleteWebhook = async (webhookId: string) => {
-    if (!confirm('Are you sure you want to delete this webhook?')) return;
+    if (!confirm("Are you sure you want to delete this webhook?")) return;
 
     try {
       await WebhookManager.deleteWebhook(webhookId);
       await loadWebhooks();
     } catch (error) {
-      logger.error('Failed to delete webhook:', error);
+      logger.error("Failed to delete webhook:", error);
     }
   };
 
@@ -96,7 +131,9 @@ const WebhookManagement: React.FC = () => {
     return (
       <div className="text-center py-12">
         <Bell className="h-12 w-12 mx-auto mb-4 opacity-20" />
-        <p className="text-muted-foreground">Please sign in to manage webhooks</p>
+        <p className="text-muted-foreground">
+          Please sign in to manage webhooks
+        </p>
       </div>
     );
   }
@@ -122,7 +159,10 @@ const WebhookManagement: React.FC = () => {
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[600px]">
-            <CreateWebhookDialog onSubmit={handleCreateWebhook} onClose={() => setIsCreateDialogOpen(false)} />
+            <CreateWebhookDialog
+              onSubmit={handleCreateWebhook}
+              onClose={() => setIsCreateDialogOpen(false)}
+            />
           </DialogContent>
         </Dialog>
       </div>
@@ -134,7 +174,9 @@ const WebhookManagement: React.FC = () => {
             <div className="text-center">
               <Webhook className="h-8 w-8 mx-auto mb-2 text-blue-600" />
               <div className="text-3xl font-bold">{webhooks.length}</div>
-              <div className="text-sm text-muted-foreground">Active Webhooks</div>
+              <div className="text-sm text-muted-foreground">
+                Active Webhooks
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -144,7 +186,7 @@ const WebhookManagement: React.FC = () => {
             <div className="text-center">
               <Activity className="h-8 w-8 mx-auto mb-2 text-green-600" />
               <div className="text-3xl font-bold">
-                {webhooks.filter(w => w.active).length}
+                {webhooks.filter((w) => w.active).length}
               </div>
               <div className="text-sm text-muted-foreground">Monitoring</div>
             </div>
@@ -184,7 +226,9 @@ const WebhookManagement: React.FC = () => {
           {webhooks.length === 0 ? (
             <div className="text-center py-12">
               <Webhook className="h-12 w-12 mx-auto mb-4 opacity-20" />
-              <p className="text-muted-foreground mb-4">No webhooks configured yet</p>
+              <p className="text-muted-foreground mb-4">
+                No webhooks configured yet
+              </p>
               <Button onClick={() => setIsCreateDialogOpen(true)}>
                 <Plus className="h-4 w-4 mr-2" />
                 Create Your First Webhook
@@ -216,18 +260,25 @@ interface WebhookCardProps {
   onSelect: (webhook: WebhookConfig) => void;
 }
 
-const WebhookCard: React.FC<WebhookCardProps> = ({ webhook, onToggle, onDelete, onSelect }) => {
+const WebhookCard: React.FC<WebhookCardProps> = ({
+  webhook,
+  onToggle,
+  onDelete,
+  onSelect,
+}) => {
   const providerColors = {
-    github: 'bg-gray-900 text-white',
-    gitlab: 'bg-orange-600 text-white',
-    bitbucket: 'bg-blue-600 text-white',
+    github: "bg-gray-900 text-white",
+    gitlab: "bg-orange-600 text-white",
+    bitbucket: "bg-blue-600 text-white",
   };
 
   return (
-    <div className={cn(
-      'border rounded-lg p-4 transition-all',
-      webhook.active ? 'border-primary/50' : 'border-border opacity-60'
-    )}>
+    <div
+      className={cn(
+        "border rounded-lg p-4 transition-all",
+        webhook.active ? "border-primary/50" : "border-border opacity-60"
+      )}
+    >
       <div className="flex items-start justify-between">
         <div className="flex-1">
           <div className="flex items-center gap-3 mb-2">
@@ -266,11 +317,7 @@ const WebhookCard: React.FC<WebhookCardProps> = ({ webhook, onToggle, onDelete, 
             checked={webhook.active}
             onCheckedChange={(checked) => onToggle(webhook.id!, checked)}
           />
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => onSelect(webhook)}
-          >
+          <Button variant="ghost" size="icon" onClick={() => onSelect(webhook)}>
             <Settings className="h-4 w-4" />
           </Button>
           <Button
@@ -291,21 +338,24 @@ interface CreateWebhookDialogProps {
   onClose: () => void;
 }
 
-const CreateWebhookDialog: React.FC<CreateWebhookDialogProps> = ({ onSubmit, onClose }) => {
+const CreateWebhookDialog: React.FC<CreateWebhookDialogProps> = ({
+  onSubmit,
+  onClose,
+}) => {
   const [formData, setFormData] = useState({
-    provider: 'github' as 'github' | 'gitlab',
-    repositoryName: '',
-    repositoryUrl: '',
-    events: ['push', 'pull_request'] as WebhookEvent[],
+    provider: "github" as "github" | "gitlab",
+    repositoryName: "",
+    repositoryUrl: "",
+    events: ["push", "pull_request"] as WebhookEvent[],
   });
 
   const availableEvents: WebhookEvent[] = [
-    'push',
-    'pull_request',
-    'pull_request_review',
-    'commit_comment',
-    'repository',
-    'release',
+    "push",
+    "pull_request",
+    "pull_request_review",
+    "commit_comment",
+    "repository",
+    "release",
   ];
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -314,10 +364,10 @@ const CreateWebhookDialog: React.FC<CreateWebhookDialogProps> = ({ onSubmit, onC
   };
 
   const toggleEvent = (event: WebhookEvent) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       events: prev.events.includes(event)
-        ? prev.events.filter(e => e !== event)
+        ? prev.events.filter((e) => e !== event)
         : [...prev.events, event],
     }));
   };
@@ -336,8 +386,8 @@ const CreateWebhookDialog: React.FC<CreateWebhookDialogProps> = ({ onSubmit, onC
           <Label htmlFor="provider">Provider</Label>
           <Select
             value={formData.provider}
-            onValueChange={(value: 'github' | 'gitlab') =>
-              setFormData(prev => ({ ...prev, provider: value }))
+            onValueChange={(value: "github" | "gitlab") =>
+              setFormData((prev) => ({ ...prev, provider: value }))
             }
           >
             <SelectTrigger>
@@ -357,7 +407,10 @@ const CreateWebhookDialog: React.FC<CreateWebhookDialogProps> = ({ onSubmit, onC
             placeholder="my-awesome-project"
             value={formData.repositoryName}
             onChange={(e) =>
-              setFormData(prev => ({ ...prev, repositoryName: e.target.value }))
+              setFormData((prev) => ({
+                ...prev,
+                repositoryName: e.target.value,
+              }))
             }
             required
           />
@@ -370,7 +423,10 @@ const CreateWebhookDialog: React.FC<CreateWebhookDialogProps> = ({ onSubmit, onC
             placeholder="https://github.com/username/repo"
             value={formData.repositoryUrl}
             onChange={(e) =>
-              setFormData(prev => ({ ...prev, repositoryUrl: e.target.value }))
+              setFormData((prev) => ({
+                ...prev,
+                repositoryUrl: e.target.value,
+              }))
             }
             required
           />
@@ -395,7 +451,10 @@ const CreateWebhookDialog: React.FC<CreateWebhookDialogProps> = ({ onSubmit, onC
           <Button type="button" variant="outline" onClick={onClose}>
             Cancel
           </Button>
-          <Button type="submit" disabled={!formData.repositoryName || !formData.repositoryUrl}>
+          <Button
+            type="submit"
+            disabled={!formData.repositoryName || !formData.repositoryUrl}
+          >
             Create Webhook
           </Button>
         </div>

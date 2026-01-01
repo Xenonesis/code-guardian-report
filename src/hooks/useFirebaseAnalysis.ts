@@ -1,20 +1,20 @@
 /**
-  * Firebase Analysis Hook
-  * Integrates Firebase storage with the existing analysis system
-  * Provides seamless cloud storage with fallback to local storage
-  */
- 
-import { useState, useCallback, useEffect } from 'react';
-import { AnalysisResults } from '@/hooks/useAnalysis';
+ * Firebase Analysis Hook
+ * Integrates Firebase storage with the existing analysis system
+ * Provides seamless cloud storage with fallback to local storage
+ */
+
+import { useState, useCallback, useEffect } from "react";
+import { AnalysisResults } from "@/hooks/useAnalysis";
 import {
   firebaseAnalysisStorage,
   FirebaseAnalysisData,
-  AnalysisHistoryQuery
-} from '../services/storage/firebaseAnalysisStorage';
-import { analysisStorage } from '../services/storage/analysisStorage';
-import { useAuth } from '@/lib/auth-context';
+  AnalysisHistoryQuery,
+} from "../services/storage/firebaseAnalysisStorage";
+import { analysisStorage } from "../services/storage/analysisStorage";
+import { useAuth } from "@/lib/auth-context";
 
-import { logger } from '@/utils/logger';
+import { logger } from "@/utils/logger";
 export interface FirebaseAnalysisState {
   analysisResults: AnalysisResults | null;
   cloudAnalysis: FirebaseAnalysisData | null;
@@ -25,26 +25,34 @@ export interface FirebaseAnalysisState {
   selectedFile: File | null;
   hasCloudData: boolean;
   hasLocalData: boolean;
-  syncStatus: 'synced' | 'pending' | 'error' | 'offline';
+  syncStatus: "synced" | "pending" | "error" | "offline";
   lastSyncTime: Date | null;
 }
 
 export const useFirebaseAnalysis = () => {
   const { user, loading } = useAuth();
   const isAuthenticated = !loading && !!user;
-  
+
   // State management
-  const [analysisResults, setAnalysisResults] = useState<AnalysisResults | null>(null);
-  const [cloudAnalysis, setCloudAnalysis] = useState<FirebaseAnalysisData | null>(null);
-  const [analysisHistory, setAnalysisHistory] = useState<FirebaseAnalysisData[]>([]);
+  const [analysisResults, setAnalysisResults] =
+    useState<AnalysisResults | null>(null);
+  const [cloudAnalysis, setCloudAnalysis] =
+    useState<FirebaseAnalysisData | null>(null);
+  const [analysisHistory, setAnalysisHistory] = useState<
+    FirebaseAnalysisData[]
+  >([]);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [isSyncing, setIsSyncing] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [hasCloudData, setHasCloudData] = useState(false);
   const [hasLocalData, setHasLocalData] = useState(false);
-  const [syncStatus, setSyncStatus] = useState<'synced' | 'pending' | 'error' | 'offline'>('offline');
+  const [syncStatus, setSyncStatus] = useState<
+    "synced" | "pending" | "error" | "offline"
+  >("offline");
   const [lastSyncTime, setLastSyncTime] = useState<Date | null>(null);
-  const [isOnline, setIsOnline] = useState(typeof navigator !== 'undefined' ? navigator.onLine : true);
+  const [isOnline, setIsOnline] = useState(
+    typeof navigator !== "undefined" ? navigator.onLine : true
+  );
 
   // Initialize Firebase storage with user authentication
   useEffect(() => {
@@ -62,7 +70,7 @@ export const useFirebaseAnalysis = () => {
   useEffect(() => {
     const handleOnline = () => {
       setIsOnline(true);
-      setSyncStatus('synced');
+      setSyncStatus("synced");
       if (user?.uid) {
         syncPendingData();
       }
@@ -70,15 +78,15 @@ export const useFirebaseAnalysis = () => {
 
     const handleOffline = () => {
       setIsOnline(false);
-      setSyncStatus('offline');
+      setSyncStatus("offline");
     };
 
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
 
     return () => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
     };
   }, [user?.uid, isAuthenticated]);
 
@@ -89,7 +97,7 @@ export const useFirebaseAnalysis = () => {
     const unsubscribe = firebaseAnalysisStorage.subscribe((data) => {
       setAnalysisHistory(data);
       setHasCloudData(data.length > 0);
-      
+
       // Set the most recent analysis as current if no local analysis exists
       if (data.length > 0 && !analysisResults) {
         const mostRecent = data[0];
@@ -109,29 +117,30 @@ export const useFirebaseAnalysis = () => {
   const loadInitialData = async () => {
     try {
       setIsSyncing(true);
-      
+
       // Load local data first (for immediate display)
       loadLocalData();
-      
+
       // Then load cloud data if online
       if (isOnline && user?.uid) {
-        const cloudHistory = await firebaseAnalysisStorage.getUserAnalysisHistory();
+        const cloudHistory =
+          await firebaseAnalysisStorage.getUserAnalysisHistory();
         setAnalysisHistory(cloudHistory);
         setHasCloudData(cloudHistory.length > 0);
-        
+
         // If we have cloud data but no local data, use the most recent cloud analysis
         if (cloudHistory.length > 0 && !hasLocalData) {
           const mostRecent = cloudHistory[0];
           setCloudAnalysis(mostRecent);
           setAnalysisResults(mostRecent.results);
         }
-        
-        setSyncStatus('synced');
+
+        setSyncStatus("synced");
         setLastSyncTime(new Date());
       }
     } catch (error) {
-      logger.error('Error loading initial data:', error);
-      setSyncStatus('error');
+      logger.error("Error loading initial data:", error);
+      setSyncStatus("error");
     } finally {
       setIsSyncing(false);
     }
@@ -150,7 +159,7 @@ export const useFirebaseAnalysis = () => {
 
     try {
       setIsSyncing(true);
-      setSyncStatus('pending');
+      setSyncStatus("pending");
 
       // Check for local data that needs to be synced
       const localAnalysis = analysisStorage.getCurrentAnalysis();
@@ -162,13 +171,13 @@ export const useFirebaseAnalysis = () => {
           [],
           false
         );
-        
-        setSyncStatus('synced');
+
+        setSyncStatus("synced");
         setLastSyncTime(new Date());
       }
     } catch (error) {
-      logger.error('Error syncing data:', error);
-      setSyncStatus('error');
+      logger.error("Error syncing data:", error);
+      setSyncStatus("error");
     } finally {
       setIsSyncing(false);
     }
@@ -176,61 +185,65 @@ export const useFirebaseAnalysis = () => {
 
   const handleFileSelect = useCallback(async (file: File) => {
     setSelectedFile(file);
-    
+
     // Clear previous results
     setAnalysisResults(null);
     setCloudAnalysis(null);
-    
+
     // Clear local storage for new file
     analysisStorage.clearCurrentAnalysis();
-    
+
     setHasLocalData(false);
   }, []);
 
-  const handleAnalysisComplete = useCallback(async (results: AnalysisResults) => {
-    setAnalysisResults(results);
-    setIsAnalyzing(false);
-    
-    if (!selectedFile) return;
+  const handleAnalysisComplete = useCallback(
+    async (results: AnalysisResults) => {
+      setAnalysisResults(results);
+      setIsAnalyzing(false);
 
-    try {
-      // Always store locally first (for immediate access)
-      await analysisStorage.storeAnalysisResults(results, selectedFile);
-      setHasLocalData(true);
+      if (!selectedFile) return;
 
-      // Store to Firebase if user is authenticated and online
-      if (user?.uid && isOnline) {
-        setIsSyncing(true);
-        setSyncStatus('pending');
-        
-        const analysisId = await firebaseAnalysisStorage.storeAnalysisResults(
-          results,
-          selectedFile,
-          [],
-          false
-        );
-        
-        // Get the stored analysis to update state
-        const storedAnalysis = await firebaseAnalysisStorage.getAnalysisById(analysisId);
-        if (storedAnalysis) {
-          setCloudAnalysis(storedAnalysis);
-          setHasCloudData(true);
+      try {
+        // Always store locally first (for immediate access)
+        await analysisStorage.storeAnalysisResults(results, selectedFile);
+        setHasLocalData(true);
+
+        // Store to Firebase if user is authenticated and online
+        if (user?.uid && isOnline) {
+          setIsSyncing(true);
+          setSyncStatus("pending");
+
+          const analysisId = await firebaseAnalysisStorage.storeAnalysisResults(
+            results,
+            selectedFile,
+            [],
+            false
+          );
+
+          // Get the stored analysis to update state
+          const storedAnalysis =
+            await firebaseAnalysisStorage.getAnalysisById(analysisId);
+          if (storedAnalysis) {
+            setCloudAnalysis(storedAnalysis);
+            setHasCloudData(true);
+          }
+
+          setSyncStatus("synced");
+          setLastSyncTime(new Date());
+        } else if (!isOnline) {
+          setSyncStatus("offline");
+        } else {
+          setSyncStatus("pending"); // Will sync when user logs in
         }
-        
-        setSyncStatus('synced');
-        setLastSyncTime(new Date());
-      } else if (!isOnline) {
-        setSyncStatus('offline');
-      } else {
-        setSyncStatus('pending'); // Will sync when user logs in
+      } catch (error) {
+        logger.error("Error storing analysis results:", error);
+        setSyncStatus("error");
+      } finally {
+        setIsSyncing(false);
       }
-    } catch (error) {
-      logger.error('Error storing analysis results:', error);
-      setSyncStatus('error');
-    } finally {
-      setIsSyncing(false);
-    }
-  }, [selectedFile, user?.uid, isOnline]);
+    },
+    [selectedFile, user?.uid, isOnline]
+  );
 
   const startAnalysis = useCallback(() => {
     setIsAnalyzing(true);
@@ -243,7 +256,7 @@ export const useFirebaseAnalysis = () => {
     setIsAnalyzing(false);
     setHasLocalData(false);
     setHasCloudData(false);
-    
+
     // Clear local storage
     analysisStorage.clearCurrentAnalysis();
   }, []);
@@ -251,79 +264,87 @@ export const useFirebaseAnalysis = () => {
   const loadAnalysisFromHistory = useCallback(async (analysisId: string) => {
     try {
       setIsSyncing(true);
-      
-      const analysis = await firebaseAnalysisStorage.getAnalysisById(analysisId);
+
+      const analysis =
+        await firebaseAnalysisStorage.getAnalysisById(analysisId);
       if (analysis) {
         setCloudAnalysis(analysis);
         setAnalysisResults(analysis.results);
-        
+
         // Create a file object for the loaded analysis
-        const analysisFile = new File([''], analysis.fileName, {
-          type: 'application/zip'
+        const analysisFile = new File([""], analysis.fileName, {
+          type: "application/zip",
         });
         setSelectedFile(analysisFile);
       }
     } catch (error) {
-      logger.error('Error loading analysis from history:', error);
+      logger.error("Error loading analysis from history:", error);
       throw error;
     } finally {
       setIsSyncing(false);
     }
   }, []);
 
-  const deleteAnalysisFromHistory = useCallback(async (analysisId: string) => {
-    try {
-      await firebaseAnalysisStorage.deleteAnalysisResults(analysisId);
-      
-      // Update local state
-      setAnalysisHistory(prev => prev.filter(analysis => analysis.id !== analysisId));
-      
-      // If the deleted analysis was the current one, clear it
-      if (cloudAnalysis?.id === analysisId) {
-        setCloudAnalysis(null);
-        setAnalysisResults(null);
+  const deleteAnalysisFromHistory = useCallback(
+    async (analysisId: string) => {
+      try {
+        await firebaseAnalysisStorage.deleteAnalysisResults(analysisId);
+
+        // Update local state
+        setAnalysisHistory((prev) =>
+          prev.filter((analysis) => analysis.id !== analysisId)
+        );
+
+        // If the deleted analysis was the current one, clear it
+        if (cloudAnalysis?.id === analysisId) {
+          setCloudAnalysis(null);
+          setAnalysisResults(null);
+        }
+      } catch (error) {
+        logger.error("Error deleting analysis:", error);
+        throw error;
       }
-    } catch (error) {
-      logger.error('Error deleting analysis:', error);
-      throw error;
-    }
-  }, [cloudAnalysis?.id]);
+    },
+    [cloudAnalysis?.id]
+  );
 
-  const searchAnalysisHistory = useCallback(async (
-    searchTerm: string,
-    filters: AnalysisHistoryQuery = {}
-  ) => {
-    try {
-      const results = await firebaseAnalysisStorage.searchAnalysis(searchTerm, filters);
-      return results;
-    } catch (error) {
-      logger.error('Error searching analysis history:', error);
-      throw error;
-    }
-  }, []);
+  const searchAnalysisHistory = useCallback(
+    async (searchTerm: string, filters: AnalysisHistoryQuery = {}) => {
+      try {
+        const results = await firebaseAnalysisStorage.searchAnalysis(
+          searchTerm,
+          filters
+        );
+        return results;
+      } catch (error) {
+        logger.error("Error searching analysis history:", error);
+        throw error;
+      }
+    },
+    []
+  );
 
-  const exportAnalysisToCloud = useCallback(async (
-    results: AnalysisResults,
-    file: File,
-    tags: string[] = []
-  ) => {
-    if (!user?.uid) {
-      throw new Error('User must be authenticated to export to cloud');
-    }
+  const exportAnalysisToCloud = useCallback(
+    async (results: AnalysisResults, file: File, tags: string[] = []) => {
+      if (!user?.uid) {
+        throw new Error("User must be authenticated to export to cloud");
+      }
 
-    try {
-      const analysisId = await firebaseAnalysisStorage.storeAnalysisResults(
-        results,
-        file,
-        tags,
-        false
-      );
-      return analysisId;
-    } catch (error) {
-      logger.error('Error exporting analysis to cloud:', error);
-      throw error;
-    }
-  }, [user?.uid]);
+      try {
+        const analysisId = await firebaseAnalysisStorage.storeAnalysisResults(
+          results,
+          file,
+          tags,
+          false
+        );
+        return analysisId;
+      } catch (error) {
+        logger.error("Error exporting analysis to cloud:", error);
+        throw error;
+      }
+    },
+    [user?.uid]
+  );
 
   const retrySync = useCallback(async () => {
     if (!user?.uid || !isOnline) return;
@@ -331,8 +352,8 @@ export const useFirebaseAnalysis = () => {
     try {
       await syncPendingData();
     } catch (error) {
-      logger.error('Error retrying sync:', error);
-      setSyncStatus('error');
+      logger.error("Error retrying sync:", error);
+      setSyncStatus("error");
     }
   }, [user?.uid, isOnline]);
 
@@ -360,7 +381,7 @@ export const useFirebaseAnalysis = () => {
     handleAnalysisComplete,
     startAnalysis,
     resetAnalysis,
-    
+
     // Firebase-specific functions
     cloudAnalysis,
     analysisHistory,
@@ -368,7 +389,7 @@ export const useFirebaseAnalysis = () => {
     deleteAnalysisFromHistory,
     searchAnalysisHistory,
     exportAnalysisToCloud,
-    
+
     // Sync and status
     isSyncing,
     isOnline,
@@ -377,7 +398,7 @@ export const useFirebaseAnalysis = () => {
     syncStatus,
     lastSyncTime,
     retrySync,
-    
+
     // Combined state
     analysisState,
   };

@@ -9,20 +9,29 @@
  * - Backup/restore functionality
  */
 
-import { AnalysisResults } from '@/hooks/useAnalysis';
-import { setLocalStorageItem, removeLocalStorageItem, createStorageChangeListener } from '@/utils/storageEvents';
-import { logger } from '@/utils/logger';
-import { toast } from '@/hooks/use-toast';
+import { AnalysisResults } from "@/hooks/useAnalysis";
+import {
+  setLocalStorageItem,
+  removeLocalStorageItem,
+  createStorageChangeListener,
+} from "@/utils/storageEvents";
+import { logger } from "@/utils/logger";
+import { toast } from "@/hooks/use-toast";
 
 // Custom error class for storage-related errors
 export class StorageError extends Error {
   constructor(
     message: string,
-    public readonly code: 'QUOTA_EXCEEDED' | 'PARSE_ERROR' | 'VERSION_MISMATCH' | 'NOT_FOUND' | 'UNKNOWN',
+    public readonly code:
+      | "QUOTA_EXCEEDED"
+      | "PARSE_ERROR"
+      | "VERSION_MISMATCH"
+      | "NOT_FOUND"
+      | "UNKNOWN",
     public readonly recoverable: boolean = true
   ) {
     super(message);
-    this.name = 'StorageError';
+    this.name = "StorageError";
   }
 }
 
@@ -61,9 +70,9 @@ interface AnalysisHistory {
 }
 
 export class AnalysisStorageService {
-  private static readonly STORAGE_KEY = 'codeGuardianAnalysis';
-  private static readonly HISTORY_KEY = 'codeGuardianHistory';
-  private static readonly VERSION = '2.0.0';
+  private static readonly STORAGE_KEY = "codeGuardianAnalysis";
+  private static readonly HISTORY_KEY = "codeGuardianHistory";
+  private static readonly VERSION = "2.0.0";
   private static readonly MAX_HISTORY_SIZE = 5;
   private static readonly MAX_STORAGE_SIZE = 50 * 1024 * 1024; // 50MB
   private static readonly COMPRESSION_THRESHOLD = 100 * 1024; // 100KB
@@ -73,7 +82,7 @@ export class AnalysisStorageService {
 
   constructor() {
     this.sessionId = this.generateSessionId();
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       this.initializeStorage();
       this.setupStorageListener();
     }
@@ -98,30 +107,41 @@ export class AnalysisStorageService {
         results,
         metadata: {
           userAgent: navigator.userAgent,
-          analysisEngine: 'EnhancedAnalysisEngine',
-          engineVersion: '3.0.0',
+          analysisEngine: "EnhancedAnalysisEngine",
+          engineVersion: "3.0.0",
           sessionId: this.sessionId,
         },
       };
 
       // Compress large results
-      if (this.getDataSize(analysisData) > AnalysisStorageService.COMPRESSION_THRESHOLD) {
+      if (
+        this.getDataSize(analysisData) >
+        AnalysisStorageService.COMPRESSION_THRESHOLD
+      ) {
         analysisData.compressed = true;
         analysisData.results = this.compressResults(results);
       }
 
       // Store current analysis with quota error handling
       try {
-        setLocalStorageItem(AnalysisStorageService.STORAGE_KEY, JSON.stringify(analysisData));
+        setLocalStorageItem(
+          AnalysisStorageService.STORAGE_KEY,
+          JSON.stringify(analysisData)
+        );
       } catch (storageError) {
         // Check if it's a quota exceeded error
-        if (storageError instanceof Error && 
-            (storageError.name === 'QuotaExceededError' || 
-             storageError.message.includes('quota'))) {
-          logger.warn('Storage quota exceeded, attempting cleanup...');
+        if (
+          storageError instanceof Error &&
+          (storageError.name === "QuotaExceededError" ||
+            storageError.message.includes("quota"))
+        ) {
+          logger.warn("Storage quota exceeded, attempting cleanup...");
           await this.optimizeStorage();
           // Retry after cleanup
-          setLocalStorageItem(AnalysisStorageService.STORAGE_KEY, JSON.stringify(analysisData));
+          setLocalStorageItem(
+            AnalysisStorageService.STORAGE_KEY,
+            JSON.stringify(analysisData)
+          );
         } else {
           throw storageError;
         }
@@ -133,14 +153,14 @@ export class AnalysisStorageService {
       // Notify listeners
       this.notifyListeners(analysisData);
 
-      logger.debug('✅ Analysis results stored successfully');
-
+      logger.debug("✅ Analysis results stored successfully");
     } catch (error) {
-      logger.error('❌ Failed to store analysis results:', error);
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      logger.error("❌ Failed to store analysis results:", error);
+      const errorMessage =
+        error instanceof Error ? error.message : "Unknown error";
       throw new StorageError(
         `Failed to store analysis results: ${errorMessage}`,
-        errorMessage.includes('quota') ? 'QUOTA_EXCEEDED' : 'UNKNOWN',
+        errorMessage.includes("quota") ? "QUOTA_EXCEEDED" : "UNKNOWN",
         true
       );
     }
@@ -155,7 +175,7 @@ export class AnalysisStorageService {
       if (!stored) return null;
 
       const data: StoredAnalysisData = JSON.parse(stored);
-      
+
       // Decompress if needed
       if (data.compressed) {
         data.results = this.decompressResults(data.results);
@@ -164,9 +184,10 @@ export class AnalysisStorageService {
       // Validate version compatibility
       if (!this.isVersionCompatible(data.version)) {
         toast({
-          title: 'Version Mismatch',
-          description: 'Your stored data is from an older version and will be refreshed.',
-          variant: 'destructive',
+          title: "Version Mismatch",
+          description:
+            "Your stored data is from an older version and will be refreshed.",
+          variant: "destructive",
         });
         this.clearCurrentAnalysis();
         return null;
@@ -175,9 +196,9 @@ export class AnalysisStorageService {
       return data;
     } catch (error) {
       toast({
-        title: 'Data Corrupted',
-        description: 'Unable to read stored analysis data. Starting fresh.',
-        variant: 'destructive',
+        title: "Data Corrupted",
+        description: "Unable to read stored analysis data. Starting fresh.",
+        variant: "destructive",
       });
       this.clearCurrentAnalysis();
       return null;
@@ -227,9 +248,9 @@ export class AnalysisStorageService {
       };
     } catch (error) {
       toast({
-        title: 'Storage Error',
-        description: 'Unable to retrieve analysis history.',
-        variant: 'destructive',
+        title: "Storage Error",
+        description: "Unable to retrieve analysis history.",
+        variant: "destructive",
       });
       return this.createEmptyHistory();
     }
@@ -238,11 +259,11 @@ export class AnalysisStorageService {
   /**
    * Export analysis results
    */
-  public exportAnalysis(format: 'json' | 'compressed' = 'json'): string {
+  public exportAnalysis(format: "json" | "compressed" = "json"): string {
     const current = this.getCurrentAnalysis();
-    if (!current) throw new Error('No analysis results to export');
+    if (!current) throw new Error("No analysis results to export");
 
-    if (format === 'compressed') {
+    if (format === "compressed") {
       return this.compressData(JSON.stringify(current));
     }
 
@@ -254,18 +275,21 @@ export class AnalysisStorageService {
    */
   public importAnalysis(data: string, compressed: boolean = false): void {
     try {
-      const parsedData = compressed ? 
-        JSON.parse(this.decompressData(data)) : 
-        JSON.parse(data);
+      const parsedData = compressed
+        ? JSON.parse(this.decompressData(data))
+        : JSON.parse(data);
 
       if (this.validateAnalysisData(parsedData)) {
-        setLocalStorageItem(AnalysisStorageService.STORAGE_KEY, JSON.stringify(parsedData));
+        setLocalStorageItem(
+          AnalysisStorageService.STORAGE_KEY,
+          JSON.stringify(parsedData)
+        );
         this.notifyListeners(parsedData);
       } else {
-        throw new Error('Invalid analysis data format');
+        throw new Error("Invalid analysis data format");
       }
     } catch (error) {
-      throw new Error('Failed to import analysis results');
+      throw new Error("Failed to import analysis results");
     }
   }
 
@@ -275,21 +299,23 @@ export class AnalysisStorageService {
   public getStorageStats(): StorageStats {
     const current = this.getCurrentAnalysis();
     const history = this.getAnalysisHistory();
-    
+
     const currentSize = current ? this.getDataSize(current) : 0;
     const historySize = history.previousAnalyses.reduce(
-      (sum, analysis) => sum + this.getDataSize(analysis), 
+      (sum, analysis) => sum + this.getDataSize(analysis),
       0
     );
-    
+
     const totalSize = currentSize + historySize;
-    const compressionRatio = current?.compressed ? 
-      this.calculateCompressionRatio(current) : undefined;
+    const compressionRatio = current?.compressed
+      ? this.calculateCompressionRatio(current)
+      : undefined;
 
     return {
       currentSize: totalSize,
       maxSize: AnalysisStorageService.MAX_STORAGE_SIZE,
-      usagePercentage: (totalSize / AnalysisStorageService.MAX_STORAGE_SIZE) * 100,
+      usagePercentage:
+        (totalSize / AnalysisStorageService.MAX_STORAGE_SIZE) * 100,
       historyCount: history.previousAnalyses.length,
       compressionRatio,
     };
@@ -298,7 +324,9 @@ export class AnalysisStorageService {
   /**
    * Subscribe to storage changes
    */
-  public subscribe(callback: (data: StoredAnalysisData | null) => void): () => void {
+  public subscribe(
+    callback: (data: StoredAnalysisData | null) => void
+  ): () => void {
     this.listeners.add(callback);
     return () => this.listeners.delete(callback);
   }
@@ -312,8 +340,9 @@ export class AnalysisStorageService {
 
     // Remove old entries if storage is full
     if (stats.usagePercentage > 80) {
-      const sortedHistory = history.previousAnalyses
-        .sort((a, b) => a.timestamp - b.timestamp);
+      const sortedHistory = history.previousAnalyses.sort(
+        (a, b) => a.timestamp - b.timestamp
+      );
 
       // Remove oldest entries
       const toRemove = Math.ceil(sortedHistory.length * 0.3);
@@ -332,7 +361,10 @@ export class AnalysisStorageService {
     // Ensure storage keys exist
     if (!localStorage.getItem(AnalysisStorageService.HISTORY_KEY)) {
       const emptyHistory = this.createEmptyHistory();
-      localStorage.setItem(AnalysisStorageService.HISTORY_KEY, JSON.stringify(emptyHistory));
+      localStorage.setItem(
+        AnalysisStorageService.HISTORY_KEY,
+        JSON.stringify(emptyHistory)
+      );
     }
   }
 
@@ -354,17 +386,27 @@ export class AnalysisStorageService {
     );
   }
 
-  private async updateAnalysisHistory(analysisData: StoredAnalysisData): Promise<void> {
+  private async updateAnalysisHistory(
+    analysisData: StoredAnalysisData
+  ): Promise<void> {
     const history = this.getAnalysisHistory();
-    
+
     // Add current to history if it exists
-    if (history.currentAnalysis && history.currentAnalysis.id !== analysisData.id) {
+    if (
+      history.currentAnalysis &&
+      history.currentAnalysis.id !== analysisData.id
+    ) {
       history.previousAnalyses.unshift(history.currentAnalysis);
     }
 
     // Limit history size
-    if (history.previousAnalyses.length > AnalysisStorageService.MAX_HISTORY_SIZE) {
-      history.previousAnalyses = history.previousAnalyses.slice(0, AnalysisStorageService.MAX_HISTORY_SIZE);
+    if (
+      history.previousAnalyses.length > AnalysisStorageService.MAX_HISTORY_SIZE
+    ) {
+      history.previousAnalyses = history.previousAnalyses.slice(
+        0,
+        AnalysisStorageService.MAX_HISTORY_SIZE
+      );
     }
 
     await this.saveHistory(history);
@@ -377,14 +419,17 @@ export class AnalysisStorageService {
       totalStorageUsed: this.calculateTotalStorageUsed(history),
     };
 
-    localStorage.setItem(AnalysisStorageService.HISTORY_KEY, JSON.stringify(historyToSave));
+    localStorage.setItem(
+      AnalysisStorageService.HISTORY_KEY,
+      JSON.stringify(historyToSave)
+    );
   }
 
   private async calculateFileHash(file: File): Promise<string> {
     const buffer = await file.arrayBuffer();
-    const hashBuffer = await crypto.subtle.digest('SHA-256', buffer);
+    const hashBuffer = await crypto.subtle.digest("SHA-256", buffer);
     const hashArray = Array.from(new Uint8Array(hashBuffer));
-    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
   }
 
   private generateAnalysisId(): string {
@@ -399,9 +444,11 @@ export class AnalysisStorageService {
     // Implement basic compression by removing unnecessary data
     return {
       ...results,
-      issues: results.issues.map(issue => ({
+      issues: results.issues.map((issue) => ({
         ...issue,
-        codeSnippet: issue.codeSnippet ? this.compressString(issue.codeSnippet) : undefined,
+        codeSnippet: issue.codeSnippet
+          ? this.compressString(issue.codeSnippet)
+          : undefined,
       })),
     };
   }
@@ -409,9 +456,11 @@ export class AnalysisStorageService {
   private decompressResults(results: AnalysisResults): AnalysisResults {
     return {
       ...results,
-      issues: results.issues.map(issue => ({
+      issues: results.issues.map((issue) => ({
         ...issue,
-        codeSnippet: issue.codeSnippet ? this.decompressString(issue.codeSnippet) : undefined,
+        codeSnippet: issue.codeSnippet
+          ? this.decompressString(issue.codeSnippet)
+          : undefined,
       })),
     };
   }
@@ -442,32 +491,36 @@ export class AnalysisStorageService {
   }
 
   private formatBytes(bytes: number): string {
-    if (bytes === 0) return '0 Bytes';
+    if (bytes === 0) return "0 Bytes";
     const k = 1024;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const sizes = ["Bytes", "KB", "MB", "GB"];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return Number.parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    return (
+      Number.parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i]
+    );
   }
 
   private isVersionCompatible(version: string): boolean {
-    const [major] = version.split('.').map(Number);
-    const [currentMajor] = AnalysisStorageService.VERSION.split('.').map(Number);
+    const [major] = version.split(".").map(Number);
+    const [currentMajor] =
+      AnalysisStorageService.VERSION.split(".").map(Number);
     return major === currentMajor;
   }
 
   private validateAnalysisData(data: unknown): data is StoredAnalysisData {
-    if (!data || typeof data !== 'object' || data === null) return false;
-    
+    if (!data || typeof data !== "object" || data === null) return false;
+
     const obj = data as Record<string, unknown>;
-    
-    if (typeof obj.id !== 'string') return false;
-    if (typeof obj.timestamp !== 'number') return false;
-    if (typeof obj.fileName !== 'string') return false;
-    if (!obj.results || typeof obj.results !== 'object' || obj.results === null) return false;
-    
+
+    if (typeof obj.id !== "string") return false;
+    if (typeof obj.timestamp !== "number") return false;
+    if (typeof obj.fileName !== "string") return false;
+    if (!obj.results || typeof obj.results !== "object" || obj.results === null)
+      return false;
+
     const results = obj.results as Record<string, unknown>;
-    if (!('issues' in results) || !Array.isArray(results.issues)) return false;
-    
+    if (!("issues" in results) || !Array.isArray(results.issues)) return false;
+
     return true;
   }
 

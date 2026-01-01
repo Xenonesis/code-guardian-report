@@ -20,11 +20,14 @@ interface StoredAPIKey {
  * Check if any AI API keys are configured
  */
 export function hasConfiguredApiKeys(): boolean {
-  if (typeof window === 'undefined') return false;
+  if (typeof window === "undefined") return false;
   try {
-    const keys = localStorage.getItem('aiApiKeys');
+    const keys = localStorage.getItem("aiApiKeys");
     const parsedKeys: StoredAPIKey[] = keys ? JSON.parse(keys) : [];
-    return parsedKeys.length > 0 && parsedKeys.some(key => key.key && key.key.trim().length > 0);
+    return (
+      parsedKeys.length > 0 &&
+      parsedKeys.some((key) => key.key && key.key.trim().length > 0)
+    );
   } catch (error) {
     return false;
   }
@@ -34,16 +37,16 @@ export function hasConfiguredApiKeys(): boolean {
  * Get configured AI providers (converted to expected format)
  */
 export function getConfiguredProviders(): AIProvider[] {
-  if (typeof window === 'undefined') return [];
+  if (typeof window === "undefined") return [];
   try {
-    const keys = localStorage.getItem('aiApiKeys');
+    const keys = localStorage.getItem("aiApiKeys");
     const storedKeys: StoredAPIKey[] = keys ? JSON.parse(keys) : [];
 
     // Convert stored format to expected format
-    return storedKeys.map(key => ({
+    return storedKeys.map((key) => ({
       id: key.provider,
       name: key.name,
-      apiKey: key.key
+      apiKey: key.key,
     }));
   } catch (error) {
     return [];
@@ -62,11 +65,13 @@ export function getPrimaryProvider(): AIProvider | null {
  * Check if a specific provider is configured
  */
 export function isProviderConfigured(providerId: string): boolean {
-  if (typeof window === 'undefined') return false;
+  if (typeof window === "undefined") return false;
   try {
-    const keys = localStorage.getItem('aiApiKeys');
+    const keys = localStorage.getItem("aiApiKeys");
     const storedKeys: StoredAPIKey[] = keys ? JSON.parse(keys) : [];
-    return storedKeys.some(key => key.provider === providerId && key.key.trim().length > 0);
+    return storedKeys.some(
+      (key) => key.provider === providerId && key.key.trim().length > 0
+    );
   } catch (error) {
     return false;
   }
@@ -77,9 +82,9 @@ export function isProviderConfigured(providerId: string): boolean {
  */
 export function formatProviderName(providerId: string): string {
   const providerNames: Record<string, string> = {
-    'openai': 'OpenAI GPT',
-    'gemini': 'Google Gemini',
-    'claude': 'Anthropic Claude'
+    openai: "OpenAI GPT",
+    gemini: "Google Gemini",
+    claude: "Anthropic Claude",
   };
   return providerNames[providerId] || providerId;
 }
@@ -87,30 +92,45 @@ export function formatProviderName(providerId: string): string {
 /**
  * Validate API key format for different providers
  */
-export function validateApiKey(providerId: string, apiKey: string): { isValid: boolean; error?: string } {
+export function validateApiKey(
+  providerId: string,
+  apiKey: string
+): { isValid: boolean; error?: string } {
   if (!apiKey || apiKey.trim().length === 0) {
-    return { isValid: false, error: 'API key cannot be empty' };
+    return { isValid: false, error: "API key cannot be empty" };
   }
 
   switch (providerId) {
-    case 'openai':
-      if (!apiKey.startsWith('sk-')) {
-        return { isValid: false, error: 'OpenAI API key should start with "sk-"' };
+    case "openai":
+      if (!apiKey.startsWith("sk-")) {
+        return {
+          isValid: false,
+          error: 'OpenAI API key should start with "sk-"',
+        };
       }
       if (apiKey.length < 20) {
-        return { isValid: false, error: 'OpenAI API key appears to be too short' };
+        return {
+          isValid: false,
+          error: "OpenAI API key appears to be too short",
+        };
       }
       break;
-    
-    case 'gemini':
+
+    case "gemini":
       if (apiKey.length < 20) {
-        return { isValid: false, error: 'Gemini API key appears to be too short' };
+        return {
+          isValid: false,
+          error: "Gemini API key appears to be too short",
+        };
       }
       break;
-    
-    case 'claude':
+
+    case "claude":
       if (apiKey.length < 20) {
-        return { isValid: false, error: 'Claude API key appears to be too short' };
+        return {
+          isValid: false,
+          error: "Claude API key appears to be too short",
+        };
       }
       break;
   }
@@ -134,30 +154,30 @@ export function truncateForTokenLimit(text: string, maxTokens: number): string {
   if (estimatedTokens <= maxTokens) {
     return text;
   }
-  
+
   const maxChars = maxTokens * 4;
-  return text.substring(0, maxChars - 3) + '...';
+  return text.substring(0, maxChars - 3) + "...";
 }
 
 /**
  * Create a storage event listener for API key changes
  */
 export function createApiKeyChangeListener(callback: () => void): () => void {
-  if (typeof window === 'undefined') {
+  if (typeof window === "undefined") {
     return () => {}; // No-op cleanup function for SSR
   }
-  
+
   const handleStorageChange = (event: StorageEvent) => {
-    if (event.key === 'aiApiKeys') {
+    if (event.key === "aiApiKeys") {
       callback();
     }
   };
 
-  window.addEventListener('storage', handleStorageChange);
-  
+  window.addEventListener("storage", handleStorageChange);
+
   // Return cleanup function
   return () => {
-    window.removeEventListener('storage', handleStorageChange);
+    window.removeEventListener("storage", handleStorageChange);
   };
 }
 
@@ -174,21 +194,24 @@ export function generateRequestId(): string {
 export function formatAIError(error: unknown): string {
   if (error instanceof Error) {
     // Handle common API errors
-    if (error.message.includes('API key')) {
-      return 'Invalid or missing API key. Please check your AI configuration.';
+    if (error.message.includes("API key")) {
+      return "Invalid or missing API key. Please check your AI configuration.";
     }
-    if (error.message.includes('rate limit') || error.message.includes('quota')) {
-      return 'API rate limit exceeded. Please try again later or check your API usage.';
+    if (
+      error.message.includes("rate limit") ||
+      error.message.includes("quota")
+    ) {
+      return "API rate limit exceeded. Please try again later or check your API usage.";
     }
-    if (error.message.includes('network') || error.message.includes('fetch')) {
-      return 'Network error. Please check your internet connection and try again.';
+    if (error.message.includes("network") || error.message.includes("fetch")) {
+      return "Network error. Please check your internet connection and try again.";
     }
-    if (error.message.includes('timeout')) {
-      return 'Request timed out. Please try again with a shorter input.';
+    if (error.message.includes("timeout")) {
+      return "Request timed out. Please try again with a shorter input.";
     }
     return error.message;
   }
-  return 'An unexpected error occurred while processing your request.';
+  return "An unexpected error occurred while processing your request.";
 }
 
 /**
@@ -197,9 +220,9 @@ export function formatAIError(error: unknown): string {
 export function isAISupported(): boolean {
   // Check for required browser features
   return (
-    typeof localStorage !== 'undefined' &&
-    typeof fetch !== 'undefined' &&
-    typeof JSON !== 'undefined'
+    typeof localStorage !== "undefined" &&
+    typeof fetch !== "undefined" &&
+    typeof JSON !== "undefined"
   );
 }
 
@@ -216,11 +239,11 @@ export function getAIFeatureStatus(): {
   const hasKeys = hasConfiguredApiKeys();
   const primaryProvider = getPrimaryProvider();
 
-  let message = '';
+  let message = "";
   if (!isSupported) {
-    message = 'AI features are not supported in this environment.';
+    message = "AI features are not supported in this environment.";
   } else if (!hasKeys) {
-    message = 'Configure AI API keys to enable intelligent insights.';
+    message = "Configure AI API keys to enable intelligent insights.";
   } else {
     message = `AI insights powered by ${formatProviderName(primaryProvider!.id)}.`;
   }
@@ -229,7 +252,7 @@ export function getAIFeatureStatus(): {
     isSupported,
     hasApiKeys: hasKeys,
     primaryProvider: primaryProvider?.id || null,
-    message
+    message,
   };
 }
 
@@ -241,7 +264,7 @@ export function debounce<T extends (...args: unknown[]) => unknown>(
   wait: number
 ): (...args: Parameters<T>) => void {
   let timeout: NodeJS.Timeout;
-  
+
   return (...args: Parameters<T>) => {
     clearTimeout(timeout);
     timeout = setTimeout(() => func(...args), wait);
@@ -257,23 +280,23 @@ export async function retryWithBackoff<T>(
   baseDelay: number = 1000
 ): Promise<T> {
   let lastError: Error;
-  
+
   for (let attempt = 0; attempt <= maxRetries; attempt++) {
     try {
       return await operation();
     } catch (error) {
-      lastError = error instanceof Error ? error : new Error('Unknown error');
-      
+      lastError = error instanceof Error ? error : new Error("Unknown error");
+
       if (attempt === maxRetries) {
         throw lastError;
       }
-      
+
       // Exponential backoff with jitter
       const delay = baseDelay * Math.pow(2, attempt) + Math.random() * 1000;
-      await new Promise(resolve => setTimeout(resolve, delay));
+      await new Promise((resolve) => setTimeout(resolve, delay));
     }
   }
-  
+
   throw lastError!;
 }
 
@@ -281,33 +304,36 @@ export async function retryWithBackoff<T>(
  * Cache management for AI responses
  */
 export class AIResponseCache {
-  private cache = new Map<string, { data: string; timestamp: number; ttl: number }>();
-  
+  private cache = new Map<
+    string,
+    { data: string; timestamp: number; ttl: number }
+  >();
+
   set(key: string, data: string, ttlMinutes: number = 30): void {
     const ttl = ttlMinutes * 60 * 1000; // Convert to milliseconds
     this.cache.set(key, {
       data,
       timestamp: Date.now(),
-      ttl
+      ttl,
     });
   }
-  
+
   get(key: string): string | null {
     const entry = this.cache.get(key);
     if (!entry) return null;
-    
+
     if (Date.now() - entry.timestamp > entry.ttl) {
       this.cache.delete(key);
       return null;
     }
-    
+
     return entry.data;
   }
-  
+
   clear(): void {
     this.cache.clear();
   }
-  
+
   size(): number {
     return this.cache.size;
   }

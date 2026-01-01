@@ -1,24 +1,24 @@
 // Application constants
 
 export const APP_CONFIG = {
-  name: 'Code Guardian Report',
-  version: '9.0.0',
-  description: 'Next-Generation AI-Powered Security Analysis Platform',
-  author: 'Code Guardian Team',
-  repository: 'https://github.com/your-org/code-guardian-report',
+  name: "Code Guardian Report",
+  version: "9.0.0",
+  description: "Next-Generation AI-Powered Security Analysis Platform",
+  author: "Code Guardian Team",
+  repository: "https://github.com/your-org/code-guardian-report",
 } as const;
 
 export const API_ENDPOINTS = {
-  github: 'https://api.github.com',
-  analytics: '/api/analytics',
-  push: '/api/push',
+  github: "https://api.github.com",
+  analytics: "/api/analytics",
+  push: "/api/push",
 } as const;
 
 export const STORAGE_KEYS = {
-  theme: 'codeGuardian_theme',
-  userPreferences: 'codeGuardian_userPreferences',
-  analysisHistory: 'codeGuardian_analysisHistory',
-  authToken: 'codeGuardian_authToken',
+  theme: "codeGuardian_theme",
+  userPreferences: "codeGuardian_userPreferences",
+  analysisHistory: "codeGuardian_analysisHistory",
+  authToken: "codeGuardian_authToken",
 } as const;
 
 export const ANALYSIS_LIMITS = {

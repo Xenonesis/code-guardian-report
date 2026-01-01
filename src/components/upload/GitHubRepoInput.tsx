@@ -1,24 +1,33 @@
-import React, { useState } from 'react';
-import { Github, Loader2, CheckCircle, AlertCircle, Download, Info } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Progress } from '@/components/ui/progress';
-import { githubRepositoryService } from '@/services/githubRepositoryService';
-import { Card } from '@/components/ui/card';
+import React, { useState } from "react";
+import {
+  Github,
+  Loader2,
+  CheckCircle,
+  AlertCircle,
+  Download,
+  Info,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Progress } from "@/components/ui/progress";
+import { githubRepositoryService } from "@/services/githubRepositoryService";
+import { Card } from "@/components/ui/card";
 
-import { logger } from '@/utils/logger';
+import { logger } from "@/utils/logger";
 interface GitHubRepoInputProps {
   onFileReady: (file: File) => void;
 }
 
-export const GitHubRepoInput: React.FC<GitHubRepoInputProps> = ({ onFileReady }) => {
-  const [repoUrl, setRepoUrl] = useState('');
+export const GitHubRepoInput: React.FC<GitHubRepoInputProps> = ({
+  onFileReady,
+}) => {
+  const [repoUrl, setRepoUrl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isFetchingInfo, setIsFetchingInfo] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [progress, setProgress] = useState(0);
-  const [progressMessage, setProgressMessage] = useState('');
+  const [progressMessage, setProgressMessage] = useState("");
   const [repoInfo, setRepoInfo] = useState<any>(null);
   const [estimatedSize, setEstimatedSize] = useState<any>(null);
 
@@ -31,7 +40,7 @@ export const GitHubRepoInput: React.FC<GitHubRepoInputProps> = ({ onFileReady })
 
     // Security: Validate URL format before making any requests
     // Only fetch info if URL starts with https://github.com/ (not just contains it)
-    if (url.startsWith('https://github.com/') && url.split('/').length >= 5) {
+    if (url.startsWith("https://github.com/") && url.split("/").length >= 5) {
       await fetchRepositoryInfo(url);
     }
   };
@@ -56,7 +65,7 @@ export const GitHubRepoInput: React.FC<GitHubRepoInputProps> = ({ onFileReady })
       );
       setEstimatedSize(size);
     } catch (err) {
-      logger.error('Error fetching repo info:', err);
+      logger.error("Error fetching repo info:", err);
     } finally {
       setIsFetchingInfo(false);
     }
@@ -64,27 +73,31 @@ export const GitHubRepoInput: React.FC<GitHubRepoInputProps> = ({ onFileReady })
 
   const handleAnalyze = async () => {
     if (!repoUrl.trim()) {
-      setError('Please enter a GitHub repository URL');
+      setError("Please enter a GitHub repository URL");
       return;
     }
 
     // Security: Additional URL validation before processing
-    if (!repoUrl.startsWith('https://github.com/')) {
-      setError('Invalid URL. Please use a valid GitHub URL starting with https://github.com/');
+    if (!repoUrl.startsWith("https://github.com/")) {
+      setError(
+        "Invalid URL. Please use a valid GitHub URL starting with https://github.com/"
+      );
       return;
     }
 
     setIsLoading(true);
     setError(null);
     setProgress(0);
-    setProgressMessage('Initializing...');
+    setProgressMessage("Initializing...");
 
     try {
       // Parse GitHub URL with security validation
       const parsedRepo = githubRepositoryService.parseGitHubUrl(repoUrl);
 
       if (!parsedRepo) {
-        throw new Error('Invalid GitHub URL. Please use format: https://github.com/owner/repo');
+        throw new Error(
+          "Invalid GitHub URL. Please use format: https://github.com/owner/repo"
+        );
       }
 
       // Validate repository exists
@@ -94,7 +107,9 @@ export const GitHubRepoInput: React.FC<GitHubRepoInputProps> = ({ onFileReady })
       );
 
       if (!isValid) {
-        throw new Error('Repository not found or not accessible. Please check the URL and try again.');
+        throw new Error(
+          "Repository not found or not accessible. Please check the URL and try again."
+        );
       }
 
       // If branch not specified, get default branch
@@ -122,22 +137,23 @@ export const GitHubRepoInput: React.FC<GitHubRepoInputProps> = ({ onFileReady })
       onFileReady(zipFile);
 
       // Reset form
-      setRepoUrl('');
+      setRepoUrl("");
       setRepoInfo(null);
       setEstimatedSize(null);
-
     } catch (err) {
-      logger.error('Error analyzing GitHub repository:', err);
-      setError(err instanceof Error ? err.message : 'Failed to analyze repository');
+      logger.error("Error analyzing GitHub repository:", err);
+      setError(
+        err instanceof Error ? err.message : "Failed to analyze repository"
+      );
     } finally {
       setIsLoading(false);
       setProgress(0);
-      setProgressMessage('');
+      setProgressMessage("");
     }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && !isLoading) {
+    if (e.key === "Enter" && !isLoading) {
       handleAnalyze();
     }
   };
@@ -207,9 +223,13 @@ export const GitHubRepoInput: React.FC<GitHubRepoInputProps> = ({ onFileReady })
                 {estimatedSize && (
                   <>
                     <span className="hidden xs:inline">•</span>
-                    <span className="truncate">{estimatedSize.fileCount} files</span>
+                    <span className="truncate">
+                      {estimatedSize.fileCount} files
+                    </span>
                     <span className="hidden xs:inline">•</span>
-                    <span className="truncate">{estimatedSize.formattedSize}</span>
+                    <span className="truncate">
+                      {estimatedSize.formattedSize}
+                    </span>
                   </>
                 )}
               </div>
@@ -247,11 +267,12 @@ export const GitHubRepoInput: React.FC<GitHubRepoInputProps> = ({ onFileReady })
           <strong className="block mb-1">Supported formats:</strong>
           <ul className="list-disc list-inside space-y-1 text-xs sm:text-sm">
             <li className="break-all">https://github.com/owner/repository</li>
-            <li className="break-all">https://github.com/owner/repository/tree/branch</li>
+            <li className="break-all">
+              https://github.com/owner/repository/tree/branch
+            </li>
           </ul>
         </AlertDescription>
       </Alert>
     </div>
   );
 };
-

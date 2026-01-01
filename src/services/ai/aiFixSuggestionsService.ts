@@ -1,5 +1,5 @@
-import { SecurityIssue } from '@/hooks/useAnalysis';
-import { AIService } from './aiService';
+import { SecurityIssue } from "@/hooks/useAnalysis";
+import { AIService } from "./aiService";
 
 export interface FixSuggestion {
   id: string;
@@ -7,7 +7,7 @@ export interface FixSuggestion {
   title: string;
   description: string;
   confidence: number; // 0-100
-  effort: 'Low' | 'Medium' | 'High';
+  effort: "Low" | "Medium" | "High";
   priority: number; // 1-5
   codeChanges: CodeChange[];
   explanation: string;
@@ -19,7 +19,7 @@ export interface FixSuggestion {
 }
 
 export interface CodeChange {
-  type: 'replace' | 'insert' | 'delete' | 'refactor';
+  type: "replace" | "insert" | "delete" | "refactor";
   filename: string;
   startLine: number;
   endLine: number;
@@ -68,9 +68,11 @@ export class AIFixSuggestionsService {
   /**
    * Generate AI-powered fix suggestions for a security issue
    */
-  public async generateFixSuggestions(request: FixSuggestionRequest): Promise<FixSuggestion[]> {
+  public async generateFixSuggestions(
+    request: FixSuggestionRequest
+  ): Promise<FixSuggestion[]> {
     const cacheKey = this.generateCacheKey(request);
-    
+
     // Check cache first
     if (this.fixCache.has(cacheKey)) {
       return this.fixCache.get(cacheKey)!;
@@ -78,24 +80,28 @@ export class AIFixSuggestionsService {
 
     try {
       const suggestions = await this.generateAIFixSuggestions(request);
-      
+
       // Cache the results
       this.fixCache.set(cacheKey, suggestions);
-      
+
       return suggestions;
     } catch (error) {
-      throw new Error(`Failed to generate fix suggestions: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Failed to generate fix suggestions: ${error instanceof Error ? error.message : "Unknown error"}`
+      );
     }
   }
 
   /**
    * Generate multiple fix approaches using AI
    */
-  private async generateAIFixSuggestions(request: FixSuggestionRequest): Promise<FixSuggestion[]> {
+  private async generateAIFixSuggestions(
+    request: FixSuggestionRequest
+  ): Promise<FixSuggestion[]> {
     const { issue, codeContext, language, framework } = request;
 
     const systemPrompt = {
-      role: 'system' as const,
+      role: "system" as const,
       content: `You are an expert security engineer and code reviewer specializing in automated vulnerability remediation. 
 
 Your task is to analyze security vulnerabilities and provide multiple, practical fix suggestions with detailed implementation guidance.
@@ -113,16 +119,16 @@ For each fix suggestion, provide:
 
 Focus on:
 - Practical, implementable solutions
-- Security best practices for ${language}${framework ? ` and ${framework}` : ''}
+- Security best practices for ${language}${framework ? ` and ${framework}` : ""}
 - Minimal breaking changes
 - Performance considerations
 - Maintainability improvements
 
-Return your response as a JSON array of fix suggestions.`
+Return your response as a JSON array of fix suggestions.`,
     };
 
     const userPrompt = {
-      role: 'user' as const,
+      role: "user" as const,
       content: `Analyze this security vulnerability and provide fix suggestions:
 
 **Security Issue:**
@@ -131,9 +137,9 @@ Return your response as a JSON array of fix suggestions.`
 - Category: ${issue.category}
 - Message: ${issue.message}
 - File: ${issue.filename}:${issue.line}
-- CWE: ${issue.cweId || 'Not specified'}
-- OWASP: ${issue.owaspCategory || 'Not specified'}
-- CVSS Score: ${issue.cvssScore || 'Not specified'}
+- CWE: ${issue.cweId || "Not specified"}
+- OWASP: ${issue.owaspCategory || "Not specified"}
+- CVSS Score: ${issue.cvssScore || "Not specified"}
 
 **Code Context:**
 \`\`\`${language}
@@ -142,8 +148,8 @@ ${codeContext}
 
 **Environment:**
 - Language: ${language}
-- Framework: ${framework || 'None specified'}
-- Current Remediation: ${issue.remediation?.description || 'None provided'}
+- Framework: ${framework || "None specified"}
+- Current Remediation: ${issue.remediation?.description || "None provided"}
 
 Please provide 2-3 different fix approaches with varying complexity and thoroughness. Include specific code changes, security explanations, and implementation guidance.
 
@@ -172,39 +178,51 @@ Format your response as a JSON array with this structure:
     "testingRecommendations": ["test suggestions"],
     "relatedPatterns": ["related security patterns"]
   }
-]`
+]`,
     };
 
     try {
-      const response = await this.aiService.generateResponse([systemPrompt, userPrompt]);
+      const response = await this.aiService.generateResponse([
+        systemPrompt,
+        userPrompt,
+      ]);
       const suggestions = this.parseAIResponse(response, request);
-      
+
       return suggestions.map((suggestion, index) => ({
         ...suggestion,
         id: this.generateFixId(request.issue.id, index),
-        issueId: request.issue.id
+        issueId: request.issue.id,
       }));
     } catch (error) {
-      throw new Error(`AI fix generation failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `AI fix generation failed: ${error instanceof Error ? error.message : "Unknown error"}`
+      );
     }
   }
 
   /**
    * Parse AI response and validate fix suggestions
    */
-  private parseAIResponse(response: string, request: FixSuggestionRequest): Omit<FixSuggestion, 'id' | 'issueId'>[] {
+  private parseAIResponse(
+    response: string,
+    request: FixSuggestionRequest
+  ): Omit<FixSuggestion, "id" | "issueId">[] {
     try {
       // Extract JSON from response if it's wrapped in markdown
-      const jsonMatch = response.match(/```json\s*([\s\S]*?)\s*```/) || response.match(/\[([\s\S]*)\]/);
-      const jsonString = jsonMatch ? (jsonMatch[1] || jsonMatch[0]) : response;
-      
+      const jsonMatch =
+        response.match(/```json\s*([\s\S]*?)\s*```/) ||
+        response.match(/\[([\s\S]*)\]/);
+      const jsonString = jsonMatch ? jsonMatch[1] || jsonMatch[0] : response;
+
       const suggestions = JSON.parse(jsonString) as unknown[];
-      
+
       if (!Array.isArray(suggestions)) {
-        throw new Error('Response is not an array');
+        throw new Error("Response is not an array");
       }
 
-      return suggestions.map((suggestion, index) => this.validateAndEnhanceSuggestion(suggestion, request, index));
+      return suggestions.map((suggestion, index) =>
+        this.validateAndEnhanceSuggestion(suggestion, request, index)
+      );
     } catch (error) {
       // Fallback to basic suggestion
       return [this.createFallbackSuggestion(request)];
@@ -215,57 +233,88 @@ Format your response as a JSON array with this structure:
    * Validate and enhance a single fix suggestion
    */
   private validateAndEnhanceSuggestion(
-    suggestion: unknown, 
-    request: FixSuggestionRequest, 
+    suggestion: unknown,
+    request: FixSuggestionRequest,
     index: number
-  ): Omit<FixSuggestion, 'id' | 'issueId'> {
+  ): Omit<FixSuggestion, "id" | "issueId"> {
     const suggestionObj = suggestion as Record<string, unknown>;
     return {
       title: (suggestionObj.title as string) || `Fix Approach ${index + 1}`,
-      description: (suggestionObj.description as string) || 'AI-generated fix suggestion',
-      confidence: Math.min(100, Math.max(0, (suggestionObj.confidence as number) || 70)),
+      description:
+        (suggestionObj.description as string) || "AI-generated fix suggestion",
+      confidence: Math.min(
+        100,
+        Math.max(0, (suggestionObj.confidence as number) || 70)
+      ),
       effort: this.validateEffort(suggestionObj.effort),
-      priority: Math.min(5, Math.max(1, (suggestionObj.priority as number) || 3)),
-      codeChanges: this.validateCodeChanges((suggestionObj.codeChanges as unknown[]) || [], request),
-      explanation: (suggestionObj.explanation as string) || 'This fix addresses the security vulnerability by implementing secure coding practices.',
-      securityBenefit: (suggestionObj.securityBenefit as string) || 'Improves application security posture.',
-      riskAssessment: (suggestionObj.riskAssessment as string) || 'Low risk of breaking changes.',
-      testingRecommendations: Array.isArray(suggestionObj.testingRecommendations) 
-        ? suggestionObj.testingRecommendations as string[]
-        : ['Test the fix thoroughly before deployment'],
-      relatedPatterns: Array.isArray(suggestionObj.relatedPatterns) 
-        ? suggestionObj.relatedPatterns as string[]
+      priority: Math.min(
+        5,
+        Math.max(1, (suggestionObj.priority as number) || 3)
+      ),
+      codeChanges: this.validateCodeChanges(
+        (suggestionObj.codeChanges as unknown[]) || [],
+        request
+      ),
+      explanation:
+        (suggestionObj.explanation as string) ||
+        "This fix addresses the security vulnerability by implementing secure coding practices.",
+      securityBenefit:
+        (suggestionObj.securityBenefit as string) ||
+        "Improves application security posture.",
+      riskAssessment:
+        (suggestionObj.riskAssessment as string) ||
+        "Low risk of breaking changes.",
+      testingRecommendations: Array.isArray(
+        suggestionObj.testingRecommendations
+      )
+        ? (suggestionObj.testingRecommendations as string[])
+        : ["Test the fix thoroughly before deployment"],
+      relatedPatterns: Array.isArray(suggestionObj.relatedPatterns)
+        ? (suggestionObj.relatedPatterns as string[])
         : [],
-      frameworkSpecific: suggestionObj.frameworkSpecific as FrameworkSpecificFix | undefined
+      frameworkSpecific: suggestionObj.frameworkSpecific as
+        | FrameworkSpecificFix
+        | undefined,
     };
   }
 
   /**
    * Validate effort level
    */
-  private validateEffort(effort: unknown): 'Low' | 'Medium' | 'High' {
-    const validEfforts = ['Low', 'Medium', 'High'];
-    return validEfforts.includes(effort as string) ? (effort as 'Low' | 'Medium' | 'High') : 'Medium';
+  private validateEffort(effort: unknown): "Low" | "Medium" | "High" {
+    const validEfforts = ["Low", "Medium", "High"];
+    return validEfforts.includes(effort as string)
+      ? (effort as "Low" | "Medium" | "High")
+      : "Medium";
   }
 
   /**
    * Validate and enhance code changes
    */
-  private validateCodeChanges(changes: unknown[], request: FixSuggestionRequest): CodeChange[] {
+  private validateCodeChanges(
+    changes: unknown[],
+    request: FixSuggestionRequest
+  ): CodeChange[] {
     if (!Array.isArray(changes)) {
       return [];
     }
 
-    return changes.map(change => {
+    return changes.map((change) => {
       const changeObj = change as Record<string, unknown>;
       return {
         type: this.validateChangeType(changeObj.type),
         filename: (changeObj.filename as string) || request.issue.filename,
-        startLine: Math.max(1, (changeObj.startLine as number) || request.issue.line),
-        endLine: Math.max((changeObj.startLine as number) || request.issue.line, (changeObj.endLine as number) || request.issue.line),
-        originalCode: (changeObj.originalCode as string) || '',
-        suggestedCode: (changeObj.suggestedCode as string) || '',
-        reasoning: (changeObj.reasoning as string) || 'Security improvement'
+        startLine: Math.max(
+          1,
+          (changeObj.startLine as number) || request.issue.line
+        ),
+        endLine: Math.max(
+          (changeObj.startLine as number) || request.issue.line,
+          (changeObj.endLine as number) || request.issue.line
+        ),
+        originalCode: (changeObj.originalCode as string) || "",
+        suggestedCode: (changeObj.suggestedCode as string) || "",
+        reasoning: (changeObj.reasoning as string) || "Security improvement",
       };
     });
   }
@@ -273,9 +322,13 @@ Format your response as a JSON array with this structure:
   /**
    * Validate change type
    */
-  private validateChangeType(type: unknown): 'replace' | 'insert' | 'delete' | 'refactor' {
-    const validTypes = ['replace', 'insert', 'delete', 'refactor'];
-    return validTypes.includes(type as string) ? (type as 'replace' | 'insert' | 'delete' | 'refactor') : 'replace';
+  private validateChangeType(
+    type: unknown
+  ): "replace" | "insert" | "delete" | "refactor" {
+    const validTypes = ["replace", "insert", "delete", "refactor"];
+    return validTypes.includes(type as string)
+      ? (type as "replace" | "insert" | "delete" | "refactor")
+      : "replace";
   }
 
   /**
@@ -283,7 +336,7 @@ Format your response as a JSON array with this structure:
    */
   private generateCacheKey(request: FixSuggestionRequest): string {
     const { issue, language, framework } = request;
-    return `${issue.id}-${issue.type}-${language}-${framework || 'none'}-${issue.line}`;
+    return `${issue.id}-${issue.type}-${language}-${framework || "none"}-${issue.line}`;
   }
 
   /**
@@ -310,31 +363,36 @@ Format your response as a JSON array with this structure:
   /**
    * Create fallback suggestion when AI parsing fails
    */
-  private createFallbackSuggestion(request: FixSuggestionRequest): Omit<FixSuggestion, 'id' | 'issueId'> {
+  private createFallbackSuggestion(
+    request: FixSuggestionRequest
+  ): Omit<FixSuggestion, "id" | "issueId"> {
     return {
-      title: 'Basic Security Fix',
+      title: "Basic Security Fix",
       description: `Address ${request.issue.type} vulnerability in ${request.issue.filename}`,
       confidence: 60,
-      effort: 'Medium',
+      effort: "Medium",
       priority: 3,
-      codeChanges: [{
-        type: 'replace',
-        filename: request.issue.filename,
-        startLine: request.issue.line,
-        endLine: request.issue.line,
-        originalCode: 'Vulnerable code pattern',
-        suggestedCode: 'Secure implementation',
-        reasoning: 'Apply security best practices'
-      }],
-      explanation: 'This fix addresses the identified security vulnerability using standard security practices.',
-      securityBenefit: 'Reduces security risk and improves code safety.',
-      riskAssessment: 'Review changes carefully before applying.',
-      testingRecommendations: [
-        'Test functionality after applying fix',
-        'Run security scans to verify fix effectiveness',
-        'Perform regression testing'
+      codeChanges: [
+        {
+          type: "replace",
+          filename: request.issue.filename,
+          startLine: request.issue.line,
+          endLine: request.issue.line,
+          originalCode: "Vulnerable code pattern",
+          suggestedCode: "Secure implementation",
+          reasoning: "Apply security best practices",
+        },
       ],
-      relatedPatterns: []
+      explanation:
+        "This fix addresses the identified security vulnerability using standard security practices.",
+      securityBenefit: "Reduces security risk and improves code safety.",
+      riskAssessment: "Review changes carefully before applying.",
+      testingRecommendations: [
+        "Test functionality after applying fix",
+        "Run security scans to verify fix effectiveness",
+        "Perform regression testing",
+      ],
+      relatedPatterns: [],
     };
   }
 
@@ -350,7 +408,7 @@ Format your response as a JSON array with this structure:
       appliedChanges: [],
       warnings: [],
       errors: [],
-      testSuggestions: []
+      testSuggestions: [],
     };
 
     try {
@@ -362,32 +420,34 @@ Format your response as a JSON array with this structure:
           continue;
         }
 
-        const lines = fileContent.split('\n');
+        const lines = fileContent.split("\n");
 
         // Validate line numbers
         if (change.startLine < 1 || change.startLine > lines.length) {
-          result.errors.push(`Invalid line number ${change.startLine} in ${change.filename}`);
+          result.errors.push(
+            `Invalid line number ${change.startLine} in ${change.filename}`
+          );
           continue;
         }
 
         // Apply the change based on type
         switch (change.type) {
-          case 'replace':
+          case "replace":
             this.applyReplaceChange(lines, change, result);
             break;
-          case 'insert':
+          case "insert":
             this.applyInsertChange(lines, change, result);
             break;
-          case 'delete':
+          case "delete":
             this.applyDeleteChange(lines, change, result);
             break;
-          case 'refactor':
+          case "refactor":
             this.applyRefactorChange(lines, change, result);
             break;
         }
 
         // Update file content
-        fileContents.set(change.filename, lines.join('\n'));
+        fileContents.set(change.filename, lines.join("\n"));
         result.appliedChanges.push(change);
       }
 
@@ -395,12 +455,13 @@ Format your response as a JSON array with this structure:
       result.testSuggestions = suggestion.testingRecommendations;
 
       if (result.success) {
-        result.warnings.push('Please review all changes before committing');
-        result.warnings.push('Run comprehensive tests to ensure functionality');
+        result.warnings.push("Please review all changes before committing");
+        result.warnings.push("Run comprehensive tests to ensure functionality");
       }
-
     } catch (error) {
-      result.errors.push(`Refactoring failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      result.errors.push(
+        `Refactoring failed: ${error instanceof Error ? error.message : "Unknown error"}`
+      );
     }
 
     return result;
@@ -409,36 +470,53 @@ Format your response as a JSON array with this structure:
   /**
    * Apply replace-type code change
    */
-  private applyReplaceChange(lines: string[], change: CodeChange, result: AutoRefactorResult): void {
+  private applyReplaceChange(
+    lines: string[],
+    change: CodeChange,
+    result: AutoRefactorResult
+  ): void {
     const startIdx = change.startLine - 1;
     const endIdx = change.endLine - 1;
 
     // Verify original code matches (basic check)
     const originalLines = lines.slice(startIdx, endIdx + 1);
-    const originalCode = originalLines.join('\n').trim();
+    const originalCode = originalLines.join("\n").trim();
 
-    if (change.originalCode && !originalCode.includes(change.originalCode.trim())) {
-      result.warnings.push(`Original code mismatch in ${change.filename}:${change.startLine}`);
+    if (
+      change.originalCode &&
+      !originalCode.includes(change.originalCode.trim())
+    ) {
+      result.warnings.push(
+        `Original code mismatch in ${change.filename}:${change.startLine}`
+      );
     }
 
     // Replace the lines
-    const newLines = change.suggestedCode.split('\n');
+    const newLines = change.suggestedCode.split("\n");
     lines.splice(startIdx, endIdx - startIdx + 1, ...newLines);
   }
 
   /**
    * Apply insert-type code change
    */
-  private applyInsertChange(lines: string[], change: CodeChange, result: AutoRefactorResult): void {
+  private applyInsertChange(
+    lines: string[],
+    change: CodeChange,
+    result: AutoRefactorResult
+  ): void {
     const insertIdx = change.startLine - 1;
-    const newLines = change.suggestedCode.split('\n');
+    const newLines = change.suggestedCode.split("\n");
     lines.splice(insertIdx, 0, ...newLines);
   }
 
   /**
    * Apply delete-type code change
    */
-  private applyDeleteChange(lines: string[], change: CodeChange, result: AutoRefactorResult): void {
+  private applyDeleteChange(
+    lines: string[],
+    change: CodeChange,
+    result: AutoRefactorResult
+  ): void {
     const startIdx = change.startLine - 1;
     const endIdx = change.endLine - 1;
     lines.splice(startIdx, endIdx - startIdx + 1);
@@ -447,11 +525,17 @@ Format your response as a JSON array with this structure:
   /**
    * Apply refactor-type code change (more complex transformation)
    */
-  private applyRefactorChange(lines: string[], change: CodeChange, result: AutoRefactorResult): void {
+  private applyRefactorChange(
+    lines: string[],
+    change: CodeChange,
+    result: AutoRefactorResult
+  ): void {
     // For refactor changes, we'll treat them as replace for now
     // In a more advanced implementation, this could involve AST manipulation
     this.applyReplaceChange(lines, change, result);
-    result.warnings.push(`Refactor change applied as replacement in ${change.filename}`);
+    result.warnings.push(
+      `Refactor change applied as replacement in ${change.filename}`
+    );
   }
 
   /**
@@ -503,26 +587,31 @@ Format your response as a JSON array with this structure:
         averageConfidence: 0,
         effortDistribution: {},
         priorityDistribution: {},
-        mostCommonPatterns: []
+        mostCommonPatterns: [],
       };
     }
 
-    const totalConfidence = suggestions.reduce((sum, s) => sum + s.confidence, 0);
+    const totalConfidence = suggestions.reduce(
+      (sum, s) => sum + s.confidence,
+      0
+    );
     const averageConfidence = totalConfidence / suggestions.length;
 
     const effortDistribution: Record<string, number> = {};
     const priorityDistribution: Record<number, number> = {};
     const patternCounts: Record<string, number> = {};
 
-    suggestions.forEach(suggestion => {
+    suggestions.forEach((suggestion) => {
       // Effort distribution
-      effortDistribution[suggestion.effort] = (effortDistribution[suggestion.effort] || 0) + 1;
+      effortDistribution[suggestion.effort] =
+        (effortDistribution[suggestion.effort] || 0) + 1;
 
       // Priority distribution
-      priorityDistribution[suggestion.priority] = (priorityDistribution[suggestion.priority] || 0) + 1;
+      priorityDistribution[suggestion.priority] =
+        (priorityDistribution[suggestion.priority] || 0) + 1;
 
       // Pattern frequency
-      suggestion.relatedPatterns.forEach(pattern => {
+      suggestion.relatedPatterns.forEach((pattern) => {
         patternCounts[pattern] = (patternCounts[pattern] || 0) + 1;
       });
     });
@@ -537,7 +626,7 @@ Format your response as a JSON array with this structure:
       averageConfidence: Math.round(averageConfidence),
       effortDistribution,
       priorityDistribution,
-      mostCommonPatterns
+      mostCommonPatterns,
     };
   }
 }

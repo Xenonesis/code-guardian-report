@@ -1,7 +1,7 @@
-import { useState, useCallback } from 'react';
-import { DetectionResult } from '@/services/detection/languageDetectionService';
-import type { ZipAnalysisResult } from '@/services/security/zipAnalysisService';
-import type { DependencyScanResult } from '@/services/security/dependencyVulnerabilityScanner';
+import { useState, useCallback } from "react";
+import { DetectionResult } from "@/services/detection/languageDetectionService";
+import type { ZipAnalysisResult } from "@/services/security/zipAnalysisService";
+import type { DependencyScanResult } from "@/services/security/dependencyVulnerabilityScanner";
 
 export interface SecurityIssue {
   id: string;
@@ -15,7 +15,7 @@ export interface SecurityIssue {
   category: string; // OWASP category
   message: string;
   naturalLanguageDescription?: string; // Simplified natural language summary
-  severity: 'Critical' | 'High' | 'Medium' | 'Low';
+  severity: "Critical" | "High" | "Medium" | "Low";
   confidence: number; // 0-100
   cvssScore?: number; // 0-10
   cweId?: string; // CWE reference
@@ -26,19 +26,19 @@ export interface SecurityIssue {
     description: string;
     codeExample?: string;
     fixExample?: string;
-    effort: 'Low' | 'Medium' | 'High';
+    effort: "Low" | "Medium" | "High";
     priority: number; // 1-5
   };
   filename: string;
   codeSnippet?: string;
-  riskRating: 'Critical' | 'High' | 'Medium' | 'Low';
+  riskRating: "Critical" | "High" | "Medium" | "Low";
   impact: string;
   likelihood: string;
   references?: string[];
   tags?: string[];
   aiSummary?: string; // AI-generated summary
   affectedFunction?: string; // Function where issue was found
-  effort?: 'Low' | 'Medium' | 'High'; // Remediation effort (duplicate of remediation.effort for backward compat)
+  effort?: "Low" | "Medium" | "High"; // Remediation effort (duplicate of remediation.effort for backward compat)
 }
 
 export interface AnalysisResults {
@@ -74,7 +74,8 @@ export interface AnalysisResults {
 }
 
 export const useAnalysis = () => {
-  const [analysisResults, setAnalysisResults] = useState<AnalysisResults | null>(null);
+  const [analysisResults, setAnalysisResults] =
+    useState<AnalysisResults | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
@@ -104,7 +105,7 @@ export const useAnalysis = () => {
     handleFileSelect,
     handleAnalysisComplete,
     startAnalysis,
-    resetAnalysis
+    resetAnalysis,
   };
 };
 

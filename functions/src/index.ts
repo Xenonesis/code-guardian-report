@@ -3,13 +3,13 @@
  * Handles webhook processing, background tasks, and scheduled jobs
  */
 
-import * as admin from 'firebase-admin';
-import * as crypto from 'crypto';
+import * as admin from "firebase-admin";
+import * as crypto from "crypto";
 
-import { onRequest } from 'firebase-functions/v2/https';
-import { onDocumentCreated } from 'firebase-functions/v2/firestore';
-import { onSchedule } from 'firebase-functions/v2/scheduler';
-import * as logger from 'firebase-functions/logger';
+import { onRequest } from "firebase-functions/v2/https";
+import { onDocumentCreated } from "firebase-functions/v2/firestore";
+import { onSchedule } from "firebase-functions/v2/scheduler";
+import * as logger from "firebase-functions/logger";
 
 // Initialize Firebase Admin
 admin.initializeApp();
@@ -22,61 +22,62 @@ const db = admin.firestore();
  */
 export const processWebhook = onRequest(async (req, res) => {
   // Only accept POST requests
-  if (req.method !== 'POST') {
-    res.status(405).send('Method Not Allowed');
+  if (req.method !== "POST") {
+    res.status(405).send("Method Not Allowed");
     return;
   }
 
   try {
     const webhookId = req.query.webhookId as string;
-    
+
     if (!webhookId) {
-      res.status(400).send('Missing webhookId parameter');
+      res.status(400).send("Missing webhookId parameter");
       return;
     }
 
     // Get webhook configuration
-    const webhookDoc = await db.collection('webhooks').doc(webhookId).get();
-    
+    const webhookDoc = await db.collection("webhooks").doc(webhookId).get();
+
     if (!webhookDoc.exists) {
-      res.status(404).send('Webhook not found');
+      res.status(404).send("Webhook not found");
       return;
     }
 
     const webhook = webhookDoc.data();
-    
+
     if (!webhook || !webhook.active) {
-      res.status(403).send('Webhook inactive');
+      res.status(403).send("Webhook inactive");
       return;
     }
 
     // Validate signature
-    const signature = req.headers['x-hub-signature-256'] as string || 
-                     req.headers['x-gitlab-token'] as string;
-    
+    const signature =
+      (req.headers["x-hub-signature-256"] as string) ||
+      (req.headers["x-gitlab-token"] as string);
+
     if (!signature) {
-      res.status(401).send('Missing signature');
+      res.status(401).send("Missing signature");
       return;
     }
 
     const payload = JSON.stringify(req.body);
     const isValid = await validateSignature(payload, signature, webhook.secret);
-    
+
     if (!isValid) {
-      res.status(401).send('Invalid signature');
+      res.status(401).send("Invalid signature");
       return;
     }
 
     // Parse webhook event
     const event = parseWebhookEvent(req.body, webhook.provider);
-    
+
     if (!event) {
-      res.status(400).send('Invalid webhook payload');
+      res.status(400).send("Invalid webhook payload");
       return;
     }
 
     // Log the webhook event
-    await db.collection('webhookLogs').add({
+    await db.collection("webhookLogs").add({
       webhookId,
       event: event.event,
       repository: event.repository.name,
@@ -86,20 +87,21 @@ export const processWebhook = onRequest(async (req, res) => {
     });
 
     // Update last triggered time
-    await db.collection('webhooks').doc(webhookId).update({
+    await db.collection("webhooks").doc(webhookId).update({
       lastTriggered: admin.firestore.FieldValue.serverTimestamp(),
     });
 
     // Get monitoring rules for this webhook
-    const rulesSnapshot = await db.collection('monitoringRules')
-      .where('webhookId', '==', webhookId)
-      .where('enabled', '==', true)
+    const rulesSnapshot = await db
+      .collection("monitoringRules")
+      .where("webhookId", "==", webhookId)
+      .where("enabled", "==", true)
       .get();
 
     // Apply rules
     const rulesToExecute: any[] = [];
-    
-    rulesSnapshot.forEach(doc => {
+
+    rulesSnapshot.forEach((doc) => {
       const rule = doc.data();
       if (evaluateRule(rule, event)) {
         rulesToExecute.push({ id: doc.id, ...rule });
@@ -109,11 +111,11 @@ export const processWebhook = onRequest(async (req, res) => {
     // Execute rule actions asynchronously
     if (rulesToExecute.length > 0) {
       // Trigger background processing
-      await db.collection('webhookTasks').add({
+      await db.collection("webhookTasks").add({
         webhookId,
         event,
         rules: rulesToExecute,
-        status: 'pending',
+        status: "pending",
         createdAt: admin.firestore.FieldValue.serverTimestamp(),
       });
     }
@@ -121,12 +123,12 @@ export const processWebhook = onRequest(async (req, res) => {
     // Mark webhook log as processed
     res.status(200).json({
       success: true,
-      message: 'Webhook processed successfully',
+      message: "Webhook processed successfully",
       rulesTriggered: rulesToExecute.length,
     });
   } catch (error) {
-    logger.error('Webhook processing error:', error);
-    res.status(500).send('Internal server error');
+    logger.error("Webhook processing error:", error);
+    res.status(500).send("Internal server error");
   }
 });
 
@@ -134,22 +136,24 @@ export const processWebhook = onRequest(async (req, res) => {
  * Background Task Processor
  * Processes webhook tasks (scans, notifications, etc.)
  */
-export const processWebhookTask = onDocumentCreated('webhookTasks/{taskId}', async (event) => {
+export const processWebhookTask = onDocumentCreated(
+  "webhookTasks/{taskId}",
+  async (event) => {
     const snap = event.data;
     if (!snap) {
-      logger.warn('processWebhookTask triggered with no snapshot data');
+      logger.warn("processWebhookTask triggered with no snapshot data");
       return;
     }
 
     const task = snap.data();
     // keep taskId available for debugging/logging
     const taskId = event.params.taskId;
-    logger.debug('Processing webhook task', { taskId });
+    logger.debug("Processing webhook task", { taskId });
 
     try {
       // Update task status
       await snap.ref.update({
-        status: 'processing',
+        status: "processing",
         startedAt: admin.firestore.FieldValue.serverTimestamp(),
       });
 
@@ -160,62 +164,79 @@ export const processWebhookTask = onDocumentCreated('webhookTasks/{taskId}', asy
 
       // Mark task as completed
       await snap.ref.update({
-        status: 'completed',
+        status: "completed",
         completedAt: admin.firestore.FieldValue.serverTimestamp(),
       });
     } catch (error) {
-      logger.error('Task processing error:', error);
-      
+      logger.error("Task processing error:", error);
+
       // Mark task as failed
       await snap.ref.update({
-        status: 'failed',
-        error: error instanceof Error ? error.message : 'Unknown error',
+        status: "failed",
+        error: error instanceof Error ? error.message : "Unknown error",
         failedAt: admin.firestore.FieldValue.serverTimestamp(),
       });
     }
-  });
+  }
+);
 
 /**
  * Scheduled cleanup of old webhook logs
  * Runs daily at midnight
  */
-export const cleanupWebhookLogs = onSchedule({ schedule: '0 0 * * *', timeZone: 'UTC' }, async () => {
+export const cleanupWebhookLogs = onSchedule(
+  { schedule: "0 0 * * *", timeZone: "UTC" },
+  async () => {
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
-    const snapshot = await db.collection('webhookLogs')
-      .where('timestamp', '<', admin.firestore.Timestamp.fromDate(thirtyDaysAgo))
+    const snapshot = await db
+      .collection("webhookLogs")
+      .where(
+        "timestamp",
+        "<",
+        admin.firestore.Timestamp.fromDate(thirtyDaysAgo)
+      )
       .get();
 
     const batch = db.batch();
-    snapshot.docs.forEach(doc => {
+    snapshot.docs.forEach((doc) => {
       batch.delete(doc.ref);
     });
 
     await batch.commit();
     logger.info(`Cleaned up ${snapshot.size} old webhook logs`);
-  });
+  }
+);
 
 /**
  * Scheduled cleanup of completed tasks
  * Runs daily at 1 AM
  */
-export const cleanupCompletedTasks = onSchedule({ schedule: '0 1 * * *', timeZone: 'UTC' }, async () => {
+export const cleanupCompletedTasks = onSchedule(
+  { schedule: "0 1 * * *", timeZone: "UTC" },
+  async () => {
     const sevenDaysAgo = new Date();
     sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 
-    const snapshot = await db.collection('webhookTasks')
-      .where('completedAt', '<', admin.firestore.Timestamp.fromDate(sevenDaysAgo))
+    const snapshot = await db
+      .collection("webhookTasks")
+      .where(
+        "completedAt",
+        "<",
+        admin.firestore.Timestamp.fromDate(sevenDaysAgo)
+      )
       .get();
 
     const batch = db.batch();
-    snapshot.docs.forEach(doc => {
+    snapshot.docs.forEach((doc) => {
       batch.delete(doc.ref);
     });
 
     await batch.commit();
     logger.info(`Cleaned up ${snapshot.size} completed tasks`);
-  });
+  }
+);
 
 /**
  * Validate webhook signature
@@ -226,12 +247,9 @@ async function validateSignature(
   secret: string
 ): Promise<boolean> {
   try {
-    const hmac = crypto.createHmac('sha256', secret);
-    const digest = 'sha256=' + hmac.update(payload).digest('hex');
-    return crypto.timingSafeEqual(
-      Buffer.from(signature),
-      Buffer.from(digest)
-    );
+    const hmac = crypto.createHmac("sha256", secret);
+    const digest = "sha256=" + hmac.update(payload).digest("hex");
+    return crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(digest));
   } catch (error) {
     return false;
   }
@@ -242,14 +260,14 @@ async function validateSignature(
  */
 function parseWebhookEvent(payload: any, provider: string): any | null {
   try {
-    if (provider === 'github') {
+    if (provider === "github") {
       return parseGitHubEvent(payload);
-    } else if (provider === 'gitlab') {
+    } else if (provider === "gitlab") {
       return parseGitLabEvent(payload);
     }
     return null;
   } catch (error) {
-    logger.error('Failed to parse webhook event:', error);
+    logger.error("Failed to parse webhook event:", error);
     return null;
   }
 }
@@ -258,9 +276,9 @@ function parseWebhookEvent(payload: any, provider: string): any | null {
  * Parse GitHub webhook event
  */
 function parseGitHubEvent(payload: any): any {
-  const eventType = payload.action ? 
-    `${payload.pull_request ? 'pull_request' : 'push'}` : 
-    'push';
+  const eventType = payload.action
+    ? `${payload.pull_request ? "pull_request" : "push"}`
+    : "push";
 
   return {
     event: eventType,
@@ -276,30 +294,35 @@ function parseGitHubEvent(payload: any): any {
       avatarUrl: payload.sender.avatar_url,
     },
     changes: {
-      files: payload.commits?.flatMap((c: any) => 
-        [...(c.added || []), ...(c.modified || []), ...(c.removed || [])]
-          .map(f => ({
-            filename: f,
-            status: 'modified',
-            additions: 0,
-            deletions: 0,
-          }))
-      ) || [],
-      commits: payload.commits?.map((c: any) => ({
-        id: c.id,
-        message: c.message,
-        author: c.author.name,
-        timestamp: new Date(c.timestamp).getTime(),
-      })) || [],
+      files:
+        payload.commits?.flatMap((c: any) =>
+          [...(c.added || []), ...(c.modified || []), ...(c.removed || [])].map(
+            (f) => ({
+              filename: f,
+              status: "modified",
+              additions: 0,
+              deletions: 0,
+            })
+          )
+        ) || [],
+      commits:
+        payload.commits?.map((c: any) => ({
+          id: c.id,
+          message: c.message,
+          author: c.author.name,
+          timestamp: new Date(c.timestamp).getTime(),
+        })) || [],
     },
-    pullRequest: payload.pull_request ? {
-      number: payload.pull_request.number,
-      title: payload.pull_request.title,
-      branch: payload.pull_request.head.ref,
-      baseBranch: payload.pull_request.base.ref,
-      state: payload.pull_request.state,
-      url: payload.pull_request.html_url,
-    } : undefined,
+    pullRequest: payload.pull_request
+      ? {
+          number: payload.pull_request.number,
+          title: payload.pull_request.title,
+          branch: payload.pull_request.head.ref,
+          baseBranch: payload.pull_request.base.ref,
+          state: payload.pull_request.state,
+          url: payload.pull_request.html_url,
+        }
+      : undefined,
     timestamp: Date.now(),
   };
 }
@@ -309,34 +332,37 @@ function parseGitHubEvent(payload: any): any {
  */
 function parseGitLabEvent(payload: any): any {
   return {
-    event: payload.object_kind || 'push',
+    event: payload.object_kind || "push",
     repository: {
-      id: payload.project?.id?.toString() || '',
-      name: payload.project?.name || '',
-      fullName: payload.project?.path_with_namespace || '',
-      url: payload.project?.web_url || '',
+      id: payload.project?.id?.toString() || "",
+      name: payload.project?.name || "",
+      fullName: payload.project?.path_with_namespace || "",
+      url: payload.project?.web_url || "",
     },
     sender: {
-      id: payload.user_id?.toString() || '',
-      username: payload.user_username || '',
-      avatarUrl: payload.user_avatar || '',
+      id: payload.user_id?.toString() || "",
+      username: payload.user_username || "",
+      avatarUrl: payload.user_avatar || "",
     },
     changes: {
-      files: payload.commits?.flatMap((c: any) => 
-        [...(c.added || []), ...(c.modified || []), ...(c.removed || [])]
-          .map((f: string) => ({
-            filename: f,
-            status: 'modified',
-            additions: 0,
-            deletions: 0,
-          }))
-      ) || [],
-      commits: payload.commits?.map((c: any) => ({
-        id: c.id,
-        message: c.message,
-        author: c.author.name,
-        timestamp: new Date(c.timestamp).getTime(),
-      })) || [],
+      files:
+        payload.commits?.flatMap((c: any) =>
+          [...(c.added || []), ...(c.modified || []), ...(c.removed || [])].map(
+            (f: string) => ({
+              filename: f,
+              status: "modified",
+              additions: 0,
+              deletions: 0,
+            })
+          )
+        ) || [],
+      commits:
+        payload.commits?.map((c: any) => ({
+          id: c.id,
+          message: c.message,
+          author: c.author.name,
+          timestamp: new Date(c.timestamp).getTime(),
+        })) || [],
     },
     timestamp: Date.now(),
   };
@@ -360,7 +386,8 @@ function evaluateRule(rule: any, event: any): boolean {
 
   // Check branches
   if (conditions.branches && event.pullRequest) {
-    const matchesBranch = conditions.branches.includes(event.pullRequest.branch) ||
+    const matchesBranch =
+      conditions.branches.includes(event.pullRequest.branch) ||
       conditions.branches.includes(event.pullRequest.baseBranch);
     if (!matchesBranch) return false;
   }
@@ -379,11 +406,11 @@ function evaluateRule(rule: any, event: any): boolean {
  */
 function matchGlob(filename: string, pattern: string): boolean {
   const regexPattern = pattern
-    .replace(/\./g, '\\.')
-    .replace(/\*\*/g, '.*')
-    .replace(/\*/g, '[^/]*')
-    .replace(/\?/g, '.');
-  
+    .replace(/\./g, "\\.")
+    .replace(/\*\*/g, ".*")
+    .replace(/\*/g, "[^/]*")
+    .replace(/\?/g, ".");
+
   const regex = new RegExp(`^${regexPattern}$`);
   return regex.test(filename);
 }
@@ -397,27 +424,27 @@ async function executeRuleActions(rule: any, event: any): Promise<void> {
   try {
     // Trigger immediate scan
     if (actions.scanImmediately) {
-      await db.collection('scanQueue').add({
+      await db.collection("scanQueue").add({
         webhookId: rule.webhookId,
         repository: event.repository,
         event: event.event,
         files: event.changes?.files || [],
         customRuleIds: rule.conditions.customRuleIds || [],
-        priority: 'high',
+        priority: "high",
         createdAt: admin.firestore.FieldValue.serverTimestamp(),
-        status: 'pending',
+        status: "pending",
       });
     }
 
     // Send notifications
     if (actions.notifyUsers && actions.notifyUsers.length > 0) {
-      await db.collection('notifications').add({
+      await db.collection("notifications").add({
         userIds: actions.notifyUsers,
-        type: 'warning',
-        title: 'Repository Alert',
+        type: "warning",
+        title: "Repository Alert",
         message: `${event.event} detected in ${event.repository.name}`,
-        category: 'security',
-        priority: 'high',
+        category: "security",
+        priority: "high",
         timestamp: admin.firestore.FieldValue.serverTimestamp(),
         read: false,
         metadata: {
@@ -431,16 +458,16 @@ async function executeRuleActions(rule: any, event: any): Promise<void> {
     // Block PR (would require GitHub API integration)
     if (actions.blockPR && event.pullRequest) {
       // This would integrate with GitHub/GitLab API to add a blocking status
-      logger.info('PR blocking requested:', event.pullRequest.url);
+      logger.info("PR blocking requested:", event.pullRequest.url);
     }
 
     // Create issue (would require GitHub API integration)
     if (actions.createIssue) {
       // This would integrate with GitHub/GitLab API to create an issue
-      logger.info('Issue creation requested for:', event.repository.name);
+      logger.info("Issue creation requested for:", event.repository.name);
     }
   } catch (error) {
-    logger.error('Failed to execute rule actions:', error);
+    logger.error("Failed to execute rule actions:", error);
     throw error;
   }
 }

@@ -1,25 +1,25 @@
 "use client";
 
-import React from 'react';
-import { AnimatedBackground } from '@/components/pages/about/AnimatedBackground';
-import { HeroSection } from '@/components/layout/HeroSection';
-import { StatsGrid } from '@/components/pages/about/StatsGrid';
-import { VersionInfo } from '@/components/pages/about/VersionInfo';
-import { DetailedInfo } from '@/components/pages/about/DetailedInfo';
-import { SupportedToolsSection } from '@/components/pages/about/SupportedToolsSection';
-import { CallToActionSection } from '@/components/pages/about/CallToActionSection';
-import HowToUseSection from '@/components/pages/about/HowToUseSection';
-import HowItWorksSection from '@/components/pages/about/HowItWorksSection';
-import MeetDeveloperSection from '@/components/pages/about/MeetDeveloperSection';
-import EnhancedFeatureShowcase from '@/components/pages/about/EnhancedFeatureShowcase';
-import { AboutFeatures } from '@/components/pages/about/AboutFeatures';
-import { CustomRulesSection } from '@/components/pages/about/CustomRulesSection';
+import React from "react";
+import { AnimatedBackground } from "@/components/pages/about/AnimatedBackground";
+import { HeroSection } from "@/components/layout/HeroSection";
+import { StatsGrid } from "@/components/pages/about/StatsGrid";
+import { VersionInfo } from "@/components/pages/about/VersionInfo";
+import { DetailedInfo } from "@/components/pages/about/DetailedInfo";
+import { SupportedToolsSection } from "@/components/pages/about/SupportedToolsSection";
+import { CallToActionSection } from "@/components/pages/about/CallToActionSection";
+import HowToUseSection from "@/components/pages/about/HowToUseSection";
+import HowItWorksSection from "@/components/pages/about/HowItWorksSection";
+import MeetDeveloperSection from "@/components/pages/about/MeetDeveloperSection";
+import EnhancedFeatureShowcase from "@/components/pages/about/EnhancedFeatureShowcase";
+import { AboutFeatures } from "@/components/pages/about/AboutFeatures";
+import { CustomRulesSection } from "@/components/pages/about/CustomRulesSection";
 
 export const AboutSection: React.FC = () => {
   return (
     <section id="about" className="min-h-screen relative overflow-hidden">
       <AnimatedBackground />
-      
+
       <div className="pt-12 sm:pt-16">
         <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
           <div className="relative z-10 space-y-12 sm:space-y-16 lg:space-y-20 xl:space-y-24">

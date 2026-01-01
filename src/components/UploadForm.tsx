@@ -1,21 +1,30 @@
-import React, { useState } from 'react';
-import { FileCode, AlertTriangle, Github, Upload } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { AnalysisResults } from '@/hooks/useAnalysis';
-import { useFileUpload } from '@/hooks/useFileUpload';
-import { FileUploadArea } from '@/components/upload/FileUploadArea';
-import { FileStatus } from '@/components/upload/FileStatus';
-import { GitHubRepoInput } from '@/components/upload/GitHubRepoInput';
+import React, { useState } from "react";
+import { FileCode, AlertTriangle, Github, Upload } from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { AnalysisResults } from "@/hooks/useAnalysis";
+import { useFileUpload } from "@/hooks/useFileUpload";
+import { FileUploadArea } from "@/components/upload/FileUploadArea";
+import { FileStatus } from "@/components/upload/FileStatus";
+import { GitHubRepoInput } from "@/components/upload/GitHubRepoInput";
 
 interface UploadFormProps {
   onFileSelect: (file: File) => void;
   onAnalysisComplete: (results: AnalysisResults) => void;
 }
 
-export const UploadForm: React.FC<UploadFormProps> = ({ onFileSelect, onAnalysisComplete }) => {
-  const [uploadMethod, setUploadMethod] = useState<'file' | 'github'>('file');
+export const UploadForm: React.FC<UploadFormProps> = ({
+  onFileSelect,
+  onAnalysisComplete,
+}) => {
+  const [uploadMethod, setUploadMethod] = useState<"file" | "github">("file");
   const {
     isDragOver,
     uploadProgress,
@@ -30,7 +39,7 @@ export const UploadForm: React.FC<UploadFormProps> = ({ onFileSelect, onAnalysis
     handleDrop,
     handleFileInput,
     removeFile,
-    processFileDirectly
+    processFileDirectly,
   } = useFileUpload({ onFileSelect, onAnalysisComplete });
 
   const handleGitHubFileReady = (file: File) => {
@@ -55,10 +64,16 @@ export const UploadForm: React.FC<UploadFormProps> = ({ onFileSelect, onAnalysis
       </CardHeader>
       <CardContent className="space-y-4 sm:space-y-6 lg:space-y-8 px-3 sm:px-4 lg:px-6 pb-6 sm:pb-8">
         {!selectedFile && !error && (
-          <Tabs value={uploadMethod} onValueChange={(value) => setUploadMethod(value as 'file' | 'github')} className="w-full">
+          <Tabs
+            value={uploadMethod}
+            onValueChange={(value) =>
+              setUploadMethod(value as "file" | "github")
+            }
+            className="w-full"
+          >
             <TabsList className="grid w-full grid-cols-2 mb-6 sm:mb-8 bg-slate-900/90 dark:bg-slate-950/95 backdrop-blur-xl p-1.5 sm:p-2 rounded-2xl sm:rounded-3xl shadow-2xl shadow-black/20 border border-slate-700/50 dark:border-slate-600/30 ring-1 ring-white/5">
-              <TabsTrigger 
-                value="file" 
+              <TabsTrigger
+                value="file"
                 className="relative flex items-center justify-center gap-2 sm:gap-3 py-3.5 sm:py-4 px-4 sm:px-6 text-sm sm:text-base font-bold 
                   text-slate-400 dark:text-slate-500 
                   hover:text-slate-200 hover:bg-slate-800/50 
@@ -72,11 +87,13 @@ export const UploadForm: React.FC<UploadFormProps> = ({ onFileSelect, onAnalysis
               >
                 <span className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-cyan-600/20 opacity-0 group-hover:opacity-100 data-[state=active]:opacity-0 transition-opacity duration-300 rounded-xl sm:rounded-2xl" />
                 <Upload className="h-4 w-4 sm:h-5 sm:w-5 group-hover:scale-110 transition-transform duration-300" />
-                <span className="hidden xs:inline tracking-wide">Upload ZIP</span>
+                <span className="hidden xs:inline tracking-wide">
+                  Upload ZIP
+                </span>
                 <span className="xs:hidden font-semibold">ZIP</span>
               </TabsTrigger>
-              <TabsTrigger 
-                value="github" 
+              <TabsTrigger
+                value="github"
                 className="relative flex items-center justify-center gap-2 sm:gap-3 py-3.5 sm:py-4 px-4 sm:px-6 text-sm sm:text-base font-bold 
                   text-slate-400 dark:text-slate-500 
                   hover:text-slate-200 hover:bg-slate-800/50 
@@ -122,20 +139,35 @@ export const UploadForm: React.FC<UploadFormProps> = ({ onFileSelect, onAnalysis
             analysisProgress={analysisProgress}
           />
         )}
-        
+
         {error && (
-          <Alert className="border-l-4 border-l-red-500 bg-red-50 dark:bg-red-950/20 dark:border-l-red-400" role="alert">
-            <AlertTriangle className="h-4 w-4 sm:h-5 sm:w-5 text-red-600 dark:text-red-400" aria-hidden="true" />
+          <Alert
+            className="border-l-4 border-l-red-500 bg-red-50 dark:bg-red-950/20 dark:border-l-red-400"
+            role="alert"
+          >
+            <AlertTriangle
+              className="h-4 w-4 sm:h-5 sm:w-5 text-red-600 dark:text-red-400"
+              aria-hidden="true"
+            />
             <AlertDescription className="text-red-800 dark:text-red-200 text-xs sm:text-sm lg:text-base">
               <strong>Error:</strong> {error}
             </AlertDescription>
           </Alert>
         )}
 
-        <Alert className="border-l-4 border-l-amber-500 bg-gradient-to-r from-amber-50 via-amber-50/80 to-yellow-50/50 dark:from-amber-950/30 dark:via-amber-950/20 dark:to-yellow-950/10 dark:border-l-amber-400 shadow-lg rounded-xl" role="note">
-          <AlertTriangle className="h-4 w-4 sm:h-5 sm:w-5 text-amber-600 dark:text-amber-400" aria-hidden="true" />
+        <Alert
+          className="border-l-4 border-l-amber-500 bg-gradient-to-r from-amber-50 via-amber-50/80 to-yellow-50/50 dark:from-amber-950/30 dark:via-amber-950/20 dark:to-yellow-950/10 dark:border-l-amber-400 shadow-lg rounded-xl"
+          role="note"
+        >
+          <AlertTriangle
+            className="h-4 w-4 sm:h-5 sm:w-5 text-amber-600 dark:text-amber-400"
+            aria-hidden="true"
+          />
           <AlertDescription className="text-amber-900 dark:text-amber-100 text-xs sm:text-sm lg:text-base leading-relaxed">
-            <strong className="font-bold">Privacy & Security:</strong> Your code is analyzed locally and securely. Files are processed in-browser with persistent storage for your convenience. Analysis results are automatically saved until you upload a new file.
+            <strong className="font-bold">Privacy & Security:</strong> Your code
+            is analyzed locally and securely. Files are processed in-browser
+            with persistent storage for your convenience. Analysis results are
+            automatically saved until you upload a new file.
           </AlertDescription>
         </Alert>
       </CardContent>

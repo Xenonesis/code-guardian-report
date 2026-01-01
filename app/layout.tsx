@@ -29,12 +29,8 @@ export const metadata: Metadata = {
   applicationName: "Code Guardian Enterprise",
   manifest: "/manifest.json",
   icons: {
-    icon: [
-      { url: "/shield-favicon.svg", type: "image/svg+xml" },
-    ],
-    apple: [
-      { url: "/apple-touch-icon.png", sizes: "180x180" },
-    ],
+    icon: [{ url: "/shield-favicon.svg", type: "image/svg+xml" }],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
   },
   openGraph: {
     type: "website",
@@ -103,7 +99,7 @@ export default function RootLayout({
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
-        
+
         {/* Structured data */}
         <script
           type="application/ld+json"

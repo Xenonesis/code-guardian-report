@@ -1,7 +1,13 @@
 "use client";
 
 import { useEffect } from "react";
-import { AlertTriangle, RefreshCcw, Home, Bug, ChevronDown } from "lucide-react";
+import {
+  AlertTriangle,
+  RefreshCcw,
+  Home,
+  Bug,
+  ChevronDown,
+} from "lucide-react";
 import Link from "next/link";
 
 interface ErrorProps {
@@ -21,7 +27,10 @@ export default function Error({ error, reset }: ErrorProps) {
 
     // In production, you would send this to an error monitoring service
     // Example: Sentry, LogRocket, Datadog, etc.
-    if (typeof window !== "undefined" && process.env.NODE_ENV === "production") {
+    if (
+      typeof window !== "undefined" &&
+      process.env.NODE_ENV === "production"
+    ) {
       // Send to analytics/monitoring
       try {
         fetch("/api/log-error", {
@@ -98,8 +107,12 @@ export default function Error({ error, reset }: ErrorProps) {
               <div className="flex items-center gap-2 p-3 rounded-lg bg-muted/30 border border-border/30">
                 <Bug className="w-4 h-4 text-muted-foreground shrink-0" />
                 <div className="text-xs">
-                  <span className="text-muted-foreground">Error Reference: </span>
-                  <code className="font-mono text-foreground">{error.digest}</code>
+                  <span className="text-muted-foreground">
+                    Error Reference:{" "}
+                  </span>
+                  <code className="font-mono text-foreground">
+                    {error.digest}
+                  </code>
                 </div>
               </div>
             )}

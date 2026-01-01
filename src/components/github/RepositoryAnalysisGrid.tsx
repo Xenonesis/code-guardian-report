@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
-import { 
-  GitBranch, 
-  ExternalLink, 
-  RefreshCw, 
-  AlertTriangle, 
-  CheckCircle, 
+import React, { useEffect, useState } from "react";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import {
+  GitBranch,
+  ExternalLink,
+  RefreshCw,
+  AlertTriangle,
+  CheckCircle,
   XCircle,
   Star,
   GitFork,
@@ -18,14 +18,14 @@ import {
   Search,
   Shield,
   Code,
-  Calendar
-} from 'lucide-react';
-import { GitHubAnalysisStorageService } from '@/services/storage/GitHubAnalysisStorageService';
-import { githubRepositoryService } from '@/services/githubRepositoryService';
-import { EnhancedAnalysisEngine } from '@/services/enhancedAnalysisEngine';
-import { toast } from 'sonner';
-import { logger } from '@/utils/logger';
-import { cn } from '@/lib/utils';
+  Calendar,
+} from "lucide-react";
+import { GitHubAnalysisStorageService } from "@/services/storage/GitHubAnalysisStorageService";
+import { githubRepositoryService } from "@/services/githubRepositoryService";
+import { EnhancedAnalysisEngine } from "@/services/enhancedAnalysisEngine";
+import { toast } from "sonner";
+import { logger } from "@/utils/logger";
+import { cn } from "@/lib/utils";
 
 interface Repository {
   id: string;
@@ -46,11 +46,13 @@ interface RepositoryAnalysisGridProps {
   userId: string;
 }
 
-export const RepositoryAnalysisGrid: React.FC<RepositoryAnalysisGridProps> = ({ userId }) => {
+export const RepositoryAnalysisGrid: React.FC<RepositoryAnalysisGridProps> = ({
+  userId,
+}) => {
   const [repositories, setRepositories] = useState<Repository[]>([]);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState<'all' | 'critical' | 'recent'>('all');
-  const [repoUrl, setRepoUrl] = useState('');
+  const [filter, setFilter] = useState<"all" | "critical" | "recent">("all");
+  const [repoUrl, setRepoUrl] = useState("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analyzingRepoId, setAnalyzingRepoId] = useState<string | null>(null);
 
@@ -65,7 +67,7 @@ export const RepositoryAnalysisGrid: React.FC<RepositoryAnalysisGridProps> = ({ 
       const repos = await storageService.getUserRepositories(userId);
       setRepositories(repos);
     } catch (error) {
-      logger.error('Error loading repositories:', error);
+      logger.error("Error loading repositories:", error);
     } finally {
       setLoading(false);
     }
@@ -73,57 +75,70 @@ export const RepositoryAnalysisGrid: React.FC<RepositoryAnalysisGridProps> = ({ 
 
   const handleAnalyzeNewRepo = async () => {
     if (!repoUrl.trim()) {
-      toast.error('Please enter a GitHub repository URL');
+      toast.error("Please enter a GitHub repository URL");
       return;
     }
 
-    if (!repoUrl.startsWith('https://github.com/')) {
-      toast.error('Please enter a valid GitHub URL (https://github.com/owner/repo)');
+    if (!repoUrl.startsWith("https://github.com/")) {
+      toast.error(
+        "Please enter a valid GitHub URL (https://github.com/owner/repo)"
+      );
       return;
     }
 
     setIsAnalyzing(true);
-    const progressToastId = toast.loading('Preparing to analyze repository...');
+    const progressToastId = toast.loading("Preparing to analyze repository...");
 
     try {
       const repoInfo = githubRepositoryService.parseGitHubUrl(repoUrl);
       if (!repoInfo) {
-        throw new Error('Invalid GitHub repository URL');
+        throw new Error("Invalid GitHub repository URL");
       }
 
       let branch = repoInfo.branch;
       if (!branch) {
         try {
-          toast.loading('Checking repository details...', { id: progressToastId });
-          const details = await githubRepositoryService.getRepositoryInfo(repoInfo.owner, repoInfo.repo);
+          toast.loading("Checking repository details...", {
+            id: progressToastId,
+          });
+          const details = await githubRepositoryService.getRepositoryInfo(
+            repoInfo.owner,
+            repoInfo.repo
+          );
           branch = details.defaultBranch;
         } catch {
-          branch = 'main';
+          branch = "main";
         }
       }
 
       let lastUpdate = 0;
-      let lastMessage = '';
+      let lastMessage = "";
       const zipFile = await githubRepositoryService.downloadRepositoryAsZip(
         repoInfo.owner,
         repoInfo.repo,
-        branch || 'main',
+        branch || "main",
         (progress, message) => {
           const now = Date.now();
-          if ((now - lastUpdate > 500 || progress === 100) && message !== lastMessage) {
+          if (
+            (now - lastUpdate > 500 || progress === 100) &&
+            message !== lastMessage
+          ) {
             lastMessage = message;
             lastUpdate = now;
-            setTimeout(() => toast.loading(message, { id: progressToastId }), 0);
+            setTimeout(
+              () => toast.loading(message, { id: progressToastId }),
+              0
+            );
           }
         }
       );
 
-      toast.loading('Analyzing code...', { id: progressToastId });
+      toast.loading("Analyzing code...", { id: progressToastId });
 
       const analysisEngine = new EnhancedAnalysisEngine();
       const results = await analysisEngine.analyzeCodebase(zipFile);
 
-      toast.loading('Saving analysis results...', { id: progressToastId });
+      toast.loading("Saving analysis results...", { id: progressToastId });
 
       const storageService = new GitHubAnalysisStorageService();
       await storageService.storeRepositoryAnalysis(userId, {
@@ -134,18 +149,24 @@ export const RepositoryAnalysisGrid: React.FC<RepositoryAnalysisGridProps> = ({ 
         securityScore: results.summary.securityScore / 10,
         issuesFound: results.issues.length,
         criticalIssues: results.summary.criticalIssues,
-        language: typeof results.languageDetection?.primaryLanguage === 'string' 
-          ? results.languageDetection.primaryLanguage 
-          : results.languageDetection?.primaryLanguage?.name || 'Unknown',
+        language:
+          typeof results.languageDetection?.primaryLanguage === "string"
+            ? results.languageDetection.primaryLanguage
+            : results.languageDetection?.primaryLanguage?.name || "Unknown",
         stars: 0,
         forks: 0,
-        duration: parseFloat(results.analysisTime) || 0
+        duration: parseFloat(results.analysisTime) || 0,
       });
 
       // Store full analysis results
-      const { firebaseAnalysisStorage } = await import('@/services/storage/firebaseAnalysisStorage');
+      const { firebaseAnalysisStorage } =
+        await import("@/services/storage/firebaseAnalysisStorage");
       firebaseAnalysisStorage.setUserId(userId);
-      const fileForStorage = new File([zipFile], `${repoInfo.owner}-${repoInfo.repo}.zip`, { type: 'application/zip' });
+      const fileForStorage = new File(
+        [zipFile],
+        `${repoInfo.owner}-${repoInfo.repo}.zip`,
+        { type: "application/zip" }
+      );
       await firebaseAnalysisStorage.storeAnalysisResults(
         results,
         fileForStorage,
@@ -153,17 +174,19 @@ export const RepositoryAnalysisGrid: React.FC<RepositoryAnalysisGridProps> = ({ 
         false
       );
 
-      toast.success(`Analysis complete! Found ${results.issues.length} issues.`, { 
-        id: progressToastId,
-        duration: 4000 
-      });
+      toast.success(
+        `Analysis complete! Found ${results.issues.length} issues.`,
+        {
+          id: progressToastId,
+          duration: 4000,
+        }
+      );
 
-      setRepoUrl('');
+      setRepoUrl("");
       await loadRepositories();
-
     } catch (error: any) {
       toast.error(`Analysis failed: ${error.message}`, { id: progressToastId });
-      logger.error('Repository analysis failed:', error);
+      logger.error("Repository analysis failed:", error);
     } finally {
       setIsAnalyzing(false);
     }
@@ -176,12 +199,15 @@ export const RepositoryAnalysisGrid: React.FC<RepositoryAnalysisGridProps> = ({ 
     try {
       const repoInfo = githubRepositoryService.parseGitHubUrl(repo.url);
       if (!repoInfo) {
-        throw new Error('Invalid repository URL');
+        throw new Error("Invalid repository URL");
       }
 
-      let branch = 'main';
+      let branch = "main";
       try {
-        const details = await githubRepositoryService.getRepositoryInfo(repoInfo.owner, repoInfo.repo);
+        const details = await githubRepositoryService.getRepositoryInfo(
+          repoInfo.owner,
+          repoInfo.repo
+        );
         branch = details.defaultBranch;
       } catch {
         // Keep default
@@ -198,7 +224,7 @@ export const RepositoryAnalysisGrid: React.FC<RepositoryAnalysisGridProps> = ({ 
         }
       );
 
-      toast.loading('Analyzing code...', { id: progressToastId });
+      toast.loading("Analyzing code...", { id: progressToastId });
 
       const analysisEngine = new EnhancedAnalysisEngine();
       const results = await analysisEngine.analyzeCodebase(zipFile);
@@ -212,18 +238,24 @@ export const RepositoryAnalysisGrid: React.FC<RepositoryAnalysisGridProps> = ({ 
         securityScore: results.summary.securityScore / 10,
         issuesFound: results.issues.length,
         criticalIssues: results.summary.criticalIssues,
-        language: typeof results.languageDetection?.primaryLanguage === 'string' 
-          ? results.languageDetection.primaryLanguage 
-          : results.languageDetection?.primaryLanguage?.name || repo.language,
+        language:
+          typeof results.languageDetection?.primaryLanguage === "string"
+            ? results.languageDetection.primaryLanguage
+            : results.languageDetection?.primaryLanguage?.name || repo.language,
         stars: repo.stars,
         forks: repo.forks,
-        duration: parseFloat(results.analysisTime) || 0
+        duration: parseFloat(results.analysisTime) || 0,
       });
 
       // Store full analysis results
-      const { firebaseAnalysisStorage } = await import('@/services/storage/firebaseAnalysisStorage');
+      const { firebaseAnalysisStorage } =
+        await import("@/services/storage/firebaseAnalysisStorage");
       firebaseAnalysisStorage.setUserId(userId);
-      const fileForStorage = new File([zipFile], `${repoInfo.owner}-${repoInfo.repo}.zip`, { type: 'application/zip' });
+      const fileForStorage = new File(
+        [zipFile],
+        `${repoInfo.owner}-${repoInfo.repo}.zip`,
+        { type: "application/zip" }
+      );
       await firebaseAnalysisStorage.storeAnalysisResults(
         results,
         fileForStorage,
@@ -231,16 +263,20 @@ export const RepositoryAnalysisGrid: React.FC<RepositoryAnalysisGridProps> = ({ 
         false
       );
 
-      toast.success(`Re-analysis complete! Found ${results.issues.length} issues.`, { 
-        id: progressToastId,
-        duration: 4000 
-      });
+      toast.success(
+        `Re-analysis complete! Found ${results.issues.length} issues.`,
+        {
+          id: progressToastId,
+          duration: 4000,
+        }
+      );
 
       await loadRepositories();
-
     } catch (error: any) {
-      toast.error(`Re-analysis failed: ${error.message}`, { id: progressToastId });
-      logger.error('Repository re-analysis failed:', error);
+      toast.error(`Re-analysis failed: ${error.message}`, {
+        id: progressToastId,
+      });
+      logger.error("Repository re-analysis failed:", error);
     } finally {
       setAnalyzingRepoId(null);
     }
@@ -271,9 +307,9 @@ export const RepositoryAnalysisGrid: React.FC<RepositoryAnalysisGridProps> = ({ 
     }
   };
 
-  const filteredRepositories = repositories.filter(repo => {
-    if (filter === 'critical') return repo.criticalIssues > 0;
-    if (filter === 'recent') {
+  const filteredRepositories = repositories.filter((repo) => {
+    if (filter === "critical") return repo.criticalIssues > 0;
+    if (filter === "recent") {
       const dayAgo = new Date();
       dayAgo.setDate(dayAgo.getDate() - 1);
       return repo.lastAnalyzed > dayAgo;
@@ -317,9 +353,10 @@ export const RepositoryAnalysisGrid: React.FC<RepositoryAnalysisGridProps> = ({ 
                 Analyze New Repository
               </h3>
               <p className="text-slate-500 dark:text-slate-400 text-sm mb-4">
-                Enter a public GitHub repository URL to scan for security vulnerabilities and code quality issues.
+                Enter a public GitHub repository URL to scan for security
+                vulnerabilities and code quality issues.
               </p>
-              
+
               <div className="flex gap-3">
                 <div className="relative flex-1">
                   <GitBranch className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400" />
@@ -328,7 +365,11 @@ export const RepositoryAnalysisGrid: React.FC<RepositoryAnalysisGridProps> = ({ 
                     placeholder="https://github.com/owner/repository"
                     value={repoUrl}
                     onChange={(e) => setRepoUrl(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && !isAnalyzing && handleAnalyzeNewRepo()}
+                    onKeyDown={(e) =>
+                      e.key === "Enter" &&
+                      !isAnalyzing &&
+                      handleAnalyzeNewRepo()
+                    }
                     disabled={isAnalyzing}
                     className="pl-10 h-11 bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 transition-all"
                   />
@@ -352,19 +393,25 @@ export const RepositoryAnalysisGrid: React.FC<RepositoryAnalysisGridProps> = ({ 
                 </Button>
               </div>
             </div>
-            
+
             <div className="hidden md:block w-px h-24 bg-slate-200 dark:bg-slate-800" />
-            
+
             <div className="flex gap-8 px-4">
               <div className="text-center">
-                <div className="text-2xl font-bold text-slate-900 dark:text-white">{repositories.length}</div>
-                <div className="text-xs text-slate-500 uppercase tracking-wider font-medium">Analyzed</div>
+                <div className="text-2xl font-bold text-slate-900 dark:text-white">
+                  {repositories.length}
+                </div>
+                <div className="text-xs text-slate-500 uppercase tracking-wider font-medium">
+                  Analyzed
+                </div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-slate-900 dark:text-white">
                   {repositories.reduce((acc, r) => acc + r.issuesFound, 0)}
                 </div>
-                <div className="text-xs text-slate-500 uppercase tracking-wider font-medium">Issues</div>
+                <div className="text-xs text-slate-500 uppercase tracking-wider font-medium">
+                  Issues
+                </div>
               </div>
             </div>
           </div>
@@ -375,9 +422,9 @@ export const RepositoryAnalysisGrid: React.FC<RepositoryAnalysisGridProps> = ({ 
       <div className="flex items-center justify-between">
         <div className="flex gap-2 bg-slate-100 dark:bg-slate-800/50 p-1 rounded-lg">
           {[
-            { id: 'all', label: 'All Repositories' },
-            { id: 'critical', label: 'Critical Issues' },
-            { id: 'recent', label: 'Recently Analyzed' }
+            { id: "all", label: "All Repositories" },
+            { id: "critical", label: "Critical Issues" },
+            { id: "recent", label: "Recently Analyzed" },
           ].map((f) => (
             <button
               key={f.id}
@@ -393,11 +440,11 @@ export const RepositoryAnalysisGrid: React.FC<RepositoryAnalysisGridProps> = ({ 
             </button>
           ))}
         </div>
-        
+
         <div className="relative hidden sm:block">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
-          <Input 
-            placeholder="Search repositories..." 
+          <Input
+            placeholder="Search repositories..."
             className="pl-9 h-9 w-64 bg-transparent border-slate-200 dark:border-slate-800"
           />
         </div>
@@ -413,7 +460,7 @@ export const RepositoryAnalysisGrid: React.FC<RepositoryAnalysisGridProps> = ({ 
             No repositories found
           </h3>
           <p className="text-slate-500 dark:text-slate-400 max-w-md mx-auto">
-            {filter === 'all' 
+            {filter === "all"
               ? "You haven't analyzed any repositories yet. Start by entering a GitHub URL above."
               : "No repositories match the selected filter."}
           </p>
@@ -421,8 +468,8 @@ export const RepositoryAnalysisGrid: React.FC<RepositoryAnalysisGridProps> = ({ 
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredRepositories.map((repo) => (
-            <Card 
-              key={repo.id} 
+            <Card
+              key={repo.id}
               className="group hover:shadow-xl transition-all duration-300 border-slate-200 dark:border-slate-800 hover:border-blue-200 dark:hover:border-blue-800 overflow-hidden"
             >
               <div className="p-6">
@@ -484,23 +531,30 @@ export const RepositoryAnalysisGrid: React.FC<RepositoryAnalysisGridProps> = ({ 
 
                 {/* Actions */}
                 <div className="flex gap-2 pt-4 border-t border-slate-100 dark:border-slate-800">
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
+                  <Button
+                    variant="ghost"
+                    size="sm"
                     className="flex-1 hover:bg-slate-100 dark:hover:bg-slate-800"
-                    onClick={() => window.open(repo.url, '_blank', 'noopener,noreferrer')}
+                    onClick={() =>
+                      window.open(repo.url, "_blank", "noopener,noreferrer")
+                    }
                   >
                     <ExternalLink className="w-4 h-4 mr-2" />
                     GitHub
                   </Button>
-                  <Button 
+                  <Button
                     variant="ghost"
-                    size="sm" 
+                    size="sm"
                     className="flex-1 hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-600 dark:text-blue-400"
                     onClick={() => handleReanalyze(repo)}
                     disabled={analyzingRepoId === repo.id}
                   >
-                    <RefreshCw className={cn("w-4 h-4 mr-2", analyzingRepoId === repo.id && "animate-spin")} />
+                    <RefreshCw
+                      className={cn(
+                        "w-4 h-4 mr-2",
+                        analyzingRepoId === repo.id && "animate-spin"
+                      )}
+                    />
                     Re-Analyze
                   </Button>
                 </div>

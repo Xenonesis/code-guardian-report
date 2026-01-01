@@ -1,6 +1,6 @@
-import JSZip from 'jszip';
+import JSZip from "jszip";
 
-import { logger } from '@/utils/logger';
+import { logger } from "@/utils/logger";
 export interface GitHubRepoInfo {
   owner: string;
   repo: string;
@@ -34,8 +34,8 @@ export interface GitHubUserInfo {
 }
 
 class GitHubRepositoryService {
-  private readonly baseUrl = 'https://api.github.com';
-  private readonly rawContentUrl = 'https://raw.githubusercontent.com';
+  private readonly baseUrl = "https://api.github.com";
+  private readonly rawContentUrl = "https://raw.githubusercontent.com";
 
   /**
    * Parse GitHub URL to extract owner, repo, and branch
@@ -56,12 +56,12 @@ class GitHubRepositoryService {
 
       // Security: Ensure the hostname is exactly github.com (case-insensitive)
       // This prevents attacks like: https://evil.com/github.com/fake/repo
-      if (parsedUrl.hostname.toLowerCase() !== 'github.com') {
+      if (parsedUrl.hostname.toLowerCase() !== "github.com") {
         return null;
       }
 
       // Security: Ensure protocol is https
-      if (parsedUrl.protocol !== 'https:') {
+      if (parsedUrl.protocol !== "https:") {
         return null;
       }
 
@@ -80,7 +80,7 @@ class GitHubRepositoryService {
         if (match) {
           // Validate owner and repo names (GitHub restrictions)
           const owner = match[1];
-          const repo = match[2].replace(/\.git$/, '');
+          const repo = match[2].replace(/\.git$/, "");
           const branch = match[3];
 
           // Security: Validate owner and repo names contain only allowed characters
@@ -99,7 +99,7 @@ class GitHubRepositoryService {
 
       return null;
     } catch (error) {
-      logger.error('Error parsing GitHub URL:', error);
+      logger.error("Error parsing GitHub URL:", error);
       return null;
     }
   }
@@ -112,7 +112,7 @@ class GitHubRepositoryService {
       const response = await fetch(`${this.baseUrl}/repos/${owner}/${repo}`);
       return response.ok;
     } catch (error) {
-      logger.error('Error validating repository:', error);
+      logger.error("Error validating repository:", error);
       return false;
     }
   }
@@ -144,7 +144,7 @@ class GitHubRepositoryService {
         updatedAt: data.updated_at,
       };
     } catch (error) {
-      logger.error('Error fetching repository info:', error);
+      logger.error("Error fetching repository info:", error);
       throw error;
     }
   }
@@ -154,7 +154,9 @@ class GitHubRepositoryService {
    */
   async getGitHubUserInfo(username: string): Promise<GitHubUserInfo | null> {
     try {
-      const response = await fetch(`${this.baseUrl}/users/${encodeURIComponent(username)}`);
+      const response = await fetch(
+        `${this.baseUrl}/users/${encodeURIComponent(username)}`
+      );
 
       if (!response.ok) {
         if (response.status === 404) {
@@ -166,7 +168,7 @@ class GitHubRepositoryService {
 
       return await response.json();
     } catch (error) {
-      logger.error('Error fetching GitHub user info:', error);
+      logger.error("Error fetching GitHub user info:", error);
       return null;
     }
   }
@@ -174,20 +176,26 @@ class GitHubRepositoryService {
   /**
    * Get file tree from repository
    */
-  async getRepositoryTree(owner: string, repo: string, branch: string = 'main') {
+  async getRepositoryTree(
+    owner: string,
+    repo: string,
+    branch: string = "main"
+  ) {
     try {
       const response = await fetch(
         `${this.baseUrl}/repos/${owner}/${repo}/git/trees/${branch}?recursive=1`
       );
 
       if (!response.ok) {
-        throw new Error(`Failed to fetch repository tree: ${response.statusText}`);
+        throw new Error(
+          `Failed to fetch repository tree: ${response.statusText}`
+        );
       }
 
       const data = await response.json();
       return data.tree;
     } catch (error) {
-      logger.error('Error fetching repository tree:', error);
+      logger.error("Error fetching repository tree:", error);
       throw error;
     }
   }
@@ -195,7 +203,12 @@ class GitHubRepositoryService {
   /**
    * Get file content from repository
    */
-  async getFileContent(owner: string, repo: string, path: string, branch: string = 'main'): Promise<string> {
+  async getFileContent(
+    owner: string,
+    repo: string,
+    path: string,
+    branch: string = "main"
+  ): Promise<string> {
     try {
       const response = await fetch(
         `${this.rawContentUrl}/${owner}/${repo}/${branch}/${path}`
@@ -217,26 +230,54 @@ class GitHubRepositoryService {
    */
   private shouldIncludeFile(path: string): boolean {
     const codeExtensions = [
-      '.js', '.jsx', '.ts', '.tsx', '.py', '.java', '.c', '.cpp', '.cs',
-      '.go', '.rs', '.rb', '.php', '.swift', '.kt', '.scala', '.vue',
-      '.html', '.css', '.scss', '.sass', '.json', '.xml', '.yaml', '.yml',
-      '.sql', '.sh', '.bash', '.ps1', '.gradle', '.maven', '.dart',
+      ".js",
+      ".jsx",
+      ".ts",
+      ".tsx",
+      ".py",
+      ".java",
+      ".c",
+      ".cpp",
+      ".cs",
+      ".go",
+      ".rs",
+      ".rb",
+      ".php",
+      ".swift",
+      ".kt",
+      ".scala",
+      ".vue",
+      ".html",
+      ".css",
+      ".scss",
+      ".sass",
+      ".json",
+      ".xml",
+      ".yaml",
+      ".yml",
+      ".sql",
+      ".sh",
+      ".bash",
+      ".ps1",
+      ".gradle",
+      ".maven",
+      ".dart",
     ];
 
     const excludePatterns = [
-      'node_modules/',
-      '.git/',
-      'dist/',
-      'build/',
-      'coverage/',
-      '.next/',
-      'vendor/',
-      'target/',
-      'bin/',
-      'obj/',
-      '__pycache__/',
-      '.venv/',
-      'venv/',
+      "node_modules/",
+      ".git/",
+      "dist/",
+      "build/",
+      "coverage/",
+      ".next/",
+      "vendor/",
+      "target/",
+      "bin/",
+      "obj/",
+      "__pycache__/",
+      ".venv/",
+      "venv/",
     ];
 
     // Check if file is in excluded directory
@@ -247,7 +288,7 @@ class GitHubRepositoryService {
     }
 
     // Check if file has valid code extension
-    return codeExtensions.some(ext => path.toLowerCase().endsWith(ext));
+    return codeExtensions.some((ext) => path.toLowerCase().endsWith(ext));
   }
 
   /**
@@ -256,27 +297,27 @@ class GitHubRepositoryService {
   async downloadRepositoryAsZip(
     owner: string,
     repo: string,
-    branch: string = 'main',
+    branch: string = "main",
     onProgress?: (progress: number, message: string) => void
   ): Promise<File> {
     try {
-      onProgress?.(10, 'Fetching repository information...');
+      onProgress?.(10, "Fetching repository information...");
 
       // Get repository info
       const repoInfo = await this.getRepositoryInfo(owner, repo);
 
-      onProgress?.(20, 'Loading repository structure...');
+      onProgress?.(20, "Loading repository structure...");
 
       // Get file tree
       const tree = await this.getRepositoryTree(owner, repo, branch);
 
       // Filter only code files
-      const codeFiles = tree.filter((item: any) => 
-        item.type === 'blob' && this.shouldIncludeFile(item.path)
+      const codeFiles = tree.filter(
+        (item: any) => item.type === "blob" && this.shouldIncludeFile(item.path)
       );
 
       if (codeFiles.length === 0) {
-        throw new Error('No code files found in repository');
+        throw new Error("No code files found in repository");
       }
 
       onProgress?.(30, `Found ${codeFiles.length} code files. Downloading...`);
@@ -294,14 +335,23 @@ class GitHubRepositoryService {
         await Promise.all(
           batch.map(async (file: any) => {
             try {
-              const content = await this.getFileContent(owner, repo, file.path, branch);
+              const content = await this.getFileContent(
+                owner,
+                repo,
+                file.path,
+                branch
+              );
               zip.file(file.path, content);
               downloadedFiles++;
 
               // Throttle progress updates: every 5 files or last file
               if (downloadedFiles % 5 === 0 || downloadedFiles === totalFiles) {
-                const progress = 30 + Math.floor((downloadedFiles / totalFiles) * 60);
-                onProgress?.(progress, `Downloaded ${downloadedFiles}/${totalFiles} files...`);
+                const progress =
+                  30 + Math.floor((downloadedFiles / totalFiles) * 60);
+                onProgress?.(
+                  progress,
+                  `Downloaded ${downloadedFiles}/${totalFiles} files...`
+                );
               }
             } catch (error) {
               logger.warn(`Failed to download ${file.path}:`, error);
@@ -310,31 +360,30 @@ class GitHubRepositoryService {
         );
       }
 
-      onProgress?.(90, 'Creating zip file...');
+      onProgress?.(90, "Creating zip file...");
 
       // Generate zip file
       let lastZipProgress = 0;
-      const zipBlob = await zip.generateAsync(
-        { type: 'blob' },
-        (metadata) => {
-          const now = Date.now();
-          // Throttle zip progress updates
-          if (now - lastZipProgress > 100 || metadata.percent === 100) {
-            const progress = 90 + Math.floor(metadata.percent / 10);
-            onProgress?.(progress, `Compressing files... ${Math.floor(metadata.percent)}%`);
-            lastZipProgress = now;
-          }
+      const zipBlob = await zip.generateAsync({ type: "blob" }, (metadata) => {
+        const now = Date.now();
+        // Throttle zip progress updates
+        if (now - lastZipProgress > 100 || metadata.percent === 100) {
+          const progress = 90 + Math.floor(metadata.percent / 10);
+          onProgress?.(
+            progress,
+            `Compressing files... ${Math.floor(metadata.percent)}%`
+          );
+          lastZipProgress = now;
         }
-      );
+      });
 
-      onProgress?.(100, 'Repository ready for analysis!');
+      onProgress?.(100, "Repository ready for analysis!");
 
       // Create File object
       const fileName = `${owner}-${repo}-${branch}.zip`;
-      return new File([zipBlob], fileName, { type: 'application/zip' });
-
+      return new File([zipBlob], fileName, { type: "application/zip" });
     } catch (error) {
-      logger.error('Error downloading repository:', error);
+      logger.error("Error downloading repository:", error);
       throw error;
     }
   }
@@ -342,21 +391,32 @@ class GitHubRepositoryService {
   /**
    * Get repository download link (archive endpoint as fallback)
    */
-  getArchiveDownloadUrl(owner: string, repo: string, branch: string = 'main'): string {
+  getArchiveDownloadUrl(
+    owner: string,
+    repo: string,
+    branch: string = "main"
+  ): string {
     return `${this.baseUrl}/repos/${owner}/${repo}/zipball/${branch}`;
   }
 
   /**
    * Estimate repository size and file count
    */
-  async estimateRepositorySize(owner: string, repo: string, branch: string = 'main') {
+  async estimateRepositorySize(
+    owner: string,
+    repo: string,
+    branch: string = "main"
+  ) {
     try {
       const tree = await this.getRepositoryTree(owner, repo, branch);
-      const codeFiles = tree.filter((item: any) => 
-        item.type === 'blob' && this.shouldIncludeFile(item.path)
+      const codeFiles = tree.filter(
+        (item: any) => item.type === "blob" && this.shouldIncludeFile(item.path)
       );
 
-      const totalSize = codeFiles.reduce((sum: number, file: any) => sum + (file.size || 0), 0);
+      const totalSize = codeFiles.reduce(
+        (sum: number, file: any) => sum + (file.size || 0),
+        0
+      );
 
       return {
         fileCount: codeFiles.length,
@@ -364,7 +424,7 @@ class GitHubRepositoryService {
         formattedSize: this.formatBytes(totalSize),
       };
     } catch (error) {
-      logger.error('Error estimating repository size:', error);
+      logger.error("Error estimating repository size:", error);
       return null;
     }
   }
@@ -373,11 +433,11 @@ class GitHubRepositoryService {
    * Format bytes to human readable format
    */
   private formatBytes(bytes: number): string {
-    if (bytes === 0) return '0 Bytes';
+    if (bytes === 0) return "0 Bytes";
     const k = 1024;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const sizes = ["Bytes", "KB", "MB", "GB"];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+    return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + " " + sizes[i];
   }
 }
 
@@ -385,4 +445,3 @@ export const githubRepositoryService = new GitHubRepositoryService();
 
 // Export the class for direct instantiation
 export { GitHubRepositoryService };
-

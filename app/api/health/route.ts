@@ -45,7 +45,8 @@ export async function GET() {
   const memoryCheck = await checkMemory();
   checks.push(memoryCheck);
   if (memoryCheck.status === "fail") overallStatus = "unhealthy";
-  if (memoryCheck.status === "warn" && overallStatus === "healthy") overallStatus = "degraded";
+  if (memoryCheck.status === "warn" && overallStatus === "healthy")
+    overallStatus = "degraded";
 
   // Check 3: Environment configuration
   const envCheck = checkEnvironment();
@@ -54,7 +55,10 @@ export async function GET() {
 
   const response: HealthStatus = {
     status: overallStatus,
-    version: process.env.NEXT_PUBLIC_APP_VERSION || process.env.npm_package_version || "10.0.0",
+    version:
+      process.env.NEXT_PUBLIC_APP_VERSION ||
+      process.env.npm_package_version ||
+      "10.0.0",
     timestamp: new Date().toISOString(),
     uptime: Math.floor((Date.now() - startTime) / 1000),
     environment: process.env.NODE_ENV || "development",
@@ -62,7 +66,12 @@ export async function GET() {
   };
 
   // Return appropriate status code based on health
-  const statusCode = overallStatus === "healthy" ? 200 : overallStatus === "degraded" ? 200 : 503;
+  const statusCode =
+    overallStatus === "healthy"
+      ? 200
+      : overallStatus === "degraded"
+        ? 200
+        : 503;
 
   return NextResponse.json(response, {
     status: statusCode,
@@ -83,7 +92,9 @@ async function checkMemory(): Promise<HealthStatus["checks"][0]> {
       const memory = process.memoryUsage();
       const heapUsedMB = Math.round(memory.heapUsed / 1024 / 1024);
       const heapTotalMB = Math.round(memory.heapTotal / 1024 / 1024);
-      const usagePercent = Math.round((memory.heapUsed / memory.heapTotal) * 100);
+      const usagePercent = Math.round(
+        (memory.heapUsed / memory.heapTotal) * 100
+      );
 
       if (usagePercent > 90) {
         return {

@@ -1,18 +1,17 @@
+import React, { useState, useRef, useEffect, useCallback } from "react";
+import { Bot, Send, X, MessageCircle, Loader2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { AIService } from "../../services/ai/aiService";
+import { toast } from "sonner";
+import { AnalysisResults } from "@/hooks/useAnalysis";
 
-import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { Bot, Send, X, MessageCircle, Loader2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { AIService } from '../../services/ai/aiService';
-import { toast } from 'sonner';
-import { AnalysisResults } from '@/hooks/useAnalysis';
-
-import { logger } from '@/utils/logger';
+import { logger } from "@/utils/logger";
 interface ChatMessage {
   id: string;
-  role: 'user' | 'assistant';
+  role: "user" | "assistant";
   content: string;
   timestamp: Date;
 }
@@ -21,10 +20,12 @@ interface FloatingChatBotProps {
   analysisResults: AnalysisResults;
 }
 
-const FloatingChatBot: React.FC<FloatingChatBotProps> = ({ analysisResults }) => {
+const FloatingChatBot: React.FC<FloatingChatBotProps> = ({
+  analysisResults,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const aiService = new AIService();
@@ -32,8 +33,8 @@ const FloatingChatBot: React.FC<FloatingChatBotProps> = ({ analysisResults }) =>
   useEffect(() => {
     if (isOpen && messages.length === 0) {
       const welcomeMessage: ChatMessage = {
-        id: '1',
-        role: 'assistant',
+        id: "1",
+        role: "assistant",
         content: `Hello! I'm your AI assistant for code analysis. I can help you understand the analysis results of your codebase. 
 
 I found ${analysisResults?.issues?.length || 0} issues across ${analysisResults?.totalFiles || 0} files. Feel free to ask me questions like:
@@ -64,69 +65,78 @@ How can I help you today?`,
 
     const userMessage: ChatMessage = {
       id: Date.now().toString(),
-      role: 'user',
+      role: "user",
       content: input,
       timestamp: new Date(),
     };
 
-    setMessages(prev => [...prev, userMessage]);
+    setMessages((prev) => [...prev, userMessage]);
     const currentInput = input;
-    setInput('');
+    setInput("");
     setIsLoading(true);
 
     try {
-      logger.debug('Sending question to AI service:', currentInput);
-      logger.debug('Analysis results available:', !!analysisResults?.issues);
-      
+      logger.debug("Sending question to AI service:", currentInput);
+      logger.debug("Analysis results available:", !!analysisResults?.issues);
+
       if (!analysisResults || !analysisResults.issues) {
-        throw new Error('No analysis results available. Please run an analysis first.');
+        throw new Error(
+          "No analysis results available. Please run an analysis first."
+        );
       }
 
-      const response = await aiService.answerQuestion(currentInput, analysisResults);
-      
+      const response = await aiService.answerQuestion(
+        currentInput,
+        analysisResults
+      );
+
       const assistantMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
-        role: 'assistant',
+        role: "assistant",
         content: response,
         timestamp: new Date(),
       };
 
-      setMessages(prev => [...prev, assistantMessage]);
+      setMessages((prev) => [...prev, assistantMessage]);
     } catch (error) {
-      logger.error('Error getting AI response:', error);
-      
-      let errorMessage = 'Sorry, I encountered an error while processing your question.';
-      
+      logger.error("Error getting AI response:", error);
+
+      let errorMessage =
+        "Sorry, I encountered an error while processing your question.";
+
       if (error instanceof Error) {
-        if (error.message.includes('No AI API keys configured')) {
-          errorMessage = 'Please configure your AI API keys in the AI Configuration tab to use this feature.';
-        } else if (error.message.includes('All AI providers failed')) {
-          errorMessage = 'Unable to connect to AI services. Please check your API keys are valid and have sufficient credits.';
-        } else if (error.message.includes('No analysis results')) {
-          errorMessage = 'No analysis results found. Please upload and analyze a code file first.';
+        if (error.message.includes("No AI API keys configured")) {
+          errorMessage =
+            "Please configure your AI API keys in the AI Configuration tab to use this feature.";
+        } else if (error.message.includes("All AI providers failed")) {
+          errorMessage =
+            "Unable to connect to AI services. Please check your API keys are valid and have sufficient credits.";
+        } else if (error.message.includes("No analysis results")) {
+          errorMessage =
+            "No analysis results found. Please upload and analyze a code file first.";
         } else {
           errorMessage = `AI Service Error: ${error.message}`;
         }
       }
-      
-      logger.error('Detailed error for user:', errorMessage);
+
+      logger.error("Detailed error for user:", errorMessage);
       toast.error(errorMessage);
-      
+
       const errorResponse: ChatMessage = {
         id: (Date.now() + 1).toString(),
-        role: 'assistant',
+        role: "assistant",
         content: errorMessage,
         timestamp: new Date(),
       };
 
-      setMessages(prev => [...prev, errorResponse]);
+      setMessages((prev) => [...prev, errorResponse]);
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSendMessage();
     }
@@ -179,18 +189,23 @@ How can I help you today?`,
                 {messages.map((message) => (
                   <div
                     key={message.id}
-                    className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in`}
+                    className={`flex ${message.role === "user" ? "justify-end" : "justify-start"} animate-fade-in`}
                   >
                     <div
                       className={`max-w-[85%] sm:max-w-[80%] rounded-lg p-2 sm:p-3 ${
-                        message.role === 'user'
-                          ? 'bg-blue-600 text-white'
-                          : 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white'
+                        message.role === "user"
+                          ? "bg-blue-600 text-white"
+                          : "bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white"
                       }`}
                     >
-                      <p className="text-xs sm:text-sm whitespace-pre-wrap leading-relaxed">{message.content}</p>
+                      <p className="text-xs sm:text-sm whitespace-pre-wrap leading-relaxed">
+                        {message.content}
+                      </p>
                       <span className="text-xs opacity-70 mt-1 block">
-                        {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                        {message.timestamp.toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
                       </span>
                     </div>
                   </div>
@@ -199,7 +214,9 @@ How can I help you today?`,
                   <div className="flex justify-start animate-fade-in">
                     <div className="bg-slate-100 dark:bg-slate-800 rounded-lg p-2 sm:p-3 flex items-center gap-2">
                       <Loader2 className="h-3 w-3 sm:h-4 sm:w-4 animate-spin" />
-                      <span className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">AI is thinking...</span>
+                      <span className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
+                        AI is thinking...
+                      </span>
                     </div>
                   </div>
                 )}

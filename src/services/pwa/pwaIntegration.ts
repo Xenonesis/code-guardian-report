@@ -1,13 +1,13 @@
 // PWA Integration Service
 // Main service that coordinates all PWA features
 
-import { backgroundSyncService } from './backgroundSync';
-import { pushNotificationService } from './pushNotifications';
-import { pwaAnalyticsService } from './pwaAnalytics';
-import { offlineManager } from '../storage/offlineManager';
-import { PWA_CONFIG } from '../../config/pwa';
+import { backgroundSyncService } from "./backgroundSync";
+import { pushNotificationService } from "./pushNotifications";
+import { pwaAnalyticsService } from "./pwaAnalytics";
+import { offlineManager } from "../storage/offlineManager";
+import { PWA_CONFIG } from "../../config/pwa";
 
-import { logger } from '@/utils/logger';
+import { logger } from "@/utils/logger";
 export interface PWAStatus {
   isInstalled: boolean;
   isOnline: boolean;
@@ -21,24 +21,24 @@ class PWAIntegrationService {
   private installPrompt: any = null;
   private status: PWAStatus = {
     isInstalled: false,
-    isOnline: typeof navigator !== 'undefined' ? navigator.onLine : true,
+    isOnline: typeof navigator !== "undefined" ? navigator.onLine : true,
     hasNotificationPermission: false,
     backgroundSyncSupported: false,
     serviceWorkerReady: false,
-    installPromptAvailable: false
+    installPromptAvailable: false,
   };
 
   async init(): Promise<void> {
     // Guard for server-side rendering
-    if (typeof window === 'undefined') return;
-    
+    if (typeof window === "undefined") return;
+
     // Initialize all services
     await Promise.all([
       this.initServiceWorker(),
       backgroundSyncService.init(),
       pushNotificationService.init(),
       pwaAnalyticsService.init(),
-      offlineManager.init()
+      offlineManager.init(),
     ]);
 
     this.setupEventListeners();
@@ -46,18 +46,27 @@ class PWAIntegrationService {
   }
 
   private async initServiceWorker(): Promise<void> {
-    if ('serviceWorker' in navigator) {
+    if ("serviceWorker" in navigator) {
       try {
         // Reuse existing registration if available to avoid duplicate listeners/registration
-        const existing = await navigator.serviceWorker.getRegistration('/sw.js');
-        const registration = existing || await navigator.serviceWorker.register('/sw.js', PWA_CONFIG.serviceWorker);
+        const existing =
+          await navigator.serviceWorker.getRegistration("/sw.js");
+        const registration =
+          existing ||
+          (await navigator.serviceWorker.register(
+            "/sw.js",
+            PWA_CONFIG.serviceWorker
+          ));
 
         // Handle updates
-        registration.addEventListener('updatefound', () => {
+        registration.addEventListener("updatefound", () => {
           const newWorker = registration.installing;
           if (newWorker) {
-            newWorker.addEventListener('statechange', () => {
-              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+            newWorker.addEventListener("statechange", () => {
+              if (
+                newWorker.state === "installed" &&
+                navigator.serviceWorker.controller
+              ) {
                 this.notifyUpdate();
               }
             });
@@ -65,8 +74,7 @@ class PWAIntegrationService {
         });
 
         this.status.serviceWorkerReady = true;
-        this.status.backgroundSyncSupported = 'sync' in registration;
-        
+        this.status.backgroundSyncSupported = "sync" in registration;
       } catch {
         // Service worker registration failed - continue without PWA features
       }
@@ -75,10 +83,10 @@ class PWAIntegrationService {
 
   private setupEventListeners(): void {
     // Guard for server-side rendering
-    if (typeof window === 'undefined') return;
-    
+    if (typeof window === "undefined") return;
+
     // Install prompt
-    window.addEventListener('beforeinstallprompt', (e) => {
+    window.addEventListener("beforeinstallprompt", (e) => {
       e.preventDefault();
       this.installPrompt = e;
       this.status.installPromptAvailable = true;
@@ -87,7 +95,7 @@ class PWAIntegrationService {
     });
 
     // App installed
-    window.addEventListener('appinstalled', () => {
+    window.addEventListener("appinstalled", () => {
       this.status.isInstalled = true;
       this.status.installPromptAvailable = false;
       this.installPrompt = null;
@@ -96,54 +104,54 @@ class PWAIntegrationService {
     });
 
     // Online/offline
-    window.addEventListener('online', () => {
+    window.addEventListener("online", () => {
       this.status.isOnline = true;
       this.dispatchStatusUpdate();
     });
 
-    window.addEventListener('offline', () => {
+    window.addEventListener("offline", () => {
       this.status.isOnline = false;
       pwaAnalyticsService.trackOfflineUsage();
       this.dispatchStatusUpdate();
     });
 
     // Service worker messages
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.addEventListener('message', (event) => {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.addEventListener("message", (event) => {
         this.handleServiceWorkerMessage(event.data);
       });
     }
 
     // Push notifications
-    window.addEventListener('pushNotification', (event: any) => {
+    window.addEventListener("pushNotification", (event: any) => {
       pwaAnalyticsService.trackPushNotification();
       this.handlePushNotification(event.detail);
     });
 
     // Sync conflicts
-    window.addEventListener('syncConflict', (event: any) => {
+    window.addEventListener("syncConflict", (event: any) => {
       this.handleSyncConflict(event.detail);
     });
   }
 
   private handleServiceWorkerMessage(data: any): void {
     switch (data.type) {
-      case 'PROCESS_UPLOAD_QUEUE':
+      case "PROCESS_UPLOAD_QUEUE":
         backgroundSyncService.processUploadQueue();
         break;
-      case 'SYNC_OFFLINE_DATA':
+      case "SYNC_OFFLINE_DATA":
         offlineManager.syncPendingData();
         break;
-      case 'SYNC_ANALYTICS':
+      case "SYNC_ANALYTICS":
         this.syncAnalytics();
         break;
-      case 'BACKGROUND_SYNC':
+      case "BACKGROUND_SYNC":
         pwaAnalyticsService.trackBackgroundSync();
         break;
-      case 'PUSH_NOTIFICATION_RECEIVED':
+      case "PUSH_NOTIFICATION_RECEIVED":
         this.handlePushNotification(data.payload);
         break;
-      case 'UPDATE_APP':
+      case "UPDATE_APP":
         this.notifyUpdate();
         break;
     }
@@ -151,38 +159,47 @@ class PWAIntegrationService {
 
   private handlePushNotification(payload: any): void {
     // Dispatch custom event for app components to handle
-    window.dispatchEvent(new CustomEvent('pwaNotification', {
-      detail: { type: 'push', payload }
-    }));
+    window.dispatchEvent(
+      new CustomEvent("pwaNotification", {
+        detail: { type: "push", payload },
+      })
+    );
   }
 
   private handleSyncConflict(conflict: any): void {
     // Dispatch custom event for app components to handle
-    window.dispatchEvent(new CustomEvent('pwaNotification', {
-      detail: { type: 'syncConflict', conflict }
-    }));
+    window.dispatchEvent(
+      new CustomEvent("pwaNotification", {
+        detail: { type: "syncConflict", conflict },
+      })
+    );
   }
 
   private notifyUpdate(): void {
-    window.dispatchEvent(new CustomEvent('pwaNotification', {
-      detail: { type: 'updateAvailable' }
-    }));
+    window.dispatchEvent(
+      new CustomEvent("pwaNotification", {
+        detail: { type: "updateAvailable" },
+      })
+    );
   }
 
   private async syncAnalytics(): Promise<void> {
     try {
       const report = await pwaAnalyticsService.generateReport();
-      
+
       // Skip API calls in development mode or when no backend is available
-      if (process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost') {
-        logger.debug('PWA Analytics Sync (dev mode):', report);
+      if (
+        process.env.NODE_ENV === "development" ||
+        window.location.hostname === "localhost"
+      ) {
+        logger.debug("PWA Analytics Sync (dev mode):", report);
         return;
       }
-      
-      await fetch('/api/analytics/pwa', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: report
+
+      await fetch("/api/analytics/pwa", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: report,
       });
     } catch {
       // Silently fail to avoid disrupting user experience
@@ -194,14 +211,14 @@ class PWAIntegrationService {
 
     try {
       const result = await this.installPrompt.prompt();
-      const accepted = result.outcome === 'accepted';
-      
+      const accepted = result.outcome === "accepted";
+
       if (accepted) {
         this.status.isInstalled = true;
         this.status.installPromptAvailable = false;
         this.installPrompt = null;
       }
-      
+
       this.dispatchStatusUpdate();
       return accepted;
     } catch {
@@ -228,12 +245,12 @@ class PWAIntegrationService {
   }
 
   async uploadFile(file: File): Promise<string> {
-    pwaAnalyticsService.trackFeatureUsage('file-upload');
+    pwaAnalyticsService.trackFeatureUsage("file-upload");
     return await backgroundSyncService.queueUpload(file);
   }
 
   async saveOfflineData(type: string, data: any): Promise<string> {
-    pwaAnalyticsService.trackFeatureUsage('offline-storage');
+    pwaAnalyticsService.trackFeatureUsage("offline-storage");
     return await offlineManager.saveOfflineData(type as any, data);
   }
 
@@ -255,34 +272,34 @@ class PWAIntegrationService {
   }
 
   async updateServiceWorker(): Promise<void> {
-    if ('serviceWorker' in navigator) {
+    if ("serviceWorker" in navigator) {
       const registration = await navigator.serviceWorker.getRegistration();
       if (registration?.waiting) {
-        registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+        registration.waiting.postMessage({ type: "SKIP_WAITING" });
         window.location.reload();
       }
     }
   }
 
   async clearCache(cacheName?: string): Promise<void> {
-    if ('serviceWorker' in navigator) {
+    if ("serviceWorker" in navigator) {
       const registration = await navigator.serviceWorker.getRegistration();
       if (registration?.active) {
         registration.active.postMessage({
-          type: 'CLEAR_CACHE',
-          cacheName
+          type: "CLEAR_CACHE",
+          cacheName,
         });
       }
     }
   }
 
   async preloadRoutes(routes: string[]): Promise<void> {
-    if ('serviceWorker' in navigator) {
+    if ("serviceWorker" in navigator) {
       const registration = await navigator.serviceWorker.getRegistration();
       if (registration?.active) {
         registration.active.postMessage({
-          type: 'PRELOAD_ROUTES',
-          routes
+          type: "PRELOAD_ROUTES",
+          routes,
         });
       }
     }
@@ -302,34 +319,41 @@ class PWAIntegrationService {
 
   private updateStatus(): void {
     // Check if app is installed
-    this.status.isInstalled = window.matchMedia('(display-mode: standalone)').matches ||
-                              (window.navigator as any).standalone === true;
-    
+    this.status.isInstalled =
+      window.matchMedia("(display-mode: standalone)").matches ||
+      (window.navigator as any).standalone === true;
+
     // Check notification permission
-    this.status.hasNotificationPermission = Notification.permission === 'granted';
-    
+    this.status.hasNotificationPermission =
+      Notification.permission === "granted";
+
     this.dispatchStatusUpdate();
   }
 
   private dispatchStatusUpdate(): void {
-    window.dispatchEvent(new CustomEvent('pwaStatusUpdate', {
-      detail: this.status
-    }));
+    window.dispatchEvent(
+      new CustomEvent("pwaStatusUpdate", {
+        detail: this.status,
+      })
+    );
   }
 
   // Feature detection
   static getCapabilities() {
     return {
-      serviceWorker: 'serviceWorker' in navigator,
-      pushNotifications: 'PushManager' in window,
-      backgroundSync: 'serviceWorker' in navigator && 'sync' in window.ServiceWorkerRegistration.prototype,
-      webShare: 'share' in navigator,
-      fileHandling: 'launchQueue' in window,
+      serviceWorker: "serviceWorker" in navigator,
+      pushNotifications: "PushManager" in window,
+      backgroundSync:
+        "serviceWorker" in navigator &&
+        "sync" in window.ServiceWorkerRegistration.prototype,
+      webShare: "share" in navigator,
+      fileHandling: "launchQueue" in window,
       installPrompt: true, // Will be updated when beforeinstallprompt fires
-      persistentStorage: 'storage' in navigator && 'persist' in navigator.storage,
-      notifications: 'Notification' in window,
-      indexedDB: 'indexedDB' in window,
-      cacheAPI: 'caches' in window
+      persistentStorage:
+        "storage" in navigator && "persist" in navigator.storage,
+      notifications: "Notification" in window,
+      indexedDB: "indexedDB" in window,
+      cacheAPI: "caches" in window,
     };
   }
 }

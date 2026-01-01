@@ -10,10 +10,10 @@ export default function Loading() {
         <div className="relative">
           {/* Outer ring */}
           <div className="absolute inset-0 w-20 h-20 rounded-full border-2 border-primary/20 animate-ping" />
-          
+
           {/* Spinning ring */}
           <div className="w-20 h-20 rounded-full border-2 border-transparent border-t-primary border-r-primary/50 animate-spin" />
-          
+
           {/* Center icon */}
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-600 flex items-center justify-center shadow-lg">
@@ -39,8 +39,9 @@ export default function Loading() {
       </div>
 
       {/* CSS for loading animation */}
-      <style dangerouslySetInnerHTML={{
-        __html: `
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
           .loading-bar-animation {
             animation: loading-bar 1.5s ease-in-out infinite;
           }
@@ -58,8 +59,9 @@ export default function Loading() {
               margin-left: 100%;
             }
           }
-        `
-      }} />
+        `,
+        }}
+      />
     </div>
   );
 }

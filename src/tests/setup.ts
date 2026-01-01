@@ -1,5 +1,5 @@
-import '@testing-library/jest-dom';
-import { vi } from 'vitest';
+import "@testing-library/jest-dom";
+import { vi } from "vitest";
 
 // Mock localStorage
 const localStorageMock = {
@@ -16,8 +16,8 @@ global.localStorage = localStorageMock as Storage;
 global.sessionStorage = localStorageMock as Storage;
 
 // Mock crypto.getRandomValues - don't override the whole crypto object
-if (typeof global.crypto === 'undefined') {
-  Object.defineProperty(global, 'crypto', {
+if (typeof global.crypto === "undefined") {
+  Object.defineProperty(global, "crypto", {
     value: {
       subtle: {
         importKey: vi.fn(),
@@ -52,7 +52,7 @@ global.IntersectionObserver = vi.fn().mockImplementation(() => ({
 }));
 
 // Mock matchMedia
-Object.defineProperty(window, 'matchMedia', {
+Object.defineProperty(window, "matchMedia", {
   writable: true,
   value: vi.fn().mockImplementation((query: string) => ({
     matches: false,
@@ -67,5 +67,5 @@ Object.defineProperty(window, 'matchMedia', {
 });
 
 // Suppress console errors in tests
-vi.spyOn(console, 'error').mockImplementation(() => {});
-vi.spyOn(console, 'warn').mockImplementation(() => {});
+vi.spyOn(console, "error").mockImplementation(() => {});
+vi.spyOn(console, "warn").mockImplementation(() => {});

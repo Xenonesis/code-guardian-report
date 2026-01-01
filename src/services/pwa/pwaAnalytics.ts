@@ -1,9 +1,9 @@
 // PWA Analytics Service
 // Tracks PWA-specific metrics and user engagement
 
-import { PWA_CONFIG } from '../../config/pwa';
+import { PWA_CONFIG } from "../../config/pwa";
 
-import { logger } from '@/utils/logger';
+import { logger } from "@/utils/logger";
 export interface PWAMetrics {
   installPrompts: number;
   installations: number;
@@ -43,7 +43,7 @@ class PWAAnalyticsService {
     backgroundSyncs: 0,
     pushNotifications: 0,
     shareActions: 0,
-    fileHandling: 0
+    fileHandling: 0,
   };
 
   private performance: PerformanceMetrics = {
@@ -52,7 +52,7 @@ class PWAAnalyticsService {
     largestContentfulPaint: 0,
     cumulativeLayoutShift: 0,
     firstInputDelay: 0,
-    timeToInteractive: 0
+    timeToInteractive: 0,
   };
 
   private engagement: UserEngagement = {
@@ -60,30 +60,30 @@ class PWAAnalyticsService {
     pageViews: 0,
     interactions: 0,
     features: [],
-    returnVisits: 0
+    returnVisits: 0,
   };
 
   private sessionStart = Date.now();
-  private isOnline = typeof navigator !== 'undefined' ? navigator.onLine : true;
+  private isOnline = typeof navigator !== "undefined" ? navigator.onLine : true;
 
   async init(): Promise<void> {
-    if (typeof window === 'undefined') return;
-    
+    if (typeof window === "undefined") return;
+
     this.loadStoredMetrics();
     this.setupEventListeners();
     this.trackLaunch();
     this.measurePerformance();
-    
+
     // Track return visits
-    const lastVisit = localStorage.getItem('pwa-last-visit');
+    const lastVisit = localStorage.getItem("pwa-last-visit");
     if (lastVisit) {
       this.engagement.returnVisits++;
     }
-    localStorage.setItem('pwa-last-visit', Date.now().toString());
+    localStorage.setItem("pwa-last-visit", Date.now().toString());
   }
 
   private loadStoredMetrics(): void {
-    const stored = localStorage.getItem('pwa-metrics');
+    const stored = localStorage.getItem("pwa-metrics");
     if (stored) {
       try {
         const data = JSON.parse(stored);
@@ -99,37 +99,37 @@ class PWAAnalyticsService {
     const data = {
       metrics: this.metrics,
       engagement: this.engagement,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     };
-    localStorage.setItem('pwa-metrics', JSON.stringify(data));
+    localStorage.setItem("pwa-metrics", JSON.stringify(data));
   }
 
   private setupEventListeners(): void {
     // Install prompt tracking
-    window.addEventListener('beforeinstallprompt', (e) => {
+    window.addEventListener("beforeinstallprompt", (e) => {
       this.trackInstallPrompt();
       e.preventDefault();
-      
+
       // Store the event for later use
       (window as any).deferredPrompt = e;
     });
 
     // Installation tracking
-    window.addEventListener('appinstalled', () => {
+    window.addEventListener("appinstalled", () => {
       this.trackInstallation();
     });
 
     // Online/offline tracking
-    window.addEventListener('online', () => {
+    window.addEventListener("online", () => {
       this.isOnline = true;
     });
 
-    window.addEventListener('offline', () => {
+    window.addEventListener("offline", () => {
       this.isOnline = false;
     });
 
     // Page visibility for session tracking
-    document.addEventListener('visibilitychange', () => {
+    document.addEventListener("visibilitychange", () => {
       if (document.hidden) {
         this.updateSessionDuration();
         this.saveMetrics();
@@ -139,16 +139,20 @@ class PWAAnalyticsService {
     });
 
     // Interaction tracking
-    ['click', 'keydown', 'scroll', 'touchstart'].forEach(event => {
-      document.addEventListener(event, () => {
-        this.engagement.interactions++;
-      }, { passive: true });
+    ["click", "keydown", "scroll", "touchstart"].forEach((event) => {
+      document.addEventListener(
+        event,
+        () => {
+          this.engagement.interactions++;
+        },
+        { passive: true }
+      );
     });
 
     // Service worker messages
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.addEventListener('message', (event) => {
-        if (event.data?.type === 'ANALYTICS_DATA') {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.addEventListener("message", (event) => {
+        if (event.data?.type === "ANALYTICS_DATA") {
           this.updateServiceWorkerMetrics(event.data.data);
         }
       });
@@ -156,18 +160,23 @@ class PWAAnalyticsService {
   }
 
   private async measurePerformance(): Promise<void> {
-    if ('performance' in window) {
+    if ("performance" in window) {
       // Wait for page load
-      window.addEventListener('load', () => {
+      window.addEventListener("load", () => {
         setTimeout(() => {
-          const navigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
-          const paint = performance.getEntriesByType('paint');
-          
-          this.performance.loadTime = navigation.loadEventEnd - navigation.fetchStart;
-          
-          const fcp = paint.find(entry => entry.name === 'first-contentful-paint');
+          const navigation = performance.getEntriesByType(
+            "navigation"
+          )[0] as PerformanceNavigationTiming;
+          const paint = performance.getEntriesByType("paint");
+
+          this.performance.loadTime =
+            navigation.loadEventEnd - navigation.fetchStart;
+
+          const fcp = paint.find(
+            (entry) => entry.name === "first-contentful-paint"
+          );
           if (fcp) this.performance.firstContentfulPaint = fcp.startTime;
-          
+
           // Web Vitals
           this.measureWebVitals();
         }, 1000);
@@ -178,43 +187,43 @@ class PWAAnalyticsService {
   private async measureWebVitals(): Promise<void> {
     try {
       // Try web-vitals v3+ API first (onCLS, onFID, etc.)
-      const webVitals = await import('web-vitals');
-      
-      if ('onCLS' in webVitals) {
+      const webVitals = await import("web-vitals");
+
+      if ("onCLS" in webVitals) {
         // Web Vitals v3+
         const { onCLS, onINP, onFCP, onLCP, onTTFB } = webVitals;
-        
+
         onCLS((metric) => {
           this.performance.cumulativeLayoutShift = metric.value;
         });
-        
+
         onINP((metric) => {
           this.performance.firstInputDelay = metric.value;
         });
-        
+
         onFCP((metric) => {
           this.performance.firstContentfulPaint = metric.value;
         });
-        
+
         onLCP((metric) => {
           this.performance.largestContentfulPaint = metric.value;
         });
-      } else if ('getCLS' in webVitals) {
+      } else if ("getCLS" in webVitals) {
         // Web Vitals v2
         const { getCLS, getFID, getFCP, getLCP, getTTFB } = webVitals as any;
-        
+
         getCLS((metric: any) => {
           this.performance.cumulativeLayoutShift = metric.value;
         });
-        
+
         getFID((metric: any) => {
           this.performance.firstInputDelay = metric.value;
         });
-        
+
         getFCP((metric: any) => {
           this.performance.firstContentfulPaint = metric.value;
         });
-        
+
         getLCP((metric: any) => {
           this.performance.largestContentfulPaint = metric.value;
         });
@@ -227,25 +236,27 @@ class PWAAnalyticsService {
   trackInstallPrompt(): void {
     this.metrics.installPrompts++;
     this.saveMetrics();
-    this.sendAnalytics('install_prompt_shown');
+    this.sendAnalytics("install_prompt_shown");
   }
 
   trackInstallation(): void {
     this.metrics.installations++;
     this.saveMetrics();
-    this.sendAnalytics('pwa_installed');
+    this.sendAnalytics("pwa_installed");
   }
 
   trackLaunch(): void {
     this.metrics.launches++;
     this.engagement.pageViews++;
-    
+
     // Detect launch mode
-    const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
-    const launchMode = isStandalone ? 'standalone' : 'browser';
-    
+    const isStandalone = window.matchMedia(
+      "(display-mode: standalone)"
+    ).matches;
+    const launchMode = isStandalone ? "standalone" : "browser";
+
     this.saveMetrics();
-    this.sendAnalytics('pwa_launch', { mode: launchMode });
+    this.sendAnalytics("pwa_launch", { mode: launchMode });
   }
 
   trackFeatureUsage(feature: string): void {
@@ -253,39 +264,39 @@ class PWAAnalyticsService {
       this.engagement.features.push(feature);
     }
     this.saveMetrics();
-    this.sendAnalytics('feature_used', { feature });
+    this.sendAnalytics("feature_used", { feature });
   }
 
   trackOfflineUsage(): void {
     if (!this.isOnline) {
       this.metrics.offlineUsage++;
       this.saveMetrics();
-      this.sendAnalytics('offline_usage');
+      this.sendAnalytics("offline_usage");
     }
   }
 
   trackBackgroundSync(): void {
     this.metrics.backgroundSyncs++;
     this.saveMetrics();
-    this.sendAnalytics('background_sync');
+    this.sendAnalytics("background_sync");
   }
 
   trackPushNotification(): void {
     this.metrics.pushNotifications++;
     this.saveMetrics();
-    this.sendAnalytics('push_notification_received');
+    this.sendAnalytics("push_notification_received");
   }
 
   trackShareAction(): void {
     this.metrics.shareActions++;
     this.saveMetrics();
-    this.sendAnalytics('share_action');
+    this.sendAnalytics("share_action");
   }
 
   trackFileHandling(): void {
     this.metrics.fileHandling++;
     this.saveMetrics();
-    this.sendAnalytics('file_handled');
+    this.sendAnalytics("file_handled");
   }
 
   private updateSessionDuration(): void {
@@ -294,43 +305,47 @@ class PWAAnalyticsService {
 
   private updateServiceWorkerMetrics(data: any): void {
     if (data.cacheHits && data.networkRequests) {
-      this.metrics.cacheHitRate = (data.cacheHits / (data.cacheHits + data.networkRequests)) * 100;
+      this.metrics.cacheHitRate =
+        (data.cacheHits / (data.cacheHits + data.networkRequests)) * 100;
     }
     this.saveMetrics();
   }
 
   async getServiceWorkerAnalytics(): Promise<any> {
-    if ('serviceWorker' in navigator) {
+    if ("serviceWorker" in navigator) {
       const registration = await navigator.serviceWorker.ready;
-      
+
       return new Promise((resolve) => {
         const channel = new MessageChannel();
         channel.port1.onmessage = (event) => {
           resolve(event.data);
         };
-        
-        registration.active?.postMessage(
-          { type: 'GET_ANALYTICS' },
-          [channel.port2]
-        );
+
+        registration.active?.postMessage({ type: "GET_ANALYTICS" }, [
+          channel.port2,
+        ]);
       });
     }
     return null;
   }
 
-  getMetrics(): { metrics: PWAMetrics; performance: PerformanceMetrics; engagement: UserEngagement } {
+  getMetrics(): {
+    metrics: PWAMetrics;
+    performance: PerformanceMetrics;
+    engagement: UserEngagement;
+  } {
     this.updateSessionDuration();
     return {
       metrics: this.metrics,
       performance: this.performance,
-      engagement: this.engagement
+      engagement: this.engagement,
     };
   }
 
   async generateReport(): Promise<string> {
     const swAnalytics = await this.getServiceWorkerAnalytics();
     const data = this.getMetrics();
-    
+
     const report = {
       timestamp: new Date().toISOString(),
       pwa: data.metrics,
@@ -342,10 +357,10 @@ class PWAAnalyticsService {
         language: navigator.language,
         platform: navigator.platform,
         cookieEnabled: navigator.cookieEnabled,
-        onLine: navigator.onLine
-      }
+        onLine: navigator.onLine,
+      },
     };
-    
+
     return JSON.stringify(report, null, 2);
   }
 
@@ -353,7 +368,10 @@ class PWAAnalyticsService {
 
   private async sendAnalytics(event: string, data?: any): Promise<void> {
     // Skip API calls in development mode or when no backend is available
-    if (process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost') {
+    if (
+      process.env.NODE_ENV === "development" ||
+      window.location.hostname === "localhost"
+    ) {
       // Only log each event type once to reduce console noise
       if (!this.loggedEvents.has(event)) {
         this.loggedEvents.add(event);
@@ -363,16 +381,16 @@ class PWAAnalyticsService {
 
     try {
       await fetch(PWA_CONFIG.analytics.endpoint, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           event,
           data,
           timestamp: Date.now(),
-          session: this.getSessionId()
-        })
+          session: this.getSessionId(),
+        }),
       });
     } catch (error) {
       // Silently fail in production to avoid disrupting user experience
@@ -380,10 +398,10 @@ class PWAAnalyticsService {
   }
 
   private getSessionId(): string {
-    let sessionId = sessionStorage.getItem('pwa-session-id');
+    let sessionId = sessionStorage.getItem("pwa-session-id");
     if (!sessionId) {
       sessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-      sessionStorage.setItem('pwa-session-id', sessionId);
+      sessionStorage.setItem("pwa-session-id", sessionId);
     }
     return sessionId;
   }
@@ -391,7 +409,7 @@ class PWAAnalyticsService {
   // Export data for external analytics
   async exportData(): Promise<Blob> {
     const report = await this.generateReport();
-    return new Blob([report], { type: 'application/json' });
+    return new Blob([report], { type: "application/json" });
   }
 }
 

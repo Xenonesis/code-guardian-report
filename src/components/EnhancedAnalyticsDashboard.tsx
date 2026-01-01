@@ -1,22 +1,35 @@
-import React, { useState } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Shield, Download, Activity, Target, Zap, FileText } from 'lucide-react';
-import { MetricsCards } from '@/components/dashboard/MetricsCards';
-import { SeverityChart } from '@/components/dashboard/charts/SeverityChart';
-import { TypeChart } from '@/components/dashboard/charts/TypeChart';
-import { FileComplexityChart } from '@/components/dashboard/charts/FileComplexityChart';
-import { RiskAssessment } from '@/components/dashboard/RiskAssessment';
-import { PerformanceMetrics } from '@/components/dashboard/PerformanceMetrics';
-import { useAnalyticsData } from '@/hooks/useAnalyticsData';
-import { SecurityIssue } from '@/hooks/useAnalysis';
+import React, { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Shield,
+  Download,
+  Activity,
+  Target,
+  Zap,
+  FileText,
+} from "lucide-react";
+import { MetricsCards } from "@/components/dashboard/MetricsCards";
+import { SeverityChart } from "@/components/dashboard/charts/SeverityChart";
+import { TypeChart } from "@/components/dashboard/charts/TypeChart";
+import { FileComplexityChart } from "@/components/dashboard/charts/FileComplexityChart";
+import { RiskAssessment } from "@/components/dashboard/RiskAssessment";
+import { PerformanceMetrics } from "@/components/dashboard/PerformanceMetrics";
+import { useAnalyticsData } from "@/hooks/useAnalyticsData";
+import { SecurityIssue } from "@/hooks/useAnalysis";
 
 // Legacy Issue type for backward compatibility
 interface Issue {
-  severity: 'Critical' | 'High' | 'Medium' | 'Low';
-  type: 'Security' | 'Bug' | 'Code Smell' | 'Vulnerability';
+  severity: "Critical" | "High" | "Medium" | "Low";
+  type: "Security" | "Bug" | "Code Smell" | "Vulnerability";
   file: string;
   line: number;
   description: string;
@@ -30,20 +43,20 @@ interface EnhancedAnalyticsDashboardProps {
   analysisTime?: string;
 }
 
-const EnhancedAnalyticsDashboard: React.FC<EnhancedAnalyticsDashboardProps> = ({ 
-  issues, 
-  totalFiles, 
-  analysisTime 
+const EnhancedAnalyticsDashboard: React.FC<EnhancedAnalyticsDashboardProps> = ({
+  issues,
+  totalFiles,
+  analysisTime,
 }) => {
-  const [activeTab, setActiveTab] = useState('overview');
-  const [timeframe, setTimeframe] = useState('7d');
-  
+  const [activeTab, setActiveTab] = useState("overview");
+  const [timeframe, setTimeframe] = useState("7d");
+
   const {
     severityData,
     typeData,
     fileComplexityData,
     riskMetrics,
-    performanceData
+    performanceData,
   } = useAnalyticsData(issues, totalFiles || 0);
 
   if (issues.length === 0) {
@@ -61,15 +74,21 @@ const EnhancedAnalyticsDashboard: React.FC<EnhancedAnalyticsDashboardProps> = ({
           </p>
           <div className="mt-4 sm:mt-6 grid grid-cols-3 gap-3 sm:gap-4 text-center">
             <div>
-              <p className="text-xl sm:text-2xl font-bold text-green-600">100%</p>
+              <p className="text-xl sm:text-2xl font-bold text-green-600">
+                100%
+              </p>
               <p className="text-xs sm:text-sm text-slate-500">Quality Score</p>
             </div>
             <div>
-              <p className="text-xl sm:text-2xl font-bold text-green-600">{totalFiles}</p>
+              <p className="text-xl sm:text-2xl font-bold text-green-600">
+                {totalFiles}
+              </p>
               <p className="text-xs sm:text-sm text-slate-500">Files Clean</p>
             </div>
             <div>
-              <p className="text-xl sm:text-2xl font-bold text-green-600">{analysisTime}</p>
+              <p className="text-xl sm:text-2xl font-bold text-green-600">
+                {analysisTime}
+              </p>
               <p className="text-xs sm:text-sm text-slate-500">Analysis Time</p>
             </div>
           </div>
@@ -83,9 +102,12 @@ const EnhancedAnalyticsDashboard: React.FC<EnhancedAnalyticsDashboardProps> = ({
       {/* Header with controls */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4">
         <div className="w-full sm:w-auto">
-          <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">Analytics Dashboard</h2>
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
+            Analytics Dashboard
+          </h2>
           <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1">
-            Comprehensive analysis of {issues.length} issues across {totalFiles} files
+            Comprehensive analysis of {issues.length} issues across {totalFiles}{" "}
+            files
           </p>
         </div>
         <div className="flex items-center gap-2 w-full sm:w-auto">
@@ -108,20 +130,32 @@ const EnhancedAnalyticsDashboard: React.FC<EnhancedAnalyticsDashboardProps> = ({
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 mb-4 sm:mb-6 h-auto">
-          <TabsTrigger value="overview" className="text-xs sm:text-sm py-2 sm:py-2.5">
+          <TabsTrigger
+            value="overview"
+            className="text-xs sm:text-sm py-2 sm:py-2.5"
+          >
             <Activity className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
             <span className="hidden xs:inline">Overview</span>
             <span className="xs:hidden">Stats</span>
           </TabsTrigger>
-          <TabsTrigger value="files" className="text-xs sm:text-sm py-2 sm:py-2.5">
+          <TabsTrigger
+            value="files"
+            className="text-xs sm:text-sm py-2 sm:py-2.5"
+          >
             <FileText className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
             Files
           </TabsTrigger>
-          <TabsTrigger value="risk" className="text-xs sm:text-sm py-2 sm:py-2.5">
+          <TabsTrigger
+            value="risk"
+            className="text-xs sm:text-sm py-2 sm:py-2.5"
+          >
             <Target className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
             Risk
           </TabsTrigger>
-          <TabsTrigger value="performance" className="text-xs sm:text-sm py-2 sm:py-2.5">
+          <TabsTrigger
+            value="performance"
+            className="text-xs sm:text-sm py-2 sm:py-2.5"
+          >
             <Zap className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
             <span className="hidden xs:inline">Performance</span>
             <span className="xs:hidden">Perf</span>

@@ -3,13 +3,13 @@
  * React hook for using the enhanced notification system
  */
 
-import { useState, useEffect } from 'react';
-import { 
-  NotificationManager, 
-  Notification, 
+import { useState, useEffect } from "react";
+import {
+  NotificationManager,
+  Notification,
   NotificationPreferences,
-  notify 
-} from '@/services/notifications/NotificationManager';
+  notify,
+} from "@/services/notifications/NotificationManager";
 
 export function useNotifications() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
@@ -18,7 +18,7 @@ export function useNotifications() {
   useEffect(() => {
     const unsubscribe = NotificationManager.subscribe((notifs) => {
       setNotifications(notifs);
-      setUnreadCount(notifs.filter(n => !n.read && !n.dismissed).length);
+      setUnreadCount(notifs.filter((n) => !n.read && !n.dismissed).length);
     });
 
     return unsubscribe;
@@ -54,8 +54,10 @@ export function useNotificationPreferences() {
 
   return {
     preferences,
-    updatePreferences: NotificationManager.updatePreferences.bind(NotificationManager),
-    resetPreferences: NotificationManager.resetPreferences.bind(NotificationManager),
+    updatePreferences:
+      NotificationManager.updatePreferences.bind(NotificationManager),
+    resetPreferences:
+      NotificationManager.resetPreferences.bind(NotificationManager),
   };
 }
 

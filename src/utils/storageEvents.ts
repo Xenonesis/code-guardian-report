@@ -3,13 +3,13 @@
  */
 
 // Custom event for API key changes
-export const AI_API_KEYS_CHANGED_EVENT = 'aiApiKeysChanged';
+export const AI_API_KEYS_CHANGED_EVENT = "aiApiKeysChanged";
 
 /**
  * Dispatch a custom event when API keys are changed in the same tab
  */
 export function dispatchApiKeysChanged(): void {
-  if (typeof window === 'undefined') return;
+  if (typeof window === "undefined") return;
   window.dispatchEvent(new CustomEvent(AI_API_KEYS_CHANGED_EVENT));
 }
 
@@ -17,11 +17,11 @@ export function dispatchApiKeysChanged(): void {
  * Enhanced localStorage setItem that dispatches custom events
  */
 export function setLocalStorageItem(key: string, value: string): void {
-  if (typeof window === 'undefined') return;
+  if (typeof window === "undefined") return;
   localStorage.setItem(key, value);
-  
+
   // Dispatch custom event for same-tab changes
-  if (key === 'aiApiKeys') {
+  if (key === "aiApiKeys") {
     dispatchApiKeysChanged();
   }
 }
@@ -30,11 +30,11 @@ export function setLocalStorageItem(key: string, value: string): void {
  * Enhanced localStorage removeItem that dispatches custom events
  */
 export function removeLocalStorageItem(key: string): void {
-  if (typeof window === 'undefined') return;
+  if (typeof window === "undefined") return;
   localStorage.removeItem(key);
-  
+
   // Dispatch custom event for same-tab changes
-  if (key === 'aiApiKeys') {
+  if (key === "aiApiKeys") {
     dispatchApiKeysChanged();
   }
 }
@@ -47,10 +47,10 @@ export function createStorageChangeListener(
   key: string,
   callback: (newValue: string | null) => void
 ): () => void {
-  if (typeof window === 'undefined') {
+  if (typeof window === "undefined") {
     return () => {}; // No-op cleanup for SSR
   }
-  
+
   // Handle cross-tab storage changes
   const handleStorageChange = (event: StorageEvent) => {
     if (event.key === key) {
@@ -65,16 +65,16 @@ export function createStorageChangeListener(
   };
 
   // Add listeners
-  window.addEventListener('storage', handleStorageChange);
-  
-  if (key === 'aiApiKeys') {
+  window.addEventListener("storage", handleStorageChange);
+
+  if (key === "aiApiKeys") {
     window.addEventListener(AI_API_KEYS_CHANGED_EVENT, handleCustomEvent);
   }
 
   // Return cleanup function
   return () => {
-    window.removeEventListener('storage', handleStorageChange);
-    if (key === 'aiApiKeys') {
+    window.removeEventListener("storage", handleStorageChange);
+    if (key === "aiApiKeys") {
       window.removeEventListener(AI_API_KEYS_CHANGED_EVENT, handleCustomEvent);
     }
   };
@@ -87,11 +87,11 @@ export function useStorageListener(
   key: string,
   callback: (newValue: string | null) => void
 ): void {
-  if (typeof window === 'undefined') return;
-  
+  if (typeof window === "undefined") return;
+
   // This would be used in a useEffect hook in React components
   const cleanup = createStorageChangeListener(key, callback);
-  
+
   // Return cleanup function (to be called in useEffect cleanup)
   return cleanup();
 }

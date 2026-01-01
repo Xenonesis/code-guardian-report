@@ -2,14 +2,14 @@
 
 /* Enhanced Card Shadows and Depth */
 .shadow-3xl {
-  box-shadow: 
+  box-shadow:
     0 35px 60px -15px rgba(0, 0, 0, 0.3),
     0 20px 25px -5px rgba(0, 0, 0, 0.1),
     0 0 1px rgba(0, 0, 0, 0.1);
 }
 
 .dark .shadow-3xl {
-  box-shadow: 
+  box-shadow:
     0 35px 60px -15px rgba(0, 0, 0, 0.5),
     0 20px 25px -5px rgba(0, 0, 0, 0.2),
     0 0 1px rgba(255, 255, 255, 0.05);
@@ -54,7 +54,7 @@
 }
 
 .btn-professional::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
@@ -63,7 +63,9 @@
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.2);
   transform: translate(-50%, -50%);
-  transition: width 0.6s, height 0.6s;
+  transition:
+    width 0.6s,
+    height 0.6s;
 }
 
 .btn-professional:hover::before {
@@ -89,7 +91,7 @@
 
 .card-professional-hover:hover {
   transform: translateY(-8px) scale(1.02);
-  box-shadow: 
+  box-shadow:
     0 40px 70px -20px rgba(59, 130, 246, 0.25),
     0 25px 35px -10px rgba(0, 0, 0, 0.15),
     0 0 1px rgba(59, 130, 246, 0.3);
@@ -150,12 +152,12 @@
 }
 
 /* Enhanced Tab Indicators */
-.tab-professional[data-state='active'] {
+.tab-professional[data-state="active"] {
   position: relative;
 }
 
-.tab-professional[data-state='active']::after {
-  content: '';
+.tab-professional[data-state="active"]::after {
+  content: "";
   position: absolute;
   bottom: -2px;
   left: 0;
@@ -179,7 +181,7 @@
 .tooltip-professional {
   background: linear-gradient(135deg, rgb(15, 23, 42) 0%, rgb(30, 41, 59) 100%);
   border: 1px solid rgba(148, 163, 184, 0.2);
-  box-shadow: 
+  box-shadow:
     0 20px 25px -5px rgba(0, 0, 0, 0.3),
     0 10px 10px -5px rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(10px);
@@ -228,7 +230,7 @@
 
 /* Enhanced Metric Number Styling */
 .metric-number {
-  font-feature-settings: 'tnum', 'ss01';
+  font-feature-settings: "tnum", "ss01";
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.02em;
 }
@@ -281,7 +283,7 @@
 }
 
 .status-indicator::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   border-radius: 50%;
@@ -289,7 +291,8 @@
 }
 
 @keyframes status-pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
     transform: scale(1);
   }
@@ -312,7 +315,7 @@
 }
 
 .progress-professional::after {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   background: linear-gradient(
@@ -335,10 +338,14 @@
 
 /* Professional Code Block Styling */
 .code-professional {
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-family: "JetBrains Mono", "Fira Code", monospace;
   font-size: 0.875rem;
   line-height: 1.7;
-  background: linear-gradient(135deg, rgb(248, 250, 252) 0%, rgb(241, 245, 249) 100%);
+  background: linear-gradient(
+    135deg,
+    rgb(248, 250, 252) 0%,
+    rgb(241, 245, 249) 100%
+  );
   border: 1px solid rgb(226, 232, 240);
   border-radius: 0.75rem;
   padding: 1.25rem;
@@ -375,7 +382,8 @@
 
 /* Gentle Float Animation */
 @keyframes float-gentle {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px);
   }
   50% {

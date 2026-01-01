@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -67,47 +67,52 @@ echo "✅ Pre-commit checks passed"
 
 function setupGitHooks() {
   try {
-    console.log('🔧 Setting up Git hooks for automatic contributor updates...');
-    
-    const gitHooksDir = path.join(process.cwd(), '.git', 'hooks');
-    
+    console.log("🔧 Setting up Git hooks for automatic contributor updates...");
+
+    const gitHooksDir = path.join(process.cwd(), ".git", "hooks");
+
     // Check if .git directory exists
-    if (!fs.existsSync(path.join(process.cwd(), '.git'))) {
-      console.error('❌ Error: Not in a Git repository. Please run this from the project root.');
+    if (!fs.existsSync(path.join(process.cwd(), ".git"))) {
+      console.error(
+        "❌ Error: Not in a Git repository. Please run this from the project root."
+      );
       process.exit(1);
     }
-    
+
     // Create hooks directory if it doesn't exist
     if (!fs.existsSync(gitHooksDir)) {
       fs.mkdirSync(gitHooksDir, { recursive: true });
     }
-    
+
     // Write post-commit hook
-    const postCommitPath = path.join(gitHooksDir, 'post-commit');
+    const postCommitPath = path.join(gitHooksDir, "post-commit");
     fs.writeFileSync(postCommitPath, postCommitHook, { mode: 0o755 });
-    console.log('✅ Created post-commit hook');
-    
+    console.log("✅ Created post-commit hook");
+
     // Write pre-commit hook
-    const preCommitPath = path.join(gitHooksDir, 'pre-commit');
+    const preCommitPath = path.join(gitHooksDir, "pre-commit");
     fs.writeFileSync(preCommitPath, preCommitHook, { mode: 0o755 });
-    console.log('✅ Created pre-commit hook');
-    
-    console.log('');
-    console.log('🎉 Git hooks setup complete!');
-    console.log('');
-    console.log('📋 What happens now:');
-    console.log('  • After each commit to main/master, contributors will be auto-updated');
-    console.log('  • Pre-commit checks will ensure everything is in order');
-    console.log('  • Changes will be committed automatically with [skip ci] to avoid CI loops');
-    console.log('');
-    console.log('🔧 To disable hooks temporarily:');
-    console.log('  git commit --no-verify');
-    console.log('');
-    console.log('🗑️  To remove hooks:');
-    console.log('  rm .git/hooks/post-commit .git/hooks/pre-commit');
-    
+    console.log("✅ Created pre-commit hook");
+
+    console.log("");
+    console.log("🎉 Git hooks setup complete!");
+    console.log("");
+    console.log("📋 What happens now:");
+    console.log(
+      "  • After each commit to main/master, contributors will be auto-updated"
+    );
+    console.log("  • Pre-commit checks will ensure everything is in order");
+    console.log(
+      "  • Changes will be committed automatically with [skip ci] to avoid CI loops"
+    );
+    console.log("");
+    console.log("🔧 To disable hooks temporarily:");
+    console.log("  git commit --no-verify");
+    console.log("");
+    console.log("🗑️  To remove hooks:");
+    console.log("  rm .git/hooks/post-commit .git/hooks/pre-commit");
   } catch (error) {
-    console.error('❌ Error setting up Git hooks:', error.message);
+    console.error("❌ Error setting up Git hooks:", error.message);
     process.exit(1);
   }
 }

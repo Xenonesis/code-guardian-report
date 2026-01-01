@@ -1,26 +1,32 @@
 "use client";
 
-import { Suspense, lazy, useState, useCallback } from 'react';
-import { PageLayout } from '@/components/layout/PageLayout';
-import { HomeHero } from '@/components/pages/home/HomeHero';
-import { AnalysisTabs } from '@/components/pages/home/AnalysisTabs';
-import { StorageBanner } from '@/components/pages/home/StorageBanner';
-import { useAnalysisHandlers } from '@/components/pages/home/AnalysisHandlers';
-import { useEnhancedAnalysis } from '@/hooks/useEnhancedAnalysis';
-import { AnalysisResults } from '@/hooks/useAnalysis';
-import { useNavigation } from '@/lib/navigation-context';
-import { logger } from '@/utils/logger';
-import type { Theme } from '@/hooks/useDarkMode';
+import { Suspense, lazy, useState, useCallback } from "react";
+import { PageLayout } from "@/components/layout/PageLayout";
+import { HomeHero } from "@/components/pages/home/HomeHero";
+import { AnalysisTabs } from "@/components/pages/home/AnalysisTabs";
+import { StorageBanner } from "@/components/pages/home/StorageBanner";
+import { useAnalysisHandlers } from "@/components/pages/home/AnalysisHandlers";
+import { useEnhancedAnalysis } from "@/hooks/useEnhancedAnalysis";
+import { AnalysisResults } from "@/hooks/useAnalysis";
+import { useNavigation } from "@/lib/navigation-context";
+import { logger } from "@/utils/logger";
+import type { Theme } from "@/hooks/useDarkMode";
 
 // Retry wrapper for dynamic imports that may fail during dev server startup
-const retryImport = <T,>(importFn: () => Promise<T>, retries = 3, delay = 1000): Promise<T> => {
+const retryImport = <T,>(
+  importFn: () => Promise<T>,
+  retries = 3,
+  delay = 1000
+): Promise<T> => {
   return new Promise((resolve, reject) => {
     importFn()
       .then(resolve)
       .catch((error) => {
         if (retries > 0) {
           setTimeout(() => {
-            retryImport(importFn, retries - 1, delay).then(resolve).catch(reject);
+            retryImport(importFn, retries - 1, delay)
+              .then(resolve)
+              .catch(reject);
           }, delay);
         } else {
           reject(error);
@@ -30,20 +36,26 @@ const retryImport = <T,>(importFn: () => Promise<T>, retries = 3, delay = 1000):
 };
 
 // Lazy load heavy components for better performance with retry logic
-const FloatingChatBot = lazy(() => retryImport(() => import('@/components/ai/FloatingChatBot')));
-const StorageStatus = lazy(() => import('@/components/firebase/StorageStatus'));
-const AnalysisHistoryModal = lazy(() => import('@/components/analysis/AnalysisHistoryModal'));
+const FloatingChatBot = lazy(() =>
+  retryImport(() => import("@/components/ai/FloatingChatBot"))
+);
+const StorageStatus = lazy(() => import("@/components/firebase/StorageStatus"));
+const AnalysisHistoryModal = lazy(
+  () => import("@/components/analysis/AnalysisHistoryModal")
+);
 
 interface HomeSectionProps {
   theme?: Theme;
 }
 
-export const HomeSection: React.FC<HomeSectionProps> = ({ theme = 'system' }) => {
+export const HomeSection: React.FC<HomeSectionProps> = ({
+  theme = "system",
+}) => {
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [showStorageStatus, setShowStorageStatus] = useState(false);
   const [showHistoryModal, setShowHistoryModal] = useState(false);
   const { currentTab, setCurrentTab, navigateTo } = useNavigation();
-  
+
   const {
     analysisResults,
     hasStoredData,
@@ -62,24 +74,37 @@ export const HomeSection: React.FC<HomeSectionProps> = ({ theme = 'system' }) =>
   } = useEnhancedAnalysis();
 
   // Create a wrapper that ensures file reference is available
-  const [currentAnalysisFile, setCurrentAnalysisFile] = useState<File | null>(null);
-  
-  const handleFileSelectWithTracking = useCallback((file: File) => {
-    setCurrentAnalysisFile(file);
-    handleFileSelect(file);
-  }, [handleFileSelect]);
-  
-  const handleAnalysisCompleteWithFile = useCallback(async (results: AnalysisResults, file?: File) => {
-    // Use the file parameter from useFileUpload if available, otherwise use currentAnalysisFile
-    const fileToUse = file || currentAnalysisFile;
-    
-    if (fileToUse) {
-      // Pass the file directly to handleAnalysisComplete to bypass state synchronization issues
-      await handleAnalysisComplete(results, undefined, fileToUse);
-    } else {
-      await handleAnalysisComplete(results);
-    }
-  }, [currentAnalysisFile, selectedFile, handleFileSelect, handleAnalysisComplete]);
+  const [currentAnalysisFile, setCurrentAnalysisFile] = useState<File | null>(
+    null
+  );
+
+  const handleFileSelectWithTracking = useCallback(
+    (file: File) => {
+      setCurrentAnalysisFile(file);
+      handleFileSelect(file);
+    },
+    [handleFileSelect]
+  );
+
+  const handleAnalysisCompleteWithFile = useCallback(
+    async (results: AnalysisResults, file?: File) => {
+      // Use the file parameter from useFileUpload if available, otherwise use currentAnalysisFile
+      const fileToUse = file || currentAnalysisFile;
+
+      if (fileToUse) {
+        // Pass the file directly to handleAnalysisComplete to bypass state synchronization issues
+        await handleAnalysisComplete(results, undefined, fileToUse);
+      } else {
+        await handleAnalysisComplete(results);
+      }
+    },
+    [
+      currentAnalysisFile,
+      selectedFile,
+      handleFileSelect,
+      handleAnalysisComplete,
+    ]
+  );
 
   const {
     handleAnalysisCompleteWithRedirect,
@@ -87,7 +112,7 @@ export const HomeSection: React.FC<HomeSectionProps> = ({ theme = 'system' }) =>
     handleExportAnalysis,
     handleImportAnalysis,
     handleOptimizeStorage,
-    handleRestoreFromHistory
+    handleRestoreFromHistory,
   } = useAnalysisHandlers({
     hasStoredData,
     onAnalysisComplete: handleAnalysisCompleteWithFile,
@@ -100,19 +125,16 @@ export const HomeSection: React.FC<HomeSectionProps> = ({ theme = 'system' }) =>
     onRestoreFromHistory: (analysisData) => {
       restoreFromHistory(analysisData);
       setShowHistoryModal(false);
-    }
+    },
   });
 
   const handleStartAnalysis = () => {
-    navigateTo('home', 'upload');
+    navigateTo("home", "upload");
   };
 
   return (
     <section id="home" className="min-h-screen">
-      <PageLayout
-        theme={theme}
-        showNavigation={false}
-      >
+      <PageLayout theme={theme} showNavigation={false}>
         <HomeHero onStartAnalysis={handleStartAnalysis} />
 
         <StorageBanner
@@ -127,7 +149,11 @@ export const HomeSection: React.FC<HomeSectionProps> = ({ theme = 'system' }) =>
         {/* Storage Status Component */}
         {showStorageStatus && (
           <div className="max-w-6xl mx-auto mb-6">
-            <Suspense fallback={<div className="h-32 bg-gray-100 dark:bg-gray-800 rounded-lg animate-pulse"></div>}>
+            <Suspense
+              fallback={
+                <div className="h-32 bg-gray-100 dark:bg-gray-800 rounded-lg animate-pulse"></div>
+              }
+            >
               <StorageStatus
                 hasStoredData={hasStoredData}
                 storedAnalysis={storedAnalysis}
@@ -163,7 +189,9 @@ export const HomeSection: React.FC<HomeSectionProps> = ({ theme = 'system' }) =>
 
         {/* Floating Chat Bot */}
         <Suspense fallback={null}>
-          {analysisResults && <FloatingChatBot analysisResults={analysisResults} />}
+          {analysisResults && (
+            <FloatingChatBot analysisResults={analysisResults} />
+          )}
         </Suspense>
       </PageLayout>
     </section>

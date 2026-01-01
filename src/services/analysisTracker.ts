@@ -16,7 +16,7 @@ interface AnalysisData {
 // Using in-memory cache instead of localStorage
 const analysisCache: AnalysisData = {
   totalFilesAnalyzed: 0,
-  users: {}
+  users: {},
 };
 
 export function trackFileAnalysis(userId: string): void {
@@ -27,7 +27,7 @@ export function trackFileAnalysis(userId: string): void {
     analysisCache.users[userId] = {
       userId,
       filesAnalyzed: 0,
-      analysisHistory: []
+      analysisHistory: [],
     };
   }
 
@@ -37,7 +37,7 @@ export function trackFileAnalysis(userId: string): void {
   user.lastAnalysis = timestamp;
   user.analysisHistory.push({
     timestamp,
-    filesAnalyzed: user.filesAnalyzed
+    filesAnalyzed: user.filesAnalyzed,
   });
   analysisCache.totalFilesAnalyzed += 1;
 }

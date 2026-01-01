@@ -1,7 +1,19 @@
-import React from 'react';
-import { AlertTriangle } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip as RechartsTooltip } from 'recharts';
+import React from "react";
+import { AlertTriangle } from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  ResponsiveContainer,
+  Tooltip as RechartsTooltip,
+} from "recharts";
 
 interface SeverityData {
   name: string;
@@ -23,13 +35,13 @@ export const SeverityChart: React.FC<SeverityChartProps> = ({
   highIssues,
   mediumIssues,
   lowIssues,
-  className = ''
+  className = "",
 }) => {
   const severityData: SeverityData[] = [
-    { name: 'Critical', value: criticalIssues, color: '#8B5CF6' },
-    { name: 'High', value: highIssues, color: '#EF4444' },
-    { name: 'Medium', value: mediumIssues, color: '#F59E0B' },
-    { name: 'Low', value: lowIssues, color: '#3B82F6' }
+    { name: "Critical", value: criticalIssues, color: "#8B5CF6" },
+    { name: "High", value: highIssues, color: "#EF4444" },
+    { name: "Medium", value: mediumIssues, color: "#F59E0B" },
+    { name: "Low", value: lowIssues, color: "#3B82F6" },
   ];
 
   return (
@@ -68,11 +80,13 @@ export const SeverityChart: React.FC<SeverityChartProps> = ({
         <div className="grid grid-cols-2 gap-4 mt-4">
           {severityData.map((item) => (
             <div key={item.name} className="flex items-center gap-2">
-              <div 
-                className="w-3 h-3 rounded-full" 
+              <div
+                className="w-3 h-3 rounded-full"
                 style={{ backgroundColor: item.color }}
               />
-              <span className="text-sm">{item.name}: {item.value}</span>
+              <span className="text-sm">
+                {item.name}: {item.value}
+              </span>
             </div>
           ))}
         </div>

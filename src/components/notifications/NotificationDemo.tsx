@@ -3,14 +3,23 @@
  * Demonstrates all notification features
  */
 
-import React, { useState } from 'react';
-import { notify } from '@/services/notifications/NotificationManager';
-import { enhancedNotifications, batchNotifications } from '@/utils/enhancedToastNotifications';
-import { useNotifications } from '@/hooks/useNotifications';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Bell, Zap, AlertTriangle, CheckCircle, Info } from 'lucide-react';
+import React, { useState } from "react";
+import { notify } from "@/services/notifications/NotificationManager";
+import {
+  enhancedNotifications,
+  batchNotifications,
+} from "@/utils/enhancedToastNotifications";
+import { useNotifications } from "@/hooks/useNotifications";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Bell, Zap, AlertTriangle, CheckCircle, Info } from "lucide-react";
 
 const NotificationDemo: React.FC = () => {
   const { unreadCount, getStats } = useNotifications();
@@ -19,65 +28,65 @@ const NotificationDemo: React.FC = () => {
   const stats = getStats();
 
   const testBasicNotifications = () => {
-    notify.success('Success Notification');
-    notify.error('Error Notification');
-    notify.warning('Warning Notification');
-    notify.info('Info Notification');
+    notify.success("Success Notification");
+    notify.error("Error Notification");
+    notify.warning("Warning Notification");
+    notify.info("Info Notification");
   };
 
   const testPriorities = () => {
-    notify.info('Low Priority', { priority: 'low' });
-    notify.success('Normal Priority', { priority: 'normal' });
-    notify.warning('High Priority', { priority: 'high' });
-    notify.error('Urgent Priority', { priority: 'urgent' });
+    notify.info("Low Priority", { priority: "low" });
+    notify.success("Normal Priority", { priority: "normal" });
+    notify.warning("High Priority", { priority: "high" });
+    notify.error("Urgent Priority", { priority: "urgent" });
   };
 
   const testCategories = () => {
-    notify.info('System notification', { category: 'system' });
-    notify.success('Analysis notification', { category: 'analysis' });
-    notify.warning('Security notification', { category: 'security' });
-    notify.error('Auth notification', { category: 'auth' });
+    notify.info("System notification", { category: "system" });
+    notify.success("Analysis notification", { category: "analysis" });
+    notify.warning("Security notification", { category: "security" });
+    notify.error("Auth notification", { category: "auth" });
   };
 
   const testBatching = () => {
     for (let i = 1; i <= 5; i++) {
       setTimeout(() => {
         notify.info(`Batch notification ${i}`, {
-          message: 'Testing batching system',
-          priority: 'normal',
+          message: "Testing batching system",
+          priority: "normal",
         });
       }, i * 100);
     }
   };
 
   const testWithActions = () => {
-    notify.warning('Action Required', {
-      message: 'This notification has an action button',
-      priority: 'high',
+    notify.warning("Action Required", {
+      message: "This notification has an action button",
+      priority: "high",
       action: {
-        label: 'View Details',
-        onClick: () => alert('Action clicked!'),
+        label: "View Details",
+        onClick: () => alert("Action clicked!"),
       },
     });
   };
 
   const testEnhancedNotifications = () => {
-    enhancedNotifications.analysisCompleted(5, 'example.js');
-    enhancedNotifications.criticalIssuesFound(3, 'auth.ts');
-    enhancedNotifications.fileUploadCompleted('data.csv');
+    enhancedNotifications.analysisCompleted(5, "example.js");
+    enhancedNotifications.criticalIssuesFound(3, "auth.ts");
+    enhancedNotifications.fileUploadCompleted("data.csv");
   };
 
   const testBatchAnalysis = () => {
     batchNotifications.analysisResults([
-      { filename: 'app.js', issueCount: 5 },
-      { filename: 'api.ts', issueCount: 12 },
-      { filename: 'utils.js', issueCount: 3 },
+      { filename: "app.js", issueCount: 5 },
+      { filename: "api.ts", issueCount: 12 },
+      { filename: "utils.js", issueCount: 3 },
     ]);
   };
 
   const testSecurityNotifications = () => {
-    enhancedNotifications.criticalIssuesFound(5, 'payment.js');
-    enhancedNotifications.vulnerabilitiesDetected(8, 'database.sql');
+    enhancedNotifications.criticalIssuesFound(5, "payment.js");
+    enhancedNotifications.vulnerabilitiesDetected(8, "database.sql");
   };
 
   const testWorkflow = () => {
@@ -86,7 +95,7 @@ const NotificationDemo: React.FC = () => {
 
     // Simulate analysis workflow
     enhancedNotifications.analysisStarted(`demo-file-${count}.js`);
-    
+
     setTimeout(() => {
       enhancedNotifications.analysisCompleted(7, `demo-file-${count}.js`);
     }, 2000);
@@ -106,7 +115,8 @@ const NotificationDemo: React.FC = () => {
           Notification System Demo
         </h1>
         <p className="text-lg text-muted-foreground">
-          Test and explore all notification features including priorities, categories, batching, and more.
+          Test and explore all notification features including priorities,
+          categories, batching, and more.
         </p>
       </div>
 
@@ -125,7 +135,9 @@ const NotificationDemo: React.FC = () => {
         <Card>
           <CardContent className="pt-6">
             <div className="text-center">
-              <Badge variant="destructive" className="mb-2">{stats.unread}</Badge>
+              <Badge variant="destructive" className="mb-2">
+                {stats.unread}
+              </Badge>
               <div className="text-3xl font-bold">{stats.unread}</div>
               <div className="text-sm text-muted-foreground">Unread</div>
             </div>
@@ -162,25 +174,43 @@ const NotificationDemo: React.FC = () => {
               <Info className="h-5 w-5" />
               Basic Notifications
             </CardTitle>
-            <CardDescription>
-              Test all notification types
-            </CardDescription>
+            <CardDescription>Test all notification types</CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
-            <Button onClick={testBasicNotifications} className="w-full" variant="outline">
+            <Button
+              onClick={testBasicNotifications}
+              className="w-full"
+              variant="outline"
+            >
               Test All Types
             </Button>
             <div className="grid grid-cols-2 gap-2">
-              <Button onClick={() => notify.success('Success!')} variant="outline" size="sm">
+              <Button
+                onClick={() => notify.success("Success!")}
+                variant="outline"
+                size="sm"
+              >
                 Success
               </Button>
-              <Button onClick={() => notify.error('Error!')} variant="outline" size="sm">
+              <Button
+                onClick={() => notify.error("Error!")}
+                variant="outline"
+                size="sm"
+              >
                 Error
               </Button>
-              <Button onClick={() => notify.warning('Warning!')} variant="outline" size="sm">
+              <Button
+                onClick={() => notify.warning("Warning!")}
+                variant="outline"
+                size="sm"
+              >
                 Warning
               </Button>
-              <Button onClick={() => notify.info('Info!')} variant="outline" size="sm">
+              <Button
+                onClick={() => notify.info("Info!")}
+                variant="outline"
+                size="sm"
+              >
                 Info
               </Button>
             </div>
@@ -194,38 +224,40 @@ const NotificationDemo: React.FC = () => {
               <Zap className="h-5 w-5" />
               Priority Levels
             </CardTitle>
-            <CardDescription>
-              Test different priority levels
-            </CardDescription>
+            <CardDescription>Test different priority levels</CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
-            <Button onClick={testPriorities} className="w-full" variant="outline">
+            <Button
+              onClick={testPriorities}
+              className="w-full"
+              variant="outline"
+            >
               Test All Priorities
             </Button>
             <div className="grid grid-cols-2 gap-2">
               <Button
-                onClick={() => notify.info('Low', { priority: 'low' })}
+                onClick={() => notify.info("Low", { priority: "low" })}
                 variant="outline"
                 size="sm"
               >
                 Low
               </Button>
               <Button
-                onClick={() => notify.info('Normal', { priority: 'normal' })}
+                onClick={() => notify.info("Normal", { priority: "normal" })}
                 variant="outline"
                 size="sm"
               >
                 Normal
               </Button>
               <Button
-                onClick={() => notify.warning('High', { priority: 'high' })}
+                onClick={() => notify.warning("High", { priority: "high" })}
                 variant="outline"
                 size="sm"
               >
                 High
               </Button>
               <Button
-                onClick={() => notify.error('Urgent', { priority: 'urgent' })}
+                onClick={() => notify.error("Urgent", { priority: "urgent" })}
                 variant="outline"
                 size="sm"
               >
@@ -239,27 +271,38 @@ const NotificationDemo: React.FC = () => {
         <Card>
           <CardHeader>
             <CardTitle>Categories</CardTitle>
-            <CardDescription>
-              Test notification categories
-            </CardDescription>
+            <CardDescription>Test notification categories</CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
-            <Button onClick={testCategories} className="w-full" variant="outline">
+            <Button
+              onClick={testCategories}
+              className="w-full"
+              variant="outline"
+            >
               Test Categories
             </Button>
             <div className="flex flex-wrap gap-2">
-              {['system', 'analysis', 'security', 'auth', 'storage', 'network', 'export', 'general'].map(
-                (cat) => (
-                  <Badge
-                    key={cat}
-                    variant="secondary"
-                    className="cursor-pointer"
-                    onClick={() => notify.info(`${cat} notification`, { category: cat as any })}
-                  >
-                    {cat}
-                  </Badge>
-                )
-              )}
+              {[
+                "system",
+                "analysis",
+                "security",
+                "auth",
+                "storage",
+                "network",
+                "export",
+                "general",
+              ].map((cat) => (
+                <Badge
+                  key={cat}
+                  variant="secondary"
+                  className="cursor-pointer"
+                  onClick={() =>
+                    notify.info(`${cat} notification`, { category: cat as any })
+                  }
+                >
+                  {cat}
+                </Badge>
+              ))}
             </div>
           </CardContent>
         </Card>
@@ -277,7 +320,8 @@ const NotificationDemo: React.FC = () => {
               Send 5 Notifications (Batched)
             </Button>
             <p className="text-xs text-muted-foreground">
-              Sends 5 notifications quickly to demonstrate batching. Configure batching in preferences.
+              Sends 5 notifications quickly to demonstrate batching. Configure
+              batching in preferences.
             </p>
           </CardContent>
         </Card>
@@ -286,18 +330,18 @@ const NotificationDemo: React.FC = () => {
         <Card>
           <CardHeader>
             <CardTitle>With Actions</CardTitle>
-            <CardDescription>
-              Notifications with action buttons
-            </CardDescription>
+            <CardDescription>Notifications with action buttons</CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
-            <Button onClick={testWithActions} className="w-full" variant="outline">
+            <Button
+              onClick={testWithActions}
+              className="w-full"
+              variant="outline"
+            >
               Test Action Button
             </Button>
             <Button
-              onClick={() =>
-                enhancedNotifications.sessionExpired()
-              }
+              onClick={() => enhancedNotifications.sessionExpired()}
               className="w-full"
               variant="outline"
             >
@@ -315,13 +359,25 @@ const NotificationDemo: React.FC = () => {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
-            <Button onClick={testEnhancedNotifications} className="w-full" variant="outline">
+            <Button
+              onClick={testEnhancedNotifications}
+              className="w-full"
+              variant="outline"
+            >
               Test Enhanced
             </Button>
-            <Button onClick={testBatchAnalysis} className="w-full" variant="outline">
+            <Button
+              onClick={testBatchAnalysis}
+              className="w-full"
+              variant="outline"
+            >
               Batch Analysis
             </Button>
-            <Button onClick={testSecurityNotifications} className="w-full" variant="outline">
+            <Button
+              onClick={testSecurityNotifications}
+              className="w-full"
+              variant="outline"
+            >
               Security Alerts
             </Button>
           </CardContent>
@@ -340,8 +396,9 @@ const NotificationDemo: React.FC = () => {
               Start Analysis Workflow (Demo #{demoCount + 1})
             </Button>
             <p className="text-sm text-muted-foreground mt-4">
-              This simulates a real analysis workflow: starts analysis, completes with results, and sometimes
-              shows critical issues. Watch the notification center!
+              This simulates a real analysis workflow: starts analysis,
+              completes with results, and sometimes shows critical issues. Watch
+              the notification center!
             </p>
           </CardContent>
         </Card>
@@ -356,10 +413,11 @@ const NotificationDemo: React.FC = () => {
           <div>
             <h4 className="font-semibold mb-2">1. Open Notification Center</h4>
             <p className="text-sm text-muted-foreground">
-              Click the bell icon in the top navigation bar to view all notifications.
+              Click the bell icon in the top navigation bar to view all
+              notifications.
             </p>
           </div>
-          
+
           <div>
             <h4 className="font-semibold mb-2">2. Configure Preferences</h4>
             <p className="text-sm text-muted-foreground">
@@ -373,14 +431,15 @@ const NotificationDemo: React.FC = () => {
               <li>Enable sound notifications</li>
             </ul>
           </div>
-          
+
           <div>
             <h4 className="font-semibold mb-2">3. Test Features</h4>
             <p className="text-sm text-muted-foreground">
-              Use the buttons above to test different notification types and features.
+              Use the buttons above to test different notification types and
+              features.
             </p>
           </div>
-          
+
           <div>
             <h4 className="font-semibold mb-2">4. Manage Notifications</h4>
             <p className="text-sm text-muted-foreground">

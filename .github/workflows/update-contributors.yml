@@ -2,13 +2,13 @@ name: Update Contributors
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [main, master]
   pull_request:
-    types: [ closed ]
-    branches: [ main, master ]
+    types: [closed]
+    branches: [main, master]
   schedule:
     # Run daily at 2 AM UTC to catch any missed updates
-    - cron: '0 2 * * *'
+    - cron: "0 2 * * *"
   workflow_dispatch:
     # Allow manual triggering
 
@@ -16,32 +16,32 @@ jobs:
   update-contributors:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true) || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
-    
+
     permissions:
       contents: write
       pull-requests: read
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          cache: 'npm'
-      
+          node-version: "18"
+          cache: "npm"
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Update contributors
         run: npm run update-contributors
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      
+
       - name: Check for changes
         id: verify-changed-files
         run: |
@@ -50,7 +50,7 @@ jobs:
           else
             echo "changed=false" >> $GITHUB_OUTPUT
           fi
-      
+
       - name: Commit and push changes
         if: steps.verify-changed-files.outputs.changed == 'true'
         run: |
@@ -58,21 +58,21 @@ jobs:
           git config --local user.name "GitHub Action"
           git add README.md
           git commit -m "🤖 Auto-update contributors in README.md
-          
+
           - Updated contributor list with latest GitHub data
           - Refreshed repository statistics
           - Updated contribution counts
-          
+
           This is an automated update triggered by recent changes to the repository."
           git push
-      
+
       - name: Create summary
         if: steps.verify-changed-files.outputs.changed == 'true'
         run: |
           echo "✅ Contributors section updated successfully!" >> $GITHUB_STEP_SUMMARY
           echo "📊 README.md has been updated with the latest contributor information." >> $GITHUB_STEP_SUMMARY
           echo "🔄 This update was triggered by: ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
-      
+
       - name: No changes summary
         if: steps.verify-changed-files.outputs.changed == 'false'
         run: |

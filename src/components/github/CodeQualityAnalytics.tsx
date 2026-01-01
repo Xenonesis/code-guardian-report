@@ -1,28 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import { Card } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { 
-  Code2, 
-  TrendingUp, 
-  AlertCircle, 
+import React, { useEffect, useState } from "react";
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import {
+  Code2,
+  TrendingUp,
+  AlertCircle,
   CheckCircle2,
   FileCode,
   GitBranch,
   Layers,
-  Activity
-} from 'lucide-react';
-import { GitHubAnalysisStorageService } from '@/services/storage/GitHubAnalysisStorageService';
+  Activity,
+} from "lucide-react";
+import { GitHubAnalysisStorageService } from "@/services/storage/GitHubAnalysisStorageService";
 
-import { logger } from '@/utils/logger';
+import { logger } from "@/utils/logger";
 interface CodeQualityMetrics {
   complexity: {
     average: number;
-    rating: 'excellent' | 'good' | 'moderate' | 'poor';
-    trend: 'improving' | 'stable' | 'declining';
+    rating: "excellent" | "good" | "moderate" | "poor";
+    trend: "improving" | "stable" | "declining";
   };
   maintainability: {
     index: number;
-    rating: 'high' | 'medium' | 'low';
+    rating: "high" | "medium" | "low";
     factors: {
       codeSmells: number;
       technicalDebt: string;
@@ -33,15 +33,15 @@ interface CodeQualityMetrics {
     percentage: number;
     linesTotal: number;
     linesCovered: number;
-    rating: 'excellent' | 'good' | 'fair' | 'poor';
+    rating: "excellent" | "good" | "fair" | "poor";
   };
   documentation: {
     coverage: number;
-    rating: 'excellent' | 'good' | 'fair' | 'poor';
+    rating: "excellent" | "good" | "fair" | "poor";
   };
   codeChurn: {
     recent: number;
-    trend: 'high' | 'medium' | 'low';
+    trend: "high" | "medium" | "low";
   };
 }
 
@@ -55,10 +55,13 @@ interface CodeQualityAnalyticsProps {
   userId: string;
 }
 
-export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({ userId }) => {
+export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({
+  userId,
+}) => {
   const [qualityData, setQualityData] = useState<RepositoryQuality[]>([]);
   const [loading, setLoading] = useState(true);
-  const [aggregateMetrics, setAggregateMetrics] = useState<CodeQualityMetrics | null>(null);
+  const [aggregateMetrics, setAggregateMetrics] =
+    useState<CodeQualityMetrics | null>(null);
 
   useEffect(() => {
     loadCodeQualityData();
@@ -69,31 +72,40 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({ user
     try {
       const storageService = new GitHubAnalysisStorageService();
       const repos = await storageService.getUserRepositories(userId);
-      
+
       // Calculate real quality metrics based on security analysis data
-      const qualityAnalysis: RepositoryQuality[] = repos.map(repo => {
+      const qualityAnalysis: RepositoryQuality[] = repos.map((repo) => {
         // Calculate complexity based on security score and issues
-        const complexityScore = calculateComplexity(repo.securityScore, repo.issuesFound);
-        
+        const complexityScore = calculateComplexity(
+          repo.securityScore,
+          repo.issuesFound
+        );
+
         // Calculate maintainability based on critical issues and overall score
-        const maintainabilityIndex = calculateMaintainability(repo.securityScore, repo.criticalIssues);
-        
+        const maintainabilityIndex = calculateMaintainability(
+          repo.securityScore,
+          repo.criticalIssues
+        );
+
         // Estimate test coverage based on security score
-        const testCoverage = estimateTestCoverage(repo.securityScore, repo.issuesFound);
-        
+        const testCoverage = estimateTestCoverage(
+          repo.securityScore,
+          repo.issuesFound
+        );
+
         // Calculate documentation coverage
         const docCoverage = estimateDocumentation(repo.securityScore);
-        
+
         // Calculate code churn (activity level)
         const churn = calculateChurn(repo.lastAnalyzed);
-        
+
         return {
           repositoryName: repo.name,
           metrics: {
             complexity: {
               average: complexityScore.average,
               rating: complexityScore.rating,
-              trend: complexityScore.trend
+              trend: complexityScore.trend,
             },
             maintainability: {
               index: maintainabilityIndex.value,
@@ -101,37 +113,37 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({ user
               factors: {
                 codeSmells: Math.max(0, repo.issuesFound - repo.criticalIssues),
                 technicalDebt: formatTechnicalDebt(repo.issuesFound),
-                duplicateCode: estimateDuplication(repo.issuesFound)
-              }
+                duplicateCode: estimateDuplication(repo.issuesFound),
+              },
             },
             testCoverage: {
               percentage: testCoverage.percentage,
               linesTotal: testCoverage.total,
               linesCovered: testCoverage.covered,
-              rating: testCoverage.rating
+              rating: testCoverage.rating,
             },
             documentation: {
               coverage: docCoverage.percentage,
-              rating: docCoverage.rating
+              rating: docCoverage.rating,
             },
             codeChurn: {
               recent: churn.value,
-              trend: churn.trend
-            }
+              trend: churn.trend,
+            },
           },
-          lastUpdated: repo.lastAnalyzed
+          lastUpdated: repo.lastAnalyzed,
         };
       });
-      
+
       setQualityData(qualityAnalysis);
-      
+
       // Calculate aggregate metrics
       if (qualityAnalysis.length > 0) {
         const aggregate = calculateAggregateMetrics(qualityAnalysis);
         setAggregateMetrics(aggregate);
       }
     } catch (error) {
-      logger.error('Error loading code quality data:', error);
+      logger.error("Error loading code quality data:", error);
     } finally {
       setLoading(false);
     }
@@ -140,70 +152,89 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({ user
   // Real calculation functions based on actual data
   const calculateComplexity = (securityScore: number, issues: number) => {
     // Higher security score and fewer issues indicate lower complexity
-    const complexityValue = Math.max(1, Math.min(10, 10 - securityScore + (issues / 10)));
-    
+    const complexityValue = Math.max(
+      1,
+      Math.min(10, 10 - securityScore + issues / 10)
+    );
+
     return {
       average: complexityValue,
-      rating: (
-        complexityValue <= 3 ? 'excellent' :
-        complexityValue <= 5 ? 'good' :
-        complexityValue <= 7 ? 'moderate' : 'poor'
-      ) as 'excellent' | 'good' | 'moderate' | 'poor',
-      trend: (
-        securityScore >= 8 ? 'improving' :
-        securityScore >= 6 ? 'stable' : 'declining'
-      ) as 'improving' | 'stable' | 'declining'
+      rating: (complexityValue <= 3
+        ? "excellent"
+        : complexityValue <= 5
+          ? "good"
+          : complexityValue <= 7
+            ? "moderate"
+            : "poor") as "excellent" | "good" | "moderate" | "poor",
+      trend: (securityScore >= 8
+        ? "improving"
+        : securityScore >= 6
+          ? "stable"
+          : "declining") as "improving" | "stable" | "declining",
     };
   };
 
-  const calculateMaintainability = (securityScore: number, criticalIssues: number) => {
+  const calculateMaintainability = (
+    securityScore: number,
+    criticalIssues: number
+  ) => {
     // Calculate maintainability index (0-100)
     const baseValue = securityScore * 10;
     const penaltyPerCritical = 5;
-    const index = Math.max(0, Math.min(100, baseValue - (criticalIssues * penaltyPerCritical)));
-    
+    const index = Math.max(
+      0,
+      Math.min(100, baseValue - criticalIssues * penaltyPerCritical)
+    );
+
     return {
       value: Math.round(index),
-      rating: (
-        index >= 75 ? 'high' :
-        index >= 50 ? 'medium' : 'low'
-      ) as 'high' | 'medium' | 'low'
+      rating: (index >= 75 ? "high" : index >= 50 ? "medium" : "low") as
+        | "high"
+        | "medium"
+        | "low",
     };
   };
 
   const estimateTestCoverage = (securityScore: number, issues: number) => {
     // Estimate test coverage based on security score
     const basePercentage = securityScore * 8; // 0-80%
-    const bonus = Math.max(0, 20 - (issues * 2)); // Up to 20% bonus
+    const bonus = Math.max(0, 20 - issues * 2); // Up to 20% bonus
     const percentage = Math.min(100, Math.round(basePercentage + bonus));
-    
+
     // Estimate lines (realistic numbers)
     const estimatedLines = 1000 + Math.floor(Math.random() * 4000);
     const covered = Math.floor(estimatedLines * (percentage / 100));
-    
+
     return {
       percentage,
       total: estimatedLines,
       covered,
-      rating: (
-        percentage >= 80 ? 'excellent' :
-        percentage >= 60 ? 'good' :
-        percentage >= 40 ? 'fair' : 'poor'
-      ) as 'excellent' | 'good' | 'fair' | 'poor'
+      rating: (percentage >= 80
+        ? "excellent"
+        : percentage >= 60
+          ? "good"
+          : percentage >= 40
+            ? "fair"
+            : "poor") as "excellent" | "good" | "fair" | "poor",
     };
   };
 
   const estimateDocumentation = (securityScore: number) => {
     // Better security typically correlates with better documentation
-    const percentage = Math.min(100, Math.round(securityScore * 9 + Math.random() * 10));
-    
+    const percentage = Math.min(
+      100,
+      Math.round(securityScore * 9 + Math.random() * 10)
+    );
+
     return {
       percentage,
-      rating: (
-        percentage >= 80 ? 'excellent' :
-        percentage >= 60 ? 'good' :
-        percentage >= 40 ? 'fair' : 'poor'
-      ) as 'excellent' | 'good' | 'fair' | 'poor'
+      rating: (percentage >= 80
+        ? "excellent"
+        : percentage >= 60
+          ? "good"
+          : percentage >= 40
+            ? "fair"
+            : "poor") as "excellent" | "good" | "fair" | "poor",
     };
   };
 
@@ -211,7 +242,7 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({ user
     const hoursPerIssue = 2;
     const totalHours = issues * hoursPerIssue;
     const days = Math.floor(totalHours / 8);
-    
+
     if (days === 0) return `${totalHours}h`;
     return `${days}d ${totalHours % 8}h`;
   };
@@ -222,83 +253,122 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({ user
   };
 
   const calculateChurn = (lastAnalyzed: Date) => {
-    const daysSince = Math.floor((Date.now() - lastAnalyzed.getTime()) / (1000 * 60 * 60 * 24));
-    const churnValue = Math.max(0, 100 - (daysSince * 5));
-    
+    const daysSince = Math.floor(
+      (Date.now() - lastAnalyzed.getTime()) / (1000 * 60 * 60 * 24)
+    );
+    const churnValue = Math.max(0, 100 - daysSince * 5);
+
     return {
       value: churnValue,
-      trend: (
-        churnValue >= 60 ? 'high' :
-        churnValue >= 30 ? 'medium' : 'low'
-      ) as 'high' | 'medium' | 'low'
+      trend: (churnValue >= 60
+        ? "high"
+        : churnValue >= 30
+          ? "medium"
+          : "low") as "high" | "medium" | "low",
     };
   };
 
-  const calculateAggregateMetrics = (data: RepositoryQuality[]): CodeQualityMetrics => {
-    const avgComplexity = data.reduce((sum, d) => sum + d.metrics.complexity.average, 0) / data.length;
-    const avgMaintainability = data.reduce((sum, d) => sum + d.metrics.maintainability.index, 0) / data.length;
-    const avgTestCoverage = data.reduce((sum, d) => sum + d.metrics.testCoverage.percentage, 0) / data.length;
-    const avgDocCoverage = data.reduce((sum, d) => sum + d.metrics.documentation.coverage, 0) / data.length;
-    const totalCodeSmells = data.reduce((sum, d) => sum + d.metrics.maintainability.factors.codeSmells, 0);
-    const totalDuplication = data.reduce((sum, d) => sum + d.metrics.maintainability.factors.duplicateCode, 0) / data.length;
-    
+  const calculateAggregateMetrics = (
+    data: RepositoryQuality[]
+  ): CodeQualityMetrics => {
+    const avgComplexity =
+      data.reduce((sum, d) => sum + d.metrics.complexity.average, 0) /
+      data.length;
+    const avgMaintainability =
+      data.reduce((sum, d) => sum + d.metrics.maintainability.index, 0) /
+      data.length;
+    const avgTestCoverage =
+      data.reduce((sum, d) => sum + d.metrics.testCoverage.percentage, 0) /
+      data.length;
+    const avgDocCoverage =
+      data.reduce((sum, d) => sum + d.metrics.documentation.coverage, 0) /
+      data.length;
+    const totalCodeSmells = data.reduce(
+      (sum, d) => sum + d.metrics.maintainability.factors.codeSmells,
+      0
+    );
+    const totalDuplication =
+      data.reduce(
+        (sum, d) => sum + d.metrics.maintainability.factors.duplicateCode,
+        0
+      ) / data.length;
+
     return {
       complexity: {
         average: Math.round(avgComplexity * 10) / 10,
-        rating: (
-          avgComplexity <= 3 ? 'excellent' :
-          avgComplexity <= 5 ? 'good' :
-          avgComplexity <= 7 ? 'moderate' : 'poor'
-        ) as any,
-        trend: 'stable'
+        rating: (avgComplexity <= 3
+          ? "excellent"
+          : avgComplexity <= 5
+            ? "good"
+            : avgComplexity <= 7
+              ? "moderate"
+              : "poor") as any,
+        trend: "stable",
       },
       maintainability: {
         index: Math.round(avgMaintainability),
-        rating: (avgMaintainability >= 75 ? 'high' : avgMaintainability >= 50 ? 'medium' : 'low') as any,
+        rating: (avgMaintainability >= 75
+          ? "high"
+          : avgMaintainability >= 50
+            ? "medium"
+            : "low") as any,
         factors: {
           codeSmells: totalCodeSmells,
           technicalDebt: formatTechnicalDebt(totalCodeSmells),
-          duplicateCode: Math.round(totalDuplication)
-        }
+          duplicateCode: Math.round(totalDuplication),
+        },
       },
       testCoverage: {
         percentage: Math.round(avgTestCoverage),
-        linesTotal: data.reduce((sum, d) => sum + d.metrics.testCoverage.linesTotal, 0),
-        linesCovered: data.reduce((sum, d) => sum + d.metrics.testCoverage.linesCovered, 0),
-        rating: (
-          avgTestCoverage >= 80 ? 'excellent' :
-          avgTestCoverage >= 60 ? 'good' :
-          avgTestCoverage >= 40 ? 'fair' : 'poor'
-        ) as any
+        linesTotal: data.reduce(
+          (sum, d) => sum + d.metrics.testCoverage.linesTotal,
+          0
+        ),
+        linesCovered: data.reduce(
+          (sum, d) => sum + d.metrics.testCoverage.linesCovered,
+          0
+        ),
+        rating: (avgTestCoverage >= 80
+          ? "excellent"
+          : avgTestCoverage >= 60
+            ? "good"
+            : avgTestCoverage >= 40
+              ? "fair"
+              : "poor") as any,
       },
       documentation: {
         coverage: Math.round(avgDocCoverage),
-        rating: (
-          avgDocCoverage >= 80 ? 'excellent' :
-          avgDocCoverage >= 60 ? 'good' :
-          avgDocCoverage >= 40 ? 'fair' : 'poor'
-        ) as any
+        rating: (avgDocCoverage >= 80
+          ? "excellent"
+          : avgDocCoverage >= 60
+            ? "good"
+            : avgDocCoverage >= 40
+              ? "fair"
+              : "poor") as any,
       },
       codeChurn: {
-        recent: Math.round(data.reduce((sum, d) => sum + d.metrics.codeChurn.recent, 0) / data.length),
-        trend: 'medium'
-      }
+        recent: Math.round(
+          data.reduce((sum, d) => sum + d.metrics.codeChurn.recent, 0) /
+            data.length
+        ),
+        trend: "medium",
+      },
     };
   };
 
   const getRatingColor = (rating: string) => {
     switch (rating) {
-      case 'excellent':
-      case 'high':
-        return 'bg-green-500 text-white';
-      case 'good':
-      case 'medium':
-        return 'bg-blue-500 text-white';
-      case 'fair':
-      case 'moderate':
-        return 'bg-yellow-500 text-white';
+      case "excellent":
+      case "high":
+        return "bg-green-500 text-white";
+      case "good":
+      case "medium":
+        return "bg-blue-500 text-white";
+      case "fair":
+      case "moderate":
+        return "bg-yellow-500 text-white";
       default:
-        return 'bg-red-500 text-white';
+        return "bg-red-500 text-white";
     }
   };
 
@@ -344,7 +414,9 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({ user
             <div className="p-3 bg-purple-100 dark:bg-purple-900/20 rounded-lg">
               <Layers className="w-6 h-6 text-purple-600 dark:text-purple-400" />
             </div>
-            <Badge className={getRatingColor(aggregateMetrics.complexity.rating)}>
+            <Badge
+              className={getRatingColor(aggregateMetrics.complexity.rating)}
+            >
               {aggregateMetrics.complexity.rating}
             </Badge>
           </div>
@@ -362,7 +434,11 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({ user
             <div className="p-3 bg-blue-100 dark:bg-blue-900/20 rounded-lg">
               <Activity className="w-6 h-6 text-blue-600 dark:text-blue-400" />
             </div>
-            <Badge className={getRatingColor(aggregateMetrics.maintainability.rating)}>
+            <Badge
+              className={getRatingColor(
+                aggregateMetrics.maintainability.rating
+              )}
+            >
               {aggregateMetrics.maintainability.rating}
             </Badge>
           </div>
@@ -380,7 +456,9 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({ user
             <div className="p-3 bg-green-100 dark:bg-green-900/20 rounded-lg">
               <CheckCircle2 className="w-6 h-6 text-green-600 dark:text-green-400" />
             </div>
-            <Badge className={getRatingColor(aggregateMetrics.testCoverage.rating)}>
+            <Badge
+              className={getRatingColor(aggregateMetrics.testCoverage.rating)}
+            >
               {aggregateMetrics.testCoverage.rating}
             </Badge>
           </div>
@@ -398,7 +476,9 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({ user
             <div className="p-3 bg-orange-100 dark:bg-orange-900/20 rounded-lg">
               <FileCode className="w-6 h-6 text-orange-600 dark:text-orange-400" />
             </div>
-            <Badge className={getRatingColor(aggregateMetrics.documentation.rating)}>
+            <Badge
+              className={getRatingColor(aggregateMetrics.documentation.rating)}
+            >
               {aggregateMetrics.documentation.rating}
             </Badge>
           </div>
@@ -420,19 +500,25 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({ user
           </h3>
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <span className="text-slate-600 dark:text-slate-400">Code Smells</span>
+              <span className="text-slate-600 dark:text-slate-400">
+                Code Smells
+              </span>
               <span className="font-semibold text-slate-900 dark:text-white">
                 {aggregateMetrics.maintainability.factors.codeSmells}
               </span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-slate-600 dark:text-slate-400">Technical Debt</span>
+              <span className="text-slate-600 dark:text-slate-400">
+                Technical Debt
+              </span>
               <span className="font-semibold text-slate-900 dark:text-white">
                 {aggregateMetrics.maintainability.factors.technicalDebt}
               </span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-slate-600 dark:text-slate-400">Code Duplication</span>
+              <span className="text-slate-600 dark:text-slate-400">
+                Code Duplication
+              </span>
               <span className="font-semibold text-slate-900 dark:text-white">
                 {aggregateMetrics.maintainability.factors.duplicateCode}%
               </span>
@@ -447,19 +533,25 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({ user
           </h3>
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <span className="text-slate-600 dark:text-slate-400">Total Lines</span>
+              <span className="text-slate-600 dark:text-slate-400">
+                Total Lines
+              </span>
               <span className="font-semibold text-slate-900 dark:text-white">
                 {aggregateMetrics.testCoverage.linesTotal.toLocaleString()}
               </span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-slate-600 dark:text-slate-400">Lines Covered</span>
+              <span className="text-slate-600 dark:text-slate-400">
+                Lines Covered
+              </span>
               <span className="font-semibold text-slate-900 dark:text-white">
                 {aggregateMetrics.testCoverage.linesCovered.toLocaleString()}
               </span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-slate-600 dark:text-slate-400">Coverage Ratio</span>
+              <span className="text-slate-600 dark:text-slate-400">
+                Coverage Ratio
+              </span>
               <span className="font-semibold text-slate-900 dark:text-white">
                 {aggregateMetrics.testCoverage.percentage}%
               </span>
@@ -475,7 +567,10 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({ user
         </h3>
         <div className="space-y-4">
           {qualityData.map((repo, idx) => (
-            <div key={idx} className="border-b border-slate-200 dark:border-slate-700 last:border-0 pb-4 last:pb-0">
+            <div
+              key={idx}
+              className="border-b border-slate-200 dark:border-slate-700 last:border-0 pb-4 last:pb-0"
+            >
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
                   <GitBranch className="w-4 h-4 text-slate-600 dark:text-slate-400" />
@@ -487,29 +582,53 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({ user
                   Updated {new Date(repo.lastUpdated).toLocaleDateString()}
                 </span>
               </div>
-              
+
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 <div>
-                  <div className="text-xs text-slate-600 dark:text-slate-400 mb-1">Complexity</div>
-                  <Badge className={getRatingColor(repo.metrics.complexity.rating)} variant="outline">
+                  <div className="text-xs text-slate-600 dark:text-slate-400 mb-1">
+                    Complexity
+                  </div>
+                  <Badge
+                    className={getRatingColor(repo.metrics.complexity.rating)}
+                    variant="outline"
+                  >
                     {repo.metrics.complexity.average.toFixed(1)}
                   </Badge>
                 </div>
                 <div>
-                  <div className="text-xs text-slate-600 dark:text-slate-400 mb-1">Maintainability</div>
-                  <Badge className={getRatingColor(repo.metrics.maintainability.rating)} variant="outline">
+                  <div className="text-xs text-slate-600 dark:text-slate-400 mb-1">
+                    Maintainability
+                  </div>
+                  <Badge
+                    className={getRatingColor(
+                      repo.metrics.maintainability.rating
+                    )}
+                    variant="outline"
+                  >
                     {repo.metrics.maintainability.index}
                   </Badge>
                 </div>
                 <div>
-                  <div className="text-xs text-slate-600 dark:text-slate-400 mb-1">Test Coverage</div>
-                  <Badge className={getRatingColor(repo.metrics.testCoverage.rating)} variant="outline">
+                  <div className="text-xs text-slate-600 dark:text-slate-400 mb-1">
+                    Test Coverage
+                  </div>
+                  <Badge
+                    className={getRatingColor(repo.metrics.testCoverage.rating)}
+                    variant="outline"
+                  >
                     {repo.metrics.testCoverage.percentage}%
                   </Badge>
                 </div>
                 <div>
-                  <div className="text-xs text-slate-600 dark:text-slate-400 mb-1">Documentation</div>
-                  <Badge className={getRatingColor(repo.metrics.documentation.rating)} variant="outline">
+                  <div className="text-xs text-slate-600 dark:text-slate-400 mb-1">
+                    Documentation
+                  </div>
+                  <Badge
+                    className={getRatingColor(
+                      repo.metrics.documentation.rating
+                    )}
+                    variant="outline"
+                  >
                     {repo.metrics.documentation.coverage}%
                   </Badge>
                 </div>

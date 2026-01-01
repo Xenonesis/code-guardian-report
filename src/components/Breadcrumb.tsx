@@ -1,6 +1,19 @@
-import React from 'react';
-import { ChevronRight, Home, Info, Lock, Award, FileText, Search, Settings, HelpCircle, History, BarChart3, Shield } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import React from "react";
+import {
+  ChevronRight,
+  Home,
+  Info,
+  Lock,
+  Award,
+  FileText,
+  Search,
+  Settings,
+  HelpCircle,
+  History,
+  BarChart3,
+  Shield,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export interface BreadcrumbItem {
   id: string;
@@ -15,15 +28,15 @@ interface BreadcrumbProps {
   className?: string;
 }
 
-export const Breadcrumb: React.FC<BreadcrumbProps> = ({ 
-  items, 
-  onNavigate, 
-  className = '' 
+export const Breadcrumb: React.FC<BreadcrumbProps> = ({
+  items,
+  onNavigate,
+  className = "",
 }) => {
   if (items.length === 0) return null;
 
   return (
-    <nav 
+    <nav
       className={cn(
         "flex items-center space-x-1 text-sm font-medium text-slate-600 dark:text-slate-400",
         className
@@ -44,13 +57,9 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({
                 : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200"
             )}
             disabled={index === items.length - 1}
-            aria-current={index === items.length - 1 ? 'page' : undefined}
+            aria-current={index === items.length - 1 ? "page" : undefined}
           >
-            {item.icon && (
-              <span className="flex-shrink-0">
-                {item.icon}
-              </span>
-            )}
+            {item.icon && <span className="flex-shrink-0">{item.icon}</span>}
             <span className="truncate">{item.label}</span>
           </button>
         </React.Fragment>
@@ -69,79 +78,84 @@ export const generateBreadcrumbItems = (
 
   // Add home as the first item
   items.push({
-    id: 'home',
-    label: 'Home',
-    icon: <Home className="h-4 w-4" />
+    id: "home",
+    label: "Home",
+    icon: <Home className="h-4 w-4" />,
   });
 
   // Add section-specific items
   switch (currentSection) {
-    case 'home':
+    case "home":
       if (currentTab) {
         const tabLabels: Record<string, string> = {
-          'upload': 'Upload Code',
-          'ai-config': 'AI Configuration',
-          'prompts': 'Custom Prompts',
-          'results': 'Analysis Results',
-          'security': 'Security Report',
-          'dashboard': 'Analytics Dashboard'
+          upload: "Upload Code",
+          "ai-config": "AI Configuration",
+          prompts: "Custom Prompts",
+          results: "Analysis Results",
+          security: "Security Report",
+          dashboard: "Analytics Dashboard",
         };
 
         const tabIcons: Record<string, React.ReactNode> = {
-          'upload': <FileText className="h-4 w-4" />,
-          'ai-config': <Settings className="h-4 w-4" />,
-          'prompts': <Search className="h-4 w-4" />,
-          'results': <FileText className="h-4 w-4" />,
-          'security': <Shield className="h-4 w-4" />,
-          'dashboard': <BarChart3 className="h-4 w-4" />,
-          'history': <History className="h-4 w-4" />
+          upload: <FileText className="h-4 w-4" />,
+          "ai-config": <Settings className="h-4 w-4" />,
+          prompts: <Search className="h-4 w-4" />,
+          results: <FileText className="h-4 w-4" />,
+          security: <Shield className="h-4 w-4" />,
+          dashboard: <BarChart3 className="h-4 w-4" />,
+          history: <History className="h-4 w-4" />,
         };
 
         items.push({
           id: currentTab,
           label: tabLabels[currentTab] || currentTab,
-          icon: tabIcons[currentTab]
+          icon: tabIcons[currentTab],
         });
 
         // Add results-specific breadcrumb if we have analysis results
-        if (analysisResults && (currentTab === 'results' || currentTab === 'security' || currentTab === 'dashboard')) {
+        if (
+          analysisResults &&
+          (currentTab === "results" ||
+            currentTab === "security" ||
+            currentTab === "dashboard")
+        ) {
           items.push({
-            id: 'analysis-results',
-            label: 'Scan Report',
-            icon: <FileText className="h-4 w-4" />
+            id: "analysis-results",
+            label: "Scan Report",
+            icon: <FileText className="h-4 w-4" />,
           });
         }
       }
       break;
-    case 'about':
+    case "about":
       items.push({
-        id: 'about',
-        label: 'About',
-        icon: <Info className="h-4 w-4" />
+        id: "about",
+        label: "About",
+        icon: <Info className="h-4 w-4" />,
       });
       break;
-    case 'privacy':
+    case "privacy":
       items.push({
-        id: 'privacy',
-        label: 'Privacy Policy',
-        icon: <Lock className="h-4 w-4" />
+        id: "privacy",
+        label: "Privacy Policy",
+        icon: <Lock className="h-4 w-4" />,
       });
       break;
-    case 'terms':
+    case "terms":
       items.push({
-        id: 'terms',
-        label: 'Terms of Service',
-        icon: <Award className="h-4 w-4" />
+        id: "terms",
+        label: "Terms of Service",
+        icon: <Award className="h-4 w-4" />,
       });
       break;
-    case 'help':
+    case "help":
       items.push({
-        id: 'help',
-        label: 'Help & Documentation',
-        icon: <HelpCircle className="h-4 w-4" />
+        id: "help",
+        label: "Help & Documentation",
+        icon: <HelpCircle className="h-4 w-4" />,
       });
       break;
   }
 
   return items;
-}; 
+};

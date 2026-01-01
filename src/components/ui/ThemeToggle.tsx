@@ -1,8 +1,8 @@
-import React from 'react';
-import { Sun, Moon, Monitor } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
-import type { Theme } from '@/hooks/useDarkMode';
+import React from "react";
+import { Sun, Moon, Monitor } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import type { Theme } from "@/hooks/useDarkMode";
 
 interface ThemeToggleProps {
   theme: Theme;
@@ -13,20 +13,25 @@ interface ThemeToggleProps {
 /**
  * Theme toggle component - cycles through light, dark, and system modes
  */
-export const ThemeToggle: React.FC<ThemeToggleProps> = ({ 
-  theme, 
+export const ThemeToggle: React.FC<ThemeToggleProps> = ({
+  theme,
   onThemeChange,
-  className 
+  className,
 }) => {
   const handleToggle = () => {
-    const themes: Theme[] = ['light', 'dark', 'system'];
+    const themes: Theme[] = ["light", "dark", "system"];
     const currentIndex = themes.indexOf(theme);
     const nextIndex = (currentIndex + 1) % themes.length;
     onThemeChange(themes[nextIndex]);
   };
 
-  const Icon = theme === 'light' ? Sun : theme === 'dark' ? Moon : Monitor;
-  const color = theme === 'light' ? 'text-amber-500' : theme === 'dark' ? 'text-slate-400' : 'text-blue-500';
+  const Icon = theme === "light" ? Sun : theme === "dark" ? Moon : Monitor;
+  const color =
+    theme === "light"
+      ? "text-amber-500"
+      : theme === "dark"
+        ? "text-slate-400"
+        : "text-blue-500";
 
   return (
     <Button
@@ -40,7 +45,12 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
       aria-label={`Current theme: ${theme}. Click to change`}
       title={`Current: ${theme} - Click to change`}
     >
-      <Icon className={cn("h-4 w-4 sm:h-5 sm:w-5 transition-colors duration-200", color)} />
+      <Icon
+        className={cn(
+          "h-4 w-4 sm:h-5 sm:w-5 transition-colors duration-200",
+          color
+        )}
+      />
     </Button>
   );
 };

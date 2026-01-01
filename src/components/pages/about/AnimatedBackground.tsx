@@ -1,5 +1,5 @@
-import React from 'react';
-import '@/styles/background-effects.css';
+import React from "react";
+import "@/styles/background-effects.css";
 
 export const AnimatedBackground: React.FC = () => {
   return (
@@ -27,17 +27,52 @@ export const AnimatedBackground: React.FC = () => {
       <div className="absolute inset-0 bg-[linear-gradient(rgba(59,130,246,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(59,130,246,0.03)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)] slow-rotate"></div>
 
       {/* Enhanced Animated Lines */}
-      <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
+      <svg
+        className="absolute inset-0 w-full h-full"
+        xmlns="http://www.w3.org/2000/svg"
+      >
         <defs>
-          <linearGradient id="line-gradient-1" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="rgb(59, 130, 246)" stopOpacity="0.15" />
-            <stop offset="50%" stopColor="rgb(147, 51, 234)" stopOpacity="0.25" />
-            <stop offset="100%" stopColor="rgb(59, 130, 246)" stopOpacity="0.15" />
+          <linearGradient
+            id="line-gradient-1"
+            x1="0%"
+            y1="0%"
+            x2="100%"
+            y2="100%"
+          >
+            <stop
+              offset="0%"
+              stopColor="rgb(59, 130, 246)"
+              stopOpacity="0.15"
+            />
+            <stop
+              offset="50%"
+              stopColor="rgb(147, 51, 234)"
+              stopOpacity="0.25"
+            />
+            <stop
+              offset="100%"
+              stopColor="rgb(59, 130, 246)"
+              stopOpacity="0.15"
+            />
           </linearGradient>
-          <linearGradient id="line-gradient-2" x1="0%" y1="0%" x2="100%" y2="100%">
+          <linearGradient
+            id="line-gradient-2"
+            x1="0%"
+            y1="0%"
+            x2="100%"
+            y2="100%"
+          >
             <stop offset="0%" stopColor="rgb(16, 185, 129)" stopOpacity="0.1" />
-            <stop offset="50%" stopColor="rgb(59, 130, 246)" stopOpacity="0.2" />
-            <stop offset="100%" stopColor="rgb(16, 185, 129)" stopOpacity="0.1" />
+            <stop
+              offset="50%"
+              stopColor="rgb(59, 130, 246)"
+              stopOpacity="0.2"
+            />
+            <stop
+              offset="100%"
+              stopColor="rgb(16, 185, 129)"
+              stopOpacity="0.1"
+            />
           </linearGradient>
         </defs>
         <path

@@ -19,7 +19,11 @@
 }
 
 .github-stat-card {
-  background: linear-gradient(135deg, rgba(33, 136, 255, 0.1) 0%, rgba(79, 70, 229, 0.1) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(33, 136, 255, 0.1) 0%,
+    rgba(79, 70, 229, 0.1) 100%
+  );
   border: 1px solid rgba(33, 136, 255, 0.2);
 }
 
@@ -53,7 +57,8 @@
 
 /* GitHub-style animations */
 @keyframes github-pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
@@ -72,7 +77,8 @@
 
 /* GitHub code-style typography */
 .github-code-font {
-  font-family: 'SFMono-Regular', 'Consolas', 'Liberation Mono', 'Menlo', monospace;
+  font-family:
+    "SFMono-Regular", "Consolas", "Liberation Mono", "Menlo", monospace;
 }
 
 /* Repository card specific styles */
@@ -82,7 +88,7 @@
 }
 
 .repo-card::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -94,7 +100,8 @@
 }
 
 @keyframes gradient-shift {
-  0%, 100% {
+  0%,
+  100% {
     background-position: 0% 50%;
   }
   50% {
@@ -126,7 +133,7 @@
 }
 
 .timeline-item::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   top: 0;
@@ -178,7 +185,7 @@
   .github-card {
     padding: 1rem;
   }
-  
+
   .timeline-item {
     padding-left: 1.5rem;
   }

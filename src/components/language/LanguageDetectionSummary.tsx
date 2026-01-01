@@ -1,15 +1,14 @@
-import React from 'react';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { 
-  Code2, 
-  Zap, 
-  Info,
-  CheckCircle,
-  AlertCircle
-} from 'lucide-react';
-import { DetectionResult } from '@/services/detection/languageDetectionService';
+import React from "react";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Code2, Zap, Info, CheckCircle, AlertCircle } from "lucide-react";
+import { DetectionResult } from "@/services/detection/languageDetectionService";
 
 interface LanguageDetectionSummaryProps {
   detectionResult: DetectionResult;
@@ -19,82 +18,82 @@ interface LanguageDetectionSummaryProps {
 
 const getLanguageIcon = (language: string) => {
   switch (language.toLowerCase()) {
-    case 'javascript':
-    case 'typescript':
-      return '🟨';
-    case 'python':
-      return '🐍';
-    case 'java':
-      return '☕';
-    case 'php':
-      return '🐘';
-    case 'ruby':
-      return '💎';
-    case 'go':
-      return '🐹';
-    case 'rust':
-      return '🦀';
-    case 'csharp':
-      return '🔷';
+    case "javascript":
+    case "typescript":
+      return "🟨";
+    case "python":
+      return "🐍";
+    case "java":
+      return "☕";
+    case "php":
+      return "🐘";
+    case "ruby":
+      return "💎";
+    case "go":
+      return "🐹";
+    case "rust":
+      return "🦀";
+    case "csharp":
+      return "🔷";
     default:
-      return '📄';
+      return "📄";
   }
 };
 
 const getFrameworkIcon = (framework: string) => {
   switch (framework.toLowerCase()) {
-    case 'react':
-    case 'next.js':
-      return '⚛️';
-    case 'vue.js':
-    case 'nuxt.js':
-      return '💚';
-    case 'angular':
-      return '🅰️';
-    case 'svelte':
-      return '🧡';
-    case 'django':
-      return '🎸';
-    case 'flask':
-    case 'fastapi':
-      return '🐍';
-    case 'spring boot':
-      return '🍃';
-    case 'express.js':
-    case 'nestjs':
-      return '🚀';
-    case 'laravel':
-      return '🎭';
+    case "react":
+    case "next.js":
+      return "⚛️";
+    case "vue.js":
+    case "nuxt.js":
+      return "💚";
+    case "angular":
+      return "🅰️";
+    case "svelte":
+      return "🧡";
+    case "django":
+      return "🎸";
+    case "flask":
+    case "fastapi":
+      return "🐍";
+    case "spring boot":
+      return "🍃";
+    case "express.js":
+    case "nestjs":
+      return "🚀";
+    case "laravel":
+      return "🎭";
     default:
-      return '🔧';
+      return "🔧";
   }
 };
 
 const getConfidenceColor = (confidence: number) => {
-  if (confidence >= 80) return 'text-green-600 dark:text-green-400';
-  if (confidence >= 60) return 'text-yellow-600 dark:text-yellow-400';
-  if (confidence >= 40) return 'text-orange-600 dark:text-orange-400';
-  return 'text-red-600 dark:text-red-400';
+  if (confidence >= 80) return "text-green-600 dark:text-green-400";
+  if (confidence >= 60) return "text-yellow-600 dark:text-yellow-400";
+  if (confidence >= 40) return "text-orange-600 dark:text-orange-400";
+  return "text-red-600 dark:text-red-400";
 };
 
 const getConfidenceIcon = (confidence: number) => {
-  if (confidence >= 80) return <CheckCircle className="h-3 w-3 text-green-500" />;
-  if (confidence >= 60) return <AlertCircle className="h-3 w-3 text-yellow-500" />;
+  if (confidence >= 80)
+    return <CheckCircle className="h-3 w-3 text-green-500" />;
+  if (confidence >= 60)
+    return <AlertCircle className="h-3 w-3 text-yellow-500" />;
   return <AlertCircle className="h-3 w-3 text-orange-500" />;
 };
 
-export const LanguageDetectionSummary: React.FC<LanguageDetectionSummaryProps> = ({
-  detectionResult,
-  className = '',
-  compact = false
-}) => {
+export const LanguageDetectionSummary: React.FC<
+  LanguageDetectionSummaryProps
+> = ({ detectionResult, className = "", compact = false }) => {
   const {
     primaryLanguage,
     allLanguages,
     frameworks,
     projectStructure,
     totalFiles,
-    analysisTime
+    analysisTime,
   } = detectionResult;
 
   if (compact) {
@@ -109,21 +108,31 @@ export const LanguageDetectionSummary: React.FC<LanguageDetectionSummaryProps> =
               </div>
             </TooltipTrigger>
             <TooltipContent>
-              <p>Analyzed {totalFiles} files in {analysisTime}ms</p>
+              <p>
+                Analyzed {totalFiles} files in {analysisTime}ms
+              </p>
             </TooltipContent>
           </Tooltip>
 
           <div className="flex items-center gap-1">
-            <span className="text-sm">{getLanguageIcon(primaryLanguage.name)}</span>
-            <span className="text-sm font-medium capitalize">{primaryLanguage.name}</span>
-            <span className={`text-xs ${getConfidenceColor(primaryLanguage.confidence)}`}>
+            <span className="text-sm">
+              {getLanguageIcon(primaryLanguage.name)}
+            </span>
+            <span className="text-sm font-medium capitalize">
+              {primaryLanguage.name}
+            </span>
+            <span
+              className={`text-xs ${getConfidenceColor(primaryLanguage.confidence)}`}
+            >
               {primaryLanguage.confidence}%
             </span>
           </div>
 
           {frameworks.length > 0 && (
             <div className="flex items-center gap-1">
-              <span className="text-sm">{getFrameworkIcon(frameworks[0].name)}</span>
+              <span className="text-sm">
+                {getFrameworkIcon(frameworks[0].name)}
+              </span>
               <span className="text-sm">{frameworks[0].name}</span>
               {frameworks.length > 1 && (
                 <Badge variant="outline" className="text-xs px-1 py-0">
@@ -151,7 +160,9 @@ export const LanguageDetectionSummary: React.FC<LanguageDetectionSummaryProps> =
               <div className="p-1.5 rounded-lg bg-yellow-100 dark:bg-yellow-900/30">
                 <Zap className="h-4 w-4 text-yellow-600 dark:text-yellow-400" />
               </div>
-              <span className="font-semibold text-slate-900 dark:text-white">Language Detection</span>
+              <span className="font-semibold text-slate-900 dark:text-white">
+                Language Detection
+              </span>
             </div>
             <div className="flex items-center gap-3 text-xs font-medium text-slate-600 dark:text-slate-400">
               <div className="flex items-center gap-1 px-2 py-1 rounded-md bg-slate-100 dark:bg-slate-800">
@@ -168,15 +179,23 @@ export const LanguageDetectionSummary: React.FC<LanguageDetectionSummaryProps> =
           {/* Primary Language */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="text-lg">{getLanguageIcon(primaryLanguage.name)}</span>
+              <span className="text-lg">
+                {getLanguageIcon(primaryLanguage.name)}
+              </span>
               <div>
-                <span className="font-medium capitalize">{primaryLanguage.name}</span>
-                <div className="text-xs text-muted-foreground">Primary Language</div>
+                <span className="font-medium capitalize">
+                  {primaryLanguage.name}
+                </span>
+                <div className="text-xs text-muted-foreground">
+                  Primary Language
+                </div>
               </div>
             </div>
             <div className="flex items-center gap-1">
               {getConfidenceIcon(primaryLanguage.confidence)}
-              <span className={`font-medium ${getConfidenceColor(primaryLanguage.confidence)}`}>
+              <span
+                className={`font-medium ${getConfidenceColor(primaryLanguage.confidence)}`}
+              >
                 {primaryLanguage.confidence}%
               </span>
             </div>
@@ -185,7 +204,9 @@ export const LanguageDetectionSummary: React.FC<LanguageDetectionSummaryProps> =
           {/* Additional Languages */}
           {allLanguages.length > 1 && (
             <div>
-              <div className="text-xs text-muted-foreground mb-1">Other Languages:</div>
+              <div className="text-xs text-muted-foreground mb-1">
+                Other Languages:
+              </div>
               <div className="flex flex-wrap gap-1">
                 {allLanguages.slice(1, 4).map((lang, index) => (
                   <TooltipProvider key={index}>
@@ -213,7 +234,9 @@ export const LanguageDetectionSummary: React.FC<LanguageDetectionSummaryProps> =
           {/* Frameworks */}
           {frameworks.length > 0 && (
             <div>
-              <div className="text-xs text-muted-foreground mb-1">Frameworks:</div>
+              <div className="text-xs text-muted-foreground mb-1">
+                Frameworks:
+              </div>
               <div className="flex flex-wrap gap-1">
                 {frameworks.slice(0, 3).map((framework, index) => (
                   <TooltipProvider key={index}>
@@ -224,7 +247,10 @@ export const LanguageDetectionSummary: React.FC<LanguageDetectionSummaryProps> =
                         </Badge>
                       </TooltipTrigger>
                       <TooltipContent>
-                        <p>{framework.confidence}% confidence • {framework.category}</p>
+                        <p>
+                          {framework.confidence}% confidence •{" "}
+                          {framework.category}
+                        </p>
                       </TooltipContent>
                     </Tooltip>
                   </TooltipProvider>
@@ -252,16 +278,19 @@ export const LanguageDetectionSummary: React.FC<LanguageDetectionSummaryProps> =
                   </TooltipTrigger>
                   <TooltipContent>
                     <p>{projectStructure.confidence}% confidence</p>
-                    {projectStructure.indicators && projectStructure.indicators.length > 0 && (
-                      <div className="mt-1">
-                        <p className="font-medium">Indicators:</p>
-                        <ul className="text-xs">
-                          {projectStructure.indicators.slice(0, 3).map((indicator, index) => (
-                            <li key={index}>• {indicator}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
+                    {projectStructure.indicators &&
+                      projectStructure.indicators.length > 0 && (
+                        <div className="mt-1">
+                          <p className="font-medium">Indicators:</p>
+                          <ul className="text-xs">
+                            {projectStructure.indicators
+                              .slice(0, 3)
+                              .map((indicator, index) => (
+                                <li key={index}>• {indicator}</li>
+                              ))}
+                          </ul>
+                        </div>
+                      )}
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>

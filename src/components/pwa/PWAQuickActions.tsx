@@ -1,11 +1,7 @@
-import React from 'react';
-import { Button } from '../ui/button';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '../ui/popover';
-import { Badge } from '../ui/badge';
+import React from "react";
+import { Button } from "../ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Badge } from "../ui/badge";
 import {
   Download,
   Wifi,
@@ -17,19 +13,22 @@ import {
   CheckCircle2,
   Cloud,
   CloudOff,
-  Settings
-} from 'lucide-react';
-import { usePWA, usePWACapabilities } from '../../hooks/usePWA';
-import { useNavigation } from '@/lib/navigation-context';
-import { toast } from 'sonner';
-import { cn } from '@/lib/utils';
+  Settings,
+} from "lucide-react";
+import { usePWA, usePWACapabilities } from "../../hooks/usePWA";
+import { useNavigation } from "@/lib/navigation-context";
+import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 
 interface PWAQuickActionsProps {
   readonly className?: string;
   readonly showLabel?: boolean;
 }
 
-export function PWAQuickActions({ className, showLabel = false }: PWAQuickActionsProps) {
+export function PWAQuickActions({
+  className,
+  showLabel = false,
+}: PWAQuickActionsProps) {
   const {
     status,
     isInstalled,
@@ -39,7 +38,7 @@ export function PWAQuickActions({ className, showLabel = false }: PWAQuickAction
     promptInstall,
     enableNotifications,
     updateApp,
-    shareContent
+    shareContent,
   } = usePWA();
 
   const capabilities = usePWACapabilities();
@@ -49,7 +48,7 @@ export function PWAQuickActions({ className, showLabel = false }: PWAQuickAction
   const handleInstall = async () => {
     const success = await promptInstall();
     if (success) {
-      toast.success('App installed successfully!');
+      toast.success("App installed successfully!");
       setOpen(false);
     }
   };
@@ -57,66 +56,64 @@ export function PWAQuickActions({ className, showLabel = false }: PWAQuickAction
   const handleNotifications = async () => {
     const enabled = await enableNotifications();
     if (enabled) {
-      toast.success('Notifications enabled!');
+      toast.success("Notifications enabled!");
     } else {
-      toast.error('Could not enable notifications');
+      toast.error("Could not enable notifications");
     }
   };
 
   const handleShare = async () => {
     const success = await shareContent({
-      title: 'Code Guardian Enterprise',
-      text: 'Check out this AI-powered security analysis platform!',
-      url: globalThis.location.href
+      title: "Code Guardian Enterprise",
+      text: "Check out this AI-powered security analysis platform!",
+      url: globalThis.location.href,
     });
-    
+
     if (success) {
-      toast.success('Shared successfully!');
+      toast.success("Shared successfully!");
       setOpen(false);
     } else {
       // Fallback to clipboard
       try {
         await navigator.clipboard.writeText(globalThis.location.href);
-        toast.success('Link copied to clipboard!');
+        toast.success("Link copied to clipboard!");
       } catch {
-        toast.error('Failed to share');
+        toast.error("Failed to share");
       }
     }
   };
 
   const handleUpdate = async () => {
     await updateApp();
-    toast.info('Checking for updates...');
+    toast.info("Checking for updates...");
   };
 
   // Status indicator color
   const getStatusColor = () => {
-    if (!status.serviceWorkerReady) return 'bg-gray-400';
-    if (!isOnline) return 'bg-orange-500';
-    return 'bg-green-500';
+    if (!status.serviceWorkerReady) return "bg-gray-400";
+    if (!isOnline) return "bg-orange-500";
+    return "bg-green-500";
   };
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button
-          variant="ghost"
-          size="sm"
-          className={cn("relative", className)}
-        >
+        <Button variant="ghost" size="sm" className={cn("relative", className)}>
           <div className="relative">
             <Zap className="h-4 w-4" />
             {/* Status indicator dot */}
-            <span className={cn(
-              "absolute -top-0.5 -right-0.5 h-2 w-2 rounded-full",
-              getStatusColor(),
-              "ring-2 ring-background"
-            )} />
+            <span
+              className={cn(
+                "absolute -top-0.5 -right-0.5 h-2 w-2 rounded-full",
+                getStatusColor(),
+                "ring-2 ring-background"
+              )}
+            />
           </div>
           {showLabel && <span className="ml-2">PWA</span>}
         </Button>
       </PopoverTrigger>
-      
+
       <PopoverContent className="w-72 p-3" align="end">
         <div className="space-y-3">
           {/* Header */}
@@ -125,12 +122,21 @@ export function PWAQuickActions({ className, showLabel = false }: PWAQuickAction
               <Zap className="h-4 w-4 text-blue-600" />
               Quick Actions
             </h4>
-            <Badge variant="secondary" className={cn(
-              "text-xs",
-              isOnline ? "bg-green-100 text-green-700" : "bg-orange-100 text-orange-700"
-            )}>
-              {isOnline ? <Wifi className="h-3 w-3 mr-1" /> : <WifiOff className="h-3 w-3 mr-1" />}
-              {isOnline ? 'Online' : 'Offline'}
+            <Badge
+              variant="secondary"
+              className={cn(
+                "text-xs",
+                isOnline
+                  ? "bg-green-100 text-green-700"
+                  : "bg-orange-100 text-orange-700"
+              )}
+            >
+              {isOnline ? (
+                <Wifi className="h-3 w-3 mr-1" />
+              ) : (
+                <WifiOff className="h-3 w-3 mr-1" />
+              )}
+              {isOnline ? "Online" : "Offline"}
             </Badge>
           </div>
 
@@ -145,7 +151,7 @@ export function PWAQuickActions({ className, showLabel = false }: PWAQuickAction
                 variant="primary"
               />
             )}
-            
+
             {isInstalled && (
               <ActionButton
                 icon={CheckCircle2}
@@ -163,7 +169,7 @@ export function PWAQuickActions({ className, showLabel = false }: PWAQuickAction
                 onClick={handleNotifications}
               />
             )}
-            
+
             {hasNotificationPermission && (
               <ActionButton
                 icon={Bell}
@@ -174,11 +180,7 @@ export function PWAQuickActions({ className, showLabel = false }: PWAQuickAction
             )}
 
             {/* Share */}
-            <ActionButton
-              icon={Share2}
-              label="Share"
-              onClick={handleShare}
-            />
+            <ActionButton icon={Share2} label="Share" onClick={handleShare} />
 
             {/* Update */}
             <ActionButton
@@ -205,7 +207,7 @@ export function PWAQuickActions({ className, showLabel = false }: PWAQuickAction
                   </>
                 )}
               </span>
-              
+
               {status.backgroundSyncSupported && (
                 <span className="flex items-center gap-1">
                   <RefreshCw className="h-3 w-3 text-blue-500" />
@@ -213,14 +215,14 @@ export function PWAQuickActions({ className, showLabel = false }: PWAQuickAction
                 </span>
               )}
             </div>
-            
+
             {/* Link to PWA Settings */}
             <Button
               variant="ghost"
               size="sm"
               className="w-full mt-2 text-xs"
               onClick={() => {
-                navigateTo('pwa-settings');
+                navigateTo("pwa-settings");
                 setOpen(false);
               }}
             >
@@ -239,20 +241,22 @@ interface ActionButtonProps {
   readonly label: string;
   readonly onClick?: () => void;
   readonly disabled?: boolean;
-  readonly variant?: 'default' | 'primary' | 'success';
+  readonly variant?: "default" | "primary" | "success";
 }
 
-function ActionButton({ 
-  icon: Icon, 
-  label, 
-  onClick, 
+function ActionButton({
+  icon: Icon,
+  label,
+  onClick,
   disabled,
-  variant = 'default'
+  variant = "default",
 }: ActionButtonProps) {
   const variantStyles = {
-    default: 'bg-muted hover:bg-muted/80',
-    primary: 'bg-blue-100 hover:bg-blue-200 text-blue-700 dark:bg-blue-900/30 dark:hover:bg-blue-900/50 dark:text-blue-300',
-    success: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300'
+    default: "bg-muted hover:bg-muted/80",
+    primary:
+      "bg-blue-100 hover:bg-blue-200 text-blue-700 dark:bg-blue-900/30 dark:hover:bg-blue-900/50 dark:text-blue-300",
+    success:
+      "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300",
   };
 
   return (

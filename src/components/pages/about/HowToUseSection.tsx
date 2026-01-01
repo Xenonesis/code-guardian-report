@@ -1,21 +1,27 @@
-import React, { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { 
-  Upload, 
-  Play, 
-  FileText, 
-  Download, 
-  Wand2, 
-  Shield, 
+import React, { useState } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Upload,
+  Play,
+  FileText,
+  Download,
+  Wand2,
+  Shield,
   ChevronRight,
   CheckCircle,
   AlertTriangle,
   Code,
   Eye,
-  Copy
-} from 'lucide-react';
+  Copy,
+} from "lucide-react";
 
 const HowToUseSection = () => {
   const [activeStep, setActiveStep] = useState<number>(0);
@@ -31,14 +37,25 @@ const HowToUseSection = () => {
         "Support for individual files or entire project folders",
         "Accepts all major programming languages",
         "Maximum file size: 100MB per upload",
-        "Batch upload multiple files at once"
+        "Batch upload multiple files at once",
       ],
-      supportedFormats: ["JavaScript", "Python", "Java", "C#", "PHP", "Go", "Rust", "TypeScript", "HTML", "CSS"],
+      supportedFormats: [
+        "JavaScript",
+        "Python",
+        "Java",
+        "C#",
+        "PHP",
+        "Go",
+        "Rust",
+        "TypeScript",
+        "HTML",
+        "CSS",
+      ],
       tips: [
         "Include configuration files for better analysis",
         "Upload package.json, requirements.txt for dependency analysis",
-        "Larger projects provide more comprehensive insights"
-      ]
+        "Larger projects provide more comprehensive insights",
+      ],
     },
     {
       id: 2,
@@ -50,42 +67,71 @@ const HowToUseSection = () => {
         "Code quality and maintainability analysis",
         "Performance bottleneck identification",
         "Dependency vulnerability scanning",
-        "OWASP Top 10 security checks"
+        "OWASP Top 10 security checks",
       ],
       analysisTypes: [
-        { name: "Security Scan", time: "30-60s", icon: <Shield className="w-4 h-4" /> },
-        { name: "Quality Check", time: "15-30s", icon: <Code className="w-4 h-4" /> },
-        { name: "Performance Review", time: "20-45s", icon: <AlertTriangle className="w-4 h-4" /> }
+        {
+          name: "Security Scan",
+          time: "30-60s",
+          icon: <Shield className="w-4 h-4" />,
+        },
+        {
+          name: "Quality Check",
+          time: "15-30s",
+          icon: <Code className="w-4 h-4" />,
+        },
+        {
+          name: "Performance Review",
+          time: "20-45s",
+          icon: <AlertTriangle className="w-4 h-4" />,
+        },
       ],
       tips: [
         "Analysis time depends on codebase size",
         "Larger files may take longer to process",
-        "You can continue browsing while analysis runs"
-      ]
+        "You can continue browsing while analysis runs",
+      ],
     },
     {
       id: 3,
       title: "Review Results",
       icon: <Eye className="w-6 h-6" />,
-      description: "Examine detailed findings with severity ratings and explanations",
+      description:
+        "Examine detailed findings with severity ratings and explanations",
       details: [
         "Interactive dashboard with visual metrics",
         "Severity-based issue categorization",
         "Line-by-line code highlighting",
         "Detailed explanations for each issue",
-        "Fix suggestions and recommendations"
+        "Fix suggestions and recommendations",
       ],
       severityLevels: [
-        { level: "Critical", color: "bg-red-500", description: "Immediate security risks" },
-        { level: "High", color: "bg-orange-500", description: "Important issues to address" },
-        { level: "Medium", color: "bg-yellow-500", description: "Moderate concerns" },
-        { level: "Low", color: "bg-blue-500", description: "Minor improvements" }
+        {
+          level: "Critical",
+          color: "bg-red-500",
+          description: "Immediate security risks",
+        },
+        {
+          level: "High",
+          color: "bg-orange-500",
+          description: "Important issues to address",
+        },
+        {
+          level: "Medium",
+          color: "bg-yellow-500",
+          description: "Moderate concerns",
+        },
+        {
+          level: "Low",
+          color: "bg-blue-500",
+          description: "Minor improvements",
+        },
       ],
       tips: [
         "Start with Critical and High severity issues",
         "Use filters to focus on specific issue types",
-        "Click on issues for detailed explanations"
-      ]
+        "Click on issues for detailed explanations",
+      ],
     },
     {
       id: 4,
@@ -97,21 +143,21 @@ const HowToUseSection = () => {
         "Ready-to-use with Cursor, Windsurf, or Copilot",
         "Multiple prompt templates for different needs",
         "Context-aware suggestions for your codebase",
-        "Copy-paste ready for immediate use"
+        "Copy-paste ready for immediate use",
       ],
       promptTypes: [
         "Security Vulnerability Scanner",
-        "Code Quality Fixer", 
+        "Code Quality Fixer",
         "Performance Optimizer",
         "Bug Hunter",
         "API Security Checker",
-        "Dependency Checker"
+        "Dependency Checker",
       ],
       tips: [
         "Use Security Scanner for immediate threats",
         "Combine multiple prompts for comprehensive fixes",
-        "Prompts include your specific issue details"
-      ]
+        "Prompts include your specific issue details",
+      ],
     },
     {
       id: 5,
@@ -123,20 +169,20 @@ const HowToUseSection = () => {
         "Detailed CSV exports for data analysis",
         "JSON format for integration with other tools",
         "Shareable links for team collaboration",
-        "Custom report templates available"
+        "Custom report templates available",
       ],
       exportFormats: [
         { format: "PDF", description: "Professional reports for stakeholders" },
         { format: "CSV", description: "Data analysis and tracking" },
         { format: "JSON", description: "Integration with CI/CD pipelines" },
-        { format: "HTML", description: "Interactive web reports" }
+        { format: "HTML", description: "Interactive web reports" },
       ],
       tips: [
         "PDF reports are great for management presentations",
         "Use CSV for tracking progress over time",
-        "JSON exports work well with automation tools"
-      ]
-    }
+        "JSON exports work well with automation tools",
+      ],
+    },
   ];
 
   const quickStartGuide = [
@@ -145,7 +191,7 @@ const HowToUseSection = () => {
     "Wait for automatic analysis to complete",
     "Review results in the interactive dashboard",
     "Generate AI prompts for specific fixes",
-    "Export reports for documentation"
+    "Export reports for documentation",
   ];
 
   return (
@@ -157,9 +203,10 @@ const HowToUseSection = () => {
             How to Use This Platform
           </h2>
           <p className="text-lg text-slate-600 dark:text-slate-400 max-w-3xl mx-auto mb-8">
-            Follow these simple steps to analyze your code and get actionable security insights
+            Follow these simple steps to analyze your code and get actionable
+            security insights
           </p>
-          
+
           {/* Quick Start */}
           <Card className="max-w-2xl mx-auto mb-12 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950 dark:to-indigo-950 border-blue-200 dark:border-blue-800">
             <CardHeader>
@@ -171,8 +218,14 @@ const HowToUseSection = () => {
             <CardContent>
               <ol className="text-left space-y-2">
                 {quickStartGuide.map((step, index) => (
-                  <li key={index} className="flex items-start gap-3 text-sm text-blue-800 dark:text-blue-200">
-                    <Badge variant="secondary" className="min-w-6 h-6 rounded-full p-0 flex items-center justify-center text-xs">
+                  <li
+                    key={index}
+                    className="flex items-start gap-3 text-sm text-blue-800 dark:text-blue-200"
+                  >
+                    <Badge
+                      variant="secondary"
+                      className="min-w-6 h-6 rounded-full p-0 flex items-center justify-center text-xs"
+                    >
                       {index + 1}
                     </Badge>
                     <span>{step}</span>
@@ -220,7 +273,9 @@ const HowToUseSection = () => {
             <CardContent className="space-y-6">
               {/* Main Details */}
               <div>
-                <h4 className="font-semibold mb-3">What happens in this step:</h4>
+                <h4 className="font-semibold mb-3">
+                  What happens in this step:
+                </h4>
                 <ul className="space-y-2">
                   {steps[activeStep].details.map((detail, index) => (
                     <li key={index} className="flex items-start gap-2">
@@ -237,7 +292,9 @@ const HowToUseSection = () => {
                   <h4 className="font-semibold mb-3">Supported File Types:</h4>
                   <div className="flex flex-wrap gap-2">
                     {steps[activeStep].supportedFormats.map((format) => (
-                      <Badge key={format} variant="outline">{format}</Badge>
+                      <Badge key={format} variant="outline">
+                        {format}
+                      </Badge>
                     ))}
                   </div>
                 </div>
@@ -251,7 +308,9 @@ const HowToUseSection = () => {
                       <Card key={type.name} className="p-4">
                         <div className="flex items-center gap-2 mb-2">
                           {type.icon}
-                          <span className="font-medium text-sm">{type.name}</span>
+                          <span className="font-medium text-sm">
+                            {type.name}
+                          </span>
                         </div>
                         <p className="text-xs text-slate-600 dark:text-slate-400">
                           Typical time: {type.time}
@@ -267,9 +326,16 @@ const HowToUseSection = () => {
                   <h4 className="font-semibold mb-3">Severity Levels:</h4>
                   <div className="space-y-2">
                     {steps[activeStep].severityLevels.map((severity) => (
-                      <div key={severity.level} className="flex items-center gap-3">
-                        <div className={`w-3 h-3 rounded-full ${severity.color}`}></div>
-                        <span className="font-medium text-sm">{severity.level}</span>
+                      <div
+                        key={severity.level}
+                        className="flex items-center gap-3"
+                      >
+                        <div
+                          className={`w-3 h-3 rounded-full ${severity.color}`}
+                        ></div>
+                        <span className="font-medium text-sm">
+                          {severity.level}
+                        </span>
                         <span className="text-sm text-slate-600 dark:text-slate-400">
                           - {severity.description}
                         </span>
@@ -281,10 +347,15 @@ const HowToUseSection = () => {
 
               {steps[activeStep].promptTypes && (
                 <div>
-                  <h4 className="font-semibold mb-3">Available Prompt Types:</h4>
+                  <h4 className="font-semibold mb-3">
+                    Available Prompt Types:
+                  </h4>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     {steps[activeStep].promptTypes.map((type) => (
-                      <div key={type} className="flex items-center gap-2 p-2 bg-slate-50 dark:bg-slate-800 rounded">
+                      <div
+                        key={type}
+                        className="flex items-center gap-2 p-2 bg-slate-50 dark:bg-slate-800 rounded"
+                      >
                         <Wand2 className="w-4 h-4 text-purple-500" />
                         <span className="text-sm">{type}</span>
                       </div>
@@ -301,7 +372,9 @@ const HowToUseSection = () => {
                       <Card key={format.format} className="p-4">
                         <div className="flex items-center gap-2 mb-2">
                           <FileText className="w-4 h-4" />
-                          <span className="font-medium text-sm">{format.format}</span>
+                          <span className="font-medium text-sm">
+                            {format.format}
+                          </span>
                         </div>
                         <p className="text-xs text-slate-600 dark:text-slate-400">
                           {format.description}
@@ -319,7 +392,10 @@ const HowToUseSection = () => {
                 </h4>
                 <ul className="space-y-1">
                   {steps[activeStep].tips.map((tip, index) => (
-                    <li key={index} className="text-sm text-amber-700 dark:text-amber-300">
+                    <li
+                      key={index}
+                      className="text-sm text-amber-700 dark:text-amber-300"
+                    >
                       • {tip}
                     </li>
                   ))}
@@ -338,7 +414,9 @@ const HowToUseSection = () => {
               Previous Step
             </Button>
             <Button
-              onClick={() => setActiveStep(Math.min(steps.length - 1, activeStep + 1))}
+              onClick={() =>
+                setActiveStep(Math.min(steps.length - 1, activeStep + 1))
+              }
               disabled={activeStep === steps.length - 1}
             >
               Next Step

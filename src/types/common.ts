@@ -26,7 +26,7 @@ export interface PaginationParams {
 
 export interface SortParams {
   field: string;
-  direction: 'asc' | 'desc';
+  direction: "asc" | "desc";
 }
 
 export interface FilterParams {
@@ -46,18 +46,24 @@ export interface ModalProps extends BaseProps {
 }
 
 export interface ButtonProps extends BaseProps {
-  variant?: 'primary' | 'secondary' | 'danger' | 'outline';
-  size?: 'sm' | 'md' | 'lg';
+  variant?: "primary" | "secondary" | "danger" | "outline";
+  size?: "sm" | "md" | "lg";
   disabled?: boolean;
   loading?: boolean;
   onClick?: () => void;
 }
 
 // Theme types
-export type ThemeMode = 'light' | 'dark' | 'system';
+export type ThemeMode = "light" | "dark" | "system";
 
 // Navigation types
-export type NavigationSection = 'home' | 'about' | 'privacy' | 'terms' | 'history' | 'help';
+export type NavigationSection =
+  | "home"
+  | "about"
+  | "privacy"
+  | "terms"
+  | "history"
+  | "help";
 
 export interface NavigationState {
   currentSection: NavigationSection;

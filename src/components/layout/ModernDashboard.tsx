@@ -1,28 +1,33 @@
-import React from 'react';
-import { EnhancedCard, EnhancedCardContent, EnhancedCardHeader, EnhancedCardTitle } from '@/components/ui/enhanced-card';
-import { MetricsCard } from '@/components/dashboard/MetricsCard';
-import { 
-  Shield, 
-  Bug, 
-  AlertTriangle, 
-  CheckCircle, 
-  TrendingUp, 
-  Code, 
+import React from "react";
+import {
+  EnhancedCard,
+  EnhancedCardContent,
+  EnhancedCardHeader,
+  EnhancedCardTitle,
+} from "@/components/ui/enhanced-card";
+import { MetricsCard } from "@/components/dashboard/MetricsCard";
+import {
+  Shield,
+  Bug,
+  AlertTriangle,
+  CheckCircle,
+  TrendingUp,
+  Code,
   FileText,
   Zap,
   Target,
-  Activity
-} from 'lucide-react';
-import { AnalysisResults } from '@/hooks/useAnalysis';
+  Activity,
+} from "lucide-react";
+import { AnalysisResults } from "@/hooks/useAnalysis";
 
 interface ModernDashboardProps {
   analysisResults?: AnalysisResults;
   className?: string;
 }
 
-export const ModernDashboard: React.FC<ModernDashboardProps> = ({ 
-  analysisResults, 
-  className = '' 
+export const ModernDashboard: React.FC<ModernDashboardProps> = ({
+  analysisResults,
+  className = "",
 }) => {
   // Use real analysis data or provide meaningful defaults
   const metrics = {
@@ -33,7 +38,7 @@ export const ModernDashboard: React.FC<ModernDashboardProps> = ({
     filesScanned: analysisResults?.totalFiles || 0,
     linesOfCode: analysisResults?.summary?.linesAnalyzed || 0,
     securityScore: analysisResults?.summary?.securityScore || 0,
-    qualityScore: analysisResults?.summary?.qualityScore || 0
+    qualityScore: analysisResults?.summary?.qualityScore || 0,
   };
 
   return (
@@ -44,7 +49,8 @@ export const ModernDashboard: React.FC<ModernDashboardProps> = ({
           Analysis Dashboard
         </h2>
         <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-          Comprehensive overview of your code analysis results with AI-powered insights
+          Comprehensive overview of your code analysis results with AI-powered
+          insights
         </p>
       </div>
 
@@ -61,7 +67,7 @@ export const ModernDashboard: React.FC<ModernDashboardProps> = ({
           trendValue="-12%"
           className="animate-fade-in animate-stagger-1"
         />
-        
+
         <MetricsCard
           title="Critical Issues"
           value={metrics.criticalIssues}
@@ -73,7 +79,7 @@ export const ModernDashboard: React.FC<ModernDashboardProps> = ({
           trendValue="-5%"
           className="animate-fade-in animate-stagger-2"
         />
-        
+
         <MetricsCard
           title="Files Scanned"
           value={metrics.filesScanned}
@@ -85,7 +91,7 @@ export const ModernDashboard: React.FC<ModernDashboardProps> = ({
           trendValue="+23%"
           className="animate-fade-in animate-stagger-3"
         />
-        
+
         <MetricsCard
           title="Lines of Code"
           value={metrics.linesOfCode.toLocaleString()}
@@ -114,7 +120,7 @@ export const ModernDashboard: React.FC<ModernDashboardProps> = ({
           trendValue="+5%"
           className="animate-slide-up animate-stagger-1"
         />
-        
+
         <MetricsCard
           title="Code Quality Score"
           value={`${metrics.qualityScore}%`}
@@ -133,7 +139,12 @@ export const ModernDashboard: React.FC<ModernDashboardProps> = ({
       {/* Detailed Analysis Cards */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Issue Breakdown */}
-        <EnhancedCard variant="modern" hover={true} glow="blue" className="animate-scale-in">
+        <EnhancedCard
+          variant="modern"
+          hover={true}
+          glow="blue"
+          className="animate-scale-in"
+        >
           <EnhancedCardHeader>
             <EnhancedCardTitle gradient={true} size="lg">
               Issue Breakdown
@@ -150,8 +161,12 @@ export const ModernDashboard: React.FC<ModernDashboardProps> = ({
                     <AlertTriangle className="h-5 w-5 text-red-600 dark:text-red-400" />
                   </div>
                   <div>
-                    <p className="font-semibold text-red-900 dark:text-red-100">Critical</p>
-                    <p className="text-sm text-red-600 dark:text-red-400">High priority fixes</p>
+                    <p className="font-semibold text-red-900 dark:text-red-100">
+                      Critical
+                    </p>
+                    <p className="text-sm text-red-600 dark:text-red-400">
+                      High priority fixes
+                    </p>
                   </div>
                 </div>
                 <span className="text-2xl font-bold text-red-600 dark:text-red-400">
@@ -165,8 +180,12 @@ export const ModernDashboard: React.FC<ModernDashboardProps> = ({
                     <Bug className="h-5 w-5 text-orange-600 dark:text-orange-400" />
                   </div>
                   <div>
-                    <p className="font-semibold text-orange-900 dark:text-orange-100">Warning</p>
-                    <p className="text-sm text-orange-600 dark:text-orange-400">Should be addressed</p>
+                    <p className="font-semibold text-orange-900 dark:text-orange-100">
+                      Warning
+                    </p>
+                    <p className="text-sm text-orange-600 dark:text-orange-400">
+                      Should be addressed
+                    </p>
                   </div>
                 </div>
                 <span className="text-2xl font-bold text-orange-600 dark:text-orange-400">
@@ -180,8 +199,12 @@ export const ModernDashboard: React.FC<ModernDashboardProps> = ({
                     <CheckCircle className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                   </div>
                   <div>
-                    <p className="font-semibold text-blue-900 dark:text-blue-100">Info</p>
-                    <p className="text-sm text-blue-600 dark:text-blue-400">Minor improvements</p>
+                    <p className="font-semibold text-blue-900 dark:text-blue-100">
+                      Info
+                    </p>
+                    <p className="text-sm text-blue-600 dark:text-blue-400">
+                      Minor improvements
+                    </p>
                   </div>
                 </div>
                 <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">
@@ -193,7 +216,12 @@ export const ModernDashboard: React.FC<ModernDashboardProps> = ({
         </EnhancedCard>
 
         {/* Performance Metrics */}
-        <EnhancedCard variant="modern" hover={true} glow="purple" className="animate-scale-in">
+        <EnhancedCard
+          variant="modern"
+          hover={true}
+          glow="purple"
+          className="animate-scale-in"
+        >
           <EnhancedCardHeader>
             <EnhancedCardTitle gradient={true} size="lg">
               Performance Insights
@@ -211,10 +239,14 @@ export const ModernDashboard: React.FC<ModernDashboardProps> = ({
                   </div>
                   <div>
                     <p className="font-semibold">Analysis Speed</p>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">Lines per second</p>
+                    <p className="text-sm text-slate-600 dark:text-slate-400">
+                      Lines per second
+                    </p>
                   </div>
                 </div>
-                <span className="text-xl font-bold gradient-text-green">2.4K</span>
+                <span className="text-xl font-bold gradient-text-green">
+                  2.4K
+                </span>
               </div>
 
               <div className="flex items-center justify-between">
@@ -224,10 +256,14 @@ export const ModernDashboard: React.FC<ModernDashboardProps> = ({
                   </div>
                   <div>
                     <p className="font-semibold">Memory Usage</p>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">Peak consumption</p>
+                    <p className="text-sm text-slate-600 dark:text-slate-400">
+                      Peak consumption
+                    </p>
                   </div>
                 </div>
-                <span className="text-xl font-bold gradient-text-purple">128MB</span>
+                <span className="text-xl font-bold gradient-text-purple">
+                  128MB
+                </span>
               </div>
 
               <div className="flex items-center justify-between">
@@ -237,10 +273,14 @@ export const ModernDashboard: React.FC<ModernDashboardProps> = ({
                   </div>
                   <div>
                     <p className="font-semibold">Efficiency Score</p>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">Overall performance</p>
+                    <p className="text-sm text-slate-600 dark:text-slate-400">
+                      Overall performance
+                    </p>
                   </div>
                 </div>
-                <span className="text-xl font-bold gradient-text-blue">94%</span>
+                <span className="text-xl font-bold gradient-text-blue">
+                  94%
+                </span>
               </div>
             </div>
           </EnhancedCardContent>

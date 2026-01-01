@@ -1,5 +1,5 @@
-import React from 'react';
-import { ChevronRight, Info } from 'lucide-react';
+import React from "react";
+import { ChevronRight, Info } from "lucide-react";
 
 interface LegalSectionProps {
   title: string;
@@ -12,7 +12,7 @@ export const LegalSection: React.FC<LegalSectionProps> = ({
   title,
   children,
   icon = <Info className="h-5 w-5" />,
-  className = ''
+  className = "",
 }) => {
   return (
     <section className={`mb-8 sm:mb-12 ${className}`}>
@@ -44,7 +44,7 @@ interface LegalSubsectionProps {
 export const LegalSubsection: React.FC<LegalSubsectionProps> = ({
   title,
   children,
-  className = ''
+  className = "",
 }) => {
   return (
     <div className={`mb-6 ${className}`}>
@@ -68,10 +68,10 @@ interface LegalListProps {
 export const LegalList: React.FC<LegalListProps> = ({
   items,
   ordered = false,
-  className = ''
+  className = "",
 }) => {
-  const ListComponent = ordered ? 'ol' : 'ul';
-  
+  const ListComponent = ordered ? "ol" : "ul";
+
   return (
     <ListComponent className={`space-y-2 ml-4 ${className}`}>
       {items.map((item, index) => (

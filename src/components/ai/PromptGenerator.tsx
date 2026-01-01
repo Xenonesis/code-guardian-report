@@ -1,18 +1,44 @@
 /* @jsxImportSource react */
-import React, { useState, useMemo } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Copy, Wand2, Shield, Bug, Code, Zap, FileCode, ChevronDown, ChevronUp, Settings, Filter, Download, Share2, Eye, Sparkles, FileText, TestTube, BookOpen, Layers } from 'lucide-react';
-import { toast } from '@/hooks/use-toast';
-import { AnalysisResults } from '@/hooks/useAnalysis';
-import { logger } from '@/utils/logger';
+import React, { useState, useMemo } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import {
+  Copy,
+  Wand2,
+  Shield,
+  Bug,
+  Code,
+  Zap,
+  FileCode,
+  ChevronDown,
+  ChevronUp,
+  Settings,
+  Filter,
+  Download,
+  Share2,
+  Eye,
+  Sparkles,
+  FileText,
+  TestTube,
+  BookOpen,
+  Layers,
+} from "lucide-react";
+import { toast } from "@/hooks/use-toast";
+import { AnalysisResults } from "@/hooks/useAnalysis";
+import { logger } from "@/utils/logger";
 
 interface PromptTemplate {
   id: string;
   title: string;
   description: string;
-  category: 'security' | 'quality' | 'performance' | 'general';
+  category: "security" | "quality" | "performance" | "general";
   icon: React.ReactNode;
   prompt: string;
   tags: string[];
@@ -24,12 +50,12 @@ interface PromptGeneratorProps {
 
 const PROMPT_TEMPLATES: PromptTemplate[] = [
   {
-    id: 'security-audit',
-    title: 'Security Vulnerability Scanner',
-    description: 'Find and fix security issues in your code',
-    category: 'security',
+    id: "security-audit",
+    title: "Security Vulnerability Scanner",
+    description: "Find and fix security issues in your code",
+    category: "security",
     icon: <Shield className="w-4 h-4" />,
-    tags: ['Security', 'Vulnerabilities', 'Fix'],
+    tags: ["Security", "Vulnerabilities", "Fix"],
     prompt: `You are a security expert. Analyze this code and find security vulnerabilities.
 
 For each security issue you find:
@@ -65,15 +91,15 @@ Fixed code:
 [show secure code]
 \`\`\`
 
-Provide practical fixes I can copy-paste into my code.`
+Provide practical fixes I can copy-paste into my code.`,
   },
   {
-    id: 'code-quality',
-    title: 'Code Quality Fixer',
-    description: 'Improve code quality and fix bad practices',
-    category: 'quality',
+    id: "code-quality",
+    title: "Code Quality Fixer",
+    description: "Improve code quality and fix bad practices",
+    category: "quality",
     icon: <Code className="w-4 h-4" />,
-    tags: ['Quality', 'Clean Code', 'Refactor'],
+    tags: ["Quality", "Clean Code", "Refactor"],
     prompt: `You are a senior developer. Review this code and fix quality issues.
 
 Find and fix:
@@ -107,15 +133,15 @@ Improved code:
 
 Why better: [explanation]
 
-Give me clean, readable code I can use immediately.`
+Give me clean, readable code I can use immediately.`,
   },
   {
-    id: 'performance-optimizer',
-    title: 'Performance Optimizer',
-    description: 'Make code faster while keeping it secure',
-    category: 'performance',
+    id: "performance-optimizer",
+    title: "Performance Optimizer",
+    description: "Make code faster while keeping it secure",
+    category: "performance",
     icon: <Zap className="w-4 h-4" />,
-    tags: ['Performance', 'Speed', 'Optimization'],
+    tags: ["Performance", "Speed", "Optimization"],
     prompt: `You are a performance expert. Make this code faster while keeping it secure.
 
 Find and fix:
@@ -151,15 +177,15 @@ Faster code:
 Speed improvement: [explanation]
 Security check: [still secure? yes/no]
 
-Give me production-ready optimized code.`
+Give me production-ready optimized code.`,
   },
   {
-    id: 'bug-finder',
-    title: 'Bug Hunter',
-    description: 'Find and fix bugs before they cause problems',
-    category: 'quality',
+    id: "bug-finder",
+    title: "Bug Hunter",
+    description: "Find and fix bugs before they cause problems",
+    category: "quality",
     icon: <Bug className="w-4 h-4" />,
-    tags: ['Bugs', 'Errors', 'Debug'],
+    tags: ["Bugs", "Errors", "Debug"],
     prompt: `You are a debugging expert. Find bugs in this code that could cause crashes or errors.
 
 Look for:
@@ -197,15 +223,15 @@ Fixed code:
 
 Why fix works: [explanation]
 
-Help me catch bugs before users do.`
+Help me catch bugs before users do.`,
   },
   {
-    id: 'api-security',
-    title: 'API Security Checker',
-    description: 'Secure your APIs and endpoints',
-    category: 'security',
+    id: "api-security",
+    title: "API Security Checker",
+    description: "Secure your APIs and endpoints",
+    category: "security",
     icon: <Shield className="w-4 h-4" />,
-    tags: ['API', 'Endpoints', 'REST'],
+    tags: ["API", "Endpoints", "REST"],
     prompt: `You are an API security expert. Make my API endpoints secure.
 
 Check for:
@@ -242,15 +268,15 @@ Secure code:
 
 Security added: [what protection was added]
 
-Make my APIs bulletproof against attacks.`
+Make my APIs bulletproof against attacks.`,
   },
   {
-    id: 'dependency-checker',
-    title: 'Dependency Checker',
-    description: 'Find vulnerable packages and outdated dependencies',
-    category: 'security',
+    id: "dependency-checker",
+    title: "Dependency Checker",
+    description: "Find vulnerable packages and outdated dependencies",
+    category: "security",
     icon: <Bug className="w-4 h-4" />,
-    tags: ['Dependencies', 'Packages', 'Updates'],
+    tags: ["Dependencies", "Packages", "Updates"],
     prompt: `You are a dependency security expert. Check my packages for vulnerabilities.
 
 Analyze:
@@ -281,15 +307,15 @@ Update command: [exact command to run]
 
 Alternative: [better package if needed]
 
-Give me exact commands to fix my dependencies safely.`
+Give me exact commands to fix my dependencies safely.`,
   },
   {
-    id: 'architecture-review',
-    title: 'Architecture & Design Review',
-    description: 'Review code architecture and design patterns',
-    category: 'quality',
+    id: "architecture-review",
+    title: "Architecture & Design Review",
+    description: "Review code architecture and design patterns",
+    category: "quality",
     icon: <Layers className="w-4 h-4" />,
-    tags: ['Architecture', 'Design Patterns', 'Structure'],
+    tags: ["Architecture", "Design Patterns", "Structure"],
     prompt: `You are a senior software architect. Review the codebase architecture and design.
 
 Analyze:
@@ -327,15 +353,15 @@ Benefits:
 - [improvement 1]
 - [improvement 2]
 
-Provide practical refactoring steps.`
+Provide practical refactoring steps.`,
   },
   {
-    id: 'testing-coverage',
-    title: 'Testing & Coverage Analyzer',
-    description: 'Identify missing tests and improve coverage',
-    category: 'quality',
+    id: "testing-coverage",
+    title: "Testing & Coverage Analyzer",
+    description: "Identify missing tests and improve coverage",
+    category: "quality",
     icon: <TestTube className="w-4 h-4" />,
-    tags: ['Testing', 'Unit Tests', 'Coverage'],
+    tags: ["Testing", "Unit Tests", "Coverage"],
     prompt: `You are a testing expert. Analyze this code and identify missing tests.
 
 Focus on:
@@ -385,15 +411,15 @@ describe('[function name]', () => {
 });
 \`\`\`
 
-Provide complete, runnable test code with good coverage.`
+Provide complete, runnable test code with good coverage.`,
   },
   {
-    id: 'documentation-generator',
-    title: 'Documentation Generator',
-    description: 'Generate comprehensive code documentation',
-    category: 'general',
+    id: "documentation-generator",
+    title: "Documentation Generator",
+    description: "Generate comprehensive code documentation",
+    category: "general",
     icon: <BookOpen className="w-4 h-4" />,
-    tags: ['Documentation', 'Comments', 'JSDoc'],
+    tags: ["Documentation", "Comments", "JSDoc"],
     prompt: `You are a technical writer. Generate comprehensive documentation for this code.
 
 Create:
@@ -445,15 +471,15 @@ function myFunction(paramName, optionalParam = 10) {
 }
 \`\`\`
 
-Make documentation clear, accurate, and helpful for developers.`
+Make documentation clear, accurate, and helpful for developers.`,
   },
   {
-    id: 'refactoring-suggestions',
-    title: 'Refactoring Assistant',
-    description: 'Suggest code refactoring improvements',
-    category: 'quality',
+    id: "refactoring-suggestions",
+    title: "Refactoring Assistant",
+    description: "Suggest code refactoring improvements",
+    category: "quality",
     icon: <Sparkles className="w-4 h-4" />,
-    tags: ['Refactoring', 'Clean Code', 'Optimization'],
+    tags: ["Refactoring", "Clean Code", "Optimization"],
     prompt: `You are a refactoring expert. Analyze this code and suggest improvements.
 
 Look for:
@@ -519,16 +545,24 @@ Improvements:
 ✅ Reduced complexity
 ✅ Reusable components
 
-Provide clean, maintainable code following SOLID principles and best practices.`
-  }
+Provide clean, maintainable code following SOLID principles and best practices.`,
+  },
 ];
 
-const PromptGenerator: React.FC<PromptGeneratorProps> = ({ analysisResults }) => {
-  const [selectedTemplate, setSelectedTemplate] = useState<PromptTemplate | null>(null);
-  const [generatedPrompt, setGeneratedPrompt] = useState<string>('');
+const PromptGenerator: React.FC<PromptGeneratorProps> = ({
+  analysisResults,
+}) => {
+  const [selectedTemplate, setSelectedTemplate] =
+    useState<PromptTemplate | null>(null);
+  const [generatedPrompt, setGeneratedPrompt] = useState<string>("");
   const [showAllPrompts, setShowAllPrompts] = useState<boolean>(false);
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [severityFilter, setSeverityFilter] = useState<string[]>(['Critical', 'High', 'Medium', 'Low']);
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [severityFilter, setSeverityFilter] = useState<string[]>([
+    "Critical",
+    "High",
+    "Medium",
+    "Low",
+  ]);
   const [showFilters, setShowFilters] = useState<boolean>(false);
 
   // Calculate token count (rough estimate: ~4 chars per token)
@@ -538,12 +572,16 @@ const PromptGenerator: React.FC<PromptGeneratorProps> = ({ analysisResults }) =>
 
   // Filter templates by category
   const filteredTemplates = useMemo(() => {
-    if (selectedCategory === 'all') return PROMPT_TEMPLATES;
-    return PROMPT_TEMPLATES.filter(t => t.category === selectedCategory);
+    if (selectedCategory === "all") return PROMPT_TEMPLATES;
+    return PROMPT_TEMPLATES.filter((t) => t.category === selectedCategory);
   }, [selectedCategory]);
 
   const generateCodebasePrompt = () => {
-    if (!analysisResults || !analysisResults.issues || analysisResults.issues.length === 0) {
+    if (
+      !analysisResults ||
+      !analysisResults.issues ||
+      analysisResults.issues.length === 0
+    ) {
       toast({
         title: "No File Uploaded",
         description: "Please upload and analyze a file first.",
@@ -553,10 +591,12 @@ const PromptGenerator: React.FC<PromptGeneratorProps> = ({ analysisResults }) =>
     }
 
     const { issues, totalFiles } = analysisResults;
-    
+
     // Filter issues by selected severity
-    const filteredIssues = issues.filter(i => severityFilter.includes(i.severity));
-    
+    const filteredIssues = issues.filter((i) =>
+      severityFilter.includes(i.severity)
+    );
+
     if (filteredIssues.length === 0) {
       toast({
         title: "No Issues Match Filter",
@@ -565,67 +605,91 @@ const PromptGenerator: React.FC<PromptGeneratorProps> = ({ analysisResults }) =>
       });
       return;
     }
-    
-    const criticalIssues = filteredIssues.filter(i => i.severity === 'Critical');
-    const highIssues = filteredIssues.filter(i => i.severity === 'High');
-    const mediumIssues = filteredIssues.filter(i => i.severity === 'Medium');
-    const lowIssues = filteredIssues.filter(i => i.severity === 'Low');
-    
-    const securityIssues = filteredIssues.filter(i => i.type?.toLowerCase().includes('security') || i.type?.toLowerCase().includes('vulnerability'));
-    const qualityIssues = filteredIssues.filter(i => i.type?.toLowerCase().includes('quality') || i.type?.toLowerCase().includes('smell') || i.type?.toLowerCase().includes('maintainability'));
-    const bugIssues = filteredIssues.filter(i => i.type?.toLowerCase().includes('bug') || i.type?.toLowerCase().includes('error'));
-    
+
+    const criticalIssues = filteredIssues.filter(
+      (i) => i.severity === "Critical"
+    );
+    const highIssues = filteredIssues.filter((i) => i.severity === "High");
+    const mediumIssues = filteredIssues.filter((i) => i.severity === "Medium");
+    const lowIssues = filteredIssues.filter((i) => i.severity === "Low");
+
+    const securityIssues = filteredIssues.filter(
+      (i) =>
+        i.type?.toLowerCase().includes("security") ||
+        i.type?.toLowerCase().includes("vulnerability")
+    );
+    const qualityIssues = filteredIssues.filter(
+      (i) =>
+        i.type?.toLowerCase().includes("quality") ||
+        i.type?.toLowerCase().includes("smell") ||
+        i.type?.toLowerCase().includes("maintainability")
+    );
+    const bugIssues = filteredIssues.filter(
+      (i) =>
+        i.type?.toLowerCase().includes("bug") ||
+        i.type?.toLowerCase().includes("error")
+    );
+
     // Get all unique issue types
-    const allIssueTypes = [...new Set(filteredIssues.map(i => i.type))].filter(Boolean);
-    
+    const allIssueTypes = [
+      ...new Set(filteredIssues.map((i) => i.type)),
+    ].filter(Boolean);
+
     // Get all unique files with issues
-    const allFiles = [...new Set(filteredIssues.map(i => i.filename))];
-    
+    const allFiles = [...new Set(filteredIssues.map((i) => i.filename))];
+
     // Get OWASP categories if available
-    const owaspCategories = [...new Set(filteredIssues.map(i => i.owaspCategory).filter(Boolean))];
-    
+    const owaspCategories = [
+      ...new Set(filteredIssues.map((i) => i.owaspCategory).filter(Boolean)),
+    ];
+
     // Get CWE IDs if available
-    const cweIds = [...new Set(filteredIssues.map(i => i.cweId).filter(Boolean))];
-    
+    const cweIds = [
+      ...new Set(filteredIssues.map((i) => i.cweId).filter(Boolean)),
+    ];
+
     // Add code snippets for top issues
     const addCodeSnippet = (issue: any): string => {
       if (issue.snippet) {
         return `\n  Code snippet:\n  \`\`\`\n  ${issue.snippet}\n  \`\`\``;
       }
-      return '';
+      return "";
     };
-    
+
     // Build detailed issue breakdown
-    let issueBreakdown = '';
+    let issueBreakdown = "";
     if (criticalIssues.length > 0) {
       issueBreakdown += `\n\nCRITICAL ISSUES (${criticalIssues.length}):\n`;
-      criticalIssues.slice(0, 3).forEach(issue => {
+      criticalIssues.slice(0, 3).forEach((issue) => {
         issueBreakdown += `- ${issue.message} (${issue.filename}:${issue.line})${addCodeSnippet(issue)}\n`;
       });
-      if (criticalIssues.length > 3) issueBreakdown += `... and ${criticalIssues.length - 3} more critical issues\n`;
+      if (criticalIssues.length > 3)
+        issueBreakdown += `... and ${criticalIssues.length - 3} more critical issues\n`;
     }
-    
+
     if (highIssues.length > 0) {
       issueBreakdown += `\n\nHIGH SEVERITY ISSUES (${highIssues.length}):\n`;
-      highIssues.slice(0, 5).forEach(issue => {
+      highIssues.slice(0, 5).forEach((issue) => {
         issueBreakdown += `- ${issue.message} (${issue.filename}:${issue.line})\n`;
       });
-      if (highIssues.length > 5) issueBreakdown += `... and ${highIssues.length - 5} more high severity issues\n`;
+      if (highIssues.length > 5)
+        issueBreakdown += `... and ${highIssues.length - 5} more high severity issues\n`;
     }
-    
+
     if (securityIssues.length > 0) {
       issueBreakdown += `\n\nSECURITY VULNERABILITIES (${securityIssues.length}):\n`;
-      securityIssues.slice(0, 5).forEach(issue => {
-        issueBreakdown += `- ${issue.message} (${issue.filename}:${issue.line})${issue.owaspCategory ? ` [${issue.owaspCategory}]` : ''}${issue.cweId ? ` [CWE-${issue.cweId}]` : ''}\n`;
+      securityIssues.slice(0, 5).forEach((issue) => {
+        issueBreakdown += `- ${issue.message} (${issue.filename}:${issue.line})${issue.owaspCategory ? ` [${issue.owaspCategory}]` : ""}${issue.cweId ? ` [CWE-${issue.cweId}]` : ""}\n`;
       });
-      if (securityIssues.length > 5) issueBreakdown += `... and ${securityIssues.length - 5} more security issues\n`;
+      if (securityIssues.length > 5)
+        issueBreakdown += `... and ${securityIssues.length - 5} more security issues\n`;
     }
-    
+
     const customPrompt = `You are a code security and quality expert. I have analyzed my codebase and found specific issues that need fixing.
 
 === CODEBASE ANALYSIS SUMMARY ===
 Total Files Analyzed: ${totalFiles}
-Total Issues Found: ${filteredIssues.length}${severityFilter.length < 4 ? ` (filtered by: ${severityFilter.join(', ')})` : ''}
+Total Issues Found: ${filteredIssues.length}${severityFilter.length < 4 ? ` (filtered by: ${severityFilter.join(", ")})` : ""}
 
 ISSUE BREAKDOWN:
 - Critical Issues: ${criticalIssues.length}
@@ -639,12 +703,17 @@ ISSUE CATEGORIES:
 - Bug/Error Issues: ${bugIssues.length}
 
 ISSUE TYPES DETECTED:
-${allIssueTypes.map(type => `- ${type}`).join('\n')}
+${allIssueTypes.map((type) => `- ${type}`).join("\n")}
 
 FILES WITH ISSUES:
-${allFiles.slice(0, 10).map(file => `- ${file}`).join('\n')}${allFiles.length > 10 ? `\n... and ${allFiles.length - 10} more files` : ''}
+${allFiles
+  .slice(0, 10)
+  .map((file) => `- ${file}`)
+  .join(
+    "\n"
+  )}${allFiles.length > 10 ? `\n... and ${allFiles.length - 10} more files` : ""}
 
-${owaspCategories.length > 0 ? `OWASP CATEGORIES FOUND:\n${owaspCategories.map(cat => `- ${cat}`).join('\n')}\n\n` : ''}${cweIds.length > 0 ? `CWE WEAKNESSES FOUND:\n${cweIds.map(cwe => `- CWE-${cwe}`).join('\n')}\n\n` : ''}=== SPECIFIC ISSUES TO FIX ===${issueBreakdown}
+${owaspCategories.length > 0 ? `OWASP CATEGORIES FOUND:\n${owaspCategories.map((cat) => `- ${cat}`).join("\n")}\n\n` : ""}${cweIds.length > 0 ? `CWE WEAKNESSES FOUND:\n${cweIds.map((cwe) => `- CWE-${cwe}`).join("\n")}\n\n` : ""}=== SPECIFIC ISSUES TO FIX ===${issueBreakdown}
 
 === YOUR TASK ===
 Analyze my code and provide fixes for these exact issues. For each problem you find:
@@ -685,7 +754,10 @@ Security/Quality improvement: [what this prevents/improves]
 Provide complete, copy-paste ready code fixes that I can implement immediately in my codebase.`;
 
     setGeneratedPrompt(customPrompt);
-    logger.info('Generated custom prompt', { issueCount: filteredIssues.length, filters: severityFilter });
+    logger.info("Generated custom prompt", {
+      issueCount: filteredIssues.length,
+      filters: severityFilter,
+    });
   };
 
   const copyToClipboard = async (text: string, title: string) => {
@@ -695,9 +767,9 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
         title: "Copied!",
         description: `${title} prompt ready to use`,
       });
-      logger.info('Prompt copied to clipboard', { title, length: text.length });
+      logger.info("Prompt copied to clipboard", { title, length: text.length });
     } catch (err) {
-      logger.error('Failed to copy prompt', err);
+      logger.error("Failed to copy prompt", err);
       toast({
         title: "Copy failed",
         description: "Please copy manually",
@@ -709,23 +781,23 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
   // Export prompt as file
   const exportPrompt = (text: string, filename: string) => {
     try {
-      const blob = new Blob([text], { type: 'text/plain' });
+      const blob = new Blob([text], { type: "text/plain" });
       const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
+      const a = document.createElement("a");
       a.href = url;
       a.download = `${filename}.txt`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-      
+
       toast({
         title: "Exported!",
         description: `Prompt saved as ${filename}.txt`,
       });
-      logger.info('Prompt exported as file', { filename });
+      logger.info("Prompt exported as file", { filename });
     } catch (err) {
-      logger.error('Failed to export prompt', err);
+      logger.error("Failed to export prompt", err);
       toast({
         title: "Export failed",
         description: "Could not save file",
@@ -740,17 +812,17 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
       // Encode prompt to base64 for URL
       const encoded = btoa(encodeURIComponent(text));
       const shareUrl = `${window.location.origin}${window.location.pathname}?prompt=${encoded}`;
-      
+
       // Copy URL to clipboard
       await navigator.clipboard.writeText(shareUrl);
-      
+
       toast({
         title: "Share URL Copied!",
         description: "Anyone with this URL can view the prompt",
       });
-      logger.info('Prompt share URL created', { urlLength: shareUrl.length });
+      logger.info("Prompt share URL created", { urlLength: shareUrl.length });
     } catch (err) {
-      logger.error('Failed to create share URL', err);
+      logger.error("Failed to create share URL", err);
       toast({
         title: "Share failed",
         description: "Could not generate share URL",
@@ -763,23 +835,23 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
   const exportAsMarkdown = (text: string, filename: string) => {
     try {
       const markdownContent = `# AI Code Analysis Prompt\n\n## Generated: ${new Date().toLocaleString()}\n\n---\n\n${text}`;
-      const blob = new Blob([markdownContent], { type: 'text/markdown' });
+      const blob = new Blob([markdownContent], { type: "text/markdown" });
       const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
+      const a = document.createElement("a");
       a.href = url;
       a.download = `${filename}.md`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-      
+
       toast({
         title: "Exported!",
         description: `Prompt saved as ${filename}.md`,
       });
-      logger.info('Prompt exported as markdown', { filename });
+      logger.info("Prompt exported as markdown", { filename });
     } catch (err) {
-      logger.error('Failed to export markdown', err);
+      logger.error("Failed to export markdown", err);
       toast({
         title: "Export failed",
         description: "Could not save markdown file",
@@ -788,14 +860,16 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
     }
   };
 
-
-
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case 'security': return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200';
-      case 'quality': return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200';
-      case 'performance': return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
-      default: return 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200';
+      case "security":
+        return "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200";
+      case "quality":
+        return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200";
+      case "performance":
+        return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200";
+      default:
+        return "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200";
     }
   };
 
@@ -808,7 +882,8 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
             AI Code Assistant Prompts
           </CardTitle>
           <CardDescription>
-            Copy these prompts to Cursor, Windsurf, or Copilot to analyze your code
+            Copy these prompts to Cursor, Windsurf, or Copilot to analyze your
+            code
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -821,12 +896,13 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
                       <Wand2 className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-blue-900 dark:text-blue-100">Smart Prompt Generator</h3>
+                      <h3 className="font-semibold text-blue-900 dark:text-blue-100">
+                        Smart Prompt Generator
+                      </h3>
                       <p className="text-sm text-blue-700 dark:text-blue-300">
-                        {analysisResults ? 
-                          `Generate custom prompt based on your ${analysisResults.issues.length} code issues` :
-                          'Generate prompt for general code analysis'
-                        }
+                        {analysisResults
+                          ? `Generate custom prompt based on your ${analysisResults.issues.length} code issues`
+                          : "Generate prompt for general code analysis"}
                       </p>
                     </div>
                   </div>
@@ -843,31 +919,37 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
                     <Button
                       onClick={generateCodebasePrompt}
                       className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
-                      disabled={!analysisResults || !analysisResults.issues || analysisResults.issues.length === 0}
+                      disabled={
+                        !analysisResults ||
+                        !analysisResults.issues ||
+                        analysisResults.issues.length === 0
+                      }
                     >
                       <Wand2 className="w-4 h-4 mr-2" />
                       Generate
                     </Button>
                   </div>
                 </div>
-                
+
                 {/* Filters Section */}
                 {showFilters && analysisResults && (
                   <div className="mt-4 p-4 bg-white dark:bg-gray-900 rounded-lg border border-blue-200 dark:border-blue-800">
-                    <h4 className="text-sm font-semibold mb-3 text-blue-900 dark:text-blue-100">Filter by Severity</h4>
+                    <h4 className="text-sm font-semibold mb-3 text-blue-900 dark:text-blue-100">
+                      Filter by Severity
+                    </h4>
                     <div className="flex flex-wrap gap-2">
-                      {['Critical', 'High', 'Medium', 'Low'].map((severity) => (
+                      {["Critical", "High", "Medium", "Low"].map((severity) => (
                         <Badge
                           key={severity}
                           className={`cursor-pointer transition-all ${
                             severityFilter.includes(severity)
-                              ? 'bg-blue-600 text-white hover:bg-blue-700'
-                              : 'bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-300 hover:bg-gray-300'
+                              ? "bg-blue-600 text-white hover:bg-blue-700"
+                              : "bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-300 hover:bg-gray-300"
                           }`}
                           onClick={() => {
-                            setSeverityFilter(prev => 
+                            setSeverityFilter((prev) =>
                               prev.includes(severity)
-                                ? prev.filter(s => s !== severity)
+                                ? prev.filter((s) => s !== severity)
                                 : [...prev, severity]
                             );
                           }}
@@ -877,35 +959,39 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
                       ))}
                     </div>
                     <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">
-                      {severityFilter.length === 4 ? 'All severities selected' : `${severityFilter.length} severity level(s) selected`}
+                      {severityFilter.length === 4
+                        ? "All severities selected"
+                        : `${severityFilter.length} severity level(s) selected`}
                     </p>
                   </div>
                 )}
               </CardContent>
             </Card>
           </div>
-          
+
           {/* Category Filter for Templates */}
           <div className="mb-4 flex items-center gap-2 flex-wrap">
             <span className="text-sm font-medium">Template Category:</span>
-            {['all', 'security', 'quality', 'performance', 'general'].map((cat) => (
-              <Badge
-                key={cat}
-                className={`cursor-pointer ${
-                  selectedCategory === cat
-                    ? 'bg-primary text-primary-foreground'
-                    : 'bg-secondary hover:bg-secondary/80'
-                }`}
-                onClick={() => setSelectedCategory(cat)}
-              >
-                {cat.charAt(0).toUpperCase() + cat.slice(1)}
-              </Badge>
-            ))}
+            {["all", "security", "quality", "performance", "general"].map(
+              (cat) => (
+                <Badge
+                  key={cat}
+                  className={`cursor-pointer ${
+                    selectedCategory === cat
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-secondary hover:bg-secondary/80"
+                  }`}
+                  onClick={() => setSelectedCategory(cat)}
+                >
+                  {cat.charAt(0).toUpperCase() + cat.slice(1)}
+                </Badge>
+              )
+            )}
           </div>
 
           {/* Default Security Scanner */}
           <div className="mb-4">
-            <Card 
+            <Card
               className="cursor-pointer hover:shadow-md transition-shadow border-red-200 dark:border-red-800"
               onClick={() => setSelectedTemplate(PROMPT_TEMPLATES[0])}
             >
@@ -913,7 +999,9 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-2">
                     <Shield className="w-4 h-4" />
-                    <CardTitle className="text-sm">Security Vulnerability Scanner</CardTitle>
+                    <CardTitle className="text-sm">
+                      Security Vulnerability Scanner
+                    </CardTitle>
                   </div>
                   <Badge className="bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200">
                     security
@@ -925,7 +1013,7 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
               </CardHeader>
               <CardContent className="pt-0">
                 <div className="flex flex-wrap gap-1">
-                  {['Security', 'Vulnerabilities', 'Fix'].map((tag) => (
+                  {["Security", "Vulnerabilities", "Fix"].map((tag) => (
                     <Badge key={tag} variant="outline" className="text-xs">
                       {tag}
                     </Badge>
@@ -942,18 +1030,24 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
               onClick={() => setShowAllPrompts(!showAllPrompts)}
               className="w-full mb-4 flex items-center justify-center gap-2"
             >
-              {showAllPrompts ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-              {showAllPrompts ? 'Hide Other AI Prompts' : 'Show More AI Prompts'}
+              {showAllPrompts ? (
+                <ChevronUp className="w-4 h-4" />
+              ) : (
+                <ChevronDown className="w-4 h-4" />
+              )}
+              {showAllPrompts
+                ? "Hide Other AI Prompts"
+                : "Show More AI Prompts"}
               <Badge variant="secondary" className="ml-2">
                 {filteredTemplates.length - 1}
               </Badge>
             </Button>
-            
+
             {showAllPrompts && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {filteredTemplates.slice(1).map((template) => (
-                  <Card 
-                    key={template.id} 
+                  <Card
+                    key={template.id}
                     className="cursor-pointer hover:shadow-md transition-shadow"
                     onClick={() => setSelectedTemplate(template)}
                   >
@@ -961,7 +1055,9 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
                       <div className="flex items-start justify-between">
                         <div className="flex items-center gap-2">
                           {template.icon}
-                          <CardTitle className="text-sm">{template.title}</CardTitle>
+                          <CardTitle className="text-sm">
+                            {template.title}
+                          </CardTitle>
                         </div>
                         <Badge className={getCategoryColor(template.category)}>
                           {template.category}
@@ -974,7 +1070,11 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
                     <CardContent className="pt-0">
                       <div className="flex flex-wrap gap-1">
                         {template.tags.map((tag) => (
-                          <Badge key={tag} variant="outline" className="text-xs">
+                          <Badge
+                            key={tag}
+                            variant="outline"
+                            className="text-xs"
+                          >
                             {tag}
                           </Badge>
                         ))}
@@ -985,8 +1085,6 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
               </div>
             )}
           </div>
-
-
         </CardContent>
       </Card>
 
@@ -996,14 +1094,21 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
             <div className="flex items-center justify-between flex-wrap gap-2">
               <div className="flex items-center gap-2">
                 <FileCode className="w-5 h-5 text-green-600" />
-                <CardTitle className="text-green-800 dark:text-green-200">Your Custom Prompt</CardTitle>
+                <CardTitle className="text-green-800 dark:text-green-200">
+                  Your Custom Prompt
+                </CardTitle>
               </div>
               <div className="flex items-center gap-2 flex-wrap">
-                <Badge variant="outline" className="text-green-700 dark:text-green-300">
+                <Badge
+                  variant="outline"
+                  className="text-green-700 dark:text-green-300"
+                >
                   ~{estimateTokens(generatedPrompt)} tokens
                 </Badge>
                 <Button
-                  onClick={() => copyToClipboard(generatedPrompt, 'Custom Codebase Prompt')}
+                  onClick={() =>
+                    copyToClipboard(generatedPrompt, "Custom Codebase Prompt")
+                  }
                   className="bg-green-600 hover:bg-green-700"
                   size="sm"
                 >
@@ -1011,7 +1116,9 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
                   Copy
                 </Button>
                 <Button
-                  onClick={() => exportPrompt(generatedPrompt, 'code-guardian-prompt')}
+                  onClick={() =>
+                    exportPrompt(generatedPrompt, "code-guardian-prompt")
+                  }
                   variant="outline"
                   size="sm"
                   className="border-green-600 text-green-700 dark:text-green-300 hover:bg-green-50 dark:hover:bg-green-950"
@@ -1031,10 +1138,9 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
               </div>
             </div>
             <CardDescription className="text-green-700 dark:text-green-300">
-              {analysisResults ? 
-                `Tailored for your codebase with ${analysisResults.issues.filter(i => severityFilter.includes(i.severity)).length} detected issues` :
-                'General code analysis prompt'
-              }
+              {analysisResults
+                ? `Tailored for your codebase with ${analysisResults.issues.filter((i) => severityFilter.includes(i.severity)).length} detected issues`
+                : "General code analysis prompt"}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -1069,14 +1175,24 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
                   ~{estimateTokens(selectedTemplate.prompt)} tokens
                 </Badge>
                 <Button
-                  onClick={() => copyToClipboard(selectedTemplate.prompt, selectedTemplate.title)}
+                  onClick={() =>
+                    copyToClipboard(
+                      selectedTemplate.prompt,
+                      selectedTemplate.title
+                    )
+                  }
                   size="sm"
                 >
                   <Copy className="w-4 h-4 mr-2" />
                   Copy
                 </Button>
                 <Button
-                  onClick={() => exportPrompt(selectedTemplate.prompt, `${selectedTemplate.id}-prompt`)}
+                  onClick={() =>
+                    exportPrompt(
+                      selectedTemplate.prompt,
+                      `${selectedTemplate.id}-prompt`
+                    )
+                  }
                   variant="outline"
                   size="sm"
                 >
@@ -1084,7 +1200,12 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
                   Export
                 </Button>
                 <Button
-                  onClick={() => exportAsMarkdown(selectedTemplate.prompt, `${selectedTemplate.id}-prompt`)}
+                  onClick={() =>
+                    exportAsMarkdown(
+                      selectedTemplate.prompt,
+                      `${selectedTemplate.id}-prompt`
+                    )
+                  }
                   variant="outline"
                   size="sm"
                 >

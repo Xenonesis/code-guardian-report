@@ -4,9 +4,6 @@
     "composite": true,
     "tsBuildInfoFile": "./.tsbuildinfo-app"
   },
-  "include": [
-    "src/**/*",
-    "src/**/*.json"
-  ],
+  "include": ["src/**/*", "src/**/*.json"],
   "exclude": []
 }

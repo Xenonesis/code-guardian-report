@@ -1,7 +1,7 @@
-import { useCallback } from 'react';
-import { toast } from 'sonner';
+import { useCallback } from "react";
+import { toast } from "sonner";
 
-import { logger } from '@/utils/logger';
+import { logger } from "@/utils/logger";
 export interface ErrorContext {
   component?: string;
   action?: string;
@@ -10,36 +10,42 @@ export interface ErrorContext {
 }
 
 export const useErrorHandler = () => {
-  const handleError = useCallback((error: Error | unknown, context?: ErrorContext) => {
-    const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
-    
-    logger.error('Error handled:', {
-      error: errorMessage,
-      context,
-      stack: error instanceof Error ? error.stack : undefined
-    });
+  const handleError = useCallback(
+    (error: Error | unknown, context?: ErrorContext) => {
+      const errorMessage =
+        error instanceof Error ? error.message : "An unknown error occurred";
 
-    // Show user-friendly toast
-    toast.error(`Error: ${errorMessage}`, {
-      description: context?.action ? `Failed to ${context.action}` : undefined
-    });
+      logger.error("Error handled:", {
+        error: errorMessage,
+        context,
+        stack: error instanceof Error ? error.stack : undefined,
+      });
 
-    // In production, send to error tracking service
-    if (process.env.NODE_ENV === 'production') {
-      // Example: Sentry.captureException(error, { contexts: { custom: context } });
-    }
-  }, []);
+      // Show user-friendly toast
+      toast.error(`Error: ${errorMessage}`, {
+        description: context?.action
+          ? `Failed to ${context.action}`
+          : undefined,
+      });
 
-  const handleAsyncError = useCallback(async (
-    asyncFn: () => Promise<void>,
-    context?: ErrorContext
-  ) => {
-    try {
-      await asyncFn();
-    } catch (error) {
-      handleError(error, context);
-    }
-  }, [handleError]);
+      // In production, send to error tracking service
+      if (process.env.NODE_ENV === "production") {
+        // Example: Sentry.captureException(error, { contexts: { custom: context } });
+      }
+    },
+    []
+  );
+
+  const handleAsyncError = useCallback(
+    async (asyncFn: () => Promise<void>, context?: ErrorContext) => {
+      try {
+        await asyncFn();
+      } catch (error) {
+        handleError(error, context);
+      }
+    },
+    [handleError]
+  );
 
   return { handleError, handleAsyncError };
 };

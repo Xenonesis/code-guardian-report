@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Shield, Github, Twitter } from 'lucide-react';
-import { Navigation } from '@/components/layout/Navigation';
-import { FeatureGrid } from '@/components/features/FeatureGrid';
-import type { Theme } from '@/hooks/useDarkMode';
+import React, { useState, useEffect } from "react";
+import { Shield, Github, Twitter } from "lucide-react";
+import { Navigation } from "@/components/layout/Navigation";
+import { FeatureGrid } from "@/components/features/FeatureGrid";
+import type { Theme } from "@/hooks/useDarkMode";
 
 interface Feature {
   icon: React.ReactNode;
@@ -24,16 +24,17 @@ interface PageLayoutProps {
 
 export const PageLayout: React.FC<PageLayoutProps> = ({
   children,
-  theme = 'system',
+  theme = "system",
   onThemeChange,
   showNavigation = true,
-  className = '',
+  className = "",
   features,
-  noContainer = false
+  noContainer = false,
 }) => {
-
   return (
-    <div className={`min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20 dark:from-slate-950 dark:via-blue-950/30 dark:to-purple-950/20 transition-all duration-500 ${className}`}>
+    <div
+      className={`min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20 dark:from-slate-950 dark:via-blue-950/30 dark:to-purple-950/20 transition-all duration-500 ${className}`}
+    >
       {/* Enhanced Background Effects - Reduced on mobile */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-0 left-1/4 w-64 h-64 sm:w-96 sm:h-96 bg-gradient-to-r from-blue-400/5 sm:from-blue-400/10 via-purple-400/5 sm:via-purple-400/10 to-pink-400/5 sm:to-pink-400/10 rounded-full blur-3xl animate-float-slow"></div>

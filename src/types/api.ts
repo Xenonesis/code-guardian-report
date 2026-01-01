@@ -8,7 +8,7 @@ export interface APIConfig {
 }
 
 export interface RequestOptions {
-  method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+  method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
   headers?: Record<string, string>;
   body?: any;
   timeout?: number;
@@ -54,7 +54,7 @@ export interface GitHubUser {
   login: string;
   avatar_url: string;
   url: string;
-  type: 'User' | 'Organization';
+  type: "User" | "Organization";
 }
 
 export interface GitHubContent {
@@ -63,9 +63,9 @@ export interface GitHubContent {
   sha: string;
   size: number;
   url: string;
-  type: 'file' | 'dir';
+  type: "file" | "dir";
   content?: string;
-  encoding?: 'base64';
+  encoding?: "base64";
 }
 
 // Firebase API types

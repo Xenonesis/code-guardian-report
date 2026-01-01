@@ -1,7 +1,7 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from "react";
 
-import { logger } from '@/utils/logger';
-export type Theme = 'light' | 'dark' | 'system';
+import { logger } from "@/utils/logger";
+export type Theme = "light" | "dark" | "system";
 
 interface UseDarkModeReturn {
   theme: Theme;
@@ -10,7 +10,7 @@ interface UseDarkModeReturn {
   toggleDarkMode: () => void;
 }
 
-const THEME_STORAGE_KEY = 'code-guardian-theme';
+const THEME_STORAGE_KEY = "code-guardian-theme";
 
 /**
  * Custom hook for managing theme preferences with support for light, dark, and system modes
@@ -19,16 +19,16 @@ const THEME_STORAGE_KEY = 'code-guardian-theme';
 export const useDarkMode = (): UseDarkModeReturn => {
   // Get initial theme from localStorage or default to 'system'
   const [theme, setThemeState] = useState<Theme>(() => {
-    if (typeof window === 'undefined') return 'system';
+    if (typeof window === "undefined") return "system";
     try {
       const saved = localStorage.getItem(THEME_STORAGE_KEY);
-      if (saved && ['light', 'dark', 'system'].includes(saved)) {
+      if (saved && ["light", "dark", "system"].includes(saved)) {
         return saved as Theme;
       }
     } catch (error) {
-      logger.warn('Failed to load theme from localStorage:', error);
+      logger.warn("Failed to load theme from localStorage:", error);
     }
-    return 'system';
+    return "system";
   });
 
   // Track the actual dark mode state based on theme and system preference
@@ -36,28 +36,31 @@ export const useDarkMode = (): UseDarkModeReturn => {
 
   // Get system preference
   const getSystemPreference = useCallback((): boolean => {
-    if (typeof window === 'undefined') return false;
-    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (typeof window === "undefined") return false;
+    return window.matchMedia("(prefers-color-scheme: dark)").matches;
   }, []);
 
   // Calculate effective dark mode based on theme
-  const calculateDarkMode = useCallback((currentTheme: Theme): boolean => {
-    if (currentTheme === 'system') {
-      return getSystemPreference();
-    }
-    return currentTheme === 'dark';
-  }, [getSystemPreference]);
+  const calculateDarkMode = useCallback(
+    (currentTheme: Theme): boolean => {
+      if (currentTheme === "system") {
+        return getSystemPreference();
+      }
+      return currentTheme === "dark";
+    },
+    [getSystemPreference]
+  );
 
   // Apply theme to document
   const applyTheme = useCallback((shouldBeDark: boolean) => {
-    if (typeof document === 'undefined') return;
+    if (typeof document === "undefined") return;
     const root = document.documentElement;
     if (shouldBeDark) {
-      root.classList.add('dark');
-      root.setAttribute('data-theme', 'dark');
+      root.classList.add("dark");
+      root.setAttribute("data-theme", "dark");
     } else {
-      root.classList.remove('dark');
-      root.setAttribute('data-theme', 'light');
+      root.classList.remove("dark");
+      root.setAttribute("data-theme", "light");
     }
   }, []);
 
@@ -67,22 +70,22 @@ export const useDarkMode = (): UseDarkModeReturn => {
     try {
       localStorage.setItem(THEME_STORAGE_KEY, newTheme);
     } catch (error) {
-      logger.warn('Failed to save theme to localStorage:', error);
+      logger.warn("Failed to save theme to localStorage:", error);
     }
   }, []);
 
   // Toggle between light and dark (skip system)
   const toggleDarkMode = useCallback(() => {
-    setTheme(isDarkMode ? 'light' : 'dark');
+    setTheme(isDarkMode ? "light" : "dark");
   }, [isDarkMode, setTheme]);
 
   // Listen to system preference changes when theme is 'system'
   useEffect(() => {
-    if (theme !== 'system') return;
-    if (typeof window === 'undefined') return;
+    if (theme !== "system") return;
+    if (typeof window === "undefined") return;
 
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
     const handleChange = (e: MediaQueryListEvent) => {
       const newDarkMode = e.matches;
       setIsDarkMode(newDarkMode);
@@ -90,10 +93,10 @@ export const useDarkMode = (): UseDarkModeReturn => {
     };
 
     // Use addEventListener for better compatibility
-    mediaQuery.addEventListener('change', handleChange);
+    mediaQuery.addEventListener("change", handleChange);
 
     return () => {
-      mediaQuery.removeEventListener('change', handleChange);
+      mediaQuery.removeEventListener("change", handleChange);
     };
   }, [theme, applyTheme]);
 
@@ -104,11 +107,11 @@ export const useDarkMode = (): UseDarkModeReturn => {
     applyTheme(newDarkMode);
   }, [theme, calculateDarkMode, applyTheme]);
 
-  return { 
-    theme, 
-    isDarkMode, 
-    setTheme, 
-    toggleDarkMode 
+  return {
+    theme,
+    isDarkMode,
+    setTheme,
+    toggleDarkMode,
   };
 };
 

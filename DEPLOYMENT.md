@@ -325,13 +325,11 @@ curl https://your-domain.com/api/health
 ### Regular Maintenance
 
 1. **Weekly**
-
    - Review error logs
    - Check health endpoint status
    - Monitor performance metrics
 
 2. **Monthly**
-
    - Update dependencies (`npm update`)
    - Run security audit (`npm audit`)
    - Review and rotate API keys if needed

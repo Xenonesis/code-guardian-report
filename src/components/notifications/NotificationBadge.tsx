@@ -3,10 +3,10 @@
  * Simple badge to show unread notification count
  */
 
-import React, { useState, useEffect } from 'react';
-import { NotificationManager } from '@/services/notifications/NotificationManager';
-import { Badge } from '@/components/ui/badge';
-import { cn } from '@/lib/utils';
+import React, { useState, useEffect } from "react";
+import { NotificationManager } from "@/services/notifications/NotificationManager";
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
 interface NotificationBadgeProps {
   className?: string;
@@ -23,7 +23,9 @@ const NotificationBadge: React.FC<NotificationBadgeProps> = ({
 
   useEffect(() => {
     const unsubscribe = NotificationManager.subscribe((notifications) => {
-      const unread = notifications.filter(n => !n.read && !n.dismissed).length;
+      const unread = notifications.filter(
+        (n) => !n.read && !n.dismissed
+      ).length;
       setCount(unread);
     });
 
@@ -40,7 +42,7 @@ const NotificationBadge: React.FC<NotificationBadgeProps> = ({
     <Badge
       variant="destructive"
       className={cn(
-        'h-5 min-w-[20px] px-1 flex items-center justify-center text-xs font-semibold',
+        "h-5 min-w-[20px] px-1 flex items-center justify-center text-xs font-semibold",
         className
       )}
     >

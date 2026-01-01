@@ -1,6 +1,6 @@
-import React from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { AlertTriangle, Shield, Bug, Code } from 'lucide-react';
+import React from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { AlertTriangle, Shield, Bug, Code } from "lucide-react";
 
 interface MetricsCardsProps {
   totalIssues: number;
@@ -13,7 +13,7 @@ export const MetricsCards: React.FC<MetricsCardsProps> = ({
   totalIssues,
   criticalIssues,
   securityIssues,
-  codeQuality
+  codeQuality,
 }) => {
   return (
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
@@ -24,7 +24,9 @@ export const MetricsCards: React.FC<MetricsCardsProps> = ({
               <p className="text-lg sm:text-2xl font-bold text-blue-800 dark:text-blue-200">
                 {totalIssues}
               </p>
-              <p className="text-xs sm:text-sm text-blue-600 dark:text-blue-400">Total Issues</p>
+              <p className="text-xs sm:text-sm text-blue-600 dark:text-blue-400">
+                Total Issues
+              </p>
             </div>
             <AlertTriangle className="h-6 w-6 sm:h-8 sm:w-8 text-blue-600 dark:text-blue-400" />
           </div>
@@ -38,7 +40,9 @@ export const MetricsCards: React.FC<MetricsCardsProps> = ({
               <p className="text-lg sm:text-2xl font-bold text-red-800 dark:text-red-200">
                 {criticalIssues}
               </p>
-              <p className="text-xs sm:text-sm text-red-600 dark:text-red-400">Critical</p>
+              <p className="text-xs sm:text-sm text-red-600 dark:text-red-400">
+                Critical
+              </p>
             </div>
             <Shield className="h-6 w-6 sm:h-8 sm:w-8 text-red-600 dark:text-red-400" />
           </div>
@@ -52,7 +56,9 @@ export const MetricsCards: React.FC<MetricsCardsProps> = ({
               <p className="text-lg sm:text-2xl font-bold text-amber-800 dark:text-amber-200">
                 {securityIssues}
               </p>
-              <p className="text-xs sm:text-sm text-amber-600 dark:text-amber-400">Security</p>
+              <p className="text-xs sm:text-sm text-amber-600 dark:text-amber-400">
+                Security
+              </p>
             </div>
             <Bug className="h-6 w-6 sm:h-8 sm:w-8 text-amber-600 dark:text-amber-400" />
           </div>
@@ -66,7 +72,9 @@ export const MetricsCards: React.FC<MetricsCardsProps> = ({
               <p className="text-lg sm:text-2xl font-bold text-green-800 dark:text-green-200">
                 {codeQuality}%
               </p>
-              <p className="text-xs sm:text-sm text-green-600 dark:text-green-400">Quality</p>
+              <p className="text-xs sm:text-sm text-green-600 dark:text-green-400">
+                Quality
+              </p>
             </div>
             <Code className="h-6 w-6 sm:h-8 sm:w-8 text-green-600 dark:text-green-400" />
           </div>

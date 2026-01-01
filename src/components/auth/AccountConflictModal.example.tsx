@@ -1,30 +1,35 @@
 // src/components/auth/AccountConflictModal.example.tsx
 /**
  * Example integration of AccountConflictModal with Firebase Authentication
- * 
+ *
  * This file demonstrates how to handle the 'account-exists-with-different-credential'
  * error in a real application using Firebase Auth.
  */
 
-import React, { useState } from 'react';
-import { 
-  signInWithPopup, 
-  GoogleAuthProvider, 
+import React, { useState } from "react";
+import {
+  signInWithPopup,
+  GoogleAuthProvider,
   GithubAuthProvider,
   linkWithCredential,
   fetchSignInMethodsForEmail,
   signInWithEmailAndPassword,
   AuthError,
   AuthCredential,
-  UserCredential
-} from 'firebase/auth';
-import { auth } from '@/lib/firebase';
-import { AccountConflictModal } from './AccountConflictModal';
-import { getProviderFromError, getEmailFromError } from '@/lib/auth-utils';
-import { toast } from 'sonner';
+  UserCredential,
+} from "firebase/auth";
+import { auth } from "@/lib/firebase";
+import { AccountConflictModal } from "./AccountConflictModal";
+import { getProviderFromError, getEmailFromError } from "@/lib/auth-utils";
+import { toast } from "sonner";
 
-import { logger } from '@/utils/logger';
-type Provider = 'google.com' | 'github.com' | 'password' | 'facebook.com' | 'twitter.com';
+import { logger } from "@/utils/logger";
+type Provider =
+  | "google.com"
+  | "github.com"
+  | "password"
+  | "facebook.com"
+  | "twitter.com";
 
 interface ConflictState {
   isOpen: boolean;
@@ -37,9 +42,9 @@ interface ConflictState {
 export const AuthWithConflictHandling: React.FC = () => {
   const [conflictState, setConflictState] = useState<ConflictState>({
     isOpen: false,
-    email: '',
-    existingProvider: 'password',
-    attemptedProvider: 'google.com',
+    email: "",
+    existingProvider: "password",
+    attemptedProvider: "google.com",
     pendingCredential: null,
   });
   const [isLinking, setIsLinking] = useState(false);
@@ -51,10 +56,10 @@ export const AuthWithConflictHandling: React.FC = () => {
     try {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
-      toast.success('Successfully signed in with Google!');
+      toast.success("Successfully signed in with Google!");
       return result;
     } catch (error: any) {
-      handleAuthError(error, 'google.com');
+      handleAuthError(error, "google.com");
       return undefined;
     }
   };
@@ -66,10 +71,10 @@ export const AuthWithConflictHandling: React.FC = () => {
     try {
       const provider = new GithubAuthProvider();
       const result = await signInWithPopup(auth, provider);
-      toast.success('Successfully signed in with GitHub!');
+      toast.success("Successfully signed in with GitHub!");
       return result;
     } catch (error: any) {
-      handleAuthError(error, 'github.com');
+      handleAuthError(error, "github.com");
       return undefined;
     }
   };
@@ -77,28 +82,31 @@ export const AuthWithConflictHandling: React.FC = () => {
   /**
    * Handle authentication errors, specifically looking for account conflicts
    */
-  const handleAuthError = async (error: AuthError, attemptedProvider: Provider) => {
-    if (error.code === 'auth/account-exists-with-different-credential') {
+  const handleAuthError = async (
+    error: AuthError,
+    attemptedProvider: Provider
+  ) => {
+    if (error.code === "auth/account-exists-with-different-credential") {
       // Extract information from the error
-      const email = getEmailFromError(error) || '';
+      const email = getEmailFromError(error) || "";
       const pendingCredential = (error as any).credential || null;
 
       // Fetch the existing sign-in methods for this email
       try {
         const signInMethods = await fetchSignInMethodsForEmail(auth, email);
-        
+
         // Determine the existing provider
-        let existingProvider: Provider = 'password';
-        if (signInMethods.includes('google.com')) {
-          existingProvider = 'google.com';
-        } else if (signInMethods.includes('github.com')) {
-          existingProvider = 'github.com';
-        } else if (signInMethods.includes('facebook.com')) {
-          existingProvider = 'facebook.com';
-        } else if (signInMethods.includes('twitter.com')) {
-          existingProvider = 'twitter.com';
-        } else if (signInMethods.includes('password')) {
-          existingProvider = 'password';
+        let existingProvider: Provider = "password";
+        if (signInMethods.includes("google.com")) {
+          existingProvider = "google.com";
+        } else if (signInMethods.includes("github.com")) {
+          existingProvider = "github.com";
+        } else if (signInMethods.includes("facebook.com")) {
+          existingProvider = "facebook.com";
+        } else if (signInMethods.includes("twitter.com")) {
+          existingProvider = "twitter.com";
+        } else if (signInMethods.includes("password")) {
+          existingProvider = "password";
         }
 
         // Show the conflict modal
@@ -110,13 +118,15 @@ export const AuthWithConflictHandling: React.FC = () => {
           pendingCredential,
         });
       } catch (fetchError) {
-        logger.error('Error fetching sign-in methods:', fetchError);
-        toast.error('Unable to determine existing sign-in method. Please try again.');
+        logger.error("Error fetching sign-in methods:", fetchError);
+        toast.error(
+          "Unable to determine existing sign-in method. Please try again."
+        );
       }
     } else {
       // Handle other errors normally
-      logger.error('Auth error:', error);
-      toast.error(error.message || 'An authentication error occurred');
+      logger.error("Auth error:", error);
+      toast.error(error.message || "An authentication error occurred");
     }
   };
 
@@ -133,49 +143,53 @@ export const AuthWithConflictHandling: React.FC = () => {
       let userCredential;
 
       switch (existingProvider) {
-        case 'google.com': {
+        case "google.com": {
           const provider = new GoogleAuthProvider();
           provider.setCustomParameters({ login_hint: email });
           userCredential = await signInWithPopup(auth, provider);
           break;
         }
-        case 'github.com': {
+        case "github.com": {
           const provider = new GithubAuthProvider();
           provider.setCustomParameters({ login: email });
           userCredential = await signInWithPopup(auth, provider);
           break;
         }
-        case 'password': {
+        case "password": {
           // For email/password, we need to prompt the user for their password
           // In a real app, you'd show a password input modal here
-          toast.info('Please sign in with your email and password');
+          toast.info("Please sign in with your email and password");
           setIsLinking(false);
-          setConflictState(prev => ({ ...prev, isOpen: false }));
+          setConflictState((prev) => ({ ...prev, isOpen: false }));
           return;
         }
         default:
-          throw new Error('Unsupported provider');
+          throw new Error("Unsupported provider");
       }
 
       // After successful sign-in, link the pending credential if available
       if (pendingCredential && userCredential.user) {
         try {
           await linkWithCredential(userCredential.user, pendingCredential);
-          toast.success('Successfully linked accounts! You can now use both sign-in methods.');
+          toast.success(
+            "Successfully linked accounts! You can now use both sign-in methods."
+          );
         } catch (linkError: any) {
           // If linking fails, it's okay - the user is still signed in
-          logger.error('Error linking accounts:', linkError);
-          toast.info('Signed in successfully. You can link additional providers from your profile.');
+          logger.error("Error linking accounts:", linkError);
+          toast.info(
+            "Signed in successfully. You can link additional providers from your profile."
+          );
         }
       } else {
-        toast.success('Successfully signed in!');
+        toast.success("Successfully signed in!");
       }
 
       // Close the modal
-      setConflictState(prev => ({ ...prev, isOpen: false }));
+      setConflictState((prev) => ({ ...prev, isOpen: false }));
     } catch (error: any) {
-      logger.error('Error signing in with existing provider:', error);
-      toast.error('Failed to sign in. Please try again.');
+      logger.error("Error signing in with existing provider:", error);
+      toast.error("Failed to sign in. Please try again.");
     } finally {
       setIsLinking(false);
     }
@@ -185,8 +199,10 @@ export const AuthWithConflictHandling: React.FC = () => {
    * Handle user choosing to try a different sign-in method
    */
   const handleTryDifferentMethod = () => {
-    setConflictState(prev => ({ ...prev, isOpen: false }));
-    toast.info('Please choose a different sign-in method or contact support for help.');
+    setConflictState((prev) => ({ ...prev, isOpen: false }));
+    toast.info(
+      "Please choose a different sign-in method or contact support for help."
+    );
   };
 
   return (
@@ -199,7 +215,7 @@ export const AuthWithConflictHandling: React.FC = () => {
         >
           Sign in with Google
         </button>
-        
+
         <button
           onClick={handleGitHubSignIn}
           className="w-full bg-gray-800 text-white py-2 px-4 rounded-lg hover:bg-gray-900"
@@ -211,7 +227,7 @@ export const AuthWithConflictHandling: React.FC = () => {
       {/* Account Conflict Modal */}
       <AccountConflictModal
         isOpen={conflictState.isOpen}
-        onClose={() => setConflictState(prev => ({ ...prev, isOpen: false }))}
+        onClose={() => setConflictState((prev) => ({ ...prev, isOpen: false }))}
         email={conflictState.email}
         existingProvider={conflictState.existingProvider}
         attemptedProvider={conflictState.attemptedProvider}
@@ -230,9 +246,9 @@ export const AuthWithConflictHandling: React.FC = () => {
 export const SimpleAuthWithConflictHandling: React.FC = () => {
   const [conflictState, setConflictState] = useState<ConflictState>({
     isOpen: false,
-    email: '',
-    existingProvider: 'password',
-    attemptedProvider: 'google.com',
+    email: "",
+    existingProvider: "password",
+    attemptedProvider: "google.com",
     pendingCredential: null,
   });
 
@@ -240,22 +256,22 @@ export const SimpleAuthWithConflictHandling: React.FC = () => {
     try {
       const provider = new GoogleAuthProvider();
       await signInWithPopup(auth, provider);
-      toast.success('Successfully signed in!');
+      toast.success("Successfully signed in!");
     } catch (error: any) {
-      if (error.code === 'auth/account-exists-with-different-credential') {
-        const email = getEmailFromError(error) || '';
+      if (error.code === "auth/account-exists-with-different-credential") {
+        const email = getEmailFromError(error) || "";
         const signInMethods = await fetchSignInMethodsForEmail(auth, email);
-        
+
         // Show conflict modal (without auto-linking)
         setConflictState({
           isOpen: true,
           email,
           existingProvider: signInMethods[0] as Provider,
-          attemptedProvider: 'google.com',
+          attemptedProvider: "google.com",
           pendingCredential: null,
         });
       } else {
-        toast.error('Authentication failed. Please try again.');
+        toast.error("Authentication failed. Please try again.");
       }
     }
   };
@@ -263,19 +279,19 @@ export const SimpleAuthWithConflictHandling: React.FC = () => {
   return (
     <>
       <button onClick={handleGoogleSignIn}>Sign in with Google</button>
-      
+
       <AccountConflictModal
         isOpen={conflictState.isOpen}
-        onClose={() => setConflictState(prev => ({ ...prev, isOpen: false }))}
+        onClose={() => setConflictState((prev) => ({ ...prev, isOpen: false }))}
         email={conflictState.email}
         existingProvider={conflictState.existingProvider}
         attemptedProvider={conflictState.attemptedProvider}
         onSignInWithExisting={() => {
           // Simply close and let user manually sign in
-          setConflictState(prev => ({ ...prev, isOpen: false }));
+          setConflictState((prev) => ({ ...prev, isOpen: false }));
         }}
         onTryDifferentMethod={() => {
-          setConflictState(prev => ({ ...prev, isOpen: false }));
+          setConflictState((prev) => ({ ...prev, isOpen: false }));
         }}
       />
     </>

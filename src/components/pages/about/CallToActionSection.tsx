@@ -1,20 +1,22 @@
-import React from 'react';
-import { Download } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import React from "react";
+import { Download } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 
 interface CallToActionSectionProps {
   className?: string;
 }
 
-export const CallToActionSection: React.FC<CallToActionSectionProps> = ({ className = '' }) => {
+export const CallToActionSection: React.FC<CallToActionSectionProps> = ({
+  className = "",
+}) => {
   // Smooth scroll to home section
   const scrollToHome = () => {
-    const homeSection = document.getElementById('home');
+    const homeSection = document.getElementById("home");
     if (homeSection) {
-      homeSection.scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start'
+      homeSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
       });
     }
   };
@@ -39,11 +41,20 @@ export const CallToActionSection: React.FC<CallToActionSectionProps> = ({ classN
 
           {/* Particle System */}
           <div className="particle-system opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-            <div className="particle" style={{ left: '20%', animationDelay: '0s' }}></div>
-            <div className="particle" style={{ left: '80%', animationDelay: '3s' }}></div>
-            <div className="particle" style={{ left: '50%', animationDelay: '6s' }}></div>
+            <div
+              className="particle"
+              style={{ left: "20%", animationDelay: "0s" }}
+            ></div>
+            <div
+              className="particle"
+              style={{ left: "80%", animationDelay: "3s" }}
+            ></div>
+            <div
+              className="particle"
+              style={{ left: "50%", animationDelay: "6s" }}
+            ></div>
           </div>
-        
+
           <CardContent className="relative z-10 p-10 sm:p-16">
             <div className="max-w-3xl mx-auto">
               {/* Enhanced Title */}
@@ -54,8 +65,9 @@ export const CallToActionSection: React.FC<CallToActionSectionProps> = ({ classN
               {/* Enhanced Description */}
               <div className="glass-card-ultra p-6 mb-10">
                 <p className="text-xl text-slate-800 dark:text-slate-200 leading-relaxed">
-                  Start analyzing your codebase today with our comprehensive security and quality tools.
-                  Join thousands of developers who trust Code Guardian for their security needs.
+                  Start analyzing your codebase today with our comprehensive
+                  security and quality tools. Join thousands of developers who
+                  trust Code Guardian for their security needs.
                 </p>
               </div>
 
@@ -76,9 +88,21 @@ export const CallToActionSection: React.FC<CallToActionSectionProps> = ({ classN
               {/* Enhanced Trust Indicators */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                 {[
-                  { label: '25,000+ Developers', color: 'from-green-500 to-emerald-500', delay: '0s' },
-                  { label: '150,000+ Vulnerabilities Found', color: 'from-blue-500 to-indigo-500', delay: '0.3s' },
-                  { label: 'Free Forever', color: 'from-purple-500 to-pink-500', delay: '0.6s' }
+                  {
+                    label: "25,000+ Developers",
+                    color: "from-green-500 to-emerald-500",
+                    delay: "0s",
+                  },
+                  {
+                    label: "150,000+ Vulnerabilities Found",
+                    color: "from-blue-500 to-indigo-500",
+                    delay: "0.3s",
+                  },
+                  {
+                    label: "Free Forever",
+                    color: "from-purple-500 to-pink-500",
+                    delay: "0.6s",
+                  },
                 ].map((item, index) => (
                   <div
                     key={index}
@@ -86,7 +110,9 @@ export const CallToActionSection: React.FC<CallToActionSectionProps> = ({ classN
                     style={{ animationDelay: item.delay }}
                   >
                     <div className="flex items-center justify-center gap-3">
-                      <div className={`w-3 h-3 bg-gradient-to-r ${item.color} rounded-full animate-pulse group-hover:scale-125 transition-transform duration-300`}></div>
+                      <div
+                        className={`w-3 h-3 bg-gradient-to-r ${item.color} rounded-full animate-pulse group-hover:scale-125 transition-transform duration-300`}
+                      ></div>
                       <span className="text-sm font-semibold text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-white transition-colors duration-300">
                         {item.label}
                       </span>

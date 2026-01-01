@@ -3,20 +3,20 @@
  * Manages notifications with priorities, batching, history, and user preferences
  */
 
-import { toast } from 'sonner';
+import { toast } from "sonner";
 
-import { logger } from '@/utils/logger';
-export type NotificationPriority = 'low' | 'normal' | 'high' | 'urgent';
-export type NotificationType = 'success' | 'error' | 'warning' | 'info';
-export type NotificationCategory = 
-  | 'system' 
-  | 'analysis' 
-  | 'security' 
-  | 'auth' 
-  | 'storage' 
-  | 'network'
-  | 'export'
-  | 'general';
+import { logger } from "@/utils/logger";
+export type NotificationPriority = "low" | "normal" | "high" | "urgent";
+export type NotificationType = "success" | "error" | "warning" | "info";
+export type NotificationCategory =
+  | "system"
+  | "analysis"
+  | "security"
+  | "auth"
+  | "storage"
+  | "network"
+  | "export"
+  | "general";
 
 export interface Notification {
   id: string;
@@ -85,12 +85,14 @@ class NotificationManagerClass {
   private batchQueue: Notification[] = [];
   private batchTimeout: NodeJS.Timeout | null = null;
   private listeners: Set<(notifications: Notification[]) => void> = new Set();
-  private preferencesListeners: Set<(preferences: NotificationPreferences) => void> = new Set();
-  
+  private preferencesListeners: Set<
+    (preferences: NotificationPreferences) => void
+  > = new Set();
+
   constructor() {
     this.preferences = DEFAULT_PREFERENCES;
     // Only access browser APIs on client side
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       this.preferences = this.loadPreferences();
       this.loadHistory();
       this.requestBrowserNotificationPermission();
@@ -102,15 +104,15 @@ class NotificationManagerClass {
    */
   private loadPreferences(): NotificationPreferences {
     // Guard for server-side rendering
-    if (typeof localStorage === 'undefined') return DEFAULT_PREFERENCES;
-    
+    if (typeof localStorage === "undefined") return DEFAULT_PREFERENCES;
+
     try {
-      const stored = localStorage.getItem('notificationPreferences');
+      const stored = localStorage.getItem("notificationPreferences");
       if (stored) {
         return { ...DEFAULT_PREFERENCES, ...JSON.parse(stored) };
       }
     } catch (error) {
-      logger.error('Failed to load notification preferences:', error);
+      logger.error("Failed to load notification preferences:", error);
     }
     return DEFAULT_PREFERENCES;
   }
@@ -120,13 +122,16 @@ class NotificationManagerClass {
    */
   private savePreferences(): void {
     // Guard for server-side rendering
-    if (typeof localStorage === 'undefined') return;
-    
+    if (typeof localStorage === "undefined") return;
+
     try {
-      localStorage.setItem('notificationPreferences', JSON.stringify(this.preferences));
+      localStorage.setItem(
+        "notificationPreferences",
+        JSON.stringify(this.preferences)
+      );
       this.notifyPreferencesListeners();
     } catch (error) {
-      logger.error('Failed to save notification preferences:', error);
+      logger.error("Failed to save notification preferences:", error);
     }
   }
 
@@ -135,17 +140,17 @@ class NotificationManagerClass {
    */
   private loadHistory(): void {
     // Guard for server-side rendering
-    if (typeof localStorage === 'undefined') return;
+    if (typeof localStorage === "undefined") return;
     if (!this.preferences.persistHistory) return;
-    
+
     try {
-      const stored = localStorage.getItem('notificationHistory');
+      const stored = localStorage.getItem("notificationHistory");
       if (stored) {
         this.notifications = JSON.parse(stored);
         this.notifyListeners();
       }
     } catch (error) {
-      logger.error('Failed to load notification history:', error);
+      logger.error("Failed to load notification history:", error);
     }
   }
 
@@ -154,13 +159,13 @@ class NotificationManagerClass {
    */
   private saveHistory(): void {
     if (!this.preferences.persistHistory) return;
-    
+
     try {
       // Keep only the most recent notifications
       const toSave = this.notifications.slice(-this.preferences.maxHistorySize);
-      localStorage.setItem('notificationHistory', JSON.stringify(toSave));
+      localStorage.setItem("notificationHistory", JSON.stringify(toSave));
     } catch (error) {
-      logger.error('Failed to save notification history:', error);
+      logger.error("Failed to save notification history:", error);
     }
   }
 
@@ -168,8 +173,8 @@ class NotificationManagerClass {
    * Request browser notification permission
    */
   private async requestBrowserNotificationPermission(): Promise<void> {
-    if ('Notification' in window && this.preferences.showBrowserNotifications) {
-      if (Notification.permission === 'default') {
+    if ("Notification" in window && this.preferences.showBrowserNotifications) {
+      if (Notification.permission === "default") {
         await Notification.requestPermission();
       }
     }
@@ -180,19 +185,19 @@ class NotificationManagerClass {
    */
   private showBrowserNotification(notification: Notification): void {
     if (!this.preferences.showBrowserNotifications) return;
-    if (!('Notification' in window)) return;
-    if (Notification.permission !== 'granted') return;
+    if (!("Notification" in window)) return;
+    if (Notification.permission !== "granted") return;
 
     const options: NotificationOptions = {
       body: notification.message,
-      icon: '/icon-192.png',
-      badge: '/icon-192.png',
+      icon: "/icon-192.png",
+      badge: "/icon-192.png",
       tag: notification.id,
-      requireInteraction: notification.priority === 'urgent',
+      requireInteraction: notification.priority === "urgent",
     };
 
     const browserNotification = new Notification(notification.title, options);
-    
+
     if (notification.action) {
       browserNotification.onclick = () => {
         notification.action?.onClick();
@@ -201,7 +206,7 @@ class NotificationManagerClass {
     }
 
     // Auto close after delay based on priority
-    const autoCloseDelay = notification.priority === 'urgent' ? 10000 : 5000;
+    const autoCloseDelay = notification.priority === "urgent" ? 10000 : 5000;
     setTimeout(() => browserNotification.close(), autoCloseDelay);
   }
 
@@ -210,19 +215,19 @@ class NotificationManagerClass {
    */
   private playSound(priority: NotificationPriority): void {
     if (!this.preferences.playSound) return;
-    
+
     try {
       const audio = new Audio();
       // Different sounds for different priorities
       switch (priority) {
-        case 'urgent':
-          audio.src = '/sounds/urgent.mp3';
+        case "urgent":
+          audio.src = "/sounds/urgent.mp3";
           break;
-        case 'high':
-          audio.src = '/sounds/high.mp3';
+        case "high":
+          audio.src = "/sounds/high.mp3";
           break;
         default:
-          audio.src = '/sounds/default.mp3';
+          audio.src = "/sounds/default.mp3";
           break;
       }
       audio.play().catch(() => {
@@ -255,13 +260,13 @@ class NotificationManagerClass {
    */
   private getDuration(priority: NotificationPriority): number {
     switch (priority) {
-      case 'urgent':
+      case "urgent":
         return 10000;
-      case 'high':
+      case "high":
         return 6000;
-      case 'normal':
+      case "normal":
         return 4000;
-      case 'low':
+      case "low":
         return 3000;
       default:
         return 4000;
@@ -275,23 +280,25 @@ class NotificationManagerClass {
     const options: any = {
       description: notification.message,
       duration: this.getDuration(notification.priority),
-      action: notification.action ? {
-        label: notification.action.label,
-        onClick: notification.action.onClick,
-      } : undefined,
+      action: notification.action
+        ? {
+            label: notification.action.label,
+            onClick: notification.action.onClick,
+          }
+        : undefined,
     };
 
     switch (notification.type) {
-      case 'success':
+      case "success":
         toast.success(notification.title, options);
         break;
-      case 'error':
+      case "error":
         toast.error(notification.title, options);
         break;
-      case 'warning':
+      case "warning":
         toast.warning(notification.title, options);
         break;
-      case 'info':
+      case "info":
       default:
         toast.info(notification.title, options);
         break;
@@ -306,14 +313,21 @@ class NotificationManagerClass {
 
     // Sort by priority (urgent first)
     const priorityOrder = { urgent: 0, high: 1, normal: 2, low: 3 };
-    this.batchQueue.sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
+    this.batchQueue.sort(
+      (a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]
+    );
 
     // Take top N notifications based on max batch size
-    const toShow = this.batchQueue.slice(0, this.preferences.maxNotificationsPerBatch);
-    const remaining = this.batchQueue.slice(this.preferences.maxNotificationsPerBatch);
+    const toShow = this.batchQueue.slice(
+      0,
+      this.preferences.maxNotificationsPerBatch
+    );
+    const remaining = this.batchQueue.slice(
+      this.preferences.maxNotificationsPerBatch
+    );
 
     // Show individual notifications
-    toShow.forEach(notification => {
+    toShow.forEach((notification) => {
       this.showToast(notification);
       this.showBrowserNotification(notification);
       this.playSound(notification.priority);
@@ -321,19 +335,16 @@ class NotificationManagerClass {
 
     // If there are remaining notifications, show a summary
     if (remaining.length > 0) {
-      toast.info(
-        `+${remaining.length} more notifications`,
-        {
-          description: 'Click to view all notifications',
-          action: {
-            label: 'View',
-            onClick: () => {
-              // This will be handled by the UI component
-              window.dispatchEvent(new CustomEvent('openNotificationPanel'));
-            },
+      toast.info(`+${remaining.length} more notifications`, {
+        description: "Click to view all notifications",
+        action: {
+          label: "View",
+          onClick: () => {
+            // This will be handled by the UI component
+            window.dispatchEvent(new CustomEvent("openNotificationPanel"));
           },
-        }
-      );
+        },
+      });
     }
 
     // Clear the batch queue
@@ -362,14 +373,16 @@ class NotificationManagerClass {
    * Notify all listeners
    */
   private notifyListeners(): void {
-    this.listeners.forEach(listener => listener([...this.notifications]));
+    this.listeners.forEach((listener) => listener([...this.notifications]));
   }
 
   /**
    * Notify preferences listeners
    */
   private notifyPreferencesListeners(): void {
-    this.preferencesListeners.forEach(listener => listener({ ...this.preferences }));
+    this.preferencesListeners.forEach((listener) =>
+      listener({ ...this.preferences })
+    );
   }
 
   /**
@@ -391,8 +404,8 @@ class NotificationManagerClass {
       type,
       title,
       message: options.message,
-      priority: options.priority || 'normal',
-      category: options.category || 'general',
+      priority: options.priority || "normal",
+      category: options.category || "general",
       timestamp: Date.now(),
       read: false,
       dismissed: false,
@@ -418,7 +431,10 @@ class NotificationManagerClass {
     }
 
     // Handle batching or show immediately
-    if (this.preferences.batchingEnabled && notification.priority !== 'urgent') {
+    if (
+      this.preferences.batchingEnabled &&
+      notification.priority !== "urgent"
+    ) {
       this.addToBatch(notification);
     } else {
       // Show immediately for urgent notifications or when batching is disabled
@@ -434,7 +450,7 @@ class NotificationManagerClass {
    * Mark notification as read
    */
   public markAsRead(id: string): void {
-    const notification = this.notifications.find(n => n.id === id);
+    const notification = this.notifications.find((n) => n.id === id);
     if (notification) {
       notification.read = true;
       this.saveHistory();
@@ -446,7 +462,7 @@ class NotificationManagerClass {
    * Mark all notifications as read
    */
   public markAllAsRead(): void {
-    this.notifications.forEach(n => n.read = true);
+    this.notifications.forEach((n) => (n.read = true));
     this.saveHistory();
     this.notifyListeners();
   }
@@ -455,7 +471,7 @@ class NotificationManagerClass {
    * Dismiss notification
    */
   public dismiss(id: string): void {
-    const notification = this.notifications.find(n => n.id === id);
+    const notification = this.notifications.find((n) => n.id === id);
     if (notification) {
       notification.dismissed = true;
       this.saveHistory();
@@ -476,8 +492,8 @@ class NotificationManagerClass {
    * Clear old notifications (older than N days)
    */
   public clearOld(days: number = 7): void {
-    const cutoff = Date.now() - (days * 24 * 60 * 60 * 1000);
-    this.notifications = this.notifications.filter(n => n.timestamp > cutoff);
+    const cutoff = Date.now() - days * 24 * 60 * 60 * 1000;
+    this.notifications = this.notifications.filter((n) => n.timestamp > cutoff);
     this.saveHistory();
     this.notifyListeners();
   }
@@ -493,27 +509,29 @@ class NotificationManagerClass {
    * Get unread notifications
    */
   public getUnread(): Notification[] {
-    return this.notifications.filter(n => !n.read && !n.dismissed);
+    return this.notifications.filter((n) => !n.read && !n.dismissed);
   }
 
   /**
    * Get notifications by category
    */
   public getByCategory(category: NotificationCategory): Notification[] {
-    return this.notifications.filter(n => n.category === category);
+    return this.notifications.filter((n) => n.category === category);
   }
 
   /**
    * Get notifications by priority
    */
   public getByPriority(priority: NotificationPriority): Notification[] {
-    return this.notifications.filter(n => n.priority === priority);
+    return this.notifications.filter((n) => n.priority === priority);
   }
 
   /**
    * Subscribe to notification changes
    */
-  public subscribe(listener: (notifications: Notification[]) => void): () => void {
+  public subscribe(
+    listener: (notifications: Notification[]) => void
+  ): () => void {
     this.listeners.add(listener);
     // Immediately notify with current state
     listener([...this.notifications]);
@@ -524,7 +542,9 @@ class NotificationManagerClass {
   /**
    * Subscribe to preferences changes
    */
-  public subscribeToPreferences(listener: (preferences: NotificationPreferences) => void): () => void {
+  public subscribeToPreferences(
+    listener: (preferences: NotificationPreferences) => void
+  ): () => void {
     this.preferencesListeners.add(listener);
     // Immediately notify with current state
     listener({ ...this.preferences });
@@ -545,7 +565,7 @@ class NotificationManagerClass {
   public updatePreferences(updates: Partial<NotificationPreferences>): void {
     this.preferences = { ...this.preferences, ...updates };
     this.savePreferences();
-    
+
     // Request browser notification permission if enabled
     if (updates.showBrowserNotifications) {
       this.requestBrowserNotificationPermission();
@@ -567,23 +587,26 @@ class NotificationManagerClass {
     const total = this.notifications.length;
     const unread = this.getUnread().length;
     const byType = {
-      success: this.notifications.filter(n => n.type === 'success').length,
-      error: this.notifications.filter(n => n.type === 'error').length,
-      warning: this.notifications.filter(n => n.type === 'warning').length,
-      info: this.notifications.filter(n => n.type === 'info').length,
+      success: this.notifications.filter((n) => n.type === "success").length,
+      error: this.notifications.filter((n) => n.type === "error").length,
+      warning: this.notifications.filter((n) => n.type === "warning").length,
+      info: this.notifications.filter((n) => n.type === "info").length,
     };
     const byPriority = {
-      urgent: this.notifications.filter(n => n.priority === 'urgent').length,
-      high: this.notifications.filter(n => n.priority === 'high').length,
-      normal: this.notifications.filter(n => n.priority === 'normal').length,
-      low: this.notifications.filter(n => n.priority === 'low').length,
+      urgent: this.notifications.filter((n) => n.priority === "urgent").length,
+      high: this.notifications.filter((n) => n.priority === "high").length,
+      normal: this.notifications.filter((n) => n.priority === "normal").length,
+      low: this.notifications.filter((n) => n.priority === "low").length,
     };
-    const byCategory = Object.keys(this.preferences.categories).reduce((acc, cat) => {
-      acc[cat as NotificationCategory] = this.notifications.filter(
-        n => n.category === cat
-      ).length;
-      return acc;
-    }, {} as Record<NotificationCategory, number>);
+    const byCategory = Object.keys(this.preferences.categories).reduce(
+      (acc, cat) => {
+        acc[cat as NotificationCategory] = this.notifications.filter(
+          (n) => n.category === cat
+        ).length;
+        return acc;
+      },
+      {} as Record<NotificationCategory, number>
+    );
 
     return {
       total,
@@ -600,15 +623,23 @@ export const NotificationManager = new NotificationManagerClass();
 
 // Export convenience methods
 export const notify = {
-  success: (title: string, options?: Omit<Parameters<typeof NotificationManager.notify>[2], 'type'>) =>
-    NotificationManager.notify('success', title, options),
-  
-  error: (title: string, options?: Omit<Parameters<typeof NotificationManager.notify>[2], 'type'>) =>
-    NotificationManager.notify('error', title, options),
-  
-  warning: (title: string, options?: Omit<Parameters<typeof NotificationManager.notify>[2], 'type'>) =>
-    NotificationManager.notify('warning', title, options),
-  
-  info: (title: string, options?: Omit<Parameters<typeof NotificationManager.notify>[2], 'type'>) =>
-    NotificationManager.notify('info', title, options),
+  success: (
+    title: string,
+    options?: Omit<Parameters<typeof NotificationManager.notify>[2], "type">
+  ) => NotificationManager.notify("success", title, options),
+
+  error: (
+    title: string,
+    options?: Omit<Parameters<typeof NotificationManager.notify>[2], "type">
+  ) => NotificationManager.notify("error", title, options),
+
+  warning: (
+    title: string,
+    options?: Omit<Parameters<typeof NotificationManager.notify>[2], "type">
+  ) => NotificationManager.notify("warning", title, options),
+
+  info: (
+    title: string,
+    options?: Omit<Parameters<typeof NotificationManager.notify>[2], "type">
+  ) => NotificationManager.notify("info", title, options),
 };

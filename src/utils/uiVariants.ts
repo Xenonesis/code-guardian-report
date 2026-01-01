@@ -27,21 +27,29 @@ export const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "text-white shadow-2xl hover:shadow-[0_20px_40px_-12px_rgba(59,130,246,0.4)] transform hover:scale-110 focus:scale-110 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:via-indigo-500 hover:to-purple-500",
+        default:
+          "text-white shadow-2xl hover:shadow-[0_20px_40px_-12px_rgba(59,130,246,0.4)] transform hover:scale-110 focus:scale-110 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:via-indigo-500 hover:to-purple-500",
         destructive:
           "text-white shadow-2xl hover:shadow-[0_20px_40px_-12px_rgba(239,68,68,0.4)] transform hover:scale-110 bg-gradient-to-r from-red-600 via-pink-600 to-rose-600 hover:from-red-500 hover:via-pink-500 hover:to-rose-500",
         outline:
           "border-2 border-white/30 dark:border-white/20 bg-white/10 dark:bg-black/10 backdrop-blur-xl hover:border-blue-300/50 dark:hover:border-blue-600/50 text-slate-700 dark:text-slate-300 shadow-xl hover:shadow-2xl transform hover:scale-110 hover:bg-white/20 dark:hover:bg-black/20",
         secondary:
           "bg-white/15 dark:bg-black/15 backdrop-blur-xl border border-white/20 dark:border-white/10 text-slate-900 dark:text-slate-100 hover:bg-white/25 dark:hover:bg-black/25 shadow-xl hover:shadow-2xl transform hover:scale-110",
-        ghost: "hover:bg-white/10 dark:hover:bg-black/10 backdrop-blur-sm text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transform hover:scale-110",
+        ghost:
+          "hover:bg-white/10 dark:hover:bg-black/10 backdrop-blur-sm text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transform hover:scale-110",
         link: "text-blue-600 dark:text-blue-400 underline-offset-4 hover:underline hover:text-blue-700 dark:hover:text-blue-300 transform hover:scale-105",
-        modern: "bg-white/95 dark:bg-slate-800/95 backdrop-blur-xl border border-white/30 dark:border-white/20 text-slate-900 dark:text-white shadow-2xl hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] hover:bg-white dark:hover:bg-slate-700 transform hover:scale-110",
-        glass: "backdrop-blur-2xl bg-white/10 dark:bg-black/10 border border-white/30 dark:border-white/20 text-slate-900 dark:text-white shadow-2xl hover:bg-white/20 dark:hover:bg-black/20 hover:border-white/50 dark:hover:border-white/30 transform hover:scale-110",
-        gradient: "text-white shadow-2xl hover:shadow-[0_20px_40px_-12px_rgba(147,51,234,0.4)] transform hover:scale-110 bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 hover:from-purple-500 hover:via-pink-500 hover:to-rose-500",
-        success: "text-white shadow-2xl hover:shadow-[0_20px_40px_-12px_rgba(16,185,129,0.4)] transform hover:scale-110 bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 hover:from-emerald-500 hover:via-teal-500 hover:to-cyan-500",
-        warning: "text-white shadow-2xl hover:shadow-[0_20px_40px_-12px_rgba(245,158,11,0.4)] transform hover:scale-110 bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 hover:from-amber-400 hover:via-orange-400 hover:to-red-400",
-        ultra: "text-white shadow-2xl hover:shadow-[0_25px_50px_-12px_rgba(59,130,246,0.5)] transform hover:scale-110 focus:scale-110 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-500 hover:via-purple-500 hover:to-pink-500 animate-gradient-flow"
+        modern:
+          "bg-white/95 dark:bg-slate-800/95 backdrop-blur-xl border border-white/30 dark:border-white/20 text-slate-900 dark:text-white shadow-2xl hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] hover:bg-white dark:hover:bg-slate-700 transform hover:scale-110",
+        glass:
+          "backdrop-blur-2xl bg-white/10 dark:bg-black/10 border border-white/30 dark:border-white/20 text-slate-900 dark:text-white shadow-2xl hover:bg-white/20 dark:hover:bg-black/20 hover:border-white/50 dark:hover:border-white/30 transform hover:scale-110",
+        gradient:
+          "text-white shadow-2xl hover:shadow-[0_20px_40px_-12px_rgba(147,51,234,0.4)] transform hover:scale-110 bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 hover:from-purple-500 hover:via-pink-500 hover:to-rose-500",
+        success:
+          "text-white shadow-2xl hover:shadow-[0_20px_40px_-12px_rgba(16,185,129,0.4)] transform hover:scale-110 bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 hover:from-emerald-500 hover:via-teal-500 hover:to-cyan-500",
+        warning:
+          "text-white shadow-2xl hover:shadow-[0_20px_40px_-12px_rgba(245,158,11,0.4)] transform hover:scale-110 bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 hover:from-amber-400 hover:via-orange-400 hover:to-red-400",
+        ultra:
+          "text-white shadow-2xl hover:shadow-[0_25px_50px_-12px_rgba(59,130,246,0.5)] transform hover:scale-110 focus:scale-110 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-500 hover:via-purple-500 hover:to-pink-500 animate-gradient-flow",
       },
       size: {
         default: "h-12 px-8 py-3 text-sm",
@@ -52,7 +60,7 @@ export const buttonVariants = cva(
         icon: "h-12 w-12 rounded-2xl",
         "icon-sm": "h-10 w-10 rounded-xl",
         "icon-lg": "h-14 w-14 rounded-2xl",
-        "icon-xl": "h-16 w-16 rounded-3xl"
+        "icon-xl": "h-16 w-16 rounded-3xl",
       },
     },
     defaultVariants: {

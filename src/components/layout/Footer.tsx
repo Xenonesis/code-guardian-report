@@ -1,52 +1,103 @@
 "use client";
 
-import * as React from 'react';
-import { Shield, Heart, Mail, Github, Globe, Scale, FileText, Code, Building2, Brain, Star, Users, Youtube, Linkedin, ExternalLink } from 'lucide-react';
-import { APP_VERSION_WITH_PREFIX } from '@/utils/version';
+import * as React from "react";
+import {
+  Shield,
+  Heart,
+  Mail,
+  Github,
+  Globe,
+  Scale,
+  FileText,
+  Code,
+  Building2,
+  Brain,
+  Star,
+  Users,
+  Youtube,
+  Linkedin,
+  ExternalLink,
+} from "lucide-react";
+import { APP_VERSION_WITH_PREFIX } from "@/utils/version";
 
 interface FooterProps {
   className?: string;
 }
 
-export const Footer: React.FC<FooterProps> = ({ className = '' }) => {
+export const Footer: React.FC<FooterProps> = ({ className = "" }) => {
   const currentYear = new Date().getFullYear();
 
   // Smooth scroll to section
   const scrollToSection = (sectionId: string) => {
     const section = document.getElementById(sectionId);
     if (section) {
-      section.scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start'
+      section.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
       });
     }
   };
 
   const footerLinks = {
     main: [
-      { id: 'home', label: 'AI Platform', description: 'Next-gen security analysis' },
-      { id: 'about', label: 'About', description: 'Enterprise tools' }
+      {
+        id: "home",
+        label: "AI Platform",
+        description: "Next-gen security analysis",
+      },
+      { id: "about", label: "About", description: "Enterprise tools" },
     ],
     legal: [
-      { id: 'privacy', label: 'Privacy Policy', description: 'Data protection' },
-      { id: 'terms', label: 'Terms of Service', description: 'Usage terms' }
+      {
+        id: "privacy",
+        label: "Privacy Policy",
+        description: "Data protection",
+      },
+      { id: "terms", label: "Terms of Service", description: "Usage terms" },
     ],
     resources: [
-      { path: '#documentation', label: 'Documentation', description: 'User guides' },
-      { path: '#api-reference', label: 'API Reference', description: 'Developer docs' },
-      { path: '#community', label: 'Community', description: 'Join developers' },
-      { path: '#support', label: 'Support', description: 'Get help' }
-    ]
+      {
+        path: "#documentation",
+        label: "Documentation",
+        description: "User guides",
+      },
+      {
+        path: "#api-reference",
+        label: "API Reference",
+        description: "Developer docs",
+      },
+      {
+        path: "#community",
+        label: "Community",
+        description: "Join developers",
+      },
+      { path: "#support", label: "Support", description: "Get help" },
+    ],
   };
 
   const socialLinks = [
-    { name: 'GitHub', icon: Github, href: 'https://github.com/Xenonesis/code-guardian-report' },
-    { name: 'YouTube', icon: Youtube, href: 'https://youtube.com/@techiaddy?si=lPZBPOwHtnrFz-mk' },
-    { name: 'LinkedIn', icon: Linkedin, href: 'https://www.linkedin.com/in/itisaddy/' }
+    {
+      name: "GitHub",
+      icon: Github,
+      href: "https://github.com/Xenonesis/code-guardian-report",
+    },
+    {
+      name: "YouTube",
+      icon: Youtube,
+      href: "https://youtube.com/@techiaddy?si=lPZBPOwHtnrFz-mk",
+    },
+    {
+      name: "LinkedIn",
+      icon: Linkedin,
+      href: "https://www.linkedin.com/in/itisaddy/",
+    },
   ];
 
   return (
-    <footer className={`relative overflow-hidden bg-gradient-to-br from-slate-100 via-blue-50 to-slate-100 dark:from-slate-950 dark:via-blue-950 dark:to-slate-950 border-t border-slate-200/50 dark:border-slate-700/30 ${className}`} style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
+    <footer
+      className={`relative overflow-hidden bg-gradient-to-br from-slate-100 via-blue-50 to-slate-100 dark:from-slate-950 dark:via-blue-950 dark:to-slate-950 border-t border-slate-200/50 dark:border-slate-700/30 ${className}`}
+      style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+    >
       {/* Enhanced Background Effects */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 left-1/4 w-64 h-64 bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-pink-500/5 rounded-full blur-3xl animate-float-slow"></div>
@@ -68,12 +119,24 @@ export const Footer: React.FC<FooterProps> = ({ className = '' }) => {
                 <h3 className="text-xl sm:text-xl lg:text-2xl font-bold bg-gradient-to-r from-slate-900 to-blue-900 dark:from-white dark:to-blue-100 bg-clip-text text-transparent">
                   Code Guardian
                 </h3>
-                <p className="text-xs sm:text-sm" style={{ overflowWrap: 'break-word', whiteSpace: 'normal', wordBreak: 'break-word', maxWidth: '100%' }}>AI-Powered Security Platform</p>
+                <p
+                  className="text-xs sm:text-sm"
+                  style={{
+                    overflowWrap: "break-word",
+                    whiteSpace: "normal",
+                    wordBreak: "break-word",
+                    maxWidth: "100%",
+                  }}
+                >
+                  AI-Powered Security Platform
+                </p>
               </div>
             </div>
-            
+
             <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300 mb-6 sm:mb-7 lg:mb-8 max-w-md leading-relaxed">
-              Revolutionizing code security with advanced AI analysis, real-time threat detection, and comprehensive vulnerability assessment for modern development teams.
+              Revolutionizing code security with advanced AI analysis, real-time
+              threat detection, and comprehensive vulnerability assessment for
+              modern development teams.
             </p>
 
             {/* Enhanced Social Links */}
@@ -138,7 +201,9 @@ export const Footer: React.FC<FooterProps> = ({ className = '' }) => {
                     <span className="group-hover:translate-x-1 transition-transform duration-300">
                       {link.label}
                     </span>
-                    {link.path === '#' && <ExternalLink className="h-2.5 w-2.5 sm:h-3 sm:w-3 opacity-60 group-hover:opacity-100" />}
+                    {link.path === "#" && (
+                      <ExternalLink className="h-2.5 w-2.5 sm:h-3 sm:w-3 opacity-60 group-hover:opacity-100" />
+                    )}
                   </a>
                 </li>
               ))}
@@ -178,12 +243,17 @@ export const Footer: React.FC<FooterProps> = ({ className = '' }) => {
               <div className="flex items-center gap-2 sm:gap-2.5 lg:gap-3 text-slate-700 dark:text-slate-300">
                 <div className="flex items-center gap-1.5 sm:gap-2">
                   <Heart className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-red-400 animate-pulse" />
-                  <span className="text-center sm:text-left">© {currentYear} Code Guardian. Made with love for developers.</span>
+                  <span className="text-center sm:text-left">
+                    © {currentYear} Code Guardian. Made with love for
+                    developers.
+                  </span>
                 </div>
               </div>
               <div className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-gradient-to-r from-blue-500/20 to-indigo-500/20 border border-blue-400/30 backdrop-blur-sm">
                 <Star className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-yellow-400" />
-                <span className="text-xs sm:text-sm text-blue-900 dark:text-blue-100 font-medium">Trusted by 10K+ developers</span>
+                <span className="text-xs sm:text-sm text-blue-900 dark:text-blue-100 font-medium">
+                  Trusted by 10K+ developers
+                </span>
               </div>
             </div>
 
@@ -198,7 +268,9 @@ export const Footer: React.FC<FooterProps> = ({ className = '' }) => {
               </a>
               <div className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-lg bg-slate-200/50 border border-slate-300/50 dark:bg-slate-800/50 dark:border-slate-700/50 backdrop-blur-sm">
                 <Code className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-slate-600 dark:text-slate-400" />
-                <span className="text-xs sm:text-sm text-slate-700 dark:text-slate-300">{APP_VERSION_WITH_PREFIX}</span>
+                <span className="text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+                  {APP_VERSION_WITH_PREFIX}
+                </span>
               </div>
             </div>
           </div>
@@ -210,19 +282,25 @@ export const Footer: React.FC<FooterProps> = ({ className = '' }) => {
                 <div className="p-0.5 sm:p-1 bg-gradient-to-r from-blue-500/20 to-indigo-500/20 rounded-full">
                   <Globe className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-blue-600 group-hover:text-blue-700 dark:text-blue-300 dark:group-hover:text-blue-200 transition-colors duration-300" />
                 </div>
-                <span className="group-hover:text-slate-700 dark:group-hover:text-slate-300 transition-colors duration-300">Global Security Platform</span>
+                <span className="group-hover:text-slate-700 dark:group-hover:text-slate-300 transition-colors duration-300">
+                  Global Security Platform
+                </span>
               </div>
               <div className="flex items-center gap-1.5 sm:gap-2 group">
                 <div className="p-0.5 sm:p-1 bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-full">
                   <Shield className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-green-600 group-hover:text-green-700 dark:text-green-300 dark:group-hover:text-green-200 transition-colors duration-300" />
                 </div>
-                <span className="group-hover:text-slate-700 dark:group-hover:text-slate-300 transition-colors duration-300">SOC 2 Type II Compliant</span>
+                <span className="group-hover:text-slate-700 dark:group-hover:text-slate-300 transition-colors duration-300">
+                  SOC 2 Type II Compliant
+                </span>
               </div>
               <div className="flex items-center gap-1.5 sm:gap-2 group">
                 <div className="p-0.5 sm:p-1 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full">
                   <Users className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-purple-600 group-hover:text-purple-700 dark:text-purple-300 dark:group-hover:text-purple-200 transition-colors duration-300" />
                 </div>
-                <span className="group-hover:text-slate-700 dark:group-hover:text-slate-300 transition-colors duration-300">ISO 27001 Certified</span>
+                <span className="group-hover:text-slate-700 dark:group-hover:text-slate-300 transition-colors duration-300">
+                  ISO 27001 Certified
+                </span>
               </div>
             </div>
           </div>

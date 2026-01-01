@@ -1,10 +1,10 @@
 /**
  * Modern Security Dashboard Component
- * 
+ *
  * Displays SonarQube-style security and code quality metrics:
  * - Quality Gate status
  * - Security Rating (A-E)
- * - Reliability Rating (A-E)  
+ * - Reliability Rating (A-E)
  * - Maintainability Rating (A-E)
  * - Technical Debt
  * - Code Coverage estimate
@@ -12,10 +12,16 @@
  * - Issue breakdown by type
  */
 
-import React from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
+import React from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
 import {
   Shield,
   Bug,
@@ -27,9 +33,9 @@ import {
   XCircle,
   Activity,
   Target,
-  Zap
-} from 'lucide-react';
-import { CodeQualityMetrics } from '@/services/security/modernCodeScanningService';
+  Zap,
+} from "lucide-react";
+import { CodeQualityMetrics } from "@/services/security/modernCodeScanningService";
 
 export interface ModernSecurityDashboardProps {
   metrics: CodeQualityMetrics;
@@ -38,7 +44,7 @@ export interface ModernSecurityDashboardProps {
     passed: boolean;
     conditions: Array<{
       metric: string;
-      status: 'OK' | 'ERROR';
+      status: "OK" | "ERROR";
       value: number;
       threshold: number;
     }>;
@@ -48,61 +54,67 @@ export interface ModernSecurityDashboardProps {
 
 const getRatingColor = (rating: string): string => {
   switch (rating) {
-    case 'A':
-      return 'bg-green-100 text-green-800 border-green-200 dark:bg-green-900/30 dark:text-green-300';
-    case 'B':
-      return 'bg-lime-100 text-lime-800 border-lime-200 dark:bg-lime-900/30 dark:text-lime-300';
-    case 'C':
-      return 'bg-yellow-100 text-yellow-800 border-yellow-200 dark:bg-yellow-900/30 dark:text-yellow-300';
-    case 'D':
-      return 'bg-orange-100 text-orange-800 border-orange-200 dark:bg-orange-900/30 dark:text-orange-300';
-    case 'E':
-      return 'bg-red-100 text-red-800 border-red-200 dark:bg-red-900/30 dark:text-red-300';
+    case "A":
+      return "bg-green-100 text-green-800 border-green-200 dark:bg-green-900/30 dark:text-green-300";
+    case "B":
+      return "bg-lime-100 text-lime-800 border-lime-200 dark:bg-lime-900/30 dark:text-lime-300";
+    case "C":
+      return "bg-yellow-100 text-yellow-800 border-yellow-200 dark:bg-yellow-900/30 dark:text-yellow-300";
+    case "D":
+      return "bg-orange-100 text-orange-800 border-orange-200 dark:bg-orange-900/30 dark:text-orange-300";
+    case "E":
+      return "bg-red-100 text-red-800 border-red-200 dark:bg-red-900/30 dark:text-red-300";
     default:
-      return 'bg-gray-100 text-gray-800 border-gray-200 dark:bg-gray-900/30 dark:text-gray-300';
+      return "bg-gray-100 text-gray-800 border-gray-200 dark:bg-gray-900/30 dark:text-gray-300";
   }
 };
 
 const calculateSecurityRating = (vulnerabilities: number): string => {
-  if (vulnerabilities === 0) return 'A';
-  if (vulnerabilities <= 2) return 'B';
-  if (vulnerabilities <= 5) return 'C';
-  if (vulnerabilities <= 10) return 'D';
-  return 'E';
+  if (vulnerabilities === 0) return "A";
+  if (vulnerabilities <= 2) return "B";
+  if (vulnerabilities <= 5) return "C";
+  if (vulnerabilities <= 10) return "D";
+  return "E";
 };
 
 const calculateReliabilityRating = (bugs: number): string => {
-  if (bugs === 0) return 'A';
-  if (bugs <= 3) return 'B';
-  if (bugs <= 7) return 'C';
-  if (bugs <= 15) return 'D';
-  return 'E';
+  if (bugs === 0) return "A";
+  if (bugs <= 3) return "B";
+  if (bugs <= 7) return "C";
+  if (bugs <= 15) return "D";
+  return "E";
 };
 
-const calculateMaintainabilityRating = (maintainabilityIndex: number): string => {
-  if (maintainabilityIndex >= 80) return 'A';
-  if (maintainabilityIndex >= 65) return 'B';
-  if (maintainabilityIndex >= 50) return 'C';
-  if (maintainabilityIndex >= 35) return 'D';
-  return 'E';
+const calculateMaintainabilityRating = (
+  maintainabilityIndex: number
+): string => {
+  if (maintainabilityIndex >= 80) return "A";
+  if (maintainabilityIndex >= 65) return "B";
+  if (maintainabilityIndex >= 50) return "C";
+  if (maintainabilityIndex >= 35) return "D";
+  return "E";
 };
 
-export const ModernSecurityDashboard: React.FC<ModernSecurityDashboardProps> = ({
-  metrics,
-  technicalDebt,
-  qualityGate,
-  totalIssues
-}) => {
+export const ModernSecurityDashboard: React.FC<
+  ModernSecurityDashboardProps
+> = ({ metrics, technicalDebt, qualityGate, totalIssues }) => {
   const securityRating = calculateSecurityRating(metrics.vulnerabilities);
   const reliabilityRating = calculateReliabilityRating(metrics.bugs);
-  const maintainabilityRating = calculateMaintainabilityRating(metrics.maintainabilityIndex);
+  const maintainabilityRating = calculateMaintainabilityRating(
+    metrics.maintainabilityIndex
+  );
   const debtDays = (technicalDebt / (8 * 60)).toFixed(1);
-  const duplicatedLinesPercent = ((metrics.duplicatedLines / metrics.linesOfCode) * 100).toFixed(1);
+  const duplicatedLinesPercent = (
+    (metrics.duplicatedLines / metrics.linesOfCode) *
+    100
+  ).toFixed(1);
 
   return (
     <div className="space-y-6">
       {/* Quality Gate Status */}
-      <Card className={`border-2 ${qualityGate.passed ? 'border-green-500 dark:border-green-700' : 'border-red-500 dark:border-red-700'}`}>
+      <Card
+        className={`border-2 ${qualityGate.passed ? "border-green-500 dark:border-green-700" : "border-red-500 dark:border-red-700"}`}
+      >
         <CardHeader>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -113,13 +125,12 @@ export const ModernSecurityDashboard: React.FC<ModernSecurityDashboardProps> = (
               )}
               <div>
                 <CardTitle className="text-2xl">
-                  Quality Gate {qualityGate.passed ? 'Passed' : 'Failed'}
+                  Quality Gate {qualityGate.passed ? "Passed" : "Failed"}
                 </CardTitle>
                 <CardDescription>
-                  {qualityGate.passed 
-                    ? 'All quality conditions met'
-                    : `${qualityGate.conditions.filter(c => c.status === 'ERROR').length} condition(s) failed`
-                  }
+                  {qualityGate.passed
+                    ? "All quality conditions met"
+                    : `${qualityGate.conditions.filter((c) => c.status === "ERROR").length} condition(s) failed`}
                 </CardDescription>
               </div>
             </div>
@@ -129,9 +140,12 @@ export const ModernSecurityDashboard: React.FC<ModernSecurityDashboardProps> = (
           <CardContent>
             <div className="space-y-2">
               {qualityGate.conditions
-                .filter(c => c.status === 'ERROR')
+                .filter((c) => c.status === "ERROR")
                 .map((condition, idx) => (
-                  <div key={idx} className="flex items-center justify-between p-3 bg-red-50 dark:bg-red-900/20 rounded-lg">
+                  <div
+                    key={idx}
+                    className="flex items-center justify-between p-3 bg-red-50 dark:bg-red-900/20 rounded-lg"
+                  >
                     <span className="text-sm font-medium text-red-900 dark:text-red-100">
                       {condition.metric}
                     </span>
@@ -158,7 +172,9 @@ export const ModernSecurityDashboard: React.FC<ModernSecurityDashboardProps> = (
                 <Shield className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                 <CardTitle className="text-lg">Security</CardTitle>
               </div>
-              <Badge className={`${getRatingColor(securityRating)} text-xl font-bold px-3 py-1`}>
+              <Badge
+                className={`${getRatingColor(securityRating)} text-xl font-bold px-3 py-1`}
+              >
                 {securityRating}
               </Badge>
             </div>
@@ -166,13 +182,17 @@ export const ModernSecurityDashboard: React.FC<ModernSecurityDashboardProps> = (
           <CardContent>
             <div className="space-y-2">
               <div className="flex justify-between text-sm">
-                <span className="text-slate-600 dark:text-slate-400">Vulnerabilities</span>
+                <span className="text-slate-600 dark:text-slate-400">
+                  Vulnerabilities
+                </span>
                 <span className="font-semibold text-slate-900 dark:text-slate-100">
                   {metrics.vulnerabilities}
                 </span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-slate-600 dark:text-slate-400">Security Hotspots</span>
+                <span className="text-slate-600 dark:text-slate-400">
+                  Security Hotspots
+                </span>
                 <span className="font-semibold text-slate-900 dark:text-slate-100">
                   {metrics.securityHotspots}
                 </span>
@@ -189,7 +209,9 @@ export const ModernSecurityDashboard: React.FC<ModernSecurityDashboardProps> = (
                 <Bug className="h-5 w-5 text-orange-600 dark:text-orange-400" />
                 <CardTitle className="text-lg">Reliability</CardTitle>
               </div>
-              <Badge className={`${getRatingColor(reliabilityRating)} text-xl font-bold px-3 py-1`}>
+              <Badge
+                className={`${getRatingColor(reliabilityRating)} text-xl font-bold px-3 py-1`}
+              >
                 {reliabilityRating}
               </Badge>
             </div>
@@ -203,7 +225,9 @@ export const ModernSecurityDashboard: React.FC<ModernSecurityDashboardProps> = (
                 </span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-slate-600 dark:text-slate-400">Total Issues</span>
+                <span className="text-slate-600 dark:text-slate-400">
+                  Total Issues
+                </span>
                 <span className="font-semibold text-slate-900 dark:text-slate-100">
                   {totalIssues}
                 </span>
@@ -220,7 +244,9 @@ export const ModernSecurityDashboard: React.FC<ModernSecurityDashboardProps> = (
                 <Code2 className="h-5 w-5 text-green-600 dark:text-green-400" />
                 <CardTitle className="text-lg">Maintainability</CardTitle>
               </div>
-              <Badge className={`${getRatingColor(maintainabilityRating)} text-xl font-bold px-3 py-1`}>
+              <Badge
+                className={`${getRatingColor(maintainabilityRating)} text-xl font-bold px-3 py-1`}
+              >
                 {maintainabilityRating}
               </Badge>
             </div>
@@ -228,13 +254,17 @@ export const ModernSecurityDashboard: React.FC<ModernSecurityDashboardProps> = (
           <CardContent>
             <div className="space-y-2">
               <div className="flex justify-between text-sm">
-                <span className="text-slate-600 dark:text-slate-400">Code Smells</span>
+                <span className="text-slate-600 dark:text-slate-400">
+                  Code Smells
+                </span>
                 <span className="font-semibold text-slate-900 dark:text-slate-100">
                   {metrics.codeSmells}
                 </span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-slate-600 dark:text-slate-400">Maintainability</span>
+                <span className="text-slate-600 dark:text-slate-400">
+                  Maintainability
+                </span>
                 <span className="font-semibold text-slate-900 dark:text-slate-100">
                   {metrics.maintainabilityIndex.toFixed(1)}%
                 </span>
@@ -257,24 +287,30 @@ export const ModernSecurityDashboard: React.FC<ModernSecurityDashboardProps> = (
           <CardContent className="space-y-4">
             <div>
               <div className="flex justify-between mb-2">
-                <span className="text-sm text-slate-600 dark:text-slate-400">Remediation Time</span>
+                <span className="text-sm text-slate-600 dark:text-slate-400">
+                  Remediation Time
+                </span>
                 <span className="text-lg font-bold text-purple-600 dark:text-purple-400">
                   {debtDays} days
                 </span>
               </div>
-              <Progress 
-                value={Math.min(100, metrics.technicalDebtRatio * 20)} 
+              <Progress
+                value={Math.min(100, metrics.technicalDebtRatio * 20)}
                 className="h-2"
               />
             </div>
             <div className="flex justify-between text-sm">
-              <span className="text-slate-600 dark:text-slate-400">Debt Ratio</span>
+              <span className="text-slate-600 dark:text-slate-400">
+                Debt Ratio
+              </span>
               <span className="font-semibold text-slate-900 dark:text-slate-100">
                 {metrics.technicalDebtRatio.toFixed(1)}%
               </span>
             </div>
             <div className="flex justify-between text-sm">
-              <span className="text-slate-600 dark:text-slate-400">Remediation Effort</span>
+              <span className="text-slate-600 dark:text-slate-400">
+                Remediation Effort
+              </span>
               <span className="font-semibold text-slate-900 dark:text-slate-100">
                 {technicalDebt} min
               </span>
@@ -292,19 +328,25 @@ export const ModernSecurityDashboard: React.FC<ModernSecurityDashboardProps> = (
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="flex justify-between text-sm">
-              <span className="text-slate-600 dark:text-slate-400">Lines of Code</span>
+              <span className="text-slate-600 dark:text-slate-400">
+                Lines of Code
+              </span>
               <span className="font-semibold text-slate-900 dark:text-slate-100">
                 {metrics.linesOfCode.toLocaleString()}
               </span>
             </div>
             <div className="flex justify-between text-sm">
-              <span className="text-slate-600 dark:text-slate-400">Comment Lines</span>
+              <span className="text-slate-600 dark:text-slate-400">
+                Comment Lines
+              </span>
               <span className="font-semibold text-slate-900 dark:text-slate-100">
                 {metrics.commentLines}
               </span>
             </div>
             <div className="flex justify-between text-sm">
-              <span className="text-slate-600 dark:text-slate-400">Duplicated Lines</span>
+              <span className="text-slate-600 dark:text-slate-400">
+                Duplicated Lines
+              </span>
               <span className="font-semibold text-slate-900 dark:text-slate-100">
                 {duplicatedLinesPercent}%
               </span>

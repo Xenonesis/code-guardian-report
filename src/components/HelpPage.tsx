@@ -1,26 +1,26 @@
 "use client";
 
-import React from 'react';
-import { 
-  HelpCircle, 
-  BookOpen, 
-  Video, 
-  MessageCircle, 
-  Mail, 
-  Github, 
+import React from "react";
+import {
+  HelpCircle,
+  BookOpen,
+  Video,
+  MessageCircle,
+  Mail,
+  Github,
   ExternalLink,
   Shield,
   Code,
   Settings,
   FileText,
-  BarChart3
-} from 'lucide-react';
+  BarChart3,
+} from "lucide-react";
 
 interface HelpPageProps {
   className?: string;
 }
 
-export const HelpPage: React.FC<HelpPageProps> = ({ className = '' }) => {
+export const HelpPage: React.FC<HelpPageProps> = ({ className = "" }) => {
   const helpSections = [
     {
       title: "Getting Started",
@@ -29,19 +29,19 @@ export const HelpPage: React.FC<HelpPageProps> = ({ className = '' }) => {
         {
           title: "Quick Start Guide",
           description: "Learn how to upload and analyze your first code file",
-          link: "#quick-start"
+          link: "#quick-start",
         },
         {
           title: "Supported Languages",
           description: "See which programming languages are supported",
-          link: "#languages"
+          link: "#languages",
         },
         {
           title: "File Upload Guidelines",
           description: "Best practices for uploading code files",
-          link: "#upload-guidelines"
-        }
-      ]
+          link: "#upload-guidelines",
+        },
+      ],
     },
     {
       title: "Analysis Features",
@@ -50,19 +50,19 @@ export const HelpPage: React.FC<HelpPageProps> = ({ className = '' }) => {
         {
           title: "Security Analysis",
           description: "Understanding security vulnerabilities and fixes",
-          link: "#security-analysis"
+          link: "#security-analysis",
         },
         {
           title: "AI Configuration",
           description: "How to configure AI services for analysis",
-          link: "#ai-config"
+          link: "#ai-config",
         },
         {
           title: "Custom Prompts",
           description: "Creating custom analysis prompts",
-          link: "#custom-prompts"
-        }
-      ]
+          link: "#custom-prompts",
+        },
+      ],
     },
     {
       title: "Results & Reports",
@@ -71,19 +71,19 @@ export const HelpPage: React.FC<HelpPageProps> = ({ className = '' }) => {
         {
           title: "Understanding Results",
           description: "How to interpret analysis results",
-          link: "#understanding-results"
+          link: "#understanding-results",
         },
         {
           title: "Export Options",
           description: "Exporting analysis reports in different formats",
-          link: "#export-options"
+          link: "#export-options",
         },
         {
           title: "Analytics Dashboard",
           description: "Using the comprehensive analytics view",
-          link: "#analytics-dashboard"
-        }
-      ]
+          link: "#analytics-dashboard",
+        },
+      ],
     },
     {
       title: "Troubleshooting",
@@ -92,20 +92,20 @@ export const HelpPage: React.FC<HelpPageProps> = ({ className = '' }) => {
         {
           title: "Common Issues",
           description: "Solutions to frequently encountered problems",
-          link: "#common-issues"
+          link: "#common-issues",
         },
         {
           title: "API Configuration",
           description: "Setting up OpenAI and Anthropic API keys",
-          link: "#api-config"
+          link: "#api-config",
         },
         {
           title: "Performance Tips",
           description: "Optimizing analysis performance",
-          link: "#performance-tips"
-        }
-      ]
-    }
+          link: "#performance-tips",
+        },
+      ],
+    },
   ];
 
   const supportOptions = [
@@ -114,26 +114,28 @@ export const HelpPage: React.FC<HelpPageProps> = ({ className = '' }) => {
       icon: <BookOpen className="h-5 w-5" />,
       description: "Comprehensive guides and API reference",
       link: "https://github.com/Xenonesis/code-guardian-report",
-      external: true
+      external: true,
     },
     {
       title: "GitHub Issues",
       icon: <Github className="h-5 w-5" />,
       description: "Report bugs and request features",
       link: "https://github.com/Xenonesis/code-guardian-report/issues",
-      external: true
+      external: true,
     },
     {
       title: "Email Support",
       icon: <Mail className="h-5 w-5" />,
       description: "Get help via email",
       link: "mailto:itisaddy7@gmail.com",
-      external: true
-    }
+      external: true,
+    },
   ];
 
   return (
-    <div className={`min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20 dark:from-slate-950 dark:via-blue-950/30 dark:to-purple-950/20 ${className}`}>
+    <div
+      className={`min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20 dark:from-slate-950 dark:via-blue-950/30 dark:to-purple-950/20 ${className}`}
+    >
       <div className="pt-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="max-w-6xl mx-auto">
@@ -146,14 +148,18 @@ export const HelpPage: React.FC<HelpPageProps> = ({ className = '' }) => {
                 Help & Documentation
               </h1>
               <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
-                Everything you need to know about using Code Guardian for secure code analysis
+                Everything you need to know about using Code Guardian for secure
+                code analysis
               </p>
             </div>
 
             {/* Help Sections */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
               {helpSections.map((section, index) => (
-                <div key={index} className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 rounded-xl p-6">
+                <div
+                  key={index}
+                  className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 rounded-xl p-6"
+                >
                   <div className="flex items-center gap-3 mb-4">
                     <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
                       {section.icon}
@@ -224,19 +230,31 @@ export const HelpPage: React.FC<HelpPageProps> = ({ className = '' }) => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-slate-700 dark:text-slate-300">
                 <div className="flex items-start gap-2">
                   <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Use the sidebar navigation to quickly switch between different analysis features</span>
+                  <span>
+                    Use the sidebar navigation to quickly switch between
+                    different analysis features
+                  </span>
                 </div>
                 <div className="flex items-start gap-2">
                   <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Configure your AI API keys in the AI Configuration tab for enhanced analysis</span>
+                  <span>
+                    Configure your AI API keys in the AI Configuration tab for
+                    enhanced analysis
+                  </span>
                 </div>
                 <div className="flex items-start gap-2">
                   <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Export your analysis results to share with your team or for record keeping</span>
+                  <span>
+                    Export your analysis results to share with your team or for
+                    record keeping
+                  </span>
                 </div>
                 <div className="flex items-start gap-2">
                   <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                  <span>Use custom prompts to tailor the analysis to your specific security requirements</span>
+                  <span>
+                    Use custom prompts to tailor the analysis to your specific
+                    security requirements
+                  </span>
                 </div>
               </div>
             </div>
@@ -245,4 +263,4 @@ export const HelpPage: React.FC<HelpPageProps> = ({ className = '' }) => {
       </div>
     </div>
   );
-}; 
+};

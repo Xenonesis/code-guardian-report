@@ -1,4 +1,7 @@
-import { type StoredAnalysisData, type StorageStats } from '../../../services/storage/analysisStorage';
+import {
+  type StoredAnalysisData,
+  type StorageStats,
+} from "../../../services/storage/analysisStorage";
 
 interface StorageBannerProps {
   hasStoredData: boolean;
@@ -15,7 +18,7 @@ export const StorageBanner = ({
   storageStats,
   isNewFile,
   showStorageStatus,
-  onToggleStorageStatus
+  onToggleStorageStatus,
 }: StorageBannerProps) => {
   if (!hasStoredData && storageStats.usagePercentage <= 70) {
     return null;
@@ -28,20 +31,18 @@ export const StorageBanner = ({
           <div className="flex items-center gap-3">
             <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
             <span className="text-sm font-medium text-blue-900 dark:text-blue-100">
-              {hasStoredData ? (
-                storedAnalysis ? (
-                  `Previous analysis for "${storedAnalysis.fileName}" is available${!isNewFile ? ' (same file detected)' : ''}`
-                ) : 'Analysis data stored'
-              ) : (
-                `Storage ${storageStats.usagePercentage.toFixed(0)}% full`
-              )}
+              {hasStoredData
+                ? storedAnalysis
+                  ? `Previous analysis for "${storedAnalysis.fileName}" is available${!isNewFile ? " (same file detected)" : ""}`
+                  : "Analysis data stored"
+                : `Storage ${storageStats.usagePercentage.toFixed(0)}% full`}
             </span>
           </div>
           <button
             onClick={onToggleStorageStatus}
             className="text-sm text-blue-700 dark:text-blue-300 hover:text-blue-800 dark:hover:text-blue-200 underline"
           >
-            {showStorageStatus ? 'Hide Details' : 'View Details'}
+            {showStorageStatus ? "Hide Details" : "View Details"}
           </button>
         </div>
       </div>

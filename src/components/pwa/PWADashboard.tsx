@@ -1,11 +1,17 @@
-import React from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
-import { Button } from '../ui/button';
-import { Badge } from '../ui/badge';
-import { Progress } from '../ui/progress';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
-import { Switch } from '../ui/switch';
-import { Separator } from '../ui/separator';
+import React from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
+import { Button } from "../ui/button";
+import { Badge } from "../ui/badge";
+import { Progress } from "../ui/progress";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import { Switch } from "../ui/switch";
+import { Separator } from "../ui/separator";
 import {
   Download,
   Wifi,
@@ -30,25 +36,39 @@ import {
   TestTube,
   Send,
   Signal,
-  Upload
-} from 'lucide-react';
-import { usePWA, usePWACapabilities, useNetworkStatus, usePWAAnalytics } from '../../hooks/usePWA';
-import { clearAppCache, getInstallationInstructions } from '../../utils/pwaUtils';
-import { toast } from 'sonner';
-import { cn } from '@/lib/utils';
+  Upload,
+} from "lucide-react";
+import {
+  usePWA,
+  usePWACapabilities,
+  useNetworkStatus,
+  usePWAAnalytics,
+} from "../../hooks/usePWA";
+import {
+  clearAppCache,
+  getInstallationInstructions,
+} from "../../utils/pwaUtils";
+import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 
 // Helper to get installation status label
-function getInstallationLabel(isInstalled: boolean, isInstallable: boolean): string {
-  if (isInstalled) return 'Installed';
-  if (isInstallable) return 'Available';
-  return 'Browser Only';
+function getInstallationLabel(
+  isInstalled: boolean,
+  isInstallable: boolean
+): string {
+  if (isInstalled) return "Installed";
+  if (isInstallable) return "Available";
+  return "Browser Only";
 }
 
 // Helper to get installation status
-function getInstallationStatus(isInstalled: boolean, isInstallable: boolean): 'success' | 'warning' | 'neutral' {
-  if (isInstalled) return 'success';
-  if (isInstallable) return 'warning';
-  return 'neutral';
+function getInstallationStatus(
+  isInstalled: boolean,
+  isInstallable: boolean
+): "success" | "warning" | "neutral" {
+  if (isInstalled) return "success";
+  if (isInstallable) return "warning";
+  return "neutral";
 }
 
 export function PWADashboard() {
@@ -65,13 +85,13 @@ export function PWADashboard() {
     enableNotifications,
     disableNotifications,
     sendTestNotification,
-    updateApp
+    updateApp,
   } = usePWA();
 
   const capabilities = usePWACapabilities();
   const networkStatus = useNetworkStatus();
   const { refreshAnalytics } = usePWAAnalytics();
-  
+
   const [isClearing, setIsClearing] = React.useState(false);
   const [isSendingTest, setIsSendingTest] = React.useState(false);
 
@@ -80,9 +100,9 @@ export function PWADashboard() {
     try {
       await clearAppCache();
       await refreshMetrics();
-      toast.success('Cache cleared successfully');
+      toast.success("Cache cleared successfully");
     } catch {
-      toast.error('Failed to clear cache');
+      toast.error("Failed to clear cache");
     } finally {
       setIsClearing(false);
     }
@@ -91,7 +111,7 @@ export function PWADashboard() {
   const handleInstall = async () => {
     const success = await promptInstall();
     if (success) {
-      toast.success('App installed successfully!');
+      toast.success("App installed successfully!");
     } else {
       toast.info(getInstallationInstructions());
     }
@@ -101,9 +121,9 @@ export function PWADashboard() {
     setIsSendingTest(true);
     try {
       await sendTestNotification();
-      toast.success('Test notification sent!');
+      toast.success("Test notification sent!");
     } catch {
-      toast.error('Failed to send test notification');
+      toast.error("Failed to send test notification");
     } finally {
       setIsSendingTest(false);
     }
@@ -112,13 +132,13 @@ export function PWADashboard() {
   const handleNotificationToggle = async () => {
     if (hasNotificationPermission) {
       await disableNotifications();
-      toast.info('Notifications disabled');
+      toast.info("Notifications disabled");
     } else {
       const enabled = await enableNotifications();
       if (enabled) {
-        toast.success('Notifications enabled!');
+        toast.success("Notifications enabled!");
       } else {
-        toast.error('Could not enable notifications');
+        toast.error("Could not enable notifications");
       }
     }
   };
@@ -130,8 +150,8 @@ export function PWADashboard() {
   };
 
   const getNetworkLabel = () => {
-    if (!isOnline) return 'Offline';
-    if (networkStatus.effectiveType === 'unknown') return 'Online';
+    if (!isOnline) return "Offline";
+    if (networkStatus.effectiveType === "unknown") return "Online";
     return `${networkStatus.effectiveType.toUpperCase()} - ${networkStatus.downlink} Mbps`;
   };
 
@@ -154,21 +174,26 @@ export function PWADashboard() {
               </CardDescription>
             </div>
           </div>
-          
+
           <div className="flex items-center gap-2">
-            <Badge 
-              variant={isOnline ? "default" : "destructive"} 
+            <Badge
+              variant={isOnline ? "default" : "destructive"}
               className={cn(
                 "flex items-center gap-1.5 px-3 py-1",
-                isOnline ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300" : ""
+                isOnline
+                  ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300"
+                  : ""
               )}
             >
               {getNetworkIcon()}
               {getNetworkLabel()}
             </Badge>
-            
+
             {isInstalled && (
-              <Badge variant="secondary" className="bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300">
+              <Badge
+                variant="secondary"
+                className="bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300"
+              >
                 <Smartphone className="h-3 w-3 mr-1" />
                 Installed
               </Badge>
@@ -188,7 +213,10 @@ export function PWADashboard() {
               <Database className="h-4 w-4" />
               <span className="hidden sm:inline">Storage</span>
             </TabsTrigger>
-            <TabsTrigger value="notifications" className="flex items-center gap-1.5">
+            <TabsTrigger
+              value="notifications"
+              className="flex items-center gap-1.5"
+            >
               <Bell className="h-4 w-4" />
               <span className="hidden sm:inline">Alerts</span>
             </TabsTrigger>
@@ -211,20 +239,20 @@ export function PWADashboard() {
               <StatusCard
                 icon={isOnline ? Wifi : WifiOff}
                 label="Connection"
-                value={isOnline ? 'Online' : 'Offline'}
-                status={isOnline ? 'success' : 'error'}
+                value={isOnline ? "Online" : "Offline"}
+                status={isOnline ? "success" : "error"}
               />
               <StatusCard
                 icon={status.serviceWorkerReady ? Cloud : CloudOff}
                 label="Service Worker"
-                value={status.serviceWorkerReady ? 'Active' : 'Inactive'}
-                status={status.serviceWorkerReady ? 'success' : 'error'}
+                value={status.serviceWorkerReady ? "Active" : "Inactive"}
+                status={status.serviceWorkerReady ? "success" : "error"}
               />
               <StatusCard
                 icon={hasNotificationPermission ? Bell : BellOff}
                 label="Notifications"
-                value={hasNotificationPermission ? 'Enabled' : 'Disabled'}
-                status={hasNotificationPermission ? 'success' : 'neutral'}
+                value={hasNotificationPermission ? "Enabled" : "Disabled"}
+                status={hasNotificationPermission ? "success" : "neutral"}
               />
             </div>
 
@@ -254,14 +282,16 @@ export function PWADashboard() {
                   icon={Share2}
                   label="Share App"
                   onClick={() => {
-                    navigator.share?.({
-                      title: 'Code Guardian',
-                      text: 'AI-powered security analysis platform',
-                      url: globalThis.location.href
-                    }).catch(() => {
-                      navigator.clipboard.writeText(globalThis.location.href);
-                      toast.success('Link copied!');
-                    });
+                    navigator
+                      .share?.({
+                        title: "Code Guardian",
+                        text: "AI-powered security analysis platform",
+                        url: globalThis.location.href,
+                      })
+                      .catch(() => {
+                        navigator.clipboard.writeText(globalThis.location.href);
+                        toast.success("Link copied!");
+                      });
                   }}
                 />
                 {isUpdateAvailable && (
@@ -278,7 +308,7 @@ export function PWADashboard() {
                   onClick={() => {
                     refreshMetrics();
                     refreshAnalytics();
-                    toast.success('Data refreshed');
+                    toast.success("Data refreshed");
                   }}
                 />
               </div>
@@ -291,14 +321,38 @@ export function PWADashboard() {
                 Device Capabilities
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-                <CapabilityBadge label="Service Worker" enabled={capabilities.install} />
-                <CapabilityBadge label="Push Notifications" enabled={capabilities.notifications} />
-                <CapabilityBadge label="Background Sync" enabled={capabilities.backgroundSync} />
-                <CapabilityBadge label="Web Share" enabled={capabilities.share} />
-                <CapabilityBadge label="Clipboard" enabled={capabilities.clipboard} />
-                <CapabilityBadge label="IndexedDB" enabled={capabilities.indexedDB} />
-                <CapabilityBadge label="Cache API" enabled={capabilities.cacheAPI} />
-                <CapabilityBadge label="Web Workers" enabled={capabilities.webWorkers} />
+                <CapabilityBadge
+                  label="Service Worker"
+                  enabled={capabilities.install}
+                />
+                <CapabilityBadge
+                  label="Push Notifications"
+                  enabled={capabilities.notifications}
+                />
+                <CapabilityBadge
+                  label="Background Sync"
+                  enabled={capabilities.backgroundSync}
+                />
+                <CapabilityBadge
+                  label="Web Share"
+                  enabled={capabilities.share}
+                />
+                <CapabilityBadge
+                  label="Clipboard"
+                  enabled={capabilities.clipboard}
+                />
+                <CapabilityBadge
+                  label="IndexedDB"
+                  enabled={capabilities.indexedDB}
+                />
+                <CapabilityBadge
+                  label="Cache API"
+                  enabled={capabilities.cacheAPI}
+                />
+                <CapabilityBadge
+                  label="Web Workers"
+                  enabled={capabilities.webWorkers}
+                />
               </div>
             </div>
           </TabsContent>
@@ -323,25 +377,30 @@ export function PWADashboard() {
                   <Button variant="outline" size="sm" onClick={refreshMetrics}>
                     <RefreshCw className="h-4 w-4" />
                   </Button>
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
+                  <Button
+                    variant="outline"
+                    size="sm"
                     onClick={handleClearCache}
                     disabled={isClearing || metrics.cacheSize === 0}
                   >
                     <Trash2 className="h-4 w-4 mr-1" />
-                    {isClearing ? 'Clearing...' : 'Clear'}
+                    {isClearing ? "Clearing..." : "Clear"}
                   </Button>
                 </div>
               </div>
-              
+
               <div className="space-y-2">
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Cache Usage</span>
-                  <span className="font-medium">{metrics.cacheSizeFormatted} / 100 MB</span>
+                  <span className="font-medium">
+                    {metrics.cacheSizeFormatted} / 100 MB
+                  </span>
                 </div>
-                <Progress 
-                  value={Math.min((metrics.cacheSize / (100 * 1024 * 1024)) * 100, 100)} 
+                <Progress
+                  value={Math.min(
+                    (metrics.cacheSize / (100 * 1024 * 1024)) * 100,
+                    100
+                  )}
                   className="h-2"
                 />
               </div>
@@ -362,9 +421,9 @@ export function PWADashboard() {
                   </div>
                 </div>
               </div>
-              
+
               <Separator />
-              
+
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div className="flex items-center gap-2">
                   <Upload className="h-4 w-4 text-muted-foreground" />
@@ -375,12 +434,17 @@ export function PWADashboard() {
                   <Clock className="h-4 w-4 text-muted-foreground" />
                   <span className="text-muted-foreground">Last Sync:</span>
                   <span className="font-medium">
-                    {metrics.lastSyncTime 
-                      ? new Intl.RelativeTimeFormat('en', { numeric: 'auto' }).format(
-                          Math.round((metrics.lastSyncTime.getTime() - Date.now()) / 60000),
-                          'minute'
+                    {metrics.lastSyncTime
+                      ? new Intl.RelativeTimeFormat("en", {
+                          numeric: "auto",
+                        }).format(
+                          Math.round(
+                            (metrics.lastSyncTime.getTime() - Date.now()) /
+                              60000
+                          ),
+                          "minute"
                         )
-                      : 'Never'}
+                      : "Never"}
                   </span>
                 </div>
               </div>
@@ -389,10 +453,14 @@ export function PWADashboard() {
             {/* Network Info */}
             <div className="p-4 bg-muted/50 rounded-lg space-y-3">
               <div className="flex items-center gap-3">
-                <div className={cn(
-                  "p-2 rounded-lg",
-                  isOnline ? "bg-green-100 dark:bg-green-900" : "bg-red-100 dark:bg-red-900"
-                )}>
+                <div
+                  className={cn(
+                    "p-2 rounded-lg",
+                    isOnline
+                      ? "bg-green-100 dark:bg-green-900"
+                      : "bg-red-100 dark:bg-red-900"
+                  )}
+                >
                   {isOnline ? (
                     <Wifi className="h-5 w-5 text-green-600" />
                   ) : (
@@ -402,22 +470,26 @@ export function PWADashboard() {
                 <div>
                   <p className="font-medium">Network Status</p>
                   <p className="text-sm text-muted-foreground">
-                    {isOnline ? 'Connected to the internet' : 'Working offline'}
+                    {isOnline ? "Connected to the internet" : "Working offline"}
                   </p>
                 </div>
               </div>
-              
-              {isOnline && networkStatus.effectiveType !== 'unknown' && (
+
+              {isOnline && networkStatus.effectiveType !== "unknown" && (
                 <>
                   <Separator />
                   <div className="grid grid-cols-3 gap-4 text-sm">
                     <div>
                       <span className="text-muted-foreground">Type:</span>
-                      <p className="font-medium">{networkStatus.effectiveType.toUpperCase()}</p>
+                      <p className="font-medium">
+                        {networkStatus.effectiveType.toUpperCase()}
+                      </p>
                     </div>
                     <div>
                       <span className="text-muted-foreground">Speed:</span>
-                      <p className="font-medium">{networkStatus.downlink} Mbps</p>
+                      <p className="font-medium">
+                        {networkStatus.downlink} Mbps
+                      </p>
                     </div>
                     <div>
                       <span className="text-muted-foreground">Latency:</span>
@@ -435,12 +507,14 @@ export function PWADashboard() {
             <div className="p-4 bg-muted/50 rounded-lg space-y-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className={cn(
-                    "p-2 rounded-lg",
-                    hasNotificationPermission 
-                      ? "bg-green-100 dark:bg-green-900" 
-                      : "bg-gray-100 dark:bg-gray-800"
-                  )}>
+                  <div
+                    className={cn(
+                      "p-2 rounded-lg",
+                      hasNotificationPermission
+                        ? "bg-green-100 dark:bg-green-900"
+                        : "bg-gray-100 dark:bg-gray-800"
+                    )}
+                  >
                     {hasNotificationPermission ? (
                       <Bell className="h-5 w-5 text-green-600" />
                     ) : (
@@ -450,13 +524,13 @@ export function PWADashboard() {
                   <div>
                     <p className="font-medium">Push Notifications</p>
                     <p className="text-sm text-muted-foreground">
-                      {hasNotificationPermission 
-                        ? 'You will receive security alerts and updates' 
-                        : 'Enable to get notified about security issues'}
+                      {hasNotificationPermission
+                        ? "You will receive security alerts and updates"
+                        : "Enable to get notified about security issues"}
                     </p>
                   </div>
                 </div>
-                
+
                 <Switch
                   checked={hasNotificationPermission}
                   onCheckedChange={handleNotificationToggle}
@@ -480,15 +554,15 @@ export function PWADashboard() {
                       </p>
                     </div>
                   </div>
-                  
-                  <Button 
-                    variant="outline" 
+
+                  <Button
+                    variant="outline"
                     size="sm"
                     onClick={handleTestNotification}
                     disabled={isSendingTest}
                   >
                     <Send className="h-4 w-4 mr-1" />
-                    {isSendingTest ? 'Sending...' : 'Send Test'}
+                    {isSendingTest ? "Sending..." : "Send Test"}
                   </Button>
                 </div>
               </div>
@@ -498,18 +572,18 @@ export function PWADashboard() {
             <div className="space-y-3">
               <h3 className="text-sm font-semibold">Notification Types</h3>
               <div className="space-y-2">
-                <NotificationTypeRow 
-                  label="Security Alerts" 
+                <NotificationTypeRow
+                  label="Security Alerts"
                   description="Critical security vulnerabilities found"
                   enabled={hasNotificationPermission}
                 />
-                <NotificationTypeRow 
-                  label="Analysis Complete" 
+                <NotificationTypeRow
+                  label="Analysis Complete"
                   description="When code analysis finishes"
                   enabled={hasNotificationPermission}
                 />
-                <NotificationTypeRow 
-                  label="App Updates" 
+                <NotificationTypeRow
+                  label="App Updates"
                   description="New version available"
                   enabled={hasNotificationPermission}
                 />
@@ -532,25 +606,28 @@ export function PWADashboard() {
                   </div>
                   <div>
                     <p className="font-medium">
-                      {isInstalled ? 'App Installed' : 'Install App'}
+                      {isInstalled ? "App Installed" : "Install App"}
                     </p>
                     <p className="text-sm text-muted-foreground">
-                      {isInstalled 
-                        ? 'Running in standalone mode' 
-                        : 'Add to home screen for the best experience'}
+                      {isInstalled
+                        ? "Running in standalone mode"
+                        : "Add to home screen for the best experience"}
                     </p>
                   </div>
                 </div>
-                
+
                 {!isInstalled && isInstallable && (
                   <Button onClick={handleInstall}>
                     <Download className="h-4 w-4 mr-1" />
                     Install
                   </Button>
                 )}
-                
+
                 {isInstalled && (
-                  <Badge variant="secondary" className="bg-green-100 text-green-800">
+                  <Badge
+                    variant="secondary"
+                    className="bg-green-100 text-green-800"
+                  >
                     <CheckCircle2 className="h-3 w-3 mr-1" />
                     Installed
                   </Badge>
@@ -563,34 +640,40 @@ export function PWADashboard() {
               <div className="p-4 bg-muted/50 rounded-lg">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className={cn(
-                      "p-2 rounded-lg",
-                      isUpdateAvailable 
-                        ? "bg-orange-100 dark:bg-orange-900" 
-                        : "bg-green-100 dark:bg-green-900"
-                    )}>
-                      <RefreshCw className={cn(
-                        "h-5 w-5",
-                        isUpdateAvailable ? "text-orange-600" : "text-green-600"
-                      )} />
+                    <div
+                      className={cn(
+                        "p-2 rounded-lg",
+                        isUpdateAvailable
+                          ? "bg-orange-100 dark:bg-orange-900"
+                          : "bg-green-100 dark:bg-green-900"
+                      )}
+                    >
+                      <RefreshCw
+                        className={cn(
+                          "h-5 w-5",
+                          isUpdateAvailable
+                            ? "text-orange-600"
+                            : "text-green-600"
+                        )}
+                      />
                     </div>
                     <div>
                       <p className="font-medium">App Updates</p>
                       <p className="text-sm text-muted-foreground">
-                        {isUpdateAvailable 
-                          ? 'A new version is available' 
-                          : 'You have the latest version'}
+                        {isUpdateAvailable
+                          ? "A new version is available"
+                          : "You have the latest version"}
                       </p>
                     </div>
                   </div>
-                  
-                  <Button 
-                    variant={isUpdateAvailable ? "default" : "outline"} 
-                    size="sm" 
+
+                  <Button
+                    variant={isUpdateAvailable ? "default" : "outline"}
+                    size="sm"
                     onClick={updateApp}
                   >
                     <RefreshCw className="h-4 w-4 mr-1" />
-                    {isUpdateAvailable ? 'Update Now' : 'Check'}
+                    {isUpdateAvailable ? "Update Now" : "Check"}
                   </Button>
                 </div>
               </div>
@@ -600,29 +683,39 @@ export function PWADashboard() {
             <div className="p-4 bg-muted/50 rounded-lg">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className={cn(
-                    "p-2 rounded-lg",
-                    status.backgroundSyncSupported 
-                      ? "bg-green-100 dark:bg-green-900" 
-                      : "bg-gray-100 dark:bg-gray-800"
-                  )}>
-                    <Cloud className={cn(
-                      "h-5 w-5",
-                      status.backgroundSyncSupported ? "text-green-600" : "text-gray-500"
-                    )} />
+                  <div
+                    className={cn(
+                      "p-2 rounded-lg",
+                      status.backgroundSyncSupported
+                        ? "bg-green-100 dark:bg-green-900"
+                        : "bg-gray-100 dark:bg-gray-800"
+                    )}
+                  >
+                    <Cloud
+                      className={cn(
+                        "h-5 w-5",
+                        status.backgroundSyncSupported
+                          ? "text-green-600"
+                          : "text-gray-500"
+                      )}
+                    />
                   </div>
                   <div>
                     <p className="font-medium">Background Sync</p>
                     <p className="text-sm text-muted-foreground">
-                      {status.backgroundSyncSupported 
-                        ? 'Changes sync automatically when online' 
-                        : 'Not supported in this browser'}
+                      {status.backgroundSyncSupported
+                        ? "Changes sync automatically when online"
+                        : "Not supported in this browser"}
                     </p>
                   </div>
                 </div>
-                
-                <Badge variant={status.backgroundSyncSupported ? "secondary" : "outline"}>
-                  {status.backgroundSyncSupported ? 'Active' : 'Unavailable'}
+
+                <Badge
+                  variant={
+                    status.backgroundSyncSupported ? "secondary" : "outline"
+                  }
+                >
+                  {status.backgroundSyncSupported ? "Active" : "Unavailable"}
                 </Badge>
               </div>
             </div>
@@ -634,36 +727,36 @@ export function PWADashboard() {
 }
 
 // Helper Components
-function StatusCard({ 
-  icon: Icon, 
-  label, 
-  value, 
-  status 
-}: { 
+function StatusCard({
+  icon: Icon,
+  label,
+  value,
+  status,
+}: {
   readonly icon: React.ComponentType<{ className?: string }>;
   readonly label: string;
   readonly value: string;
-  readonly status: 'success' | 'warning' | 'error' | 'neutral';
+  readonly status: "success" | "warning" | "error" | "neutral";
 }) {
   const statusColors = {
-    success: 'bg-green-50 border-green-200 dark:bg-green-900/20 dark:border-green-800',
-    warning: 'bg-orange-50 border-orange-200 dark:bg-orange-900/20 dark:border-orange-800',
-    error: 'bg-red-50 border-red-200 dark:bg-red-900/20 dark:border-red-800',
-    neutral: 'bg-gray-50 border-gray-200 dark:bg-gray-800/50 dark:border-gray-700'
+    success:
+      "bg-green-50 border-green-200 dark:bg-green-900/20 dark:border-green-800",
+    warning:
+      "bg-orange-50 border-orange-200 dark:bg-orange-900/20 dark:border-orange-800",
+    error: "bg-red-50 border-red-200 dark:bg-red-900/20 dark:border-red-800",
+    neutral:
+      "bg-gray-50 border-gray-200 dark:bg-gray-800/50 dark:border-gray-700",
   };
 
   const iconColors = {
-    success: 'text-green-600',
-    warning: 'text-orange-600',
-    error: 'text-red-600',
-    neutral: 'text-gray-500'
+    success: "text-green-600",
+    warning: "text-orange-600",
+    error: "text-red-600",
+    neutral: "text-gray-500",
   };
 
   return (
-    <div className={cn(
-      "p-3 rounded-lg border",
-      statusColors[status]
-    )}>
+    <div className={cn("p-3 rounded-lg border", statusColors[status])}>
       <Icon className={cn("h-5 w-5 mb-2", iconColors[status])} />
       <p className="text-xs text-muted-foreground">{label}</p>
       <p className="text-sm font-medium">{value}</p>
@@ -671,21 +764,23 @@ function StatusCard({
   );
 }
 
-function ActionButton({ 
-  icon: Icon, 
-  label, 
-  onClick, 
-  variant = 'default' 
-}: { 
+function ActionButton({
+  icon: Icon,
+  label,
+  onClick,
+  variant = "default",
+}: {
   readonly icon: React.ComponentType<{ className?: string }>;
   readonly label: string;
   readonly onClick: () => void;
-  readonly variant?: 'default' | 'primary' | 'warning';
+  readonly variant?: "default" | "primary" | "warning";
 }) {
   const variantStyles = {
-    default: 'bg-muted hover:bg-muted/80',
-    primary: 'bg-blue-100 hover:bg-blue-200 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300',
-    warning: 'bg-orange-100 hover:bg-orange-200 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300'
+    default: "bg-muted hover:bg-muted/80",
+    primary:
+      "bg-blue-100 hover:bg-blue-200 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
+    warning:
+      "bg-orange-100 hover:bg-orange-200 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300",
   };
 
   return (
@@ -702,20 +797,22 @@ function ActionButton({
   );
 }
 
-function CapabilityBadge({ 
-  label, 
-  enabled 
-}: { 
-  readonly label: string; 
+function CapabilityBadge({
+  label,
+  enabled,
+}: {
+  readonly label: string;
   readonly enabled: boolean;
 }) {
   return (
-    <div className={cn(
-      "flex items-center gap-2 px-3 py-2 rounded-lg text-xs",
-      enabled 
-        ? "bg-green-50 text-green-700 dark:bg-green-900/20 dark:text-green-300" 
-        : "bg-gray-50 text-gray-500 dark:bg-gray-800/50 dark:text-gray-400"
-    )}>
+    <div
+      className={cn(
+        "flex items-center gap-2 px-3 py-2 rounded-lg text-xs",
+        enabled
+          ? "bg-green-50 text-green-700 dark:bg-green-900/20 dark:text-green-300"
+          : "bg-gray-50 text-gray-500 dark:bg-gray-800/50 dark:text-gray-400"
+      )}
+    >
       {enabled ? (
         <CheckCircle2 className="h-3.5 w-3.5" />
       ) : (
@@ -726,11 +823,11 @@ function CapabilityBadge({
   );
 }
 
-function NotificationTypeRow({ 
-  label, 
-  description, 
-  enabled 
-}: { 
+function NotificationTypeRow({
+  label,
+  description,
+  enabled,
+}: {
   readonly label: string;
   readonly description: string;
   readonly enabled: boolean;

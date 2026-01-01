@@ -1,25 +1,27 @@
-import { useState, Suspense, lazy } from 'react';
+import { useState, Suspense, lazy } from "react";
 
-import { PageLayout } from '@/components/layout/PageLayout';
-import { HomeHero } from '@/components/pages/home/HomeHero';
-import { AnalysisTabs } from '@/components/pages/home/AnalysisTabs';
-import { StorageBanner } from '@/components/pages/home/StorageBanner';
-import { useAnalysisHandlers } from '@/components/pages/home/AnalysisHandlers';
-import { useDarkMode } from '@/hooks/useDarkMode';
-import { useEnhancedAnalysis } from '@/hooks/useEnhancedAnalysis';
+import { PageLayout } from "@/components/layout/PageLayout";
+import { HomeHero } from "@/components/pages/home/HomeHero";
+import { AnalysisTabs } from "@/components/pages/home/AnalysisTabs";
+import { StorageBanner } from "@/components/pages/home/StorageBanner";
+import { useAnalysisHandlers } from "@/components/pages/home/AnalysisHandlers";
+import { useDarkMode } from "@/hooks/useDarkMode";
+import { useEnhancedAnalysis } from "@/hooks/useEnhancedAnalysis";
 
 // Lazy load heavy components for better performance
-const FloatingChatBot = lazy(() => import('@/components/ai/FloatingChatBot'));
-const StorageStatus = lazy(() => import('@/components/firebase/StorageStatus'));
-const AnalysisHistoryModal = lazy(() => import('@/components/analysis/AnalysisHistoryModal'));
+const FloatingChatBot = lazy(() => import("@/components/ai/FloatingChatBot"));
+const StorageStatus = lazy(() => import("@/components/firebase/StorageStatus"));
+const AnalysisHistoryModal = lazy(
+  () => import("@/components/analysis/AnalysisHistoryModal")
+);
 
 const Index = () => {
-  const [currentTab, setCurrentTab] = useState('upload');
+  const [currentTab, setCurrentTab] = useState("upload");
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [showStorageStatus, setShowStorageStatus] = useState(false);
   const [showHistoryModal, setShowHistoryModal] = useState(false);
   const { theme, setTheme } = useDarkMode();
-  
+
   const {
     analysisResults,
     hasStoredData,
@@ -42,10 +44,11 @@ const Index = () => {
     handleExportAnalysis,
     handleImportAnalysis,
     handleOptimizeStorage,
-    handleRestoreFromHistory
+    handleRestoreFromHistory,
   } = useAnalysisHandlers({
     hasStoredData,
-    onAnalysisComplete: (results, file) => handleAnalysisComplete(results, undefined, file),
+    onAnalysisComplete: (results, file) =>
+      handleAnalysisComplete(results, undefined, file),
     onSetCurrentTab: setCurrentTab,
     onSetIsRedirecting: setIsRedirecting,
     onClearStoredData: clearStoredData,
@@ -55,18 +58,15 @@ const Index = () => {
     onRestoreFromHistory: (analysisData) => {
       restoreFromHistory(analysisData);
       setShowHistoryModal(false);
-    }
+    },
   });
 
   const handleStartAnalysis = () => {
-    setCurrentTab('upload');
+    setCurrentTab("upload");
   };
 
   return (
-    <PageLayout
-      theme={theme}
-      onThemeChange={setTheme}
-    >
+    <PageLayout theme={theme} onThemeChange={setTheme}>
       <HomeHero onStartAnalysis={handleStartAnalysis} />
 
       <StorageBanner
@@ -81,7 +81,11 @@ const Index = () => {
       {/* Storage Status Component */}
       {showStorageStatus && (
         <div className="max-w-6xl mx-auto mb-6">
-          <Suspense fallback={<div className="h-32 bg-gray-100 dark:bg-gray-800 rounded-lg animate-pulse"></div>}>
+          <Suspense
+            fallback={
+              <div className="h-32 bg-gray-100 dark:bg-gray-800 rounded-lg animate-pulse"></div>
+            }
+          >
             <StorageStatus
               hasStoredData={hasStoredData}
               storedAnalysis={storedAnalysis}
@@ -117,7 +121,9 @@ const Index = () => {
 
       {/* Floating Chat Bot */}
       <Suspense fallback={null}>
-        {analysisResults && <FloatingChatBot analysisResults={analysisResults} />}
+        {analysisResults && (
+          <FloatingChatBot analysisResults={analysisResults} />
+        )}
       </Suspense>
     </PageLayout>
   );

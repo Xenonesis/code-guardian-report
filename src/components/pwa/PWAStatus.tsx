@@ -1,8 +1,8 @@
 // PWA Status Component
 // Production-ready component for PWA feature integration
 
-import React from 'react';
-import { usePWA } from '../../hooks/usePWA';
+import React from "react";
+import { usePWA } from "../../hooks/usePWA";
 
 export function PWAStatus() {
   const { status, promptInstall, enableNotifications } = usePWA();
@@ -11,7 +11,7 @@ export function PWAStatus() {
     <div className="pwa-status">
       {/* Install prompt */}
       {status.installPromptAvailable && !status.isInstalled && (
-        <button 
+        <button
           onClick={promptInstall}
           className="install-button"
           aria-label="Install app"
@@ -22,7 +22,7 @@ export function PWAStatus() {
 
       {/* Notification permission */}
       {!status.hasNotificationPermission && (
-        <button 
+        <button
           onClick={enableNotifications}
           className="notification-button"
           aria-label="Enable notifications"

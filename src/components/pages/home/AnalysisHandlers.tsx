@@ -1,15 +1,18 @@
-import { useToast } from '@/hooks/use-toast';
-import { AnalysisResults } from '@/hooks/useAnalysis';
-import { type StoredAnalysisData } from '../../../services/storage/analysisStorage';
-import { type FirebaseAnalysisData } from '../../../services/storage/firebaseAnalysisStorage';
+import { useToast } from "@/hooks/use-toast";
+import { AnalysisResults } from "@/hooks/useAnalysis";
+import { type StoredAnalysisData } from "../../../services/storage/analysisStorage";
+import { type FirebaseAnalysisData } from "../../../services/storage/firebaseAnalysisStorage";
 
 interface AnalysisHandlersProps {
   hasStoredData: boolean;
-  onAnalysisComplete: (results: AnalysisResults, file?: File) => void | Promise<void>;
+  onAnalysisComplete: (
+    results: AnalysisResults,
+    file?: File
+  ) => void | Promise<void>;
   onSetCurrentTab: (tab: string) => void;
   onSetIsRedirecting: (isRedirecting: boolean) => void;
   onClearStoredData: () => void;
-  onExportAnalysis: (format: 'json' | 'compressed') => void;
+  onExportAnalysis: (format: "json" | "compressed") => void;
   onImportAnalysis: (data: string, compressed: boolean) => void;
   onOptimizeStorage: () => Promise<void>;
   onRestoreFromHistory: (analysisData: StoredAnalysisData) => void;
@@ -24,11 +27,14 @@ export const useAnalysisHandlers = ({
   onExportAnalysis,
   onImportAnalysis,
   onOptimizeStorage,
-  onRestoreFromHistory
+  onRestoreFromHistory,
 }: AnalysisHandlersProps) => {
   const { toast } = useToast();
 
-  const handleAnalysisCompleteWithRedirect = (results: AnalysisResults, file?: File) => {
+  const handleAnalysisCompleteWithRedirect = (
+    results: AnalysisResults,
+    file?: File
+  ) => {
     onAnalysisComplete(results, file);
     onSetIsRedirecting(true);
 
@@ -40,12 +46,14 @@ export const useAnalysisHandlers = ({
     });
 
     setTimeout(() => {
-      onSetCurrentTab('results');
+      onSetCurrentTab("results");
       onSetIsRedirecting(false);
 
       toast({
         title: "📊 Results Ready!",
-        description: hasStoredData ? "Analysis results are now displayed below and saved for future access." : "Analysis results are now displayed below.",
+        description: hasStoredData
+          ? "Analysis results are now displayed below and saved for future access."
+          : "Analysis results are now displayed below.",
         variant: "default",
         duration: 3000,
       });
@@ -62,7 +70,7 @@ export const useAnalysisHandlers = ({
     });
   };
 
-  const handleExportAnalysis = (format: 'json' | 'compressed') => {
+  const handleExportAnalysis = (format: "json" | "compressed") => {
     try {
       onExportAnalysis(format);
       toast({
@@ -93,7 +101,8 @@ export const useAnalysisHandlers = ({
     } catch (error) {
       toast({
         title: "❌ Import Failed",
-        description: "Failed to import analysis data. Please check the file format.",
+        description:
+          "Failed to import analysis data. Please check the file format.",
         variant: "destructive",
         duration: 3000,
       });
@@ -121,7 +130,7 @@ export const useAnalysisHandlers = ({
 
   const handleRestoreFromHistory = (analysisData: StoredAnalysisData) => {
     onRestoreFromHistory(analysisData);
-    onSetCurrentTab('results');
+    onSetCurrentTab("results");
     toast({
       title: "📋 Analysis Restored",
       description: `Successfully restored analysis for ${analysisData.fileName}.`,
@@ -136,6 +145,6 @@ export const useAnalysisHandlers = ({
     handleExportAnalysis,
     handleImportAnalysis,
     handleOptimizeStorage,
-    handleRestoreFromHistory
+    handleRestoreFromHistory,
   };
 };

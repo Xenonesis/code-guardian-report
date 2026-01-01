@@ -1,9 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { Card } from '@/components/ui/card';
-import { Shield, TrendingUp, TrendingDown, AlertTriangle, CheckCircle, Activity } from 'lucide-react';
-import { GitHubAnalysisStorageService } from '@/services/storage/GitHubAnalysisStorageService';
-import { logger } from '@/utils/logger';
-import { cn } from '@/lib/utils';
+import React, { useEffect, useState } from "react";
+import { Card } from "@/components/ui/card";
+import {
+  Shield,
+  TrendingUp,
+  TrendingDown,
+  AlertTriangle,
+  CheckCircle,
+  Activity,
+} from "lucide-react";
+import { GitHubAnalysisStorageService } from "@/services/storage/GitHubAnalysisStorageService";
+import { logger } from "@/utils/logger";
+import { cn } from "@/lib/utils";
 
 interface SecurityTrend {
   date: string;
@@ -16,17 +23,16 @@ interface SecurityAnalyticsSectionProps {
   detailed?: boolean;
 }
 
-export const SecurityAnalyticsSection: React.FC<SecurityAnalyticsSectionProps> = ({ 
-  userId, 
-  detailed = false 
-}) => {
+export const SecurityAnalyticsSection: React.FC<
+  SecurityAnalyticsSectionProps
+> = ({ userId, detailed = false }) => {
   const [trends, setTrends] = useState<SecurityTrend[]>([]);
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({
     averageScore: 0,
     totalIssues: 0,
     criticalIssues: 0,
-    trend: 'up' as 'up' | 'down' | 'stable'
+    trend: "up" as "up" | "down" | "stable",
   });
 
   useEffect(() => {
@@ -41,7 +47,7 @@ export const SecurityAnalyticsSection: React.FC<SecurityAnalyticsSectionProps> =
       setTrends(data.trends);
       setStats(data.stats);
     } catch (error) {
-      logger.error('Error loading security analytics:', error);
+      logger.error("Error loading security analytics:", error);
     } finally {
       setLoading(false);
     }
@@ -52,7 +58,10 @@ export const SecurityAnalyticsSection: React.FC<SecurityAnalyticsSectionProps> =
       <div className="space-y-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {Array.from({ length: 4 }).map((_, i) => (
-            <Card key={i} className="p-6 border-slate-200 dark:border-slate-800">
+            <Card
+              key={i}
+              className="p-6 border-slate-200 dark:border-slate-800"
+            >
               <div className="flex justify-between items-start mb-4">
                 <div className="h-10 w-10 bg-slate-100 dark:bg-slate-800 rounded-lg animate-pulse"></div>
                 <div className="h-4 w-4 bg-slate-100 dark:bg-slate-800 rounded animate-pulse"></div>
@@ -99,7 +108,7 @@ export const SecurityAnalyticsSection: React.FC<SecurityAnalyticsSectionProps> =
             <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-xl group-hover:scale-110 transition-transform duration-300">
               <Activity className="w-6 h-6 text-blue-600 dark:text-blue-400" />
             </div>
-            {stats.trend === 'up' ? (
+            {stats.trend === "up" ? (
               <div className="flex items-center text-green-600 text-sm font-medium bg-green-50 dark:bg-green-900/20 px-2 py-1 rounded-full">
                 <TrendingUp className="w-3 h-3 mr-1" />
                 +2.4%
@@ -176,13 +185,16 @@ export const SecurityAnalyticsSection: React.FC<SecurityAnalyticsSectionProps> =
             </div>
             <div className="flex gap-2">
               <div className="flex items-center text-xs text-slate-500">
-                <div className="w-2 h-2 rounded-full bg-green-500 mr-1"></div> Excellent
+                <div className="w-2 h-2 rounded-full bg-green-500 mr-1"></div>{" "}
+                Excellent
               </div>
               <div className="flex items-center text-xs text-slate-500">
-                <div className="w-2 h-2 rounded-full bg-yellow-500 mr-1"></div> Good
+                <div className="w-2 h-2 rounded-full bg-yellow-500 mr-1"></div>{" "}
+                Good
               </div>
               <div className="flex items-center text-xs text-slate-500">
-                <div className="w-2 h-2 rounded-full bg-red-500 mr-1"></div> Poor
+                <div className="w-2 h-2 rounded-full bg-red-500 mr-1"></div>{" "}
+                Poor
               </div>
             </div>
           </div>
@@ -192,7 +204,11 @@ export const SecurityAnalyticsSection: React.FC<SecurityAnalyticsSectionProps> =
               <div key={index} className="group">
                 <div className="flex items-end justify-between text-sm mb-2">
                   <span className="font-medium text-slate-700 dark:text-slate-300">
-                    {new Date(trend.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+                    {new Date(trend.date).toLocaleDateString(undefined, {
+                      month: "short",
+                      day: "numeric",
+                      year: "numeric",
+                    })}
                   </span>
                   <span className="text-slate-500">
                     {trend.issues} issues found
@@ -200,12 +216,14 @@ export const SecurityAnalyticsSection: React.FC<SecurityAnalyticsSectionProps> =
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="flex-1 h-3 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-                    <div 
+                    <div
                       className={cn(
                         "h-full rounded-full transition-all duration-1000 ease-out relative",
-                        trend.score >= 8 ? 'bg-gradient-to-r from-green-500 to-emerald-400' : 
-                        trend.score >= 6 ? 'bg-gradient-to-r from-yellow-500 to-orange-400' : 
-                        'bg-gradient-to-r from-red-500 to-rose-400'
+                        trend.score >= 8
+                          ? "bg-gradient-to-r from-green-500 to-emerald-400"
+                          : trend.score >= 6
+                            ? "bg-gradient-to-r from-yellow-500 to-orange-400"
+                            : "bg-gradient-to-r from-red-500 to-rose-400"
                       )}
                       style={{ width: `${(trend.score / 10) * 100}%` }}
                     >

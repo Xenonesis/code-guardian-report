@@ -1465,13 +1465,13 @@ graph LR
     style E fill:#F59E0B
 ```
 
-| Command            | Description                         | Usage                      |
-| ------------------ | ----------------------------------- | -------------------------- |
-| `dev`              | Start development server            | `npm run dev`              |
-| `build`            | Build for production                | `npm run build`            |
-| `start`            | Start production server             | `npm run start`            |
-| `lint`             | Run ESLint                          | `npm run lint`             |
-| `type-check`       | Run TypeScript type checking        | `npm run type-check`       |
+| Command      | Description                  | Usage                |
+| ------------ | ---------------------------- | -------------------- |
+| `dev`        | Start development server     | `npm run dev`        |
+| `build`      | Build for production         | `npm run build`      |
+| `start`      | Start production server      | `npm run start`      |
+| `lint`       | Run ESLint                   | `npm run lint`       |
+| `type-check` | Run TypeScript type checking | `npm run type-check` |
 
 ### 🔧 Environment Setup
 
@@ -2265,7 +2265,7 @@ If you encounter any issues or have questions:
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">197 commits</span>
         </div>
       </td>
-    
+
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/186174121?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
@@ -2277,7 +2277,7 @@ If you encounter any issues or have questions:
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">5 commits</span>
         </div>
       </td>
-    
+
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/164482191?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
@@ -2289,7 +2289,7 @@ If you encounter any issues or have questions:
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">4 commits</span>
         </div>
       </td>
-    
+
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/176881379?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
@@ -2301,8 +2301,9 @@ If you encounter any issues or have questions:
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">3 commits</span>
         </div>
       </td>
-    
+
     </tr>
+
 <tr>
 
       <td align="center" style="padding: 20px;">
@@ -2315,7 +2316,7 @@ If you encounter any issues or have questions:
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">3 commits</span>
         </div>
       </td>
-    
+
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/180313267?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
@@ -2327,7 +2328,7 @@ If you encounter any issues or have questions:
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">2 commits</span>
         </div>
       </td>
-    
+
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/180231504?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
@@ -2339,7 +2340,7 @@ If you encounter any issues or have questions:
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">2 commits</span>
         </div>
       </td>
-    
+
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/189628930?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
@@ -2351,7 +2352,7 @@ If you encounter any issues or have questions:
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">1 commits</span>
         </div>
       </td>
-    
+
     </tr>
 
   </table>
@@ -2656,13 +2657,13 @@ Each scenario above maps to tracked OKRs stored in `md/changelogs.md`, ensuring 
 
 ### 8. Configuration & Secrets Reference
 
-| Variable                       | Required | Purpose                                | Notes                                          |
-| ------------------------------ | -------- | -------------------------------------- | ---------------------------------------------- |
-| `OPENAI_API_KEY`               | Optional | Enables OpenAI-backed AI explanations. | Store in platform secret manager; server-side only. |
-| `ANTHROPIC_API_KEY`            | Optional | Claude inference provider.             | Supports failover rotation; server-side only.  |
-| `GEMINI_API_KEY`               | Optional | Google Gemini provider.                | Required for hybrid analysis; server-side only.|
-| `NEXT_PUBLIC_FIREBASE_*`       | Optional | Enables sync with Firestore + Auth.    | Use emulator values locally.                   |
-| `GITHUB_CLIENT_ID/SECRET`      | Optional | GitHub OAuth integration.              | For GitHub repository analysis.                |
+| Variable                  | Required | Purpose                                | Notes                                               |
+| ------------------------- | -------- | -------------------------------------- | --------------------------------------------------- |
+| `OPENAI_API_KEY`          | Optional | Enables OpenAI-backed AI explanations. | Store in platform secret manager; server-side only. |
+| `ANTHROPIC_API_KEY`       | Optional | Claude inference provider.             | Supports failover rotation; server-side only.       |
+| `GEMINI_API_KEY`          | Optional | Google Gemini provider.                | Required for hybrid analysis; server-side only.     |
+| `NEXT_PUBLIC_FIREBASE_*`  | Optional | Enables sync with Firestore + Auth.    | Use emulator values locally.                        |
+| `GITHUB_CLIENT_ID/SECRET` | Optional | GitHub OAuth integration.              | For GitHub repository analysis.                     |
 
 Secrets should be injected via your deployment platform. Never commit `.env.local`—the template in this repo is intentionally blank.
 

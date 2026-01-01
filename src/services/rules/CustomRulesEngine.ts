@@ -3,14 +3,32 @@
  * Allows users to define and apply custom security rules
  */
 
-import { db } from '@/lib/firebase';
-import { collection, addDoc, query, where, getDocs, updateDoc, doc, deleteDoc } from 'firebase/firestore';
-import { enhancedNotifications } from '@/utils/enhancedToastNotifications';
+import { db } from "@/lib/firebase";
+import {
+  collection,
+  addDoc,
+  query,
+  where,
+  getDocs,
+  updateDoc,
+  doc,
+  deleteDoc,
+} from "firebase/firestore";
+import { enhancedNotifications } from "@/utils/enhancedToastNotifications";
 
-import { logger } from '@/utils/logger';
-export type RuleType = 'pattern' | 'ast' | 'regex' | 'esquery';
-export type RuleSeverity = 'Critical' | 'High' | 'Medium' | 'Low';
-export type RuleLanguage = 'javascript' | 'typescript' | 'python' | 'java' | 'go' | 'rust' | 'php' | 'ruby' | 'all';
+import { logger } from "@/utils/logger";
+export type RuleType = "pattern" | "ast" | "regex" | "esquery";
+export type RuleSeverity = "Critical" | "High" | "Medium" | "Low";
+export type RuleLanguage =
+  | "javascript"
+  | "typescript"
+  | "python"
+  | "java"
+  | "go"
+  | "rust"
+  | "php"
+  | "ruby"
+  | "all";
 
 export interface CustomRule {
   id?: string;
@@ -21,50 +39,50 @@ export interface CustomRule {
   language: RuleLanguage;
   severity: RuleSeverity;
   type: RuleType;
-  
+
   // Rule definition based on type
   pattern?: {
     search: string; // Pattern to search for
     flags?: string; // Regex flags (g, i, m, etc.)
     context?: string; // Additional context requirements
   };
-  
+
   astQuery?: {
     selector: string; // ESQuery selector
     conditions?: Record<string, any>; // Additional conditions
   };
-  
+
   regex?: {
     pattern: string;
     flags?: string;
     multiline?: boolean;
   };
-  
+
   // Metadata
   message: string; // Message to show when rule matches
   recommendation: string; // How to fix the issue
   references?: string[]; // URLs to documentation
   tags: string[];
-  
+
   // CWE/OWASP mappings
   cwe?: string;
   owasp?: string;
-  
+
   // Rule behavior
   enabled: boolean;
   autoFix?: {
     enabled: boolean;
     replacement: string;
   };
-  
+
   // Statistics
   matchCount?: number;
   lastMatched?: number;
-  
+
   // Sharing
   isPublic: boolean;
   sharedWith?: string[]; // User IDs
-  
+
   createdAt: number;
   updatedAt: number;
 }
@@ -103,98 +121,103 @@ export interface RuleTemplate {
 }
 
 class CustomRulesEngineClass {
-  private rulesCollection = 'customRules';
-  private ruleMatchesCollection = 'ruleMatches';
-  
+  private rulesCollection = "customRules";
+  private ruleMatchesCollection = "ruleMatches";
+
   /**
    * Predefined rule templates
    */
   private templates: RuleTemplate[] = [
     {
-      name: 'Hardcoded API Keys',
-      description: 'Detect hardcoded API keys and secrets',
-      category: 'Security',
-      language: 'all',
-      severity: 'Critical',
-      type: 'regex',
+      name: "Hardcoded API Keys",
+      description: "Detect hardcoded API keys and secrets",
+      category: "Security",
+      language: "all",
+      severity: "Critical",
+      type: "regex",
       template: {
         regex: {
-          pattern: '(api[_-]?key|api[_-]?secret|access[_-]?token)\\s*[=:]\\s*["\']([a-zA-Z0-9_-]{20,})["\']',
-          flags: 'gi',
+          pattern:
+            "(api[_-]?key|api[_-]?secret|access[_-]?token)\\s*[=:]\\s*[\"']([a-zA-Z0-9_-]{20,})[\"']",
+          flags: "gi",
         },
-        message: 'Hardcoded API key or secret detected',
-        recommendation: 'Store sensitive credentials in environment variables or a secure vault',
-        cwe: 'CWE-798',
-        owasp: 'A02:2021',
+        message: "Hardcoded API key or secret detected",
+        recommendation:
+          "Store sensitive credentials in environment variables or a secure vault",
+        cwe: "CWE-798",
+        owasp: "A02:2021",
       },
     },
     {
-      name: 'SQL Injection Risk',
-      description: 'Detect potential SQL injection vulnerabilities',
-      category: 'Security',
-      language: 'all',
-      severity: 'Critical',
-      type: 'pattern',
+      name: "SQL Injection Risk",
+      description: "Detect potential SQL injection vulnerabilities",
+      category: "Security",
+      language: "all",
+      severity: "Critical",
+      type: "pattern",
       template: {
         pattern: {
-          search: 'execute.*\\+.*\\+',
-          flags: 'gi',
+          search: "execute.*\\+.*\\+",
+          flags: "gi",
         },
-        message: 'Potential SQL injection - string concatenation in query',
-        recommendation: 'Use parameterized queries or prepared statements',
-        cwe: 'CWE-89',
-        owasp: 'A03:2021',
+        message: "Potential SQL injection - string concatenation in query",
+        recommendation: "Use parameterized queries or prepared statements",
+        cwe: "CWE-89",
+        owasp: "A03:2021",
       },
     },
     {
-      name: 'Console.log in Production',
-      description: 'Detect console.log statements that should be removed',
-      category: 'Best Practices',
-      language: 'javascript',
-      severity: 'Low',
-      type: 'pattern',
+      name: "Console.log in Production",
+      description: "Detect console.log statements that should be removed",
+      category: "Best Practices",
+      language: "javascript",
+      severity: "Low",
+      type: "pattern",
       template: {
         pattern: {
-          search: 'console\\.log',
-          flags: 'g',
+          search: "console\\.log",
+          flags: "g",
         },
-        message: 'console.log statement found - should be removed in production',
-        recommendation: 'Use a proper logging framework or remove debug statements',
+        message:
+          "console.log statement found - should be removed in production",
+        recommendation:
+          "Use a proper logging framework or remove debug statements",
         autoFix: {
           enabled: true,
-          replacement: '// console.log',
+          replacement: "// console.log",
         },
       },
     },
     {
-      name: 'Deprecated Function Usage',
-      description: 'Detect usage of deprecated functions',
-      category: 'Best Practices',
-      language: 'javascript',
-      severity: 'Medium',
-      type: 'pattern',
+      name: "Deprecated Function Usage",
+      description: "Detect usage of deprecated functions",
+      category: "Best Practices",
+      language: "javascript",
+      severity: "Medium",
+      type: "pattern",
       template: {
         pattern: {
-          search: 'componentWillMount|componentWillReceiveProps|componentWillUpdate',
-          flags: 'g',
+          search:
+            "componentWillMount|componentWillReceiveProps|componentWillUpdate",
+          flags: "g",
         },
-        message: 'Deprecated React lifecycle method',
-        recommendation: 'Use modern lifecycle methods or hooks',
+        message: "Deprecated React lifecycle method",
+        recommendation: "Use modern lifecycle methods or hooks",
       },
     },
     {
-      name: 'Missing Error Handling',
-      description: 'Detect async functions without try-catch',
-      category: 'Best Practices',
-      language: 'javascript',
-      severity: 'Medium',
-      type: 'ast',
+      name: "Missing Error Handling",
+      description: "Detect async functions without try-catch",
+      category: "Best Practices",
+      language: "javascript",
+      severity: "Medium",
+      type: "ast",
       template: {
         astQuery: {
-          selector: 'FunctionDeclaration[async=true]:not(:has(TryStatement))',
+          selector: "FunctionDeclaration[async=true]:not(:has(TryStatement))",
         },
-        message: 'Async function missing error handling',
-        recommendation: 'Add try-catch block or .catch() handler',
+        message: "Async function missing error handling",
+        recommendation: "Add try-catch block or .catch() handler",
       },
     },
   ];
@@ -202,36 +225,41 @@ class CustomRulesEngineClass {
   /**
    * Create a new custom rule
    */
-  async createRule(rule: Omit<CustomRule, 'id' | 'createdAt' | 'updatedAt' | 'matchCount'>): Promise<CustomRule> {
+  async createRule(
+    rule: Omit<CustomRule, "id" | "createdAt" | "updatedAt" | "matchCount">
+  ): Promise<CustomRule> {
     try {
       const now = Date.now();
-      const ruleData: Omit<CustomRule, 'id'> = {
+      const ruleData: Omit<CustomRule, "id"> = {
         ...rule,
         matchCount: 0,
         createdAt: now,
         updatedAt: now,
       };
 
-      const docRef = await addDoc(collection(db, this.rulesCollection), ruleData);
-      
+      const docRef = await addDoc(
+        collection(db, this.rulesCollection),
+        ruleData
+      );
+
       const customRule: CustomRule = {
         ...ruleData,
         id: docRef.id,
       };
 
-      enhancedNotifications.success('Custom Rule Created', {
+      enhancedNotifications.success("Custom Rule Created", {
         message: `Rule "${rule.name}" has been created`,
-        category: 'system',
-        priority: 'normal',
+        category: "system",
+        priority: "normal",
       });
 
       return customRule;
     } catch (error) {
-      logger.error('Failed to create custom rule:', error);
-      enhancedNotifications.error('Rule Creation Failed', {
-        message: error instanceof Error ? error.message : 'Unknown error',
-        category: 'system',
-        priority: 'high',
+      logger.error("Failed to create custom rule:", error);
+      enhancedNotifications.error("Rule Creation Failed", {
+        message: error instanceof Error ? error.message : "Unknown error",
+        category: "system",
+        priority: "high",
       });
       throw error;
     }
@@ -240,37 +268,45 @@ class CustomRulesEngineClass {
   /**
    * Get custom rules for a user
    */
-  async getRules(userId: string, options?: {
-    language?: RuleLanguage;
-    category?: string;
-    enabled?: boolean;
-  }): Promise<CustomRule[]> {
+  async getRules(
+    userId: string,
+    options?: {
+      language?: RuleLanguage;
+      category?: string;
+      enabled?: boolean;
+    }
+  ): Promise<CustomRule[]> {
     try {
       let q = query(
         collection(db, this.rulesCollection),
-        where('userId', '==', userId)
+        where("userId", "==", userId)
       );
 
       const snapshot = await getDocs(q);
-      let rules = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data(),
-      } as CustomRule));
+      let rules = snapshot.docs.map(
+        (doc) =>
+          ({
+            id: doc.id,
+            ...doc.data(),
+          }) as CustomRule
+      );
 
       // Apply filters
-      if (options?.language && options.language !== 'all') {
-        rules = rules.filter(r => r.language === options.language || r.language === 'all');
+      if (options?.language && options.language !== "all") {
+        rules = rules.filter(
+          (r) => r.language === options.language || r.language === "all"
+        );
       }
       if (options?.category) {
-        rules = rules.filter(r => r.category === options.category);
+        rules = rules.filter((r) => r.category === options.category);
       }
       if (options?.enabled !== undefined) {
-        rules = rules.filter(r => r.enabled === options.enabled);
+        rules = rules.filter((r) => r.enabled === options.enabled);
       }
 
       return rules;
     } catch (error) {
-      logger.error('Failed to get custom rules:', error);
+      logger.error("Failed to get custom rules:", error);
       return [];
     }
   }
@@ -285,26 +321,31 @@ class CustomRulesEngineClass {
     try {
       const q = query(
         collection(db, this.rulesCollection),
-        where('isPublic', '==', true)
+        where("isPublic", "==", true)
       );
 
       const snapshot = await getDocs(q);
-      let rules = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data(),
-      } as CustomRule));
+      let rules = snapshot.docs.map(
+        (doc) =>
+          ({
+            id: doc.id,
+            ...doc.data(),
+          }) as CustomRule
+      );
 
       // Apply filters
-      if (options?.language && options.language !== 'all') {
-        rules = rules.filter(r => r.language === options.language || r.language === 'all');
+      if (options?.language && options.language !== "all") {
+        rules = rules.filter(
+          (r) => r.language === options.language || r.language === "all"
+        );
       }
       if (options?.category) {
-        rules = rules.filter(r => r.category === options.category);
+        rules = rules.filter((r) => r.category === options.category);
       }
 
       return rules;
     } catch (error) {
-      logger.error('Failed to get public rules:', error);
+      logger.error("Failed to get public rules:", error);
       return [];
     }
   }
@@ -312,7 +353,10 @@ class CustomRulesEngineClass {
   /**
    * Update custom rule
    */
-  async updateRule(ruleId: string, updates: Partial<CustomRule>): Promise<void> {
+  async updateRule(
+    ruleId: string,
+    updates: Partial<CustomRule>
+  ): Promise<void> {
     try {
       const ruleRef = doc(db, this.rulesCollection, ruleId);
       await updateDoc(ruleRef, {
@@ -320,15 +364,15 @@ class CustomRulesEngineClass {
         updatedAt: Date.now(),
       });
 
-      enhancedNotifications.success('Rule Updated', {
-        category: 'system',
-        priority: 'low',
+      enhancedNotifications.success("Rule Updated", {
+        category: "system",
+        priority: "low",
       });
     } catch (error) {
-      logger.error('Failed to update rule:', error);
-      enhancedNotifications.error('Rule Update Failed', {
-        category: 'system',
-        priority: 'high',
+      logger.error("Failed to update rule:", error);
+      enhancedNotifications.error("Rule Update Failed", {
+        category: "system",
+        priority: "high",
       });
       throw error;
     }
@@ -340,16 +384,16 @@ class CustomRulesEngineClass {
   async deleteRule(ruleId: string): Promise<void> {
     try {
       await deleteDoc(doc(db, this.rulesCollection, ruleId));
-      
-      enhancedNotifications.success('Rule Deleted', {
-        category: 'system',
-        priority: 'low',
+
+      enhancedNotifications.success("Rule Deleted", {
+        category: "system",
+        priority: "low",
       });
     } catch (error) {
-      logger.error('Failed to delete rule:', error);
-      enhancedNotifications.error('Rule Deletion Failed', {
-        category: 'system',
-        priority: 'high',
+      logger.error("Failed to delete rule:", error);
+      enhancedNotifications.error("Rule Deletion Failed", {
+        category: "system",
+        priority: "high",
       });
       throw error;
     }
@@ -395,19 +439,19 @@ class CustomRulesEngineClass {
     const matches: RuleMatch[] = [];
 
     switch (rule.type) {
-      case 'regex':
+      case "regex":
         if (rule.regex) {
           matches.push(...this.applyRegexRule(code, filename, rule));
         }
         break;
-      
-      case 'pattern':
+
+      case "pattern":
         if (rule.pattern) {
           matches.push(...this.applyPatternRule(code, filename, rule));
         }
         break;
-      
-      case 'ast':
+
+      case "ast":
         // AST-based rules would require parsing
         // This is a placeholder for AST analysis
         break;
@@ -419,20 +463,24 @@ class CustomRulesEngineClass {
   /**
    * Apply regex-based rule
    */
-  private applyRegexRule(code: string, filename: string, rule: CustomRule): RuleMatch[] {
+  private applyRegexRule(
+    code: string,
+    filename: string,
+    rule: CustomRule
+  ): RuleMatch[] {
     const matches: RuleMatch[] = [];
-    
+
     if (!rule.regex) return matches;
 
     try {
-      const regex = new RegExp(rule.regex.pattern, rule.regex.flags || 'g');
-      const lines = code.split('\n');
+      const regex = new RegExp(rule.regex.pattern, rule.regex.flags || "g");
+      const lines = code.split("\n");
 
       lines.forEach((line, lineIndex) => {
         let match;
         while ((match = regex.exec(line)) !== null) {
           matches.push({
-            ruleId: rule.id || 'unknown',
+            ruleId: rule.id || "unknown",
             ruleName: rule.name,
             file: filename,
             line: lineIndex + 1,
@@ -441,15 +489,17 @@ class CustomRulesEngineClass {
             severity: rule.severity,
             message: rule.message,
             recommendation: rule.recommendation,
-            autoFix: rule.autoFix?.enabled ? {
-              available: true,
-              replacement: rule.autoFix.replacement,
-            } : undefined,
+            autoFix: rule.autoFix?.enabled
+              ? {
+                  available: true,
+                  replacement: rule.autoFix.replacement,
+                }
+              : undefined,
           });
         }
       });
     } catch (error) {
-      logger.error('Regex rule error:', error);
+      logger.error("Regex rule error:", error);
     }
 
     return matches;
@@ -458,20 +508,24 @@ class CustomRulesEngineClass {
   /**
    * Apply pattern-based rule
    */
-  private applyPatternRule(code: string, filename: string, rule: CustomRule): RuleMatch[] {
+  private applyPatternRule(
+    code: string,
+    filename: string,
+    rule: CustomRule
+  ): RuleMatch[] {
     const matches: RuleMatch[] = [];
-    
+
     if (!rule.pattern) return matches;
 
     try {
-      const regex = new RegExp(rule.pattern.search, rule.pattern.flags || 'g');
-      const lines = code.split('\n');
+      const regex = new RegExp(rule.pattern.search, rule.pattern.flags || "g");
+      const lines = code.split("\n");
 
       lines.forEach((line, lineIndex) => {
         let match;
         while ((match = regex.exec(line)) !== null) {
           matches.push({
-            ruleId: rule.id || 'unknown',
+            ruleId: rule.id || "unknown",
             ruleName: rule.name,
             file: filename,
             line: lineIndex + 1,
@@ -480,15 +534,17 @@ class CustomRulesEngineClass {
             severity: rule.severity,
             message: rule.message,
             recommendation: rule.recommendation,
-            autoFix: rule.autoFix?.enabled ? {
-              available: true,
-              replacement: rule.autoFix.replacement,
-            } : undefined,
+            autoFix: rule.autoFix?.enabled
+              ? {
+                  available: true,
+                  replacement: rule.autoFix.replacement,
+                }
+              : undefined,
           });
         }
       });
     } catch (error) {
-      logger.error('Pattern rule error:', error);
+      logger.error("Pattern rule error:", error);
     }
 
     return matches;
@@ -497,11 +553,19 @@ class CustomRulesEngineClass {
   /**
    * Update rule match count
    */
-  private async updateMatchCount(ruleId: string, additionalMatches: number): Promise<void> {
+  private async updateMatchCount(
+    ruleId: string,
+    additionalMatches: number
+  ): Promise<void> {
     try {
       const ruleRef = doc(db, this.rulesCollection, ruleId);
-      const ruleDoc = await getDocs(query(collection(db, this.rulesCollection), where('__name__', '==', ruleId)));
-      
+      const ruleDoc = await getDocs(
+        query(
+          collection(db, this.rulesCollection),
+          where("__name__", "==", ruleId)
+        )
+      );
+
       if (!ruleDoc.empty) {
         const currentCount = ruleDoc.docs[0].data().matchCount || 0;
         await updateDoc(ruleRef, {
@@ -510,7 +574,7 @@ class CustomRulesEngineClass {
         });
       }
     } catch (error) {
-      logger.error('Failed to update match count:', error);
+      logger.error("Failed to update match count:", error);
     }
   }
 
@@ -524,10 +588,12 @@ class CustomRulesEngineClass {
     let templates = this.templates;
 
     if (options?.category) {
-      templates = templates.filter(t => t.category === options.category);
+      templates = templates.filter((t) => t.category === options.category);
     }
-    if (options?.language && options.language !== 'all') {
-      templates = templates.filter(t => t.language === options.language || t.language === 'all');
+    if (options?.language && options.language !== "all") {
+      templates = templates.filter(
+        (t) => t.language === options.language || t.language === "all"
+      );
     }
 
     return templates;
@@ -541,12 +607,15 @@ class CustomRulesEngineClass {
     templateName: string,
     customizations?: Partial<CustomRule>
   ): Promise<CustomRule> {
-    const template = this.templates.find(t => t.name === templateName);
+    const template = this.templates.find((t) => t.name === templateName);
     if (!template) {
-      throw new Error('Template not found');
+      throw new Error("Template not found");
     }
 
-    const rule: Omit<CustomRule, 'id' | 'createdAt' | 'updatedAt' | 'matchCount'> = {
+    const rule: Omit<
+      CustomRule,
+      "id" | "createdAt" | "updatedAt" | "matchCount"
+    > = {
       userId,
       name: template.name,
       description: template.description,
@@ -554,8 +623,8 @@ class CustomRulesEngineClass {
       language: template.language,
       severity: template.severity,
       type: template.type,
-      message: '',
-      recommendation: '',
+      message: "",
+      recommendation: "",
       tags: [template.category.toLowerCase()],
       enabled: true,
       isPublic: false,
@@ -573,16 +642,21 @@ class CustomRulesEngineClass {
     const rules = await this.getRules(userId);
     const categoriesMap = new Map<string, number>();
 
-    rules.forEach(rule => {
-      categoriesMap.set(rule.category, (categoriesMap.get(rule.category) || 0) + 1);
+    rules.forEach((rule) => {
+      categoriesMap.set(
+        rule.category,
+        (categoriesMap.get(rule.category) || 0) + 1
+      );
     });
 
-    const categories: RuleCategory[] = Array.from(categoriesMap.entries()).map(([name, count]) => ({
-      name,
-      description: this.getCategoryDescription(name),
-      icon: this.getCategoryIcon(name),
-      ruleCount: count,
-    }));
+    const categories: RuleCategory[] = Array.from(categoriesMap.entries()).map(
+      ([name, count]) => ({
+        name,
+        description: this.getCategoryDescription(name),
+        icon: this.getCategoryIcon(name),
+        ruleCount: count,
+      })
+    );
 
     return categories.sort((a, b) => b.ruleCount - a.ruleCount);
   }
@@ -592,14 +666,14 @@ class CustomRulesEngineClass {
    */
   private getCategoryDescription(category: string): string {
     const descriptions: Record<string, string> = {
-      'Security': 'Rules that detect security vulnerabilities and risks',
-      'Performance': 'Rules that identify performance bottlenecks',
-      'Best Practices': 'Rules that enforce coding standards and conventions',
-      'Maintainability': 'Rules that improve code maintainability',
-      'Accessibility': 'Rules that ensure accessibility compliance',
-      'Testing': 'Rules related to test coverage and quality',
+      Security: "Rules that detect security vulnerabilities and risks",
+      Performance: "Rules that identify performance bottlenecks",
+      "Best Practices": "Rules that enforce coding standards and conventions",
+      Maintainability: "Rules that improve code maintainability",
+      Accessibility: "Rules that ensure accessibility compliance",
+      Testing: "Rules related to test coverage and quality",
     };
-    return descriptions[category] || 'Custom rule category';
+    return descriptions[category] || "Custom rule category";
   }
 
   /**
@@ -607,14 +681,14 @@ class CustomRulesEngineClass {
    */
   private getCategoryIcon(category: string): string {
     const icons: Record<string, string> = {
-      'Security': '🔒',
-      'Performance': '⚡',
-      'Best Practices': '✨',
-      'Maintainability': '🔧',
-      'Accessibility': '♿',
-      'Testing': '🧪',
+      Security: "🔒",
+      Performance: "⚡",
+      "Best Practices": "✨",
+      Maintainability: "🔧",
+      Accessibility: "♿",
+      Testing: "🧪",
     };
-    return icons[category] || '📋';
+    return icons[category] || "📋";
   }
 
   /**
@@ -627,28 +701,28 @@ class CustomRulesEngineClass {
     const errors: string[] = [];
 
     if (!rule.name || rule.name.trim().length === 0) {
-      errors.push('Rule name is required');
+      errors.push("Rule name is required");
     }
 
     if (!rule.severity) {
-      errors.push('Severity is required');
+      errors.push("Severity is required");
     }
 
     if (!rule.type) {
-      errors.push('Rule type is required');
+      errors.push("Rule type is required");
     }
 
     // Type-specific validation
-    if (rule.type === 'regex' && !rule.regex?.pattern) {
-      errors.push('Regex pattern is required for regex rules');
+    if (rule.type === "regex" && !rule.regex?.pattern) {
+      errors.push("Regex pattern is required for regex rules");
     }
 
-    if (rule.type === 'pattern' && !rule.pattern?.search) {
-      errors.push('Search pattern is required for pattern rules');
+    if (rule.type === "pattern" && !rule.pattern?.search) {
+      errors.push("Search pattern is required for pattern rules");
     }
 
-    if (rule.type === 'ast' && !rule.astQuery?.selector) {
-      errors.push('AST selector is required for AST rules');
+    if (rule.type === "ast" && !rule.astQuery?.selector) {
+      errors.push("AST selector is required for AST rules");
     }
 
     // Validate regex syntax
@@ -656,7 +730,7 @@ class CustomRulesEngineClass {
       try {
         new RegExp(rule.regex.pattern, rule.regex.flags);
       } catch (e) {
-        errors.push('Invalid regex pattern syntax');
+        errors.push("Invalid regex pattern syntax");
       }
     }
 
@@ -677,7 +751,10 @@ class CustomRulesEngineClass {
   /**
    * Import rules from JSON
    */
-  async importRules(userId: string, json: string): Promise<{
+  async importRules(
+    userId: string,
+    json: string
+  ): Promise<{
     imported: number;
     failed: number;
     errors: string[];
@@ -695,20 +772,22 @@ class CustomRulesEngineClass {
         try {
           // Remove ID to create new rule
           const { id, createdAt, updatedAt, matchCount, ...ruleData } = rule;
-          
+
           await this.createRule({
             ...ruleData,
             userId,
           });
-          
+
           result.imported++;
         } catch (error) {
           result.failed++;
-          result.errors.push(`Failed to import rule "${rule.name}": ${error instanceof Error ? error.message : 'Unknown error'}`);
+          result.errors.push(
+            `Failed to import rule "${rule.name}": ${error instanceof Error ? error.message : "Unknown error"}`
+          );
         }
       }
     } catch (error) {
-      result.errors.push('Invalid JSON format');
+      result.errors.push("Invalid JSON format");
     }
 
     return result;

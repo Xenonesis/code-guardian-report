@@ -1,17 +1,26 @@
 // components/user-dashboard.tsx
-import React, { useState, useEffect } from 'react';
-import { useAuth } from '@/lib/auth-context';
-import { useNavigation } from '@/lib/navigation-context';
-import { collection, query, where, getDocs, addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
-import { useGitHubRepositories } from '@/hooks/useGitHubRepositories';
-import GitHubRepositoryPermissionModal from '@/components/github/GitHubRepositoryPermissionModal';
-import GitHubRepositoryList from '@/components/github/GitHubRepositoryList';
-import GitHubUsernameInput from '@/components/github/GitHubUsernameInput';
-import { Github } from 'lucide-react';
-import { toast } from 'sonner';
+import React, { useState, useEffect } from "react";
+import { useAuth } from "@/lib/auth-context";
+import { useNavigation } from "@/lib/navigation-context";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  addDoc,
+  deleteDoc,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { useGitHubRepositories } from "@/hooks/useGitHubRepositories";
+import GitHubRepositoryPermissionModal from "@/components/github/GitHubRepositoryPermissionModal";
+import GitHubRepositoryList from "@/components/github/GitHubRepositoryList";
+import GitHubUsernameInput from "@/components/github/GitHubUsernameInput";
+import { Github } from "lucide-react";
+import { toast } from "sonner";
 
-import { logger } from '@/utils/logger';
+import { logger } from "@/utils/logger";
 interface Task {
   id: string;
   title: string;
@@ -24,8 +33,8 @@ interface Task {
 const UserDashboard: React.FC = () => {
   const { user, userProfile, logout } = useAuth();
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [newTaskTitle, setNewTaskTitle] = useState('');
-  const [newTaskDescription, setNewTaskDescription] = useState('');
+  const [newTaskTitle, setNewTaskTitle] = useState("");
+  const [newTaskDescription, setNewTaskDescription] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPermissionModal, setShowPermissionModal] = useState(false);
   const [showUsernameInput, setShowUsernameInput] = useState(false);
@@ -42,17 +51,17 @@ const UserDashboard: React.FC = () => {
     grantPermission,
     denyPermission,
     revokePermission,
-    setManualUsername
+    setManualUsername,
   } = useGitHubRepositories({
     email: userProfile?.email || null,
-    enabled: !userProfile?.isGitHubUser // Only for non-GitHub users (Google sign-in)
+    enabled: !userProfile?.isGitHubUser, // Only for non-GitHub users (Google sign-in)
   });
 
   const fetchTasks = async () => {
     if (!user) return;
 
     try {
-      const q = query(collection(db, 'tasks'), where('userId', '==', user.uid));
+      const q = query(collection(db, "tasks"), where("userId", "==", user.uid));
       const querySnapshot = await getDocs(q);
       const userTasks: Task[] = [];
 
@@ -60,13 +69,18 @@ const UserDashboard: React.FC = () => {
         userTasks.push({
           id: doc.id,
           ...doc.data(),
-          createdAt: doc.data().createdAt.toDate()
+          createdAt: doc.data().createdAt.toDate(),
         } as Task);
       });
 
-      setTasks(userTasks.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()));
+      setTasks(
+        userTasks.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+      );
     } catch (error) {
-      logger.warn('Firestore connection error - tasks feature unavailable:', error);
+      logger.warn(
+        "Firestore connection error - tasks feature unavailable:",
+        error
+      );
       // You could show a message to the user here if needed
       setTasks([]);
     }
@@ -83,15 +97,15 @@ const UserDashboard: React.FC = () => {
         description: newTaskDescription,
         completed: false,
         createdAt: new Date(),
-        userId: user.uid
+        userId: user.uid,
       };
 
-      await addDoc(collection(db, 'tasks'), newTask);
-      setNewTaskTitle('');
-      setNewTaskDescription('');
+      await addDoc(collection(db, "tasks"), newTask);
+      setNewTaskTitle("");
+      setNewTaskDescription("");
       await fetchTasks();
     } catch (error) {
-      logger.warn('Firestore connection error - unable to add task:', error);
+      logger.warn("Firestore connection error - unable to add task:", error);
       // You could show a toast notification here
     } finally {
       setLoading(false);
@@ -100,20 +114,20 @@ const UserDashboard: React.FC = () => {
 
   const toggleTask = async (taskId: string, completed: boolean) => {
     try {
-      const taskRef = doc(db, 'tasks', taskId);
+      const taskRef = doc(db, "tasks", taskId);
       await updateDoc(taskRef, { completed: !completed });
       await fetchTasks();
     } catch (error) {
-      logger.warn('Firestore connection error - unable to update task:', error);
+      logger.warn("Firestore connection error - unable to update task:", error);
     }
   };
 
   const deleteTask = async (taskId: string) => {
     try {
-      await deleteDoc(doc(db, 'tasks', taskId));
+      await deleteDoc(doc(db, "tasks", taskId));
       await fetchTasks();
     } catch (error) {
-      logger.warn('Firestore connection error - unable to delete task:', error);
+      logger.warn("Firestore connection error - unable to delete task:", error);
     }
   };
 
@@ -121,7 +135,7 @@ const UserDashboard: React.FC = () => {
     try {
       await logout();
     } catch (error) {
-      logger.error('Error signing out:', error);
+      logger.error("Error signing out:", error);
     }
   };
 
@@ -131,7 +145,12 @@ const UserDashboard: React.FC = () => {
 
   // Show permission modal if user has GitHub account but hasn't granted/denied permission
   useEffect(() => {
-    if (hasGitHubAccount && !permissionGranted && !permissionDenied && !userProfile?.isGitHubUser) {
+    if (
+      hasGitHubAccount &&
+      !permissionGranted &&
+      !permissionDenied &&
+      !userProfile?.isGitHubUser
+    ) {
       // Delay showing the modal by 2 seconds to not overwhelm the user immediately
       const timer = setTimeout(() => {
         setShowPermissionModal(true);
@@ -139,63 +158,83 @@ const UserDashboard: React.FC = () => {
       return () => clearTimeout(timer);
     }
     return undefined;
-  }, [hasGitHubAccount, permissionGranted, permissionDenied, userProfile?.isGitHubUser]);
+  }, [
+    hasGitHubAccount,
+    permissionGranted,
+    permissionDenied,
+    userProfile?.isGitHubUser,
+  ]);
 
   // Show username input if no GitHub account detected but user wants to connect
   useEffect(() => {
-    if (!hasGitHubAccount && !permissionGranted && !permissionDenied && !userProfile?.isGitHubUser && userProfile?.email) {
+    if (
+      !hasGitHubAccount &&
+      !permissionGranted &&
+      !permissionDenied &&
+      !userProfile?.isGitHubUser &&
+      userProfile?.email
+    ) {
       // Check if we should prompt for manual username input
-      const hasAskedForUsername = localStorage.getItem('github_username_asked');
+      const hasAskedForUsername = localStorage.getItem("github_username_asked");
       if (!hasAskedForUsername) {
         const timer = setTimeout(() => {
           setShowUsernameInput(true);
-          localStorage.setItem('github_username_asked', 'true');
+          localStorage.setItem("github_username_asked", "true");
         }, 3000);
         return () => clearTimeout(timer);
       }
     }
     return undefined;
-  }, [hasGitHubAccount, permissionGranted, permissionDenied, userProfile?.isGitHubUser, userProfile?.email]);
+  }, [
+    hasGitHubAccount,
+    permissionGranted,
+    permissionDenied,
+    userProfile?.isGitHubUser,
+    userProfile?.email,
+  ]);
 
   const handleAllowGitHubAccess = async () => {
     setShowPermissionModal(false);
-    const t = toast.loading('Fetching your repositories...');
+    const t = toast.loading("Fetching your repositories...");
     await grantPermission();
-    toast.success('GitHub repositories loaded successfully!', { id: t });
+    toast.success("GitHub repositories loaded successfully!", { id: t });
     setShowGitHubRepos(true);
   };
 
   const handleDenyGitHubAccess = () => {
     setShowPermissionModal(false);
     denyPermission();
-    toast.info('You can enable this later from settings.');
+    toast.info("You can enable this later from settings.");
   };
 
   const handleManualUsernameSuccess = async (username: string) => {
     setShowUsernameInput(false);
-    const t = toast.loading('Fetching your repositories...');
+    const t = toast.loading("Fetching your repositories...");
     await setManualUsername(username);
-    toast.success('GitHub repositories loaded successfully!', { id: t });
+    toast.success("GitHub repositories loaded successfully!", { id: t });
     setShowGitHubRepos(true);
   };
 
   const handleSkipUsernameInput = () => {
     setShowUsernameInput(false);
-    localStorage.setItem('github_repo_permission', 'denied');
-    toast.info('You can connect your GitHub account later from settings.');
+    localStorage.setItem("github_repo_permission", "denied");
+    toast.info("You can connect your GitHub account later from settings.");
   };
 
   const { navigateTo, setCurrentSection, setCurrentTab } = useNavigation();
 
   const handleAnalyzeRepository = async (repoUrl: string, repoName: string) => {
     try {
-      const { githubRepositoryService } = await import('@/services/githubRepositoryService');
-      const { EnhancedAnalysisEngine } = await import('@/services/enhancedAnalysisEngine');
-      const { GitHubAnalysisStorageService } = await import('@/services/storage/GitHubAnalysisStorageService');
+      const { githubRepositoryService } =
+        await import("@/services/githubRepositoryService");
+      const { EnhancedAnalysisEngine } =
+        await import("@/services/enhancedAnalysisEngine");
+      const { GitHubAnalysisStorageService } =
+        await import("@/services/storage/GitHubAnalysisStorageService");
 
       const repoInfo = githubRepositoryService.parseGitHubUrl(repoUrl);
       if (!repoInfo) {
-        toast.error('Invalid GitHub repository URL');
+        toast.error("Invalid GitHub repository URL");
         return;
       }
 
@@ -206,26 +245,32 @@ const UserDashboard: React.FC = () => {
         let branch = repoInfo.branch;
         if (!branch) {
           try {
-            const details = await githubRepositoryService.getRepositoryInfo(repoInfo.owner, repoInfo.repo);
+            const details = await githubRepositoryService.getRepositoryInfo(
+              repoInfo.owner,
+              repoInfo.repo
+            );
             branch = details.defaultBranch;
             // Update stored metadata with stars/forks
             var stars = details.stars;
             var forks = details.forks;
           } catch {
-            branch = 'main';
+            branch = "main";
           }
         }
 
         // Download ZIP with progress updates (throttled)
         let lastUpdate = 0;
-        let lastMessage = '';
+        let lastMessage = "";
         const zipFile = await githubRepositoryService.downloadRepositoryAsZip(
           repoInfo.owner,
           repoInfo.repo,
-          branch || 'main',
+          branch || "main",
           (progress, message) => {
             const now = Date.now();
-            if ((now - lastUpdate > 500 || progress === 100) && message !== lastMessage) {
+            if (
+              (now - lastUpdate > 500 || progress === 100) &&
+              message !== lastMessage
+            ) {
               lastMessage = message;
               lastUpdate = now;
               setTimeout(() => toast.loading(message, { id: toastId }), 0);
@@ -234,7 +279,7 @@ const UserDashboard: React.FC = () => {
         );
 
         // Analyze
-        toast.loading('Analyzing code...', { id: toastId });
+        toast.loading("Analyzing code...", { id: toastId });
         const engine = new EnhancedAnalysisEngine();
         const results = await engine.analyzeCodebase(zipFile);
 
@@ -249,31 +294,39 @@ const UserDashboard: React.FC = () => {
             securityScore: results.summary.securityScore / 10,
             issuesFound: results.issues.length,
             criticalIssues: results.summary.criticalIssues,
-            language: typeof results.languageDetection?.primaryLanguage === 'string' 
-              ? results.languageDetection.primaryLanguage 
-              : results.languageDetection?.primaryLanguage?.name || 'Unknown',
-            stars: typeof stars === 'number' ? stars : 0,
-            forks: typeof forks === 'number' ? forks : 0,
-            duration: parseFloat(results.analysisTime) || 0
+            language:
+              typeof results.languageDetection?.primaryLanguage === "string"
+                ? results.languageDetection.primaryLanguage
+                : results.languageDetection?.primaryLanguage?.name || "Unknown",
+            stars: typeof stars === "number" ? stars : 0,
+            forks: typeof forks === "number" ? forks : 0,
+            duration: parseFloat(results.analysisTime) || 0,
           });
         }
 
-        toast.success(`Analysis complete! Found ${results.issues.length} issues.`, { id: toastId, duration: 2000 });
+        toast.success(
+          `Analysis complete! Found ${results.issues.length} issues.`,
+          { id: toastId, duration: 2000 }
+        );
         // Navigate to GitHub Analysis page Analytics tab
-        localStorage.setItem('github_selected_tab', 'analytics');
+        localStorage.setItem("github_selected_tab", "analytics");
         if (navigateTo) {
-          navigateTo('github-analysis', 'analytics');
+          navigateTo("github-analysis", "analytics");
         } else {
-          setCurrentSection?.('github-analysis');
-          setCurrentTab?.('analytics');
+          setCurrentSection?.("github-analysis");
+          setCurrentTab?.("analytics");
         }
       } catch (err: any) {
-        toast.error(`Analysis failed: ${err.message || 'Unknown error'}`, { id: toastId });
-        logger.error('Repository analysis failed:', err);
+        toast.error(`Analysis failed: ${err.message || "Unknown error"}`, {
+          id: toastId,
+        });
+        logger.error("Repository analysis failed:", err);
       }
     } catch (error: any) {
-      toast.error(`Failed to analyze repository: ${error.message || 'Unknown error'}`);
-      logger.error('Error in handleAnalyzeRepository:', error);
+      toast.error(
+        `Failed to analyze repository: ${error.message || "Unknown error"}`
+      );
+      logger.error("Error in handleAnalyzeRepository:", error);
     }
   };
 
@@ -293,7 +346,7 @@ const UserDashboard: React.FC = () => {
       {/* GitHub Permission Modal */}
       <GitHubRepositoryPermissionModal
         isOpen={showPermissionModal}
-        email={userProfile?.email || ''}
+        email={userProfile?.email || ""}
         onAllow={handleAllowGitHubAccess}
         onDeny={handleDenyGitHubAccess}
         onClose={() => setShowPermissionModal(false)}
@@ -302,7 +355,7 @@ const UserDashboard: React.FC = () => {
       {/* GitHub Username Input Modal */}
       <GitHubUsernameInput
         isOpen={showUsernameInput}
-        email={userProfile?.email || ''}
+        email={userProfile?.email || ""}
         onSuccess={handleManualUsernameSuccess}
         onSkip={handleSkipUsernameInput}
         onClose={() => setShowUsernameInput(false)}
@@ -312,8 +365,12 @@ const UserDashboard: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
-              <p className="text-gray-500 dark:text-gray-400">Welcome back, {userProfile.displayName}!</p>
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+                Dashboard
+              </h1>
+              <p className="text-gray-500 dark:text-gray-400">
+                Welcome back, {userProfile.displayName}!
+              </p>
             </div>
             <button
               onClick={handleLogout}
@@ -332,7 +389,9 @@ const UserDashboard: React.FC = () => {
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <Github className="w-6 h-6 text-purple-600 dark:text-purple-400" />
-                <h2 className="text-xl font-bold text-gray-900 dark:text-white">Your GitHub Repositories</h2>
+                <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+                  Your GitHub Repositories
+                </h2>
                 <span className="px-2 py-1 text-xs bg-purple-100 dark:bg-purple-500/20 text-purple-700 dark:text-purple-300 rounded-full">
                   {repositories.length} repos
                 </span>
@@ -341,10 +400,10 @@ const UserDashboard: React.FC = () => {
                 onClick={() => setShowGitHubRepos(!showGitHubRepos)}
                 className="text-sm text-purple-600 dark:text-purple-400 hover:text-purple-500 dark:hover:text-purple-300 transition-colors"
               >
-                {showGitHubRepos ? 'Hide' : 'Show'}
+                {showGitHubRepos ? "Hide" : "Show"}
               </button>
             </div>
-            
+
             {showGitHubRepos && (
               <GitHubRepositoryList
                 repositories={repositories}
@@ -359,21 +418,33 @@ const UserDashboard: React.FC = () => {
           {/* Profile and Stats */}
           <div className="lg:col-span-1 space-y-6">
             <div className="bg-white dark:bg-[#252538] rounded-lg shadow p-6 border border-gray-200 dark:border-transparent">
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Profile Information</h2>
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                Profile Information
+              </h2>
               <div className="space-y-3">
                 <div>
-                  <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Display Name</p>
-                  <p className="text-gray-900 dark:text-white">{userProfile.displayName}</p>
+                  <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                    Display Name
+                  </p>
+                  <p className="text-gray-900 dark:text-white">
+                    {userProfile.displayName}
+                  </p>
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Email</p>
-                  <p className="text-gray-900 dark:text-white">{userProfile.email}</p>
+                  <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                    Email
+                  </p>
+                  <p className="text-gray-900 dark:text-white">
+                    {userProfile.email}
+                  </p>
                 </div>
               </div>
             </div>
 
             <div className="bg-white dark:bg-[#252538] rounded-lg shadow p-6 border border-gray-200 dark:border-transparent">
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Task Statistics</h2>
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                Task Statistics
+              </h2>
               <div className="space-y-3">
                 <div className="flex justify-between text-gray-600 dark:text-gray-300">
                   <span>Total Tasks</span>
@@ -382,13 +453,13 @@ const UserDashboard: React.FC = () => {
                 <div className="flex justify-between text-green-600 dark:text-green-400">
                   <span>Completed</span>
                   <span className="font-semibold">
-                    {tasks.filter(task => task.completed).length}
+                    {tasks.filter((task) => task.completed).length}
                   </span>
                 </div>
                 <div className="flex justify-between text-yellow-600 dark:text-yellow-400">
                   <span>Pending</span>
                   <span className="font-semibold">
-                    {tasks.filter(task => !task.completed).length}
+                    {tasks.filter((task) => !task.completed).length}
                   </span>
                 </div>
               </div>
@@ -398,12 +469,20 @@ const UserDashboard: React.FC = () => {
           {/* Tasks Manager */}
           <div className="lg:col-span-2">
             <div className="bg-white dark:bg-[#252538] rounded-lg shadow p-6 border border-gray-200 dark:border-transparent">
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Task Manager</h2>
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                Task Manager
+              </h2>
 
-              <form onSubmit={addTask} className="mb-6 p-4 bg-gray-50 dark:bg-[#1e1e2f] rounded-lg border border-gray-200 dark:border-gray-700">
+              <form
+                onSubmit={addTask}
+                className="mb-6 p-4 bg-gray-50 dark:bg-[#1e1e2f] rounded-lg border border-gray-200 dark:border-gray-700"
+              >
                 <div className="grid grid-cols-1 gap-4">
                   <div>
-                    <label htmlFor="taskTitle" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    <label
+                      htmlFor="taskTitle"
+                      className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                    >
                       Task Title
                     </label>
                     <input
@@ -417,7 +496,10 @@ const UserDashboard: React.FC = () => {
                     />
                   </div>
                   <div>
-                    <label htmlFor="taskDescription" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                    <label
+                      htmlFor="taskDescription"
+                      className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                    >
                       Description (Optional)
                     </label>
                     <textarea
@@ -434,7 +516,7 @@ const UserDashboard: React.FC = () => {
                     disabled={loading}
                     className="bg-gradient-to-r from-purple-600 to-blue-500 text-white px-4 py-2 rounded-md hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:opacity-50"
                   >
-                    {loading ? 'Adding...' : 'Add Task'}
+                    {loading ? "Adding..." : "Add Task"}
                   </button>
                 </div>
               </form>
@@ -450,8 +532,8 @@ const UserDashboard: React.FC = () => {
                       key={task.id}
                       className={`p-4 border rounded-lg ${
                         task.completed
-                          ? 'bg-green-50 dark:bg-green-900/30 border-green-200 dark:border-green-600'
-                          : 'bg-white dark:bg-[#2a2a3d] border-gray-200 dark:border-gray-600'
+                          ? "bg-green-50 dark:bg-green-900/30 border-green-200 dark:border-green-600"
+                          : "bg-white dark:bg-[#2a2a3d] border-gray-200 dark:border-gray-600"
                       }`}
                     >
                       <div className="flex items-start justify-between">
@@ -463,15 +545,23 @@ const UserDashboard: React.FC = () => {
                             className="mt-1 h-4 w-4 text-blue-500 focus:ring-blue-400 border-gray-300 rounded"
                           />
                           <div>
-                            <h3 className={`font-medium ${
-                              task.completed ? 'text-gray-500 dark:text-gray-400 line-through' : 'text-gray-900 dark:text-white'
-                            }`}>
+                            <h3
+                              className={`font-medium ${
+                                task.completed
+                                  ? "text-gray-500 dark:text-gray-400 line-through"
+                                  : "text-gray-900 dark:text-white"
+                              }`}
+                            >
                               {task.title}
                             </h3>
                             {task.description && (
-                              <p className={`text-sm mt-1 ${
-                                task.completed ? 'text-gray-500' : 'text-gray-600 dark:text-gray-300'
-                              }`}>
+                              <p
+                                className={`text-sm mt-1 ${
+                                  task.completed
+                                    ? "text-gray-500"
+                                    : "text-gray-600 dark:text-gray-300"
+                                }`}
+                              >
                                 {task.description}
                               </p>
                             )}

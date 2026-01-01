@@ -1,8 +1,8 @@
 // components/github/GitHubUsernameInput.tsx
-import React, { useState } from 'react';
-import { Github, Check, X, Loader2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { logger } from '@/utils/logger';
+import React, { useState } from "react";
+import { Github, Check, X, Loader2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { logger } from "@/utils/logger";
 
 interface GitHubUsernameInputProps {
   isOpen: boolean;
@@ -17,9 +17,9 @@ const GitHubUsernameInput: React.FC<GitHubUsernameInputProps> = ({
   email,
   onSuccess,
   onSkip,
-  onClose
+  onClose,
 }) => {
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState("");
   const [verifying, setVerifying] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -27,7 +27,7 @@ const GitHubUsernameInput: React.FC<GitHubUsernameInputProps> = ({
 
   const handleVerify = async () => {
     if (!username.trim()) {
-      setError('Please enter a username');
+      setError("Please enter a username");
       return;
     }
 
@@ -35,27 +35,29 @@ const GitHubUsernameInput: React.FC<GitHubUsernameInputProps> = ({
     setError(null);
 
     try {
-      const response = await fetch(`https://api.github.com/users/${username.trim()}`);
+      const response = await fetch(
+        `https://api.github.com/users/${username.trim()}`
+      );
 
       if (response.ok) {
         const userData = await response.json();
-        logger.debug('GitHub account verified:', userData.login);
+        logger.debug("GitHub account verified:", userData.login);
         onSuccess(username.trim());
       } else if (response.status === 404) {
-        setError('GitHub user not found. Please check the username.');
+        setError("GitHub user not found. Please check the username.");
       } else {
-        setError('Unable to verify. Please try again.');
+        setError("Unable to verify. Please try again.");
       }
     } catch (error) {
-      logger.error('Error verifying GitHub username:', error);
-      setError('Network error. Please try again.');
+      logger.error("Error verifying GitHub username:", error);
+      setError("Network error. Please try again.");
     } finally {
       setVerifying(false);
     }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       handleVerify();
     }
   };
@@ -88,17 +90,22 @@ const GitHubUsernameInput: React.FC<GitHubUsernameInputProps> = ({
           {/* Description */}
           <div className="space-y-4 mb-6">
             <p className="text-gray-300 text-center text-sm">
-              We couldn't automatically detect a GitHub account for <span className="font-semibold text-white">{email}</span>
+              We couldn't automatically detect a GitHub account for{" "}
+              <span className="font-semibold text-white">{email}</span>
             </p>
 
             <div className="bg-[#252538] rounded-lg p-4 border border-gray-700">
               <p className="text-sm text-gray-300 mb-3">
-                If you have a GitHub account, enter your username below to access your repositories:
+                If you have a GitHub account, enter your username below to
+                access your repositories:
               </p>
 
               <div className="space-y-3">
                 <div>
-                  <label htmlFor="github-username" className="block text-xs font-medium text-gray-400 mb-1">
+                  <label
+                    htmlFor="github-username"
+                    className="block text-xs font-medium text-gray-400 mb-1"
+                  >
                     GitHub Username
                   </label>
                   <input

@@ -31,7 +31,7 @@ export interface GitHubMetadata {
 }
 
 export interface UserPreferences {
-  theme: 'light' | 'dark' | 'system';
+  theme: "light" | "dark" | "system";
   notifications: NotificationPreferences;
   analysis: AnalysisPreferences;
   privacy: PrivacyPreferences;
@@ -47,10 +47,10 @@ export interface NotificationPreferences {
 
 export interface AnalysisPreferences {
   autoSave: boolean;
-  defaultSeverityThreshold: 'critical' | 'high' | 'medium' | 'low';
+  defaultSeverityThreshold: "critical" | "high" | "medium" | "low";
   includeTestFiles: boolean;
   includeDependencies: boolean;
-  outputFormat: 'json' | 'pdf' | 'html';
+  outputFormat: "json" | "pdf" | "html";
 }
 
 export interface PrivacyPreferences {

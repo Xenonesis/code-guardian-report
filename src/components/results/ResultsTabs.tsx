@@ -1,12 +1,12 @@
-import { Shield, FileCode, Sparkles, BarChart3, Package } from 'lucide-react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { AnalysisResults } from '@/hooks/useAnalysis';
-import { SecurityOverview } from './SecurityOverview';
-import { AISecurityInsights } from '../ai/AISecurityInsights';
-import { SecurityMetricsDashboard } from '@/components/SecurityMetricsDashboard';
-import { LanguageDetectionDisplay } from '../language/LanguageDetectionDisplay';
-import { UnifiedMetricsHeader } from './UnifiedMetricsHeader';
-import { DependencyAnalysisDisplay } from './DependencyAnalysisDisplay';
+import { Shield, FileCode, Sparkles, BarChart3, Package } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { AnalysisResults } from "@/hooks/useAnalysis";
+import { SecurityOverview } from "./SecurityOverview";
+import { AISecurityInsights } from "../ai/AISecurityInsights";
+import { SecurityMetricsDashboard } from "@/components/SecurityMetricsDashboard";
+import { LanguageDetectionDisplay } from "../language/LanguageDetectionDisplay";
+import { UnifiedMetricsHeader } from "./UnifiedMetricsHeader";
+import { DependencyAnalysisDisplay } from "./DependencyAnalysisDisplay";
 
 interface ResultsTabsProps {
   results: AnalysisResults;
@@ -17,8 +17,8 @@ export const ResultsTabs: React.FC<ResultsTabsProps> = ({ results }) => {
 
   // Calculate grid columns based on available features (Dependencies tab is always shown)
   const getGridCols = () => {
-    if (hasLanguageDetection) return 'sm:grid-cols-5';
-    return 'sm:grid-cols-4';
+    if (hasLanguageDetection) return "sm:grid-cols-5";
+    return "sm:grid-cols-4";
   };
 
   return (
@@ -83,14 +83,22 @@ export const ResultsTabs: React.FC<ResultsTabsProps> = ({ results }) => {
 
         {hasLanguageDetection && results.languageDetection && (
           <TabsContent value="language-detection" className="space-y-6 mt-0">
-            <LanguageDetectionDisplay detectionResult={results.languageDetection} />
+            <LanguageDetectionDisplay
+              detectionResult={results.languageDetection}
+            />
           </TabsContent>
         )}
 
         <TabsContent value="dependency-analysis" className="space-y-6 mt-0">
           <DependencyAnalysisDisplay
             dependencyAnalysis={results.dependencyAnalysis}
-            onRetry={() => { try { if (typeof window !== 'undefined') window.location.reload(); } catch { /* noop */ } }}
+            onRetry={() => {
+              try {
+                if (typeof window !== "undefined") window.location.reload();
+              } catch {
+                /* noop */
+              }
+            }}
             isLoading={false}
           />
         </TabsContent>

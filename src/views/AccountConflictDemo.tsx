@@ -1,31 +1,50 @@
 // src/pages/AccountConflictDemo.tsx
-import React, { useState, useEffect } from 'react';
-import { AccountConflictModal } from '@/components/auth/AccountConflictModal';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import React, { useState, useEffect } from "react";
+import { AccountConflictModal } from "@/components/auth/AccountConflictModal";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
-import { logger } from '@/utils/logger';
-type Provider = 'google.com' | 'github.com' | 'password' | 'facebook.com' | 'twitter.com';
+import { logger } from "@/utils/logger";
+type Provider =
+  | "google.com"
+  | "github.com"
+  | "password"
+  | "facebook.com"
+  | "twitter.com";
 
 export const AccountConflictDemo: React.FC = () => {
   // Prevent access in production
   useEffect(() => {
-    if (process.env.NODE_ENV === 'production') {
-      logger.warn('⚠️ Demo pages are not available in production');
-      window.location.href = '/';
+    if (process.env.NODE_ENV === "production") {
+      logger.warn("⚠️ Demo pages are not available in production");
+      window.location.href = "/";
     }
   }, []);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [existingProvider, setExistingProvider] = useState<Provider>('password');
-  const [attemptedProvider, setAttemptedProvider] = useState<Provider>('google.com');
+  const [existingProvider, setExistingProvider] =
+    useState<Provider>("password");
+  const [attemptedProvider, setAttemptedProvider] =
+    useState<Provider>("google.com");
   const [isLinking, setIsLinking] = useState(false);
-  const [email, setEmail] = useState('user@example.com');
+  const [email, setEmail] = useState("user@example.com");
 
   const handleSignInWithExisting = () => {
-    logger.debug('Sign in with existing provider:', existingProvider);
+    logger.debug("Sign in with existing provider:", existingProvider);
     setIsLinking(true);
-    
+
     // Simulate async operation
     setTimeout(() => {
       setIsLinking(false);
@@ -35,17 +54,17 @@ export const AccountConflictDemo: React.FC = () => {
   };
 
   const handleTryDifferentMethod = () => {
-    logger.debug('User wants to try a different method');
+    logger.debug("User wants to try a different method");
     setIsModalOpen(false);
-    alert('Redirecting to sign-in options...');
+    alert("Redirecting to sign-in options...");
   };
 
   const providerOptions = [
-    { value: 'google.com', label: 'Google' },
-    { value: 'github.com', label: 'GitHub' },
-    { value: 'password', label: 'Email/Password' },
-    { value: 'facebook.com', label: 'Facebook' },
-    { value: 'twitter.com', label: 'Twitter' },
+    { value: "google.com", label: "Google" },
+    { value: "github.com", label: "GitHub" },
+    { value: "password", label: "Email/Password" },
+    { value: "facebook.com", label: "Facebook" },
+    { value: "twitter.com", label: "Twitter" },
   ];
 
   return (
@@ -66,7 +85,8 @@ export const AccountConflictDemo: React.FC = () => {
           <CardHeader>
             <CardTitle>Demo Configuration</CardTitle>
             <CardDescription>
-              Customize the scenario to see how the modal handles different provider conflicts
+              Customize the scenario to see how the modal handles different
+              provider conflicts
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -88,9 +108,16 @@ export const AccountConflictDemo: React.FC = () => {
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     Existing Provider
-                    <span className="text-xs text-gray-500 ml-2">(Account already exists with)</span>
+                    <span className="text-xs text-gray-500 ml-2">
+                      (Account already exists with)
+                    </span>
                   </label>
-                  <Select value={existingProvider} onValueChange={(value) => setExistingProvider(value as Provider)}>
+                  <Select
+                    value={existingProvider}
+                    onValueChange={(value) =>
+                      setExistingProvider(value as Provider)
+                    }
+                  >
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
@@ -107,9 +134,16 @@ export const AccountConflictDemo: React.FC = () => {
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     Attempted Provider
-                    <span className="text-xs text-gray-500 ml-2">(User tried to sign in with)</span>
+                    <span className="text-xs text-gray-500 ml-2">
+                      (User tried to sign in with)
+                    </span>
                   </label>
-                  <Select value={attemptedProvider} onValueChange={(value) => setAttemptedProvider(value as Provider)}>
+                  <Select
+                    value={attemptedProvider}
+                    onValueChange={(value) =>
+                      setAttemptedProvider(value as Provider)
+                    }
+                  >
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
@@ -197,7 +231,7 @@ export const AccountConflictDemo: React.FC = () => {
           </CardHeader>
           <CardContent>
             <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto text-sm">
-{`import { AccountConflictModal } from '@/components/auth/AccountConflictModal';
+              {`import { AccountConflictModal } from '@/components/auth/AccountConflictModal';
 
 // In your auth error handler:
 if (error.code === 'auth/account-exists-with-different-credential') {
@@ -233,13 +267,18 @@ if (error.code === 'auth/account-exists-with-different-credential') {
   );
 };
 
-const FeatureItem: React.FC<{ title: string; description: string }> = ({ title, description }) => (
+const FeatureItem: React.FC<{ title: string; description: string }> = ({
+  title,
+  description,
+}) => (
   <div className="flex gap-3">
     <div className="flex-shrink-0 mt-1">
       <div className="w-2 h-2 rounded-full bg-blue-600" />
     </div>
     <div>
-      <h4 className="font-semibold text-gray-900 dark:text-gray-100 text-sm">{title}</h4>
+      <h4 className="font-semibold text-gray-900 dark:text-gray-100 text-sm">
+        {title}
+      </h4>
       <p className="text-sm text-gray-600 dark:text-gray-400">{description}</p>
     </div>
   </div>

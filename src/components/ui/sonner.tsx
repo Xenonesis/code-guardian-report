@@ -1,38 +1,41 @@
 "use client";
 
-import { useEffect, useState } from "react"
-import { Toaster as Sonner } from "sonner"
+import { useEffect, useState } from "react";
+import { Toaster as Sonner } from "sonner";
 
-type ToasterProps = React.ComponentProps<typeof Sonner>
+type ToasterProps = React.ComponentProps<typeof Sonner>;
 
 const Toaster = ({ ...props }: ToasterProps) => {
   // Initialize theme with a lazy initializer to avoid setState during render
   const [theme, setTheme] = useState<"light" | "dark" | "system">(() => {
-    if (typeof document !== 'undefined') {
-      const isDarkMode = document.documentElement.classList.contains('dark')
-      return isDarkMode ? "dark" : "light"
+    if (typeof document !== "undefined") {
+      const isDarkMode = document.documentElement.classList.contains("dark");
+      return isDarkMode ? "dark" : "light";
     }
-    return "system"
-  })
+    return "system";
+  });
 
   useEffect(() => {
     // Watch for changes to the dark class
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
-        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-          const isDark = document.documentElement.classList.contains('dark')
-          setTheme(isDark ? "dark" : "light")
+        if (
+          mutation.type === "attributes" &&
+          mutation.attributeName === "class"
+        ) {
+          const isDark = document.documentElement.classList.contains("dark");
+          setTheme(isDark ? "dark" : "light");
         }
-      })
-    })
+      });
+    });
 
     observer.observe(document.documentElement, {
       attributes: true,
-      attributeFilter: ['class']
-    })
+      attributeFilter: ["class"],
+    });
 
-    return () => observer.disconnect()
-  }, [])
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <Sonner
@@ -51,7 +54,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
       }}
       {...props}
     />
-  )
-}
+  );
+};
 
-export { Toaster }
+export { Toaster };

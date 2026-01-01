@@ -1,8 +1,8 @@
 // components/github/GitHubRepositoryPermissionModal.tsx
-import React, { useState } from 'react';
-import { X, Github, CheckCircle, AlertCircle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { logger } from '@/utils/logger';
+import React, { useState } from "react";
+import { X, Github, CheckCircle, AlertCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { logger } from "@/utils/logger";
 
 interface GitHubRepositoryPermissionModalProps {
   isOpen: boolean;
@@ -12,13 +12,9 @@ interface GitHubRepositoryPermissionModalProps {
   onClose: () => void;
 }
 
-const GitHubRepositoryPermissionModal: React.FC<GitHubRepositoryPermissionModalProps> = ({
-  isOpen,
-  email,
-  onAllow,
-  onDeny,
-  onClose
-}) => {
+const GitHubRepositoryPermissionModal: React.FC<
+  GitHubRepositoryPermissionModalProps
+> = ({ isOpen, email, onAllow, onDeny, onClose }) => {
   if (!isOpen) return null;
 
   return (
@@ -49,9 +45,11 @@ const GitHubRepositoryPermissionModal: React.FC<GitHubRepositoryPermissionModalP
           {/* Description */}
           <div className="space-y-4 mb-6">
             <p className="text-gray-300 text-center">
-              We detected that your Google account email <span className="font-semibold text-white">{email}</span> may be associated with a GitHub account.
+              We detected that your Google account email{" "}
+              <span className="font-semibold text-white">{email}</span> may be
+              associated with a GitHub account.
             </p>
-            
+
             <div className="bg-[#252538] rounded-lg p-4 border border-gray-700">
               <h3 className="text-sm font-semibold text-white mb-3 flex items-center">
                 <CheckCircle className="w-4 h-4 mr-2 text-green-400" />
@@ -77,7 +75,8 @@ const GitHubRepositoryPermissionModal: React.FC<GitHubRepositoryPermissionModalP
               <p className="text-sm text-blue-300 flex items-start">
                 <AlertCircle className="w-4 h-4 mr-2 mt-0.5 flex-shrink-0" />
                 <span>
-                  This will help you quickly analyze your GitHub repositories for security vulnerabilities.
+                  This will help you quickly analyze your GitHub repositories
+                  for security vulnerabilities.
                 </span>
               </p>
             </div>

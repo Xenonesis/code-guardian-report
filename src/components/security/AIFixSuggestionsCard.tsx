@@ -1,9 +1,15 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Alert, AlertDescription } from '@/components/ui/alert';
+import React, { useState, useEffect, useCallback } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
   Brain,
   Lightbulb,
@@ -19,11 +25,15 @@ import {
   Zap,
   Shield,
   Target,
-  Info
-} from 'lucide-react';
-import { SecurityIssue } from '@/hooks/useAnalysis';
-import { FixSuggestion, AIFixSuggestionsService, FixSuggestionRequest } from '@/services/ai/aiFixSuggestionsService';
-import { toast } from 'sonner';
+  Info,
+} from "lucide-react";
+import { SecurityIssue } from "@/hooks/useAnalysis";
+import {
+  FixSuggestion,
+  AIFixSuggestionsService,
+  FixSuggestionRequest,
+} from "@/services/ai/aiFixSuggestionsService";
+import { toast } from "sonner";
 
 interface AIFixSuggestionsCardProps {
   issue: SecurityIssue;
@@ -38,18 +48,20 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
   codeContext,
   language,
   framework,
-  onApplyFix
+  onApplyFix,
 }) => {
   const [suggestions, setSuggestions] = useState<FixSuggestion[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [expandedSuggestion, setExpandedSuggestion] = useState<string | null>(null);
+  const [expandedSuggestion, setExpandedSuggestion] = useState<string | null>(
+    null
+  );
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
   const [fixService] = useState(() => new AIFixSuggestionsService());
 
   const generateFixSuggestions = useCallback(async () => {
     // Don't generate if no code context
-    if (!codeContext || codeContext.trim() === '') {
+    if (!codeContext || codeContext.trim() === "") {
       return;
     }
 
@@ -61,13 +73,16 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
         issue,
         codeContext,
         language,
-        framework
+        framework,
       };
 
       const fixSuggestions = await fixService.generateFixSuggestions(request);
       setSuggestions(fixSuggestions);
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to generate fix suggestions';
+      const errorMessage =
+        err instanceof Error
+          ? err.message
+          : "Failed to generate fix suggestions";
       setError(errorMessage);
       toast.error(errorMessage);
     } finally {
@@ -77,12 +92,10 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
 
   useEffect(() => {
     // Only generate suggestions if we have code context
-    if (codeContext && codeContext.trim() !== '') {
+    if (codeContext && codeContext.trim() !== "") {
       generateFixSuggestions();
     }
   }, [generateFixSuggestions, codeContext]);
-
-
 
   const toggleSuggestionExpansion = (suggestionId: string) => {
     setExpandedSuggestion(
@@ -97,23 +110,28 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
       toast.success(`${label} copied to clipboard`);
       setTimeout(() => setCopiedCode(null), 2000);
     } catch {
-      toast.error('Failed to copy to clipboard');
+      toast.error("Failed to copy to clipboard");
     }
   };
 
   const getEffortColor = (effort: string) => {
     switch (effort) {
-      case 'Low': return 'bg-green-100 text-green-800 border-green-200';
-      case 'Medium': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-      case 'High': return 'bg-red-100 text-red-800 border-red-200';
-      default: return 'bg-gray-100 text-gray-800 border-gray-200';
+      case "Low":
+        return "bg-green-100 text-green-800 border-green-200";
+      case "Medium":
+        return "bg-yellow-100 text-yellow-800 border-yellow-200";
+      case "High":
+        return "bg-red-100 text-red-800 border-red-200";
+      default:
+        return "bg-gray-100 text-gray-800 border-gray-200";
     }
   };
 
   const getConfidenceColor = (confidence: number) => {
-    if (confidence >= 80) return 'bg-green-100 text-green-800 border-green-200';
-    if (confidence >= 60) return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-    return 'bg-red-100 text-red-800 border-red-200';
+    if (confidence >= 80) return "bg-green-100 text-green-800 border-green-200";
+    if (confidence >= 60)
+      return "bg-yellow-100 text-yellow-800 border-yellow-200";
+    return "bg-red-100 text-red-800 border-red-200";
   };
 
   const renderPriorityStars = (priority: number) => {
@@ -121,9 +139,7 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
       <Star
         key={i}
         className={`h-3 w-3 ${
-          i < priority
-            ? 'text-yellow-400 fill-current'
-            : 'text-gray-300'
+          i < priority ? "text-yellow-400 fill-current" : "text-gray-300"
         }`}
       />
     ));
@@ -136,7 +152,10 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
           <CardTitle className="flex items-center gap-2">
             <Brain className="h-5 w-5 text-purple-600" />
             AI Fix Suggestions
-            <Badge variant="outline" className="text-purple-600 border-purple-300">
+            <Badge
+              variant="outline"
+              className="text-purple-600 border-purple-300"
+            >
               Generating...
             </Badge>
           </CardTitle>
@@ -156,14 +175,17 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
     );
   }
 
-  if (!codeContext || codeContext.trim() === '') {
+  if (!codeContext || codeContext.trim() === "") {
     return (
       <Card className="bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-yellow-950/20 dark:to-orange-900/20 border-yellow-200 dark:border-yellow-800">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Brain className="h-5 w-5 text-yellow-600" />
             AI Fix Suggestions
-            <Badge variant="outline" className="text-yellow-600 border-yellow-300">
+            <Badge
+              variant="outline"
+              className="text-yellow-600 border-yellow-300"
+            >
               Code Required
             </Badge>
           </CardTitle>
@@ -195,9 +217,7 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
         <CardContent>
           <Alert>
             <AlertTriangle className="h-4 w-4" />
-            <AlertDescription>
-              {error}
-            </AlertDescription>
+            <AlertDescription>{error}</AlertDescription>
           </Alert>
           <Button
             onClick={generateFixSuggestions}
@@ -218,12 +238,16 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
         <CardTitle className="flex items-center gap-2">
           <Brain className="h-5 w-5 text-purple-600" />
           AI Fix Suggestions ({suggestions?.length || 0})
-          <Badge variant="outline" className="text-purple-600 border-purple-300">
+          <Badge
+            variant="outline"
+            className="text-purple-600 border-purple-300"
+          >
             AI-Powered
           </Badge>
         </CardTitle>
         <CardDescription>
-          Intelligent fix suggestions with confidence scores and implementation guidance
+          Intelligent fix suggestions with confidence scores and implementation
+          guidance
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -233,8 +257,8 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
             <p className="text-slate-600 dark:text-slate-400">
               No fix suggestions available for this issue.
             </p>
-            <Button 
-              onClick={generateFixSuggestions} 
+            <Button
+              onClick={generateFixSuggestions}
               className="mt-4"
               variant="outline"
             >
@@ -245,7 +269,10 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
         ) : (
           <div className="space-y-4">
             {suggestions?.map((suggestion) => (
-              <div key={suggestion.id} className="border rounded-lg overflow-hidden">
+              <div
+                key={suggestion.id}
+                className="border rounded-lg overflow-hidden"
+              >
                 <button
                   type="button"
                   onClick={() => toggleSuggestionExpansion(suggestion.id)}
@@ -254,7 +281,9 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-2">
-                        <Badge className={getConfidenceColor(suggestion.confidence)}>
+                        <Badge
+                          className={getConfidenceColor(suggestion.confidence)}
+                        >
                           {suggestion.confidence}% confidence
                         </Badge>
                         <Badge className={getEffortColor(suggestion.effort)}>
@@ -304,7 +333,7 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
                             {suggestion.explanation}
                           </p>
                         </div>
-                        
+
                         <div>
                           <h4 className="font-semibold mb-2 flex items-center gap-2">
                             <Shield className="h-4 w-4" />
@@ -327,13 +356,21 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
 
                         {suggestion.relatedPatterns.length > 0 && (
                           <div>
-                            <h4 className="font-semibold mb-2">Related Security Patterns</h4>
+                            <h4 className="font-semibold mb-2">
+                              Related Security Patterns
+                            </h4>
                             <div className="flex flex-wrap gap-2">
-                              {suggestion.relatedPatterns.map((pattern, index) => (
-                                <Badge key={index} variant="outline" className="text-xs">
-                                  {pattern}
-                                </Badge>
-                              ))}
+                              {suggestion.relatedPatterns.map(
+                                (pattern, index) => (
+                                  <Badge
+                                    key={index}
+                                    variant="outline"
+                                    className="text-xs"
+                                  >
+                                    {pattern}
+                                  </Badge>
+                                )
+                              )}
                             </div>
                           </div>
                         )}
@@ -344,23 +381,33 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
                           <div key={index} className="space-y-2">
                             <div className="flex items-center justify-between">
                               <h4 className="font-semibold text-sm">
-                                {change.type.charAt(0).toUpperCase() + change.type.slice(1)} in {change.filename}
+                                {change.type.charAt(0).toUpperCase() +
+                                  change.type.slice(1)}{" "}
+                                in {change.filename}
                               </h4>
                               <Badge variant="outline" className="text-xs">
                                 Lines {change.startLine}-{change.endLine}
                               </Badge>
                             </div>
-                            
+
                             {change.originalCode && (
                               <div>
                                 <div className="flex items-center justify-between mb-2">
-                                  <span className="text-sm font-medium text-red-600">Before:</span>
+                                  <span className="text-sm font-medium text-red-600">
+                                    Before:
+                                  </span>
                                   <Button
                                     size="sm"
                                     variant="outline"
-                                    onClick={() => copyToClipboard(change.originalCode, `Original code ${index + 1}`)}
+                                    onClick={() =>
+                                      copyToClipboard(
+                                        change.originalCode,
+                                        `Original code ${index + 1}`
+                                      )
+                                    }
                                   >
-                                    {copiedCode === `Original code ${index + 1}` ? (
+                                    {copiedCode ===
+                                    `Original code ${index + 1}` ? (
                                       <CheckCircle className="h-4 w-4" />
                                     ) : (
                                       <Copy className="h-4 w-4" />
@@ -375,13 +422,21 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
 
                             <div>
                               <div className="flex items-center justify-between mb-2">
-                                <span className="text-sm font-medium text-green-600">After:</span>
+                                <span className="text-sm font-medium text-green-600">
+                                  After:
+                                </span>
                                 <Button
                                   size="sm"
                                   variant="outline"
-                                  onClick={() => copyToClipboard(change.suggestedCode, `Suggested code ${index + 1}`)}
+                                  onClick={() =>
+                                    copyToClipboard(
+                                      change.suggestedCode,
+                                      `Suggested code ${index + 1}`
+                                    )
+                                  }
                                 >
-                                  {copiedCode === `Suggested code ${index + 1}` ? (
+                                  {copiedCode ===
+                                  `Suggested code ${index + 1}` ? (
                                     <CheckCircle className="h-4 w-4" />
                                   ) : (
                                     <Copy className="h-4 w-4" />
@@ -409,10 +464,14 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
                             Apply Fix
                           </Button>
                           <Button
-                            onClick={() => copyToClipboard(
-                              suggestion.codeChanges.map(c => c.suggestedCode).join('\n\n'),
-                              'All suggested code'
-                            )}
+                            onClick={() =>
+                              copyToClipboard(
+                                suggestion.codeChanges
+                                  .map((c) => c.suggestedCode)
+                                  .join("\n\n"),
+                                "All suggested code"
+                              )
+                            }
                             variant="outline"
                             size="sm"
                           >
@@ -429,12 +488,19 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
                             Testing Recommendations
                           </h4>
                           <ul className="space-y-2">
-                            {suggestion.testingRecommendations.map((test, index) => (
-                              <li key={index} className="flex items-start gap-2 text-sm">
-                                <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
-                                <span className="text-slate-600 dark:text-slate-400">{test}</span>
-                              </li>
-                            ))}
+                            {suggestion.testingRecommendations.map(
+                              (test, index) => (
+                                <li
+                                  key={index}
+                                  className="flex items-start gap-2 text-sm"
+                                >
+                                  <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
+                                  <span className="text-slate-600 dark:text-slate-400">
+                                    {test}
+                                  </span>
+                                </li>
+                              )
+                            )}
                           </ul>
                         </div>
                       </TabsContent>
@@ -442,17 +508,25 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
                       <TabsContent value="security" className="space-y-4">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div>
-                            <h4 className="font-semibold mb-2">Security Metrics</h4>
+                            <h4 className="font-semibold mb-2">
+                              Security Metrics
+                            </h4>
                             <div className="space-y-2 text-sm">
                               <div className="flex justify-between">
                                 <span>Confidence:</span>
-                                <Badge className={getConfidenceColor(suggestion.confidence)}>
+                                <Badge
+                                  className={getConfidenceColor(
+                                    suggestion.confidence
+                                  )}
+                                >
                                   {suggestion.confidence}%
                                 </Badge>
                               </div>
                               <div className="flex justify-between">
                                 <span>Implementation Effort:</span>
-                                <Badge className={getEffortColor(suggestion.effort)}>
+                                <Badge
+                                  className={getEffortColor(suggestion.effort)}
+                                >
                                   {suggestion.effort}
                                 </Badge>
                               </div>
@@ -467,11 +541,15 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
 
                           {suggestion.frameworkSpecific && (
                             <div>
-                              <h4 className="font-semibold mb-2">Framework-Specific</h4>
+                              <h4 className="font-semibold mb-2">
+                                Framework-Specific
+                              </h4>
                               <div className="space-y-2 text-sm">
                                 <div className="flex justify-between">
                                   <span>Framework:</span>
-                                  <Badge variant="outline">{suggestion.frameworkSpecific.framework}</Badge>
+                                  <Badge variant="outline">
+                                    {suggestion.frameworkSpecific.framework}
+                                  </Badge>
                                 </div>
                                 {suggestion.frameworkSpecific.version && (
                                   <div className="flex justify-between">
@@ -483,13 +561,21 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
                                 )}
                                 {suggestion.frameworkSpecific.dependencies && (
                                   <div>
-                                    <span className="font-medium">Dependencies:</span>
+                                    <span className="font-medium">
+                                      Dependencies:
+                                    </span>
                                     <div className="flex flex-wrap gap-1 mt-1">
-                                      {suggestion.frameworkSpecific.dependencies.map((dep, index) => (
-                                        <Badge key={index} variant="outline" className="text-xs">
-                                          {dep}
-                                        </Badge>
-                                      ))}
+                                      {suggestion.frameworkSpecific.dependencies.map(
+                                        (dep, index) => (
+                                          <Badge
+                                            key={index}
+                                            variant="outline"
+                                            className="text-xs"
+                                          >
+                                            {dep}
+                                          </Badge>
+                                        )
+                                      )}
                                     </div>
                                   </div>
                                 )}

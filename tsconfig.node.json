@@ -7,9 +7,5 @@
     "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true
   },
-  "include": [
-    "next.config.ts",
-    "tailwind.config.ts",
-    "postcss.config.js"
-  ]
+  "include": ["next.config.ts", "tailwind.config.ts", "postcss.config.js"]
 }

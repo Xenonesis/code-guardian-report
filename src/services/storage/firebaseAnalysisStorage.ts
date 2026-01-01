@@ -9,26 +9,26 @@
  * - Data compression for large results
  */
 
-import { 
-  collection, 
-  doc, 
-  addDoc, 
-  updateDoc, 
-  deleteDoc, 
-  getDocs, 
+import {
+  collection,
+  doc,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  getDocs,
   getDoc,
-  query, 
-  where, 
+  query,
+  where,
   limit,
   serverTimestamp,
   onSnapshot,
-  Timestamp
-} from 'firebase/firestore';
-import { db } from '@/lib/firebase';
-import { AnalysisResults } from '@/hooks/useAnalysis';
-import { safeGetDoc, safeSetDoc } from '@/lib/firestore-utils';
+  Timestamp,
+} from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { AnalysisResults } from "@/hooks/useAnalysis";
+import { safeGetDoc, safeSetDoc } from "@/lib/firestore-utils";
 
-import { logger } from '@/utils/logger';
+import { logger } from "@/utils/logger";
 export interface FirebaseAnalysisData {
   id: string;
   userId: string;
@@ -48,7 +48,7 @@ export interface FirebaseAnalysisData {
   tags: string[];
   isPublic: boolean;
   compressed: boolean;
-  syncStatus: 'synced' | 'pending' | 'error';
+  syncStatus: "synced" | "pending" | "error";
   createdAt: Timestamp;
   updatedAt: Timestamp;
 }
@@ -63,8 +63,8 @@ export interface AnalysisHistoryQuery {
 }
 
 export class FirebaseAnalysisStorageService {
-  private static readonly COLLECTION_NAME = 'analysisResults';
-  private static readonly USER_STATS_COLLECTION = 'userStats';
+  private static readonly COLLECTION_NAME = "analysisResults";
+  private static readonly USER_STATS_COLLECTION = "userStats";
   private static readonly MAX_HISTORY_SIZE = 50;
   private static readonly COMPRESSION_THRESHOLD = 100 * 1024; // 100KB
 
@@ -111,15 +111,15 @@ export class FirebaseAnalysisStorageService {
     isPublic: boolean = false
   ): Promise<string> {
     if (!this.userId) {
-      throw new Error('User must be authenticated to store analysis results');
+      throw new Error("User must be authenticated to store analysis results");
     }
 
     try {
-      logger.debug('🔥 Storing analysis results to Firebase...', {
+      logger.debug("🔥 Storing analysis results to Firebase...", {
         fileName: file.name,
         fileSize: file.size,
         userId: this.userId,
-        issuesCount: results.issues?.length
+        issuesCount: results.issues?.length,
       });
 
       const fileHash = await this.calculateFileHash(file);
@@ -128,10 +128,14 @@ export class FirebaseAnalysisStorageService {
       // Check if analysis with same hash already exists
 
       // Compress results if they're large
-      const shouldCompress = this.getDataSize(results) > FirebaseAnalysisStorageService.COMPRESSION_THRESHOLD;
-      const finalResults = shouldCompress ? this.compressResults(results) : results;
+      const shouldCompress =
+        this.getDataSize(results) >
+        FirebaseAnalysisStorageService.COMPRESSION_THRESHOLD;
+      const finalResults = shouldCompress
+        ? this.compressResults(results)
+        : results;
 
-      const analysisData: Omit<FirebaseAnalysisData, 'id'> = {
+      const analysisData: Omit<FirebaseAnalysisData, "id"> = {
         userId: this.userId,
         timestamp: serverTimestamp() as Timestamp,
         fileName: file.name,
@@ -140,15 +144,15 @@ export class FirebaseAnalysisStorageService {
         results: finalResults,
         metadata: {
           userAgent: navigator.userAgent,
-          analysisEngine: 'EnhancedAnalysisEngine',
-          engineVersion: '3.0.0',
+          analysisEngine: "EnhancedAnalysisEngine",
+          engineVersion: "3.0.0",
           sessionId,
           deviceInfo: this.getDeviceInfo(),
         },
         tags: tags || [],
         isPublic,
         compressed: shouldCompress,
-        syncStatus: 'pending',
+        syncStatus: "pending",
         createdAt: serverTimestamp() as Timestamp,
         updatedAt: serverTimestamp() as Timestamp,
       };
@@ -157,44 +161,54 @@ export class FirebaseAnalysisStorageService {
       const sanitizedData = this.sanitizeObject(analysisData);
 
       // Store in Firestore
-      const docRef = await addDoc(collection(db, FirebaseAnalysisStorageService.COLLECTION_NAME), sanitizedData);
+      const docRef = await addDoc(
+        collection(db, FirebaseAnalysisStorageService.COLLECTION_NAME),
+        sanitizedData
+      );
 
-      logger.debug('✅ Analysis stored successfully with ID:', docRef.id);
+      logger.debug("✅ Analysis stored successfully with ID:", docRef.id);
 
       // Update sync status
-      await updateDoc(docRef, { syncStatus: 'synced' });
+      await updateDoc(docRef, { syncStatus: "synced" });
       await this.updateUserStats(file.size, results.issues?.length || 0);
 
       return docRef.id;
-
     } catch (error) {
-      logger.error('❌ Failed to store analysis results to Firebase:', error);
-      throw new Error(`Failed to store analysis results: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      logger.error("❌ Failed to store analysis results to Firebase:", error);
+      throw new Error(
+        `Failed to store analysis results: ${error instanceof Error ? error.message : "Unknown error"}`
+      );
     }
   }
 
   /**
    * Get analysis results by ID
    */
-  public async getAnalysisById(analysisId: string): Promise<FirebaseAnalysisData | null> {
+  public async getAnalysisById(
+    analysisId: string
+  ): Promise<FirebaseAnalysisData | null> {
     try {
-      const docRef = doc(db, FirebaseAnalysisStorageService.COLLECTION_NAME, analysisId);
+      const docRef = doc(
+        db,
+        FirebaseAnalysisStorageService.COLLECTION_NAME,
+        analysisId
+      );
       const result = await safeGetDoc<FirebaseAnalysisData>(docRef);
-      
+
       if (result.exists && result.data) {
         const data = { ...result.data, id: analysisId };
-        
+
         // Decompress if needed
         if (data.compressed) {
           data.results = this.decompressResults(data.results);
         }
-        
+
         return data;
       }
-      
+
       return null;
     } catch (error) {
-      logger.error('Error getting analysis by ID:', error);
+      logger.error("Error getting analysis by ID:", error);
       return null;
     }
   }
@@ -208,23 +222,23 @@ export class FirebaseAnalysisStorageService {
   ): Promise<FirebaseAnalysisData[]> {
     const targetUserId = userId || this.userId;
     if (!targetUserId) {
-      throw new Error('User ID is required');
+      throw new Error("User ID is required");
     }
 
     try {
       // Primary query with orderBy (may require a composite index)
       let q = query(
         collection(db, FirebaseAnalysisStorageService.COLLECTION_NAME),
-        where('userId', '==', targetUserId)
+        where("userId", "==", targetUserId)
       );
 
       // Add additional filters
       if (queryOptions.fileName) {
-        q = query(q, where('fileName', '==', queryOptions.fileName));
+        q = query(q, where("fileName", "==", queryOptions.fileName));
       }
 
       if (queryOptions.tags && queryOptions.tags.length > 0) {
-        q = query(q, where('tags', 'array-contains-any', queryOptions.tags));
+        q = query(q, where("tags", "array-contains-any", queryOptions.tags));
       }
 
       let querySnapshot;
@@ -232,17 +246,26 @@ export class FirebaseAnalysisStorageService {
         querySnapshot = await getDocs(q);
       } catch (err: any) {
         // Fallback when composite index is missing or other precondition fails
-        logger.warn('Primary history query failed, falling back to basic query:', err?.code || err);
+        logger.warn(
+          "Primary history query failed, falling back to basic query:",
+          err?.code || err
+        );
         let fallback = query(
           collection(db, FirebaseAnalysisStorageService.COLLECTION_NAME),
-          where('userId', '==', targetUserId)
+          where("userId", "==", targetUserId)
         );
         // Note: we intentionally skip orderBy here to avoid composite index requirement
         if (queryOptions.fileName) {
-          fallback = query(fallback, where('fileName', '==', queryOptions.fileName));
+          fallback = query(
+            fallback,
+            where("fileName", "==", queryOptions.fileName)
+          );
         }
         if (queryOptions.tags && queryOptions.tags.length > 0) {
-          fallback = query(fallback, where('tags', 'array-contains-any', queryOptions.tags));
+          fallback = query(
+            fallback,
+            where("tags", "array-contains-any", queryOptions.tags)
+          );
         }
         querySnapshot = await getDocs(fallback);
       }
@@ -250,13 +273,19 @@ export class FirebaseAnalysisStorageService {
       const results: FirebaseAnalysisData[] = [];
 
       querySnapshot.forEach((doc) => {
-        const data = doc.data() as Omit<FirebaseAnalysisData, 'id'>;
-        
+        const data = doc.data() as Omit<FirebaseAnalysisData, "id">;
+
         // Apply date filters (client-side since Firestore has limitations)
-        if (queryOptions.startDate && data.createdAt.toDate() < queryOptions.startDate) {
+        if (
+          queryOptions.startDate &&
+          data.createdAt.toDate() < queryOptions.startDate
+        ) {
           return;
         }
-        if (queryOptions.endDate && data.createdAt.toDate() > queryOptions.endDate) {
+        if (
+          queryOptions.endDate &&
+          data.createdAt.toDate() > queryOptions.endDate
+        ) {
           return;
         }
 
@@ -275,16 +304,20 @@ export class FirebaseAnalysisStorageService {
 
       // Ensure results are sorted by createdAt desc if we used the fallback (no orderBy)
       results.sort((a, b) => {
-        const ad = (a.createdAt as any)?.toDate ? (a.createdAt as any).toDate() : new Date(a.createdAt as any);
-        const bd = (b.createdAt as any)?.toDate ? (b.createdAt as any).toDate() : new Date(b.createdAt as any);
+        const ad = (a.createdAt as any)?.toDate
+          ? (a.createdAt as any).toDate()
+          : new Date(a.createdAt as any);
+        const bd = (b.createdAt as any)?.toDate
+          ? (b.createdAt as any).toDate()
+          : new Date(b.createdAt as any);
         return bd.getTime() - ad.getTime();
       });
 
-      const limitAmount = queryOptions.limit || FirebaseAnalysisStorageService.MAX_HISTORY_SIZE;
+      const limitAmount =
+        queryOptions.limit || FirebaseAnalysisStorageService.MAX_HISTORY_SIZE;
       return results.slice(0, limitAmount);
-
     } catch (error) {
-      logger.error('Error getting user analysis history:', error);
+      logger.error("Error getting user analysis history:", error);
       throw error;
     }
   }
@@ -295,19 +328,25 @@ export class FirebaseAnalysisStorageService {
   public async getUserStats(userId?: string): Promise<any> {
     const targetUserId = userId || this.userId;
     if (!targetUserId) {
-      throw new Error('User ID is required');
+      throw new Error("User ID is required");
     }
 
     try {
-      const userStatsRef = doc(db, FirebaseAnalysisStorageService.USER_STATS_COLLECTION, targetUserId);
+      const userStatsRef = doc(
+        db,
+        FirebaseAnalysisStorageService.USER_STATS_COLLECTION,
+        targetUserId
+      );
       const userStatsDoc = await getDoc(userStatsRef);
-      
+
       if (userStatsDoc.exists()) {
         const data = userStatsDoc.data();
-        
+
         // Calculate average security score from analysis history if not stored
         if (!data.averageSecurityScore) {
-          const history = await this.getUserAnalysisHistory(targetUserId, { limit: 100 });
+          const history = await this.getUserAnalysisHistory(targetUserId, {
+            limit: 100,
+          });
           if (history.length > 0) {
             const totalScore = history.reduce((sum, analysis) => {
               return sum + (analysis.results.summary?.securityScore || 0);
@@ -315,10 +354,10 @@ export class FirebaseAnalysisStorageService {
             data.averageSecurityScore = Math.round(totalScore / history.length);
           }
         }
-        
+
         return data;
       }
-      
+
       // Return default stats if no document exists
       return {
         totalAnalyses: 0,
@@ -329,7 +368,7 @@ export class FirebaseAnalysisStorageService {
         lastAnalysis: null,
       };
     } catch (error) {
-      logger.error('Error getting user stats:', error);
+      logger.error("Error getting user stats:", error);
       throw error;
     }
   }
@@ -339,34 +378,39 @@ export class FirebaseAnalysisStorageService {
    */
   public async deleteAnalysisResults(analysisId: string): Promise<void> {
     if (!this.userId) {
-      throw new Error('User must be authenticated to delete analysis');
+      throw new Error("User must be authenticated to delete analysis");
     }
 
     try {
-      const analysisRef = doc(db, FirebaseAnalysisStorageService.COLLECTION_NAME, analysisId);
-      
+      const analysisRef = doc(
+        db,
+        FirebaseAnalysisStorageService.COLLECTION_NAME,
+        analysisId
+      );
+
       // Verify ownership before deletion
       const analysisDoc = await getDoc(analysisRef);
       if (!analysisDoc.exists()) {
-        throw new Error('Analysis not found');
+        throw new Error("Analysis not found");
       }
-      
+
       const analysisData = analysisDoc.data();
       if (analysisData.userId !== this.userId) {
-        throw new Error('Unauthorized: Cannot delete analysis belonging to another user');
+        throw new Error(
+          "Unauthorized: Cannot delete analysis belonging to another user"
+        );
       }
-      
+
       // Delete the analysis document
       await deleteDoc(analysisRef);
-      
+
       // Update user stats (decrease counters)
       await this.decrementUserStats(
         analysisData.fileSize || 0,
         analysisData.results?.issues?.length || 0
       );
-      
     } catch (error) {
-      logger.error('Error deleting analysis results:', error);
+      logger.error("Error deleting analysis results:", error);
       throw error;
     }
   }
@@ -374,11 +418,18 @@ export class FirebaseAnalysisStorageService {
   /**
    * Decrement user stats when deleting an analysis
    */
-  private async decrementUserStats(fileSize: number, issuesFound: number): Promise<void> {
+  private async decrementUserStats(
+    fileSize: number,
+    issuesFound: number
+  ): Promise<void> {
     if (!this.userId) return;
 
     try {
-      const userStatsRef = doc(db, FirebaseAnalysisStorageService.USER_STATS_COLLECTION, this.userId);
+      const userStatsRef = doc(
+        db,
+        FirebaseAnalysisStorageService.USER_STATS_COLLECTION,
+        this.userId
+      );
       const userStats = await safeGetDoc(userStatsRef, {
         totalAnalyses: 0,
         totalFilesAnalyzed: 0,
@@ -388,15 +439,24 @@ export class FirebaseAnalysisStorageService {
 
       const updateData = {
         totalAnalyses: Math.max(0, (userStats.data?.totalAnalyses || 0) - 1),
-        totalFilesAnalyzed: Math.max(0, (userStats.data?.totalFilesAnalyzed || 0) - 1),
-        totalIssuesFound: Math.max(0, (userStats.data?.totalIssuesFound || 0) - issuesFound),
-        totalBytesAnalyzed: Math.max(0, (userStats.data?.totalBytesAnalyzed || 0) - fileSize),
+        totalFilesAnalyzed: Math.max(
+          0,
+          (userStats.data?.totalFilesAnalyzed || 0) - 1
+        ),
+        totalIssuesFound: Math.max(
+          0,
+          (userStats.data?.totalIssuesFound || 0) - issuesFound
+        ),
+        totalBytesAnalyzed: Math.max(
+          0,
+          (userStats.data?.totalBytesAnalyzed || 0) - fileSize
+        ),
         updatedAt: serverTimestamp(),
       };
 
       await safeSetDoc(userStatsRef, updateData, { merge: true });
     } catch (error) {
-      logger.error('Error updating user stats after deletion:', error);
+      logger.error("Error updating user stats after deletion:", error);
     }
   }
 
@@ -409,35 +469,43 @@ export class FirebaseAnalysisStorageService {
     tags?: string[]
   ): Promise<string> {
     if (!this.userId) {
-      throw new Error('User must be authenticated');
+      throw new Error("User must be authenticated");
     }
-    
+
     if (!analysisId) {
-      throw new Error('Analysis ID is required to update results');
+      throw new Error("Analysis ID is required to update results");
     }
 
     try {
-      const docRef = doc(db, FirebaseAnalysisStorageService.COLLECTION_NAME, analysisId);
-      
+      const docRef = doc(
+        db,
+        FirebaseAnalysisStorageService.COLLECTION_NAME,
+        analysisId
+      );
+
       // Check if document exists and belongs to user
       const existingDoc = await getDoc(docRef);
       if (!existingDoc.exists()) {
-        throw new Error('Analysis not found');
-      }
-      
-      const existingData = existingDoc.data() as FirebaseAnalysisData;
-      if (existingData.userId !== this.userId) {
-        throw new Error('Not authorized to update this analysis');
+        throw new Error("Analysis not found");
       }
 
-      const shouldCompress = this.getDataSize(results) > FirebaseAnalysisStorageService.COMPRESSION_THRESHOLD;
-      const finalResults = shouldCompress ? this.compressResults(results) : results;
+      const existingData = existingDoc.data() as FirebaseAnalysisData;
+      if (existingData.userId !== this.userId) {
+        throw new Error("Not authorized to update this analysis");
+      }
+
+      const shouldCompress =
+        this.getDataSize(results) >
+        FirebaseAnalysisStorageService.COMPRESSION_THRESHOLD;
+      const finalResults = shouldCompress
+        ? this.compressResults(results)
+        : results;
 
       const updateData: Partial<FirebaseAnalysisData> = {
         results: finalResults,
         compressed: shouldCompress,
         updatedAt: serverTimestamp() as Timestamp,
-        syncStatus: 'synced',
+        syncStatus: "synced",
       };
 
       if (tags) {
@@ -448,11 +516,10 @@ export class FirebaseAnalysisStorageService {
 
       return analysisId;
     } catch (error) {
-      logger.error('❌ Failed to update analysis results:', error);
+      logger.error("❌ Failed to update analysis results:", error);
       throw error;
     }
   }
-
 
   /**
    * Search analysis results
@@ -462,29 +529,35 @@ export class FirebaseAnalysisStorageService {
     filters: AnalysisHistoryQuery = {}
   ): Promise<FirebaseAnalysisData[]> {
     if (!this.userId) {
-      throw new Error('User must be authenticated');
+      throw new Error("User must be authenticated");
     }
 
     try {
       // Get user's analysis history first
-      const allResults = await this.getUserAnalysisHistory(this.userId, filters);
-      
+      const allResults = await this.getUserAnalysisHistory(
+        this.userId,
+        filters
+      );
+
       // Filter by search term (client-side search)
-      const searchResults = allResults.filter(analysis => {
+      const searchResults = allResults.filter((analysis) => {
         const searchLower = searchTerm.toLowerCase();
         return (
           analysis.fileName.toLowerCase().includes(searchLower) ||
-          analysis.tags.some(tag => tag.toLowerCase().includes(searchLower)) ||
-          analysis.results.issues?.some(issue =>
-            (issue.message || '').toLowerCase().includes(searchLower) ||
-            issue.type.toLowerCase().includes(searchLower)
+          analysis.tags.some((tag) =>
+            tag.toLowerCase().includes(searchLower)
+          ) ||
+          analysis.results.issues?.some(
+            (issue) =>
+              (issue.message || "").toLowerCase().includes(searchLower) ||
+              issue.type.toLowerCase().includes(searchLower)
           )
         );
       });
 
       return searchResults;
     } catch (error) {
-      logger.error('Error searching analysis results:', error);
+      logger.error("Error searching analysis results:", error);
       throw error;
     }
   }
@@ -511,16 +584,16 @@ export class FirebaseAnalysisStorageService {
     try {
       const q = query(
         collection(db, FirebaseAnalysisStorageService.COLLECTION_NAME),
-        where('userId', '==', this.userId)
+        where("userId", "==", this.userId)
       );
 
       this.unsubscribeSnapshot = onSnapshot(
-        q, 
+        q,
         (querySnapshot) => {
           const results: FirebaseAnalysisData[] = [];
-          
+
           querySnapshot.forEach((doc) => {
-            const data = doc.data() as Omit<FirebaseAnalysisData, 'id'>;
+            const data = doc.data() as Omit<FirebaseAnalysisData, "id">;
             const analysisData: FirebaseAnalysisData = {
               ...data,
               id: doc.id,
@@ -528,7 +601,9 @@ export class FirebaseAnalysisStorageService {
 
             // Decompress if needed
             if (analysisData.compressed) {
-              analysisData.results = this.decompressResults(analysisData.results);
+              analysisData.results = this.decompressResults(
+                analysisData.results
+              );
             }
 
             results.push(analysisData);
@@ -536,37 +611,45 @@ export class FirebaseAnalysisStorageService {
 
           // Notify listeners
           results.sort((a, b) => {
-            const ad = (a.createdAt as any)?.toDate ? (a.createdAt as any).toDate() : new Date(a.createdAt as any);
-            const bd = (b.createdAt as any)?.toDate ? (b.createdAt as any).toDate() : new Date(b.createdAt as any);
+            const ad = (a.createdAt as any)?.toDate
+              ? (a.createdAt as any).toDate()
+              : new Date(a.createdAt as any);
+            const bd = (b.createdAt as any)?.toDate
+              ? (b.createdAt as any).toDate()
+              : new Date(b.createdAt as any);
             return bd.getTime() - ad.getTime();
           });
 
           const limitAmount = FirebaseAnalysisStorageService.MAX_HISTORY_SIZE;
           this.notifyListeners(results.slice(0, limitAmount));
-        }, 
+        },
         (error: any) => {
           // Handle permission errors gracefully
-          if (error?.code === 'permission-denied') {
-            logger.warn('⚠️ Firebase real-time listener: Permission denied. User may not be authenticated or lacks access rights.');
+          if (error?.code === "permission-denied") {
+            logger.warn(
+              "⚠️ Firebase real-time listener: Permission denied. User may not be authenticated or lacks access rights."
+            );
             // Clean up the listener
             if (this.unsubscribeSnapshot) {
               this.unsubscribeSnapshot();
               this.unsubscribeSnapshot = null;
             }
           } else {
-            logger.error('❌ Real-time listener error:', error);
+            logger.error("❌ Real-time listener error:", error);
           }
         }
       );
     } catch (error) {
-      logger.error('❌ Failed to setup real-time listener:', error);
+      logger.error("❌ Failed to setup real-time listener:", error);
     }
   }
 
   /**
    * Subscribe to real-time updates
    */
-  public subscribe(callback: (data: FirebaseAnalysisData[]) => void): () => void {
+  public subscribe(
+    callback: (data: FirebaseAnalysisData[]) => void
+  ): () => void {
     this.listeners.add(callback);
     return () => this.listeners.delete(callback);
   }
@@ -584,38 +667,48 @@ export class FirebaseAnalysisStorageService {
 
   // Private helper methods
 
-  private async getAnalysisByHash(fileHash: string, file: File): Promise<FirebaseAnalysisData | null> {
+  private async getAnalysisByHash(
+    fileHash: string,
+    file: File
+  ): Promise<FirebaseAnalysisData | null> {
     if (!this.userId) return null;
 
     try {
       const q = query(
         collection(db, FirebaseAnalysisStorageService.COLLECTION_NAME),
-        where('userId', '==', this.userId),
-        where('fileHash', '==', fileHash),
-        where('fileName', '==', file.name),
+        where("userId", "==", this.userId),
+        where("fileHash", "==", fileHash),
+        where("fileName", "==", file.name),
         limit(1)
       );
 
       const querySnapshot = await getDocs(q);
-      
+
       if (!querySnapshot.empty) {
         const doc = querySnapshot.docs[0];
-        const data = doc.data() as Omit<FirebaseAnalysisData, 'id'>;
+        const data = doc.data() as Omit<FirebaseAnalysisData, "id">;
         return { ...data, id: doc.id };
       }
 
       return null;
     } catch (error) {
-      logger.error('Error getting analysis by hash:', error);
+      logger.error("Error getting analysis by hash:", error);
       return null;
     }
   }
 
-  private async updateUserStats(fileSize: number, issuesFound: number): Promise<void> {
+  private async updateUserStats(
+    fileSize: number,
+    issuesFound: number
+  ): Promise<void> {
     if (!this.userId) return;
 
     try {
-      const userStatsRef = doc(db, FirebaseAnalysisStorageService.USER_STATS_COLLECTION, this.userId);
+      const userStatsRef = doc(
+        db,
+        FirebaseAnalysisStorageService.USER_STATS_COLLECTION,
+        this.userId
+      );
       const userStats = await safeGetDoc(userStatsRef, {
         totalAnalyses: 0,
         totalFilesAnalyzed: 0,
@@ -628,22 +721,25 @@ export class FirebaseAnalysisStorageService {
         totalAnalyses: (userStats.data?.totalAnalyses || 0) + 1,
         totalFilesAnalyzed: (userStats.data?.totalFilesAnalyzed || 0) + 1,
         totalIssuesFound: (userStats.data?.totalIssuesFound || 0) + issuesFound,
-        totalBytesAnalyzed: (userStats.data?.totalBytesAnalyzed || 0) + fileSize,
+        totalBytesAnalyzed:
+          (userStats.data?.totalBytesAnalyzed || 0) + fileSize,
         lastAnalysis: serverTimestamp(),
         updatedAt: serverTimestamp(),
       };
 
-      await safeSetDoc(userStatsRef, this.sanitizeObject(updateData), { merge: true });
+      await safeSetDoc(userStatsRef, this.sanitizeObject(updateData), {
+        merge: true,
+      });
     } catch (error) {
-      logger.error('Error updating user stats:', error);
+      logger.error("Error updating user stats:", error);
     }
   }
 
   private async calculateFileHash(file: File): Promise<string> {
     const buffer = await file.arrayBuffer();
-    const hashBuffer = await crypto.subtle.digest('SHA-256', buffer);
+    const hashBuffer = await crypto.subtle.digest("SHA-256", buffer);
     const hashArray = Array.from(new Uint8Array(hashBuffer));
-    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
   }
 
   private generateSessionId(): string {
@@ -651,27 +747,33 @@ export class FirebaseAnalysisStorageService {
   }
 
   private getDeviceInfo(): string {
-    const platform = (navigator as any).userAgentData?.platform || 'Unknown';
+    const platform = (navigator as any).userAgentData?.platform || "Unknown";
     return `${platform} - ${navigator.userAgent.substring(0, 100)}`;
   }
 
   private compressResults(results: AnalysisResults): AnalysisResults {
     return {
       ...results,
-      issues: results.issues?.map(issue => ({
-        ...issue,
-        codeSnippet: issue.codeSnippet ? this.compressString(issue.codeSnippet) : undefined,
-      })) || [],
+      issues:
+        results.issues?.map((issue) => ({
+          ...issue,
+          codeSnippet: issue.codeSnippet
+            ? this.compressString(issue.codeSnippet)
+            : undefined,
+        })) || [],
     };
   }
 
   private decompressResults(results: AnalysisResults): AnalysisResults {
     return {
       ...results,
-      issues: results.issues?.map(issue => ({
-        ...issue,
-        codeSnippet: issue.codeSnippet ? this.decompressString(issue.codeSnippet) : undefined,
-      })) || [],
+      issues:
+        results.issues?.map((issue) => ({
+          ...issue,
+          codeSnippet: issue.codeSnippet
+            ? this.decompressString(issue.codeSnippet)
+            : undefined,
+        })) || [],
     };
   }
 
@@ -700,7 +802,7 @@ export class FirebaseAnalysisStorageService {
       try {
         callback(data);
       } catch (error) {
-        logger.error('Error in listener callback:', error);
+        logger.error("Error in listener callback:", error);
       }
     }
   }
@@ -715,14 +817,14 @@ export class FirebaseAnalysisStorageService {
     }
 
     if (Array.isArray(obj)) {
-      return obj.map(item => this.sanitizeObject(item));
+      return obj.map((item) => this.sanitizeObject(item));
     }
 
-    if (typeof obj === 'object' && obj.constructor === Object) {
+    if (typeof obj === "object" && obj.constructor === Object) {
       const newObj: { [key: string]: any } = {};
       for (const key in obj) {
         // Skip empty string keys (Firebase doesn't allow them)
-        if (key === '') {
+        if (key === "") {
           continue;
         }
         if (Object.hasOwn(obj, key) && obj[key] !== undefined) {
@@ -739,14 +841,16 @@ export class FirebaseAnalysisStorageService {
 // Global instance - lazy initialization for SSR compatibility
 let _firebaseAnalysisStorage: FirebaseAnalysisStorageService | null = null;
 
-export const getFirebaseAnalysisStorage = (): FirebaseAnalysisStorageService => {
-  if (!_firebaseAnalysisStorage) {
-    _firebaseAnalysisStorage = new FirebaseAnalysisStorageService();
-  }
-  return _firebaseAnalysisStorage;
-};
+export const getFirebaseAnalysisStorage =
+  (): FirebaseAnalysisStorageService => {
+    if (!_firebaseAnalysisStorage) {
+      _firebaseAnalysisStorage = new FirebaseAnalysisStorageService();
+    }
+    return _firebaseAnalysisStorage;
+  };
 
 // For backward compatibility - use getter instead
-export const firebaseAnalysisStorage = typeof window !== 'undefined' 
-  ? getFirebaseAnalysisStorage() 
-  : (null as unknown as FirebaseAnalysisStorageService);
+export const firebaseAnalysisStorage =
+  typeof window !== "undefined"
+    ? getFirebaseAnalysisStorage()
+    : (null as unknown as FirebaseAnalysisStorageService);

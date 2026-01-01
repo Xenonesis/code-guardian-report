@@ -208,16 +208,15 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
             </div>
             <div>
               <h1 className="error-title">Critical Error</h1>
-              <p className="error-subtitle">
-                Application failed to load
-              </p>
+              <p className="error-subtitle">Application failed to load</p>
             </div>
           </div>
 
           <div className="error-content">
             <p className="error-message">
-              We encountered a critical error that prevented the application from loading properly. 
-              Our team has been automatically notified. Please try refreshing the page.
+              We encountered a critical error that prevented the application
+              from loading properly. Our team has been automatically notified.
+              Please try refreshing the page.
             </p>
 
             {error.digest && (

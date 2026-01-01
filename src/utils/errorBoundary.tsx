@@ -1,5 +1,5 @@
-import React, { Component, ErrorInfo, ReactNode } from 'react';
-import { logger } from './logger';
+import React, { Component, ErrorInfo, ReactNode } from "react";
+import { logger } from "./logger";
 
 interface Props {
   children: ReactNode;
@@ -34,7 +34,7 @@ export class ErrorBoundary extends Component<Props, State> {
 
   override componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
     // Log error to production monitoring service
-    logger.error('React Error Boundary caught an error', {
+    logger.error("React Error Boundary caught an error", {
       error: error.message,
       stack: error.stack,
       componentStack: errorInfo.componentStack,
@@ -76,9 +76,10 @@ export class ErrorBoundary extends Component<Props, State> {
               Something went wrong
             </h3>
             <p className="mt-2 text-sm text-gray-600 text-center">
-              We're sorry, but something unexpected happened. Please try refreshing the page.
+              We're sorry, but something unexpected happened. Please try
+              refreshing the page.
             </p>
-            {process.env.NODE_ENV === 'development' && this.state.error && (
+            {process.env.NODE_ENV === "development" && this.state.error && (
               <div className="mt-4 p-3 bg-gray-100 rounded text-xs font-mono text-red-600 overflow-auto max-h-40">
                 {this.state.error.toString()}
               </div>

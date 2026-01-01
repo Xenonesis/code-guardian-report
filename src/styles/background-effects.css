@@ -52,7 +52,8 @@
 
 /* Pulsing animation for gradient orbs */
 @keyframes gentle-pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.3;
     transform: scale(1);
   }
@@ -68,7 +69,8 @@
 
 /* Floating animation */
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px);
   }
   50% {
@@ -118,7 +120,9 @@
 
 /* Hover floating effects */
 .hover-float {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .hover-float:hover {
@@ -127,7 +131,9 @@
 }
 
 .hover-float-subtle {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .hover-float-subtle:hover {
@@ -136,7 +142,10 @@
 }
 
 .hover-float-strong {
-  transition: transform 0.4s ease, box-shadow 0.4s ease, filter 0.3s ease;
+  transition:
+    transform 0.4s ease,
+    box-shadow 0.4s ease,
+    filter 0.3s ease;
 }
 
 .hover-float-strong:hover {
@@ -147,7 +156,9 @@
 
 /* Hover glow effect */
 .hover-glow {
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  transition:
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
 }
 
 .hover-glow:hover {
@@ -157,7 +168,9 @@
 
 /* Hover scale with float */
 .hover-scale-float {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .hover-scale-float:hover {
@@ -175,7 +188,11 @@
 }
 
 @keyframes bounce-hover {
-  0%, 20%, 50%, 80%, 100% {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
     transform: translateY(0);
   }
   40% {
@@ -188,7 +205,8 @@
 
 /* Stats Grid Floating Animation */
 @keyframes stats-float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
   50% {
@@ -217,7 +235,7 @@
 }
 
 .shimmer-effect::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
@@ -263,7 +281,8 @@
 }
 
 @keyframes gradient-shift {
-  0%, 100% {
+  0%,
+  100% {
     background-position: 0% 50%;
   }
   50% {
@@ -329,17 +348,37 @@
 }
 
 @media (min-width: 640px) {
-  .text-responsive-xs { font-size: 0.875rem; }
-  .text-responsive-sm { font-size: 1rem; }
-  .text-responsive-base { font-size: 1.125rem; }
-  .text-responsive-lg { font-size: 1.25rem; }
-  .text-responsive-xl { font-size: 1.5rem; }
+  .text-responsive-xs {
+    font-size: 0.875rem;
+  }
+  .text-responsive-sm {
+    font-size: 1rem;
+  }
+  .text-responsive-base {
+    font-size: 1.125rem;
+  }
+  .text-responsive-lg {
+    font-size: 1.25rem;
+  }
+  .text-responsive-xl {
+    font-size: 1.5rem;
+  }
 }
 
 @media (min-width: 1024px) {
-  .text-responsive-xs { font-size: 1rem; }
-  .text-responsive-sm { font-size: 1.125rem; }
-  .text-responsive-base { font-size: 1.25rem; }
-  .text-responsive-lg { font-size: 1.5rem; }
-  .text-responsive-xl { font-size: 2rem; }
+  .text-responsive-xs {
+    font-size: 1rem;
+  }
+  .text-responsive-sm {
+    font-size: 1.125rem;
+  }
+  .text-responsive-base {
+    font-size: 1.25rem;
+  }
+  .text-responsive-lg {
+    font-size: 1.5rem;
+  }
+  .text-responsive-xl {
+    font-size: 2rem;
+  }
 }

@@ -1,9 +1,9 @@
 "use client";
 
 // src/components/FirestoreStatus.tsx
-import React, { useState, useEffect } from 'react';
-import { connectionManager } from '../../lib/connection-manager';
-import { AlertCircle, Wifi, WifiOff } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { connectionManager } from "../../lib/connection-manager";
+import { AlertCircle, Wifi, WifiOff } from "lucide-react";
 
 export const FirestoreStatus: React.FC = () => {
   const [isOnline, setIsOnline] = useState(true);
@@ -13,7 +13,7 @@ export const FirestoreStatus: React.FC = () => {
     const unsubscribe = connectionManager.addListener((online) => {
       setIsOnline(online);
       setShowStatus(!online); // Only show when offline
-      
+
       if (online) {
         // Hide status after 3 seconds when back online
         setTimeout(() => setShowStatus(false), 3000);
@@ -26,11 +26,13 @@ export const FirestoreStatus: React.FC = () => {
   if (!showStatus) return null;
 
   return (
-    <div className={`fixed top-4 right-4 z-50 p-3 rounded-lg shadow-lg flex items-center gap-2 ${
-      isOnline 
-        ? 'bg-green-100 text-green-800 border border-green-200' 
-        : 'bg-red-100 text-red-800 border border-red-200'
-    }`}>
+    <div
+      className={`fixed top-4 right-4 z-50 p-3 rounded-lg shadow-lg flex items-center gap-2 ${
+        isOnline
+          ? "bg-green-100 text-green-800 border border-green-200"
+          : "bg-red-100 text-red-800 border border-red-200"
+      }`}
+    >
       {isOnline ? (
         <>
           <Wifi className="w-4 h-4" />
@@ -39,7 +41,9 @@ export const FirestoreStatus: React.FC = () => {
       ) : (
         <>
           <WifiOff className="w-4 h-4" />
-          <span className="text-sm font-medium">Connection issues detected</span>
+          <span className="text-sm font-medium">
+            Connection issues detected
+          </span>
         </>
       )}
     </div>

@@ -1,11 +1,11 @@
-import { logger } from '@/utils/logger';
+import { logger } from "@/utils/logger";
 
 export interface FileIntegrityRecord {
   id: string;
   filename: string;
   filepath: string;
   checksum: string;
-  algorithm: 'SHA-256' | 'SHA-512' | 'MD5';
+  algorithm: "SHA-256" | "SHA-512" | "MD5";
   size: number;
   lastModified: Date;
   isSecurityCritical: boolean;
@@ -14,8 +14,8 @@ export interface FileIntegrityRecord {
   metadata: {
     language?: string;
     framework?: string;
-    category: 'source' | 'config' | 'dependency' | 'build' | 'security';
-    importance: 'critical' | 'high' | 'medium' | 'low';
+    category: "source" | "config" | "dependency" | "build" | "security";
+    importance: "critical" | "high" | "medium" | "low";
   };
 }
 
@@ -23,8 +23,12 @@ export interface TamperingAlert {
   id: string;
   fileId: string;
   filename: string;
-  alertType: 'modification' | 'deletion' | 'unauthorized_access' | 'suspicious_pattern';
-  severity: 'critical' | 'high' | 'medium' | 'low';
+  alertType:
+    | "modification"
+    | "deletion"
+    | "unauthorized_access"
+    | "suspicious_pattern";
+  severity: "critical" | "high" | "medium" | "low";
   detectedAt: Date;
   description: string;
   changes: FileChange[];
@@ -34,7 +38,7 @@ export interface TamperingAlert {
 }
 
 export interface FileChange {
-  type: 'content' | 'permissions' | 'metadata' | 'location';
+  type: "content" | "permissions" | "metadata" | "location";
   field: string;
   oldValue: string;
   newValue: string;
@@ -73,7 +77,7 @@ export class CodeProvenanceService {
   public async initializeMonitoring(
     files: { filename: string; content: string; path?: string }[]
   ): Promise<void> {
-    logger.debug('Initializing code provenance monitoring...');
+    logger.debug("Initializing code provenance monitoring...");
 
     for (const file of files) {
       await this.addFileToMonitoring(file.filename, file.content, file.path);
@@ -81,7 +85,7 @@ export class CodeProvenanceService {
 
     this.monitoringEnabled = true;
     this.saveData();
-    
+
     logger.debug(`Monitoring initialized for ${files.length} files`);
   }
 
@@ -95,19 +99,19 @@ export class CodeProvenanceService {
   ): Promise<string> {
     const checksum = await this.calculateChecksum(content);
     const isSecurityCritical = this.isSecurityCriticalFile(filename);
-    
+
     const record: FileIntegrityRecord = {
       id: this.generateId(),
       filename,
       filepath: filepath || filename,
       checksum,
-      algorithm: 'SHA-256',
+      algorithm: "SHA-256",
       size: content.length,
       lastModified: new Date(),
       isSecurityCritical,
       baseline: true,
       tags: this.generateFileTags(filename, content),
-      metadata: this.analyzeFileMetadata(filename, content)
+      metadata: this.analyzeFileMetadata(filename, content),
     };
 
     this.fileRecords.set(record.id, record);
@@ -127,7 +131,7 @@ export class CodeProvenanceService {
     alert?: TamperingAlert;
   }> {
     const record = this.findFileRecord(filename);
-    
+
     if (!record) {
       return { isValid: false };
     }
@@ -138,7 +142,7 @@ export class CodeProvenanceService {
     if (!isValid) {
       const changes = await this.detectChanges(record, currentContent);
       const alert = this.createTamperingAlert(record, changes);
-      
+
       this.alerts.push(alert);
       this.saveData();
 
@@ -146,7 +150,7 @@ export class CodeProvenanceService {
         isValid: false,
         record,
         changes,
-        alert
+        alert,
       };
     }
 
@@ -160,12 +164,12 @@ export class CodeProvenanceService {
     currentFiles: { filename: string; content: string }[]
   ): Promise<ProvenanceReport> {
     const violations: TamperingAlert[] = [];
-    const fileMap = new Map(currentFiles.map(f => [f.filename, f.content]));
+    const fileMap = new Map(currentFiles.map((f) => [f.filename, f.content]));
 
     // Check existing files for modifications
     for (const record of this.fileRecords.values()) {
       const currentContent = fileMap.get(record.filename);
-      
+
       if (!currentContent) {
         // File was deleted
         const alert = this.createDeletionAlert(record);
@@ -174,7 +178,10 @@ export class CodeProvenanceService {
         continue;
       }
 
-      const verification = await this.verifyFileIntegrity(record.filename, currentContent);
+      const verification = await this.verifyFileIntegrity(
+        record.filename,
+        currentContent
+      );
       if (!verification.isValid && verification.alert) {
         violations.push(verification.alert);
       }
@@ -183,9 +190,15 @@ export class CodeProvenanceService {
     // Check for new files that might be suspicious
     for (const file of currentFiles) {
       if (!this.findFileRecord(file.filename)) {
-        const suspiciousPatterns = this.detectSuspiciousPatterns(file.filename, file.content);
+        const suspiciousPatterns = this.detectSuspiciousPatterns(
+          file.filename,
+          file.content
+        );
         if (suspiciousPatterns.length > 0) {
-          const alert = this.createSuspiciousFileAlert(file.filename, suspiciousPatterns);
+          const alert = this.createSuspiciousFileAlert(
+            file.filename,
+            suspiciousPatterns
+          );
           violations.push(alert);
           this.alerts.push(alert);
         }
@@ -194,7 +207,7 @@ export class CodeProvenanceService {
 
     const report = this.generateProvenanceReport(violations);
     this.saveData();
-    
+
     return report;
   }
 
@@ -202,17 +215,21 @@ export class CodeProvenanceService {
    * Get all tampering alerts
    */
   public getAlerts(
-    severity?: 'critical' | 'high' | 'medium' | 'low',
+    severity?: "critical" | "high" | "medium" | "low",
     limit?: number
   ): TamperingAlert[] {
     let filteredAlerts = this.alerts;
 
     if (severity) {
-      filteredAlerts = filteredAlerts.filter(alert => alert.severity === severity);
+      filteredAlerts = filteredAlerts.filter(
+        (alert) => alert.severity === severity
+      );
     }
 
     // Sort by detection time (newest first)
-    filteredAlerts.sort((a, b) => b.detectedAt.getTime() - a.detectedAt.getTime());
+    filteredAlerts.sort(
+      (a, b) => b.detectedAt.getTime() - a.detectedAt.getTime()
+    );
 
     if (limit) {
       filteredAlerts = filteredAlerts.slice(0, limit);
@@ -225,7 +242,7 @@ export class CodeProvenanceService {
    * Mark an alert as resolved
    */
   public resolveAlert(alertId: string): boolean {
-    const index = this.alerts.findIndex(alert => alert.id === alertId);
+    const index = this.alerts.findIndex((alert) => alert.id === alertId);
     if (index === -1) return false;
 
     this.alerts.splice(index, 1);
@@ -236,12 +253,15 @@ export class CodeProvenanceService {
   /**
    * Update baseline for a file
    */
-  public async updateBaseline(filename: string, newContent: string): Promise<boolean> {
+  public async updateBaseline(
+    filename: string,
+    newContent: string
+  ): Promise<boolean> {
     const record = this.findFileRecord(filename);
     if (!record) return false;
 
     const newChecksum = await this.calculateChecksum(newContent);
-    
+
     record.checksum = newChecksum;
     record.size = newContent.length;
     record.lastModified = new Date();
@@ -261,16 +281,21 @@ export class CodeProvenanceService {
     lastScanTime: Date | null;
     monitoringStatus: boolean;
   } {
-    const criticalFiles = Array.from(this.fileRecords.values())
-      .filter(record => record.isSecurityCritical).length;
+    const criticalFiles = Array.from(this.fileRecords.values()).filter(
+      (record) => record.isSecurityCritical
+    ).length;
 
     return {
       totalFiles: this.fileRecords.size,
       criticalFiles,
       alertCount: this.alerts.length,
-      lastScanTime: this.alerts.length > 0 ? 
-        new Date(Math.max(...this.alerts.map(a => a.detectedAt.getTime()))) : null,
-      monitoringStatus: this.monitoringEnabled
+      lastScanTime:
+        this.alerts.length > 0
+          ? new Date(
+              Math.max(...this.alerts.map((a) => a.detectedAt.getTime()))
+            )
+          : null,
+      monitoringStatus: this.monitoringEnabled,
     };
   }
 
@@ -280,9 +305,9 @@ export class CodeProvenanceService {
   private async calculateChecksum(content: string): Promise<string> {
     const encoder = new TextEncoder();
     const data = encoder.encode(content);
-    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
     const hashArray = Array.from(new Uint8Array(hashBuffer));
-    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
   }
 
   /**
@@ -296,10 +321,10 @@ export class CodeProvenanceService {
       /\.(htaccess|htpasswd)$/i,
       /(dockerfile|docker-compose)/i,
       /^(package\.json|requirements\.txt|Gemfile|pom\.xml)$/i,
-      /(webpack|babel|eslint)\.config/i
+      /(webpack|babel|eslint)\.config/i,
     ];
 
-    return criticalPatterns.some(pattern => pattern.test(filename));
+    return criticalPatterns.some((pattern) => pattern.test(filename));
   }
 
   /**
@@ -309,20 +334,26 @@ export class CodeProvenanceService {
     const tags: string[] = [];
 
     // File type tags
-    const extension = filename.split('.').pop()?.toLowerCase();
+    const extension = filename.split(".").pop()?.toLowerCase();
     if (extension) tags.push(`ext:${extension}`);
 
     // Content-based tags
-    if (content.includes('password') || content.includes('secret')) tags.push('credentials');
-    if (content.includes('import') || content.includes('require')) tags.push('dependencies');
-    if (content.includes('export') || content.includes('module.exports')) tags.push('module');
-    if (content.includes('function') || content.includes('class')) tags.push('code');
-    if (content.includes('test') || content.includes('spec')) tags.push('test');
+    if (content.includes("password") || content.includes("secret"))
+      tags.push("credentials");
+    if (content.includes("import") || content.includes("require"))
+      tags.push("dependencies");
+    if (content.includes("export") || content.includes("module.exports"))
+      tags.push("module");
+    if (content.includes("function") || content.includes("class"))
+      tags.push("code");
+    if (content.includes("test") || content.includes("spec")) tags.push("test");
 
     // Security-related tags
-    if (this.isSecurityCriticalFile(filename)) tags.push('security-critical');
-    if (content.includes('crypto') || content.includes('hash')) tags.push('cryptography');
-    if (content.includes('auth') || content.includes('login')) tags.push('authentication');
+    if (this.isSecurityCriticalFile(filename)) tags.push("security-critical");
+    if (content.includes("crypto") || content.includes("hash"))
+      tags.push("cryptography");
+    if (content.includes("auth") || content.includes("login"))
+      tags.push("authentication");
 
     return tags;
   }
@@ -330,33 +361,49 @@ export class CodeProvenanceService {
   /**
    * Analyze file metadata
    */
-  private analyzeFileMetadata(filename: string, content: string): FileIntegrityRecord['metadata'] {
-    const extension = filename.split('.').pop()?.toLowerCase();
-    
+  private analyzeFileMetadata(
+    filename: string,
+    content: string
+  ): FileIntegrityRecord["metadata"] {
+    const extension = filename.split(".").pop()?.toLowerCase();
+
     // Determine language
     const languageMap: Record<string, string> = {
-      'js': 'javascript', 'ts': 'typescript', 'py': 'python',
-      'java': 'java', 'php': 'php', 'rb': 'ruby', 'go': 'golang',
-      'cs': 'csharp', 'cpp': 'cpp', 'c': 'c'
+      js: "javascript",
+      ts: "typescript",
+      py: "python",
+      java: "java",
+      php: "php",
+      rb: "ruby",
+      go: "golang",
+      cs: "csharp",
+      cpp: "cpp",
+      c: "c",
     };
 
     // Determine category
-    let category: 'source' | 'config' | 'dependency' | 'build' | 'security' = 'source';
-    if (/\.(json|yaml|yml|xml|ini|conf|config)$/i.test(filename)) category = 'config';
-    if (/package\.json|requirements\.txt|Gemfile|pom\.xml/i.test(filename)) category = 'dependency';
-    if (/webpack|babel|gulp|grunt|Makefile|Dockerfile/i.test(filename)) category = 'build';
-    if (this.isSecurityCriticalFile(filename)) category = 'security';
+    let category: "source" | "config" | "dependency" | "build" | "security" =
+      "source";
+    if (/\.(json|yaml|yml|xml|ini|conf|config)$/i.test(filename))
+      category = "config";
+    if (/package\.json|requirements\.txt|Gemfile|pom\.xml/i.test(filename))
+      category = "dependency";
+    if (/webpack|babel|gulp|grunt|Makefile|Dockerfile/i.test(filename))
+      category = "build";
+    if (this.isSecurityCriticalFile(filename)) category = "security";
 
     // Determine importance
-    let importance: 'critical' | 'high' | 'medium' | 'low' = 'medium';
-    if (this.isSecurityCriticalFile(filename)) importance = 'critical';
-    else if (category === 'dependency' || category === 'build') importance = 'high';
-    else if (content.includes('main') || content.includes('index')) importance = 'high';
+    let importance: "critical" | "high" | "medium" | "low" = "medium";
+    if (this.isSecurityCriticalFile(filename)) importance = "critical";
+    else if (category === "dependency" || category === "build")
+      importance = "high";
+    else if (content.includes("main") || content.includes("index"))
+      importance = "high";
 
     return {
       language: extension ? languageMap[extension] : undefined,
       category,
-      importance
+      importance,
     };
   }
 
@@ -364,8 +411,9 @@ export class CodeProvenanceService {
    * Find file record by filename
    */
   private findFileRecord(filename: string): FileIntegrityRecord | undefined {
-    return Array.from(this.fileRecords.values())
-      .find(record => record.filename === filename);
+    return Array.from(this.fileRecords.values()).find(
+      (record) => record.filename === filename
+    );
   }
 
   /**
@@ -380,23 +428,23 @@ export class CodeProvenanceService {
     // Size change
     if (currentContent.length !== record.size) {
       changes.push({
-        type: 'content',
-        field: 'size',
+        type: "content",
+        field: "size",
         oldValue: record.size.toString(),
         newValue: currentContent.length.toString(),
         timestamp: new Date(),
-        confidence: 100
+        confidence: 100,
       });
     }
 
     // Content change (already detected via checksum)
     changes.push({
-      type: 'content',
-      field: 'checksum',
+      type: "content",
+      field: "checksum",
       oldValue: record.checksum,
       newValue: await this.calculateChecksum(currentContent),
       timestamp: new Date(),
-      confidence: 100
+      confidence: 100,
     });
 
     return changes;
@@ -409,27 +457,29 @@ export class CodeProvenanceService {
     record: FileIntegrityRecord,
     changes: FileChange[]
   ): TamperingAlert {
-    const severity = record.isSecurityCritical ? 'critical' : 'high';
-    
+    const severity = record.isSecurityCritical ? "critical" : "high";
+
     return {
       id: this.generateId(),
       fileId: record.id,
       filename: record.filename,
-      alertType: 'modification',
+      alertType: "modification",
       severity,
       detectedAt: new Date(),
       description: `File ${record.filename} has been modified since baseline`,
       changes,
-      riskAssessment: record.isSecurityCritical 
-        ? 'High risk: Security-critical file has been modified'
-        : 'Medium risk: Monitored file has been modified',
+      riskAssessment: record.isSecurityCritical
+        ? "High risk: Security-critical file has been modified"
+        : "Medium risk: Monitored file has been modified",
       recommendedActions: [
-        'Review changes for unauthorized modifications',
-        'Verify changes are legitimate',
-        'Update baseline if changes are approved',
-        record.isSecurityCritical ? 'Perform security audit' : 'Monitor for additional changes'
+        "Review changes for unauthorized modifications",
+        "Verify changes are legitimate",
+        "Update baseline if changes are approved",
+        record.isSecurityCritical
+          ? "Perform security audit"
+          : "Monitor for additional changes",
       ],
-      falsePositiveRisk: record.isSecurityCritical ? 10 : 30
+      falsePositiveRisk: record.isSecurityCritical ? 10 : 30,
     };
   }
 
@@ -441,51 +491,59 @@ export class CodeProvenanceService {
       id: this.generateId(),
       fileId: record.id,
       filename: record.filename,
-      alertType: 'deletion',
-      severity: record.isSecurityCritical ? 'critical' : 'medium',
+      alertType: "deletion",
+      severity: record.isSecurityCritical ? "critical" : "medium",
       detectedAt: new Date(),
       description: `Monitored file ${record.filename} has been deleted`,
-      changes: [{
-        type: 'content',
-        field: 'existence',
-        oldValue: 'present',
-        newValue: 'deleted',
-        timestamp: new Date(),
-        confidence: 100
-      }],
-      riskAssessment: 'File deletion detected - potential security incident',
-      recommendedActions: [
-        'Investigate reason for file deletion',
-        'Check if deletion was authorized',
-        'Restore file if deletion was unauthorized',
-        'Review access logs'
+      changes: [
+        {
+          type: "content",
+          field: "existence",
+          oldValue: "present",
+          newValue: "deleted",
+          timestamp: new Date(),
+          confidence: 100,
+        },
       ],
-      falsePositiveRisk: 5
+      riskAssessment: "File deletion detected - potential security incident",
+      recommendedActions: [
+        "Investigate reason for file deletion",
+        "Check if deletion was authorized",
+        "Restore file if deletion was unauthorized",
+        "Review access logs",
+      ],
+      falsePositiveRisk: 5,
     };
   }
 
   /**
    * Detect suspicious patterns in new files
    */
-  private detectSuspiciousPatterns(filename: string, content: string): string[] {
+  private detectSuspiciousPatterns(
+    filename: string,
+    content: string
+  ): string[] {
     const patterns: string[] = [];
 
     // Suspicious file patterns
     if (/\.(exe|bat|cmd|sh|ps1)$/i.test(filename)) {
-      patterns.push('Executable file detected');
+      patterns.push("Executable file detected");
     }
 
     // Suspicious content patterns
-    if (content.includes('eval(') || content.includes('exec(')) {
-      patterns.push('Dynamic code execution detected');
+    if (content.includes("eval(") || content.includes("exec(")) {
+      patterns.push("Dynamic code execution detected");
     }
 
-    if (content.includes('base64') && content.includes('decode')) {
-      patterns.push('Base64 decoding detected');
+    if (content.includes("base64") && content.includes("decode")) {
+      patterns.push("Base64 decoding detected");
     }
 
-    if (/password|secret|key|token/i.test(content) && !/test|example|demo/i.test(filename)) {
-      patterns.push('Potential credentials in code');
+    if (
+      /password|secret|key|token/i.test(content) &&
+      !/test|example|demo/i.test(filename)
+    ) {
+      patterns.push("Potential credentials in code");
     }
 
     return patterns;
@@ -494,55 +552,68 @@ export class CodeProvenanceService {
   /**
    * Create alert for suspicious new file
    */
-  private createSuspiciousFileAlert(filename: string, patterns: string[]): TamperingAlert {
+  private createSuspiciousFileAlert(
+    filename: string,
+    patterns: string[]
+  ): TamperingAlert {
     return {
       id: this.generateId(),
-      fileId: '',
+      fileId: "",
       filename,
-      alertType: 'suspicious_pattern',
-      severity: 'medium',
+      alertType: "suspicious_pattern",
+      severity: "medium",
       detectedAt: new Date(),
       description: `New file ${filename} contains suspicious patterns`,
       changes: [],
-      riskAssessment: `Suspicious patterns detected: ${patterns.join(', ')}`,
+      riskAssessment: `Suspicious patterns detected: ${patterns.join(", ")}`,
       recommendedActions: [
-        'Review file contents for malicious code',
-        'Verify file source and legitimacy',
-        'Scan file with security tools',
-        'Add to monitoring if legitimate'
+        "Review file contents for malicious code",
+        "Verify file source and legitimacy",
+        "Scan file with security tools",
+        "Add to monitoring if legitimate",
       ],
-      falsePositiveRisk: 60
+      falsePositiveRisk: 60,
     };
   }
 
   /**
    * Generate comprehensive provenance report
    */
-  private generateProvenanceReport(newViolations: TamperingAlert[]): ProvenanceReport {
+  private generateProvenanceReport(
+    newViolations: TamperingAlert[]
+  ): ProvenanceReport {
     const allRecords = Array.from(this.fileRecords.values());
-    const criticalFiles = allRecords.filter(r => r.isSecurityCritical).length;
+    const criticalFiles = allRecords.filter((r) => r.isSecurityCritical).length;
 
     // Calculate statistics
     const fileStatistics = {
       byCategory: {} as Record<string, number>,
       byImportance: {} as Record<string, number>,
-      byLanguage: {} as Record<string, number>
+      byLanguage: {} as Record<string, number>,
     };
 
-    allRecords.forEach(record => {
+    allRecords.forEach((record) => {
       const category = record.metadata.category;
       const importance = record.metadata.importance;
-      const language = record.metadata.language || 'unknown';
+      const language = record.metadata.language || "unknown";
 
-      fileStatistics.byCategory[category] = (fileStatistics.byCategory[category] || 0) + 1;
-      fileStatistics.byImportance[importance] = (fileStatistics.byImportance[importance] || 0) + 1;
-      fileStatistics.byLanguage[language] = (fileStatistics.byLanguage[language] || 0) + 1;
+      fileStatistics.byCategory[category] =
+        (fileStatistics.byCategory[category] || 0) + 1;
+      fileStatistics.byImportance[importance] =
+        (fileStatistics.byImportance[importance] || 0) + 1;
+      fileStatistics.byLanguage[language] =
+        (fileStatistics.byLanguage[language] || 0) + 1;
     });
 
     // Calculate risk score
-    const criticalAlerts = this.alerts.filter(a => a.severity === 'critical').length;
-    const highAlerts = this.alerts.filter(a => a.severity === 'high').length;
-    const riskScore = Math.min(100, (criticalAlerts * 25) + (highAlerts * 10) + (newViolations.length * 5));
+    const criticalAlerts = this.alerts.filter(
+      (a) => a.severity === "critical"
+    ).length;
+    const highAlerts = this.alerts.filter((a) => a.severity === "high").length;
+    const riskScore = Math.min(
+      100,
+      criticalAlerts * 25 + highAlerts * 10 + newViolations.length * 5
+    );
 
     return {
       totalFiles: allRecords.length,
@@ -552,7 +623,7 @@ export class CodeProvenanceService {
       lastScanTime: new Date(),
       alerts: newViolations,
       fileStatistics,
-      riskScore
+      riskScore,
     };
   }
 
@@ -571,14 +642,17 @@ export class CodeProvenanceService {
       const data = {
         fileRecords: Array.from(this.fileRecords.entries()),
         alerts: this.alerts,
-        monitoringEnabled: this.monitoringEnabled
+        monitoringEnabled: this.monitoringEnabled,
       };
-      localStorage.setItem('codeProvenance', JSON.stringify(data, (key, value) => {
-        if (value instanceof Date) {
-          return value.toISOString();
-        }
-        return value as unknown;
-      }));
+      localStorage.setItem(
+        "codeProvenance",
+        JSON.stringify(data, (key, value) => {
+          if (value instanceof Date) {
+            return value.toISOString();
+          }
+          return value as unknown;
+        })
+      );
     } catch (error) {
       // Silent error handling
     }
@@ -589,14 +663,16 @@ export class CodeProvenanceService {
    */
   private loadStoredData(): void {
     try {
-      const stored = localStorage.getItem('codeProvenance');
+      const stored = localStorage.getItem("codeProvenance");
       if (stored) {
         const data = JSON.parse(stored);
         this.fileRecords = new Map(data.fileRecords || []);
-        this.alerts = (data.alerts || []).map((alert: Record<string, unknown>) => ({
-          ...alert,
-          detectedAt: new Date(alert.detectedAt as string | number | Date)
-        }));
+        this.alerts = (data.alerts || []).map(
+          (alert: Record<string, unknown>) => ({
+            ...alert,
+            detectedAt: new Date(alert.detectedAt as string | number | Date),
+          })
+        );
         this.monitoringEnabled = data.monitoringEnabled || false;
       }
     } catch (error) {

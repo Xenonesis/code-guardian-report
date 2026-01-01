@@ -9,7 +9,7 @@ This guide explains how to set up your environment, follow our workflow, and mak
 
 ## Code of Conduct
 
-Please read and follow our **Code of Conduct** (CODE\_OF\_CONDUCT.md).
+Please read and follow our **Code of Conduct** (CODE_OF_CONDUCT.md).
 We are committed to creating a positive and welcoming environment for everyone.
 
 ---
@@ -18,10 +18,10 @@ We are committed to creating a positive and welcoming environment for everyone.
 
 We welcome:
 
-* **Bug fixes** – improve stability and fix issues
-* **Feature enhancements** – new AI features, analytics improvements, UI updates
-* **Documentation** – tutorials, guides, and examples
-* **Testing** – improve code coverage and reporting
+- **Bug fixes** – improve stability and fix issues
+- **Feature enhancements** – new AI features, analytics improvements, UI updates
+- **Documentation** – tutorials, guides, and examples
+- **Testing** – improve code coverage and reporting
 
 ---
 
@@ -87,20 +87,20 @@ code-guardian-report/
 
 Key technologies:
 
-* React 18 + TypeScript 5.9
-* Vite 6 for development
-* Tailwind CSS for styling
-* shadcn/ui + Radix UI for components
-* Framer Motion for animations
+- React 18 + TypeScript 5.9
+- Vite 6 for development
+- Tailwind CSS for styling
+- shadcn/ui + Radix UI for components
+- Framer Motion for animations
 
 ---
 
 ## Pull Request Guidelines
 
-* Keep PRs small and focused.
-* Reference related issues (e.g., `Fixes #42`).
-* Update documentation when adding features.
-* Ensure all CI checks pass before requesting a review.
+- Keep PRs small and focused.
+- Reference related issues (e.g., `Fixes #42`).
+- Update documentation when adding features.
+- Ensure all CI checks pass before requesting a review.
 
 ---
 
@@ -108,21 +108,21 @@ Key technologies:
 
 If you find a bug, please include:
 
-* Steps to reproduce
-* Expected vs. actual behavior
-* Screenshots or logs if applicable
+- Steps to reproduce
+- Expected vs. actual behavior
+- Screenshots or logs if applicable
 
 For feature requests, describe:
 
-* The problem or use case
-* Proposed solution or feature
+- The problem or use case
+- Proposed solution or feature
 
 ---
 
 ## Community
 
-* Discussions: Use GitHub Discussions for ideas and help.
-* Issues: Use GitHub Issues for bugs and features.
+- Discussions: Use GitHub Discussions for ideas and help.
+- Issues: Use GitHub Issues for bugs and features.
 
 ---
 

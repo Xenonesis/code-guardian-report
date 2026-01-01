@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { 
-  Brain, 
-  Shield, 
-  AlertTriangle, 
-  TrendingUp, 
+import React, { useState, useEffect, useCallback } from "react";
+import {
+  Brain,
+  Shield,
+  AlertTriangle,
+  TrendingUp,
   Target,
   Loader2,
   RefreshCw,
@@ -24,18 +24,28 @@ import {
   Sparkles,
   TrendingDown,
   Users,
-  Workflow
-} from 'lucide-react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Progress } from '@/components/ui/progress';
-import { AIService } from '../../services/ai/aiService';
-import { AnalysisResults } from '@/hooks/useAnalysis';
-import { hasConfiguredApiKeys, formatAIError, getAIFeatureStatus } from '@/utils/aiUtils';
-import { toast } from 'sonner';
+  Workflow,
+} from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Progress } from "@/components/ui/progress";
+import { AIService } from "../../services/ai/aiService";
+import { AnalysisResults } from "@/hooks/useAnalysis";
+import {
+  hasConfiguredApiKeys,
+  formatAIError,
+  getAIFeatureStatus,
+} from "@/utils/aiUtils";
+import { toast } from "sonner";
 
 interface AISecurityInsightsProps {
   results: AnalysisResults;
@@ -50,63 +60,68 @@ interface InsightState {
   lastGenerated: Date | null;
 }
 
-export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results, className = '' }) => {
-  const [aiFeatureStatus, setAiFeatureStatus] = useState(() => getAIFeatureStatus());
+export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
+  results,
+  className = "",
+}) => {
+  const [aiFeatureStatus, setAiFeatureStatus] = useState(() =>
+    getAIFeatureStatus()
+  );
   const [aiService] = useState(() => new AIService());
 
-
-  
   // Separate state for each type of insight
   const [securityInsights, setSecurityInsights] = useState<InsightState>({
-    content: '',
+    content: "",
     isLoading: false,
     error: null,
-    lastGenerated: null
-  });
-  
-  const [remediationStrategy, setRemediationStrategy] = useState<InsightState>({
-    content: '',
-    isLoading: false,
-    error: null,
-    lastGenerated: null
+    lastGenerated: null,
   });
 
-  const [owaspExplanations, setOwaspExplanations] = useState<Record<string, InsightState>>({});
-  const [threatModeling, setThreatModeling] = useState<InsightState>({
-    content: '',
+  const [remediationStrategy, setRemediationStrategy] = useState<InsightState>({
+    content: "",
     isLoading: false,
     error: null,
-    lastGenerated: null
+    lastGenerated: null,
+  });
+
+  const [owaspExplanations, setOwaspExplanations] = useState<
+    Record<string, InsightState>
+  >({});
+  const [threatModeling, setThreatModeling] = useState<InsightState>({
+    content: "",
+    isLoading: false,
+    error: null,
+    lastGenerated: null,
   });
   const [complianceAnalysis, setComplianceAnalysis] = useState<InsightState>({
-    content: '',
+    content: "",
     isLoading: false,
     error: null,
-    lastGenerated: null
+    lastGenerated: null,
   });
   const [riskAssessment, setRiskAssessment] = useState<InsightState>({
-    content: '',
+    content: "",
     isLoading: false,
     error: null,
-    lastGenerated: null
+    lastGenerated: null,
   });
   const [performanceImpact, setPerformanceImpact] = useState<InsightState>({
-    content: '',
+    content: "",
     isLoading: false,
     error: null,
-    lastGenerated: null
+    lastGenerated: null,
   });
   const [codeQualityInsights, setCodeQualityInsights] = useState<InsightState>({
-    content: '',
+    content: "",
     isLoading: false,
     error: null,
-    lastGenerated: null
+    lastGenerated: null,
   });
   const [trendsAnalysis, setTrendsAnalysis] = useState<InsightState>({
-    content: '',
+    content: "",
     isLoading: false,
     error: null,
-    lastGenerated: null
+    lastGenerated: null,
   });
 
   // Check for API keys on component mount and listen for changes
@@ -120,7 +135,7 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
 
     // Listen for storage changes
     const handleStorageChange = (event: StorageEvent) => {
-      if (event.key === 'aiApiKeys') {
+      if (event.key === "aiApiKeys") {
         updateFeatureStatus();
       }
     };
@@ -130,18 +145,18 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
       updateFeatureStatus();
     };
 
-    window.addEventListener('storage', handleStorageChange);
-    window.addEventListener('aiApiKeysChanged', handleCustomStorageChange);
+    window.addEventListener("storage", handleStorageChange);
+    window.addEventListener("aiApiKeysChanged", handleCustomStorageChange);
 
     return () => {
-      window.removeEventListener('storage', handleStorageChange);
-      window.removeEventListener('aiApiKeysChanged', handleCustomStorageChange);
+      window.removeEventListener("storage", handleStorageChange);
+      window.removeEventListener("aiApiKeysChanged", handleCustomStorageChange);
     };
   }, []);
 
   // Define generateSecurityInsights first
   const generateSecurityInsights = useCallback(async () => {
-    setSecurityInsights(prev => ({ ...prev, isLoading: true, error: null }));
+    setSecurityInsights((prev) => ({ ...prev, isLoading: true, error: null }));
 
     try {
       const insights = await aiService.generateSecurityInsights(results);
@@ -150,153 +165,161 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
         content: insights,
         isLoading: false,
         error: null,
-        lastGenerated: new Date()
+        lastGenerated: new Date(),
       });
-      toast.success('Security insights generated successfully!');
+      toast.success("Security insights generated successfully!");
     } catch (error) {
       const errorMessage = formatAIError(error);
-      setSecurityInsights(prev => ({
+      setSecurityInsights((prev) => ({
         ...prev,
         isLoading: false,
-        error: errorMessage
+        error: errorMessage,
       }));
       toast.error(`Failed to generate insights: ${errorMessage}`);
     }
   }, [results, aiService]);
 
   const generateThreatModeling = async () => {
-    setThreatModeling(prev => ({ ...prev, isLoading: true, error: null }));
-    
+    setThreatModeling((prev) => ({ ...prev, isLoading: true, error: null }));
+
     try {
       const threats = await aiService.generateThreatModeling(results);
       setThreatModeling({
         content: threats,
         isLoading: false,
         error: null,
-        lastGenerated: new Date()
+        lastGenerated: new Date(),
       });
-      toast.success('Threat modeling analysis generated!');
+      toast.success("Threat modeling analysis generated!");
     } catch (error) {
       const errorMessage = formatAIError(error);
-      setThreatModeling(prev => ({
+      setThreatModeling((prev) => ({
         ...prev,
         isLoading: false,
-        error: errorMessage
+        error: errorMessage,
       }));
       toast.error(`Failed to generate threat modeling: ${errorMessage}`);
     }
   };
 
   const generateComplianceAnalysis = async () => {
-    setComplianceAnalysis(prev => ({ ...prev, isLoading: true, error: null }));
-    
+    setComplianceAnalysis((prev) => ({
+      ...prev,
+      isLoading: true,
+      error: null,
+    }));
+
     try {
       const compliance = await aiService.generateComplianceAnalysis(results);
       setComplianceAnalysis({
         content: compliance,
         isLoading: false,
         error: null,
-        lastGenerated: new Date()
+        lastGenerated: new Date(),
       });
-      toast.success('Compliance analysis generated!');
+      toast.success("Compliance analysis generated!");
     } catch (error) {
       const errorMessage = formatAIError(error);
-      setComplianceAnalysis(prev => ({
+      setComplianceAnalysis((prev) => ({
         ...prev,
         isLoading: false,
-        error: errorMessage
+        error: errorMessage,
       }));
       toast.error(`Failed to generate compliance analysis: ${errorMessage}`);
     }
   };
 
   const generateRiskAssessment = async () => {
-    setRiskAssessment(prev => ({ ...prev, isLoading: true, error: null }));
-    
+    setRiskAssessment((prev) => ({ ...prev, isLoading: true, error: null }));
+
     try {
       const risk = await aiService.generateRiskAssessment(results);
       setRiskAssessment({
         content: risk,
         isLoading: false,
         error: null,
-        lastGenerated: new Date()
+        lastGenerated: new Date(),
       });
-      toast.success('Risk assessment generated!');
+      toast.success("Risk assessment generated!");
     } catch (error) {
       const errorMessage = formatAIError(error);
-      setRiskAssessment(prev => ({
+      setRiskAssessment((prev) => ({
         ...prev,
         isLoading: false,
-        error: errorMessage
+        error: errorMessage,
       }));
       toast.error(`Failed to generate risk assessment: ${errorMessage}`);
     }
   };
 
   const generatePerformanceImpact = async () => {
-    setPerformanceImpact(prev => ({ ...prev, isLoading: true, error: null }));
-    
+    setPerformanceImpact((prev) => ({ ...prev, isLoading: true, error: null }));
+
     try {
       const performance = await aiService.generatePerformanceImpact(results);
       setPerformanceImpact({
         content: performance,
         isLoading: false,
         error: null,
-        lastGenerated: new Date()
+        lastGenerated: new Date(),
       });
-      toast.success('Performance impact analysis generated!');
+      toast.success("Performance impact analysis generated!");
     } catch (error) {
       const errorMessage = formatAIError(error);
-      setPerformanceImpact(prev => ({
+      setPerformanceImpact((prev) => ({
         ...prev,
         isLoading: false,
-        error: errorMessage
+        error: errorMessage,
       }));
       toast.error(`Failed to generate performance analysis: ${errorMessage}`);
     }
   };
 
   const generateCodeQualityInsights = async () => {
-    setCodeQualityInsights(prev => ({ ...prev, isLoading: true, error: null }));
-    
+    setCodeQualityInsights((prev) => ({
+      ...prev,
+      isLoading: true,
+      error: null,
+    }));
+
     try {
       const quality = await aiService.generateCodeQualityInsights(results);
       setCodeQualityInsights({
         content: quality,
         isLoading: false,
         error: null,
-        lastGenerated: new Date()
+        lastGenerated: new Date(),
       });
-      toast.success('Code quality insights generated!');
+      toast.success("Code quality insights generated!");
     } catch (error) {
       const errorMessage = formatAIError(error);
-      setCodeQualityInsights(prev => ({
+      setCodeQualityInsights((prev) => ({
         ...prev,
         isLoading: false,
-        error: errorMessage
+        error: errorMessage,
       }));
       toast.error(`Failed to generate code quality insights: ${errorMessage}`);
     }
   };
 
   const generateTrendsAnalysis = async () => {
-    setTrendsAnalysis(prev => ({ ...prev, isLoading: true, error: null }));
-    
+    setTrendsAnalysis((prev) => ({ ...prev, isLoading: true, error: null }));
+
     try {
       const trends = await aiService.generateTrendsAnalysis(results);
       setTrendsAnalysis({
         content: trends,
         isLoading: false,
         error: null,
-        lastGenerated: new Date()
+        lastGenerated: new Date(),
       });
-      toast.success('Trends analysis generated!');
+      toast.success("Trends analysis generated!");
     } catch (error) {
       const errorMessage = formatAIError(error);
-      setTrendsAnalysis(prev => ({
+      setTrendsAnalysis((prev) => ({
         ...prev,
         isLoading: false,
-        error: errorMessage
+        error: errorMessage,
       }));
       toast.error(`Failed to generate trends analysis: ${errorMessage}`);
     }
@@ -304,7 +327,12 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
 
   // Auto-generate insights when API keys are available
   useEffect(() => {
-    if (aiFeatureStatus.hasApiKeys && results.issues.length > 0 && !securityInsights.content && !securityInsights.isLoading) {
+    if (
+      aiFeatureStatus.hasApiKeys &&
+      results.issues.length > 0 &&
+      !securityInsights.content &&
+      !securityInsights.isLoading
+    ) {
       // Add a small delay to ensure the UI is ready
       const timer = setTimeout(() => {
         generateSecurityInsights();
@@ -313,75 +341,98 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
       return () => clearTimeout(timer);
     }
     return undefined;
-  }, [aiFeatureStatus.hasApiKeys, results.issues.length, securityInsights.content, securityInsights.isLoading, generateSecurityInsights]);
+  }, [
+    aiFeatureStatus.hasApiKeys,
+    results.issues.length,
+    securityInsights.content,
+    securityInsights.isLoading,
+    generateSecurityInsights,
+  ]);
 
   const generateRemediationStrategy = async () => {
-    setRemediationStrategy(prev => ({ ...prev, isLoading: true, error: null }));
-    
+    setRemediationStrategy((prev) => ({
+      ...prev,
+      isLoading: true,
+      error: null,
+    }));
+
     try {
       const strategy = await aiService.generateRemediationStrategy(results);
       setRemediationStrategy({
         content: strategy,
         isLoading: false,
         error: null,
-        lastGenerated: new Date()
+        lastGenerated: new Date(),
       });
-      toast.success('Remediation strategy generated successfully!');
+      toast.success("Remediation strategy generated successfully!");
     } catch (error) {
       const errorMessage = formatAIError(error);
-      setRemediationStrategy(prev => ({
+      setRemediationStrategy((prev) => ({
         ...prev,
         isLoading: false,
-        error: errorMessage
+        error: errorMessage,
       }));
       toast.error(`Failed to generate strategy: ${errorMessage}`);
     }
   };
 
   const generateOwaspExplanation = async (owaspCategory: string) => {
-    const relatedIssues = results.issues.filter(issue => issue.owaspCategory === owaspCategory);
-    
-    setOwaspExplanations(prev => ({
+    const relatedIssues = results.issues.filter(
+      (issue) => issue.owaspCategory === owaspCategory
+    );
+
+    setOwaspExplanations((prev) => ({
       ...prev,
-      [owaspCategory]: { ...prev[owaspCategory], isLoading: true, error: null }
+      [owaspCategory]: { ...prev[owaspCategory], isLoading: true, error: null },
     }));
-    
+
     try {
-      const explanation = await aiService.generateOwaspExplanation(owaspCategory, relatedIssues);
-      setOwaspExplanations(prev => ({
+      const explanation = await aiService.generateOwaspExplanation(
+        owaspCategory,
+        relatedIssues
+      );
+      setOwaspExplanations((prev) => ({
         ...prev,
         [owaspCategory]: {
           content: explanation,
           isLoading: false,
           error: null,
-          lastGenerated: new Date()
-        }
+          lastGenerated: new Date(),
+        },
       }));
-      toast.success(`OWASP explanation generated for ${owaspCategory.split(' – ')[0]}`);
+      toast.success(
+        `OWASP explanation generated for ${owaspCategory.split(" – ")[0]}`
+      );
     } catch (error) {
       const errorMessage = formatAIError(error);
-      setOwaspExplanations(prev => ({
+      setOwaspExplanations((prev) => ({
         ...prev,
         [owaspCategory]: {
           ...prev[owaspCategory],
           isLoading: false,
-          error: errorMessage
-        }
+          error: errorMessage,
+        },
       }));
       toast.error(`Failed to generate OWASP explanation: ${errorMessage}`);
     }
   };
 
   const getUniqueOwaspCategories = (): string[] => {
-    return [...new Set(results.issues.map(issue => issue.owaspCategory).filter((cat): cat is string => Boolean(cat)))];
+    return [
+      ...new Set(
+        results.issues
+          .map((issue) => issue.owaspCategory)
+          .filter((cat): cat is string => Boolean(cat))
+      ),
+    ];
   };
 
   const formatTimestamp = (date: Date) => {
-    return date.toLocaleString('en-US', {
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
+    return date.toLocaleString("en-US", {
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
     });
   };
 
@@ -394,12 +445,12 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
       riskAssessment,
       performanceImpact,
       codeQualityInsights,
-      trendsAnalysis
+      trendsAnalysis,
     ];
-    
-    const generated = totalInsights.filter(insight => insight.content).length;
-    const loading = totalInsights.filter(insight => insight.isLoading).length;
-    
+
+    const generated = totalInsights.filter((insight) => insight.content).length;
+    const loading = totalInsights.filter((insight) => insight.isLoading).length;
+
     return { total: totalInsights.length, generated, loading };
   };
 
@@ -410,7 +461,9 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <CardTitle className="flex items-center gap-3">
               <Brain className="h-5 w-5 text-gray-400 flex-shrink-0" />
-              <span className="text-slate-900 dark:text-white font-bold">AI Security Insights</span>
+              <span className="text-slate-900 dark:text-white font-bold">
+                AI Security Insights
+              </span>
             </CardTitle>
             <Badge
               variant="outline"
@@ -427,7 +480,8 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
           <Alert className="border-gray-200 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-950/20">
             <XCircle className="h-4 w-4 text-gray-600" />
             <AlertDescription className="text-slate-700 dark:text-slate-300 leading-relaxed">
-              AI security insights require a modern browser with localStorage and fetch API support.
+              AI security insights require a modern browser with localStorage
+              and fetch API support.
             </AlertDescription>
           </Alert>
         </CardContent>
@@ -442,7 +496,9 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <CardTitle className="flex items-center gap-3">
               <Brain className="h-5 w-5 text-purple-600 flex-shrink-0" />
-              <span className="text-slate-900 dark:text-white font-bold">AI Security Insights</span>
+              <span className="text-slate-900 dark:text-white font-bold">
+                AI Security Insights
+              </span>
             </CardTitle>
             <Badge
               variant="outline"
@@ -459,8 +515,9 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
           <Alert className="border-orange-200 dark:border-orange-800 bg-orange-50/50 dark:bg-orange-950/20">
             <Info className="h-4 w-4 text-orange-600" />
             <AlertDescription className="text-slate-700 dark:text-slate-300 leading-relaxed">
-              Please configure your AI API keys in the AI Configuration tab to enable intelligent security analysis,
-              OWASP explanations, and personalized remediation strategies.
+              Please configure your AI API keys in the AI Configuration tab to
+              enable intelligent security analysis, OWASP explanations, and
+              personalized remediation strategies.
             </AlertDescription>
           </Alert>
         </CardContent>
@@ -477,10 +534,14 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
               <div className="flex flex-col sm:flex-row sm:items-center gap-3">
                 <CardTitle className="flex items-center gap-3">
                   <Brain className="h-5 w-5 text-purple-600 flex-shrink-0" />
-                  <span className="text-slate-900 dark:text-white font-bold">AI Security Insights</span>
+                  <span className="text-slate-900 dark:text-white font-bold">
+                    AI Security Insights
+                  </span>
                 </CardTitle>
                 <Badge className="bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300 px-3 py-1 font-semibold text-sm w-fit">
-                  {aiFeatureStatus.primaryProvider ? `${aiFeatureStatus.primaryProvider.toUpperCase()} Connected` : 'API Connected'}
+                  {aiFeatureStatus.primaryProvider
+                    ? `${aiFeatureStatus.primaryProvider.toUpperCase()} Connected`
+                    : "API Connected"}
                 </Badge>
               </div>
               <CardDescription className="text-slate-600 dark:text-slate-400 leading-relaxed">
@@ -501,13 +562,15 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
               </div>
               {(() => {
                 const summary = getInsightsSummary();
-                return summary.loading > 0 && (
-                  <div className="flex items-center justify-center gap-3 p-4 rounded-2xl bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/30 dark:to-indigo-950/30 border border-blue-200 dark:border-blue-800">
-                    <Loader2 className="h-5 w-5 animate-spin text-blue-600" />
-                    <span className="text-sm font-semibold text-blue-700 dark:text-blue-300">
-                      {summary.loading} generating...
-                    </span>
-                  </div>
+                return (
+                  summary.loading > 0 && (
+                    <div className="flex items-center justify-center gap-3 p-4 rounded-2xl bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/30 dark:to-indigo-950/30 border border-blue-200 dark:border-blue-800">
+                      <Loader2 className="h-5 w-5 animate-spin text-blue-600" />
+                      <span className="text-sm font-semibold text-blue-700 dark:text-blue-300">
+                        {summary.loading} generating...
+                      </span>
+                    </div>
+                  )
                 );
               })()}
             </div>
@@ -516,35 +579,67 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
         <CardContent>
           <Tabs defaultValue="overview" className="w-full">
             <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 h-auto bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl border shadow-xl rounded-2xl p-2">
-              <TabsTrigger value="overview" className="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs sm:text-sm font-semibold py-3 px-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-indigo-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 rounded-xl hover:scale-105">
+              <TabsTrigger
+                value="overview"
+                className="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs sm:text-sm font-semibold py-3 px-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-indigo-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 rounded-xl hover:scale-105"
+              >
                 <Shield className="h-4 w-4 flex-shrink-0" />
-                <span className="text-center leading-tight whitespace-nowrap">Overview</span>
+                <span className="text-center leading-tight whitespace-nowrap">
+                  Overview
+                </span>
               </TabsTrigger>
-              <TabsTrigger value="remediation" className="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs sm:text-sm font-semibold py-3 px-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 rounded-xl hover:scale-105">
+              <TabsTrigger
+                value="remediation"
+                className="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs sm:text-sm font-semibold py-3 px-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 rounded-xl hover:scale-105"
+              >
                 <Target className="h-4 w-4 flex-shrink-0" />
-                <span className="text-center leading-tight whitespace-nowrap">Remediation</span>
+                <span className="text-center leading-tight whitespace-nowrap">
+                  Remediation
+                </span>
               </TabsTrigger>
-              <TabsTrigger value="owasp" className="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs sm:text-sm font-semibold py-3 px-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-orange-500 data-[state=active]:to-red-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 rounded-xl hover:scale-105">
+              <TabsTrigger
+                value="owasp"
+                className="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs sm:text-sm font-semibold py-3 px-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-orange-500 data-[state=active]:to-red-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 rounded-xl hover:scale-105"
+              >
                 <BookOpen className="h-4 w-4 flex-shrink-0" />
-                <span className="text-center leading-tight whitespace-nowrap">OWASP</span>
+                <span className="text-center leading-tight whitespace-nowrap">
+                  OWASP
+                </span>
               </TabsTrigger>
-              <TabsTrigger value="threats" className="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs sm:text-sm font-semibold py-3 px-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-emerald-500 data-[state=active]:to-teal-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 rounded-xl hover:scale-105">
+              <TabsTrigger
+                value="threats"
+                className="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs sm:text-sm font-semibold py-3 px-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-emerald-500 data-[state=active]:to-teal-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 rounded-xl hover:scale-105"
+              >
                 <Radar className="h-4 w-4 flex-shrink-0" />
-                <span className="text-center leading-tight whitespace-nowrap">Threats</span>
+                <span className="text-center leading-tight whitespace-nowrap">
+                  Threats
+                </span>
               </TabsTrigger>
-              <TabsTrigger value="compliance" className="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs sm:text-sm font-semibold py-3 px-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-yellow-500 data-[state=active]:to-orange-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 rounded-xl hover:scale-105">
+              <TabsTrigger
+                value="compliance"
+                className="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs sm:text-sm font-semibold py-3 px-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-yellow-500 data-[state=active]:to-orange-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 rounded-xl hover:scale-105"
+              >
                 <Lock className="h-4 w-4 flex-shrink-0" />
-                <span className="text-center leading-tight whitespace-nowrap">Compliance</span>
+                <span className="text-center leading-tight whitespace-nowrap">
+                  Compliance
+                </span>
               </TabsTrigger>
-              <TabsTrigger value="advanced" className="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs sm:text-sm font-semibold py-3 px-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-indigo-500 data-[state=active]:to-purple-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 rounded-xl hover:scale-105">
+              <TabsTrigger
+                value="advanced"
+                className="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs sm:text-sm font-semibold py-3 px-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-indigo-500 data-[state=active]:to-purple-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 rounded-xl hover:scale-105"
+              >
                 <Sparkles className="h-4 w-4 flex-shrink-0" />
-                <span className="text-center leading-tight whitespace-nowrap">Advanced</span>
+                <span className="text-center leading-tight whitespace-nowrap">
+                  Advanced
+                </span>
               </TabsTrigger>
             </TabsList>
 
             <TabsContent value="overview" className="space-y-4">
               <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold">Security Posture Analysis</h3>
+                <h3 className="text-lg font-semibold">
+                  Security Posture Analysis
+                </h3>
                 <Button
                   onClick={generateSecurityInsights}
                   disabled={securityInsights.isLoading}
@@ -556,7 +651,7 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
                   ) : (
                     <RefreshCw className="h-4 w-4 mr-2" />
                   )}
-                  {securityInsights.isLoading ? 'Generating...' : 'Regenerate'}
+                  {securityInsights.isLoading ? "Generating..." : "Regenerate"}
                 </Button>
               </div>
 
@@ -565,10 +660,13 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
                   <div className="text-center space-y-4">
                     <Loader2 className="h-8 w-8 animate-spin mx-auto text-purple-600" />
                     <div className="space-y-2">
-                      <p className="text-sm font-medium">Analyzing security posture...</p>
+                      <p className="text-sm font-medium">
+                        Analyzing security posture...
+                      </p>
                       <Progress value={undefined} className="w-64" />
                       <p className="text-xs text-slate-500">
-                        AI is analyzing {results.issues.length} issues across {results.totalFiles} files
+                        AI is analyzing {results.issues.length} issues across{" "}
+                        {results.totalFiles} files
                       </p>
                     </div>
                   </div>
@@ -579,7 +677,8 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
                 <Alert variant="destructive">
                   <XCircle className="h-4 w-4" />
                   <AlertDescription>
-                    Failed to generate security insights: {securityInsights.error}
+                    Failed to generate security insights:{" "}
+                    {securityInsights.error}
                   </AlertDescription>
                 </Alert>
               )}
@@ -594,28 +693,37 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
                   {securityInsights.lastGenerated && (
                     <div className="flex items-center gap-2 text-xs text-slate-500">
                       <CheckCircle className="h-3 w-3" />
-                      Generated on {formatTimestamp(securityInsights.lastGenerated)}
+                      Generated on{" "}
+                      {formatTimestamp(securityInsights.lastGenerated)}
                     </div>
                   )}
                 </div>
               )}
 
-              {!securityInsights.content && !securityInsights.isLoading && !securityInsights.error && (
-                <div className="text-center py-8">
-                  <Button onClick={generateSecurityInsights} className="bg-purple-600 hover:bg-purple-700">
-                    <Brain className="h-4 w-4 mr-2" />
-                    Generate Security Insights
-                  </Button>
-                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
-                    Get AI-powered analysis of your security posture and risk assessment
-                  </p>
-                </div>
-              )}
+              {!securityInsights.content &&
+                !securityInsights.isLoading &&
+                !securityInsights.error && (
+                  <div className="text-center py-8">
+                    <Button
+                      onClick={generateSecurityInsights}
+                      className="bg-purple-600 hover:bg-purple-700"
+                    >
+                      <Brain className="h-4 w-4 mr-2" />
+                      Generate Security Insights
+                    </Button>
+                    <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
+                      Get AI-powered analysis of your security posture and risk
+                      assessment
+                    </p>
+                  </div>
+                )}
             </TabsContent>
 
             <TabsContent value="remediation" className="space-y-4">
               <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold">Prioritized Remediation Strategy</h3>
+                <h3 className="text-lg font-semibold">
+                  Prioritized Remediation Strategy
+                </h3>
                 <Button
                   onClick={generateRemediationStrategy}
                   disabled={remediationStrategy.isLoading}
@@ -627,7 +735,9 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
                   ) : (
                     <Zap className="h-4 w-4 mr-2" />
                   )}
-                  {remediationStrategy.isLoading ? 'Generating...' : 'Generate Plan'}
+                  {remediationStrategy.isLoading
+                    ? "Generating..."
+                    : "Generate Plan"}
                 </Button>
               </div>
 
@@ -636,10 +746,15 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
                   <div className="text-center space-y-4">
                     <Loader2 className="h-8 w-8 animate-spin mx-auto text-blue-600" />
                     <div className="space-y-2">
-                      <p className="text-sm font-medium">Creating remediation strategy...</p>
+                      <p className="text-sm font-medium">
+                        Creating remediation strategy...
+                      </p>
                       <Progress value={undefined} className="w-64" />
                       <p className="text-xs text-slate-500">
-                        Prioritizing {results.summary.criticalIssues + results.summary.highIssues} critical/high issues
+                        Prioritizing{" "}
+                        {results.summary.criticalIssues +
+                          results.summary.highIssues}{" "}
+                        critical/high issues
                       </p>
                     </div>
                   </div>
@@ -650,7 +765,8 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
                 <Alert variant="destructive">
                   <XCircle className="h-4 w-4" />
                   <AlertDescription>
-                    Failed to generate remediation strategy: {remediationStrategy.error}
+                    Failed to generate remediation strategy:{" "}
+                    {remediationStrategy.error}
                   </AlertDescription>
                 </Alert>
               )}
@@ -665,30 +781,40 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
                   {remediationStrategy.lastGenerated && (
                     <div className="flex items-center gap-2 text-xs text-slate-500">
                       <CheckCircle className="h-3 w-3" />
-                      Generated on {formatTimestamp(remediationStrategy.lastGenerated)}
+                      Generated on{" "}
+                      {formatTimestamp(remediationStrategy.lastGenerated)}
                     </div>
                   )}
                 </div>
               )}
 
-              {!remediationStrategy.content && !remediationStrategy.isLoading && !remediationStrategy.error && (
-                <div className="text-center py-8">
-                  <Button onClick={generateRemediationStrategy} className="bg-blue-600 hover:bg-blue-700">
-                    <Target className="h-4 w-4 mr-2" />
-                    Generate Remediation Strategy
-                  </Button>
-                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
-                    Get a prioritized action plan based on risk, effort, and business impact
-                  </p>
-                </div>
-              )}
+              {!remediationStrategy.content &&
+                !remediationStrategy.isLoading &&
+                !remediationStrategy.error && (
+                  <div className="text-center py-8">
+                    <Button
+                      onClick={generateRemediationStrategy}
+                      className="bg-blue-600 hover:bg-blue-700"
+                    >
+                      <Target className="h-4 w-4 mr-2" />
+                      Generate Remediation Strategy
+                    </Button>
+                    <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
+                      Get a prioritized action plan based on risk, effort, and
+                      business impact
+                    </p>
+                  </div>
+                )}
             </TabsContent>
 
             <TabsContent value="owasp" className="space-y-4">
               <div>
-                <h3 className="text-lg font-semibold mb-4">OWASP Top 10 Analysis</h3>
+                <h3 className="text-lg font-semibold mb-4">
+                  OWASP Top 10 Analysis
+                </h3>
                 <p className="text-sm text-slate-600 dark:text-slate-400 mb-6">
-                  Get detailed explanations for each OWASP category detected in your codebase
+                  Get detailed explanations for each OWASP category detected in
+                  your codebase
                 </p>
               </div>
 
@@ -696,19 +822,30 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
                 <Alert>
                   <Info className="h-4 w-4" />
                   <AlertDescription>
-                    No OWASP Top 10 categories detected in the current analysis results.
+                    No OWASP Top 10 categories detected in the current analysis
+                    results.
                   </AlertDescription>
                 </Alert>
               ) : (
                 <div className="space-y-4">
                   {getUniqueOwaspCategories().map((category) => {
-                    const relatedIssues = results.issues.filter(issue => issue.owaspCategory === category);
-                    const categoryState = owaspExplanations[category] || { content: '', isLoading: false, error: null, lastGenerated: null };
-                    const categoryId = category.split(' – ')[0];
-                    const categoryName = category.split(' – ')[1] || category;
+                    const relatedIssues = results.issues.filter(
+                      (issue) => issue.owaspCategory === category
+                    );
+                    const categoryState = owaspExplanations[category] || {
+                      content: "",
+                      isLoading: false,
+                      error: null,
+                      lastGenerated: null,
+                    };
+                    const categoryId = category.split(" – ")[0];
+                    const categoryName = category.split(" – ")[1] || category;
 
                     return (
-                      <Card key={category} className="border-l-4 border-l-orange-500">
+                      <Card
+                        key={category}
+                        className="border-l-4 border-l-orange-500"
+                      >
                         <CardHeader>
                           <div className="flex items-center justify-between">
                             <div>
@@ -717,7 +854,8 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
                                 {categoryId}: {categoryName}
                               </CardTitle>
                               <CardDescription>
-                                {relatedIssues.length} issue{relatedIssues.length !== 1 ? 's' : ''} detected
+                                {relatedIssues.length} issue
+                                {relatedIssues.length !== 1 ? "s" : ""} detected
                               </CardDescription>
                             </div>
                             <Button
@@ -731,20 +869,27 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
                               ) : (
                                 <Lightbulb className="h-4 w-4 mr-2" />
                               )}
-                              {categoryState.isLoading ? 'Analyzing...' : 'Explain'}
+                              {categoryState.isLoading
+                                ? "Analyzing..."
+                                : "Explain"}
                             </Button>
                           </div>
                         </CardHeader>
-                        
-                        {(categoryState.content || categoryState.isLoading || categoryState.error) && (
+
+                        {(categoryState.content ||
+                          categoryState.isLoading ||
+                          categoryState.error) && (
                           <CardContent>
                             {categoryState.isLoading && (
                               <div className="flex items-center gap-3 p-4">
                                 <Loader2 className="h-5 w-5 animate-spin text-orange-600" />
                                 <div>
-                                  <p className="text-sm font-medium">Analyzing {categoryName}...</p>
+                                  <p className="text-sm font-medium">
+                                    Analyzing {categoryName}...
+                                  </p>
                                   <p className="text-xs text-slate-500">
-                                    Examining {relatedIssues.length} related issue{relatedIssues.length !== 1 ? 's' : ''}
+                                    Examining {relatedIssues.length} related
+                                    issue{relatedIssues.length !== 1 ? "s" : ""}
                                   </p>
                                 </div>
                               </div>
@@ -754,7 +899,8 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
                               <Alert variant="destructive">
                                 <XCircle className="h-4 w-4" />
                                 <AlertDescription>
-                                  Failed to generate explanation: {categoryState.error}
+                                  Failed to generate explanation:{" "}
+                                  {categoryState.error}
                                 </AlertDescription>
                               </Alert>
                             )}
@@ -769,7 +915,10 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
                                 {categoryState.lastGenerated && (
                                   <div className="flex items-center gap-2 text-xs text-slate-500">
                                     <CheckCircle className="h-3 w-3" />
-                                    Generated on {formatTimestamp(categoryState.lastGenerated)}
+                                    Generated on{" "}
+                                    {formatTimestamp(
+                                      categoryState.lastGenerated
+                                    )}
                                   </div>
                                 )}
                               </div>
@@ -785,7 +934,9 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
 
             <TabsContent value="threats" className="space-y-4">
               <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold">Threat Modeling & Attack Vectors</h3>
+                <h3 className="text-lg font-semibold">
+                  Threat Modeling & Attack Vectors
+                </h3>
                 <Button
                   onClick={generateThreatModeling}
                   disabled={threatModeling.isLoading}
@@ -797,7 +948,9 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
                   ) : (
                     <Radar className="h-4 w-4 mr-2" />
                   )}
-                  {threatModeling.isLoading ? 'Analyzing...' : 'Generate Analysis'}
+                  {threatModeling.isLoading
+                    ? "Analyzing..."
+                    : "Generate Analysis"}
                 </Button>
               </div>
 
@@ -806,7 +959,9 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
                   <div className="text-center space-y-4">
                     <Loader2 className="h-8 w-8 animate-spin mx-auto text-red-600" />
                     <div className="space-y-2">
-                      <p className="text-sm font-medium">Modeling potential threats...</p>
+                      <p className="text-sm font-medium">
+                        Modeling potential threats...
+                      </p>
                       <Progress value={undefined} className="w-64" />
                       <p className="text-xs text-slate-500">
                         Analyzing attack surfaces and threat vectors
@@ -835,28 +990,37 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
                   {threatModeling.lastGenerated && (
                     <div className="flex items-center gap-2 text-xs text-slate-500">
                       <CheckCircle className="h-3 w-3" />
-                      Generated on {formatTimestamp(threatModeling.lastGenerated)}
+                      Generated on{" "}
+                      {formatTimestamp(threatModeling.lastGenerated)}
                     </div>
                   )}
                 </div>
               )}
 
-              {!threatModeling.content && !threatModeling.isLoading && !threatModeling.error && (
-                <div className="text-center py-8">
-                  <Button onClick={generateThreatModeling} className="bg-red-600 hover:bg-red-700">
-                    <Radar className="h-4 w-4 mr-2" />
-                    Generate Threat Model
-                  </Button>
-                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
-                    Identify potential attack vectors and security threats specific to your codebase
-                  </p>
-                </div>
-              )}
+              {!threatModeling.content &&
+                !threatModeling.isLoading &&
+                !threatModeling.error && (
+                  <div className="text-center py-8">
+                    <Button
+                      onClick={generateThreatModeling}
+                      className="bg-red-600 hover:bg-red-700"
+                    >
+                      <Radar className="h-4 w-4 mr-2" />
+                      Generate Threat Model
+                    </Button>
+                    <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
+                      Identify potential attack vectors and security threats
+                      specific to your codebase
+                    </p>
+                  </div>
+                )}
             </TabsContent>
 
             <TabsContent value="compliance" className="space-y-4">
               <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold">Compliance & Standards Analysis</h3>
+                <h3 className="text-lg font-semibold">
+                  Compliance & Standards Analysis
+                </h3>
                 <Button
                   onClick={generateComplianceAnalysis}
                   disabled={complianceAnalysis.isLoading}
@@ -868,7 +1032,9 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
                   ) : (
                     <Lock className="h-4 w-4 mr-2" />
                   )}
-                  {complianceAnalysis.isLoading ? 'Analyzing...' : 'Generate Analysis'}
+                  {complianceAnalysis.isLoading
+                    ? "Analyzing..."
+                    : "Generate Analysis"}
                 </Button>
               </div>
 
@@ -877,7 +1043,9 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
                   <div className="text-center space-y-4">
                     <Loader2 className="h-8 w-8 animate-spin mx-auto text-green-600" />
                     <div className="space-y-2">
-                      <p className="text-sm font-medium">Analyzing compliance requirements...</p>
+                      <p className="text-sm font-medium">
+                        Analyzing compliance requirements...
+                      </p>
                       <Progress value={undefined} className="w-64" />
                       <p className="text-xs text-slate-500">
                         Checking against security standards and regulations
@@ -891,7 +1059,8 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
                 <Alert variant="destructive">
                   <XCircle className="h-4 w-4" />
                   <AlertDescription>
-                    Failed to generate compliance analysis: {complianceAnalysis.error}
+                    Failed to generate compliance analysis:{" "}
+                    {complianceAnalysis.error}
                   </AlertDescription>
                 </Alert>
               )}
@@ -906,23 +1075,30 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
                   {complianceAnalysis.lastGenerated && (
                     <div className="flex items-center gap-2 text-xs text-slate-500">
                       <CheckCircle className="h-3 w-3" />
-                      Generated on {formatTimestamp(complianceAnalysis.lastGenerated)}
+                      Generated on{" "}
+                      {formatTimestamp(complianceAnalysis.lastGenerated)}
                     </div>
                   )}
                 </div>
               )}
 
-              {!complianceAnalysis.content && !complianceAnalysis.isLoading && !complianceAnalysis.error && (
-                <div className="text-center py-8">
-                  <Button onClick={generateComplianceAnalysis} className="bg-green-600 hover:bg-green-700">
-                    <Lock className="h-4 w-4 mr-2" />
-                    Generate Compliance Analysis
-                  </Button>
-                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
-                    Assess compliance with security standards like SOC 2, PCI DSS, GDPR, and more
-                  </p>
-                </div>
-              )}
+              {!complianceAnalysis.content &&
+                !complianceAnalysis.isLoading &&
+                !complianceAnalysis.error && (
+                  <div className="text-center py-8">
+                    <Button
+                      onClick={generateComplianceAnalysis}
+                      className="bg-green-600 hover:bg-green-700"
+                    >
+                      <Lock className="h-4 w-4 mr-2" />
+                      Generate Compliance Analysis
+                    </Button>
+                    <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
+                      Assess compliance with security standards like SOC 2, PCI
+                      DSS, GDPR, and more
+                    </p>
+                  </div>
+                )}
             </TabsContent>
 
             <TabsContent value="advanced" className="space-y-6">
@@ -957,8 +1133,12 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
                       <div className="flex items-center gap-3 p-4">
                         <Loader2 className="h-5 w-5 animate-spin text-yellow-600" />
                         <div>
-                          <p className="text-sm font-medium">Calculating risk metrics...</p>
-                          <p className="text-xs text-slate-500">Analyzing business impact</p>
+                          <p className="text-sm font-medium">
+                            Calculating risk metrics...
+                          </p>
+                          <p className="text-xs text-slate-500">
+                            Analyzing business impact
+                          </p>
                         </div>
                       </div>
                     )}
@@ -968,7 +1148,12 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
                       </div>
                     )}
                     {!riskAssessment.content && !riskAssessment.isLoading && (
-                      <Button onClick={generateRiskAssessment} variant="ghost" size="sm" className="w-full">
+                      <Button
+                        onClick={generateRiskAssessment}
+                        variant="ghost"
+                        size="sm"
+                        className="w-full"
+                      >
                         Generate Risk Assessment
                       </Button>
                     )}
@@ -1005,8 +1190,12 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
                       <div className="flex items-center gap-3 p-4">
                         <Loader2 className="h-5 w-5 animate-spin text-indigo-600" />
                         <div>
-                          <p className="text-sm font-medium">Analyzing performance...</p>
-                          <p className="text-xs text-slate-500">Measuring security overhead</p>
+                          <p className="text-sm font-medium">
+                            Analyzing performance...
+                          </p>
+                          <p className="text-xs text-slate-500">
+                            Measuring security overhead
+                          </p>
                         </div>
                       </div>
                     )}
@@ -1015,11 +1204,17 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
                         {performanceImpact.content.substring(0, 200)}...
                       </div>
                     )}
-                    {!performanceImpact.content && !performanceImpact.isLoading && (
-                      <Button onClick={generatePerformanceImpact} variant="ghost" size="sm" className="w-full">
-                        Analyze Performance Impact
-                      </Button>
-                    )}
+                    {!performanceImpact.content &&
+                      !performanceImpact.isLoading && (
+                        <Button
+                          onClick={generatePerformanceImpact}
+                          variant="ghost"
+                          size="sm"
+                          className="w-full"
+                        >
+                          Analyze Performance Impact
+                        </Button>
+                      )}
                   </CardContent>
                 </Card>
 
@@ -1053,8 +1248,12 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
                       <div className="flex items-center gap-3 p-4">
                         <Loader2 className="h-5 w-5 animate-spin text-teal-600" />
                         <div>
-                          <p className="text-sm font-medium">Analyzing code quality...</p>
-                          <p className="text-xs text-slate-500">Evaluating maintainability</p>
+                          <p className="text-sm font-medium">
+                            Analyzing code quality...
+                          </p>
+                          <p className="text-xs text-slate-500">
+                            Evaluating maintainability
+                          </p>
                         </div>
                       </div>
                     )}
@@ -1063,11 +1262,17 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
                         {codeQualityInsights.content.substring(0, 200)}...
                       </div>
                     )}
-                    {!codeQualityInsights.content && !codeQualityInsights.isLoading && (
-                      <Button onClick={generateCodeQualityInsights} variant="ghost" size="sm" className="w-full">
-                        Generate Quality Insights
-                      </Button>
-                    )}
+                    {!codeQualityInsights.content &&
+                      !codeQualityInsights.isLoading && (
+                        <Button
+                          onClick={generateCodeQualityInsights}
+                          variant="ghost"
+                          size="sm"
+                          className="w-full"
+                        >
+                          Generate Quality Insights
+                        </Button>
+                      )}
                   </CardContent>
                 </Card>
 
@@ -1101,8 +1306,12 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
                       <div className="flex items-center gap-3 p-4">
                         <Loader2 className="h-5 w-5 animate-spin text-pink-600" />
                         <div>
-                          <p className="text-sm font-medium">Analyzing trends...</p>
-                          <p className="text-xs text-slate-500">Comparing with industry data</p>
+                          <p className="text-sm font-medium">
+                            Analyzing trends...
+                          </p>
+                          <p className="text-xs text-slate-500">
+                            Comparing with industry data
+                          </p>
                         </div>
                       </div>
                     )}
@@ -1112,7 +1321,12 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
                       </div>
                     )}
                     {!trendsAnalysis.content && !trendsAnalysis.isLoading && (
-                      <Button onClick={generateTrendsAnalysis} variant="ghost" size="sm" className="w-full">
+                      <Button
+                        onClick={generateTrendsAnalysis}
+                        variant="ghost"
+                        size="sm"
+                        className="w-full"
+                      >
                         Analyze Security Trends
                       </Button>
                     )}
@@ -1122,19 +1336,36 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
 
               {/* Expanded View for Advanced Insights */}
               <div className="space-y-4">
-                {[riskAssessment, performanceImpact, codeQualityInsights, trendsAnalysis].map((insight, index) => {
-                  const titles = ['Risk Assessment', 'Performance Impact', 'Code Quality Insights', 'Security Trends'];
-                  const colors = ['yellow', 'indigo', 'teal', 'pink'];
-                  
+                {[
+                  riskAssessment,
+                  performanceImpact,
+                  codeQualityInsights,
+                  trendsAnalysis,
+                ].map((insight, index) => {
+                  const titles = [
+                    "Risk Assessment",
+                    "Performance Impact",
+                    "Code Quality Insights",
+                    "Security Trends",
+                  ];
+                  const colors = ["yellow", "indigo", "teal", "pink"];
+
                   if (!insight.content) return null;
-                  
+
                   return (
-                    <Card key={index} className={`border-l-4 border-l-${colors[index]}-500`}>
+                    <Card
+                      key={index}
+                      className={`border-l-4 border-l-${colors[index]}-500`}
+                    >
                       <CardHeader>
-                        <CardTitle className="text-lg">{titles[index]} - Detailed Analysis</CardTitle>
+                        <CardTitle className="text-lg">
+                          {titles[index]} - Detailed Analysis
+                        </CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <div className={`bg-${colors[index]}-50 dark:bg-${colors[index]}-950/20 p-4 rounded-lg border border-${colors[index]}-200 dark:border-${colors[index]}-800`}>
+                        <div
+                          className={`bg-${colors[index]}-50 dark:bg-${colors[index]}-950/20 p-4 rounded-lg border border-${colors[index]}-200 dark:border-${colors[index]}-800`}
+                        >
                           <div className="whitespace-pre-wrap text-sm text-slate-700 dark:text-slate-300">
                             {insight.content}
                           </div>
@@ -1142,7 +1373,8 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({ results,
                         {insight.lastGenerated && (
                           <div className="flex items-center gap-2 text-xs text-slate-500 mt-3">
                             <CheckCircle className="h-3 w-3" />
-                            Generated on {formatTimestamp(insight.lastGenerated)}
+                            Generated on{" "}
+                            {formatTimestamp(insight.lastGenerated)}
                           </div>
                         )}
                       </CardContent>

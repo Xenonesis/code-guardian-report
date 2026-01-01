@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { 
-  GitBranch, 
-  TrendingUp, 
-  Shield, 
+import React, { useState, useEffect } from "react";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import {
+  GitBranch,
+  TrendingUp,
+  Shield,
   AlertTriangle,
   CheckCircle,
   XCircle,
   X,
   Plus,
-  BarChart3
-} from 'lucide-react';
-import { GitHubAnalysisStorageService } from '@/services/storage/GitHubAnalysisStorageService';
+  BarChart3,
+} from "lucide-react";
+import { GitHubAnalysisStorageService } from "@/services/storage/GitHubAnalysisStorageService";
 
-import { logger } from '@/utils/logger';
+import { logger } from "@/utils/logger";
 interface Repository {
   id: string;
   name: string;
@@ -39,7 +39,9 @@ interface RepositoryComparisonToolProps {
   userId: string;
 }
 
-export const RepositoryComparisonTool: React.FC<RepositoryComparisonToolProps> = ({ userId }) => {
+export const RepositoryComparisonTool: React.FC<
+  RepositoryComparisonToolProps
+> = ({ userId }) => {
   const [availableRepos, setAvailableRepos] = useState<Repository[]>([]);
   const [selectedRepos, setSelectedRepos] = useState<Repository[]>([]);
   const [loading, setLoading] = useState(true);
@@ -55,13 +57,13 @@ export const RepositoryComparisonTool: React.FC<RepositoryComparisonToolProps> =
       const storageService = new GitHubAnalysisStorageService();
       const repos = await storageService.getUserRepositories(userId);
       setAvailableRepos(repos);
-      
+
       // Auto-select first 2 repos if available
       if (repos.length >= 2 && selectedRepos.length === 0) {
         setSelectedRepos([repos[0], repos[1]]);
       }
     } catch (error) {
-      logger.error('Error loading repositories:', error);
+      logger.error("Error loading repositories:", error);
     } finally {
       setLoading(false);
     }
@@ -69,84 +71,87 @@ export const RepositoryComparisonTool: React.FC<RepositoryComparisonToolProps> =
 
   const comparisonMetrics: ComparisonMetric[] = [
     {
-      label: 'Security Score',
+      label: "Security Score",
       getValue: (repo) => repo.securityScore,
       format: (val) => `${val.toFixed(1)}/10`,
-      icon: <Shield className="w-4 h-4" />
+      icon: <Shield className="w-4 h-4" />,
     },
     {
-      label: 'Total Issues',
+      label: "Total Issues",
       getValue: (repo) => repo.issuesFound,
       format: (val) => val.toString(),
-      icon: <AlertTriangle className="w-4 h-4" />
+      icon: <AlertTriangle className="w-4 h-4" />,
     },
     {
-      label: 'Critical Issues',
+      label: "Critical Issues",
       getValue: (repo) => repo.criticalIssues,
       format: (val) => val.toString(),
-      icon: <XCircle className="w-4 h-4" />
+      icon: <XCircle className="w-4 h-4" />,
     },
     {
-      label: 'Language',
+      label: "Language",
       getValue: (repo) => repo.language,
       format: (val) => val,
-      icon: <GitBranch className="w-4 h-4" />
+      icon: <GitBranch className="w-4 h-4" />,
     },
     {
-      label: 'Last Analyzed',
+      label: "Last Analyzed",
       getValue: (repo) => repo.lastAnalyzed.getTime(),
       format: (val) => new Date(val).toLocaleDateString(),
-      icon: <TrendingUp className="w-4 h-4" />
-    }
+      icon: <TrendingUp className="w-4 h-4" />,
+    },
   ];
 
   const addRepository = (repo: Repository) => {
-    if (selectedRepos.length < 4 && !selectedRepos.find(r => r.id === repo.id)) {
+    if (
+      selectedRepos.length < 4 &&
+      !selectedRepos.find((r) => r.id === repo.id)
+    ) {
       setSelectedRepos([...selectedRepos, repo]);
       setShowSelector(false);
     }
   };
 
   const removeRepository = (repoId: string) => {
-    setSelectedRepos(selectedRepos.filter(r => r.id !== repoId));
+    setSelectedRepos(selectedRepos.filter((r) => r.id !== repoId));
   };
 
   const getBestValue = (metric: ComparisonMetric): any => {
     if (selectedRepos.length === 0) return null;
-    
-    const values = selectedRepos.map(repo => metric.getValue(repo));
-    
+
+    const values = selectedRepos.map((repo) => metric.getValue(repo));
+
     // For security score, higher is better
-    if (metric.label === 'Security Score') {
+    if (metric.label === "Security Score") {
       return Math.max(...(values as number[]));
     }
-    
+
     // For issues, lower is better
-    if (metric.label.includes('Issues')) {
+    if (metric.label.includes("Issues")) {
       return Math.min(...(values as number[]));
     }
-    
+
     return null;
   };
 
   const isWinner = (repo: Repository, metric: ComparisonMetric): boolean => {
     const bestValue = getBestValue(metric);
     if (bestValue === null) return false;
-    
+
     const currentValue = metric.getValue(repo);
     return currentValue === bestValue;
   };
 
   const getScoreColor = (score: number): string => {
-    if (score >= 8) return 'text-green-600 dark:text-green-400';
-    if (score >= 6) return 'text-yellow-600 dark:text-yellow-400';
-    return 'text-red-600 dark:text-red-400';
+    if (score >= 8) return "text-green-600 dark:text-green-400";
+    if (score >= 6) return "text-yellow-600 dark:text-yellow-400";
+    return "text-red-600 dark:text-red-400";
   };
 
   const getIssueColor = (issues: number): string => {
-    if (issues === 0) return 'text-green-600 dark:text-green-400';
-    if (issues < 5) return 'text-yellow-600 dark:text-yellow-400';
-    return 'text-red-600 dark:text-red-400';
+    if (issues === 0) return "text-green-600 dark:text-green-400";
+    if (issues < 5) return "text-yellow-600 dark:text-yellow-400";
+    return "text-red-600 dark:text-red-400";
   };
 
   if (loading) {
@@ -169,7 +174,7 @@ export const RepositoryComparisonTool: React.FC<RepositoryComparisonToolProps> =
             Compare security metrics across repositories
           </p>
         </div>
-        
+
         <Button
           onClick={() => setShowSelector(!showSelector)}
           disabled={selectedRepos.length >= 4}
@@ -195,11 +200,11 @@ export const RepositoryComparisonTool: React.FC<RepositoryComparisonToolProps> =
               <X className="w-4 h-4" />
             </Button>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             {availableRepos
-              .filter(repo => !selectedRepos.find(r => r.id === repo.id))
-              .map(repo => (
+              .filter((repo) => !selectedRepos.find((r) => r.id === repo.id))
+              .map((repo) => (
                 <button
                   key={repo.id}
                   onClick={() => addRepository(repo)}
@@ -237,9 +242,14 @@ export const RepositoryComparisonTool: React.FC<RepositoryComparisonToolProps> =
       ) : (
         <div className="space-y-4">
           {/* Repository Headers */}
-          <div className="grid gap-4" style={{ gridTemplateColumns: `200px repeat(${selectedRepos.length}, 1fr)` }}>
+          <div
+            className="grid gap-4"
+            style={{
+              gridTemplateColumns: `200px repeat(${selectedRepos.length}, 1fr)`,
+            }}
+          >
             <div></div>
-            {selectedRepos.map(repo => (
+            {selectedRepos.map((repo) => (
               <Card key={repo.id} className="p-4 relative">
                 <button
                   onClick={() => removeRepository(repo.id)}
@@ -247,7 +257,7 @@ export const RepositoryComparisonTool: React.FC<RepositoryComparisonToolProps> =
                 >
                   <X className="w-3 h-3 text-slate-600 dark:text-slate-400" />
                 </button>
-                
+
                 <div className="pr-6">
                   <h4 className="font-semibold text-slate-900 dark:text-white mb-1 truncate">
                     {repo.name}
@@ -266,7 +276,9 @@ export const RepositoryComparisonTool: React.FC<RepositoryComparisonToolProps> =
               <div
                 key={idx}
                 className="grid gap-4"
-                style={{ gridTemplateColumns: `200px repeat(${selectedRepos.length}, 1fr)` }}
+                style={{
+                  gridTemplateColumns: `200px repeat(${selectedRepos.length}, 1fr)`,
+                }}
               >
                 {/* Metric Label */}
                 <div className="flex items-center gap-2 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-lg">
@@ -279,26 +291,28 @@ export const RepositoryComparisonTool: React.FC<RepositoryComparisonToolProps> =
                 </div>
 
                 {/* Metric Values */}
-                {selectedRepos.map(repo => {
+                {selectedRepos.map((repo) => {
                   const value = metric.getValue(repo);
                   const formattedValue = metric.format(value);
                   const winner = isWinner(repo, metric);
-                  
+
                   return (
                     <Card
                       key={repo.id}
                       className={`p-4 flex items-center justify-center ${
-                        winner ? 'ring-2 ring-green-500 dark:ring-green-400' : ''
+                        winner
+                          ? "ring-2 ring-green-500 dark:ring-green-400"
+                          : ""
                       }`}
                     >
                       <div className="text-center">
                         <div
                           className={`text-lg font-bold ${
-                            metric.label === 'Security Score'
+                            metric.label === "Security Score"
                               ? getScoreColor(value as number)
-                              : metric.label.includes('Issues')
-                              ? getIssueColor(value as number)
-                              : 'text-slate-900 dark:text-white'
+                              : metric.label.includes("Issues")
+                                ? getIssueColor(value as number)
+                                : "text-slate-900 dark:text-white"
                           }`}
                         >
                           {formattedValue}
@@ -319,7 +333,7 @@ export const RepositoryComparisonTool: React.FC<RepositoryComparisonToolProps> =
             <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">
               Security Score Comparison
             </h3>
-            
+
             <div className="space-y-4">
               {selectedRepos.map((repo) => (
                 <div key={repo.id}>
@@ -327,7 +341,9 @@ export const RepositoryComparisonTool: React.FC<RepositoryComparisonToolProps> =
                     <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
                       {repo.name}
                     </span>
-                    <span className={`text-sm font-bold ${getScoreColor(repo.securityScore)}`}>
+                    <span
+                      className={`text-sm font-bold ${getScoreColor(repo.securityScore)}`}
+                    >
                       {repo.securityScore.toFixed(1)}/10
                     </span>
                   </div>
@@ -335,10 +351,10 @@ export const RepositoryComparisonTool: React.FC<RepositoryComparisonToolProps> =
                     <div
                       className={`h-3 rounded-full transition-all duration-500 ${
                         repo.securityScore >= 8
-                          ? 'bg-green-500'
+                          ? "bg-green-500"
                           : repo.securityScore >= 6
-                          ? 'bg-yellow-500'
-                          : 'bg-red-500'
+                            ? "bg-yellow-500"
+                            : "bg-red-500"
                       }`}
                       style={{ width: `${(repo.securityScore / 10) * 100}%` }}
                     ></div>
@@ -353,21 +369,41 @@ export const RepositoryComparisonTool: React.FC<RepositoryComparisonToolProps> =
             <h3 className="text-lg font-semibold text-blue-900 dark:text-blue-100 mb-3">
               Comparison Insights
             </h3>
-            
+
             <div className="space-y-2 text-sm text-blue-800 dark:text-blue-200">
               {(() => {
-                const avgScore = selectedRepos.reduce((sum, r) => sum + r.securityScore, 0) / selectedRepos.length;
-                const totalIssues = selectedRepos.reduce((sum, r) => sum + r.issuesFound, 0);
-                const bestRepo = selectedRepos.reduce((best, repo) => 
-                  repo.securityScore > best.securityScore ? repo : best
-                , selectedRepos[0]);
-                
+                const avgScore =
+                  selectedRepos.reduce((sum, r) => sum + r.securityScore, 0) /
+                  selectedRepos.length;
+                const totalIssues = selectedRepos.reduce(
+                  (sum, r) => sum + r.issuesFound,
+                  0
+                );
+                const bestRepo = selectedRepos.reduce(
+                  (best, repo) =>
+                    repo.securityScore > best.securityScore ? repo : best,
+                  selectedRepos[0]
+                );
+
                 return (
                   <>
-                    <p>• Average Security Score: <strong>{avgScore.toFixed(1)}/10</strong></p>
-                    <p>• Total Issues Across Repositories: <strong>{totalIssues}</strong></p>
-                    <p>• Best Performing Repository: <strong>{bestRepo.name}</strong> ({bestRepo.securityScore.toFixed(1)}/10)</p>
-                    <p>• Repositories Compared: <strong>{selectedRepos.length}</strong></p>
+                    <p>
+                      • Average Security Score:{" "}
+                      <strong>{avgScore.toFixed(1)}/10</strong>
+                    </p>
+                    <p>
+                      • Total Issues Across Repositories:{" "}
+                      <strong>{totalIssues}</strong>
+                    </p>
+                    <p>
+                      • Best Performing Repository:{" "}
+                      <strong>{bestRepo.name}</strong> (
+                      {bestRepo.securityScore.toFixed(1)}/10)
+                    </p>
+                    <p>
+                      • Repositories Compared:{" "}
+                      <strong>{selectedRepos.length}</strong>
+                    </p>
                   </>
                 );
               })()}

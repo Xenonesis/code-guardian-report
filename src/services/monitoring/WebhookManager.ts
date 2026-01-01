@@ -3,19 +3,28 @@
  * Handles webhook registration, validation, and processing for GitHub/GitLab
  */
 
-import { db } from '@/lib/firebase';
-import { collection, addDoc, query, where, getDocs, updateDoc, doc, deleteDoc } from 'firebase/firestore';
-import { enhancedNotifications } from '@/utils/enhancedToastNotifications';
+import { db } from "@/lib/firebase";
+import {
+  collection,
+  addDoc,
+  query,
+  where,
+  getDocs,
+  updateDoc,
+  doc,
+  deleteDoc,
+} from "firebase/firestore";
+import { enhancedNotifications } from "@/utils/enhancedToastNotifications";
 
-import { logger } from '@/utils/logger';
-export type WebhookProvider = 'github' | 'gitlab' | 'bitbucket';
-export type WebhookEvent = 
-  | 'push' 
-  | 'pull_request' 
-  | 'pull_request_review'
-  | 'commit_comment'
-  | 'repository'
-  | 'release';
+import { logger } from "@/utils/logger";
+export type WebhookProvider = "github" | "gitlab" | "bitbucket";
+export type WebhookEvent =
+  | "push"
+  | "pull_request"
+  | "pull_request_review"
+  | "commit_comment"
+  | "repository"
+  | "release";
 
 export interface WebhookConfig {
   id?: string;
@@ -49,7 +58,7 @@ export interface WebhookPayload {
   changes?: {
     files: Array<{
       filename: string;
-      status: 'added' | 'modified' | 'removed';
+      status: "added" | "modified" | "removed";
       additions: number;
       deletions: number;
       patch?: string;
@@ -66,7 +75,7 @@ export interface WebhookPayload {
     title: string;
     branch: string;
     baseBranch: string;
-    state: 'open' | 'closed' | 'merged';
+    state: "open" | "closed" | "merged";
     url: string;
   };
   timestamp: number;
@@ -82,7 +91,7 @@ export interface MonitoringRule {
     filePatterns?: string[]; // Glob patterns like "*.js", "src/**/*.ts"
     branches?: string[]; // Branch names like "main", "develop"
     authors?: string[]; // Author usernames
-    minSeverity?: 'Critical' | 'High' | 'Medium' | 'Low';
+    minSeverity?: "Critical" | "High" | "Medium" | "Low";
     customRuleIds?: string[]; // Apply specific custom rules
   };
   actions: {
@@ -98,9 +107,9 @@ export interface MonitoringRule {
 }
 
 class WebhookManagerClass {
-  private webhookCollection = 'webhooks';
-  private monitoringRulesCollection = 'monitoringRules';
-  private webhookLogsCollection = 'webhookLogs';
+  private webhookCollection = "webhooks";
+  private monitoringRulesCollection = "monitoringRules";
+  private webhookLogsCollection = "webhookLogs";
 
   /**
    * Generate a secure webhook secret
@@ -108,44 +117,51 @@ class WebhookManagerClass {
   generateSecret(): string {
     const array = new Uint8Array(32);
     crypto.getRandomValues(array);
-    return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
+    return Array.from(array, (byte) => byte.toString(16).padStart(2, "0")).join(
+      ""
+    );
   }
 
   /**
    * Create a new webhook configuration
    */
-  async createWebhook(config: Omit<WebhookConfig, 'id' | 'createdAt' | 'updatedAt' | 'secret'>): Promise<WebhookConfig> {
+  async createWebhook(
+    config: Omit<WebhookConfig, "id" | "createdAt" | "updatedAt" | "secret">
+  ): Promise<WebhookConfig> {
     try {
       const secret = this.generateSecret();
       const now = Date.now();
-      
-      const webhookData: Omit<WebhookConfig, 'id'> = {
+
+      const webhookData: Omit<WebhookConfig, "id"> = {
         ...config,
         secret,
         createdAt: now,
         updatedAt: now,
       };
 
-      const docRef = await addDoc(collection(db, this.webhookCollection), webhookData);
-      
+      const docRef = await addDoc(
+        collection(db, this.webhookCollection),
+        webhookData
+      );
+
       const webhook: WebhookConfig = {
         ...webhookData,
         id: docRef.id,
       };
 
-      enhancedNotifications.success('Webhook Created', {
+      enhancedNotifications.success("Webhook Created", {
         message: `Monitoring enabled for ${config.repositoryName}`,
-        category: 'system',
-        priority: 'normal',
+        category: "system",
+        priority: "normal",
       });
 
       return webhook;
     } catch (error) {
-      logger.error('Failed to create webhook:', error);
-      enhancedNotifications.error('Webhook Creation Failed', {
-        message: error instanceof Error ? error.message : 'Unknown error',
-        category: 'system',
-        priority: 'high',
+      logger.error("Failed to create webhook:", error);
+      enhancedNotifications.error("Webhook Creation Failed", {
+        message: error instanceof Error ? error.message : "Unknown error",
+        category: "system",
+        priority: "high",
       });
       throw error;
     }
@@ -158,16 +174,19 @@ class WebhookManagerClass {
     try {
       const q = query(
         collection(db, this.webhookCollection),
-        where('userId', '==', userId)
+        where("userId", "==", userId)
       );
-      
+
       const snapshot = await getDocs(q);
-      return snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data(),
-      } as WebhookConfig));
+      return snapshot.docs.map(
+        (doc) =>
+          ({
+            id: doc.id,
+            ...doc.data(),
+          }) as WebhookConfig
+      );
     } catch (error) {
-      logger.error('Failed to get webhooks:', error);
+      logger.error("Failed to get webhooks:", error);
       return [];
     }
   }
@@ -175,7 +194,10 @@ class WebhookManagerClass {
   /**
    * Update webhook configuration
    */
-  async updateWebhook(webhookId: string, updates: Partial<WebhookConfig>): Promise<void> {
+  async updateWebhook(
+    webhookId: string,
+    updates: Partial<WebhookConfig>
+  ): Promise<void> {
     try {
       const webhookRef = doc(db, this.webhookCollection, webhookId);
       await updateDoc(webhookRef, {
@@ -183,15 +205,15 @@ class WebhookManagerClass {
         updatedAt: Date.now(),
       });
 
-      enhancedNotifications.success('Webhook Updated', {
-        category: 'system',
-        priority: 'low',
+      enhancedNotifications.success("Webhook Updated", {
+        category: "system",
+        priority: "low",
       });
     } catch (error) {
-      logger.error('Failed to update webhook:', error);
-      enhancedNotifications.error('Webhook Update Failed', {
-        category: 'system',
-        priority: 'high',
+      logger.error("Failed to update webhook:", error);
+      enhancedNotifications.error("Webhook Update Failed", {
+        category: "system",
+        priority: "high",
       });
       throw error;
     }
@@ -203,25 +225,27 @@ class WebhookManagerClass {
   async deleteWebhook(webhookId: string): Promise<void> {
     try {
       await deleteDoc(doc(db, this.webhookCollection, webhookId));
-      
+
       // Also delete associated monitoring rules
       const rulesQuery = query(
         collection(db, this.monitoringRulesCollection),
-        where('webhookId', '==', webhookId)
+        where("webhookId", "==", webhookId)
       );
       const rulesSnapshot = await getDocs(rulesQuery);
-      const deletePromises = rulesSnapshot.docs.map(doc => deleteDoc(doc.ref));
+      const deletePromises = rulesSnapshot.docs.map((doc) =>
+        deleteDoc(doc.ref)
+      );
       await Promise.all(deletePromises);
 
-      enhancedNotifications.success('Webhook Deleted', {
-        category: 'system',
-        priority: 'low',
+      enhancedNotifications.success("Webhook Deleted", {
+        category: "system",
+        priority: "low",
       });
     } catch (error) {
-      logger.error('Failed to delete webhook:', error);
-      enhancedNotifications.error('Webhook Deletion Failed', {
-        category: 'system',
-        priority: 'high',
+      logger.error("Failed to delete webhook:", error);
+      enhancedNotifications.error("Webhook Deletion Failed", {
+        category: "system",
+        priority: "high",
       });
       throw error;
     }
@@ -238,26 +262,28 @@ class WebhookManagerClass {
     try {
       const encoder = new TextEncoder();
       const key = await crypto.subtle.importKey(
-        'raw',
+        "raw",
         encoder.encode(secret),
-        { name: 'HMAC', hash: 'SHA-256' },
+        { name: "HMAC", hash: "SHA-256" },
         false,
-        ['sign']
+        ["sign"]
       );
 
       const signatureBuffer = await crypto.subtle.sign(
-        'HMAC',
+        "HMAC",
         key,
         encoder.encode(payload)
       );
 
-      const expectedSignature = 'sha256=' + Array.from(new Uint8Array(signatureBuffer))
-        .map(b => b.toString(16).padStart(2, '0'))
-        .join('');
+      const expectedSignature =
+        "sha256=" +
+        Array.from(new Uint8Array(signatureBuffer))
+          .map((b) => b.toString(16).padStart(2, "0"))
+          .join("");
 
       return signature === expectedSignature;
     } catch (error) {
-      logger.error('Failed to validate signature:', error);
+      logger.error("Failed to validate signature:", error);
       return false;
     }
   }
@@ -291,16 +317,16 @@ class WebhookManagerClass {
         }
       }
 
-      enhancedNotifications.info('Repository Event', {
+      enhancedNotifications.info("Repository Event", {
         message: `${payload.event} on ${payload.repository.name}`,
-        category: 'analysis',
-        priority: 'normal',
+        category: "analysis",
+        priority: "normal",
       });
     } catch (error) {
-      logger.error('Failed to process webhook:', error);
-      enhancedNotifications.error('Webhook Processing Failed', {
-        category: 'system',
-        priority: 'high',
+      logger.error("Failed to process webhook:", error);
+      enhancedNotifications.error("Webhook Processing Failed", {
+        category: "system",
+        priority: "high",
       });
     }
   }
@@ -322,30 +348,35 @@ class WebhookManagerClass {
         processed: true,
       });
     } catch (error) {
-      logger.error('Failed to log webhook event:', error);
+      logger.error("Failed to log webhook event:", error);
     }
   }
 
   /**
    * Create monitoring rule
    */
-  async createMonitoringRule(rule: Omit<MonitoringRule, 'id' | 'createdAt' | 'updatedAt'>): Promise<MonitoringRule> {
+  async createMonitoringRule(
+    rule: Omit<MonitoringRule, "id" | "createdAt" | "updatedAt">
+  ): Promise<MonitoringRule> {
     try {
       const now = Date.now();
-      const ruleData: Omit<MonitoringRule, 'id'> = {
+      const ruleData: Omit<MonitoringRule, "id"> = {
         ...rule,
         createdAt: now,
         updatedAt: now,
       };
 
-      const docRef = await addDoc(collection(db, this.monitoringRulesCollection), ruleData);
-      
+      const docRef = await addDoc(
+        collection(db, this.monitoringRulesCollection),
+        ruleData
+      );
+
       return {
         ...ruleData,
         id: docRef.id,
       };
     } catch (error) {
-      logger.error('Failed to create monitoring rule:', error);
+      logger.error("Failed to create monitoring rule:", error);
       throw error;
     }
   }
@@ -357,16 +388,19 @@ class WebhookManagerClass {
     try {
       const q = query(
         collection(db, this.monitoringRulesCollection),
-        where('webhookId', '==', webhookId)
+        where("webhookId", "==", webhookId)
       );
-      
+
       const snapshot = await getDocs(q);
-      return snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data(),
-      } as MonitoringRule));
+      return snapshot.docs.map(
+        (doc) =>
+          ({
+            id: doc.id,
+            ...doc.data(),
+          }) as MonitoringRule
+      );
     } catch (error) {
-      logger.error('Failed to get monitoring rules:', error);
+      logger.error("Failed to get monitoring rules:", error);
       return [];
     }
   }
@@ -379,8 +413,8 @@ class WebhookManagerClass {
 
     // Check file patterns
     if (conditions.filePatterns && payload.changes?.files) {
-      const matchesPattern = payload.changes.files.some(file =>
-        conditions.filePatterns!.some(pattern =>
+      const matchesPattern = payload.changes.files.some((file) =>
+        conditions.filePatterns!.some((pattern) =>
           this.matchGlob(file.filename, pattern)
         )
       );
@@ -389,14 +423,17 @@ class WebhookManagerClass {
 
     // Check branches
     if (conditions.branches && payload.pullRequest) {
-      const matchesBranch = conditions.branches.includes(payload.pullRequest.branch) ||
+      const matchesBranch =
+        conditions.branches.includes(payload.pullRequest.branch) ||
         conditions.branches.includes(payload.pullRequest.baseBranch);
       if (!matchesBranch) return false;
     }
 
     // Check authors
     if (conditions.authors) {
-      const matchesAuthor = conditions.authors.includes(payload.sender.username);
+      const matchesAuthor = conditions.authors.includes(
+        payload.sender.username
+      );
       if (!matchesAuthor) return false;
     }
 
@@ -408,10 +445,10 @@ class WebhookManagerClass {
    */
   private matchGlob(filename: string, pattern: string): boolean {
     const regexPattern = pattern
-      .replace(/\./g, '\\.')
-      .replace(/\*/g, '.*')
-      .replace(/\?/g, '.');
-    
+      .replace(/\./g, "\\.")
+      .replace(/\*/g, ".*")
+      .replace(/\?/g, ".");
+
     const regex = new RegExp(`^${regexPattern}$`);
     return regex.test(filename);
   }
@@ -428,19 +465,19 @@ class WebhookManagerClass {
     // Trigger immediate scan
     if (actions.scanImmediately) {
       // This would trigger the analysis service
-      enhancedNotifications.info('Automatic Scan Triggered', {
+      enhancedNotifications.info("Automatic Scan Triggered", {
         message: `Scanning ${payload.repository.name} due to ${payload.event}`,
-        category: 'analysis',
-        priority: 'high',
+        category: "analysis",
+        priority: "high",
       });
     }
 
     // Notify users
     if (actions.notifyUsers && actions.notifyUsers.length > 0) {
-      enhancedNotifications.warning('Repository Alert', {
+      enhancedNotifications.warning("Repository Alert", {
         message: `${payload.event} detected in ${payload.repository.name}`,
-        category: 'security',
-        priority: 'high',
+        category: "security",
+        priority: "high",
       });
     }
 
@@ -461,20 +498,21 @@ class WebhookManagerClass {
     try {
       const q = query(
         collection(db, this.webhookLogsCollection),
-        where('webhookId', '==', webhookId)
+        where("webhookId", "==", webhookId)
       );
-      
+
       const snapshot = await getDocs(q);
-      const logs = snapshot.docs.map(doc => doc.data());
+      const logs = snapshot.docs.map((doc) => doc.data());
 
       const eventsByType: Record<string, number> = {};
-      logs.forEach(log => {
+      logs.forEach((log) => {
         eventsByType[log.event] = (eventsByType[log.event] || 0) + 1;
       });
 
-      const lastEvent = logs.length > 0
-        ? Math.max(...logs.map(log => log.timestamp))
-        : undefined;
+      const lastEvent =
+        logs.length > 0
+          ? Math.max(...logs.map((log) => log.timestamp))
+          : undefined;
 
       return {
         totalEvents: logs.length,
@@ -482,7 +520,7 @@ class WebhookManagerClass {
         lastEvent,
       };
     } catch (error) {
-      logger.error('Failed to get webhook stats:', error);
+      logger.error("Failed to get webhook stats:", error);
       return {
         totalEvents: 0,
         eventsByType: {},

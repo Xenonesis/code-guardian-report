@@ -1,7 +1,22 @@
-import React from 'react';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { TrendingUp } from 'lucide-react';
+import React from "react";
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { TrendingUp } from "lucide-react";
 
 interface TrendData {
   date: string;
@@ -21,7 +36,9 @@ export const TrendChart: React.FC<TrendChartProps> = ({ data }) => {
           <TrendingUp className="h-5 w-5 text-purple-600" />
           Issue Trends Over Time
         </CardTitle>
-        <CardDescription>Historical view of issues and resolutions</CardDescription>
+        <CardDescription>
+          Historical view of issues and resolutions
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <ResponsiveContainer width="100%" height={400}>
@@ -31,8 +48,22 @@ export const TrendChart: React.FC<TrendChartProps> = ({ data }) => {
             <YAxis />
             <Tooltip />
             <Legend />
-            <Area type="monotone" dataKey="issues" stackId="1" stroke="#3b82f6" fill="#3b82f6" fillOpacity={0.6} />
-            <Area type="monotone" dataKey="resolved" stackId="2" stroke="#10b981" fill="#10b981" fillOpacity={0.6} />
+            <Area
+              type="monotone"
+              dataKey="issues"
+              stackId="1"
+              stroke="#3b82f6"
+              fill="#3b82f6"
+              fillOpacity={0.6}
+            />
+            <Area
+              type="monotone"
+              dataKey="resolved"
+              stackId="2"
+              stroke="#10b981"
+              fill="#10b981"
+              fillOpacity={0.6}
+            />
           </AreaChart>
         </ResponsiveContainer>
       </CardContent>

@@ -1,18 +1,18 @@
 "use client";
 
-import React from 'react';
-import { Button } from '../ui/button';
-import { 
-  Download, 
-  X, 
-  Smartphone, 
+import React from "react";
+import { Button } from "../ui/button";
+import {
+  Download,
+  X,
+  Smartphone,
   Zap,
   Shield,
   WifiOff,
-  Bell
-} from 'lucide-react';
-import { usePWA } from '../../hooks/usePWA';
-import { cn } from '@/lib/utils';
+  Bell,
+} from "lucide-react";
+import { usePWA } from "../../hooks/usePWA";
+import { cn } from "@/lib/utils";
 
 export function PWAMobileBanner() {
   const { isInstallable, isInstalled, installApp } = usePWA();
@@ -22,8 +22,8 @@ export function PWAMobileBanner() {
   // Check if on mobile and show banner after a delay
   React.useEffect(() => {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    const hasBeenDismissed = localStorage.getItem('pwa-banner-dismissed');
-    
+    const hasBeenDismissed = localStorage.getItem("pwa-banner-dismissed");
+
     if (isMobile && isInstallable && !isInstalled && !hasBeenDismissed) {
       const timer = setTimeout(() => setIsVisible(true), 3000);
       return () => clearTimeout(timer);
@@ -45,27 +45,29 @@ export function PWAMobileBanner() {
   const handleDismiss = () => {
     setDismissed(true);
     setIsVisible(false);
-    localStorage.setItem('pwa-banner-dismissed', 'true');
+    localStorage.setItem("pwa-banner-dismissed", "true");
   };
 
   const features = [
-    { icon: Zap, text: 'Faster Loading' },
-    { icon: WifiOff, text: 'Works Offline' },
-    { icon: Bell, text: 'Push Notifications' },
+    { icon: Zap, text: "Faster Loading" },
+    { icon: WifiOff, text: "Works Offline" },
+    { icon: Bell, text: "Push Notifications" },
   ];
 
   return (
-    <div className={cn(
-      "fixed bottom-0 left-0 right-0 z-50",
-      "bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600",
-      "text-white shadow-2xl",
-      "transform transition-transform duration-500 ease-out",
-      "safe-bottom", // For iOS safe area
-      isVisible ? "translate-y-0" : "translate-y-full"
-    )}>
+    <div
+      className={cn(
+        "fixed bottom-0 left-0 right-0 z-50",
+        "bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600",
+        "text-white shadow-2xl",
+        "transform transition-transform duration-500 ease-out",
+        "safe-bottom", // For iOS safe area
+        isVisible ? "translate-y-0" : "translate-y-full"
+      )}
+    >
       {/* Decorative top border */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-yellow-400 via-pink-500 to-blue-400" />
-      
+
       <div className="relative px-4 py-4 sm:px-6">
         {/* Close button */}
         <button
@@ -87,7 +89,7 @@ export function PWAMobileBanner() {
                 <Smartphone className="h-3 w-3" />
               </div>
             </div>
-            
+
             <div className="text-left">
               <h3 className="font-bold text-base sm:text-lg leading-tight">
                 Install Code Guardian
@@ -101,7 +103,10 @@ export function PWAMobileBanner() {
           {/* Features - Hidden on very small screens */}
           <div className="hidden sm:flex items-center gap-4 px-4">
             {features.map((feature, index) => (
-              <div key={index} className="flex items-center gap-1.5 text-xs text-white/90">
+              <div
+                key={index}
+                className="flex items-center gap-1.5 text-xs text-white/90"
+              >
                 <feature.icon className="h-3.5 w-3.5" />
                 <span>{feature.text}</span>
               </div>
@@ -122,7 +127,10 @@ export function PWAMobileBanner() {
         {/* Features for mobile - Shown only on small screens */}
         <div className="flex sm:hidden items-center justify-center gap-4 mt-3 pt-3 border-t border-white/20">
           {features.map((feature, index) => (
-            <div key={index} className="flex items-center gap-1 text-xs text-white/80">
+            <div
+              key={index}
+              className="flex items-center gap-1 text-xs text-white/80"
+            >
               <feature.icon className="h-3 w-3" />
               <span>{feature.text}</span>
             </div>

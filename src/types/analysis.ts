@@ -12,8 +12,8 @@ export interface AnalysisResult {
   status: AnalysisStatus;
 }
 
-export type AnalysisType = 'security' | 'quality' | 'performance' | 'full';
-export type AnalysisStatus = 'pending' | 'processing' | 'completed' | 'failed';
+export type AnalysisType = "security" | "quality" | "performance" | "full";
+export type AnalysisStatus = "pending" | "processing" | "completed" | "failed";
 
 export interface SecurityIssue {
   id: string;
@@ -29,15 +29,15 @@ export interface SecurityIssue {
   owasp?: string;
 }
 
-export type SecurityIssueType = 
-  | 'vulnerability'
-  | 'secret'
-  | 'dependency'
-  | 'code-quality'
-  | 'performance'
-  | 'security-misconfiguration';
+export type SecurityIssueType =
+  | "vulnerability"
+  | "secret"
+  | "dependency"
+  | "code-quality"
+  | "performance"
+  | "security-misconfiguration";
 
-export type SeverityLevel = 'critical' | 'high' | 'medium' | 'low' | 'info';
+export type SeverityLevel = "critical" | "high" | "medium" | "low" | "info";
 
 export interface AnalysisMetrics {
   totalLines: number;
@@ -73,7 +73,12 @@ export interface UploadFile {
   error?: string;
 }
 
-export type UploadStatus = 'pending' | 'uploading' | 'processing' | 'completed' | 'failed';
+export type UploadStatus =
+  | "pending"
+  | "uploading"
+  | "processing"
+  | "completed"
+  | "failed";
 
 // Analysis configuration
 export interface AnalysisConfig {
@@ -93,4 +98,4 @@ export interface CustomRule {
   enabled: boolean;
 }
 
-export type OutputFormat = 'json' | 'pdf' | 'html' | 'csv' | 'sarif';
+export type OutputFormat = "json" | "pdf" | "html" | "csv" | "sarif";

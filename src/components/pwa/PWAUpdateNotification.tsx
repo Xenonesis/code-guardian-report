@@ -1,10 +1,10 @@
 "use client";
 
-import React from 'react';
-import { Button } from '../ui/button';
-import { Card } from '../ui/card';
-import { RefreshCw, X, Sparkles, ArrowRight } from 'lucide-react';
-import { usePWA } from '../../hooks/usePWA';
+import React from "react";
+import { Button } from "../ui/button";
+import { Card } from "../ui/card";
+import { RefreshCw, X, Sparkles, ArrowRight } from "lucide-react";
+import { usePWA } from "../../hooks/usePWA";
 
 export function PWAUpdateNotification() {
   const { isUpdateAvailable, updateApp } = usePWA();
@@ -32,7 +32,7 @@ export function PWAUpdateNotification() {
             <Sparkles className="h-5 w-5" />
           </div>
         </div>
-        
+
         <div className="flex-1 min-w-0">
           <h3 className="font-semibold text-sm mb-1 flex items-center gap-2">
             Update Available
@@ -41,9 +41,10 @@ export function PWAUpdateNotification() {
             </span>
           </h3>
           <p className="text-xs text-white/90 mb-3">
-            A new version of Code Guardian is ready with improvements and bug fixes
+            A new version of Code Guardian is ready with improvements and bug
+            fixes
           </p>
-          
+
           <div className="flex gap-2">
             <Button
               size="sm"

@@ -1,4 +1,4 @@
-import { logger } from './logger';
+import { logger } from "./logger";
 
 /**
  * Production-grade error handler
@@ -31,29 +31,29 @@ class ErrorHandler {
    */
   private setupGlobalErrorHandlers(): void {
     // Guard for server-side rendering
-    if (typeof window === 'undefined') return;
-    
+    if (typeof window === "undefined") return;
+
     // Handle uncaught promise rejections
-    window.addEventListener('unhandledrejection', (event) => {
-      logger.error('Unhandled Promise Rejection', {
+    window.addEventListener("unhandledrejection", (event) => {
+      logger.error("Unhandled Promise Rejection", {
         reason: event.reason,
         promise: event.promise,
       });
-      
+
       // Prevent default browser behavior
       event.preventDefault();
     });
 
     // Handle uncaught errors
-    window.addEventListener('error', (event) => {
-      logger.error('Uncaught Error', {
+    window.addEventListener("error", (event) => {
+      logger.error("Uncaught Error", {
         message: event.message,
         filename: event.filename,
         lineno: event.lineno,
         colno: event.colno,
         error: event.error,
       });
-      
+
       // Prevent default browser behavior
       event.preventDefault();
     });
@@ -64,7 +64,7 @@ class ErrorHandler {
    */
   handle(error: unknown, context?: Record<string, unknown>): AppError {
     const appError = this.normalizeError(error, context);
-    
+
     logger.error(appError.message, {
       code: appError.code,
       stack: appError.stack,
@@ -77,7 +77,10 @@ class ErrorHandler {
   /**
    * Normalize different error types into AppError
    */
-  private normalizeError(error: unknown, context?: Record<string, unknown>): AppError {
+  private normalizeError(
+    error: unknown,
+    context?: Record<string, unknown>
+  ): AppError {
     // Handle Error instances
     if (error instanceof Error) {
       return {
@@ -88,7 +91,7 @@ class ErrorHandler {
     }
 
     // Handle string errors
-    if (typeof error === 'string') {
+    if (typeof error === "string") {
       return {
         message: error,
         context,
@@ -96,17 +99,17 @@ class ErrorHandler {
     }
 
     // Handle objects with message property
-    if (error && typeof error === 'object' && 'message' in error) {
+    if (error && typeof error === "object" && "message" in error) {
       return {
         message: String(error.message),
-        code: 'code' in error ? String(error.code) : undefined,
+        code: "code" in error ? String(error.code) : undefined,
         context,
       };
     }
 
     // Fallback for unknown error types
     return {
-      message: 'An unknown error occurred',
+      message: "An unknown error occurred",
       context: {
         ...context,
         originalError: error,
@@ -153,8 +156,10 @@ class ErrorHandler {
 export const errorHandler = ErrorHandler.getInstance();
 
 // Convenience functions
-export const handleError = (error: unknown, context?: Record<string, unknown>) => 
-  errorHandler.handle(error, context);
+export const handleError = (
+  error: unknown,
+  context?: Record<string, unknown>
+) => errorHandler.handle(error, context);
 
 export const wrapAsync = <T>(
   fn: (...args: unknown[]) => Promise<T>,

@@ -1,8 +1,8 @@
-import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { AlertTriangle, Shield, Package, Clock, Database } from 'lucide-react';
-import { DependencyScanResult } from '@/services/security/dependencyVulnerabilityScanner';
+import React from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { AlertTriangle, Shield, Package, Clock, Database } from "lucide-react";
+import { DependencyScanResult } from "@/services/security/dependencyVulnerabilityScanner";
 
 interface DependencyAnalysisDisplayProps {
   dependencyAnalysis: DependencyScanResult | null | undefined;
@@ -10,11 +10,9 @@ interface DependencyAnalysisDisplayProps {
   isLoading?: boolean;
 }
 
-export const DependencyAnalysisDisplay: React.FC<DependencyAnalysisDisplayProps> = ({
-  dependencyAnalysis,
-  onRetry,
-  isLoading
-}) => {
+export const DependencyAnalysisDisplay: React.FC<
+  DependencyAnalysisDisplayProps
+> = ({ dependencyAnalysis, onRetry, isLoading }) => {
   // Handle case where dependency analysis failed or is undefined
   if (isLoading) {
     return (
@@ -42,7 +40,7 @@ export const DependencyAnalysisDisplay: React.FC<DependencyAnalysisDisplayProps>
     const handleRetry = () => {
       try {
         // Simple retry: reload the page to re-run analysis flow
-        if (typeof window !== 'undefined') window.location.reload();
+        if (typeof window !== "undefined") window.location.reload();
       } catch {
         // no-op fallback
       }
@@ -61,8 +59,9 @@ export const DependencyAnalysisDisplay: React.FC<DependencyAnalysisDisplayProps>
                   Dependency Analysis Unavailable
                 </h3>
                 <p className="text-sm text-slate-600 dark:text-slate-300 max-w-2xl">
-                  We couldn't complete dependency scanning. This often happens when required package manifests are missing
-                  or the file selection didn't include them.
+                  We couldn't complete dependency scanning. This often happens
+                  when required package manifests are missing or the file
+                  selection didn't include them.
                 </p>
               </div>
 
@@ -83,41 +82,75 @@ export const DependencyAnalysisDisplay: React.FC<DependencyAnalysisDisplayProps>
 
               <div id="dependency-help" className="w-full mt-4">
                 <div className="text-left mx-auto max-w-2xl">
-                  <h4 className="text-sm font-semibold text-slate-800 dark:text-slate-200 mb-2">To enable Dependency Scanning:</h4>
+                  <h4 className="text-sm font-semibold text-slate-800 dark:text-slate-200 mb-2">
+                    To enable Dependency Scanning:
+                  </h4>
                   <ul className="text-sm text-slate-700 dark:text-slate-300 list-disc pl-5 space-y-1">
-                    <li>Include at least one supported manifest when running analysis or uploading archives.</li>
-                    <li>Ensure the manifest files are at the project root inside your zip or selection.</li>
+                    <li>
+                      Include at least one supported manifest when running
+                      analysis or uploading archives.
+                    </li>
+                    <li>
+                      Ensure the manifest files are at the project root inside
+                      your zip or selection.
+                    </li>
                   </ul>
 
                   <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div className="rounded-lg border border-slate-200 dark:border-slate-800 p-3 bg-white/70 dark:bg-slate-900/30">
-                      <p className="text-xs font-semibold text-slate-900 dark:text-slate-100 mb-1">JavaScript/TypeScript</p>
-                      <p className="text-xs text-slate-600 dark:text-slate-400">package.json, yarn.lock</p>
+                      <p className="text-xs font-semibold text-slate-900 dark:text-slate-100 mb-1">
+                        JavaScript/TypeScript
+                      </p>
+                      <p className="text-xs text-slate-600 dark:text-slate-400">
+                        package.json, yarn.lock
+                      </p>
                     </div>
                     <div className="rounded-lg border border-slate-200 dark:border-slate-800 p-3 bg-white/70 dark:bg-slate-900/30">
-                      <p className="text-xs font-semibold text-slate-900 dark:text-slate-100 mb-1">Python</p>
-                      <p className="text-xs text-slate-600 dark:text-slate-400">requirements.txt</p>
+                      <p className="text-xs font-semibold text-slate-900 dark:text-slate-100 mb-1">
+                        Python
+                      </p>
+                      <p className="text-xs text-slate-600 dark:text-slate-400">
+                        requirements.txt
+                      </p>
                     </div>
                     <div className="rounded-lg border border-slate-200 dark:border-slate-800 p-3 bg-white/70 dark:bg-slate-900/30">
-                      <p className="text-xs font-semibold text-slate-900 dark:text-slate-100 mb-1">Java (Maven/Gradle)</p>
-                      <p className="text-xs text-slate-600 dark:text-slate-400">pom.xml, build.gradle</p>
+                      <p className="text-xs font-semibold text-slate-900 dark:text-slate-100 mb-1">
+                        Java (Maven/Gradle)
+                      </p>
+                      <p className="text-xs text-slate-600 dark:text-slate-400">
+                        pom.xml, build.gradle
+                      </p>
                     </div>
                     <div className="rounded-lg border border-slate-200 dark:border-slate-800 p-3 bg-white/70 dark:bg-slate-900/30">
-                      <p className="text-xs font-semibold text-slate-900 dark:text-slate-100 mb-1">PHP</p>
-                      <p className="text-xs text-slate-600 dark:text-slate-400">composer.json, composer.lock</p>
+                      <p className="text-xs font-semibold text-slate-900 dark:text-slate-100 mb-1">
+                        PHP
+                      </p>
+                      <p className="text-xs text-slate-600 dark:text-slate-400">
+                        composer.json, composer.lock
+                      </p>
                     </div>
                     <div className="rounded-lg border border-slate-200 dark:border-slate-800 p-3 bg-white/70 dark:bg-slate-900/30">
-                      <p className="text-xs font-semibold text-slate-900 dark:text-slate-100 mb-1">Rust</p>
-                      <p className="text-xs text-slate-600 dark:text-slate-400">Cargo.toml, Cargo.lock</p>
+                      <p className="text-xs font-semibold text-slate-900 dark:text-slate-100 mb-1">
+                        Rust
+                      </p>
+                      <p className="text-xs text-slate-600 dark:text-slate-400">
+                        Cargo.toml, Cargo.lock
+                      </p>
                     </div>
                     <div className="rounded-lg border border-slate-200 dark:border-slate-800 p-3 bg-white/70 dark:bg-slate-900/30">
-                      <p className="text-xs font-semibold text-slate-900 dark:text-slate-100 mb-1">Ruby</p>
-                      <p className="text-xs text-slate-600 dark:text-slate-400">Gemfile, Gemfile.lock</p>
+                      <p className="text-xs font-semibold text-slate-900 dark:text-slate-100 mb-1">
+                        Ruby
+                      </p>
+                      <p className="text-xs text-slate-600 dark:text-slate-400">
+                        Gemfile, Gemfile.lock
+                      </p>
                     </div>
                   </div>
 
                   <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">
-                    Tip: If you uploaded a zip, make sure your manifests are not nested too deeply. Place them near the root for best results.
+                    Tip: If you uploaded a zip, make sure your manifests are not
+                    nested too deeply. Place them near the root for best
+                    results.
                   </p>
                 </div>
               </div>
@@ -128,36 +161,53 @@ export const DependencyAnalysisDisplay: React.FC<DependencyAnalysisDisplayProps>
     );
   }
 
-  const { summary, vulnerabilities, licenseIssues, outdatedPackages, supplyChainRisks, recommendations } = dependencyAnalysis;
+  const {
+    summary,
+    vulnerabilities,
+    licenseIssues,
+    outdatedPackages,
+    supplyChainRisks,
+    recommendations,
+  } = dependencyAnalysis;
 
   const getSeverityColor = (severity: string) => {
     switch (severity.toLowerCase()) {
-      case 'critical': return 'bg-red-500 text-white';
-      case 'high': return 'bg-orange-500 text-white';
-      case 'medium': return 'bg-yellow-500 text-black';
-      case 'low': return 'bg-blue-500 text-white';
-      default: return 'bg-gray-500 text-white';
+      case "critical":
+        return "bg-red-500 text-white";
+      case "high":
+        return "bg-orange-500 text-white";
+      case "medium":
+        return "bg-yellow-500 text-black";
+      case "low":
+        return "bg-blue-500 text-white";
+      default:
+        return "bg-gray-500 text-white";
     }
   };
 
   const getPriorityColor = (priority: string) => {
     switch (priority.toLowerCase()) {
-      case 'critical': return 'bg-red-100 text-red-800 border-red-200';
-      case 'high': return 'bg-orange-100 text-orange-800 border-orange-200';
-      case 'medium': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-      case 'low': return 'bg-blue-100 text-blue-800 border-blue-200';
-      default: return 'bg-gray-100 text-gray-800 border-gray-200';
+      case "critical":
+        return "bg-red-100 text-red-800 border-red-200";
+      case "high":
+        return "bg-orange-100 text-orange-800 border-orange-200";
+      case "medium":
+        return "bg-yellow-100 text-yellow-800 border-yellow-200";
+      case "low":
+        return "bg-blue-100 text-blue-800 border-blue-200";
+      default:
+        return "bg-gray-100 text-gray-800 border-gray-200";
     }
   };
 
   const getUpdateRecommendationColor = (recommendation: string) => {
     switch (recommendation) {
-      case 'immediate':
-        return 'text-red-600 border-red-600';
-      case 'planned':
-        return 'text-yellow-600 border-yellow-600';
+      case "immediate":
+        return "text-red-600 border-red-600";
+      case "planned":
+        return "text-yellow-600 border-yellow-600";
       default:
-        return 'text-blue-600 border-blue-600';
+        return "text-blue-600 border-blue-600";
     }
   };
 
@@ -176,17 +226,35 @@ export const DependencyAnalysisDisplay: React.FC<DependencyAnalysisDisplayProps>
             <div className="flex flex-wrap gap-3">
               <span className="inline-flex items-center gap-2">
                 <span className="font-medium">Scanned:</span>
-                <time dateTime={new Date(summary ? (dependencyAnalysis?.scanMetadata?.scanDate || new Date()) : new Date()).toISOString()}>
-                  {dependencyAnalysis?.scanMetadata?.scanDate ? new Date(dependencyAnalysis.scanMetadata.scanDate).toLocaleString() : '—'}
+                <time
+                  dateTime={new Date(
+                    summary
+                      ? dependencyAnalysis?.scanMetadata?.scanDate || new Date()
+                      : new Date()
+                  ).toISOString()}
+                >
+                  {dependencyAnalysis?.scanMetadata?.scanDate
+                    ? new Date(
+                        dependencyAnalysis.scanMetadata.scanDate
+                      ).toLocaleString()
+                    : "—"}
                 </time>
               </span>
               <span className="inline-flex items-center gap-2">
                 <span className="font-medium">Duration:</span>
-                <span>{typeof dependencyAnalysis?.scanMetadata?.scanDuration === 'number' ? `${Math.max(1, Math.round(dependencyAnalysis.scanMetadata.scanDuration))} ms` : '—'}</span>
+                <span>
+                  {typeof dependencyAnalysis?.scanMetadata?.scanDuration ===
+                  "number"
+                    ? `${Math.max(1, Math.round(dependencyAnalysis.scanMetadata.scanDuration))} ms`
+                    : "—"}
+                </span>
               </span>
             </div>
             <div className="text-xs opacity-80">
-              Databases: {Array.isArray(dependencyAnalysis?.scanMetadata?.databasesUsed) ? dependencyAnalysis!.scanMetadata.databasesUsed.join(', ') : '—'}
+              Databases:{" "}
+              {Array.isArray(dependencyAnalysis?.scanMetadata?.databasesUsed)
+                ? dependencyAnalysis!.scanMetadata.databasesUsed.join(", ")
+                : "—"}
             </div>
           </div>
         </CardContent>
@@ -198,8 +266,12 @@ export const DependencyAnalysisDisplay: React.FC<DependencyAnalysisDisplayProps>
             <div className="flex items-center gap-2">
               <Package className="h-5 w-5 text-blue-600" />
               <div>
-                <p className="text-sm font-medium text-blue-900 dark:text-blue-100">Total Packages</p>
-                <p className="text-2xl font-bold text-blue-700 dark:text-blue-300">{summary.totalPackages}</p>
+                <p className="text-sm font-medium text-blue-900 dark:text-blue-100">
+                  Total Packages
+                </p>
+                <p className="text-2xl font-bold text-blue-700 dark:text-blue-300">
+                  {summary.totalPackages}
+                </p>
               </div>
             </div>
           </CardContent>
@@ -210,8 +282,12 @@ export const DependencyAnalysisDisplay: React.FC<DependencyAnalysisDisplayProps>
             <div className="flex items-center gap-2">
               <AlertTriangle className="h-5 w-5 text-red-600" />
               <div>
-                <p className="text-sm font-medium text-red-900 dark:text-red-100">Vulnerabilities</p>
-                <p className="text-2xl font-bold text-red-700 dark:text-red-300">{summary.vulnerablePackages}</p>
+                <p className="text-sm font-medium text-red-900 dark:text-red-100">
+                  Vulnerabilities
+                </p>
+                <p className="text-2xl font-bold text-red-700 dark:text-red-300">
+                  {summary.vulnerablePackages}
+                </p>
               </div>
             </div>
           </CardContent>
@@ -222,8 +298,12 @@ export const DependencyAnalysisDisplay: React.FC<DependencyAnalysisDisplayProps>
             <div className="flex items-center gap-2">
               <Clock className="h-5 w-5 text-yellow-600" />
               <div>
-                <p className="text-sm font-medium text-yellow-900 dark:text-yellow-100">Outdated</p>
-                <p className="text-2xl font-bold text-yellow-700 dark:text-yellow-300">{summary.outdatedPackages}</p>
+                <p className="text-sm font-medium text-yellow-900 dark:text-yellow-100">
+                  Outdated
+                </p>
+                <p className="text-2xl font-bold text-yellow-700 dark:text-yellow-300">
+                  {summary.outdatedPackages}
+                </p>
               </div>
             </div>
           </CardContent>
@@ -234,8 +314,12 @@ export const DependencyAnalysisDisplay: React.FC<DependencyAnalysisDisplayProps>
             <div className="flex items-center gap-2">
               <Shield className="h-5 w-5 text-purple-600" />
               <div>
-                <p className="text-sm font-medium text-purple-900 dark:text-purple-100">Risk Score</p>
-                <p className="text-2xl font-bold text-purple-700 dark:text-purple-300">{summary.overallRiskScore}</p>
+                <p className="text-sm font-medium text-purple-900 dark:text-purple-100">
+                  Risk Score
+                </p>
+                <p className="text-2xl font-bold text-purple-700 dark:text-purple-300">
+                  {summary.overallRiskScore}
+                </p>
               </div>
             </div>
           </CardContent>
@@ -253,8 +337,9 @@ export const DependencyAnalysisDisplay: React.FC<DependencyAnalysisDisplayProps>
           </CardHeader>
           <CardContent>
             <p className="text-sm text-gray-600 dark:text-gray-300">
-              Great news! We didn’t find any known vulnerabilities in your dependencies.
-              Keep your dependencies updated and consider enabling automated scanning in CI.
+              Great news! We didn’t find any known vulnerabilities in your
+              dependencies. Keep your dependencies updated and consider enabling
+              automated scanning in CI.
             </p>
           </CardContent>
         </Card>
@@ -269,11 +354,18 @@ export const DependencyAnalysisDisplay: React.FC<DependencyAnalysisDisplayProps>
           <CardContent>
             <div className="space-y-3">
               {vulnerabilities.slice(0, 10).map((vuln, index) => (
-                <div key={`vulnerability-${vuln.package}-${vuln.vulnerability.id}-${vuln.version}-${index}`} className="border rounded-lg p-4 bg-red-50 dark:bg-red-950/10">
+                <div
+                  key={`vulnerability-${vuln.package}-${vuln.vulnerability.id}-${vuln.version}-${index}`}
+                  className="border rounded-lg p-4 bg-red-50 dark:bg-red-950/10"
+                >
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-2">
-                        <Badge className={getSeverityColor(vuln.vulnerability.severity)}>
+                        <Badge
+                          className={getSeverityColor(
+                            vuln.vulnerability.severity
+                          )}
+                        >
                           {vuln.vulnerability.severity}
                         </Badge>
                         <span className="font-mono text-sm text-gray-600 dark:text-gray-400">
@@ -287,9 +379,14 @@ export const DependencyAnalysisDisplay: React.FC<DependencyAnalysisDisplayProps>
                         {vuln.vulnerability.description}
                       </p>
                       <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
-                        <span>Package: {vuln.package}@{vuln.version}</span>
+                        <span>
+                          Package: {vuln.package}@{vuln.version}
+                        </span>
                         {vuln.fixAvailable && (
-                          <Badge variant="outline" className="text-green-600 border-green-600">
+                          <Badge
+                            variant="outline"
+                            className="text-green-600 border-green-600"
+                          >
                             Fix Available: {vuln.fixVersion}
                           </Badge>
                         )}
@@ -320,7 +417,10 @@ export const DependencyAnalysisDisplay: React.FC<DependencyAnalysisDisplayProps>
           <CardContent>
             <div className="space-y-3">
               {licenseIssues.map((issue, index) => (
-                <div key={`license-${issue.package}-${issue.license}-${index}`} className="border rounded-lg p-4 bg-yellow-50 dark:bg-yellow-950/10">
+                <div
+                  key={`license-${issue.package}-${issue.license}-${index}`}
+                  className="border rounded-lg p-4 bg-yellow-50 dark:bg-yellow-950/10"
+                >
                   <div className="flex items-center justify-between">
                     <div>
                       <Badge className={getSeverityColor(issue.severity)}>
@@ -353,7 +453,10 @@ export const DependencyAnalysisDisplay: React.FC<DependencyAnalysisDisplayProps>
           <CardContent>
             <div className="space-y-3">
               {outdatedPackages.slice(0, 10).map((pkg, index) => (
-                <div key={`outdated-${pkg.package}-${pkg.currentVersion}-${index}`} className="border rounded-lg p-4 bg-blue-50 dark:bg-blue-950/10">
+                <div
+                  key={`outdated-${pkg.package}-${pkg.currentVersion}-${index}`}
+                  className="border rounded-lg p-4 bg-blue-50 dark:bg-blue-950/10"
+                >
                   <div className="flex items-center justify-between">
                     <div>
                       <h4 className="font-semibold text-gray-900 dark:text-white">
@@ -363,7 +466,12 @@ export const DependencyAnalysisDisplay: React.FC<DependencyAnalysisDisplayProps>
                         {pkg.currentVersion} → {pkg.latestVersion}
                       </p>
                       <div className="flex items-center gap-2 mt-1">
-                        <Badge variant="outline" className={getUpdateRecommendationColor(pkg.updateRecommendation)}>
+                        <Badge
+                          variant="outline"
+                          className={getUpdateRecommendationColor(
+                            pkg.updateRecommendation
+                          )}
+                        >
                           {pkg.updateRecommendation}
                         </Badge>
                         {pkg.majorVersionsBehind > 0 && (
@@ -398,7 +506,10 @@ export const DependencyAnalysisDisplay: React.FC<DependencyAnalysisDisplayProps>
           <CardContent>
             <div className="space-y-3">
               {recommendations.map((rec, index) => (
-                <div key={`recommendation-${rec.title}-${rec.priority}-${index}`} className={`border rounded-lg p-4 ${getPriorityColor(rec.priority)}`}>
+                <div
+                  key={`recommendation-${rec.title}-${rec.priority}-${index}`}
+                  className={`border rounded-lg p-4 ${getPriorityColor(rec.priority)}`}
+                >
                   <div className="flex items-start gap-3">
                     <Badge className={getSeverityColor(rec.priority)}>
                       {rec.priority}
@@ -416,7 +527,11 @@ export const DependencyAnalysisDisplay: React.FC<DependencyAnalysisDisplayProps>
                       {rec.packages.length > 0 && (
                         <div className="flex flex-wrap gap-1">
                           {rec.packages.slice(0, 5).map((pkg, pkgIndex) => (
-                            <Badge key={`pkg-${pkg}-${pkgIndex}`} variant="outline" className="text-xs">
+                            <Badge
+                              key={`pkg-${pkg}-${pkgIndex}`}
+                              variant="outline"
+                              className="text-xs"
+                            >
                               {pkg}
                             </Badge>
                           ))}
@@ -448,13 +563,16 @@ export const DependencyAnalysisDisplay: React.FC<DependencyAnalysisDisplayProps>
           <CardContent>
             <div className="space-y-3">
               {supplyChainRisks.map((risk, index) => (
-                <div key={`risk-${risk.package}-${risk.riskType}-${index}`} className="border rounded-lg p-4 bg-purple-50 dark:bg-purple-950/10">
+                <div
+                  key={`risk-${risk.package}-${risk.riskType}-${index}`}
+                  className="border rounded-lg p-4 bg-purple-50 dark:bg-purple-950/10"
+                >
                   <div className="flex items-center justify-between mb-2">
                     <Badge className={getSeverityColor(risk.severity)}>
                       {risk.severity}
                     </Badge>
                     <span className="text-sm font-medium text-purple-700 dark:text-purple-300">
-                      {risk.riskType.replace('_', ' ').toUpperCase()}
+                      {risk.riskType.replace("_", " ").toUpperCase()}
                     </span>
                   </div>
                   <h4 className="font-semibold text-gray-900 dark:text-white mb-1">

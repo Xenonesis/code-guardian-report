@@ -33,7 +33,7 @@ export const ScrollToTop: React.FC<ScrollToTopProps> = ({ className = "" }) => {
     });
   };
 
-  if (!isVisible) return null; 
+  if (!isVisible) return null;
 
   return (
     <Button

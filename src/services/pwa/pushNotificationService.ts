@@ -1,4 +1,4 @@
-import { logger } from '@/utils/logger';
+import { logger } from "@/utils/logger";
 
 // Push Notification Service for PWA
 // Handles server integration and notification management
@@ -25,8 +25,9 @@ export interface PushSubscription {
 
 class PushNotificationService {
   private static instance: PushNotificationService;
-  private vapidPublicKey = 'BEl62iUYgUivxIkv69yViEuiBIa40HI80NqIUHI-lzKkMiWd2_MzC4AkMaHPXQdmPfflWGxJ4lWzwILyaEp2dDY'; // Replace with your VAPID key
-  private serverEndpoint = '/api/push-notifications';
+  private vapidPublicKey =
+    "BEl62iUYgUivxIkv69yViEuiBIa40HI80NqIUHI-lzKkMiWd2_MzC4AkMaHPXQdmPfflWGxJ4lWzwILyaEp2dDY"; // Replace with your VAPID key
+  private serverEndpoint = "/api/push-notifications";
 
   static getInstance(): PushNotificationService {
     if (!PushNotificationService.instance) {
@@ -37,16 +38,16 @@ class PushNotificationService {
 
   // Request notification permission and subscribe
   async subscribe(): Promise<PushSubscription | null> {
-    if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
-      logger.warn('Push notifications not supported');
+    if (!("serviceWorker" in navigator) || !("PushManager" in window)) {
+      logger.warn("Push notifications not supported");
       return null;
     }
 
     try {
       // Request permission
       const permission = await Notification.requestPermission();
-      if (permission !== 'granted') {
-        throw new Error('Notification permission denied');
+      if (permission !== "granted") {
+        throw new Error("Notification permission denied");
       }
 
       // Get service worker registration
@@ -56,26 +57,29 @@ class PushNotificationService {
       // Subscribe to push notifications
       const subscription = await registration.pushManager.subscribe({
         userVisibleOnly: true,
-        applicationServerKey: appServerKey
+        applicationServerKey: appServerKey,
       });
 
       // Send subscription to server
       const subscriptionData = {
         endpoint: subscription.endpoint,
         keys: {
-          p256dh: this.arrayBufferToBase64(subscription.getKey('p256dh')!),
-          auth: this.arrayBufferToBase64(subscription.getKey('auth')!)
-        }
+          p256dh: this.arrayBufferToBase64(subscription.getKey("p256dh")!),
+          auth: this.arrayBufferToBase64(subscription.getKey("auth")!),
+        },
       };
 
       await this.sendSubscriptionToServer(subscriptionData);
-      
+
       // Store subscription locally
-      localStorage.setItem('push-subscription', JSON.stringify(subscriptionData));
+      localStorage.setItem(
+        "push-subscription",
+        JSON.stringify(subscriptionData)
+      );
 
       return subscriptionData;
     } catch (error) {
-      logger.error('Failed to subscribe to push notifications:', error);
+      logger.error("Failed to subscribe to push notifications:", error);
       return null;
     }
   }
@@ -85,16 +89,16 @@ class PushNotificationService {
     try {
       const registration = await navigator.serviceWorker.ready;
       const subscription = await registration.pushManager.getSubscription();
-      
+
       if (subscription) {
         await subscription.unsubscribe();
         await this.removeSubscriptionFromServer();
-        localStorage.removeItem('push-subscription');
+        localStorage.removeItem("push-subscription");
         return true;
       }
       return false;
     } catch (error) {
-      logger.error('Failed to unsubscribe from push notifications:', error);
+      logger.error("Failed to unsubscribe from push notifications:", error);
       return false;
     }
   }
@@ -102,7 +106,7 @@ class PushNotificationService {
   // Check if user is subscribed
   async isSubscribed(): Promise<boolean> {
     try {
-      if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+      if (!("serviceWorker" in navigator) || !("PushManager" in window)) {
         return false;
       }
 
@@ -115,71 +119,80 @@ class PushNotificationService {
   }
 
   // Send subscription to server
-  private async sendSubscriptionToServer(subscription: PushSubscription): Promise<void> {
+  private async sendSubscriptionToServer(
+    subscription: PushSubscription
+  ): Promise<void> {
     const response = await fetch(`${this.serverEndpoint}/subscribe`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         subscription,
         userAgent: navigator.userAgent,
-        timestamp: Date.now()
-      })
+        timestamp: Date.now(),
+      }),
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to send subscription to server: ${response.statusText}`);
+      throw new Error(
+        `Failed to send subscription to server: ${response.statusText}`
+      );
     }
   }
 
   // Remove subscription from server
   private async removeSubscriptionFromServer(): Promise<void> {
-    const storedSubscription = localStorage.getItem('push-subscription');
+    const storedSubscription = localStorage.getItem("push-subscription");
     if (!storedSubscription) return;
 
     const subscription = JSON.parse(storedSubscription);
-    
+
     const response = await fetch(`${this.serverEndpoint}/unsubscribe`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ subscription })
+      body: JSON.stringify({ subscription }),
     });
 
     if (!response.ok) {
-      logger.warn(`Failed to remove subscription from server: ${response.statusText}`);
+      logger.warn(
+        `Failed to remove subscription from server: ${response.statusText}`
+      );
     }
   }
 
   // Send notification to specific user (server-side)
-  async sendNotification(userId: string, payload: NotificationPayload): Promise<boolean> {
+  async sendNotification(
+    userId: string,
+    payload: NotificationPayload
+  ): Promise<boolean> {
     try {
       const response = await fetch(`${this.serverEndpoint}/send`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           userId,
           payload: {
             title: payload.title,
             body: payload.body,
-            icon: payload.icon || '/favicon-192x192.svg',
-            badge: payload.badge || '/favicon-192x192.svg',
+            icon: payload.icon || "/favicon-192x192.svg",
+            badge: payload.badge || "/favicon-192x192.svg",
             image: payload.image,
             data: payload.data,
             actions: payload.actions,
             tag: payload.tag,
-            requireInteraction: payload.requireInteraction || false
-          }
-        })
+            requireInteraction: payload.requireInteraction || false,
+          },
+        }),
       });
 
       return response.ok;
     } catch (error) {
-      logger.error('Failed to send notification:', error);
+      logger.error("Failed to send notification:", error);
       return false;
     }
   }
@@ -188,38 +201,38 @@ class PushNotificationService {
   async broadcastNotification(payload: NotificationPayload): Promise<boolean> {
     try {
       const response = await fetch(`${this.serverEndpoint}/broadcast`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ payload })
+        body: JSON.stringify({ payload }),
       });
 
       return response.ok;
     } catch (error) {
-      logger.error('Failed to broadcast notification:', error);
+      logger.error("Failed to broadcast notification:", error);
       return false;
     }
   }
 
   // Show local notification (fallback)
   async showLocalNotification(payload: NotificationPayload): Promise<void> {
-    if ('Notification' in window && Notification.permission === 'granted') {
+    if ("Notification" in window && Notification.permission === "granted") {
       const notification = new Notification(payload.title, {
         body: payload.body,
-        icon: payload.icon || '/favicon-192x192.svg',
-        badge: payload.badge || '/favicon-192x192.svg',
+        icon: payload.icon || "/favicon-192x192.svg",
+        badge: payload.badge || "/favicon-192x192.svg",
         data: payload.data,
         tag: payload.tag,
-        requireInteraction: payload.requireInteraction || false
+        requireInteraction: payload.requireInteraction || false,
       });
 
       // Handle notification click
       notification.onclick = (event) => {
         event.preventDefault();
         window.focus();
-        if (payload.data?.url && typeof payload.data.url === 'string') {
-          window.open(payload.data.url, '_blank');
+        if (payload.data?.url && typeof payload.data.url === "string") {
+          window.open(payload.data.url, "_blank");
         }
         notification.close();
       };
@@ -228,10 +241,10 @@ class PushNotificationService {
 
   // Utility methods
   private urlBase64ToUint8Array(base64String: string): BufferSource {
-    const padding = '='.repeat((4 - base64String.length % 4) % 4);
+    const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
     const base64 = (base64String + padding)
-      .replace(/-/g, '+')
-      .replace(/_/g, '/');
+      .replace(/-/g, "+")
+      .replace(/_/g, "/");
 
     const rawData = window.atob(base64);
     const outputArray = new Uint8Array(rawData.length);
@@ -244,7 +257,7 @@ class PushNotificationService {
 
   private arrayBufferToBase64(buffer: ArrayBuffer): string {
     const bytes = new Uint8Array(buffer);
-    let binary = '';
+    let binary = "";
     for (let i = 0; i < bytes.byteLength; i++) {
       binary += String.fromCharCode(bytes[i]);
     }
@@ -252,44 +265,50 @@ class PushNotificationService {
   }
 
   // Notification templates for common scenarios
-  async notifyAnalysisComplete(analysisId: string, results: any): Promise<void> {
+  async notifyAnalysisComplete(
+    analysisId: string,
+    results: any
+  ): Promise<void> {
     const payload: NotificationPayload = {
-      title: 'Security Analysis Complete',
+      title: "Security Analysis Complete",
       body: `Analysis ${analysisId} found ${results.issueCount} security issues`,
-      icon: '/favicon-192x192.svg',
+      icon: "/favicon-192x192.svg",
       data: {
         url: `/?analysis=${analysisId}`,
         analysisId,
-        results
+        results,
       },
       actions: [
         {
-          action: 'view',
-          title: 'View Results',
-          icon: '/favicon-192x192.svg'
+          action: "view",
+          title: "View Results",
+          icon: "/favicon-192x192.svg",
         },
         {
-          action: 'dismiss',
-          title: 'Dismiss'
-        }
+          action: "dismiss",
+          title: "Dismiss",
+        },
       ],
-      tag: `analysis-${analysisId}`
+      tag: `analysis-${analysisId}`,
     };
 
     await this.showLocalNotification(payload);
   }
 
-  async notifySecurityAlert(severity: 'high' | 'medium' | 'low', message: string): Promise<void> {
+  async notifySecurityAlert(
+    severity: "high" | "medium" | "low",
+    message: string
+  ): Promise<void> {
     const payload: NotificationPayload = {
       title: `Security Alert - ${severity.toUpperCase()}`,
       body: message,
-      icon: '/favicon-192x192.svg',
-      requireInteraction: severity === 'high',
+      icon: "/favicon-192x192.svg",
+      requireInteraction: severity === "high",
       data: {
         severity,
-        timestamp: Date.now()
+        timestamp: Date.now(),
       },
-      tag: 'security-alert'
+      tag: "security-alert",
     };
 
     await this.showLocalNotification(payload);
@@ -297,21 +316,21 @@ class PushNotificationService {
 
   async notifyUpdateAvailable(): Promise<void> {
     const payload: NotificationPayload = {
-      title: 'App Update Available',
-      body: 'A new version of Code Guardian is ready to install',
-      icon: '/favicon-192x192.svg',
+      title: "App Update Available",
+      body: "A new version of Code Guardian is ready to install",
+      icon: "/favicon-192x192.svg",
       actions: [
         {
-          action: 'update',
-          title: 'Update Now',
-          icon: '/favicon-192x192.svg'
+          action: "update",
+          title: "Update Now",
+          icon: "/favicon-192x192.svg",
         },
         {
-          action: 'later',
-          title: 'Later'
-        }
+          action: "later",
+          title: "Later",
+        },
       ],
-      tag: 'app-update'
+      tag: "app-update",
     };
 
     await this.showLocalNotification(payload);

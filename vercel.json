@@ -3,20 +3,20 @@
   "framework": "nextjs",
   "cleanUrls": true,
   "trailingSlash": false,
-  
+
   "buildCommand": "npm run build",
   "installCommand": "npm ci",
   "outputDirectory": ".next",
-  
+
   "regions": ["iad1"],
-  
+
   "functions": {
     "app/api/**/*.ts": {
       "maxDuration": 30,
       "memory": 1024
     }
   },
-  
+
   "headers": [
     {
       "source": "/assets/(.*)",
@@ -136,7 +136,7 @@
       ]
     }
   ],
-  
+
   "redirects": [
     {
       "source": "/dashboard",
@@ -154,8 +154,8 @@
       "permanent": false
     }
   ],
-  
+
   "rewrites": [],
-  
+
   "crons": []
 }

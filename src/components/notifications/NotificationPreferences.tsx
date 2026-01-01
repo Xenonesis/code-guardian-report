@@ -3,18 +3,29 @@
  * Allows users to configure notification settings
  */
 
-import React, { useState, useEffect } from 'react';
-import { NotificationManager, NotificationPreferences as Preferences } from '@/services/notifications/NotificationManager';
-import { Button } from '@/components/ui/button';
-import { Switch } from '@/components/ui/switch';
-import { Label } from '@/components/ui/label';
-import { Slider } from '@/components/ui/slider';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
-import { Bell, Volume2, Layers, Clock, Archive, RotateCcw } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import {
+  NotificationManager,
+  NotificationPreferences as Preferences,
+} from "@/services/notifications/NotificationManager";
+import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+import { Slider } from "@/components/ui/slider";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { Bell, Volume2, Layers, Clock, Archive, RotateCcw } from "lucide-react";
 
 const NotificationPreferences: React.FC = () => {
-  const [preferences, setPreferences] = useState<Preferences>(NotificationManager.getPreferences());
+  const [preferences, setPreferences] = useState<Preferences>(
+    NotificationManager.getPreferences()
+  );
 
   useEffect(() => {
     const unsubscribe = NotificationManager.subscribeToPreferences((prefs) => {
@@ -29,7 +40,7 @@ const NotificationPreferences: React.FC = () => {
     });
   };
 
-  const handleCategoryToggle = (category: keyof Preferences['categories']) => {
+  const handleCategoryToggle = (category: keyof Preferences["categories"]) => {
     NotificationManager.updatePreferences({
       categories: {
         ...preferences.categories,
@@ -38,7 +49,7 @@ const NotificationPreferences: React.FC = () => {
     });
   };
 
-  const handlePriorityToggle = (priority: keyof Preferences['priorities']) => {
+  const handlePriorityToggle = (priority: keyof Preferences["priorities"]) => {
     NotificationManager.updatePreferences({
       priorities: {
         ...preferences.priorities,
@@ -72,15 +83,15 @@ const NotificationPreferences: React.FC = () => {
   };
 
   const handleReset = () => {
-    if (confirm('Reset all notification preferences to default?')) {
+    if (confirm("Reset all notification preferences to default?")) {
       NotificationManager.resetPreferences();
     }
   };
 
   const handleRequestBrowserPermission = async () => {
-    if ('Notification' in window) {
+    if ("Notification" in window) {
       const permission = await Notification.requestPermission();
-      if (permission === 'granted') {
+      if (permission === "granted") {
         NotificationManager.updatePreferences({
           showBrowserNotifications: true,
         });
@@ -112,30 +123,42 @@ const NotificationPreferences: React.FC = () => {
             <Switch
               id="enabled"
               checked={preferences.enabled}
-              onCheckedChange={() => handleToggle('enabled')}
+              onCheckedChange={() => handleToggle("enabled")}
             />
           </div>
 
           <Separator />
 
           <div className="flex items-center justify-between">
-            <Label htmlFor="browser-notifications" className="flex flex-col gap-1">
+            <Label
+              htmlFor="browser-notifications"
+              className="flex flex-col gap-1"
+            >
               <span>Browser Notifications</span>
               <span className="text-sm text-muted-foreground font-normal">
                 Show desktop notifications
               </span>
             </Label>
             <div className="flex items-center gap-2">
-              {!preferences.showBrowserNotifications && 'Notification' in window && Notification.permission === 'default' && (
-                <Button size="sm" variant="outline" onClick={handleRequestBrowserPermission}>
-                  Enable
-                </Button>
-              )}
+              {!preferences.showBrowserNotifications &&
+                "Notification" in window &&
+                Notification.permission === "default" && (
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={handleRequestBrowserPermission}
+                  >
+                    Enable
+                  </Button>
+                )}
               <Switch
                 id="browser-notifications"
                 checked={preferences.showBrowserNotifications}
-                onCheckedChange={() => handleToggle('showBrowserNotifications')}
-                disabled={'Notification' in window && Notification.permission === 'denied'}
+                onCheckedChange={() => handleToggle("showBrowserNotifications")}
+                disabled={
+                  "Notification" in window &&
+                  Notification.permission === "denied"
+                }
               />
             </div>
           </div>
@@ -155,7 +178,7 @@ const NotificationPreferences: React.FC = () => {
             <Switch
               id="play-sound"
               checked={preferences.playSound}
-              onCheckedChange={() => handleToggle('playSound')}
+              onCheckedChange={() => handleToggle("playSound")}
             />
           </div>
         </CardContent>
@@ -183,7 +206,7 @@ const NotificationPreferences: React.FC = () => {
             <Switch
               id="batching-enabled"
               checked={preferences.batchingEnabled}
-              onCheckedChange={() => handleToggle('batchingEnabled')}
+              onCheckedChange={() => handleToggle("batchingEnabled")}
             />
           </div>
 
@@ -191,7 +214,8 @@ const NotificationPreferences: React.FC = () => {
             <>
               <div className="space-y-2">
                 <Label>
-                  Batching Delay: {(preferences.batchingDelay / 1000).toFixed(1)}s
+                  Batching Delay:{" "}
+                  {(preferences.batchingDelay / 1000).toFixed(1)}s
                 </Label>
                 <Slider
                   value={[preferences.batchingDelay]}
@@ -247,15 +271,13 @@ const NotificationPreferences: React.FC = () => {
             <Switch
               id="auto-mark-read"
               checked={preferences.autoMarkAsRead}
-              onCheckedChange={() => handleToggle('autoMarkAsRead')}
+              onCheckedChange={() => handleToggle("autoMarkAsRead")}
             />
           </div>
 
           {preferences.autoMarkAsRead && (
             <div className="space-y-2">
-              <Label>
-                Delay: {preferences.autoMarkAsReadDelay}s
-              </Label>
+              <Label>Delay: {preferences.autoMarkAsReadDelay}s</Label>
               <Slider
                 value={[preferences.autoMarkAsReadDelay]}
                 onValueChange={handleAutoMarkAsReadDelayChange}
@@ -278,9 +300,7 @@ const NotificationPreferences: React.FC = () => {
             <Archive className="h-5 w-5" />
             History
           </CardTitle>
-          <CardDescription>
-            Manage notification history
-          </CardDescription>
+          <CardDescription>Manage notification history</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex items-center justify-between">
@@ -293,15 +313,13 @@ const NotificationPreferences: React.FC = () => {
             <Switch
               id="persist-history"
               checked={preferences.persistHistory}
-              onCheckedChange={() => handleToggle('persistHistory')}
+              onCheckedChange={() => handleToggle("persistHistory")}
             />
           </div>
 
           {preferences.persistHistory && (
             <div className="space-y-2">
-              <Label>
-                Max History Size: {preferences.maxHistorySize}
-              </Label>
+              <Label>Max History Size: {preferences.maxHistorySize}</Label>
               <Slider
                 value={[preferences.maxHistorySize]}
                 onValueChange={handleMaxHistorySizeChange}

@@ -56,7 +56,8 @@
     @apply mb-4 leading-relaxed;
   }
 
-  .prose ul, .prose ol {
+  .prose ul,
+  .prose ol {
     @apply mb-4 pl-6;
   }
 
@@ -115,7 +116,7 @@
   .feature-icon {
     @apply w-12 h-12 sm:w-16 sm:h-16 mb-4 sm:mb-6 text-blue-600 dark:text-blue-400 transition-transform duration-300;
   }
-  
+
   .feature-card:hover .feature-icon {
     @apply scale-110;
   }
@@ -165,11 +166,15 @@
 
   /* Background Effects */
   .bg-gradient-radial {
-    background: radial-gradient(circle at center, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+    background: radial-gradient(
+      circle at center,
+      rgba(59, 130, 246, 0.1) 0%,
+      transparent 70%
+    );
   }
 
   .bg-mesh-pattern {
-    background-image: 
+    background-image:
       linear-gradient(rgba(59, 130, 246, 0.03) 1px, transparent 1px),
       linear-gradient(90deg, rgba(59, 130, 246, 0.03) 1px, transparent 1px);
     background-size: 20px 20px;

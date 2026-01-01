@@ -1,25 +1,25 @@
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 
 interface FooterProps {
-  logo: React.ReactNode
-  brandName: string
+  logo: React.ReactNode;
+  brandName: string;
   socialLinks: Array<{
-    icon: React.ReactNode
-    href: string
-    label: string
-  }>
+    icon: React.ReactNode;
+    href: string;
+    label: string;
+  }>;
   mainLinks: Array<{
-    href: string
-    label: string
-  }>
+    href: string;
+    label: string;
+  }>;
   legalLinks: Array<{
-    href: string
-    label: string
-  }>
+    href: string;
+    label: string;
+  }>;
   copyright: {
-    text: string
-    license?: string
-  }
+    text: string;
+    license?: string;
+  };
 }
 
 export function Footer({
@@ -95,5 +95,5 @@ export function Footer({
         </div>
       </div>
     </footer>
-  )
+  );
 }

@@ -1,9 +1,15 @@
-import React from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
-import { Button } from '../ui/button';
-import { Badge } from '../ui/badge';
-import { Switch } from '../ui/switch';
-import { Separator } from '../ui/separator';
+import React from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
+import { Button } from "../ui/button";
+import { Badge } from "../ui/badge";
+import { Switch } from "../ui/switch";
+import { Separator } from "../ui/separator";
 import {
   Download,
   Wifi,
@@ -20,11 +26,16 @@ import {
   CheckCircle2,
   XCircle,
   Zap,
-  Cloud
-} from 'lucide-react';
-import { usePWA, usePWACapabilities } from '../../hooks/usePWA';
-import { formatBytes, getCacheSize, clearAppCache, getInstallationInstructions } from '../../utils/pwaUtils';
-import { toast } from 'sonner';
+  Cloud,
+} from "lucide-react";
+import { usePWA, usePWACapabilities } from "../../hooks/usePWA";
+import {
+  formatBytes,
+  getCacheSize,
+  clearAppCache,
+  getInstallationInstructions,
+} from "../../utils/pwaUtils";
+import { toast } from "sonner";
 
 export function PWAManager() {
   const {
@@ -36,7 +47,7 @@ export function PWAManager() {
     promptInstall,
     enableNotifications,
     disableNotifications,
-    updateApp
+    updateApp,
   } = usePWA();
 
   const capabilities = usePWACapabilities();
@@ -57,9 +68,9 @@ export function PWAManager() {
     try {
       await clearAppCache();
       await refreshCacheSize();
-      toast.success('Cache cleared successfully');
+      toast.success("Cache cleared successfully");
     } catch (error) {
-      toast.error('Failed to clear cache');
+      toast.error("Failed to clear cache");
     } finally {
       setIsClearing(false);
     }
@@ -68,7 +79,7 @@ export function PWAManager() {
   const handleInstall = async () => {
     const success = await promptInstall();
     if (success) {
-      toast.success('App installed successfully!');
+      toast.success("App installed successfully!");
     } else {
       toast.info(getInstallationInstructions());
     }
@@ -77,13 +88,13 @@ export function PWAManager() {
   const handleNotificationToggle = async () => {
     if (hasNotificationPermission) {
       await disableNotifications();
-      toast.info('Notifications disabled');
+      toast.info("Notifications disabled");
     } else {
       const enabled = await enableNotifications();
       if (enabled) {
-        toast.success('Notifications enabled!');
+        toast.success("Notifications enabled!");
       } else {
-        toast.error('Could not enable notifications');
+        toast.error("Could not enable notifications");
       }
     }
   };
@@ -96,9 +107,16 @@ export function PWAManager() {
             <Settings className="h-5 w-5 text-blue-600" />
             <CardTitle className="text-lg">PWA Settings</CardTitle>
           </div>
-          <Badge variant={isOnline ? "default" : "destructive"} className="flex items-center gap-1">
-            {isOnline ? <Wifi className="h-3 w-3" /> : <WifiOff className="h-3 w-3" />}
-            {isOnline ? 'Online' : 'Offline'}
+          <Badge
+            variant={isOnline ? "default" : "destructive"}
+            className="flex items-center gap-1"
+          >
+            {isOnline ? (
+              <Wifi className="h-3 w-3" />
+            ) : (
+              <WifiOff className="h-3 w-3" />
+            )}
+            {isOnline ? "Online" : "Offline"}
           </Badge>
         </div>
         <CardDescription>
@@ -113,7 +131,7 @@ export function PWAManager() {
             <Download className="h-4 w-4" />
             App Installation
           </h3>
-          
+
           <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-blue-100 dark:bg-blue-900 rounded-lg">
@@ -125,25 +143,28 @@ export function PWAManager() {
               </div>
               <div>
                 <p className="font-medium text-sm">
-                  {isInstalled ? 'App Installed' : 'Install as App'}
+                  {isInstalled ? "App Installed" : "Install as App"}
                 </p>
                 <p className="text-xs text-muted-foreground">
-                  {isInstalled 
-                    ? 'Running in standalone mode' 
-                    : 'Get faster access and work offline'}
+                  {isInstalled
+                    ? "Running in standalone mode"
+                    : "Get faster access and work offline"}
                 </p>
               </div>
             </div>
-            
+
             {!isInstalled && isInstallable && (
               <Button size="sm" onClick={handleInstall}>
                 <Download className="h-4 w-4 mr-1" />
                 Install
               </Button>
             )}
-            
+
             {isInstalled && (
-              <Badge variant="secondary" className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100">
+              <Badge
+                variant="secondary"
+                className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100"
+              >
                 <CheckCircle2 className="h-3 w-3 mr-1" />
                 Installed
               </Badge>
@@ -159,10 +180,12 @@ export function PWAManager() {
             <Bell className="h-4 w-4" />
             Notifications
           </h3>
-          
+
           <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
             <div className="flex items-center gap-3">
-              <div className={`p-2 rounded-lg ${hasNotificationPermission ? 'bg-green-100 dark:bg-green-900' : 'bg-gray-100 dark:bg-gray-800'}`}>
+              <div
+                className={`p-2 rounded-lg ${hasNotificationPermission ? "bg-green-100 dark:bg-green-900" : "bg-gray-100 dark:bg-gray-800"}`}
+              >
                 {hasNotificationPermission ? (
                   <Bell className="h-5 w-5 text-green-600" />
                 ) : (
@@ -172,13 +195,13 @@ export function PWAManager() {
               <div>
                 <p className="font-medium text-sm">Push Notifications</p>
                 <p className="text-xs text-muted-foreground">
-                  {hasNotificationPermission 
-                    ? 'You will receive security alerts' 
-                    : 'Enable to get security updates'}
+                  {hasNotificationPermission
+                    ? "You will receive security alerts"
+                    : "Enable to get security updates"}
                 </p>
               </div>
             </div>
-            
+
             <Switch
               checked={hasNotificationPermission}
               onCheckedChange={handleNotificationToggle}
@@ -195,7 +218,7 @@ export function PWAManager() {
             <HardDrive className="h-4 w-4" />
             Storage & Cache
           </h3>
-          
+
           <div className="p-3 bg-muted/50 rounded-lg space-y-3">
             <div className="flex items-center justify-between">
               <div>
@@ -208,18 +231,18 @@ export function PWAManager() {
                 <Button variant="outline" size="sm" onClick={refreshCacheSize}>
                   <RefreshCw className="h-4 w-4" />
                 </Button>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
+                <Button
+                  variant="outline"
+                  size="sm"
                   onClick={handleClearCache}
                   disabled={isClearing || cacheSize === 0}
                 >
                   <Trash2 className="h-4 w-4 mr-1" />
-                  {isClearing ? 'Clearing...' : 'Clear'}
+                  {isClearing ? "Clearing..." : "Clear"}
                 </Button>
               </div>
             </div>
-            
+
             {/* Progress bar for cache usage */}
             <div className="space-y-1">
               <div className="flex justify-between text-xs text-muted-foreground">
@@ -227,9 +250,11 @@ export function PWAManager() {
                 <span>{formatBytes(cacheSize)} / 100 MB</span>
               </div>
               <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                <div 
+                <div
                   className="h-full bg-blue-600 transition-all duration-300"
-                  style={{ width: `${Math.min((cacheSize / (100 * 1024 * 1024)) * 100, 100)}%` }}
+                  style={{
+                    width: `${Math.min((cacheSize / (100 * 1024 * 1024)) * 100, 100)}%`,
+                  }}
                 />
               </div>
             </div>
@@ -244,27 +269,27 @@ export function PWAManager() {
             <Zap className="h-4 w-4" />
             Capabilities
           </h3>
-          
+
           <div className="grid grid-cols-2 gap-2">
-            <CapabilityItem 
-              icon={Cloud} 
-              label="Service Worker" 
-              enabled={capabilities.install} 
+            <CapabilityItem
+              icon={Cloud}
+              label="Service Worker"
+              enabled={capabilities.install}
             />
-            <CapabilityItem 
-              icon={Bell} 
-              label="Push Notifications" 
-              enabled={capabilities.notifications} 
+            <CapabilityItem
+              icon={Bell}
+              label="Push Notifications"
+              enabled={capabilities.notifications}
             />
-            <CapabilityItem 
-              icon={RefreshCw} 
-              label="Background Sync" 
-              enabled={capabilities.backgroundSync} 
+            <CapabilityItem
+              icon={RefreshCw}
+              label="Background Sync"
+              enabled={capabilities.backgroundSync}
             />
-            <CapabilityItem 
-              icon={Share2} 
-              label="Native Sharing" 
-              enabled={capabilities.share} 
+            <CapabilityItem
+              icon={Share2}
+              label="Native Sharing"
+              enabled={capabilities.share}
             />
           </div>
         </div>
@@ -297,20 +322,26 @@ export function PWAManager() {
   );
 }
 
-function CapabilityItem({ 
-  icon: Icon, 
-  label, 
-  enabled 
-}: { 
-  readonly icon: React.ComponentType<{ className?: string }>; 
-  readonly label: string; 
+function CapabilityItem({
+  icon: Icon,
+  label,
+  enabled,
+}: {
+  readonly icon: React.ComponentType<{ className?: string }>;
+  readonly label: string;
   readonly enabled: boolean;
 }) {
   return (
-    <div className={`flex items-center gap-2 p-2 rounded-lg ${
-      enabled ? 'bg-green-50 dark:bg-green-900/20' : 'bg-gray-50 dark:bg-gray-800/50'
-    }`}>
-      <Icon className={`h-4 w-4 ${enabled ? 'text-green-600' : 'text-gray-400'}`} />
+    <div
+      className={`flex items-center gap-2 p-2 rounded-lg ${
+        enabled
+          ? "bg-green-50 dark:bg-green-900/20"
+          : "bg-gray-50 dark:bg-gray-800/50"
+      }`}
+    >
+      <Icon
+        className={`h-4 w-4 ${enabled ? "text-green-600" : "text-gray-400"}`}
+      />
       <span className="text-xs font-medium">{label}</span>
       {enabled ? (
         <CheckCircle2 className="h-3 w-3 text-green-500 ml-auto" />

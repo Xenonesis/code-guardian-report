@@ -3,18 +3,18 @@
  * A slide-out panel component built on top of Dialog
  */
 
-import * as React from "react"
-import * as DialogPrimitive from "@radix-ui/react-dialog"
-import { X } from "lucide-react"
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import * as DialogPrimitive from "@radix-ui/react-dialog";
+import { X } from "lucide-react";
+import { cn } from "@/lib/utils";
 
-const Sheet = DialogPrimitive.Root
+const Sheet = DialogPrimitive.Root;
 
-const SheetTrigger = DialogPrimitive.Trigger
+const SheetTrigger = DialogPrimitive.Trigger;
 
-const SheetClose = DialogPrimitive.Close
+const SheetClose = DialogPrimitive.Close;
 
-const SheetPortal = DialogPrimitive.Portal
+const SheetPortal = DialogPrimitive.Portal;
 
 const SheetOverlay = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Overlay>,
@@ -28,12 +28,13 @@ const SheetOverlay = React.forwardRef<
     {...props}
     ref={ref}
   />
-))
-SheetOverlay.displayName = DialogPrimitive.Overlay.displayName
+));
+SheetOverlay.displayName = DialogPrimitive.Overlay.displayName;
 
-interface SheetContentProps
-  extends React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> {
-  side?: "top" | "right" | "bottom" | "left"
+interface SheetContentProps extends React.ComponentPropsWithoutRef<
+  typeof DialogPrimitive.Content
+> {
+  side?: "top" | "right" | "bottom" | "left";
 }
 
 const SheetContent = React.forwardRef<
@@ -67,8 +68,8 @@ const SheetContent = React.forwardRef<
       </DialogPrimitive.Close>
     </DialogPrimitive.Content>
   </SheetPortal>
-))
-SheetContent.displayName = DialogPrimitive.Content.displayName
+));
+SheetContent.displayName = DialogPrimitive.Content.displayName;
 
 const SheetHeader = ({
   className,
@@ -81,8 +82,8 @@ const SheetHeader = ({
     )}
     {...props}
   />
-)
-SheetHeader.displayName = "SheetHeader"
+);
+SheetHeader.displayName = "SheetHeader";
 
 const SheetFooter = ({
   className,
@@ -95,8 +96,8 @@ const SheetFooter = ({
     )}
     {...props}
   />
-)
-SheetFooter.displayName = "SheetFooter"
+);
+SheetFooter.displayName = "SheetFooter";
 
 const SheetTitle = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Title>,
@@ -107,8 +108,8 @@ const SheetTitle = React.forwardRef<
     className={cn("text-lg font-semibold text-foreground", className)}
     {...props}
   />
-))
-SheetTitle.displayName = DialogPrimitive.Title.displayName
+));
+SheetTitle.displayName = DialogPrimitive.Title.displayName;
 
 const SheetDescription = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Description>,
@@ -119,8 +120,8 @@ const SheetDescription = React.forwardRef<
     className={cn("text-sm text-muted-foreground", className)}
     {...props}
   />
-))
-SheetDescription.displayName = DialogPrimitive.Description.displayName
+));
+SheetDescription.displayName = DialogPrimitive.Description.displayName;
 
 export {
   Sheet,
@@ -133,4 +134,4 @@ export {
   SheetFooter,
   SheetTitle,
   SheetDescription,
-}
+};

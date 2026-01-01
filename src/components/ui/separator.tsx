@@ -1,7 +1,7 @@
-import * as React from "react"
+import * as React from "react";
 // Note: @radix-ui/react-separator not installed, creating a simple implementation
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 interface SeparatorProps extends React.HTMLAttributes<HTMLDivElement> {
   orientation?: "horizontal" | "vertical";
@@ -25,7 +25,7 @@ const Separator = React.forwardRef<HTMLDivElement, SeparatorProps>(
       {...props}
     />
   )
-)
-Separator.displayName = "Separator"
+);
+Separator.displayName = "Separator";
 
-export { Separator }
+export { Separator };

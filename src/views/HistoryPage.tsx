@@ -5,45 +5,64 @@
  * Shows user's personal analysis history from Firebase
  */
 
-import { useState, useEffect, useCallback } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
-import { AnimatedBackground } from '@/components/pages/about/AnimatedBackground';
-import { 
-  History, 
-  Filter, 
-  Download, 
-  Trash2, 
+import { useState, useEffect, useCallback } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { AnimatedBackground } from "@/components/pages/about/AnimatedBackground";
+import {
+  History,
+  Filter,
+  Download,
+  Trash2,
   Eye,
   Calendar,
   FileText,
   Bug,
   Shield,
   User,
-  Database
-} from 'lucide-react';
-import { firebaseAnalysisStorage, type FirebaseAnalysisData } from '../services/storage/firebaseAnalysisStorage';
-import { useAuth } from '@/lib/auth-context';
-import { useToast } from '@/hooks/use-toast';
- 
+  Database,
+} from "lucide-react";
+import {
+  firebaseAnalysisStorage,
+  type FirebaseAnalysisData,
+} from "../services/storage/firebaseAnalysisStorage";
+import { useAuth } from "@/lib/auth-context";
+import { useToast } from "@/hooks/use-toast";
 
-import { logger } from '@/utils/logger';
+import { logger } from "@/utils/logger";
 interface HistoryPageProps {
   onAnalysisSelect?: (analysis: FirebaseAnalysisData) => void;
   onNavigateBack?: () => void;
 }
 
-export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPageProps) => {
+export const HistoryPage = ({
+  onAnalysisSelect,
+  onNavigateBack,
+}: HistoryPageProps) => {
   const { toast } = useToast();
-  
-  const [analysisHistory, setAnalysisHistory] = useState<FirebaseAnalysisData[]>([]);
-  const [filteredHistory, setFilteredHistory] = useState<FirebaseAnalysisData[]>([]);
+
+  const [analysisHistory, setAnalysisHistory] = useState<
+    FirebaseAnalysisData[]
+  >([]);
+  const [filteredHistory, setFilteredHistory] = useState<
+    FirebaseAnalysisData[]
+  >([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedTimeRange, setSelectedTimeRange] = useState<'all' | 'week' | 'month' | 'year'>('all');
-  const [selectedSeverity, setSelectedSeverity] = useState<'all' | 'critical' | 'high' | 'medium' | 'low'>('all');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedTimeRange, setSelectedTimeRange] = useState<
+    "all" | "week" | "month" | "year"
+  >("all");
+  const [selectedSeverity, setSelectedSeverity] = useState<
+    "all" | "critical" | "high" | "medium" | "low"
+  >("all");
   type UserStats = {
     totalAnalyses?: number;
     totalIssuesFound?: number;
@@ -56,54 +75,58 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
 
   const loadAnalysisHistory = useCallback(async () => {
     if (!currentUser?.uid) {
-      logger.debug('🚫 No user authenticated for history loading');
+      logger.debug("🚫 No user authenticated for history loading");
       return;
     }
 
-    logger.debug('📊 Loading analysis history for user:', currentUser.uid);
+    logger.debug("📊 Loading analysis history for user:", currentUser.uid);
     setIsLoading(true);
-    
+
     try {
       firebaseAnalysisStorage.setUserId(currentUser.uid);
-      logger.debug('🔧 Firebase service user ID set');
-      
-      const history = await firebaseAnalysisStorage.getUserAnalysisHistory(currentUser.uid);
+      logger.debug("🔧 Firebase service user ID set");
+
+      const history = await firebaseAnalysisStorage.getUserAnalysisHistory(
+        currentUser.uid
+      );
       logger.debug(`📈 Retrieved history: ${history.length} analyses`);
-      logger.debug('📋 History data:', history);
-      
+      logger.debug("📋 History data:", history);
+
       // Deduplicate history entries based on fileName and fileHash
       const deduplicatedHistory = history.filter((analysis, index, array) => {
-        const firstOccurrence = array.findIndex(item => 
-          item.fileName === analysis.fileName && 
-          item.fileHash === analysis.fileHash
+        const firstOccurrence = array.findIndex(
+          (item) =>
+            item.fileName === analysis.fileName &&
+            item.fileHash === analysis.fileHash
         );
         return index === firstOccurrence;
       });
-      
-      logger.debug(`🔄 Deduplicated history: ${deduplicatedHistory.length} unique analyses`);
-      
+
+      logger.debug(
+        `🔄 Deduplicated history: ${deduplicatedHistory.length} unique analyses`
+      );
+
       setAnalysisHistory(deduplicatedHistory);
-      
+
       toast({
-        title: '📊 History Loaded',
+        title: "📊 History Loaded",
         description: `Found ${deduplicatedHistory.length} unique analysis results.`,
       });
-      
+
       if (deduplicatedHistory.length === 0) {
-        logger.debug('ℹ️ No analysis history found for this user');
+        logger.debug("ℹ️ No analysis history found for this user");
         toast({
-          title: '📝 No History Yet',
-          description: 'Upload and analyze some code to see your history here.',
+          title: "📝 No History Yet",
+          description: "Upload and analyze some code to see your history here.",
         });
       }
-      
     } catch (err) {
-      logger.error('❌ Error loading analysis history:', err);
-      
+      logger.error("❌ Error loading analysis history:", err);
+
       toast({
-        title: '❌ Failed to Load History',
+        title: "❌ Failed to Load History",
         description: `Could not load your analysis history: ${err instanceof Error ? err.message : String(err)}`,
-        variant: 'destructive',
+        variant: "destructive",
       });
     } finally {
       setIsLoading(false);
@@ -142,7 +165,7 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
       const stats = await firebaseAnalysisStorage.getUserStats(currentUser.uid);
       setUserStats(stats);
     } catch (error) {
-      logger.error('Error loading user stats:', error);
+      logger.error("Error loading user stats:", error);
     }
   };
 
@@ -151,37 +174,47 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
 
     // Filter by search term
     if (searchTerm.trim()) {
-      filtered = filtered.filter(analysis => 
-        analysis.fileName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        analysis.tags?.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase())) ||
-        analysis.results.issues?.some(issue => 
-          issue.type.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          issue.message?.toLowerCase().includes(searchTerm.toLowerCase())
-        )
+      filtered = filtered.filter(
+        (analysis) =>
+          analysis.fileName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          analysis.tags?.some((tag) =>
+            tag.toLowerCase().includes(searchTerm.toLowerCase())
+          ) ||
+          analysis.results.issues?.some(
+            (issue) =>
+              issue.type.toLowerCase().includes(searchTerm.toLowerCase()) ||
+              issue.message?.toLowerCase().includes(searchTerm.toLowerCase())
+          )
       );
     }
 
     // Filter by time range
-    if (selectedTimeRange !== 'all') {
+    if (selectedTimeRange !== "all") {
       const now = new Date();
       const timeRanges = {
         week: 7 * 24 * 60 * 60 * 1000,
         month: 30 * 24 * 60 * 60 * 1000,
-        year: 365 * 24 * 60 * 60 * 1000
+        year: 365 * 24 * 60 * 60 * 1000,
       } as const;
-      
+
       const cutoff = new Date(now.getTime() - timeRanges[selectedTimeRange]);
-      filtered = filtered.filter(analysis => {
+      filtered = filtered.filter((analysis) => {
         type FireTimestamp = { toDate?: () => Date; seconds?: number };
-        const t = analysis.createdAt as FireTimestamp | Date | string | number | null | undefined;
+        const t = analysis.createdAt as
+          | FireTimestamp
+          | Date
+          | string
+          | number
+          | null
+          | undefined;
         let analysisDate: Date;
-        if (t && typeof (t as FireTimestamp).toDate === 'function') {
+        if (t && typeof (t as FireTimestamp).toDate === "function") {
           analysisDate = (t as FireTimestamp).toDate!();
-        } else if (t && typeof (t as FireTimestamp).seconds === 'number') {
+        } else if (t && typeof (t as FireTimestamp).seconds === "number") {
           analysisDate = new Date((t as FireTimestamp).seconds! * 1000);
         } else if (t instanceof Date) {
           analysisDate = t as Date;
-        } else if (typeof t === 'string' || typeof t === 'number') {
+        } else if (typeof t === "string" || typeof t === "number") {
           analysisDate = new Date(t);
         } else {
           analysisDate = new Date();
@@ -191,10 +224,10 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
     }
 
     // Filter by severity
-    if (selectedSeverity !== 'all') {
-      filtered = filtered.filter(analysis =>
-        analysis.results.issues?.some(issue => 
-          issue.severity.toLowerCase() === selectedSeverity
+    if (selectedSeverity !== "all") {
+      filtered = filtered.filter((analysis) =>
+        analysis.results.issues?.some(
+          (issue) => issue.severity.toLowerCase() === selectedSeverity
         )
       );
     }
@@ -205,21 +238,21 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
   const handleDeleteAnalysis = async (analysisId: string) => {
     try {
       await firebaseAnalysisStorage.deleteAnalysisResults(analysisId);
-      setAnalysisHistory(prev => prev.filter(a => a.id !== analysisId));
-      
+      setAnalysisHistory((prev) => prev.filter((a) => a.id !== analysisId));
+
       toast({
-        title: '🗑️ Analysis Deleted',
-        description: 'Analysis has been permanently deleted.',
+        title: "🗑️ Analysis Deleted",
+        description: "Analysis has been permanently deleted.",
       });
-      
+
       // Reload stats after deletion
       loadUserStats();
     } catch (error) {
-      logger.error('Error deleting analysis:', error);
+      logger.error("Error deleting analysis:", error);
       toast({
-        title: '❌ Delete Failed',
-        description: 'Could not delete analysis.',
-        variant: 'destructive',
+        title: "❌ Delete Failed",
+        description: "Could not delete analysis.",
+        variant: "destructive",
       });
     }
   };
@@ -228,9 +261,9 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
     if (onAnalysisSelect) {
       onAnalysisSelect(analysis);
     }
-    
+
     toast({
-      title: '👁️ Analysis Loaded',
+      title: "👁️ Analysis Loaded",
       description: `Viewing results for ${analysis.fileName}`,
     });
   };
@@ -241,35 +274,41 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
         user: {
           id: currentUser?.uid,
           email: currentUser?.email,
-          exportDate: new Date().toISOString()
+          exportDate: new Date().toISOString(),
         },
         stats: userStats,
-        analyses: filteredHistory.map(analysis => ({
+        analyses: filteredHistory.map((analysis) => ({
           ...analysis,
-          createdAt: analysis.createdAt?.toDate ? analysis.createdAt.toDate().toISOString() : analysis.createdAt,
-          updatedAt: analysis.updatedAt?.toDate ? analysis.updatedAt.toDate().toISOString() : analysis.updatedAt
-        }))
+          createdAt: analysis.createdAt?.toDate
+            ? analysis.createdAt.toDate().toISOString()
+            : analysis.createdAt,
+          updatedAt: analysis.updatedAt?.toDate
+            ? analysis.updatedAt.toDate().toISOString()
+            : analysis.updatedAt,
+        })),
       };
 
-      const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+      const blob = new Blob([JSON.stringify(exportData, null, 2)], {
+        type: "application/json",
+      });
       const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
+      const a = document.createElement("a");
       a.href = url;
-      a.download = `analysis-history-${new Date().toISOString().split('T')[0]}.json`;
+      a.download = `analysis-history-${new Date().toISOString().split("T")[0]}.json`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
 
       toast({
-        title: '📤 Export Complete',
-        description: 'Your analysis history has been exported.',
+        title: "📤 Export Complete",
+        description: "Your analysis history has been exported.",
       });
     } catch {
       toast({
-        title: '❌ Export Failed',
-        description: 'Could not export analysis history.',
-        variant: 'destructive',
+        title: "❌ Export Failed",
+        description: "Could not export analysis history.",
+        variant: "destructive",
       });
     }
   };
@@ -277,41 +316,52 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
   const formatDate = (timestamp: unknown) => {
     try {
       let date: Date;
-      
+
       type FireTimestamp = { toDate?: () => Date; seconds?: number };
-      const t = timestamp as FireTimestamp | Date | string | number | null | undefined;
-      if (t && typeof (t as FireTimestamp).toDate === 'function') {
+      const t = timestamp as
+        | FireTimestamp
+        | Date
+        | string
+        | number
+        | null
+        | undefined;
+      if (t && typeof (t as FireTimestamp).toDate === "function") {
         // Firebase Timestamp
         date = (t as FireTimestamp).toDate!();
-      } else if (t && typeof (t as FireTimestamp).seconds === 'number') {
+      } else if (t && typeof (t as FireTimestamp).seconds === "number") {
         // Firebase Timestamp object with seconds
         date = new Date((t as FireTimestamp).seconds! * 1000);
       } else if (timestamp instanceof Date) {
         // Already a Date object
         date = timestamp;
-      } else if (typeof t === 'string' || typeof t === 'number') {
+      } else if (typeof t === "string" || typeof t === "number") {
         // String or number timestamp
         date = new Date(t);
       } else {
         // Fallback to current date
-        logger.warn('Unable to parse timestamp:', t);
+        logger.warn("Unable to parse timestamp:", t);
         date = new Date();
       }
-      
-      return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+
+      return date.toLocaleDateString() + " " + date.toLocaleTimeString();
     } catch (error) {
-      logger.error('Error formatting date:', { error, timestamp });
-      return 'Invalid Date';
+      logger.error("Error formatting date:", { error, timestamp });
+      return "Invalid Date";
     }
   };
 
   const getSeverityColor = (severity: string) => {
     switch (severity.toLowerCase()) {
-      case 'critical': return 'destructive';
-      case 'high': return 'destructive';
-      case 'medium': return 'default';
-      case 'low': return 'secondary';
-      default: return 'outline';
+      case "critical":
+        return "destructive";
+      case "high":
+        return "destructive";
+      case "medium":
+        return "default";
+      case "low":
+        return "secondary";
+      default:
+        return "outline";
     }
   };
 
@@ -329,9 +379,7 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Button onClick={onNavigateBack}>
-              Back to Home
-            </Button>
+            <Button onClick={onNavigateBack}>Back to Home</Button>
           </CardContent>
         </Card>
       </div>
@@ -341,14 +389,13 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
   return (
     <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
       <AnimatedBackground />
-      
+
       {/* Decorative orbs */}
       <div className="absolute top-20 left-10 w-72 h-72 bg-violet-500/20 rounded-full blur-[128px] pointer-events-none" />
       <div className="absolute bottom-40 right-20 w-96 h-96 bg-cyan-500/15 rounded-full blur-[128px] pointer-events-none" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-fuchsia-500/10 rounded-full blur-[200px] pointer-events-none" />
-      
+
       <div className="container mx-auto py-12 space-y-8 relative z-10">
-        
         {/* Premium Header */}
         <div className="relative">
           <div className="absolute inset-0 bg-gradient-to-r from-violet-600/20 via-fuchsia-600/20 to-cyan-600/20 rounded-3xl blur-xl" />
@@ -369,19 +416,19 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
                   </div>
                 </div>
               </div>
-              
+
               <div className="flex flex-wrap gap-3">
                 {onNavigateBack && (
-                  <Button 
-                    variant="outline" 
+                  <Button
+                    variant="outline"
                     onClick={onNavigateBack}
                     className="bg-white/5 border-white/10 text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300 rounded-xl px-5"
                   >
                     Back to Home
                   </Button>
                 )}
-                <Button 
-                  onClick={exportAnalysisHistory} 
+                <Button
+                  onClick={exportAnalysisHistory}
                   className="bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white border-0 shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40 transition-all duration-300 rounded-xl px-5"
                 >
                   <Download className="h-4 w-4 mr-2" />
@@ -396,22 +443,49 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
         {userStats && (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { label: 'Total Analyses', value: userStats.totalAnalyses || 0, icon: Database, gradient: 'from-blue-500 to-cyan-500', glow: 'blue' },
-              { label: 'Issues Found', value: userStats.totalIssuesFound || 0, icon: Bug, gradient: 'from-amber-500 to-orange-500', glow: 'amber' },
-              { label: 'Files Analyzed', value: userStats.totalFilesAnalyzed || 0, icon: FileText, gradient: 'from-emerald-500 to-teal-500', glow: 'emerald' },
-              { label: 'Avg Score', value: userStats.averageSecurityScore || '--', icon: Shield, gradient: 'from-violet-500 to-purple-500', glow: 'violet' },
+              {
+                label: "Total Analyses",
+                value: userStats.totalAnalyses || 0,
+                icon: Database,
+                gradient: "from-blue-500 to-cyan-500",
+                glow: "blue",
+              },
+              {
+                label: "Issues Found",
+                value: userStats.totalIssuesFound || 0,
+                icon: Bug,
+                gradient: "from-amber-500 to-orange-500",
+                glow: "amber",
+              },
+              {
+                label: "Files Analyzed",
+                value: userStats.totalFilesAnalyzed || 0,
+                icon: FileText,
+                gradient: "from-emerald-500 to-teal-500",
+                glow: "emerald",
+              },
+              {
+                label: "Avg Score",
+                value: userStats.averageSecurityScore || "--",
+                icon: Shield,
+                gradient: "from-violet-500 to-purple-500",
+                glow: "violet",
+              },
             ].map((stat, index) => (
-              <div 
-                key={index}
-                className="group relative"
-              >
-                <div className={`absolute inset-0 bg-gradient-to-r ${stat.gradient} opacity-0 group-hover:opacity-20 rounded-2xl blur-xl transition-opacity duration-500`} />
+              <div key={index} className="group relative">
+                <div
+                  className={`absolute inset-0 bg-gradient-to-r ${stat.gradient} opacity-0 group-hover:opacity-20 rounded-2xl blur-xl transition-opacity duration-500`}
+                />
                 <div className="relative bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-2xl p-5 hover:bg-white/[0.06] hover:border-white/20 transition-all duration-300 h-full">
                   <div className="flex items-center gap-3 mb-3">
-                    <div className={`p-2 rounded-xl bg-gradient-to-br ${stat.gradient} shadow-lg`}>
+                    <div
+                      className={`p-2 rounded-xl bg-gradient-to-br ${stat.gradient} shadow-lg`}
+                    >
                       <stat.icon className="h-4 w-4 text-white" />
                     </div>
-                    <span className="text-slate-400 text-sm font-medium">{stat.label}</span>
+                    <span className="text-slate-400 text-sm font-medium">
+                      {stat.label}
+                    </span>
                   </div>
                   <p className="text-3xl font-bold text-white">{stat.value}</p>
                 </div>
@@ -440,36 +514,61 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
               <select
                 value={selectedTimeRange}
                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                  setSelectedTimeRange(e.target.value as 'all' | 'week' | 'month' | 'year')
+                  setSelectedTimeRange(
+                    e.target.value as "all" | "week" | "month" | "year"
+                  )
                 }
                 className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white focus:border-cyan-500/50 focus:ring-2 focus:ring-cyan-500/20 transition-all duration-300 cursor-pointer h-11"
                 aria-label="Time Range"
                 title="Time Range"
               >
-                <option value="all" className="bg-slate-900">📅 All Time</option>
-                <option value="week" className="bg-slate-900">📅 Past Week</option>
-                <option value="month" className="bg-slate-900">📅 Past Month</option>
-                <option value="year" className="bg-slate-900">📅 Past Year</option>
+                <option value="all" className="bg-slate-900">
+                  📅 All Time
+                </option>
+                <option value="week" className="bg-slate-900">
+                  📅 Past Week
+                </option>
+                <option value="month" className="bg-slate-900">
+                  📅 Past Month
+                </option>
+                <option value="year" className="bg-slate-900">
+                  📅 Past Year
+                </option>
               </select>
               <select
                 value={selectedSeverity}
                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
                   setSelectedSeverity(
-                    e.target.value as 'all' | 'critical' | 'high' | 'medium' | 'low'
+                    e.target.value as
+                      | "all"
+                      | "critical"
+                      | "high"
+                      | "medium"
+                      | "low"
                   )
                 }
                 className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white focus:border-cyan-500/50 focus:ring-2 focus:ring-cyan-500/20 transition-all duration-300 cursor-pointer h-11"
                 aria-label="Severity"
                 title="Severity"
               >
-                <option value="all" className="bg-slate-900">⚡ All Severities</option>
-                <option value="critical" className="bg-slate-900">🔴 Critical</option>
-                <option value="high" className="bg-slate-900">🟠 High</option>
-                <option value="medium" className="bg-slate-900">🟡 Medium</option>
-                <option value="low" className="bg-slate-900">🟢 Low</option>
+                <option value="all" className="bg-slate-900">
+                  ⚡ All Severities
+                </option>
+                <option value="critical" className="bg-slate-900">
+                  🔴 Critical
+                </option>
+                <option value="high" className="bg-slate-900">
+                  🟠 High
+                </option>
+                <option value="medium" className="bg-slate-900">
+                  🟡 Medium
+                </option>
+                <option value="low" className="bg-slate-900">
+                  🟢 Low
+                </option>
               </select>
-              <Button 
-                onClick={loadAnalysisHistory} 
+              <Button
+                onClick={loadAnalysisHistory}
                 className="w-full bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white border-0 shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 transition-all duration-300 rounded-xl h-11"
               >
                 <Filter className="h-4 w-4 mr-2" />
@@ -483,7 +582,6 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
         <div className="relative">
           <div className="absolute inset-0 bg-gradient-to-br from-fuchsia-500/5 via-transparent to-violet-500/5 rounded-3xl" />
           <div className="relative bg-white/[0.02] backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden">
-            
             {/* Section Header */}
             <div className="px-8 py-6 border-b border-white/5 bg-white/[0.02]">
               <div className="flex items-center justify-between">
@@ -497,22 +595,31 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
                   </h2>
                   {filteredHistory.length !== analysisHistory.length && (
                     <p className="text-slate-500 mt-1 text-sm">
-                      Showing {filteredHistory.length} of {analysisHistory.length} analyses
+                      Showing {filteredHistory.length} of{" "}
+                      {analysisHistory.length} analyses
                     </p>
                   )}
                 </div>
               </div>
             </div>
-            
+
             {/* Content */}
             <div className="p-6">
               {isLoading ? (
                 <div className="flex flex-col items-center justify-center py-16">
                   <div className="relative">
                     <div className="w-16 h-16 rounded-full border-4 border-white/10 border-t-violet-500 animate-spin" />
-                    <div className="absolute inset-0 w-16 h-16 rounded-full border-4 border-transparent border-r-fuchsia-500 animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1.5s' }} />
+                    <div
+                      className="absolute inset-0 w-16 h-16 rounded-full border-4 border-transparent border-r-fuchsia-500 animate-spin"
+                      style={{
+                        animationDirection: "reverse",
+                        animationDuration: "1.5s",
+                      }}
+                    />
                   </div>
-                  <span className="mt-4 text-slate-400">Loading your analysis history...</span>
+                  <span className="mt-4 text-slate-400">
+                    Loading your analysis history...
+                  </span>
                 </div>
               ) : filteredHistory.length === 0 ? (
                 <div className="text-center py-16">
@@ -523,58 +630,69 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
                     </div>
                   </div>
                   <h3 className="text-xl font-semibold text-white mt-6 mb-2">
-                    {analysisHistory.length === 0 ? 'No Analysis History Yet' : 'No Results Found'}
+                    {analysisHistory.length === 0
+                      ? "No Analysis History Yet"
+                      : "No Results Found"}
                   </h3>
                   <p className="text-slate-500 max-w-md mx-auto">
-                    {analysisHistory.length === 0 
-                      ? 'Start analyzing your code to see results here. Your analysis history will appear once you upload and scan some code.' 
-                      : 'Try adjusting your search filters to find what you\'re looking for.'}
+                    {analysisHistory.length === 0
+                      ? "Start analyzing your code to see results here. Your analysis history will appear once you upload and scan some code."
+                      : "Try adjusting your search filters to find what you're looking for."}
                   </p>
                 </div>
               ) : (
                 <div className="space-y-4">
                   {filteredHistory.map((analysis, index) => (
-                    <div 
-                      key={analysis.id} 
+                    <div
+                      key={analysis.id}
                       className="group relative"
                       style={{ animationDelay: `${index * 50}ms` }}
                     >
                       {/* Hover glow effect */}
                       <div className="absolute inset-0 bg-gradient-to-r from-violet-500/0 via-fuchsia-500/0 to-cyan-500/0 group-hover:from-violet-500/10 group-hover:via-fuchsia-500/5 group-hover:to-cyan-500/10 rounded-2xl blur-xl transition-all duration-500 opacity-0 group-hover:opacity-100" />
-                      
+
                       <div className="relative bg-white/[0.03] backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:bg-white/[0.05] hover:border-white/20 transition-all duration-300 group-hover:translate-x-1 group-hover:shadow-2xl group-hover:shadow-violet-500/10">
-                        
                         {/* Severity indicator bar */}
-                        <div className={`absolute left-0 top-0 bottom-0 w-1 rounded-l-2xl ${
-                          analysis.results.issues?.some(i => i.severity.toLowerCase() === 'critical') 
-                            ? 'bg-gradient-to-b from-red-500 to-rose-600' 
-                            : analysis.results.issues?.some(i => i.severity.toLowerCase() === 'high')
-                            ? 'bg-gradient-to-b from-orange-500 to-amber-600'
-                            : analysis.results.issues?.some(i => i.severity.toLowerCase() === 'medium')
-                            ? 'bg-gradient-to-b from-yellow-500 to-amber-500'
-                            : 'bg-gradient-to-b from-emerald-500 to-teal-600'
-                        }`} />
-                        
+                        <div
+                          className={`absolute left-0 top-0 bottom-0 w-1 rounded-l-2xl ${
+                            analysis.results.issues?.some(
+                              (i) => i.severity.toLowerCase() === "critical"
+                            )
+                              ? "bg-gradient-to-b from-red-500 to-rose-600"
+                              : analysis.results.issues?.some(
+                                    (i) => i.severity.toLowerCase() === "high"
+                                  )
+                                ? "bg-gradient-to-b from-orange-500 to-amber-600"
+                                : analysis.results.issues?.some(
+                                      (i) =>
+                                        i.severity.toLowerCase() === "medium"
+                                    )
+                                  ? "bg-gradient-to-b from-yellow-500 to-amber-500"
+                                  : "bg-gradient-to-b from-emerald-500 to-teal-600"
+                          }`}
+                        />
+
                         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5 pl-4">
                           <div className="flex-1 space-y-4">
-                            
                             {/* File name and badges */}
                             <div className="flex flex-wrap items-center gap-3">
                               <h3 className="font-bold text-lg text-white group-hover:text-violet-200 transition-colors duration-300">
                                 {analysis.fileName}
                               </h3>
-                              <span className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                                analysis.syncStatus === 'synced' 
-                                  ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' 
-                                  : 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
-                              }`}>
+                              <span
+                                className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                                  analysis.syncStatus === "synced"
+                                    ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"
+                                    : "bg-amber-500/20 text-amber-400 border border-amber-500/30"
+                                }`}
+                              >
                                 {analysis.syncStatus}
                               </span>
                               {analysis.tags && analysis.tags.length > 0 && (
                                 <div className="flex gap-1.5 flex-wrap">
                                   {analysis.tags.map((tag, idx) => (
-                                    <span 
-                                      key={idx} 
+                                    <span
+                                      key={idx}
                                       className="px-2 py-0.5 rounded-md text-xs bg-white/5 text-slate-400 border border-white/10"
                                     >
                                       {tag}
@@ -583,16 +701,32 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
                                 </div>
                               )}
                             </div>
-                            
+
                             {/* Stats grid */}
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                               {[
-                                { icon: Calendar, value: formatDate(analysis.createdAt), label: '' },
-                                { icon: FileText, value: `${analysis.results.totalFiles} files`, label: '' },
-                                { icon: Bug, value: `${analysis.results.issues?.length || 0} issues`, label: '' },
-                                { icon: Shield, value: `Score: ${analysis.results.summary?.securityScore || '--'}`, label: '' },
+                                {
+                                  icon: Calendar,
+                                  value: formatDate(analysis.createdAt),
+                                  label: "",
+                                },
+                                {
+                                  icon: FileText,
+                                  value: `${analysis.results.totalFiles} files`,
+                                  label: "",
+                                },
+                                {
+                                  icon: Bug,
+                                  value: `${analysis.results.issues?.length || 0} issues`,
+                                  label: "",
+                                },
+                                {
+                                  icon: Shield,
+                                  value: `Score: ${analysis.results.summary?.securityScore || "--"}`,
+                                  label: "",
+                                },
                               ].map((item, idx) => (
-                                <div 
+                                <div
                                   key={idx}
                                   className="flex items-center gap-2 text-sm text-slate-400 group-hover:text-slate-300 transition-colors duration-300"
                                 >
@@ -603,38 +737,49 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
                             </div>
 
                             {/* Severity badges */}
-                            {analysis.results.issues && analysis.results.issues.length > 0 && (
-                              <div className="flex gap-2 flex-wrap">
-                                {['critical', 'high', 'medium', 'low'].map((severity) => {
-                                  const count = analysis.results.issues?.filter(
-                                    issue => issue.severity.toLowerCase() === severity
-                                  ).length || 0;
-                                  
-                                  if (count === 0) return null;
-                                  
-                                  const severityStyles: Record<string, string> = {
-                                    critical: 'bg-red-500/20 text-red-400 border-red-500/30 shadow-red-500/20',
-                                    high: 'bg-orange-500/20 text-orange-400 border-orange-500/30 shadow-orange-500/20',
-                                    medium: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30 shadow-yellow-500/20',
-                                    low: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30 shadow-emerald-500/20',
-                                  };
-                                  
-                                  return (
-                                    <span 
-                                      key={severity} 
-                                      className={`px-2.5 py-1 rounded-lg text-xs font-semibold uppercase tracking-wide border shadow-lg ${severityStyles[severity]}`}
-                                    >
-                                      {severity}: {count}
-                                    </span>
-                                  );
-                                })}
-                              </div>
-                            )}
+                            {analysis.results.issues &&
+                              analysis.results.issues.length > 0 && (
+                                <div className="flex gap-2 flex-wrap">
+                                  {["critical", "high", "medium", "low"].map(
+                                    (severity) => {
+                                      const count =
+                                        analysis.results.issues?.filter(
+                                          (issue) =>
+                                            issue.severity.toLowerCase() ===
+                                            severity
+                                        ).length || 0;
+
+                                      if (count === 0) return null;
+
+                                      const severityStyles: Record<
+                                        string,
+                                        string
+                                      > = {
+                                        critical:
+                                          "bg-red-500/20 text-red-400 border-red-500/30 shadow-red-500/20",
+                                        high: "bg-orange-500/20 text-orange-400 border-orange-500/30 shadow-orange-500/20",
+                                        medium:
+                                          "bg-yellow-500/20 text-yellow-400 border-yellow-500/30 shadow-yellow-500/20",
+                                        low: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30 shadow-emerald-500/20",
+                                      };
+
+                                      return (
+                                        <span
+                                          key={severity}
+                                          className={`px-2.5 py-1 rounded-lg text-xs font-semibold uppercase tracking-wide border shadow-lg ${severityStyles[severity]}`}
+                                        >
+                                          {severity}: {count}
+                                        </span>
+                                      );
+                                    }
+                                  )}
+                                </div>
+                              )}
                           </div>
 
                           {/* Action buttons */}
                           <div className="flex items-center gap-2 lg:flex-col lg:gap-2">
-                            <Button 
+                            <Button
                               onClick={() => handleViewAnalysis(analysis)}
                               className="flex-1 lg:flex-none bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white border-0 rounded-xl shadow-lg shadow-violet-500/20 hover:shadow-violet-500/40 hover:scale-105 transition-all duration-300"
                               size="sm"
@@ -642,7 +787,7 @@ export const HistoryPage = ({ onAnalysisSelect, onNavigateBack }: HistoryPagePro
                               <Eye className="h-4 w-4 mr-1.5" />
                               View
                             </Button>
-                            <Button 
+                            <Button
                               onClick={() => handleDeleteAnalysis(analysis.id)}
                               className="bg-white/5 border border-white/10 text-slate-400 hover:bg-red-500/20 hover:border-red-500/30 hover:text-red-400 rounded-xl transition-all duration-300 hover:scale-105"
                               variant="outline"

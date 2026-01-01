@@ -13,7 +13,7 @@ export default function NotFoundContent() {
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="w-48 h-48 bg-gradient-to-br from-blue-500/10 via-indigo-500/10 to-purple-500/10 rounded-full blur-3xl" />
           </div>
-          
+
           {/* Icon */}
           <div className="relative flex justify-center">
             <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-blue-600/20 via-indigo-600/20 to-purple-600/20 border border-border/30 flex items-center justify-center backdrop-blur-sm">
@@ -31,8 +31,8 @@ export default function NotFoundContent() {
             Page Not Found
           </h2>
           <p className="text-muted-foreground max-w-md mx-auto leading-relaxed">
-            The page you&apos;re looking for doesn&apos;t exist or has been moved. 
-            Check the URL or navigate back to safety.
+            The page you&apos;re looking for doesn&apos;t exist or has been
+            moved. Check the URL or navigate back to safety.
           </p>
         </div>
 
@@ -46,7 +46,9 @@ export default function NotFoundContent() {
             Go Home
           </Link>
           <button
-            onClick={() => typeof window !== "undefined" && window.history.back()}
+            onClick={() =>
+              typeof window !== "undefined" && window.history.back()
+            }
             className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-muted/50 text-foreground font-medium hover:bg-muted transition-all border border-border/50 active:scale-[0.98]"
           >
             <ArrowLeft className="w-4 h-4" />

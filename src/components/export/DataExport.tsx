@@ -1,12 +1,32 @@
-import React, { useState, useCallback, useMemo } from 'react';
-import { Download, FileText, FileSpreadsheet, Code, Image, Loader2, CheckCircle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
-import { toast } from 'sonner';
+import React, { useState, useCallback, useMemo } from "react";
+import {
+  Download,
+  FileText,
+  FileSpreadsheet,
+  Code,
+  Image,
+  Loader2,
+  CheckCircle,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import { toast } from "sonner";
 
 export interface ExportData {
   issues: Array<{
@@ -33,7 +53,7 @@ export interface ExportData {
 }
 
 interface ExportOptions {
-  format: 'json' | 'csv' | 'pdf' | 'html' | 'xml';
+  format: "json" | "csv" | "pdf" | "html" | "xml";
   includeCodeSnippets: boolean;
   includeRecommendations: boolean;
   includeSummary: boolean;
@@ -46,13 +66,16 @@ interface DataExportProps {
   className?: string;
 }
 
-const DataExport: React.FC<DataExportProps> = ({ data, className = '' }) => {
+const DataExport: React.FC<DataExportProps> = ({ data, className = "" }) => {
   const [isExporting, setIsExporting] = useState(false);
   const [exportProgress, setExportProgress] = useState(0);
-  const [lastExport, setLastExport] = useState<{ format: string; timestamp: Date } | null>(null);
+  const [lastExport, setLastExport] = useState<{
+    format: string;
+    timestamp: Date;
+  } | null>(null);
 
   const [options, setOptions] = useState<ExportOptions>({
-    format: 'json',
+    format: "json",
     includeCodeSnippets: true,
     includeRecommendations: true,
     includeSummary: true,
@@ -60,153 +83,183 @@ const DataExport: React.FC<DataExportProps> = ({ data, className = '' }) => {
     groupByFile: false,
   });
 
-  const exportFormats = useMemo(() => [
-    {
-      value: 'json',
-      label: 'JSON',
-      description: 'Machine-readable format for APIs',
-      icon: <Code className="h-4 w-4" />,
-      mimeType: 'application/json',
-      extension: 'json',
+  const exportFormats = useMemo(
+    () => [
+      {
+        value: "json",
+        label: "JSON",
+        description: "Machine-readable format for APIs",
+        icon: <Code className="h-4 w-4" />,
+        mimeType: "application/json",
+        extension: "json",
+      },
+      {
+        value: "csv",
+        label: "CSV",
+        description: "Spreadsheet-compatible format",
+        icon: <FileSpreadsheet className="h-4 w-4" />,
+        mimeType: "text/csv",
+        extension: "csv",
+      },
+      {
+        value: "pdf",
+        label: "PDF",
+        description: "Professional report format",
+        icon: <FileText className="h-4 w-4" />,
+        mimeType: "application/pdf",
+        extension: "pdf",
+      },
+      {
+        value: "html",
+        label: "HTML",
+        description: "Web-viewable report",
+        icon: <Image className="h-4 w-4" />,
+        mimeType: "text/html",
+        extension: "html",
+      },
+      {
+        value: "xml",
+        label: "XML",
+        description: "Structured markup format",
+        icon: <Code className="h-4 w-4" />,
+        mimeType: "application/xml",
+        extension: "xml",
+      },
+    ],
+    []
+  );
+
+  const severityOptions = ["Critical", "High", "Medium", "Low"];
+
+  const updateOption = useCallback(
+    <K extends keyof ExportOptions>(key: K, value: ExportOptions[K]) => {
+      setOptions((prev) => ({ ...prev, [key]: value }));
     },
-    {
-      value: 'csv',
-      label: 'CSV',
-      description: 'Spreadsheet-compatible format',
-      icon: <FileSpreadsheet className="h-4 w-4" />,
-      mimeType: 'text/csv',
-      extension: 'csv',
+    []
+  );
+
+  const handleSeverityToggle = useCallback(
+    (severity: string) => {
+      const current = options.filterBySeverity;
+      const updated = current.includes(severity)
+        ? current.filter((s) => s !== severity)
+        : [...current, severity];
+      updateOption("filterBySeverity", updated);
     },
-    {
-      value: 'pdf',
-      label: 'PDF',
-      description: 'Professional report format',
-      icon: <FileText className="h-4 w-4" />,
-      mimeType: 'application/pdf',
-      extension: 'pdf',
+    [options.filterBySeverity, updateOption]
+  );
+
+  const filterData = useCallback(
+    (data: ExportData): ExportData => {
+      let filteredIssues = data.issues;
+
+      // Filter by severity if specified
+      if (options.filterBySeverity.length > 0) {
+        filteredIssues = filteredIssues.filter((issue) =>
+          options.filterBySeverity.includes(issue.severity)
+        );
+      }
+
+      // Remove code snippets if not included
+      if (!options.includeCodeSnippets) {
+        filteredIssues = filteredIssues.map((issue) => ({
+          ...issue,
+          codeSnippet: undefined,
+        }));
+      }
+
+      // Remove recommendations if not included
+      if (!options.includeRecommendations) {
+        filteredIssues = filteredIssues.map((issue) => ({
+          ...issue,
+          recommendation: undefined,
+        }));
+      }
+
+      return {
+        ...data,
+        issues: filteredIssues,
+        summary: options.includeSummary ? data.summary : undefined,
+      };
     },
-    {
-      value: 'html',
-      label: 'HTML',
-      description: 'Web-viewable report',
-      icon: <Image className="h-4 w-4" />,
-      mimeType: 'text/html',
-      extension: 'html',
+    [options]
+  );
+
+  const generateFileName = useCallback(
+    (format: string): string => {
+      const timestamp = new Date().toISOString().split("T")[0];
+      const projectName = data.metadata.projectName || "code-analysis";
+      return `${projectName}-report-${timestamp}.${format}`;
     },
-    {
-      value: 'xml',
-      label: 'XML',
-      description: 'Structured markup format',
-      icon: <Code className="h-4 w-4" />,
-      mimeType: 'application/xml',
-      extension: 'xml',
-    },
-  ], []);
-
-  const severityOptions = ['Critical', 'High', 'Medium', 'Low'];
-
-  const updateOption = useCallback(<K extends keyof ExportOptions>(
-    key: K,
-    value: ExportOptions[K]
-  ) => {
-    setOptions(prev => ({ ...prev, [key]: value }));
-  }, []);
-
-  const handleSeverityToggle = useCallback((severity: string) => {
-    const current = options.filterBySeverity;
-    const updated = current.includes(severity)
-      ? current.filter(s => s !== severity)
-      : [...current, severity];
-    updateOption('filterBySeverity', updated);
-  }, [options.filterBySeverity, updateOption]);
-
-  const filterData = useCallback((data: ExportData): ExportData => {
-    let filteredIssues = data.issues;
-
-    // Filter by severity if specified
-    if (options.filterBySeverity.length > 0) {
-      filteredIssues = filteredIssues.filter(issue =>
-        options.filterBySeverity.includes(issue.severity)
-      );
-    }
-
-    // Remove code snippets if not included
-    if (!options.includeCodeSnippets) {
-      filteredIssues = filteredIssues.map(issue => ({
-        ...issue,
-        codeSnippet: undefined,
-      }));
-    }
-
-    // Remove recommendations if not included
-    if (!options.includeRecommendations) {
-      filteredIssues = filteredIssues.map(issue => ({
-        ...issue,
-        recommendation: undefined,
-      }));
-    }
-
-    return {
-      ...data,
-      issues: filteredIssues,
-      summary: options.includeSummary ? data.summary : undefined,
-    };
-  }, [options]);
-
-  const generateFileName = useCallback((format: string): string => {
-    const timestamp = new Date().toISOString().split('T')[0];
-    const projectName = data.metadata.projectName || 'code-analysis';
-    return `${projectName}-report-${timestamp}.${format}`;
-  }, [data.metadata.projectName]);
+    [data.metadata.projectName]
+  );
 
   const exportAsJSON = useCallback((data: ExportData): string => {
     return JSON.stringify(data, null, 2);
   }, []);
 
-  const exportAsCSV = useCallback((data: ExportData): string => {
-    const headers = [
-      'File',
-      'Line',
-      'Severity',
-      'Type',
-      'Description',
-      ...(options.includeRecommendations ? ['Recommendation'] : []),
-      ...(options.includeCodeSnippets ? ['Code Snippet'] : []),
-    ];
+  const exportAsCSV = useCallback(
+    (data: ExportData): string => {
+      const headers = [
+        "File",
+        "Line",
+        "Severity",
+        "Type",
+        "Description",
+        ...(options.includeRecommendations ? ["Recommendation"] : []),
+        ...(options.includeCodeSnippets ? ["Code Snippet"] : []),
+      ];
 
-    const rows = data.issues.map(issue => [
-      issue.file,
-      issue.line.toString(),
-      issue.severity,
-      issue.type,
-      `"${issue.description.replace(/"/g, '""')}"`,
-      ...(options.includeRecommendations ? [`"${(issue.recommendation || '').replace(/"/g, '""')}"`] : []),
-      ...(options.includeCodeSnippets ? [`"${(issue.codeSnippet || '').replace(/"/g, '""')}"`] : []),
-    ]);
+      const rows = data.issues.map((issue) => [
+        issue.file,
+        issue.line.toString(),
+        issue.severity,
+        issue.type,
+        `"${issue.description.replace(/"/g, '""')}"`,
+        ...(options.includeRecommendations
+          ? [`"${(issue.recommendation || "").replace(/"/g, '""')}"`]
+          : []),
+        ...(options.includeCodeSnippets
+          ? [`"${(issue.codeSnippet || "").replace(/"/g, '""')}"`]
+          : []),
+      ]);
 
-    return [headers.join(','), ...rows.map(row => row.join(','))].join('\n');
-  }, [options.includeRecommendations, options.includeCodeSnippets]);
+      return [headers.join(","), ...rows.map((row) => row.join(","))].join(
+        "\n"
+      );
+    },
+    [options.includeRecommendations, options.includeCodeSnippets]
+  );
 
-  const exportAsHTML = useCallback((data: ExportData): string => {
-    const groupedIssues = options.groupByFile
-      ? data.issues.reduce((acc, issue) => {
-          if (!acc[issue.file]) acc[issue.file] = [];
-          acc[issue.file].push(issue);
-          return acc;
-        }, {} as Record<string, typeof data.issues>)
-      : { 'All Issues': data.issues };
+  const exportAsHTML = useCallback(
+    (data: ExportData): string => {
+      const groupedIssues = options.groupByFile
+        ? data.issues.reduce(
+            (acc, issue) => {
+              if (!acc[issue.file]) acc[issue.file] = [];
+              acc[issue.file].push(issue);
+              return acc;
+            },
+            {} as Record<string, typeof data.issues>
+          )
+        : { "All Issues": data.issues };
 
-    const getSeverityClass = (severity: string) => {
-      switch (severity.toLowerCase()) {
-        case 'critical': return 'color: #dc2626; font-weight: bold;';
-        case 'high': return 'color: #ea580c; font-weight: bold;';
-        case 'medium': return 'color: #d97706;';
-        case 'low': return 'color: #65a30d;';
-        default: return 'color: #6b7280;';
-      }
-    };
+      const getSeverityClass = (severity: string) => {
+        switch (severity.toLowerCase()) {
+          case "critical":
+            return "color: #dc2626; font-weight: bold;";
+          case "high":
+            return "color: #ea580c; font-weight: bold;";
+          case "medium":
+            return "color: #d97706;";
+          case "low":
+            return "color: #65a30d;";
+          default:
+            return "color: #6b7280;";
+        }
+      };
 
-    return `
+      return `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -232,19 +285,27 @@ const DataExport: React.FC<DataExportProps> = ({ data, className = '' }) => {
         <p>Generated on ${new Date().toLocaleString()}</p>
     </div>
     
-    ${options.includeSummary && data.summary ? `
+    ${
+      options.includeSummary && data.summary
+        ? `
     <div class="summary">
         <h2>Summary</h2>
         <p><strong>Total Issues:</strong> ${data.summary.totalIssues}</p>
         <p><strong>Files Analyzed:</strong> ${data.summary.totalFiles}</p>
         <p><strong>Analysis Time:</strong> ${data.summary.analysisTime}</p>
     </div>
-    ` : ''}
+    `
+        : ""
+    }
     
-    ${Object.entries(groupedIssues).map(([fileName, issues]) => `
+    ${Object.entries(groupedIssues)
+      .map(
+        ([fileName, issues]) => `
     <div class="file-group">
-        ${options.groupByFile ? `<h2 class="file-title">${fileName}</h2>` : ''}
-        ${issues.map(issue => `
+        ${options.groupByFile ? `<h2 class="file-title">${fileName}</h2>` : ""}
+        ${issues
+          .map(
+            (issue) => `
         <div class="issue">
             <div class="issue-header">
                 <span style="${getSeverityClass(issue.severity)}">${issue.severity}</span>
@@ -252,81 +313,124 @@ const DataExport: React.FC<DataExportProps> = ({ data, className = '' }) => {
                 <span>Line ${issue.line}</span>
             </div>
             <p><strong>Description:</strong> ${issue.description}</p>
-            ${options.includeRecommendations && issue.recommendation ? `
+            ${
+              options.includeRecommendations && issue.recommendation
+                ? `
             <div class="recommendation">
                 <strong>Recommendation:</strong> ${issue.recommendation}
             </div>
-            ` : ''}
-            ${options.includeCodeSnippets && issue.codeSnippet ? `
+            `
+                : ""
+            }
+            ${
+              options.includeCodeSnippets && issue.codeSnippet
+                ? `
             <div class="code-snippet">
                 <strong>Code:</strong><br>
                 <pre>${issue.codeSnippet}</pre>
             </div>
-            ` : ''}
+            `
+                : ""
+            }
         </div>
-        `).join('')}
+        `
+          )
+          .join("")}
     </div>
-    `).join('')}
+    `
+      )
+      .join("")}
 </body>
 </html>
     `.trim();
-  }, [options.groupByFile, options.includeSummary, options.includeRecommendations, options.includeCodeSnippets]);
+    },
+    [
+      options.groupByFile,
+      options.includeSummary,
+      options.includeRecommendations,
+      options.includeCodeSnippets,
+    ]
+  );
 
-  const exportAsXML = useCallback((data: ExportData): string => {
-    const escapeXml = (str: string) => {
-      return str.replace(/[<>&'"]/g, (c) => {
-        switch (c) {
-          case '<': return '&lt;';
-          case '>': return '&gt;';
-          case '&': return '&amp;';
-          case "'": return '&apos;';
-          case '"': return '&quot;';
-          default: return c;
-        }
-      });
-    };
+  const exportAsXML = useCallback(
+    (data: ExportData): string => {
+      const escapeXml = (str: string) => {
+        return str.replace(/[<>&'"]/g, (c) => {
+          switch (c) {
+            case "<":
+              return "&lt;";
+            case ">":
+              return "&gt;";
+            case "&":
+              return "&amp;";
+            case "'":
+              return "&apos;";
+            case '"':
+              return "&quot;";
+            default:
+              return c;
+          }
+        });
+      };
 
-    return `<?xml version="1.0" encoding="UTF-8"?>
+      return `<?xml version="1.0" encoding="UTF-8"?>
 <codeAnalysisReport>
     <metadata>
         <timestamp>${new Date().toISOString()}</timestamp>
-        <projectName>${escapeXml(data.metadata.projectName || 'Unknown')}</projectName>
-        <tools>${data.metadata.tools.map(tool => `<tool>${escapeXml(tool)}</tool>`).join('')}</tools>
+        <projectName>${escapeXml(data.metadata.projectName || "Unknown")}</projectName>
+        <tools>${data.metadata.tools.map((tool) => `<tool>${escapeXml(tool)}</tool>`).join("")}</tools>
     </metadata>
-    ${options.includeSummary && data.summary ? `
+    ${
+      options.includeSummary && data.summary
+        ? `
     <summary>
         <totalIssues>${data.summary.totalIssues}</totalIssues>
         <totalFiles>${data.summary.totalFiles}</totalFiles>
         <analysisTime>${escapeXml(data.summary.analysisTime)}</analysisTime>
     </summary>
-    ` : ''}
+    `
+        : ""
+    }
     <issues>
-        ${data.issues.map(issue => `
+        ${data.issues
+          .map(
+            (issue) => `
         <issue id="${escapeXml(issue.id)}">
             <file>${escapeXml(issue.file)}</file>
             <line>${issue.line}</line>
             <severity>${escapeXml(issue.severity)}</severity>
             <type>${escapeXml(issue.type)}</type>
             <description>${escapeXml(issue.description)}</description>
-            ${options.includeRecommendations && issue.recommendation ? `<recommendation>${escapeXml(issue.recommendation)}</recommendation>` : ''}
-            ${options.includeCodeSnippets && issue.codeSnippet ? `<codeSnippet><![CDATA[${issue.codeSnippet}]]></codeSnippet>` : ''}
+            ${options.includeRecommendations && issue.recommendation ? `<recommendation>${escapeXml(issue.recommendation)}</recommendation>` : ""}
+            ${options.includeCodeSnippets && issue.codeSnippet ? `<codeSnippet><![CDATA[${issue.codeSnippet}]]></codeSnippet>` : ""}
         </issue>
-        `).join('')}
+        `
+          )
+          .join("")}
     </issues>
 </codeAnalysisReport>`;
-  }, [options.includeSummary, options.includeRecommendations, options.includeCodeSnippets]);
+    },
+    [
+      options.includeSummary,
+      options.includeRecommendations,
+      options.includeCodeSnippets,
+    ]
+  );
 
-  const downloadFile = useCallback((content: string, fileName: string, mimeType: string) => {
-    const blob = new Blob([content], { type: mimeType });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = fileName;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-  }, []);
+  const downloadFile = useCallback(
+    (content: string, fileName: string, mimeType: string) => {
+      const blob = new Blob([content], { type: mimeType });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    },
+    []
+  );
 
   const handleExport = useCallback(async () => {
     setIsExporting(true);
@@ -335,24 +439,24 @@ const DataExport: React.FC<DataExportProps> = ({ data, className = '' }) => {
     try {
       // Simulate progress for better UX
       const progressInterval = setInterval(() => {
-        setExportProgress(prev => Math.min(prev + 10, 90));
+        setExportProgress((prev) => Math.min(prev + 10, 90));
       }, 100);
 
       const filteredData = filterData(data);
-      const format = exportFormats.find(f => f.value === options.format)!;
+      const format = exportFormats.find((f) => f.value === options.format)!;
       let content: string;
 
       switch (options.format) {
-        case 'json':
+        case "json":
           content = exportAsJSON(filteredData);
           break;
-        case 'csv':
+        case "csv":
           content = exportAsCSV(filteredData);
           break;
-        case 'html':
+        case "html":
           content = exportAsHTML(filteredData);
           break;
-        case 'xml':
+        case "xml":
           content = exportAsXML(filteredData);
           break;
         default:
@@ -367,16 +471,28 @@ const DataExport: React.FC<DataExportProps> = ({ data, className = '' }) => {
 
       setLastExport({ format: format.label, timestamp: new Date() });
       toast.success(`Export Complete - Report exported as ${fileName}`);
-
     } catch (error) {
-      toast.error(`Export Failed - ${error instanceof Error ? error.message : 'Unknown error occurred'}`);
+      toast.error(
+        `Export Failed - ${error instanceof Error ? error.message : "Unknown error occurred"}`
+      );
     } finally {
       setIsExporting(false);
       setTimeout(() => setExportProgress(0), 1000);
     }
-  }, [data, options, filterData, exportFormats, exportAsJSON, exportAsCSV, exportAsHTML, exportAsXML, generateFileName, downloadFile]);
+  }, [
+    data,
+    options,
+    filterData,
+    exportFormats,
+    exportAsJSON,
+    exportAsCSV,
+    exportAsHTML,
+    exportAsXML,
+    generateFileName,
+    downloadFile,
+  ]);
 
-  const selectedFormat = exportFormats.find(f => f.value === options.format)!;
+  const selectedFormat = exportFormats.find((f) => f.value === options.format)!;
   const filteredIssueCount = filterData(data).issues.length;
 
   return (
@@ -387,7 +503,8 @@ const DataExport: React.FC<DataExportProps> = ({ data, className = '' }) => {
           Export Analysis Results
         </CardTitle>
         <CardDescription>
-          Export your code analysis results in various formats for reporting and integration.
+          Export your code analysis results in various formats for reporting and
+          integration.
         </CardDescription>
       </CardHeader>
 
@@ -397,18 +514,25 @@ const DataExport: React.FC<DataExportProps> = ({ data, className = '' }) => {
           <label className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-3 block">
             Export Format
           </label>
-          <Select value={options.format} onValueChange={(value: string) => updateOption('format', value as ExportOptions['format'])}>
+          <Select
+            value={options.format}
+            onValueChange={(value: string) =>
+              updateOption("format", value as ExportOptions["format"])
+            }
+          >
             <SelectTrigger>
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              {exportFormats.map(format => (
+              {exportFormats.map((format) => (
                 <SelectItem key={format.value} value={format.value}>
                   <div className="flex items-center gap-2">
                     {format.icon}
                     <div>
                       <div className="font-medium">{format.label}</div>
-                      <div className="text-xs text-slate-500">{format.description}</div>
+                      <div className="text-xs text-slate-500">
+                        {format.description}
+                      </div>
                     </div>
                   </div>
                 </SelectItem>
@@ -419,16 +543,23 @@ const DataExport: React.FC<DataExportProps> = ({ data, className = '' }) => {
 
         {/* Export Options */}
         <div className="space-y-4">
-          <h4 className="text-sm font-medium text-slate-700 dark:text-slate-300">Export Options</h4>
-          
+          <h4 className="text-sm font-medium text-slate-700 dark:text-slate-300">
+            Export Options
+          </h4>
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="flex items-center space-x-2">
               <Checkbox
                 id="include-summary"
                 checked={options.includeSummary}
-                onCheckedChange={(checked) => updateOption('includeSummary', Boolean(checked))}
+                onCheckedChange={(checked) =>
+                  updateOption("includeSummary", Boolean(checked))
+                }
               />
-              <label htmlFor="include-summary" className="text-sm font-medium cursor-pointer">
+              <label
+                htmlFor="include-summary"
+                className="text-sm font-medium cursor-pointer"
+              >
                 Include summary
               </label>
             </div>
@@ -437,9 +568,14 @@ const DataExport: React.FC<DataExportProps> = ({ data, className = '' }) => {
               <Checkbox
                 id="include-recommendations"
                 checked={options.includeRecommendations}
-                onCheckedChange={(checked) => updateOption('includeRecommendations', Boolean(checked))}
+                onCheckedChange={(checked) =>
+                  updateOption("includeRecommendations", Boolean(checked))
+                }
               />
-              <label htmlFor="include-recommendations" className="text-sm font-medium cursor-pointer">
+              <label
+                htmlFor="include-recommendations"
+                className="text-sm font-medium cursor-pointer"
+              >
                 Include recommendations
               </label>
             </div>
@@ -448,9 +584,14 @@ const DataExport: React.FC<DataExportProps> = ({ data, className = '' }) => {
               <Checkbox
                 id="include-code-snippets"
                 checked={options.includeCodeSnippets}
-                onCheckedChange={(checked) => updateOption('includeCodeSnippets', Boolean(checked))}
+                onCheckedChange={(checked) =>
+                  updateOption("includeCodeSnippets", Boolean(checked))
+                }
               />
-              <label htmlFor="include-code-snippets" className="text-sm font-medium cursor-pointer">
+              <label
+                htmlFor="include-code-snippets"
+                className="text-sm font-medium cursor-pointer"
+              >
                 Include code snippets
               </label>
             </div>
@@ -459,10 +600,15 @@ const DataExport: React.FC<DataExportProps> = ({ data, className = '' }) => {
               <Checkbox
                 id="group-by-file"
                 checked={options.groupByFile}
-                onCheckedChange={(checked) => updateOption('groupByFile', Boolean(checked))}
-                disabled={options.format === 'csv'}
+                onCheckedChange={(checked) =>
+                  updateOption("groupByFile", Boolean(checked))
+                }
+                disabled={options.format === "csv"}
               />
-              <label htmlFor="group-by-file" className="text-sm font-medium cursor-pointer">
+              <label
+                htmlFor="group-by-file"
+                className="text-sm font-medium cursor-pointer"
+              >
                 Group by file
               </label>
             </div>
@@ -475,10 +621,14 @@ const DataExport: React.FC<DataExportProps> = ({ data, className = '' }) => {
             Filter by Severity (optional)
           </h4>
           <div className="flex flex-wrap gap-2">
-            {severityOptions.map(severity => (
+            {severityOptions.map((severity) => (
               <Badge
                 key={severity}
-                variant={options.filterBySeverity.includes(severity) ? "default" : "outline"}
+                variant={
+                  options.filterBySeverity.includes(severity)
+                    ? "default"
+                    : "outline"
+                }
                 className="cursor-pointer"
                 onClick={() => handleSeverityToggle(severity)}
               >
@@ -488,7 +638,8 @@ const DataExport: React.FC<DataExportProps> = ({ data, className = '' }) => {
           </div>
           {options.filterBySeverity.length > 0 && (
             <p className="text-xs text-slate-500 mt-2">
-              {filteredIssueCount} of {data.issues.length} issues will be exported
+              {filteredIssueCount} of {data.issues.length} issues will be
+              exported
             </p>
           )}
         </div>
@@ -509,7 +660,8 @@ const DataExport: React.FC<DataExportProps> = ({ data, className = '' }) => {
           <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
             <CheckCircle className="h-4 w-4 text-green-600" />
             <span>
-              Last exported as {lastExport.format} on {lastExport.timestamp.toLocaleString()}
+              Last exported as {lastExport.format} on{" "}
+              {lastExport.timestamp.toLocaleString()}
             </span>
           </div>
         )}
