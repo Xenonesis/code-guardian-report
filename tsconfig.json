@@ -47,9 +47,6 @@
       "@/*": [
         "./src/*"
       ],
-      "@app/*": [
-        "./src/app/*"
-      ],
       "@components/*": [
         "./src/components/*"
       ],
@@ -103,7 +100,6 @@
     "functions",
     "scripts",
     "tests",
-    "src/app",
     "**/*.test.ts",
     "**/*.test.tsx",
     "**/*.spec.ts",

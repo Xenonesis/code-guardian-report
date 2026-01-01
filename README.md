@@ -1431,33 +1431,34 @@ bun dev            # Using bun
 
 ### 🔧 Environment Setup
 
-Create a `.env` file in the root directory:
+Create a `.env.local` file in the root directory:
 
 ```env
 # Firebase Configuration (Required for cloud features)
-VITE_FIREBASE_API_KEY=your_api_key_here
-VITE_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
-VITE_FIREBASE_PROJECT_ID=your_project_id
-VITE_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
-VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
-VITE_FIREBASE_APP_ID=your_app_id
+NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key_here
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
 
-# AI Integration (Optional - for AI features)
-VITE_OPENAI_API_KEY=sk-...
-VITE_ANTHROPIC_API_KEY=sk-ant-...
-VITE_GOOGLE_API_KEY=AIza...
+# AI Integration (Server-side - Optional)
+OPENAI_API_KEY=sk-...
+ANTHROPIC_API_KEY=sk-ant-...
+GEMINI_API_KEY=AIza...
 
 # GitHub Integration (Optional - for private repos)
-VITE_GITHUB_TOKEN=ghp_...
+GITHUB_CLIENT_ID=your_client_id
+GITHUB_CLIENT_SECRET=your_secret
 ```
 
 ### 📜 Available Scripts
 
 ```mermaid
 graph LR
-    A[npm run dev] -->|Development| B[localhost:5173]
-    C[npm run build] -->|Production| D[dist/]
-    E[npm run preview] -->|Test Build| F[localhost:4173]
+    A[npm run dev] -->|Development| B[localhost:3000]
+    C[npm run build] -->|Production| D[.next/]
+    E[npm run start] -->|Start Server| F[localhost:3000]
 
     style A fill:#10B981
     style C fill:#3B82F6
@@ -1468,41 +1469,40 @@ graph LR
 | ------------------ | ----------------------------------- | -------------------------- |
 | `dev`              | Start development server            | `npm run dev`              |
 | `build`            | Build for production                | `npm run build`            |
-| `preview`          | Preview production build            | `npm run preview`          |
-| `build:production` | Build with production optimizations | `npm run build:production` |
+| `start`            | Start production server             | `npm run start`            |
+| `lint`             | Run ESLint                          | `npm run lint`             |
 | `type-check`       | Run TypeScript type checking        | `npm run type-check`       |
-| `start`            | Alias for dev command               | `npm start`                |
-| `serve`            | Alias for preview command           | `npm run serve`            |
 
 ### 🔧 Environment Setup
 
 Create a `.env.local` file in the root directory:
 
 ```env
-# AI Provider Configuration (Optional)
-VITE_OPENAI_API_URL=https://api.openai.com/v1
-VITE_ANTHROPIC_API_URL=https://api.anthropic.com/v1
-VITE_GEMINI_API_URL=https://generativelanguage.googleapis.com
+# AI Provider Configuration (Server-side - Optional)
+OPENAI_API_URL=https://api.openai.com/v1
+ANTHROPIC_API_URL=https://api.anthropic.com/v1
+GEMINI_API_URL=https://generativelanguage.googleapis.com
 
-# Keys (do not commit)
-VITE_OPENAI_API_KEY=
-VITE_ANTHROPIC_API_KEY=
-VITE_GEMINI_API_KEY=
+# API Keys (do not commit - server-side only)
+OPENAI_API_KEY=
+ANTHROPIC_API_KEY=
+GEMINI_API_KEY=
 
-# GitHub analysis
-VITE_GITHUB_TOKEN=
+# GitHub Integration (server-side)
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
 
-# Firebase (optional)
-VITE_FIREBASE_API_KEY=
-VITE_FIREBASE_AUTH_DOMAIN=
-VITE_FIREBASE_PROJECT_ID=
-VITE_FIREBASE_STORAGE_BUCKET=
-VITE_FIREBASE_MESSAGING_SENDER_ID=
-VITE_FIREBASE_APP_ID=
+# Firebase (client-side - use NEXT_PUBLIC_ prefix)
+NEXT_PUBLIC_FIREBASE_API_KEY=
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
+NEXT_PUBLIC_FIREBASE_APP_ID=
 
 # Application Settings
-VITE_APP_NAME="Code Guardian Report"
-VITE_APP_VERSION="8.6.0"
+NEXT_PUBLIC_APP_NAME="Code Guardian Enterprise"
+NEXT_PUBLIC_APP_VERSION="10.0.0"
 ```
 
 Security note: create .env.local only; ensure .gitignore excludes it.
@@ -2605,9 +2605,9 @@ Each scenario above maps to tracked OKRs stored in `md/changelogs.md`, ensuring 
 
 ### 5. Architecture Deep Dive
 
-- **App Shell**: `src/app/main.tsx` wires providers for theming, routing, and analytics. The provider registry lives in `src/app/providers` for simplified testing.
+- **App Shell**: `app/layout.tsx` is the root layout that wires providers for theming, error boundaries, and analytics. Client providers are managed via `app/ClientProviders.tsx`.
 - **Component Federation**: Feature slices (analysis, export, security, etc.) live under `src/components/<domain>` and follow a common index barrel defined in `src/components/index.ts`.
-- **Config Surface**: `src/config/constants.ts`, `src/config/security.ts`, and `src/config/pwa.ts` expose typed configuration. Every entry is validated at build time using Vite's env typing (`vite-env.d.ts`).
+- **Config Surface**: `src/config/constants.ts`, `src/config/security.ts`, and `src/config/pwa.ts` expose typed configuration. Environment variables are validated at runtime using Next.js conventions.
 - **Hooks Library**: Responsive behavior, toasts, and AI helper utilities reside in `src/hooks`. Hooks are tree-shakable and fully typed.
 - **Serverless Tier**: `functions/src/index.ts` ships Firebase callable functions that orchestrate long-running jobs, push notification scheduling, and secret rotation triggers.
 - **Edge Analytics**: `api/analytics.ts` plus nested modules under `api/analytics` and `api/push` expose Vercel edge handlers for near-instant insights.
@@ -2653,14 +2653,13 @@ Each scenario above maps to tracked OKRs stored in `md/changelogs.md`, ensuring 
 
 ### 8. Configuration & Secrets Reference
 
-| Variable                 | Required | Purpose                                | Notes                                          |
-| ------------------------ | -------- | -------------------------------------- | ---------------------------------------------- | ----- | ---- | ---- | ------- |
-| `VITE_OPENAI_API_KEY`    | Optional | Enables OpenAI-backed AI explanations. | Store in platform secret manager; redact logs. |
-| `VITE_ANTHROPIC_API_KEY` | Optional | Claude inference provider.             | Supports failover rotation.                    |
-| `VITE_GEMINI_API_KEY`    | Optional | Google Gemini provider.                | Required for hybrid analysis.                  |
-| `VITE_FIREBASE_*`        | Optional | Enables sync with Firestore + Auth.    | Use emulator values locally.                   |
-| `VITE_GITHUB_TOKEN`      | Optional | GitHub repo introspection.             | PAT scopes: `repo:read`, `code:read`.          |
-| `VITE_LOG_LEVEL`         | Optional | Overrides default `info` logging.      | Accepts `trace                                 | debug | info | warn | error`. |
+| Variable                       | Required | Purpose                                | Notes                                          |
+| ------------------------------ | -------- | -------------------------------------- | ---------------------------------------------- |
+| `OPENAI_API_KEY`               | Optional | Enables OpenAI-backed AI explanations. | Store in platform secret manager; server-side only. |
+| `ANTHROPIC_API_KEY`            | Optional | Claude inference provider.             | Supports failover rotation; server-side only.  |
+| `GEMINI_API_KEY`               | Optional | Google Gemini provider.                | Required for hybrid analysis; server-side only.|
+| `NEXT_PUBLIC_FIREBASE_*`       | Optional | Enables sync with Firestore + Auth.    | Use emulator values locally.                   |
+| `GITHUB_CLIENT_ID/SECRET`      | Optional | GitHub OAuth integration.              | For GitHub repository analysis.                |
 
 Secrets should be injected via your deployment platform. Never commit `.env.local`—the template in this repo is intentionally blank.
 
@@ -2731,7 +2730,7 @@ Run internal table-top exercises quarterly to validate the incident workflows do
 
 **Q:** How do I plug into an on-prem AI model?
 
-**A:** Configure `VITE_OPENAI_API_URL` (or equivalent) to your proxy endpoint and ensure CORS plus VPC routing allowlist the origin.
+**A:** Configure `OPENAI_API_URL` (or equivalent) environment variable to your proxy endpoint and ensure CORS plus VPC routing allowlist the origin.
 
 **Q:** Can I scope scans to sub-directories?
 
@@ -2753,8 +2752,7 @@ Run internal table-top exercises quarterly to validate the incident workflows do
 
 - 🔗 [md/CODE_OF_CONDUCT.md](md/CODE_OF_CONDUCT.md)
 - 🔗 [md/CONTRIBUTING.md](md/CONTRIBUTING.md)
-- 🔗 [tsconfig.app.json](tsconfig.app.json)
-- 🔗 [vite.config.ts](vite.config.ts)
+- 🔗 [next.config.ts](next.config.ts)
 - 🔗 [scripts/run-all-tests.ts](scripts/run-all-tests.ts)
 
 > **Tip:** Bookmark this extended hub so onboarding engineers can self-serve the majority of answers before opening a support ticket.
@@ -5488,8 +5486,8 @@ jobs:
     needs: install
     runs-on: ubuntu-latest
     env:
-      VITE_OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-      VITE_FIREBASE_API_KEY: ${{ secrets.FIREBASE_KEY }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.FIREBASE_KEY }}
     steps:
       - uses: actions/checkout@v4
         with:

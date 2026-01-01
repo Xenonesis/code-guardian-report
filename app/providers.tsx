@@ -16,7 +16,7 @@ import { PWAInstallPrompt } from "@/components/pwa/PWAInstallPrompt";
 import { PWAUpdateNotification } from "@/components/pwa/PWAUpdateNotification";
 import { OfflineIndicator } from "@/components/pwa/OfflineIndicator";
 import { PWAMobileBanner } from "@/components/pwa/PWAMobileBanner";
-import { SmoothScrollProvider } from "@/app/providers/SmoothScrollProvider";
+import { SmoothScrollProvider } from "./providers/SmoothScrollProvider";
 import { ScrollToTop } from "@/components/common/ScrollToTop";
 
 interface ProvidersProps {

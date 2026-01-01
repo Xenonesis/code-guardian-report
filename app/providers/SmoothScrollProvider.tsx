@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, createContext, useRef as useReactRef, useState } from "react";
-import dynamic from "next/dynamic";
 
 // Dynamically import Lenis only on client
 const LenisContext = createContext<any | null>(null);

@@ -1,17 +1,7 @@
 {
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "devCommand": "npm run dev",
-  "installCommand": "npm install",
-  "framework": "vite",
+  "framework": "nextjs",
   "cleanUrls": true,
   "trailingSlash": false,
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
-  ],
   "headers": [
     {
       "source": "/assets/(.*)",
@@ -91,11 +81,5 @@
       ]
     }
   ],
-  "build": {
-    "env": {
-      "NODE_ENV": "production",
-      "VITE_APP_VERSION": "9.0.0"
-    }
-  },
   "crons": []
 }

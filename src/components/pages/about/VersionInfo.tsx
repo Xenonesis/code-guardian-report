@@ -6,7 +6,7 @@ export const VersionInfo: React.FC = () => {
   const techStack = [
     { name: 'React', icon: <Code2 className="h-4 w-4" />, color: 'text-blue-500' },
     { name: 'TypeScript', icon: <Layers className="h-4 w-4" />, color: 'text-blue-600' },
-    { name: 'Vite', icon: <Zap className="h-4 w-4" />, color: 'text-purple-500' },
+    { name: 'Next.js', icon: <Zap className="h-4 w-4" />, color: 'text-black dark:text-white' },
     { name: 'Tailwind', icon: <Cpu className="h-4 w-4" />, color: 'text-teal-500' }
   ];
 

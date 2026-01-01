@@ -78,8 +78,8 @@ const MeetDeveloperSection = () => {
   ];
 
   const technologies = [
-    "React 18.3.1", "TypeScript 5.5.3", "Vite 6.3.5", "Tailwind CSS 3.4.11",
-    "AI Services (GPT-4, Claude)", "Recharts 2.15.3", "Radix UI", "shadcn/ui",
+    "React 19.x", "TypeScript 5.x", "Next.js 15.x", "Tailwind CSS 4.x",
+    "AI Services (GPT-4, Claude)", "Recharts 3.x", "Radix UI", "shadcn/ui",
     "Node.js", "Static Analysis Tools", "Security Frameworks", "Persistent Storage API",
     "Web Crypto API", "IndexedDB", "Service Workers", "Bundle Analysis"
   ];

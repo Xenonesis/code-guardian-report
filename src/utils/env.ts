@@ -1,6 +1,6 @@
 /**
  * Environment utilities for Next.js
- * Replaces import.meta.env usage from Vite
+ * Uses process.env with NEXT_PUBLIC_ prefix for client-side variables
  */
 
 export const isDev = process.env.NODE_ENV === 'development';
