@@ -17,6 +17,7 @@ import {
   ChevronDown,
   Sparkles,
 } from "lucide-react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { cn } from "@/lib/utils";
@@ -156,20 +157,23 @@ export const Navigation: React.FC<NavigationProps> = ({
     >
       <div className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14 xs:h-15 sm:h-16 md:h-[64px] lg:h-[68px]">
-          {/* Code Guardian Logo - Enhanced */}
+            {/* Code Guardian Logo - Enhanced */}
           <button
             onClick={() => handleNavigate("home")}
             className="flex items-center gap-1.5 xs:gap-2 sm:gap-3 group transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] flex-shrink-0 min-w-0"
           >
-            {/* Shield Icon with Glow Effect */}
+            {/* Logo Image */}
             <div className="relative flex-shrink-0">
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl blur-lg opacity-40 group-hover:opacity-60 transition-opacity duration-300"></div>
-              <div className="relative p-1.5 xs:p-2 sm:p-2.5 rounded-xl bg-gradient-to-br from-blue-500 via-blue-600 to-indigo-600 shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:rotate-3">
-                <Shield
-                  className="h-4 w-4 xs:h-5 xs:w-5 sm:h-6 sm:w-6 text-white drop-shadow-sm"
-                  strokeWidth={2.5}
+              <div className="absolute inset-0 bg-blue-500/20 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="relative h-8 w-8 xs:h-9 xs:w-9 sm:h-10 sm:w-10 overflow-hidden rounded-lg transition-transform duration-300 group-hover:rotate-3">
+                <Image
+                  src="/logo.png"
+                  alt="Code Guardian Logo"
+                  width={40}
+                  height={40}
+                  className="object-contain"
+                  priority
                 />
-                <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-white/25 to-transparent"></div>
               </div>
             </div>
 
@@ -217,7 +221,7 @@ export const Navigation: React.FC<NavigationProps> = ({
 
                   {/* Pro Badge */}
                   {item.badge && (
-                    <span className="ml-0.5 px-1.5 py-0.5 text-[9px] font-bold bg-gradient-to-r from-amber-400 to-orange-500 text-white rounded-full uppercase tracking-wider shadow-sm flex-shrink-0">
+                    <span className="ml-1 px-1.5 py-0.5 text-[0.6rem] font-bold bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-300 rounded border border-blue-200 dark:border-blue-800 uppercase tracking-wider flex-shrink-0">
                       {item.badge}
                     </span>
                   )}

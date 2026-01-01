@@ -23,7 +23,7 @@ export const TabNavigation: React.FC<TabNavigationProps> = ({
     >
       <TabsTrigger
         value="upload"
-        className="relative flex items-center justify-center gap-0 sm:gap-1 py-2 px-3 sm:px-4 text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300 data-[state=active]:text-white data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-indigo-500 data-[state=active]:shadow-lg transition-all duration-300 focus-ring hover-lift z-10 rounded-full min-w-[56px] sm:min-w-[110px] flex-shrink-0 snap-start"
+        className="relative cursor-pointer flex items-center justify-center gap-0 sm:gap-1 py-2 px-3 sm:px-4 text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300 data-[state=active]:text-white data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-indigo-500 data-[state=active]:shadow-lg transition-all duration-300 focus-ring hover-lift z-10 rounded-full min-w-[56px] sm:min-w-[110px] flex-shrink-0 snap-start"
         role="tab"
         aria-controls="upload-panel"
         aria-selected={currentTab === "upload"}
@@ -37,7 +37,7 @@ export const TabNavigation: React.FC<TabNavigationProps> = ({
 
       <TabsTrigger
         value="ai-config"
-        className="relative flex items-center justify-center gap-0 sm:gap-1 py-2 px-3 sm:px-4 text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300 data-[state=active]:text-white data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:shadow-lg transition-all duration-300 focus-ring hover-lift z-10 rounded-full min-w-[56px] sm:min-w-[110px] flex-shrink-0 snap-start"
+        className="relative cursor-pointer flex items-center justify-center gap-0 sm:gap-1 py-2 px-3 sm:px-4 text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300 data-[state=active]:text-white data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:shadow-lg transition-all duration-300 focus-ring hover-lift z-10 rounded-full min-w-[56px] sm:min-w-[110px] flex-shrink-0 snap-start"
         role="tab"
         aria-controls="ai-config-panel"
         aria-selected={currentTab === "ai-config"}
@@ -51,7 +51,7 @@ export const TabNavigation: React.FC<TabNavigationProps> = ({
 
       <TabsTrigger
         value="prompts"
-        className="relative flex items-center justify-center gap-0 sm:gap-1 py-2 px-3 sm:px-4 text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300 data-[state=active]:text-white data-[state=active]:bg-gradient-to-r data-[state=active]:from-orange-500 data-[state=active]:to-red-500 data-[state=active]:shadow-lg transition-all duration-300 focus-ring hover-lift z-10 rounded-full min-w-[56px] sm:min-w-[110px] flex-shrink-0 snap-start"
+        className="relative cursor-pointer flex items-center justify-center gap-0 sm:gap-1 py-2 px-3 sm:px-4 text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300 data-[state=active]:text-white data-[state=active]:bg-gradient-to-r data-[state=active]:from-orange-500 data-[state=active]:to-red-500 data-[state=active]:shadow-lg transition-all duration-300 focus-ring hover-lift z-10 rounded-full min-w-[56px] sm:min-w-[110px] flex-shrink-0 snap-start"
         role="tab"
         aria-controls="prompts-panel"
         aria-selected={currentTab === "prompts"}
@@ -65,7 +65,7 @@ export const TabNavigation: React.FC<TabNavigationProps> = ({
 
       <TabsTrigger
         value="results"
-        className={`relative flex items-center justify-center gap-0 sm:gap-1 py-2 px-3 sm:px-4 text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200 data-[state=active]:text-white data-[state=active]:bg-gradient-to-r data-[state=active]:from-emerald-500 data-[state=active]:to-teal-500 data-[state=active]:shadow-lg transition-all duration-300 focus-ring disabled:opacity-70 disabled:cursor-not-allowed hover-lift z-10 rounded-full min-w-[56px] sm:min-w-[110px] flex-shrink-0 snap-start ${
+        className={`relative cursor-pointer flex items-center justify-center gap-0 sm:gap-1 py-2 px-3 sm:px-4 text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200 data-[state=active]:text-white data-[state=active]:bg-gradient-to-r data-[state=active]:from-emerald-500 data-[state=active]:to-teal-500 data-[state=active]:shadow-lg transition-all duration-300 focus-ring disabled:opacity-70 disabled:cursor-not-allowed hover-lift z-10 rounded-full min-w-[56px] sm:min-w-[110px] flex-shrink-0 snap-start ${
           isRedirecting
             ? "animate-pulse bg-gradient-to-r from-emerald-100 to-teal-100 dark:from-emerald-900/30 dark:to-teal-900/30"
             : ""

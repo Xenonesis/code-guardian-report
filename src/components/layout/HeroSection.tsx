@@ -28,8 +28,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       {/* Enhanced Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Multi-layered Gradient Orbs with Enhanced Animations */}
-        <div className="absolute top-1/4 left-1/4 w-40 h-40 sm:w-56 sm:h-56 md:w-80 md:h-80 bg-gradient-to-r from-blue-500/30 via-purple-500/20 to-indigo-500/30 rounded-full blur-3xl animate-float-slow"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 bg-gradient-to-r from-emerald-500/25 via-teal-500/20 to-cyan-500/25 rounded-full blur-3xl animate-float-delayed"></div>
+        <div className="absolute top-1/4 left-1/4 w-40 h-40 sm:w-56 sm:h-56 md:w-80 md:h-80 bg-gradient-to-r from-blue-500/15 via-purple-500/10 to-indigo-500/15 rounded-full blur-3xl animate-float-slow"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 bg-gradient-to-r from-emerald-500/15 via-teal-500/10 to-cyan-500/15 rounded-full blur-3xl animate-float-delayed"></div>
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-56 h-56 sm:w-80 sm:h-80 md:w-[28rem] md:h-[28rem] bg-gradient-to-r from-pink-500/15 via-rose-500/10 to-orange-500/15 rounded-full blur-3xl animate-pulse-slow"></div>
 
         {/* Additional Floating Orbs for Depth */}
@@ -43,18 +43,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         <div className="absolute top-32 right-12 sm:top-40 sm:right-40 animate-float-delayed">
           <Code className="h-6 w-6 sm:h-9 sm:w-9 text-purple-500/50" />
         </div>
-        <div className="absolute bottom-32 left-12 sm:bottom-40 sm:left-40 animate-bounce-slow">
-          <Bot className="h-6 w-6 sm:h-8 sm:w-8 text-emerald-500/50" />
-        </div>
-        <div className="absolute top-1/3 right-8 sm:right-20 animate-float">
-          <Sparkles className="h-4 w-4 sm:h-6 sm:w-6 text-cyan-500/40" />
-        </div>
-        <div className="absolute bottom-1/3 right-1/3 animate-float-delayed">
-          <Stars className="h-5 w-5 sm:h-7 sm:w-7 text-pink-500/40" />
-        </div>
-        <div className="absolute top-2/3 left-8 sm:left-20 animate-bounce-slow">
-          <Zap className="h-5 w-5 sm:h-7 sm:w-7 text-amber-500/40" />
-        </div>
+        <div className="hidden"></div>
+        <div className="hidden"></div>
+        <div className="hidden"></div>
+        <div className="hidden"></div>
       </div>
 
       <div className="relative z-10 container mx-auto mobile-container">

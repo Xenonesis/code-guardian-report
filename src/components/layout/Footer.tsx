@@ -18,6 +18,7 @@ import {
   Linkedin,
   ExternalLink,
 } from "lucide-react";
+import Image from "next/image";
 import { APP_VERSION_WITH_PREFIX } from "@/utils/version";
 
 interface FooterProps {
@@ -111,9 +112,14 @@ export const Footer: React.FC<FooterProps> = ({ className = "" }) => {
           {/* Brand Section */}
           <div className="lg:col-span-2">
             <div className="flex items-center gap-2.5 sm:gap-3 lg:gap-4 mb-4 sm:mb-5 lg:mb-6">
-              <div className="relative p-2 sm:p-2.5 lg:p-3 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg sm:rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-300">
-                <Shield className="h-6 w-6 sm:h-6 sm:w-6 lg:h-7 lg:w-7 text-white" />
-                <div className="absolute inset-0 rounded-lg sm:rounded-xl bg-gradient-to-br from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="relative h-10 w-10 sm:h-12 sm:w-12 overflow-hidden rounded-xl transition-all duration-300 hover:scale-105">
+                <Image
+                  src="/logo.png"
+                  alt="Code Guardian Logo"
+                  width={48}
+                  height={48}
+                  className="object-contain"
+                />
               </div>
               <div>
                 <h3 className="text-xl sm:text-xl lg:text-2xl font-bold bg-gradient-to-r from-slate-900 to-blue-900 dark:from-white dark:to-blue-100 bg-clip-text text-transparent">
