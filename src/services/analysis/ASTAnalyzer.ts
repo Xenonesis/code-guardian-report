@@ -82,8 +82,8 @@ export class ASTAnalyzer {
           sourceType: 'module',
           locations: true
         }) as unknown as ASTNode;
-      } catch (fallbackError) {
-        logger.warn(`Failed to parse ${filename}:`, fallbackError);
+      } catch {
+        // TypeScript/JSX syntax that acorn can't handle - skip silently
         return null;
       }
     }

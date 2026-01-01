@@ -33,16 +33,13 @@ const requiredEnvVars = [
 ];
 
 const missingVars = requiredEnvVars.filter(varName => !process.env[varName]);
-// Only throw if we are not in a test environment (checking for mock values)
-if (missingVars.length > 0 && firebaseConfig.apiKey === 'mock-api-key' && process.env.NODE_ENV !== 'test' && typeof window !== 'undefined' && !(window as any).isTest) {
-  // In test environment we might accept mocks, but let's log warning
-  logger.warn('Missing Firebase environment variables, using mocks:', missingVars);
-} else if (missingVars.length > 0 && process.env.NODE_ENV !== 'test') {
-   // If we are not in test and not using mocks (which shouldn't happen with above logic but for safety)
-   // Actually the above logic sets mocks if env is missing.
-   // So we just log a warning if we are using mocks in what might be production?
-   // But we don't know if it is production.
-   // Let's just relax the check for now to allow tests to run.
+// Only log warning once in development (not in tests)
+if (typeof window !== 'undefined' && !(window as any).__firebaseEnvWarningShown) {
+  if (missingVars.length > 0 && firebaseConfig.apiKey === 'mock-api-key' && process.env.NODE_ENV !== 'test' && !(window as any).isTest) {
+    // Log debug instead of warn to reduce console noise in development
+    logger.debug('Firebase: Using mock configuration (env vars not set)');
+    (window as any).__firebaseEnvWarningShown = true;
+  }
 }
 
 // Initialize Firebase

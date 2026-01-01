@@ -114,10 +114,8 @@ export class EnhancedAnalysisEngine {
 
     if (zipFile) {
       try {
-        logger.debug('Extracting ZIP contents');
         const fileContents = await this.extractZipContents(zipFile);
         totalFiles = fileContents.length;
-        logger.info(`Extracted ${totalFiles} files for analysis`);
 
         if (totalFiles === 0) {
           throw new Error('This ZIP file does not contain any code files. Please upload a ZIP file with source code (.js, .py, .java, .ts, etc.)');
@@ -130,47 +128,37 @@ export class EnhancedAnalysisEngine {
         }
 
         // Initialize smart language detection
-        logger.debug('Initializing analysis context');
         await this.securityAnalyzer.initializeAnalysisContext(fileContents);
 
         // Phase 1: Pattern-based and framework-specific analysis
-        logger.debug('Phase 1: Pattern-based analysis');
         const analysisPromises = fileContents.map(fileContent => {
           const fileIssues = this.securityAnalyzer.analyzeFile(fileContent.filename, fileContent.content);
           const lines = fileContent.content.split('\n').length;
           return { fileIssues, lines };
         });
 
-        // Combine pattern-based results
         for (const result of analysisPromises) {
           allIssues = [...allIssues, ...result.fileIssues];
           linesAnalyzed += result.lines;
         }
-        logger.debug(`Phase 1 complete. Found ${allIssues.length} issues`);
 
         // Phase 2: AST-based deep analysis
-        logger.debug('Phase 2: AST-based deep analysis');
         for (const fileContent of fileContents) {
           const astIssues = this.astAnalyzer.analyzeAST(fileContent.filename, fileContent.content);
           allIssues = [...allIssues, ...astIssues];
         }
-        logger.debug(`Phase 2 complete. Total issues: ${allIssues.length}`);
 
         // Phase 3: Data flow and taint analysis
-        logger.debug('Phase 3: Data flow analysis');
         const dataFlowIssues = this.dataFlowAnalyzer.analyzeDataFlow(fileContents);
         allIssues = [...allIssues, ...dataFlowIssues];
-        logger.debug(`Phase 3 complete. Total issues: ${allIssues.length}`);
 
         // Phase 4: Dependency vulnerability scanning
-        logger.debug('Phase 4: Dependency scanning');
         try {
           // Map FileContent to expected format with 'name' property
           const filesForScanning = fileContents.map(f => ({ name: f.filename, content: f.content }));
           dependencyAnalysis = await this.dependencyScanner.scanDependencies(filesForScanning);
-          logger.debug('Phase 4 complete');
-        } catch (error) {
-          logger.warn('Dependency scanning failed:', error);
+        } catch {
+          // Dependency scanning is optional - continue without it
           dependencyAnalysis = undefined;
         }
       } catch (error) {

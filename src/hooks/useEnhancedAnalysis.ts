@@ -45,10 +45,8 @@ export const useEnhancedAnalysis = () => {
   useEffect(() => {
     if (user?.uid) {
       firebaseAnalysisStorage.setUserId(user.uid);
-      logger.debug('✅ Firebase storage userId synced:', user.uid);
     } else {
       firebaseAnalysisStorage.setUserId(null);
-      logger.debug('ℹ️ Firebase storage userId cleared (user logged out)');
     }
   }, [user?.uid]);
 
@@ -106,20 +104,6 @@ export const useEnhancedAnalysis = () => {
         // CRITICAL: Always use the latest user.uid from auth context
         const currentUserId = userId || user?.uid;
         
-        logger.debug('🔄 Analysis Complete - User Info:', {
-          providedUserId: userId,
-          currentUserId: currentUserId,
-          hasCurrentUser: !!user,
-          userObject: user ? { uid: user.uid, email: user.email } : null,
-          fileName: fileToUse.name,
-          willStoreInFirebase: !!currentUserId
-        });
-        
-        if (!currentUserId) {
-          logger.warn('⚠️ WARNING: No user ID available - Firebase storage will be skipped');
-          logger.warn('User auth state:', { user, hasUser: !!user, uid: user?.uid });
-        }
-        
         const storageResult = await analysisIntegrationService.handleAnalysisComplete(
           results,
           fileToUse,
@@ -132,31 +116,12 @@ export const useEnhancedAnalysis = () => {
           updateStorageStats();
         }
         
-        // Enhanced logging for debugging
-        logger.debug('📊 Final Storage Result:', {
-          ...storageResult,
-          localSuccess: storageResult.local.success,
-          firebaseSuccess: storageResult.firebase.success,
-          firebaseId: storageResult.firebase.analysisId,
-          localError: storageResult.local.error,
-          firebaseError: storageResult.firebase.error
-        });
-        
-        // Alert user if Firebase storage failed
+        // Log errors for debugging
         if (!storageResult.firebase.success && currentUserId) {
-          logger.error('❌ Firebase storage failed despite having userId:', {
-            userId: currentUserId,
-            error: storageResult.firebase.error
-          });
+          logger.error('Firebase storage failed:', storageResult.firebase.error);
         }
       } catch (error) {
-        logger.error('❌ Error storing analysis results:', error);
-        logger.error('Error details:', {
-          message: error instanceof Error ? error.message : 'Unknown error',
-          stack: error instanceof Error ? error.stack : undefined,
-          selectedFile: fileToUse?.name,
-          userId: user?.uid
-        });
+        logger.error('Error storing analysis results:', error instanceof Error ? error.message : 'Unknown error');
       }
     } else {
       logger.error('❌ No selected file - cannot store analysis results');

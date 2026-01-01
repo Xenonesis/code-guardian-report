@@ -349,10 +349,15 @@ class PWAAnalyticsService {
     return JSON.stringify(report, null, 2);
   }
 
+  private loggedEvents = new Set<string>();
+
   private async sendAnalytics(event: string, data?: any): Promise<void> {
     // Skip API calls in development mode or when no backend is available
     if (process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost') {
-      logger.debug('PWA Analytics (dev mode):', { event, data, timestamp: Date.now(), session: this.getSessionId() });
+      // Only log each event type once to reduce console noise
+      if (!this.loggedEvents.has(event)) {
+        this.loggedEvents.add(event);
+      }
       return;
     }
 

@@ -432,17 +432,6 @@ export class LanguageDetectionService {
 
     const analysisTime = Date.now() - this.startTime;
 
-    // Log detection completion for debugging
-    // @ts-ignore - console is available in browser/node
-    // eslint-disable-next-line
-    console?.log?.('✅ REAL LANGUAGE DETECTION COMPLETED:', {
-      primaryLanguage: primaryLanguage.name,
-      totalLanguages: allLanguages.length,
-      frameworks: frameworks.length,
-      totalFiles: files.length,
-      analyzedFiles: this.fileAnalyses.length
-    });
-
     return {
       primaryLanguage,
       allLanguages,

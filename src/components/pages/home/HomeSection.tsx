@@ -65,28 +65,18 @@ export const HomeSection: React.FC<HomeSectionProps> = ({ theme = 'system' }) =>
   const [currentAnalysisFile, setCurrentAnalysisFile] = useState<File | null>(null);
   
   const handleFileSelectWithTracking = useCallback((file: File) => {
-    logger.debug('🔄 File selected with tracking:', file.name);
     setCurrentAnalysisFile(file);
     handleFileSelect(file);
   }, [handleFileSelect]);
   
   const handleAnalysisCompleteWithFile = useCallback(async (results: AnalysisResults, file?: File) => {
-    logger.debug('🔄 Analysis complete with file:', { 
-      hasFile: !!file, 
-      fileName: file?.name,
-      hasCurrentAnalysisFile: !!currentAnalysisFile,
-      hasSelectedFile: !!selectedFile 
-    });
-    
     // Use the file parameter from useFileUpload if available, otherwise use currentAnalysisFile
     const fileToUse = file || currentAnalysisFile;
     
     if (fileToUse) {
-      logger.debug('🔄 Storing analysis results with file:', fileToUse.name);
       // Pass the file directly to handleAnalysisComplete to bypass state synchronization issues
       await handleAnalysisComplete(results, undefined, fileToUse);
     } else {
-      logger.error('❌ No file available for analysis storage');
       await handleAnalysisComplete(results);
     }
   }, [currentAnalysisFile, selectedFile, handleFileSelect, handleAnalysisComplete]);

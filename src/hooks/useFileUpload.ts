@@ -201,7 +201,6 @@ export const useFileUpload = ({ onFileSelect, onAnalysisComplete }: UseFileUploa
   const analyzeCode = useCallback(async (file: File) => {
     // Prevent duplicate analysis for the same file
     if (currentAnalysisFile === file.name && isAnalyzing) {
-      logger.debug('⚠️ Analysis already in progress for:', file.name);
       return;
     }
     
@@ -214,7 +213,6 @@ export const useFileUpload = ({ onFileSelect, onAnalysisComplete }: UseFileUploa
     abortControllerRef.current = new AbortController();
     const signal = abortControllerRef.current.signal;
     
-    logger.debug('Starting enhanced security analysis for:', file.name);
     setCurrentAnalysisFile(file.name);
     setIsAnalyzing(true);
     startProgressTracking(file.size);
@@ -226,7 +224,6 @@ export const useFileUpload = ({ onFileSelect, onAnalysisComplete }: UseFileUploa
       }
       
       const arrayBuffer = await file.arrayBuffer();
-      logger.debug(`File size: ${arrayBuffer.byteLength} bytes`);
       
       // Check if cancelled after file read
       if (signal.aborted) {
@@ -240,16 +237,6 @@ export const useFileUpload = ({ onFileSelect, onAnalysisComplete }: UseFileUploa
         if (signal.aborted) {
           throw new DOMException('Analysis cancelled', 'AbortError');
         }
-        
-        logger.debug('Enhanced analysis complete:', {
-          totalIssues: analysisResults.issues.length,
-          totalFiles: analysisResults.totalFiles,
-          analysisTime: analysisResults.analysisTime,
-          securityScore: analysisResults.summary.securityScore,
-          qualityScore: analysisResults.summary.qualityScore,
-          criticalIssues: analysisResults.summary.criticalIssues,
-          fullSummary: analysisResults.summary
-        });
 
         let finalResults: AnalysisResults = analysisResults;
 
@@ -289,9 +276,7 @@ export const useFileUpload = ({ onFileSelect, onAnalysisComplete }: UseFileUploa
         setCurrentAnalysisFile(null);
         onAnalysisComplete(finalResults, file);
       } catch (analysisError) {
-        // Handle cancellation gracefully
         if (analysisError instanceof DOMException && analysisError.name === 'AbortError') {
-          logger.debug('Analysis was cancelled');
           stopProgressTracking();
           setIsAnalyzing(false);
           setCurrentAnalysisFile(null);
@@ -345,9 +330,7 @@ export const useFileUpload = ({ onFileSelect, onAnalysisComplete }: UseFileUploa
         onAnalysisComplete(emptyResults, file);
       }
     } catch (error) {
-      // Handle cancellation in outer catch
       if (error instanceof DOMException && error.name === 'AbortError') {
-        logger.debug('Analysis was cancelled');
         stopProgressTracking();
         setIsAnalyzing(false);
         setCurrentAnalysisFile(null);
@@ -362,8 +345,6 @@ export const useFileUpload = ({ onFileSelect, onAnalysisComplete }: UseFileUploa
   }, [onAnalysisComplete, analysisEngine, startProgressTracking, stopProgressTracking]);
 
   const processZipFile = useCallback(async (file: File) => {
-    logger.debug('Starting to process zip file:', file.name);
-    
     const validation = await validateZipFile(file);
     if (!validation.isValid) {
       setError(validation.message);

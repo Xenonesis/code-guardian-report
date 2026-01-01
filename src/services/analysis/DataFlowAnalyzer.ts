@@ -101,8 +101,8 @@ export class DataFlowAnalyzer {
         ],
         errorRecovery: true
       });
-    } catch (error) {
-      logger.warn(`Failed to parse ${filename}:`, error);
+    } catch {
+      // TypeScript/advanced syntax - skip silently
       return null;
     }
   }

@@ -927,10 +927,7 @@ export class SecurityAnalyzer {
         const modernIssues = modernCodeScanningService.convertToSecurityIssues(modernAnalysis.issues, filename);
         issues.push(...modernIssues);
         
-        // Log quality gate results for informational purposes
-        if (!modernAnalysis.qualityGate.passed) {
-          logger.debug(`Quality Gate Failed for ${filename}`, modernAnalysis.qualityGate.conditions);
-        }
+        // Quality gate results are tracked in the analysis report, no need to log each file
       } catch (error) {
         logger.debug('Modern code scanning failed, using traditional analysis', error);
       }
