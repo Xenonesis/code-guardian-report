@@ -2229,7 +2229,7 @@ If you encounter any issues or have questions:
       </td>
       <td align="center" style="padding: 15px;">
         <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px;">
-          <h4 style="color: white; margin: 0; font-size: 24px;">👥 14</h4>
+          <h4 style="color: white; margin: 0; font-size: 24px;">👥 15</h4>
           <p style="color: rgba(255,255,255,0.8); margin: 5px 0 0 0; font-size: 14px;">Contributors</p>
         </div>
       </td>
