@@ -9,7 +9,7 @@
   <!-- Homepage -->
   <url>
     <loc>https://code-guardian-report.vercel.app/</loc>
-    <lastmod>2025-07-17</lastmod>
+    <lastmod>2026-01-01</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -22,44 +22,86 @@
   <!-- About Page -->
   <url>
     <loc>https://code-guardian-report.vercel.app/about</loc>
-    <lastmod>2025-07-17</lastmod>
+    <lastmod>2026-01-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://code-guardian-report.vercel.app/cc.png</image:loc>
-      <image:title>Code Guardian Security Analysis</image:title>
-      <image:caption>Advanced security analysis and vulnerability detection</image:caption>
+      <image:loc>https://code-guardian-report.vercel.app/about.png</image:loc>
+      <image:title>About Code Guardian Enterprise</image:title>
+      <image:caption>Learn about our enterprise security platform</image:caption>
     </image:image>
+  </url>
+
+  <!-- Help & Documentation -->
+  <url>
+    <loc>https://code-guardian-report.vercel.app/help</loc>
+    <lastmod>2026-01-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- GitHub Analysis -->
+  <url>
+    <loc>https://code-guardian-report.vercel.app/github-analysis</loc>
+    <lastmod>2026-01-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://code-guardian-report.vercel.app/github-pro.png</image:loc>
+      <image:title>GitHub Repository Analysis</image:title>
+      <image:caption>Analyze GitHub repositories for security vulnerabilities</image:caption>
+    </image:image>
+  </url>
+
+  <!-- History Page -->
+  <url>
+    <loc>https://code-guardian-report.vercel.app/history</loc>
+    <lastmod>2026-01-01</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- PWA Settings -->
+  <url>
+    <loc>https://code-guardian-report.vercel.app/pwa-settings</loc>
+    <lastmod>2026-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
 
   <!-- Privacy Policy -->
   <url>
     <loc>https://code-guardian-report.vercel.app/privacy</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-01-01</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.4</priority>
   </url>
 
   <!-- Terms of Service -->
   <url>
     <loc>https://code-guardian-report.vercel.app/terms</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-01-01</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.4</priority>
   </url>
 
   <!-- Security Analysis Tool -->
   <url>
     <loc>https://code-guardian-report.vercel.app/?tab=upload</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-01-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://code-guardian-report.vercel.app/analysis.png</image:loc>
+      <image:title>Upload Code for Security Analysis</image:title>
+      <image:caption>Upload your code files for comprehensive security analysis</image:caption>
+    </image:image>
   </url>
 
   <!-- AI Security Insights -->
   <url>
     <loc>https://code-guardian-report.vercel.app/?tab=ai-insights</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-01-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -67,7 +109,7 @@
   <!-- Security Reports -->
   <url>
     <loc>https://code-guardian-report.vercel.app/?tab=reports</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-01-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -75,9 +117,22 @@
   <!-- Compliance Dashboard -->
   <url>
     <loc>https://code-guardian-report.vercel.app/?tab=compliance</loc>
-    <lastmod>2025-01-27</lastmod>
+    <lastmod>2026-01-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
+  </url>
+
+  <!-- AI Configuration -->
+  <url>
+    <loc>https://code-guardian-report.vercel.app/?tab=ai-config</loc>
+    <lastmod>2026-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://code-guardian-report.vercel.app/ai-config.png</image:loc>
+      <image:title>AI Configuration Settings</image:title>
+      <image:caption>Configure AI-powered security analysis settings</image:caption>
+    </image:image>
   </url>
 
 </urlset>
