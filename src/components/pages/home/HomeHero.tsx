@@ -37,7 +37,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ onStartAnalysis }) => {
       {/* Revolutionary Background Effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
         {/* Dynamic Animated Grid */}
-        <div className="absolute inset-0 bg-grid-slate-100 dark:bg-grid-slate-800 opacity-20 animate-pulse-slow" />
+        <div className="absolute inset-0 bg-grid-slate-100 dark:bg-grid-slate-800 opacity-40 animate-pulse-slow" />
       </div>
 
       {/* Premium Gradient Orbs */}
