@@ -97,7 +97,6 @@ ${suggestion.testingRecommendations.map((rec, i) => `${i + 1}. ${rec}`).join("\n
       link.click();
       link.remove();
       URL.revokeObjectURL(url);
-      /* eslint-enable no-undef */
 
       toast.success(`Downloaded fix patch: "${suggestion.title}"`, {
         description: `${suggestion.codeChanges.length} changes with ${suggestion.confidence}% confidence. Review and apply manually.`,

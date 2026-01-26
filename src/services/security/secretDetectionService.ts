@@ -239,7 +239,7 @@ export class SecretDetectionService {
       {
         name: "azure_key",
         pattern:
-          /DefaultEndpointsProtocol=https;AccountName=[^;]+;AccountKey=[A-Za-z0-9+\/=]{88}/gi,
+          /DefaultEndpointsProtocol=https;AccountName=[^;]+;AccountKey=[A-Za-z0-9+/=]{88}/gi,
         entropy: { min: 4.0, max: 6.0 },
         confidence: 95,
         description: "Azure Storage Connection String",

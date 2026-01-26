@@ -10,7 +10,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
   Shield,
   AlertTriangle,
@@ -21,7 +20,6 @@ import {
   TrendingUp,
   Eye,
   CheckCircle,
-  XCircle,
   Activity,
   Database,
   Settings,
@@ -33,7 +31,6 @@ import {
   CodeProvenanceService,
   TamperingAlert,
   ProvenanceReport,
-  FileIntegrityRecord,
 } from "../../services/detection/codeProvenanceService";
 import { toast } from "sonner";
 

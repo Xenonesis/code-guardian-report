@@ -23,9 +23,9 @@ import {
   AuthError,
   AuthCredential,
 } from "firebase/auth";
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import { doc } from "firebase/firestore";
 import { auth, googleProvider, githubProvider, db } from "./firebase";
-import { safeGetDoc, safeSetDoc, isConnectionError } from "./firestore-utils";
+import { safeGetDoc, safeSetDoc } from "./firestore-utils";
 import {
   showAuthFallbackMessage,
   handleAuthError,

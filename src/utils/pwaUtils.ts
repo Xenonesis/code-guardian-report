@@ -89,12 +89,14 @@ function urlBase64ToUint8Array(base64String: string): BufferSource {
 
 export const scheduleBackgroundSync = async (tag: string): Promise<void> => {
   if (typeof window === "undefined" || typeof navigator === "undefined") return;
+  const SWReg = (window as Record<string, unknown>).ServiceWorkerRegistration as { prototype?: object } | undefined;
   if (
     "serviceWorker" in navigator &&
-    "sync" in (window as any).ServiceWorkerRegistration?.prototype
+    SWReg?.prototype &&
+    "sync" in SWReg.prototype
   ) {
     const registration = await navigator.serviceWorker.ready;
-    await registration.sync.register(tag);
+    await (registration as ServiceWorkerRegistration & { sync: { register: (tag: string) => Promise<void> } }).sync.register(tag);
   }
 };
 

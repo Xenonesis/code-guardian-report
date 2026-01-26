@@ -2,18 +2,13 @@
 
 import { initializeApp } from "firebase/app";
 import {
-  getFirestore,
-  connectFirestoreEmulator,
   enableNetwork,
   disableNetwork,
-  initializeFirestore,
-  CACHE_SIZE_UNLIMITED,
 } from "firebase/firestore";
 import {
   getAuth,
   GoogleAuthProvider,
   GithubAuthProvider,
-  connectAuthEmulator,
 } from "firebase/auth";
 import { logger } from "@/utils/logger";
 

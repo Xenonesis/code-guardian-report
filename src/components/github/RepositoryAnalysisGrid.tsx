@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import {
   GitBranch,
@@ -11,8 +10,6 @@ import {
   CheckCircle,
   XCircle,
   Star,
-  GitFork,
-  Clock,
   Plus,
   TrendingUp,
   Search,

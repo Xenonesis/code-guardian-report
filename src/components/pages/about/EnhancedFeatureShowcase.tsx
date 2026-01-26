@@ -4,8 +4,6 @@ import {
   Brain,
   Zap,
   Database,
-  Code,
-  Lock,
   CheckCircle,
   ArrowRight,
   Sparkles,

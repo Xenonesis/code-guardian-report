@@ -169,37 +169,28 @@ export const useEnhancedAnalysis = () => {
 
   const exportAnalysis = useCallback(
     (format: "json" | "compressed" = "json") => {
-      try {
-        const exported = analysisStorage.exportAnalysis(format);
+      const exported = analysisStorage.exportAnalysis(format);
 
-        // Create download
-        const blob = new Blob([exported], {
-          type: format === "json" ? "application/json" : "text/plain",
-        });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = `analysis-export-${Date.now()}.${format === "json" ? "json" : "txt"}`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(url);
-      } catch (error) {
-        // Silent error handling
-        throw error;
-      }
+      // Create download
+      const blob = new Blob([exported], {
+        type: format === "json" ? "application/json" : "text/plain",
+      });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `analysis-export-${Date.now()}.${format === "json" ? "json" : "txt"}`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
     },
     []
   );
 
   const importAnalysis = useCallback(
     (data: string, compressed: boolean = false) => {
-      try {
-        analysisStorage.importAnalysis(data, compressed);
-        updateStorageStats();
-      } catch (error) {
-        throw error;
-      }
+      analysisStorage.importAnalysis(data, compressed);
+      updateStorageStats();
     },
     [updateStorageStats]
   );
@@ -209,12 +200,8 @@ export const useEnhancedAnalysis = () => {
   }, []);
 
   const optimizeStorage = useCallback(async () => {
-    try {
-      await analysisStorage.optimizeStorage();
-      updateStorageStats();
-    } catch (error) {
-      throw error;
-    }
+    await analysisStorage.optimizeStorage();
+    updateStorageStats();
   }, [updateStorageStats]);
 
   const restoreFromHistory = useCallback((analysisData: StoredAnalysisData) => {

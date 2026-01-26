@@ -4,15 +4,11 @@ import React from "react";
 import {
   HelpCircle,
   BookOpen,
-  Video,
-  MessageCircle,
   Mail,
   Github,
   ExternalLink,
   Shield,
-  Code,
   Settings,
-  FileText,
   BarChart3,
 } from "lucide-react";
 

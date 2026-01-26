@@ -206,7 +206,7 @@ export class EnhancedFileAnalysisService {
       framework: "spring",
     },
     {
-      pattern: /Route\:\:(get|post|put|delete|patch)\(['"`]([^'"`]+)['"`]/g,
+      pattern: /Route::(get|post|put|delete|patch)\(['"`]([^'"`]+)['"`]/g,
       framework: "laravel",
     },
   ];

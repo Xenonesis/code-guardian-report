@@ -101,7 +101,9 @@ export const useGitHubRepositories = ({
             setGithubUser(parsed.data);
             return;
           }
-        } catch {}
+        } catch {
+          // Ignore JSON parse errors, will refetch
+        }
       }
 
       const resp = await fetch(`https://api.github.com/users/${username}`);
@@ -113,7 +115,9 @@ export const useGitHubRepositories = ({
             cacheKey,
             JSON.stringify({ data, cachedAt: Date.now() })
           );
-        } catch {}
+        } catch {
+          // Ignore localStorage errors (quota exceeded, etc.)
+        }
       }
     } catch (e) {
       logger.debug("Error fetching GitHub user profile:", e);
@@ -151,9 +155,9 @@ export const useGitHubRepositories = ({
       localStorage.setItem("github_username", username);
 
       logger.debug(`Fetched ${repos.length} repositories for ${username}`);
-    } catch (err: any) {
+    } catch (err: unknown) {
       logger.error("Error fetching repositories:", err);
-      setError(err.message);
+      setError(err instanceof Error ? err.message : "Failed to fetch repositories");
       setRepositories([]);
     } finally {
       setLoading(false);

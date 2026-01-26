@@ -1,4 +1,3 @@
-/* eslint-disable no-useless-escape */
 export interface CodeSnippet {
   id: string;
   title: string;

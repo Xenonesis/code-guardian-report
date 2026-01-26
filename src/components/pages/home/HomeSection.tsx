@@ -9,7 +9,6 @@ import { useAnalysisHandlers } from "@/components/pages/home/AnalysisHandlers";
 import { useEnhancedAnalysis } from "@/hooks/useEnhancedAnalysis";
 import { AnalysisResults } from "@/hooks/useAnalysis";
 import { useNavigation } from "@/lib/navigation-context";
-import { logger } from "@/utils/logger";
 import type { Theme } from "@/hooks/useDarkMode";
 
 // Retry wrapper for dynamic imports that may fail during dev server startup

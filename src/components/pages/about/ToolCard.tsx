@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  FileCode,
   Star,
   Download,
   TrendingUp,
@@ -34,7 +33,6 @@ interface ToolCardProps {
 
 export const ToolCard: React.FC<ToolCardProps> = ({
   tool,
-  index,
   viewMode = "grid",
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);

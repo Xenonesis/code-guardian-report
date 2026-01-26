@@ -3,7 +3,6 @@
 
 import { PWA_CONFIG } from "../../config/pwa";
 
-import { logger } from "@/utils/logger";
 export interface PWAMetrics {
   installPrompts: number;
   installations: number;

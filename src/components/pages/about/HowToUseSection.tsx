@@ -20,7 +20,6 @@ import {
   AlertTriangle,
   Code,
   Eye,
-  Copy,
 } from "lucide-react";
 
 const HowToUseSection = () => {

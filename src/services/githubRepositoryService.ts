@@ -70,9 +70,9 @@ class GitHubRepositoryService {
 
       // Support multiple GitHub URL formats
       const patterns = [
-        /^\/([^\/]+)\/([^\/]+?)(?:\/tree\/([^\/]+))?(?:\.git)?$/,
-        /^\/([^\/]+)\/([^\/]+)$/,
-        /^\/([^\/]+)\/([^\/]+)\/tree\/([^\/]+)/,
+        /^\/([^/]+)\/([^/]+?)(?:\/tree\/([^/]+))?(?:\.git)?$/,
+        /^\/([^/]+)\/([^/]+)$/,
+        /^\/([^/]+)\/([^/]+)\/tree\/([^/]+)/,
       ];
 
       for (const pattern of patterns) {
@@ -303,8 +303,8 @@ class GitHubRepositoryService {
     try {
       onProgress?.(10, "Fetching repository information...");
 
-      // Get repository info
-      const repoInfo = await this.getRepositoryInfo(owner, repo);
+      // Validate repository exists
+      await this.getRepositoryInfo(owner, repo);
 
       onProgress?.(20, "Loading repository structure...");
 

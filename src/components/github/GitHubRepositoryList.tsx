@@ -4,8 +4,6 @@ import {
   Github,
   Star,
   GitFork,
-  AlertCircle,
-  CheckCircle,
   ExternalLink,
   TrendingUp,
 } from "lucide-react";

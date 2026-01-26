@@ -1,8 +1,7 @@
 // components/github/GitHubRepositoryPermissionModal.tsx
-import React, { useState } from "react";
+import React from "react";
 import { X, Github, CheckCircle, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { logger } from "@/utils/logger";
 
 interface GitHubRepositoryPermissionModalProps {
   isOpen: boolean;
