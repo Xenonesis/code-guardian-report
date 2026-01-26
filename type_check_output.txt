@@ -1,4 +1,0 @@
-
-> code-guardian-report@10.0.0 type-check
-> tsc --noEmit
-
