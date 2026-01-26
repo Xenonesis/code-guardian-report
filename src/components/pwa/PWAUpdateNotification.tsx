@@ -25,7 +25,7 @@ export function PWAUpdateNotification() {
   };
 
   return (
-    <Card className="fixed top-4 right-4 z-50 max-w-sm p-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white border-0 shadow-2xl animate-in slide-in-from-top-2">
+    <Card className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 max-w-sm w-full mx-4 p-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white border-0 shadow-2xl animate-in zoom-in-95 duration-300">
       <div className="flex items-start gap-3">
         <div className="flex-shrink-0">
           <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
