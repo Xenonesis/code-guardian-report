@@ -1,10 +1,11 @@
 <div align="center">
 
-<!-- Animated Banner with Gradient -->
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=300&section=header&text=🛡️%20Code%20Guardian&fontSize=80&fontAlignY=35&desc=Enterprise-Grade%20AI-Powered%20Security%20Analysis%20Platform&descAlignY=55&descSize=25&animation=twinkling">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=0,2,8&height=300&section=header&text=🛡️%20Code%20Guardian&fontSize=80&fontAlignY=35&desc=Enterprise-Grade%20AI-Powered%20Security%20Analysis%20Platform&descAlignY=55&descSize=25&animation=twinkling" alt="Code Guardian Banner">
-</picture>
+<!-- Project Logo -->
+<a href="https://github.com/Xenonesis/code-guardian-report">
+  <img src="https://raw.githubusercontent.com/Xenonesis/code-guardian-report/main/public/logo.png" alt="Code Guardian Logo" width="120" height="120">
+</a>
+
+<h1 align="center">Code Guardian</h1>
 
 <!-- Typing Animation Effect -->
 <p align="center">
