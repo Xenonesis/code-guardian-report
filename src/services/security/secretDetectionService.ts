@@ -418,7 +418,7 @@ export class SecretDetectionService {
       {
         name: "password",
         pattern:
-          /['"](password|passwd|pwd|secret|credentials)['"]\s*[:=]\s*['"]\s*[A-Za-z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]{8,}['"]/gi,
+          /['"](password|passwd|pwd|secret|credentials)['"]\s*[:=]\s*['"]\s*[A-Za-z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]{8,}['"]/gi,
         entropy: { min: 3.0, max: 5.0 },
         confidence: 75,
         description: "Hardcoded Password",

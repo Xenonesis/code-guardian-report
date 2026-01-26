@@ -8,6 +8,21 @@ import reactPlugin from "eslint-plugin-react";
 import eslintConfigPrettier from "eslint-config-prettier";
 
 export default [
+  // Global ignores for build outputs and dependencies
+  {
+    ignores: [
+      ".next/**",
+      "node_modules/**",
+      "dist/**",
+      "out/**",
+      ".turbo/**",
+      "public/sw.js",
+      "functions/lib/**",
+      "coverage/**",
+      "*.config.js",
+      "*.config.mjs",
+    ],
+  },
   js.configs.recommended,
   {
     files: ["**/*.{js,mjs,cjs,jsx,ts,tsx}"],
