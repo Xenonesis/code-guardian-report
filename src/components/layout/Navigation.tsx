@@ -398,10 +398,11 @@ export const Navigation: React.FC<NavigationProps> = ({
                       : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/50 active:bg-slate-200 dark:active:bg-slate-800"
                   )}
                   style={{
+                    animationName: isMobileMenuOpen ? "slideIn" : "none",
+                    animationDuration: isMobileMenuOpen ? "0.3s" : undefined,
+                    animationTimingFunction: isMobileMenuOpen ? "ease-out" : undefined,
+                    animationFillMode: isMobileMenuOpen ? "forwards" : undefined,
                     animationDelay: `${index * 50}ms`,
-                    animation: isMobileMenuOpen
-                      ? "slideIn 0.3s ease-out forwards"
-                      : "none",
                   }}
                 >
                   <div

@@ -307,7 +307,7 @@ jobs:
         run: npm run build
         env:
           NODE_ENV: production
-          VITE_APP_ENVIRONMENT: preview
+          NEXT_PUBLIC_APP_ENVIRONMENT: preview
 
       - name: 🚀 Deploy to Vercel Preview
         id: deploy
@@ -363,7 +363,7 @@ jobs:
         run: npm run build:production
         env:
           NODE_ENV: production
-          VITE_APP_ENVIRONMENT: staging
+          NEXT_PUBLIC_APP_ENVIRONMENT: staging
 
       - name: 🚀 Deploy to Staging
         uses: amondnet/vercel-action@v25
@@ -412,7 +412,7 @@ jobs:
         run: npm run build:production
         env:
           NODE_ENV: production
-          VITE_APP_ENVIRONMENT: production
+          NEXT_PUBLIC_APP_ENVIRONMENT: production
 
       - name: 🚀 Deploy to Production
         uses: amondnet/vercel-action@v25
