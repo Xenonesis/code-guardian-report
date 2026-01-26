@@ -18,7 +18,6 @@
     "type-check:watch": "tsc --noEmit --watch",
     "clean": "rimraf .next node_modules/.cache dist out",
     "clean:all": "rimraf .next node_modules/.cache dist out .turbo",
-    "prebuild": "npm run clean",
     "postbuild": "echo 'Build completed successfully!'",
     "prepare": "node scripts/setup-git-hooks.js",
     "update-contributors": "node scripts/update-contributors.js",
