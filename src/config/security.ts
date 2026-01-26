@@ -57,6 +57,13 @@ export const CSP_DIRECTIVES = {
     "https://vitals.vercel-insights.com",
     "wss://*.firebaseio.com",
   ],
+  "frame-src": [
+    "'self'",
+    "https://vercel.live",
+    "https://*.firebaseapp.com",
+    "https://*.firebase.com",
+    "https://apis.google.com",
+  ],
   "worker-src": ["'self'", "blob:"],
   "manifest-src": ["'self'"],
   "frame-ancestors": ["'none'"],
