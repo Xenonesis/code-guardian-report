@@ -334,7 +334,12 @@ const WebhookCard: React.FC<WebhookCardProps> = ({
 };
 
 interface CreateWebhookDialogProps {
-  onSubmit: (data: Partial<WebhookConfig>) => void;
+  onSubmit: (data: {
+    provider: "github" | "gitlab";
+    repositoryName: string;
+    repositoryUrl: string;
+    events: WebhookEvent[];
+  }) => void;
   onClose: () => void;
 }
 

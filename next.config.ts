@@ -14,12 +14,6 @@ const nextConfig: NextConfig = {
   // Enable React strict mode for better development experience
   reactStrictMode: true,
 
-  // Production: Ignore ESLint errors during build (run lint separately)
-  // Note: Run `npm run lint:fix` before deploying to fix style issues
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-
   // Production: Ignore TypeScript errors during build (run type-check separately)
   // Note: Run `npm run type-check` before deploying to catch type errors
   typescript: {
@@ -63,6 +57,9 @@ const nextConfig: NextConfig = {
       bodySizeLimit: "2mb",
     },
   },
+
+  // Turbopack configuration for Next.js 16+ (empty config to silence warnings)
+  turbopack: {},
 
   // Configure image optimization
   images: {

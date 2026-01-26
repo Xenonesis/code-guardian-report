@@ -253,7 +253,21 @@ export const GitHubAnalysisPage: React.FC = () => {
 
       try {
         let branch = repoInfo.branch;
-        let repoDetails: { default_branch?: string } | null = null;
+        let repoDetails: {
+          name?: string;
+          fullName?: string;
+          description?: string;
+          defaultBranch?: string;
+          default_branch?: string;
+          size?: number;
+          language?: string;
+          stars?: number;
+          forks?: number;
+          openIssues?: number;
+          private?: boolean;
+          createdAt?: string;
+          updatedAt?: string;
+        } | null = null;
         if (!branch) {
           try {
             toast.loading("Checking repository details...", {
@@ -263,7 +277,7 @@ export const GitHubAnalysisPage: React.FC = () => {
               repoInfo.owner,
               repoInfo.repo
             );
-            branch = repoDetails.defaultBranch;
+            branch = repoDetails?.defaultBranch || repoDetails?.default_branch;
           } catch (err) {
             logger.warn("Failed to fetch repo info, defaulting to main", err);
             branch = "main";

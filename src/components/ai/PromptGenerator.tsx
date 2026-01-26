@@ -29,7 +29,7 @@ import {
   Layers,
 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
-import { AnalysisResults } from "@/hooks/useAnalysis";
+import { AnalysisResults, SecurityIssue } from "@/hooks/useAnalysis";
 import { logger } from "@/utils/logger";
 
 interface PromptTemplate {
@@ -647,9 +647,10 @@ const PromptGenerator: React.FC<PromptGeneratorProps> = ({
     ];
 
     // Add code snippets for top issues
-    const addCodeSnippet = (issue: { snippet?: string }): string => {
-      if (issue.snippet) {
-        return `\n  Code snippet:\n  \`\`\`\n  ${issue.snippet}\n  \`\`\``;
+    const addCodeSnippet = (issue: SecurityIssue | { snippet?: string }): string => {
+      const snippet = 'snippet' in issue ? issue.snippet : undefined;
+      if (snippet) {
+        return `\n  Code snippet:\n  \`\`\`\n  ${snippet}\n  \`\`\``;
       }
       return "";
     };

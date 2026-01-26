@@ -40,7 +40,7 @@ export const SmoothScrollProvider = ({
       lenisRef.current = lenis;
 
       function raf(time: number) {
-        lenis.raf(time);
+        lenis?.raf(time);
         animationId = requestAnimationFrame(raf);
       }
 

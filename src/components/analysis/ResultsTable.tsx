@@ -40,7 +40,7 @@ import { AIService } from "../../services/ai/aiService";
 import EnhancedAnalyticsDashboard from "@/components/EnhancedAnalyticsDashboard";
 import { PDFDownloadButton } from "../export/PDFDownloadButton";
 import { toast } from "sonner";
-import { SecurityIssue } from "@/hooks/useAnalysis";
+import { SecurityIssue, AnalysisResults } from "@/hooks/useAnalysis";
 
 import { logger } from "@/utils/logger";
 // Use SecurityIssue interface from hooks, but keep backward compatibility
@@ -58,7 +58,7 @@ interface ResultsTableProps {
   issues: SecurityIssue[];
   totalFiles: number;
   analysisTime: string;
-  results?: Record<string, unknown>; // For PDF download compatibility
+  results?: AnalysisResults; // For PDF download compatibility
 }
 
 export const ResultsTable: React.FC<ResultsTableProps> = ({
