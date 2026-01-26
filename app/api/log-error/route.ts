@@ -49,15 +49,18 @@ export async function POST(request: NextRequest) {
           request.headers.get("x-real-ip"),
       };
 
-    // Log to console (in production, send to logging service)
-    console.error("[Client Error]", JSON.stringify(errorLog, null, 2));
+    // Log to console in development only
+    if (process.env.NODE_ENV === "development") {
+      console.error("[Client Error]", JSON.stringify(errorLog, null, 2));
+    }
 
-    // In production, you could forward to:
+    // In production, forward to logging service:
     // - Sentry: Sentry.captureException(new Error(body.message))
     // - LogRocket: LogRocket.captureException(new Error(body.message))
     // - Datadog: datadogLogs.logger.error(body.message, errorLog)
     // - Custom logging service via HTTP
     // - Database for error analytics
+    // TODO: Implement production error logging service
 
     // Rate limiting could be implemented here
     // to prevent abuse of the logging endpoint

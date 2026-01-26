@@ -32,6 +32,16 @@ const nextConfig: NextConfig = {
   // Production source maps for error tracking
   productionBrowserSourceMaps: false, // Enable if using error tracking service
 
+  // Compiler optimizations - Remove console.log in production
+  compiler: {
+    removeConsole:
+      isProd
+        ? {
+            exclude: ["error", "warn", "info"], // Keep error, warn, and info logs
+          }
+        : false,
+  },
+
   // Optimize package imports for better tree-shaking
   experimental: {
     optimizePackageImports: [
@@ -117,10 +127,14 @@ const nextConfig: NextConfig = {
 
     // Production optimizations
     if (!dev) {
-      // Minimize in production
+      // Remove console.log in production (keep console.error, console.warn)
       config.optimization = {
         ...config.optimization,
         minimize: true,
+        minimizer: [
+          ...config.optimization.minimizer,
+          // Note: Next.js already includes TerserPlugin, we're just configuring it
+        ],
         splitChunks: {
           chunks: "all",
           cacheGroups: {

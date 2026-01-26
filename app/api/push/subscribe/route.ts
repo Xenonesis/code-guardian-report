@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
 
     // Log subscription data
-    console.log("Push subscription received:", body);
+    // TODO: Store subscription in database
 
     return NextResponse.json({ success: true });
   } catch (error) {

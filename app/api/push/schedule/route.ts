@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
 
     // Log scheduled notification data
-    console.log("Push notification schedule request received:", body);
+    // TODO: Schedule push notification
 
     return NextResponse.json({ success: true });
   } catch (error) {

@@ -17,16 +17,17 @@ interface ErrorProps {
 
 export default function Error({ error, reset }: ErrorProps) {
   useEffect(() => {
-    // Log error to monitoring service in production
-    console.error("Application Error:", {
-      message: error.message,
-      digest: error.digest,
-      stack: error.stack,
-      timestamp: new Date().toISOString(),
-    });
+    // Log error in development only
+    if (process.env.NODE_ENV === "development") {
+      console.error("Application Error:", {
+        message: error.message,
+        digest: error.digest,
+        stack: error.stack,
+        timestamp: new Date().toISOString(),
+      });
+    }
 
-    // In production, you would send this to an error monitoring service
-    // Example: Sentry, LogRocket, Datadog, etc.
+    // In production, send to error monitoring service
     if (
       typeof window !== "undefined" &&
       process.env.NODE_ENV === "production"

@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
 
     // Log analytics data (in a real implementation, you would store this in a database)
-    console.log("Analytics received:", body);
+    // TODO: Store analytics in database
 
     return NextResponse.json({ success: true });
   } catch (error) {

@@ -15,13 +15,16 @@ interface GlobalErrorProps {
  */
 export default function GlobalError({ error, reset }: GlobalErrorProps) {
   useEffect(() => {
-    // Log critical error
-    console.error("Critical Application Error:", {
-      message: error.message,
-      digest: error.digest,
-      stack: error.stack,
-      timestamp: new Date().toISOString(),
-    });
+    // Log critical error in development only
+    if (process.env.NODE_ENV === "development") {
+      console.error("Critical Application Error:", {
+        message: error.message,
+        digest: error.digest,
+        stack: error.stack,
+        timestamp: new Date().toISOString(),
+      });
+    }
+    // In production, this should be sent to an error monitoring service
   }, [error]);
 
   return (

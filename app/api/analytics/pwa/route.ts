@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
 
     // Log PWA analytics data
-    console.log("PWA Analytics received:", body);
+    // TODO: Store PWA analytics in database
 
     return NextResponse.json({ success: true });
   } catch (error) {

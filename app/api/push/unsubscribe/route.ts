@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
 
     // Log unsubscription data
-    console.log("Push unsubscription received:", body);
+    // TODO: Remove subscription from database
 
     return NextResponse.json({ success: true });
   } catch (error) {
