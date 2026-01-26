@@ -20,7 +20,6 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { GitHubAnalysisStorageService } from "@/services/storage/GitHubAnalysisStorageService";
-import { toast } from "sonner";
 import { logger } from "@/utils/logger";
 import { cn } from "@/lib/utils";
 
@@ -220,7 +219,7 @@ export const AnalysisHistorySection: React.FC<AnalysisHistorySectionProps> = ({
           <div className="absolute left-4 md:left-8 top-0 bottom-0 w-px bg-slate-200 dark:bg-slate-800"></div>
 
           <div className="space-y-8">
-            {filteredAnalyses.map((analysis, index) => (
+            {filteredAnalyses.map((analysis, _index) => (
               <div key={analysis.id} className="relative pl-8 md:pl-12">
                 {/* Timeline Dot */}
                 <div className="absolute left-2.5 md:left-[2.1rem] top-6 w-3 h-3 rounded-full bg-white dark:bg-slate-900 border-2 border-blue-500 z-10"></div>

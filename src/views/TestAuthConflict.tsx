@@ -52,11 +52,12 @@ export const TestAuthConflict: React.FC = () => {
         type: "success",
         text: "Successfully signed in with Google!",
       });
-    } catch (error: any) {
-      if (error.code !== "auth/account-exists-with-different-credential") {
+    } catch (error: unknown) {
+      const err = error as { code?: string; message?: string };
+      if (err.code !== "auth/account-exists-with-different-credential") {
         setMessage({
           type: "error",
-          text: error.message || "Failed to sign in with Google",
+          text: err.message || "Failed to sign in with Google",
         });
       }
     } finally {
@@ -73,11 +74,12 @@ export const TestAuthConflict: React.FC = () => {
         type: "success",
         text: "Successfully signed in with GitHub!",
       });
-    } catch (error: any) {
-      if (error.code !== "auth/account-exists-with-different-credential") {
+    } catch (error: unknown) {
+      const err = error as { code?: string; message?: string };
+      if (err.code !== "auth/account-exists-with-different-credential") {
         setMessage({
           type: "error",
-          text: error.message || "Failed to sign in with GitHub",
+          text: err.message || "Failed to sign in with GitHub",
         });
       }
     } finally {
@@ -94,11 +96,12 @@ export const TestAuthConflict: React.FC = () => {
         type: "success",
         text: "Successfully signed in with Email/Password!",
       });
-    } catch (error: any) {
-      if (error.code !== "auth/account-exists-with-different-credential") {
+    } catch (error: unknown) {
+      const err = error as { code?: string; message?: string };
+      if (err.code !== "auth/account-exists-with-different-credential") {
         setMessage({
           type: "error",
-          text: error.message || "Failed to sign in",
+          text: err.message || "Failed to sign in",
         });
       }
     } finally {
@@ -112,11 +115,12 @@ export const TestAuthConflict: React.FC = () => {
     try {
       await createUser(testEmail, testPassword, "Test User");
       setMessage({ type: "success", text: "Account created successfully!" });
-    } catch (error: any) {
-      if (error.code !== "auth/account-exists-with-different-credential") {
+    } catch (error: unknown) {
+      const err = error as { code?: string; message?: string };
+      if (err.code !== "auth/account-exists-with-different-credential") {
         setMessage({
           type: "error",
-          text: error.message || "Failed to create account",
+          text: err.message || "Failed to create account",
         });
       }
     } finally {
@@ -128,8 +132,9 @@ export const TestAuthConflict: React.FC = () => {
     try {
       await logout();
       setMessage({ type: "info", text: "Logged out successfully" });
-    } catch (error: any) {
-      setMessage({ type: "error", text: error.message || "Failed to logout" });
+    } catch (error: unknown) {
+      const err = error as { message?: string };
+      setMessage({ type: "error", text: err.message || "Failed to logout" });
     }
   };
 

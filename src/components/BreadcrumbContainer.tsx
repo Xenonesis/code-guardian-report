@@ -9,7 +9,7 @@ import {
 import { useNavigation } from "@/lib/navigation-context";
 
 interface BreadcrumbContainerProps {
-  analysisResults?: any;
+  analysisResults?: unknown;
   className?: string;
 }
 

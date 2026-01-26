@@ -96,7 +96,7 @@ export const StorageStatus: React.FC<StorageStatusProps> = ({
         const isCompressed = file.name.endsWith(".txt");
         try {
           onImportAnalysis(content, isCompressed);
-        } catch (error) {
+        } catch {
           alert(
             "Failed to import analysis data. Please check the file format."
           );

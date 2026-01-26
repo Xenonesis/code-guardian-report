@@ -44,13 +44,13 @@ const UserDashboard: React.FC = () => {
   const {
     repositories,
     loading: reposLoading,
-    error: reposError,
+    error: _reposError,
     hasGitHubAccount,
     permissionGranted,
     permissionDenied,
     grantPermission,
     denyPermission,
-    revokePermission,
+    revokePermission: _revokePermission,
     setManualUsername,
   } = useGitHubRepositories({
     email: userProfile?.email || null,
@@ -316,15 +316,17 @@ const UserDashboard: React.FC = () => {
           setCurrentSection?.("github-analysis");
           setCurrentTab?.("analytics");
         }
-      } catch (err: any) {
-        toast.error(`Analysis failed: ${err.message || "Unknown error"}`, {
+      } catch (err: unknown) {
+        const errMsg = err instanceof Error ? err.message : "Unknown error";
+        toast.error(`Analysis failed: ${errMsg}`, {
           id: toastId,
         });
         logger.error("Repository analysis failed:", err);
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errMsg = error instanceof Error ? error.message : "Unknown error";
       toast.error(
-        `Failed to analyze repository: ${error.message || "Unknown error"}`
+        `Failed to analyze repository: ${errMsg}`
       );
       logger.error("Error in handleAnalyzeRepository:", error);
     }

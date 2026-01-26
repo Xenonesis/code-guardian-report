@@ -40,19 +40,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Shield,
   Plus,
   Edit,
   Trash2,
-  Copy,
   Download,
   Upload,
   Code,
   AlertTriangle,
   CheckCircle,
-  Play,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -62,9 +59,9 @@ const CustomRulesEditor: React.FC = () => {
   const [rules, setRules] = useState<CustomRule[]>([]);
   const [categories, setCategories] = useState<RuleCategory[]>([]);
   const [templates, setTemplates] = useState<RuleTemplate[]>([]);
-  const [selectedRule, setSelectedRule] = useState<CustomRule | null>(null);
+  const [_selectedRule, setSelectedRule] = useState<CustomRule | null>(null);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [_isLoading, setIsLoading] = useState(false);
   const [filterCategory, setFilterCategory] = useState<string>("all");
 
   useEffect(() => {

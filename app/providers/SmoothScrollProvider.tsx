@@ -4,11 +4,11 @@ import {
   useEffect,
   createContext,
   useRef as useReactRef,
-  useState,
 } from "react";
+import type Lenis from "lenis";
 
 // Dynamically import Lenis only on client
-const LenisContext = createContext<any | null>(null);
+const LenisContext = createContext<Lenis | null>(null);
 
 interface SmoothScrollProviderProps {
   children: React.ReactNode;
@@ -17,16 +17,13 @@ interface SmoothScrollProviderProps {
 export const SmoothScrollProvider = ({
   children,
 }: SmoothScrollProviderProps) => {
-  const lenisRef = useReactRef<any | null>(null);
-  const [mounted, setMounted] = useState(false);
+  const lenisRef = useReactRef<Lenis | null>(null);
 
   useEffect(() => {
-    setMounted(true);
-
     // Only load Lenis on client
     if (typeof window === "undefined") return;
 
-    let lenis: any = null;
+    let lenis: Lenis | null = null;
     let animationId: number;
 
     import("lenis").then(({ default: Lenis }) => {

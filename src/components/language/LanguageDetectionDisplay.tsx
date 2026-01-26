@@ -8,7 +8,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { Separator } from "@/components/ui/separator";
 import {
   Code2,
   Layers,
@@ -24,8 +23,6 @@ import {
 } from "lucide-react";
 import {
   DetectionResult,
-  LanguageInfo,
-  FrameworkInfo,
 } from "@/services/detection/languageDetectionService";
 
 interface LanguageDetectionDisplayProps {

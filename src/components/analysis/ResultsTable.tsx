@@ -58,7 +58,7 @@ interface ResultsTableProps {
   issues: SecurityIssue[];
   totalFiles: number;
   analysisTime: string;
-  results?: any; // For PDF download compatibility
+  results?: Record<string, unknown>; // For PDF download compatibility
 }
 
 export const ResultsTable: React.FC<ResultsTableProps> = ({
@@ -224,7 +224,7 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
     return "text-red-600 dark:text-red-400";
   };
 
-  const severityCounts = {
+  const _severityCounts = {
     Critical: issues.filter((i) => i.severity === "Critical").length,
     High: issues.filter((i) => i.severity === "High").length,
     Medium: issues.filter((i) => i.severity === "Medium").length,

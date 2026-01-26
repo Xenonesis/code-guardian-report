@@ -15,16 +15,10 @@ import {
   Zap,
   Activity,
   BarChart3,
-  Clock,
   FileText,
-  GitBranch,
   Lock,
   Radar,
-  Search,
   Sparkles,
-  TrendingDown,
-  Users,
-  Workflow,
 } from "lucide-react";
 import {
   Card,
@@ -41,7 +35,6 @@ import { Progress } from "@/components/ui/progress";
 import { AIService } from "../../services/ai/aiService";
 import { AnalysisResults } from "@/hooks/useAnalysis";
 import {
-  hasConfiguredApiKeys,
   formatAIError,
   getAIFeatureStatus,
 } from "@/utils/aiUtils";

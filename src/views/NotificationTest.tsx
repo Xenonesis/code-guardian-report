@@ -76,7 +76,7 @@ const NotificationTest: React.FC = () => {
       setTimeout(() => {
         notify.info(`${priority.toUpperCase()} Priority`, {
           message: `Testing ${priority} priority notification`,
-          priority: priority as any,
+          priority: priority as "urgent" | "high" | "normal" | "low",
           category: "system",
         });
         logTest(`✓ ${priority} priority notification sent`);
@@ -103,7 +103,7 @@ const NotificationTest: React.FC = () => {
       setTimeout(() => {
         notify.info(`${category.toUpperCase()} Category`, {
           message: `Testing ${category} category`,
-          category: category as any,
+          category: category as "system" | "analysis" | "security" | "auth" | "storage" | "network" | "export" | "general",
         });
         logTest(`✓ ${category} category notification sent`);
       }, index * 300);

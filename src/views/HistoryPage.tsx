@@ -14,7 +14,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { AnimatedBackground } from "@/components/pages/about/AnimatedBackground";
 import {
@@ -350,7 +349,7 @@ export const HistoryPage = ({
     }
   };
 
-  const getSeverityColor = (severity: string) => {
+  const _getSeverityColor = (severity: string) => {
     switch (severity.toLowerCase()) {
       case "critical":
         return "destructive";

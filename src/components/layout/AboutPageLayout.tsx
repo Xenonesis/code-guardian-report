@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { Shield, Github, Twitter } from "lucide-react";
+import React from "react";
 import { Navigation } from "@/components/layout/Navigation";
 import { FeatureGrid } from "@/components/features/FeatureGrid";
 import type { Theme } from "@/hooks/useDarkMode";

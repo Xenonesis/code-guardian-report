@@ -13,14 +13,13 @@ import {
   GithubAuthProvider,
   linkWithCredential,
   fetchSignInMethodsForEmail,
-  signInWithEmailAndPassword,
   AuthError,
   AuthCredential,
   UserCredential,
 } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { AccountConflictModal } from "./AccountConflictModal";
-import { getProviderFromError, getEmailFromError } from "@/lib/auth-utils";
+import { getEmailFromError } from "@/lib/auth-utils";
 import { toast } from "sonner";
 
 import { logger } from "@/utils/logger";
@@ -58,8 +57,8 @@ export const AuthWithConflictHandling: React.FC = () => {
       const result = await signInWithPopup(auth, provider);
       toast.success("Successfully signed in with Google!");
       return result;
-    } catch (error: any) {
-      handleAuthError(error, "google.com");
+    } catch (error: unknown) {
+      handleAuthError(error as AuthError, "google.com");
       return undefined;
     }
   };

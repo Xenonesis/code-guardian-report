@@ -360,7 +360,7 @@ const NotificationPreferences: React.FC = () => {
               <Switch
                 id={`category-${category}`}
                 checked={enabled}
-                onCheckedChange={() => handleCategoryToggle(category as any)}
+                onCheckedChange={() => handleCategoryToggle(category as "system" | "analysis" | "security" | "auth" | "storage" | "network" | "export" | "general")}
               />
             </div>
           ))}
@@ -384,7 +384,7 @@ const NotificationPreferences: React.FC = () => {
               <Switch
                 id={`priority-${priority}`}
                 checked={enabled}
-                onCheckedChange={() => handlePriorityToggle(priority as any)}
+                onCheckedChange={() => handlePriorityToggle(priority as "urgent" | "high" | "normal" | "low")}
               />
             </div>
           ))}

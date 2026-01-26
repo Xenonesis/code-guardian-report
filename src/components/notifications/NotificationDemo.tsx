@@ -22,7 +22,7 @@ import { Badge } from "@/components/ui/badge";
 import { Bell, Zap, AlertTriangle, CheckCircle, Info } from "lucide-react";
 
 const NotificationDemo: React.FC = () => {
-  const { unreadCount, getStats } = useNotifications();
+  const { getStats } = useNotifications();
   const [demoCount, setDemoCount] = useState(0);
 
   const stats = getStats();
@@ -297,7 +297,7 @@ const NotificationDemo: React.FC = () => {
                   variant="secondary"
                   className="cursor-pointer"
                   onClick={() =>
-                    notify.info(`${cat} notification`, { category: cat as any })
+                    notify.info(`${cat} notification`, { category: cat as "analysis" | "security" | "system" | "update" | "github" })
                   }
                 >
                   {cat}

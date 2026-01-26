@@ -18,7 +18,6 @@ import {
   ArrowLeft,
   FileCode,
   Lock,
-  Search,
   ExternalLink,
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
@@ -48,7 +47,7 @@ const EnhancedSecurityResults = lazy(() =>
 
 export const GitHubAnalysisPage: React.FC = () => {
   const { user, userProfile, isGitHubUser, signInWithGithub } = useAuth();
-  const { navigateTo } = useNavigation();
+  const { navigateTo: _navigateTo } = useNavigation();
   const [selectedTab, setSelectedTab] = useState<
     | "overview"
     | "repositories"
@@ -63,7 +62,7 @@ export const GitHubAnalysisPage: React.FC = () => {
       typeof window !== "undefined"
         ? localStorage.getItem("github_selected_tab")
         : null;
-    return (stored as any) || "overview";
+    return (stored as "overview" | "repositories" | "history" | "analytics" | "comparison" | "quality" | "patterns" | "results") || "overview";
   });
   const [showPermissionModal, setShowPermissionModal] = useState(false);
   const [showUsernameInput, setShowUsernameInput] = useState(false);
@@ -254,7 +253,7 @@ export const GitHubAnalysisPage: React.FC = () => {
 
       try {
         let branch = repoInfo.branch;
-        let repoDetails: any = null;
+        let repoDetails: { default_branch?: string } | null = null;
         if (!branch) {
           try {
             toast.loading("Checking repository details...", {
@@ -346,14 +345,16 @@ export const GitHubAnalysisPage: React.FC = () => {
         setAnalyzedRepoName(`${repoInfo.owner}/${repoInfo.repo}`);
         setSelectedTab("results");
         localStorage.setItem("github_selected_tab", "results");
-      } catch (error: any) {
-        toast.error(`Analysis failed: ${error.message}`, {
+      } catch (error: unknown) {
+        const errMsg = error instanceof Error ? error.message : "Unknown error";
+        toast.error(`Analysis failed: ${errMsg}`, {
           id: progressToastId,
         });
         logger.error("Repository analysis failed:", error);
       }
-    } catch (error: any) {
-      toast.error(`Failed to analyze repository: ${error.message}`);
+    } catch (error: unknown) {
+      const errMsg = error instanceof Error ? error.message : "Unknown error";
+      toast.error(`Failed to analyze repository: ${errMsg}`);
       logger.error("Error in handleAnalyzeRepository:", error);
     }
   };
@@ -614,7 +615,7 @@ export const GitHubAnalysisPage: React.FC = () => {
               ].map((tab) => (
                 <button
                   key={tab.id}
-                  onClick={() => setSelectedTab(tab.id as any)}
+                  onClick={() => setSelectedTab(tab.id as "overview" | "repositories" | "history" | "analytics" | "comparison" | "quality" | "patterns" | "results")}
                   className={cn(
                     "flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all whitespace-nowrap",
                     selectedTab === tab.id

@@ -7,7 +7,6 @@ import React, { useState, useEffect } from "react";
 import {
   WebhookManager,
   WebhookConfig,
-  MonitoringRule,
   WebhookEvent,
 } from "@/services/monitoring/WebhookManager";
 import { useAuth } from "@/lib/auth-context";
@@ -23,7 +22,8 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+// Tabs components reserved for future use
+// import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Dialog,
   DialogContent,
@@ -55,11 +55,11 @@ import { logger } from "@/utils/logger";
 const WebhookManagement: React.FC = () => {
   const { user } = useAuth();
   const [webhooks, setWebhooks] = useState<WebhookConfig[]>([]);
-  const [selectedWebhook, setSelectedWebhook] = useState<WebhookConfig | null>(
+  const [_selectedWebhook, setSelectedWebhook] = useState<WebhookConfig | null>(
     null
   );
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [_isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -334,7 +334,7 @@ const WebhookCard: React.FC<WebhookCardProps> = ({
 };
 
 interface CreateWebhookDialogProps {
-  onSubmit: (data: any) => void;
+  onSubmit: (data: Partial<WebhookConfig>) => void;
   onClose: () => void;
 }
 

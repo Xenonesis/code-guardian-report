@@ -2,7 +2,7 @@ import React from "react";
 import { PageLayout } from "@/components/layout/PageLayout";
 import { HeroSection } from "@/components/layout/HeroSection";
 import { useDarkMode } from "@/hooks/useDarkMode";
-import { Shield, Scale, FileText, Calendar, Mail, Globe } from "lucide-react";
+import { Shield, Scale, Calendar, Mail, Globe } from "lucide-react";
 import { APP_VERSION_WITH_PREFIX } from "@/utils/version";
 
 interface LegalPageLayoutProps {

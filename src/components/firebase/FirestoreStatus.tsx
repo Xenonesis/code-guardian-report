@@ -3,7 +3,7 @@
 // src/components/FirestoreStatus.tsx
 import React, { useState, useEffect } from "react";
 import { connectionManager } from "../../lib/connection-manager";
-import { AlertCircle, Wifi, WifiOff } from "lucide-react";
+import { Wifi, WifiOff } from "lucide-react";
 
 export const FirestoreStatus: React.FC = () => {
   const [isOnline, setIsOnline] = useState(true);

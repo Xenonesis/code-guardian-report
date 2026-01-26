@@ -168,8 +168,8 @@ export const FirebaseAnalyticsDashboard = ({
     }
   };
 
-  const formatDate = (timestamp: any) => {
-    const date = timestamp?.toDate ? timestamp.toDate() : new Date(timestamp);
+  const formatDate = (timestamp: { toDate?: () => Date } | string | number | Date) => {
+    const date = timestamp && typeof timestamp === 'object' && 'toDate' in timestamp && timestamp.toDate ? timestamp.toDate() : new Date(timestamp as string | number | Date);
     return date.toLocaleString();
   };
 

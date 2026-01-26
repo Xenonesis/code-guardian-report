@@ -3,8 +3,6 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
   Code2,
-  TrendingUp,
-  AlertCircle,
   CheckCircle2,
   FileCode,
   GitBranch,

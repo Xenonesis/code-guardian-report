@@ -3,9 +3,6 @@ import { Shield, ChevronDown } from "lucide-react";
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 import { AnalysisResults } from "@/hooks/useAnalysis";
 import { SecurityIssueItem } from "@/components/security/SecurityIssueItem";
@@ -91,7 +88,6 @@ ${suggestion.testingRecommendations.map((rec, i) => `${i + 1}. ${rec}`).join("\n
 `;
 
       // Create a downloadable patch file using browser APIs
-      /* eslint-disable no-undef */
       const blob = new Blob([fullPatch], { type: "text/plain" });
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");

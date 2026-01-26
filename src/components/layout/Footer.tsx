@@ -10,7 +10,6 @@ import {
   Scale,
   FileText,
   Code,
-  Building2,
   Brain,
   Star,
   Users,

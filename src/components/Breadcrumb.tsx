@@ -72,7 +72,7 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({
 export const generateBreadcrumbItems = (
   currentSection: string,
   currentTab?: string,
-  analysisResults?: any
+  analysisResults?: unknown
 ): BreadcrumbItem[] => {
   const items: BreadcrumbItem[] = [];
 

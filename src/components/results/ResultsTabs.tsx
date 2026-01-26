@@ -16,7 +16,7 @@ export const ResultsTabs: React.FC<ResultsTabsProps> = ({ results }) => {
   const hasLanguageDetection = !!results.languageDetection;
 
   // Calculate grid columns based on available features (Dependencies tab is always shown)
-  const getGridCols = () => {
+  const _getGridCols = () => {
     if (hasLanguageDetection) return "sm:grid-cols-5";
     return "sm:grid-cols-4";
   };

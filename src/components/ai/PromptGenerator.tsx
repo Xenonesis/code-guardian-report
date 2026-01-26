@@ -19,11 +19,9 @@ import {
   FileCode,
   ChevronDown,
   ChevronUp,
-  Settings,
   Filter,
   Download,
   Share2,
-  Eye,
   Sparkles,
   FileText,
   TestTube,
@@ -649,7 +647,7 @@ const PromptGenerator: React.FC<PromptGeneratorProps> = ({
     ];
 
     // Add code snippets for top issues
-    const addCodeSnippet = (issue: any): string => {
+    const addCodeSnippet = (issue: { snippet?: string }): string => {
       if (issue.snippet) {
         return `\n  Code snippet:\n  \`\`\`\n  ${issue.snippet}\n  \`\`\``;
       }

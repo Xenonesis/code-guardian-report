@@ -12,7 +12,7 @@ interface DependencyAnalysisDisplayProps {
 
 export const DependencyAnalysisDisplay: React.FC<
   DependencyAnalysisDisplayProps
-> = ({ dependencyAnalysis, onRetry, isLoading }) => {
+> = ({ dependencyAnalysis, onRetry: _onRetry, isLoading }) => {
   // Handle case where dependency analysis failed or is undefined
   if (isLoading) {
     return (

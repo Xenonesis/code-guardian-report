@@ -27,7 +27,7 @@ import { useAnalyticsData } from "@/hooks/useAnalyticsData";
 import { SecurityIssue } from "@/hooks/useAnalysis";
 
 // Legacy Issue type for backward compatibility
-interface Issue {
+interface _Issue {
   severity: "Critical" | "High" | "Medium" | "Low";
   type: "Security" | "Bug" | "Code Smell" | "Vulnerability";
   file: string;

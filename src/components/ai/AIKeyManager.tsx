@@ -1,6 +1,6 @@
 // src/components/AIKeyManager.tsx
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Key,
   Eye,
@@ -14,7 +14,6 @@ import {
   Shield,
   Sparkles,
   Clock,
-  Users,
   Star,
   RefreshCw,
 } from "lucide-react";
@@ -46,8 +45,6 @@ import {
   validateAPIKey,
   AIModel,
 } from "@/services/ai/modelDiscoveryService";
-
-import { logger } from "@/utils/logger";
 
 // Real AI Provider Icons
 const OpenAIIcon = () => (
@@ -252,7 +249,7 @@ export const AIKeyManager: React.FC = () => {
         const parsedKeys = JSON.parse(storedKeys);
         return parsedKeys;
       }
-    } catch (error) {
+    } catch {
       localStorage.removeItem("aiApiKeys"); // Clear bad data if parsing fails
     }
     return []; // Default to empty array if no keys are found or an error occurs
@@ -353,7 +350,7 @@ export const AIKeyManager: React.FC = () => {
       setNewKey({ provider: "", model: "", key: "", name: "" });
       setIsAdding(false);
       setErrors({});
-    } catch (error) {
+    } catch {
       // logger.error('AIKeyManager: Error adding API key:', error); // Debug log removed for PR
       setErrors({ general: "Failed to add API key. Please try again." });
     } finally {
@@ -535,7 +532,7 @@ export const AIKeyManager: React.FC = () => {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
-            {aiProviders.map((provider, index) => {
+            {aiProviders.map((provider, _index) => {
               const isConfigured = apiKeys.some(
                 (key) => key.provider === provider.id
               );
@@ -656,7 +653,7 @@ export const AIKeyManager: React.FC = () => {
           )}
 
           <div className="space-y-4">
-            {apiKeys.map((key, index) => {
+            {apiKeys.map((key, _index) => {
               const provider = getProviderInfo(key.provider);
               const model = getModelInfo(key.provider, key.model);
               return (

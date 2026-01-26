@@ -27,7 +27,7 @@ export const ConnectionStatus: React.FC<ConnectionStatusProps> = ({
   const [connectionState, setConnectionState] =
     useState<ConnectionState>("online");
   const [showStatus, setShowStatus] = useState(false);
-  const [firebaseConnected, setFirebaseConnected] = useState(true);
+  const [_firebaseConnected, _setFirebaseConnected] = useState(true);
 
   useEffect(() => {
     const handleOnline = () => {

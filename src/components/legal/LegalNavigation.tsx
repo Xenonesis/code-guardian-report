@@ -1,6 +1,5 @@
 import React from "react";
 import { Shield, Scale, ArrowRight } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 interface LegalNavigationProps {
   currentSection?: string;

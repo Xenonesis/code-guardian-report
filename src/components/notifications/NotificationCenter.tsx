@@ -291,7 +291,7 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({
                   <select
                     className="w-full p-2 border rounded-md"
                     value={filterCategory}
-                    onChange={(e) => setFilterCategory(e.target.value as any)}
+                    onChange={(e) => setFilterCategory(e.target.value as "all" | "system" | "analysis" | "security" | "auth" | "storage" | "network" | "export" | "general")}
                   >
                     <option value="all">All Categories</option>
                     <option value="system">System</option>
@@ -312,7 +312,7 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({
                   <select
                     className="w-full p-2 border rounded-md"
                     value={filterPriority}
-                    onChange={(e) => setFilterPriority(e.target.value as any)}
+                    onChange={(e) => setFilterPriority(e.target.value as "all" | "urgent" | "high" | "normal" | "low")}
                   >
                     <option value="all">All Priorities</option>
                     <option value="urgent">Urgent</option>
