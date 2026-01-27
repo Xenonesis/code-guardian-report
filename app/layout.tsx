@@ -4,6 +4,7 @@ import "@/index.css";
 import "@/styles/enhanced-ui.css";
 import "@/styles/about-page-enhancements.css";
 import { ClientProviders } from "./ClientProviders";
+import { MainLayout } from "@/components/layout/MainLayout";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://code-guardian-report.vercel.app"),
@@ -123,7 +124,9 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <ClientProviders>{children}</ClientProviders>
+        <ClientProviders>
+          <MainLayout>{children}</MainLayout>
+        </ClientProviders>
       </body>
     </html>
   );
