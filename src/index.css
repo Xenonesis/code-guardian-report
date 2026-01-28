@@ -5,8 +5,8 @@
 /* Tailwind base, components, utilities are imported via base.css in main.tsx */
 
 /* Professional enhancements and github theme use standard CSS */
-@import url("./styles/professional-enhancements.css");
-@import url("./styles/github-theme.css");
+@import "./styles/professional-enhancements.css";
+@import "./styles/github-theme.css";
 
 /* Base styling */
 html {
