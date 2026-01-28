@@ -42,7 +42,7 @@ const NotificationBadge: React.FC<NotificationBadgeProps> = ({
     <Badge
       variant="destructive"
       className={cn(
-        "h-5 min-w-[20px] px-1 flex items-center justify-center text-xs font-semibold",
+        "flex h-5 min-w-[20px] items-center justify-center px-1 text-xs font-semibold",
         className
       )}
     >

@@ -22,21 +22,21 @@ export function PWAInstallPrompt() {
   };
 
   return (
-    <Card className="fixed bottom-4 right-4 z-50 max-w-sm p-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0 shadow-2xl animate-in slide-in-from-bottom-2">
+    <Card className="animate-in slide-in-from-bottom-2 fixed right-4 bottom-4 z-50 max-w-sm border-0 bg-gradient-to-r from-blue-600 to-purple-600 p-4 text-white shadow-2xl">
       <div className="flex items-start gap-3">
         <div className="flex-shrink-0">
-          <div className="p-2 bg-white/20 rounded-lg">
+          <div className="rounded-lg bg-white/20 p-2">
             <Download className="h-5 w-5" />
           </div>
         </div>
 
-        <div className="flex-1 min-w-0">
-          <h3 className="font-semibold text-sm mb-1">Install Code Guardian</h3>
-          <p className="text-xs text-white/90 mb-3">
+        <div className="min-w-0 flex-1">
+          <h3 className="mb-1 text-sm font-semibold">Install Code Guardian</h3>
+          <p className="mb-3 text-xs text-white/90">
             Get faster access and work offline with our app
           </p>
 
-          <div className="flex items-center gap-2 mb-3">
+          <div className="mb-3 flex items-center gap-2">
             <div className="flex items-center gap-1 text-xs">
               <Smartphone className="h-3 w-3" />
               <span>Mobile</span>

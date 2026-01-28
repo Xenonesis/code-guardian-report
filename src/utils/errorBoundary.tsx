@@ -55,11 +55,11 @@ export class ErrorBoundary extends Component<Props, State> {
 
       // Default error UI
       return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-          <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-6">
-            <div className="flex items-center justify-center w-12 h-12 mx-auto bg-red-100 rounded-full">
+        <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
+          <div className="w-full max-w-md rounded-lg bg-white p-6 shadow-lg">
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-red-100">
               <svg
-                className="w-6 h-6 text-red-600"
+                className="h-6 w-6 text-red-600"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -72,21 +72,21 @@ export class ErrorBoundary extends Component<Props, State> {
                 />
               </svg>
             </div>
-            <h3 className="mt-4 text-lg font-semibold text-gray-900 text-center">
+            <h3 className="mt-4 text-center text-lg font-semibold text-gray-900">
               Something went wrong
             </h3>
-            <p className="mt-2 text-sm text-gray-600 text-center">
+            <p className="mt-2 text-center text-sm text-gray-600">
               We're sorry, but something unexpected happened. Please try
               refreshing the page.
             </p>
             {process.env.NODE_ENV === "development" && this.state.error && (
-              <div className="mt-4 p-3 bg-gray-100 rounded text-xs font-mono text-red-600 overflow-auto max-h-40">
+              <div className="mt-4 max-h-40 overflow-auto rounded bg-gray-100 p-3 font-mono text-xs text-red-600">
                 {this.state.error.toString()}
               </div>
             )}
             <button
               onClick={() => window.location.reload()}
-              className="mt-6 w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors"
+              className="mt-6 w-full rounded bg-blue-600 px-4 py-2 text-white transition-colors hover:bg-blue-700"
             >
               Reload Page
             </button>

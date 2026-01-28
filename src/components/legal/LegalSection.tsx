@@ -17,18 +17,18 @@ export const LegalSection: React.FC<LegalSectionProps> = ({
   return (
     <section className={`mb-8 sm:mb-12 ${className}`}>
       {/* Section Header */}
-      <div className="flex items-center gap-3 mb-6 pb-4 border-b border-slate-200 dark:border-slate-700">
-        <div className="p-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl text-white">
+      <div className="mb-6 flex items-center gap-3 border-b border-slate-200 pb-4 dark:border-slate-700">
+        <div className="rounded-xl bg-gradient-to-r from-blue-500 to-purple-500 p-2 text-white">
           {icon}
         </div>
-        <h2 className="text-2xl sm:text-3xl font-bold gradient-text-animated">
+        <h2 className="gradient-text-animated text-2xl font-bold sm:text-3xl">
           {title}
         </h2>
-        <ChevronRight className="h-6 w-6 text-slate-400 ml-auto" />
+        <ChevronRight className="ml-auto h-6 w-6 text-slate-400" />
       </div>
 
       {/* Section Content */}
-      <div className="space-y-4 text-slate-700 dark:text-slate-300 leading-relaxed">
+      <div className="space-y-4 leading-relaxed text-slate-700 dark:text-slate-300">
         {children}
       </div>
     </section>
@@ -48,8 +48,8 @@ export const LegalSubsection: React.FC<LegalSubsectionProps> = ({
 }) => {
   return (
     <div className={`mb-6 ${className}`}>
-      <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
-        <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></div>
+      <h3 className="mb-3 flex items-center gap-2 text-xl font-semibold text-slate-900 dark:text-white">
+        <div className="h-2 w-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-500"></div>
         {title}
       </h3>
       <div className="ml-4 space-y-3 text-slate-700 dark:text-slate-300">
@@ -73,16 +73,16 @@ export const LegalList: React.FC<LegalListProps> = ({
   const ListComponent = ordered ? "ol" : "ul";
 
   return (
-    <ListComponent className={`space-y-2 ml-4 ${className}`}>
+    <ListComponent className={`ml-4 space-y-2 ${className}`}>
       {items.map((item, index) => (
         <li key={index} className="flex items-start gap-3">
-          <div className="flex-shrink-0 mt-2">
+          <div className="mt-2 flex-shrink-0">
             {ordered ? (
-              <span className="inline-flex items-center justify-center w-6 h-6 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-sm font-bold rounded-full">
+              <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-purple-500 text-sm font-bold text-white">
                 {index + 1}
               </span>
             ) : (
-              <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mt-1"></div>
+              <div className="mt-1 h-2 w-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-500"></div>
             )}
           </div>
           <span className="flex-1">{item}</span>

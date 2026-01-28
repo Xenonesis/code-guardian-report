@@ -48,21 +48,21 @@ export const UploadForm: React.FC<UploadFormProps> = ({
   };
 
   return (
-    <Card className="w-full max-w-4xl mx-auto bg-gradient-to-br from-white via-slate-50/50 to-blue-50/30 dark:from-slate-800 dark:via-slate-800/90 dark:to-slate-900 backdrop-blur-sm border-2 border-slate-200/60 dark:border-slate-700/60 shadow-2xl hover:shadow-3xl transition-all duration-300 rounded-2xl sm:rounded-3xl">
-      <CardHeader className="text-center pb-6 sm:pb-8 lg:pb-10 pt-6 sm:pt-8 lg:pt-10 px-4 sm:px-6">
-        <CardTitle className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 text-2xl sm:text-3xl lg:text-4xl font-bold">
-          <div className="p-2.5 sm:p-3 lg:p-4 bg-gradient-to-br from-blue-500 via-blue-600 to-indigo-600 rounded-xl sm:rounded-2xl shadow-2xl animate-float-gentle hover:scale-110 transition-transform duration-300">
-            <FileCode className="h-7 w-7 sm:h-8 sm:w-8 lg:h-10 lg:w-10 text-white" />
+    <Card className="hover:shadow-3xl mx-auto w-full max-w-4xl rounded-2xl border-2 border-slate-200/60 bg-gradient-to-br from-white via-slate-50/50 to-blue-50/30 shadow-2xl backdrop-blur-sm transition-all duration-300 sm:rounded-3xl dark:border-slate-700/60 dark:from-slate-800 dark:via-slate-800/90 dark:to-slate-900">
+      <CardHeader className="px-4 pt-6 pb-6 text-center sm:px-6 sm:pt-8 sm:pb-8 lg:pt-10 lg:pb-10">
+        <CardTitle className="flex flex-col items-center justify-center gap-3 text-2xl font-bold sm:flex-row sm:gap-4 sm:text-3xl lg:text-4xl">
+          <div className="animate-float-gentle rounded-xl bg-gradient-to-br from-blue-500 via-blue-600 to-indigo-600 p-2.5 shadow-2xl transition-transform duration-300 hover:scale-110 sm:rounded-2xl sm:p-3 lg:p-4">
+            <FileCode className="h-7 w-7 text-white sm:h-8 sm:w-8 lg:h-10 lg:w-10" />
           </div>
-          <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent font-extrabold">
+          <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text font-extrabold text-transparent">
             Analyze Your Code
           </span>
         </CardTitle>
-        <CardDescription className="text-sm sm:text-base lg:text-lg text-slate-700 dark:text-slate-300 mt-3 sm:mt-4 lg:mt-5 px-2 sm:px-4 lg:px-6 font-medium leading-relaxed">
+        <CardDescription className="mt-3 px-2 text-sm leading-relaxed font-medium text-slate-700 sm:mt-4 sm:px-4 sm:text-base lg:mt-5 lg:px-6 lg:text-lg dark:text-slate-300">
           Upload a .zip file or analyze directly from a GitHub repository
         </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-4 sm:space-y-6 lg:space-y-8 px-3 sm:px-4 lg:px-6 pb-6 sm:pb-8">
+      <CardContent className="space-y-4 px-3 pb-6 sm:space-y-6 sm:px-4 sm:pb-8 lg:space-y-8 lg:px-6">
         {!selectedFile && !error && (
           <Tabs
             value={uploadMethod}
@@ -71,43 +71,25 @@ export const UploadForm: React.FC<UploadFormProps> = ({
             }
             className="w-full"
           >
-            <TabsList className="grid w-full grid-cols-2 mb-6 sm:mb-8 bg-slate-900/90 dark:bg-slate-950/95 backdrop-blur-xl p-1.5 sm:p-2 rounded-2xl sm:rounded-3xl shadow-2xl shadow-black/20 border border-slate-700/50 dark:border-slate-600/30 ring-1 ring-white/5">
+            <TabsList className="mb-6 grid w-full grid-cols-2 rounded-2xl border border-slate-700/50 bg-slate-900/90 p-1.5 shadow-2xl ring-1 shadow-black/20 ring-white/5 backdrop-blur-xl sm:mb-8 sm:rounded-3xl sm:p-2 dark:border-slate-600/30 dark:bg-slate-950/95">
               <TabsTrigger
                 value="file"
-                className="relative flex items-center justify-center gap-2 sm:gap-3 py-3.5 sm:py-4 px-4 sm:px-6 text-sm sm:text-base font-bold 
-                  text-slate-400 dark:text-slate-500 
-                  hover:text-slate-200 hover:bg-slate-800/50 
-                  data-[state=active]:text-white 
-                  data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:via-blue-600 data-[state=active]:to-cyan-500 
-                  data-[state=active]:shadow-[0_0_30px_rgba(59,130,246,0.5)] 
-                  data-[state=active]:ring-2 data-[state=active]:ring-blue-400/30
-                  rounded-xl sm:rounded-2xl 
-                  transition-all duration-300 ease-out
-                  group overflow-hidden"
+                className="group relative flex items-center justify-center gap-2 overflow-hidden rounded-xl px-4 py-3.5 text-sm font-bold text-slate-400 transition-all duration-300 ease-out hover:bg-slate-800/50 hover:text-slate-200 data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:via-blue-600 data-[state=active]:to-cyan-500 data-[state=active]:text-white data-[state=active]:shadow-[0_0_30px_rgba(59,130,246,0.5)] data-[state=active]:ring-2 data-[state=active]:ring-blue-400/30 sm:gap-3 sm:rounded-2xl sm:px-6 sm:py-4 sm:text-base dark:text-slate-500"
               >
-                <span className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-cyan-600/20 opacity-0 group-hover:opacity-100 data-[state=active]:opacity-0 transition-opacity duration-300 rounded-xl sm:rounded-2xl" />
-                <Upload className="h-4 w-4 sm:h-5 sm:w-5 group-hover:scale-110 transition-transform duration-300" />
-                <span className="hidden xs:inline tracking-wide">
+                <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-600/20 to-cyan-600/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100 data-[state=active]:opacity-0 sm:rounded-2xl" />
+                <Upload className="h-4 w-4 transition-transform duration-300 group-hover:scale-110 sm:h-5 sm:w-5" />
+                <span className="xs:inline hidden tracking-wide">
                   Upload ZIP
                 </span>
                 <span className="xs:hidden font-semibold">ZIP</span>
               </TabsTrigger>
               <TabsTrigger
                 value="github"
-                className="relative flex items-center justify-center gap-2 sm:gap-3 py-3.5 sm:py-4 px-4 sm:px-6 text-sm sm:text-base font-bold 
-                  text-slate-400 dark:text-slate-500 
-                  hover:text-slate-200 hover:bg-slate-800/50 
-                  data-[state=active]:text-white 
-                  data-[state=active]:bg-gradient-to-r data-[state=active]:from-violet-500 data-[state=active]:via-purple-600 data-[state=active]:to-fuchsia-500 
-                  data-[state=active]:shadow-[0_0_30px_rgba(139,92,246,0.5)] 
-                  data-[state=active]:ring-2 data-[state=active]:ring-purple-400/30
-                  rounded-xl sm:rounded-2xl 
-                  transition-all duration-300 ease-out
-                  group overflow-hidden"
+                className="group relative flex items-center justify-center gap-2 overflow-hidden rounded-xl px-4 py-3.5 text-sm font-bold text-slate-400 transition-all duration-300 ease-out hover:bg-slate-800/50 hover:text-slate-200 data-[state=active]:bg-gradient-to-r data-[state=active]:from-violet-500 data-[state=active]:via-purple-600 data-[state=active]:to-fuchsia-500 data-[state=active]:text-white data-[state=active]:shadow-[0_0_30px_rgba(139,92,246,0.5)] data-[state=active]:ring-2 data-[state=active]:ring-purple-400/30 sm:gap-3 sm:rounded-2xl sm:px-6 sm:py-4 sm:text-base dark:text-slate-500"
               >
-                <span className="absolute inset-0 bg-gradient-to-r from-violet-600/20 to-fuchsia-600/20 opacity-0 group-hover:opacity-100 data-[state=active]:opacity-0 transition-opacity duration-300 rounded-xl sm:rounded-2xl" />
-                <Github className="h-4 w-4 sm:h-5 sm:w-5 group-hover:scale-110 transition-transform duration-300" />
-                <span className="hidden xs:inline tracking-wide">GitHub</span>
+                <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-violet-600/20 to-fuchsia-600/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100 data-[state=active]:opacity-0 sm:rounded-2xl" />
+                <Github className="h-4 w-4 transition-transform duration-300 group-hover:scale-110 sm:h-5 sm:w-5" />
+                <span className="xs:inline hidden tracking-wide">GitHub</span>
                 <span className="xs:hidden font-semibold">GitHub</span>
               </TabsTrigger>
             </TabsList>
@@ -142,28 +124,28 @@ export const UploadForm: React.FC<UploadFormProps> = ({
 
         {error && (
           <Alert
-            className="border-l-4 border-l-red-500 bg-red-50 dark:bg-red-950/20 dark:border-l-red-400"
+            className="border-l-4 border-l-red-500 bg-red-50 dark:border-l-red-400 dark:bg-red-950/20"
             role="alert"
           >
             <AlertTriangle
-              className="h-4 w-4 sm:h-5 sm:w-5 text-red-600 dark:text-red-400"
+              className="h-4 w-4 text-red-600 sm:h-5 sm:w-5 dark:text-red-400"
               aria-hidden="true"
             />
-            <AlertDescription className="text-red-800 dark:text-red-200 text-xs sm:text-sm lg:text-base">
+            <AlertDescription className="text-xs text-red-800 sm:text-sm lg:text-base dark:text-red-200">
               <strong>Error:</strong> {error}
             </AlertDescription>
           </Alert>
         )}
 
         <Alert
-          className="border-l-4 border-l-amber-500 bg-gradient-to-r from-amber-50 via-amber-50/80 to-yellow-50/50 dark:from-amber-950/30 dark:via-amber-950/20 dark:to-yellow-950/10 dark:border-l-amber-400 shadow-lg rounded-xl"
+          className="rounded-xl border-l-4 border-l-amber-500 bg-gradient-to-r from-amber-50 via-amber-50/80 to-yellow-50/50 shadow-lg dark:border-l-amber-400 dark:from-amber-950/30 dark:via-amber-950/20 dark:to-yellow-950/10"
           role="note"
         >
           <AlertTriangle
-            className="h-4 w-4 sm:h-5 sm:w-5 text-amber-600 dark:text-amber-400"
+            className="h-4 w-4 text-amber-600 sm:h-5 sm:w-5 dark:text-amber-400"
             aria-hidden="true"
           />
-          <AlertDescription className="text-amber-900 dark:text-amber-100 text-xs sm:text-sm lg:text-base leading-relaxed">
+          <AlertDescription className="text-xs leading-relaxed text-amber-900 sm:text-sm lg:text-base dark:text-amber-100">
             <strong className="font-bold">Privacy & Security:</strong> Your code
             is analyzed locally and securely. Files are processed in-browser
             with persistent storage for your convenience. Analysis results are

@@ -39,7 +39,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
       size="sm"
       onClick={handleToggle}
       className={cn(
-        "p-1.5 sm:p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-200",
+        "rounded-lg p-1.5 transition-all duration-200 hover:bg-slate-100 sm:p-2 dark:hover:bg-slate-800",
         className
       )}
       aria-label={`Current theme: ${theme}. Click to change`}
@@ -47,7 +47,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
     >
       <Icon
         className={cn(
-          "h-4 w-4 sm:h-5 sm:w-5 transition-colors duration-200",
+          "h-4 w-4 transition-colors duration-200 sm:h-5 sm:w-5",
           color
         )}
       />

@@ -144,7 +144,7 @@ export const ModernSecurityDashboard: React.FC<
                 .map((condition, idx) => (
                   <div
                     key={idx}
-                    className="flex items-center justify-between p-3 bg-red-50 dark:bg-red-900/20 rounded-lg"
+                    className="flex items-center justify-between rounded-lg bg-red-50 p-3 dark:bg-red-900/20"
                   >
                     <span className="text-sm font-medium text-red-900 dark:text-red-100">
                       {condition.metric}
@@ -163,7 +163,7 @@ export const ModernSecurityDashboard: React.FC<
       </Card>
 
       {/* Rating Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         {/* Security Rating */}
         <Card>
           <CardHeader>
@@ -173,7 +173,7 @@ export const ModernSecurityDashboard: React.FC<
                 <CardTitle className="text-lg">Security</CardTitle>
               </div>
               <Badge
-                className={`${getRatingColor(securityRating)} text-xl font-bold px-3 py-1`}
+                className={`${getRatingColor(securityRating)} px-3 py-1 text-xl font-bold`}
               >
                 {securityRating}
               </Badge>
@@ -210,7 +210,7 @@ export const ModernSecurityDashboard: React.FC<
                 <CardTitle className="text-lg">Reliability</CardTitle>
               </div>
               <Badge
-                className={`${getRatingColor(reliabilityRating)} text-xl font-bold px-3 py-1`}
+                className={`${getRatingColor(reliabilityRating)} px-3 py-1 text-xl font-bold`}
               >
                 {reliabilityRating}
               </Badge>
@@ -245,7 +245,7 @@ export const ModernSecurityDashboard: React.FC<
                 <CardTitle className="text-lg">Maintainability</CardTitle>
               </div>
               <Badge
-                className={`${getRatingColor(maintainabilityRating)} text-xl font-bold px-3 py-1`}
+                className={`${getRatingColor(maintainabilityRating)} px-3 py-1 text-xl font-bold`}
               >
                 {maintainabilityRating}
               </Badge>
@@ -275,7 +275,7 @@ export const ModernSecurityDashboard: React.FC<
       </div>
 
       {/* Technical Debt & Metrics */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         {/* Technical Debt */}
         <Card>
           <CardHeader>
@@ -286,7 +286,7 @@ export const ModernSecurityDashboard: React.FC<
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <div className="flex justify-between mb-2">
+              <div className="mb-2 flex justify-between">
                 <span className="text-sm text-slate-600 dark:text-slate-400">
                   Remediation Time
                 </span>
@@ -356,7 +356,7 @@ export const ModernSecurityDashboard: React.FC<
       </div>
 
       {/* Complexity Metrics */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         <Card>
           <CardHeader>
             <div className="flex items-center gap-2">
@@ -368,7 +368,7 @@ export const ModernSecurityDashboard: React.FC<
             <div className="text-3xl font-bold text-indigo-600 dark:text-indigo-400">
               {metrics.cyclomaticComplexity}
             </div>
-            <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
+            <p className="mt-1 text-xs text-slate-600 dark:text-slate-400">
               Decision points in code
             </p>
           </CardContent>
@@ -385,7 +385,7 @@ export const ModernSecurityDashboard: React.FC<
             <div className="text-3xl font-bold text-yellow-600 dark:text-yellow-400">
               {metrics.cognitiveComplexity}
             </div>
-            <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
+            <p className="mt-1 text-xs text-slate-600 dark:text-slate-400">
               Code readability measure
             </p>
           </CardContent>
@@ -402,7 +402,7 @@ export const ModernSecurityDashboard: React.FC<
             <div className="text-3xl font-bold text-green-600 dark:text-green-400">
               {metrics.estimatedTestCoverage}%
             </div>
-            <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
+            <p className="mt-1 text-xs text-slate-600 dark:text-slate-400">
               Estimated coverage
             </p>
           </CardContent>
@@ -421,36 +421,36 @@ export const ModernSecurityDashboard: React.FC<
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="text-center p-4 bg-red-50 dark:bg-red-900/20 rounded-lg">
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+            <div className="rounded-lg bg-red-50 p-4 text-center dark:bg-red-900/20">
               <div className="text-3xl font-bold text-red-600 dark:text-red-400">
                 {metrics.vulnerabilities}
               </div>
-              <div className="text-sm text-red-700 dark:text-red-300 mt-1">
+              <div className="mt-1 text-sm text-red-700 dark:text-red-300">
                 Vulnerabilities
               </div>
             </div>
-            <div className="text-center p-4 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
+            <div className="rounded-lg bg-orange-50 p-4 text-center dark:bg-orange-900/20">
               <div className="text-3xl font-bold text-orange-600 dark:text-orange-400">
                 {metrics.bugs}
               </div>
-              <div className="text-sm text-orange-700 dark:text-orange-300 mt-1">
+              <div className="mt-1 text-sm text-orange-700 dark:text-orange-300">
                 Bugs
               </div>
             </div>
-            <div className="text-center p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
+            <div className="rounded-lg bg-yellow-50 p-4 text-center dark:bg-yellow-900/20">
               <div className="text-3xl font-bold text-yellow-600 dark:text-yellow-400">
                 {metrics.codeSmells}
               </div>
-              <div className="text-sm text-yellow-700 dark:text-yellow-300 mt-1">
+              <div className="mt-1 text-sm text-yellow-700 dark:text-yellow-300">
                 Code Smells
               </div>
             </div>
-            <div className="text-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+            <div className="rounded-lg bg-blue-50 p-4 text-center dark:bg-blue-900/20">
               <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">
                 {metrics.securityHotspots}
               </div>
-              <div className="text-sm text-blue-700 dark:text-blue-300 mt-1">
+              <div className="mt-1 text-sm text-blue-700 dark:text-blue-300">
                 Security Hotspots
               </div>
             </div>

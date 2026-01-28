@@ -10,7 +10,14 @@ export default defineConfig({
       "src/**/*.{test,spec}.{ts,tsx}",
       "tests/**/*.{test,spec}.{ts,tsx}",
     ],
-    exclude: ["node_modules", ".next", "out", "coverage", "functions", "tests/modernCodeScanning.test.ts"],
+    exclude: [
+      "node_modules",
+      ".next",
+      "out",
+      "coverage",
+      "functions",
+      "tests/modernCodeScanning.test.ts",
+    ],
     testTimeout: 10000, // 10 second timeout for tests
     hookTimeout: 10000, // 10 second timeout for hooks
     coverage: {

@@ -282,22 +282,22 @@ export const RepositoryAnalysisGrid: React.FC<RepositoryAnalysisGridProps> = ({
   const getSecurityBadge = (score: number) => {
     if (score >= 8) {
       return (
-        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 text-xs font-medium border border-emerald-100 dark:border-emerald-900/30">
-          <CheckCircle className="w-3.5 h-3.5" />
+        <div className="flex items-center gap-1.5 rounded-full border border-emerald-100 bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-600 dark:border-emerald-900/30 dark:bg-emerald-900/20 dark:text-emerald-400">
+          <CheckCircle className="h-3.5 w-3.5" />
           Excellent
         </div>
       );
     } else if (score >= 6) {
       return (
-        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-yellow-50 dark:bg-yellow-900/20 text-yellow-600 dark:text-yellow-400 text-xs font-medium border border-yellow-100 dark:border-yellow-900/30">
-          <AlertTriangle className="w-3.5 h-3.5" />
+        <div className="flex items-center gap-1.5 rounded-full border border-yellow-100 bg-yellow-50 px-2.5 py-1 text-xs font-medium text-yellow-600 dark:border-yellow-900/30 dark:bg-yellow-900/20 dark:text-yellow-400">
+          <AlertTriangle className="h-3.5 w-3.5" />
           Good
         </div>
       );
     } else {
       return (
-        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 text-xs font-medium border border-red-100 dark:border-red-900/30">
-          <XCircle className="w-3.5 h-3.5" />
+        <div className="flex items-center gap-1.5 rounded-full border border-red-100 bg-red-50 px-2.5 py-1 text-xs font-medium text-red-600 dark:border-red-900/30 dark:bg-red-900/20 dark:text-red-400">
+          <XCircle className="h-3.5 w-3.5" />
           Needs Attention
         </div>
       );
@@ -316,20 +316,20 @@ export const RepositoryAnalysisGrid: React.FC<RepositoryAnalysisGridProps> = ({
 
   if (loading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {Array.from({ length: 6 }).map((_, i) => (
-          <Card key={i} className="p-6 border-slate-200 dark:border-slate-800">
-            <div className="flex items-start justify-between mb-4">
+          <Card key={i} className="border-slate-200 p-6 dark:border-slate-800">
+            <div className="mb-4 flex items-start justify-between">
               <div className="flex-1">
-                <div className="h-5 w-40 bg-slate-100 dark:bg-slate-800 rounded animate-pulse mb-2"></div>
-                <div className="h-4 w-56 bg-slate-100 dark:bg-slate-800 rounded animate-pulse"></div>
+                <div className="mb-2 h-5 w-40 animate-pulse rounded bg-slate-100 dark:bg-slate-800"></div>
+                <div className="h-4 w-56 animate-pulse rounded bg-slate-100 dark:bg-slate-800"></div>
               </div>
-              <div className="h-8 w-8 bg-slate-100 dark:bg-slate-800 rounded-full animate-pulse"></div>
+              <div className="h-8 w-8 animate-pulse rounded-full bg-slate-100 dark:bg-slate-800"></div>
             </div>
-            <div className="h-16 w-full bg-slate-100 dark:bg-slate-800 rounded animate-pulse mb-4"></div>
+            <div className="mb-4 h-16 w-full animate-pulse rounded bg-slate-100 dark:bg-slate-800"></div>
             <div className="flex gap-2">
-              <div className="h-8 w-24 bg-slate-100 dark:bg-slate-800 rounded animate-pulse"></div>
-              <div className="h-8 w-24 bg-slate-100 dark:bg-slate-800 rounded animate-pulse"></div>
+              <div className="h-8 w-24 animate-pulse rounded bg-slate-100 dark:bg-slate-800"></div>
+              <div className="h-8 w-24 animate-pulse rounded bg-slate-100 dark:bg-slate-800"></div>
             </div>
           </Card>
         ))}
@@ -340,23 +340,23 @@ export const RepositoryAnalysisGrid: React.FC<RepositoryAnalysisGridProps> = ({
   return (
     <div className="space-y-8">
       {/* New Repository Input */}
-      <div className="relative group">
-        <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl opacity-20 group-hover:opacity-40 transition duration-500 blur"></div>
-        <Card className="relative p-6 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800">
-          <div className="flex flex-col md:flex-row items-center gap-6">
-            <div className="flex-1 w-full">
-              <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2 flex items-center gap-2">
-                <Plus className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+      <div className="group relative">
+        <div className="absolute -inset-0.5 rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600 opacity-20 blur transition duration-500 group-hover:opacity-40"></div>
+        <Card className="relative border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
+          <div className="flex flex-col items-center gap-6 md:flex-row">
+            <div className="w-full flex-1">
+              <h3 className="mb-2 flex items-center gap-2 text-lg font-semibold text-slate-900 dark:text-white">
+                <Plus className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                 Analyze New Repository
               </h3>
-              <p className="text-slate-500 dark:text-slate-400 text-sm mb-4">
+              <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
                 Enter a public GitHub repository URL to scan for security
                 vulnerabilities and code quality issues.
               </p>
 
               <div className="flex gap-3">
                 <div className="relative flex-1">
-                  <GitBranch className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400" />
+                  <GitBranch className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 transform text-slate-400" />
                   <Input
                     type="url"
                     placeholder="https://github.com/owner/repository"
@@ -368,22 +368,22 @@ export const RepositoryAnalysisGrid: React.FC<RepositoryAnalysisGridProps> = ({
                       handleAnalyzeNewRepo()
                     }
                     disabled={isAnalyzing}
-                    className="pl-10 h-11 bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500 transition-all"
+                    className="h-11 border-slate-200 bg-slate-50 pl-10 transition-all focus:ring-2 focus:ring-blue-500 dark:border-slate-700 dark:bg-slate-800"
                   />
                 </div>
                 <Button
                   onClick={handleAnalyzeNewRepo}
                   disabled={isAnalyzing || !repoUrl.trim()}
-                  className="h-11 px-6 bg-blue-600 hover:bg-blue-700 text-white font-medium shadow-lg shadow-blue-500/20 transition-all hover:scale-105"
+                  className="h-11 bg-blue-600 px-6 font-medium text-white shadow-lg shadow-blue-500/20 transition-all hover:scale-105 hover:bg-blue-700"
                 >
                   {isAnalyzing ? (
                     <>
-                      <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
+                      <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
                       Analyzing...
                     </>
                   ) : (
                     <>
-                      <TrendingUp className="w-4 h-4 mr-2" />
+                      <TrendingUp className="mr-2 h-4 w-4" />
                       Analyze
                     </>
                   )}
@@ -391,14 +391,14 @@ export const RepositoryAnalysisGrid: React.FC<RepositoryAnalysisGridProps> = ({
               </div>
             </div>
 
-            <div className="hidden md:block w-px h-24 bg-slate-200 dark:bg-slate-800" />
+            <div className="hidden h-24 w-px bg-slate-200 md:block dark:bg-slate-800" />
 
             <div className="flex gap-8 px-4">
               <div className="text-center">
                 <div className="text-2xl font-bold text-slate-900 dark:text-white">
                   {repositories.length}
                 </div>
-                <div className="text-xs text-slate-500 uppercase tracking-wider font-medium">
+                <div className="text-xs font-medium tracking-wider text-slate-500 uppercase">
                   Analyzed
                 </div>
               </div>
@@ -406,7 +406,7 @@ export const RepositoryAnalysisGrid: React.FC<RepositoryAnalysisGridProps> = ({
                 <div className="text-2xl font-bold text-slate-900 dark:text-white">
                   {repositories.reduce((acc, r) => acc + r.issuesFound, 0)}
                 </div>
-                <div className="text-xs text-slate-500 uppercase tracking-wider font-medium">
+                <div className="text-xs font-medium tracking-wider text-slate-500 uppercase">
                   Issues
                 </div>
               </div>
@@ -417,7 +417,7 @@ export const RepositoryAnalysisGrid: React.FC<RepositoryAnalysisGridProps> = ({
 
       {/* Filters */}
       <div className="flex items-center justify-between">
-        <div className="flex gap-2 bg-slate-100 dark:bg-slate-800/50 p-1 rounded-lg">
+        <div className="flex gap-2 rounded-lg bg-slate-100 p-1 dark:bg-slate-800/50">
           {[
             { id: "all", label: "All Repositories" },
             { id: "critical", label: "Critical Issues" },
@@ -427,10 +427,10 @@ export const RepositoryAnalysisGrid: React.FC<RepositoryAnalysisGridProps> = ({
               key={f.id}
               onClick={() => setFilter(f.id as any)}
               className={cn(
-                "px-4 py-1.5 rounded-md text-sm font-medium transition-all",
+                "rounded-md px-4 py-1.5 text-sm font-medium transition-all",
                 filter === f.id
-                  ? "bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm"
-                  : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                  ? "bg-white text-slate-900 shadow-sm dark:bg-slate-700 dark:text-white"
+                  : "text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
               )}
             >
               {f.label}
@@ -439,44 +439,44 @@ export const RepositoryAnalysisGrid: React.FC<RepositoryAnalysisGridProps> = ({
         </div>
 
         <div className="relative hidden sm:block">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
+          <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform text-slate-400" />
           <Input
             placeholder="Search repositories..."
-            className="pl-9 h-9 w-64 bg-transparent border-slate-200 dark:border-slate-800"
+            className="h-9 w-64 border-slate-200 bg-transparent pl-9 dark:border-slate-800"
           />
         </div>
       </div>
 
       {/* Repository Grid */}
       {filteredRepositories.length === 0 ? (
-        <Card className="p-16 text-center border-dashed border-2 border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50">
-          <div className="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4">
-            <GitBranch className="w-8 h-8 text-slate-400" />
+        <Card className="border-2 border-dashed border-slate-200 bg-slate-50/50 p-16 text-center dark:border-slate-800 dark:bg-slate-900/50">
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800">
+            <GitBranch className="h-8 w-8 text-slate-400" />
           </div>
-          <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">
+          <h3 className="mb-2 text-xl font-semibold text-slate-900 dark:text-white">
             No repositories found
           </h3>
-          <p className="text-slate-500 dark:text-slate-400 max-w-md mx-auto">
+          <p className="mx-auto max-w-md text-slate-500 dark:text-slate-400">
             {filter === "all"
               ? "You haven't analyzed any repositories yet. Start by entering a GitHub URL above."
               : "No repositories match the selected filter."}
           </p>
         </Card>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {filteredRepositories.map((repo) => (
             <Card
               key={repo.id}
-              className="group hover:shadow-xl transition-all duration-300 border-slate-200 dark:border-slate-800 hover:border-blue-200 dark:hover:border-blue-800 overflow-hidden"
+              className="group overflow-hidden border-slate-200 transition-all duration-300 hover:border-blue-200 hover:shadow-xl dark:border-slate-800 dark:hover:border-blue-800"
             >
               <div className="p-6">
                 {/* Header */}
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex-1 min-w-0 mr-4">
-                    <h3 className="font-semibold text-lg text-slate-900 dark:text-white truncate group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                <div className="mb-4 flex items-start justify-between">
+                  <div className="mr-4 min-w-0 flex-1">
+                    <h3 className="truncate text-lg font-semibold text-slate-900 transition-colors group-hover:text-blue-600 dark:text-white dark:group-hover:text-blue-400">
                       {repo.name}
                     </h3>
-                    <p className="text-sm text-slate-500 truncate">
+                    <p className="truncate text-sm text-slate-500">
                       {repo.fullName}
                     </p>
                   </div>
@@ -486,48 +486,48 @@ export const RepositoryAnalysisGrid: React.FC<RepositoryAnalysisGridProps> = ({
                 </div>
 
                 {/* Description */}
-                <p className="text-sm text-slate-600 dark:text-slate-400 mb-6 line-clamp-2 h-10">
+                <p className="mb-6 line-clamp-2 h-10 text-sm text-slate-600 dark:text-slate-400">
                   {repo.description || "No description provided."}
                 </p>
 
                 {/* Metrics Grid */}
-                <div className="grid grid-cols-2 gap-4 mb-6">
-                  <div className="bg-slate-50 dark:bg-slate-800/50 p-3 rounded-lg">
-                    <div className="text-xs text-slate-500 mb-1">Issues</div>
-                    <div className="font-semibold text-slate-900 dark:text-white flex items-center gap-2">
-                      <AlertTriangle className="w-4 h-4 text-orange-500" />
+                <div className="mb-6 grid grid-cols-2 gap-4">
+                  <div className="rounded-lg bg-slate-50 p-3 dark:bg-slate-800/50">
+                    <div className="mb-1 text-xs text-slate-500">Issues</div>
+                    <div className="flex items-center gap-2 font-semibold text-slate-900 dark:text-white">
+                      <AlertTriangle className="h-4 w-4 text-orange-500" />
                       {repo.issuesFound}
                     </div>
                   </div>
-                  <div className="bg-slate-50 dark:bg-slate-800/50 p-3 rounded-lg">
-                    <div className="text-xs text-slate-500 mb-1">Score</div>
-                    <div className="font-semibold text-slate-900 dark:text-white flex items-center gap-2">
-                      <Shield className="w-4 h-4 text-emerald-500" />
+                  <div className="rounded-lg bg-slate-50 p-3 dark:bg-slate-800/50">
+                    <div className="mb-1 text-xs text-slate-500">Score</div>
+                    <div className="flex items-center gap-2 font-semibold text-slate-900 dark:text-white">
+                      <Shield className="h-4 w-4 text-emerald-500" />
                       {repo.securityScore}/10
                     </div>
                   </div>
                 </div>
 
                 {/* Footer Info */}
-                <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 mb-6">
+                <div className="mb-6 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
                   <div className="flex items-center gap-3">
                     <span className="flex items-center gap-1">
-                      <Code className="w-3 h-3" />
+                      <Code className="h-3 w-3" />
                       {repo.language}
                     </span>
                     <span className="flex items-center gap-1">
-                      <Star className="w-3 h-3" />
+                      <Star className="h-3 w-3" />
                       {repo.stars}
                     </span>
                   </div>
                   <div className="flex items-center gap-1">
-                    <Calendar className="w-3 h-3" />
+                    <Calendar className="h-3 w-3" />
                     {new Date(repo.lastAnalyzed).toLocaleDateString()}
                   </div>
                 </div>
 
                 {/* Actions */}
-                <div className="flex gap-2 pt-4 border-t border-slate-100 dark:border-slate-800">
+                <div className="flex gap-2 border-t border-slate-100 pt-4 dark:border-slate-800">
                   <Button
                     variant="ghost"
                     size="sm"
@@ -536,19 +536,19 @@ export const RepositoryAnalysisGrid: React.FC<RepositoryAnalysisGridProps> = ({
                       window.open(repo.url, "_blank", "noopener,noreferrer")
                     }
                   >
-                    <ExternalLink className="w-4 h-4 mr-2" />
+                    <ExternalLink className="mr-2 h-4 w-4" />
                     GitHub
                   </Button>
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="flex-1 hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-600 dark:text-blue-400"
+                    className="flex-1 text-blue-600 hover:bg-blue-50 dark:text-blue-400 dark:hover:bg-blue-900/20"
                     onClick={() => handleReanalyze(repo)}
                     disabled={analyzingRepoId === repo.id}
                   >
                     <RefreshCw
                       className={cn(
-                        "w-4 h-4 mr-2",
+                        "mr-2 h-4 w-4",
                         analyzingRepoId === repo.id && "animate-spin"
                       )}
                     />

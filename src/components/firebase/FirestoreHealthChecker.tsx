@@ -74,8 +74,8 @@ export const FirestoreHealthChecker: React.FC = () => {
   if (!shouldShow) return null;
 
   return (
-    <div className="fixed bottom-4 right-4 z-50">
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-3 min-w-[200px]">
+    <div className="fixed right-4 bottom-4 z-50">
+      <div className="min-w-[200px] rounded-lg border border-gray-200 bg-white p-3 shadow-lg dark:border-gray-700 dark:bg-gray-800">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <span className="text-lg">{getStatusIcon()}</span>
@@ -92,7 +92,7 @@ export const FirestoreHealthChecker: React.FC = () => {
         </div>
 
         {showDetails && (
-          <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-600">
+          <div className="mt-3 border-t border-gray-200 pt-3 dark:border-gray-600">
             <div className="space-y-2 text-xs text-gray-600 dark:text-gray-400">
               <div className="flex justify-between">
                 <span>Network:</span>
@@ -127,13 +127,13 @@ export const FirestoreHealthChecker: React.FC = () => {
             <div className="mt-3 flex space-x-2">
               <button
                 onClick={handleTestConnection}
-                className="flex-1 px-2 py-1 text-xs bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+                className="flex-1 rounded bg-blue-500 px-2 py-1 text-xs text-white transition-colors hover:bg-blue-600"
               >
                 Test
               </button>
               <button
                 onClick={handleResetConnection}
-                className="flex-1 px-2 py-1 text-xs bg-orange-500 text-white rounded hover:bg-orange-600 transition-colors"
+                className="flex-1 rounded bg-orange-500 px-2 py-1 text-xs text-white transition-colors hover:bg-orange-600"
               >
                 Reset
               </button>

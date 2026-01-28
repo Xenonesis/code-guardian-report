@@ -29,7 +29,7 @@ export function OfflineIndicator() {
 
   return (
     <Card
-      className={`fixed top-4 left-1/2 transform -translate-x-1/2 z-50 px-4 py-2 border-0 shadow-lg animate-in slide-in-from-top-2 ${
+      className={`animate-in slide-in-from-top-2 fixed top-4 left-1/2 z-50 -translate-x-1/2 transform border-0 px-4 py-2 shadow-lg ${
         showOffline
           ? "bg-gradient-to-r from-red-600 to-orange-600 text-white"
           : "bg-gradient-to-r from-green-600 to-emerald-600 text-white"

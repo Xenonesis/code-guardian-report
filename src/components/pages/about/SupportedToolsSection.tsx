@@ -179,41 +179,41 @@ export const SupportedToolsSection: React.FC<SupportedToolsSectionProps> = ({
       aria-labelledby="tools-title"
     >
       {/* Background Effects */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-50/30 via-transparent to-purple-50/30 dark:from-blue-950/10 dark:to-purple-950/10 pointer-events-none"></div>
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-r from-blue-400/10 to-purple-400/10 rounded-full blur-3xl animate-pulse pointer-events-none"></div>
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-r from-purple-400/10 to-pink-400/10 rounded-full blur-3xl animate-pulse delay-1000 pointer-events-none"></div>
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-blue-50/30 via-transparent to-purple-50/30 dark:from-blue-950/10 dark:to-purple-950/10"></div>
+      <div className="pointer-events-none absolute top-0 left-1/4 h-96 w-96 animate-pulse rounded-full bg-gradient-to-r from-blue-400/10 to-purple-400/10 blur-3xl"></div>
+      <div className="pointer-events-none absolute right-1/4 bottom-0 h-96 w-96 animate-pulse rounded-full bg-gradient-to-r from-purple-400/10 to-pink-400/10 blur-3xl delay-1000"></div>
 
       <div className="relative z-10">
-        <div className="text-center mb-8 sm:mb-12 lg:mb-16 px-4 sm:px-0">
-          <div className="inline-flex items-center gap-3 mb-6 px-6 py-3 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/30 dark:to-indigo-950/30 rounded-full border border-blue-200 dark:border-blue-800 shadow-lg backdrop-blur-sm hover:shadow-xl transition-all duration-300 group">
+        <div className="mb-8 px-4 text-center sm:mb-12 sm:px-0 lg:mb-16">
+          <div className="group mb-6 inline-flex items-center gap-3 rounded-full border border-blue-200 bg-gradient-to-r from-blue-50 to-indigo-50 px-6 py-3 shadow-lg backdrop-blur-sm transition-all duration-300 hover:shadow-xl dark:border-blue-800 dark:from-blue-950/30 dark:to-indigo-950/30">
             <div className="relative">
-              <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full animate-pulse"></div>
-              <div className="absolute inset-0 w-3 h-3 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full animate-ping opacity-75"></div>
+              <div className="h-3 w-3 animate-pulse rounded-full bg-gradient-to-r from-blue-500 to-indigo-500"></div>
+              <div className="absolute inset-0 h-3 w-3 animate-ping rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 opacity-75"></div>
             </div>
-            <Sparkles className="h-4 w-4 text-blue-600 dark:text-blue-400 group-hover:rotate-12 transition-transform duration-300" />
-            <span className="text-sm font-semibold text-blue-700 dark:text-blue-300 group-hover:text-blue-800 dark:group-hover:text-blue-200 transition-colors">
+            <Sparkles className="h-4 w-4 text-blue-600 transition-transform duration-300 group-hover:rotate-12 dark:text-blue-400" />
+            <span className="text-sm font-semibold text-blue-700 transition-colors group-hover:text-blue-800 dark:text-blue-300 dark:group-hover:text-blue-200">
               Powered by Industry Leaders
             </span>
-            <Zap className="h-4 w-4 text-indigo-600 dark:text-indigo-400 group-hover:-rotate-12 transition-transform duration-300" />
+            <Zap className="h-4 w-4 text-indigo-600 transition-transform duration-300 group-hover:-rotate-12 dark:text-indigo-400" />
           </div>
 
           <h3
             id="tools-title"
-            className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-slate-900 dark:text-white animate-fade-in"
+            className="animate-fade-in mb-6 text-4xl font-bold text-slate-900 sm:text-5xl lg:text-6xl dark:text-white"
           >
-            <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 dark:from-blue-400 dark:via-purple-400 dark:to-indigo-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent dark:from-blue-400 dark:via-purple-400 dark:to-indigo-400">
               Industry-Leading
             </span>
             <br className="sm:hidden" />
             <span className="relative inline-block">
-              <span className="bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 dark:from-purple-400 dark:via-pink-400 dark:to-blue-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent dark:from-purple-400 dark:via-pink-400 dark:to-blue-400">
                 Analysis Tools
               </span>
-              <div className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full animate-pulse"></div>
+              <div className="absolute right-0 -bottom-2 left-0 h-1 animate-pulse rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"></div>
             </span>
           </h3>
 
-          <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-400 max-w-4xl mx-auto leading-relaxed mb-8">
+          <p className="mx-auto mb-8 max-w-4xl text-lg leading-relaxed text-slate-600 sm:text-xl dark:text-slate-400">
             We integrate with the most{" "}
             <span className="font-semibold text-blue-600 dark:text-blue-400">
               trusted
@@ -227,20 +227,20 @@ export const SupportedToolsSection: React.FC<SupportedToolsSectionProps> = ({
           </p>
 
           {/* Stats Row */}
-          <div className="flex flex-wrap justify-center gap-6 sm:gap-8 mb-8">
-            <div className="flex items-center gap-2 px-4 py-2 bg-white/80 dark:bg-slate-800/80 rounded-full shadow-md backdrop-blur-sm">
-              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+          <div className="mb-8 flex flex-wrap justify-center gap-6 sm:gap-8">
+            <div className="flex items-center gap-2 rounded-full bg-white/80 px-4 py-2 shadow-md backdrop-blur-sm dark:bg-slate-800/80">
+              <div className="h-2 w-2 animate-pulse rounded-full bg-green-500"></div>
               <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
                 {supportedTools.length}+ Tools
               </span>
             </div>
-            <div className="flex items-center gap-2 px-4 py-2 bg-white/80 dark:bg-slate-800/80 rounded-full shadow-md backdrop-blur-sm">
+            <div className="flex items-center gap-2 rounded-full bg-white/80 px-4 py-2 shadow-md backdrop-blur-sm dark:bg-slate-800/80">
               <TrendingUp className="h-4 w-4 text-blue-500" />
               <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
                 99.9% Uptime
               </span>
             </div>
-            <div className="flex items-center gap-2 px-4 py-2 bg-white/80 dark:bg-slate-800/80 rounded-full shadow-md backdrop-blur-sm">
+            <div className="flex items-center gap-2 rounded-full bg-white/80 px-4 py-2 shadow-md backdrop-blur-sm dark:bg-slate-800/80">
               <Zap className="h-4 w-4 text-purple-500" />
               <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
                 Real-time Analysis
@@ -251,21 +251,21 @@ export const SupportedToolsSection: React.FC<SupportedToolsSectionProps> = ({
 
         {/* Enhanced Controls */}
         <div className="mb-8 px-4 sm:px-0">
-          <div className="flex flex-col lg:flex-row gap-6 items-center justify-between max-w-6xl mx-auto bg-white/60 dark:bg-slate-800/60 backdrop-blur-md rounded-2xl p-6 shadow-xl border border-white/20 dark:border-slate-700/50">
+          <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 rounded-2xl border border-white/20 bg-white/60 p-6 shadow-xl backdrop-blur-md lg:flex-row dark:border-slate-700/50 dark:bg-slate-800/60">
             {/* Search Bar */}
-            <div className="relative flex-1 max-w-md group">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-blue-500 transition-colors duration-200" />
+            <div className="group relative max-w-md flex-1">
+              <Search className="absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2 transform text-slate-400 transition-colors duration-200 group-focus-within:text-blue-500" />
               <input
                 type="text"
                 placeholder="Search tools, features, or languages..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-12 pr-4 py-4 bg-white/80 dark:bg-slate-900/80 border border-slate-200/50 dark:border-slate-700/50 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:bg-white dark:focus:bg-slate-900 transition-all duration-300 text-sm placeholder:text-slate-400 shadow-sm backdrop-blur-sm"
+                className="w-full rounded-xl border border-slate-200/50 bg-white/80 py-4 pr-4 pl-12 text-sm shadow-sm backdrop-blur-sm transition-all duration-300 placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-500 dark:border-slate-700/50 dark:bg-slate-900/80 dark:focus:bg-slate-900"
               />
               {searchTerm && (
                 <button
                   onClick={() => setSearchTerm("")}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 p-1 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+                  className="absolute top-1/2 right-3 -translate-y-1/2 transform rounded-full p-1 transition-colors hover:bg-slate-200 dark:hover:bg-slate-700"
                 >
                   <span className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300">
                     ×
@@ -284,10 +284,10 @@ export const SupportedToolsSection: React.FC<SupportedToolsSectionProps> = ({
                 <Badge
                   key={option.value}
                   variant={filter === option.value ? "default" : "outline"}
-                  className={`cursor-pointer transition-all duration-300 hover:scale-105 px-4 py-2 font-medium ${
+                  className={`cursor-pointer px-4 py-2 font-medium transition-all duration-300 hover:scale-105 ${
                     filter === option.value
-                      ? "bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-lg hover:shadow-xl hover:from-blue-600 hover:to-indigo-600 border-0"
-                      : "hover:bg-blue-50 dark:hover:bg-blue-950/30 hover:border-blue-400 dark:hover:border-blue-500 hover:text-blue-700 dark:hover:text-blue-300 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm"
+                      ? "border-0 bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-lg hover:from-blue-600 hover:to-indigo-600 hover:shadow-xl"
+                      : "bg-white/80 backdrop-blur-sm hover:border-blue-400 hover:bg-blue-50 hover:text-blue-700 dark:bg-slate-800/80 dark:hover:border-blue-500 dark:hover:bg-blue-950/30 dark:hover:text-blue-300"
                   }`}
                   onClick={() => setFilter(option.value)}
                 >
@@ -298,37 +298,37 @@ export const SupportedToolsSection: React.FC<SupportedToolsSectionProps> = ({
             </div>
 
             {/* View Toggle */}
-            <div className="flex items-center gap-1 bg-slate-100/80 dark:bg-slate-800/80 rounded-xl p-1 backdrop-blur-sm shadow-sm">
+            <div className="flex items-center gap-1 rounded-xl bg-slate-100/80 p-1 shadow-sm backdrop-blur-sm dark:bg-slate-800/80">
               <button
                 onClick={() => setViewMode("grid")}
-                className={`p-3 rounded-lg transition-all duration-300 group ${
+                className={`group rounded-lg p-3 transition-all duration-300 ${
                   viewMode === "grid"
-                    ? "bg-white dark:bg-slate-700 shadow-md text-blue-600 dark:text-blue-400 scale-105"
-                    : "text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 hover:bg-white/50 dark:hover:bg-slate-700/50"
+                    ? "scale-105 bg-white text-blue-600 shadow-md dark:bg-slate-700 dark:text-blue-400"
+                    : "text-slate-500 hover:bg-white/50 hover:text-slate-700 dark:hover:bg-slate-700/50 dark:hover:text-slate-300"
                 }`}
                 title="Grid View"
               >
-                <Grid className="h-4 w-4 group-hover:scale-110 transition-transform" />
+                <Grid className="h-4 w-4 transition-transform group-hover:scale-110" />
               </button>
               <button
                 onClick={() => setViewMode("list")}
-                className={`p-3 rounded-lg transition-all duration-300 group ${
+                className={`group rounded-lg p-3 transition-all duration-300 ${
                   viewMode === "list"
-                    ? "bg-white dark:bg-slate-700 shadow-md text-blue-600 dark:text-blue-400 scale-105"
-                    : "text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 hover:bg-white/50 dark:hover:bg-slate-700/50"
+                    ? "scale-105 bg-white text-blue-600 shadow-md dark:bg-slate-700 dark:text-blue-400"
+                    : "text-slate-500 hover:bg-white/50 hover:text-slate-700 dark:hover:bg-slate-700/50 dark:hover:text-slate-300"
                 }`}
                 title="List View"
               >
-                <List className="h-4 w-4 group-hover:scale-110 transition-transform" />
+                <List className="h-4 w-4 transition-transform group-hover:scale-110" />
               </button>
             </div>
           </div>
         </div>
 
         {/* Results Count */}
-        <div className="text-center mb-8 px-4 sm:px-0">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-700 rounded-full shadow-sm border border-slate-200 dark:border-slate-600">
-            <div className="w-2 h-2 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full animate-pulse"></div>
+        <div className="mb-8 px-4 text-center sm:px-0">
+          <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-gradient-to-r from-slate-50 to-slate-100 px-4 py-2 shadow-sm dark:border-slate-600 dark:from-slate-800 dark:to-slate-700">
+            <div className="h-2 w-2 animate-pulse rounded-full bg-gradient-to-r from-green-500 to-emerald-500"></div>
             <p className="text-sm font-medium text-slate-700 dark:text-slate-300">
               Showing{" "}
               <span className="font-bold text-blue-600 dark:text-blue-400">
@@ -352,7 +352,7 @@ export const SupportedToolsSection: React.FC<SupportedToolsSectionProps> = ({
         <div
           className={`px-4 sm:px-0 ${
             viewMode === "grid"
-              ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10"
+              ? "grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3 lg:gap-10"
               : "space-y-6"
           } transition-all duration-500`}
         >
@@ -369,35 +369,35 @@ export const SupportedToolsSection: React.FC<SupportedToolsSectionProps> = ({
 
         {/* Enhanced Empty State */}
         {filteredTools.length === 0 && (
-          <div className="text-center py-16 px-4">
+          <div className="px-4 py-16 text-center">
             <div className="relative mx-auto mb-8">
-              <div className="w-24 h-24 mx-auto bg-gradient-to-r from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-600 rounded-full flex items-center justify-center shadow-lg">
+              <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-r from-slate-200 to-slate-300 shadow-lg dark:from-slate-700 dark:to-slate-600">
                 <Search className="h-12 w-12 text-slate-400" />
               </div>
-              <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-red-400 to-pink-400 rounded-full flex items-center justify-center animate-bounce">
-                <span className="text-white text-sm font-bold">0</span>
+              <div className="absolute -top-2 -right-2 flex h-8 w-8 animate-bounce items-center justify-center rounded-full bg-gradient-to-r from-red-400 to-pink-400">
+                <span className="text-sm font-bold text-white">0</span>
               </div>
             </div>
-            <h4 className="text-2xl font-bold text-slate-900 dark:text-white mb-3">
+            <h4 className="mb-3 text-2xl font-bold text-slate-900 dark:text-white">
               No tools found
             </h4>
-            <p className="text-lg text-slate-500 dark:text-slate-400 mb-8 max-w-md mx-auto">
+            <p className="mx-auto mb-8 max-w-md text-lg text-slate-500 dark:text-slate-400">
               We couldn't find any tools matching your criteria. Try adjusting
               your search or filter settings.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col justify-center gap-4 sm:flex-row">
               <button
                 onClick={() => {
                   setSearchTerm("");
                   setFilter("all");
                 }}
-                className="px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-xl hover:from-blue-600 hover:to-indigo-600 transition-all duration-300 shadow-lg hover:shadow-xl font-semibold"
+                className="rounded-xl bg-gradient-to-r from-blue-500 to-indigo-500 px-6 py-3 font-semibold text-white shadow-lg transition-all duration-300 hover:from-blue-600 hover:to-indigo-600 hover:shadow-xl"
               >
                 Clear all filters
               </button>
               <button
                 onClick={() => setSearchTerm("")}
-                className="px-6 py-3 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-600 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700 transition-all duration-300 font-semibold"
+                className="rounded-xl border border-slate-300 bg-white px-6 py-3 font-semibold text-slate-700 transition-all duration-300 hover:bg-slate-50 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
               >
                 Clear search only
               </button>

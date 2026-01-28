@@ -42,7 +42,7 @@ export const Terms: React.FC = () => {
           constitutes acceptance of any changes.
         </p>
 
-        <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+        <div className="mt-6 rounded-lg border border-blue-200 bg-blue-50 p-4 dark:border-blue-800 dark:bg-blue-900/20">
           <p className="font-medium text-blue-900 dark:text-blue-100">
             <strong>Important:</strong> Code Guardian is provided as a free
             service for educational and professional use. Commercial use may
@@ -167,7 +167,7 @@ export const Terms: React.FC = () => {
         icon={<AlertTriangle className="h-5 w-5" />}
       >
         <LegalSubsection title="Service Disclaimers">
-          <div className="p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border border-yellow-200 dark:border-yellow-800 mb-4">
+          <div className="mb-4 rounded-lg border border-yellow-200 bg-yellow-50 p-4 dark:border-yellow-800 dark:bg-yellow-900/20">
             <p className="font-medium text-yellow-900 dark:text-yellow-100">
               <strong>Important:</strong> Code Guardian is provided "as is"
               without warranties of any kind.
@@ -290,7 +290,7 @@ export const Terms: React.FC = () => {
           If you have questions about these Terms of Service, please contact us:
         </p>
 
-        <div className="mt-6 p-6 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800">
+        <div className="mt-6 rounded-xl border border-blue-200 bg-blue-50 p-6 dark:border-blue-800 dark:bg-blue-900/20">
           <div className="space-y-3">
             <div className="flex items-center gap-3">
               <Mail className="h-5 w-5 text-blue-600" />

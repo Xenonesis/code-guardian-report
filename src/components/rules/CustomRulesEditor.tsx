@@ -190,8 +190,8 @@ const CustomRulesEditor: React.FC = () => {
 
   if (!user) {
     return (
-      <div className="text-center py-12">
-        <Shield className="h-12 w-12 mx-auto mb-4 opacity-20" />
+      <div className="py-12 text-center">
+        <Shield className="mx-auto mb-4 h-12 w-12 opacity-20" />
         <p className="text-muted-foreground">
           Please sign in to manage custom rules
         </p>
@@ -204,8 +204,8 @@ const CustomRulesEditor: React.FC = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-3xl font-bold flex items-center gap-3">
-            <Code className="h-8 w-8 text-primary" />
+          <h2 className="flex items-center gap-3 text-3xl font-bold">
+            <Code className="text-primary h-8 w-8" />
             Custom Rules Engine
           </h2>
           <p className="text-muted-foreground mt-2">
@@ -214,7 +214,7 @@ const CustomRulesEditor: React.FC = () => {
         </div>
         <div className="flex gap-2">
           <Button variant="outline" onClick={handleExportRules}>
-            <Download className="h-4 w-4 mr-2" />
+            <Download className="mr-2 h-4 w-4" />
             Export
           </Button>
           <Button
@@ -230,7 +230,7 @@ const CustomRulesEditor: React.FC = () => {
               input.click();
             }}
           >
-            <Upload className="h-4 w-4 mr-2" />
+            <Upload className="mr-2 h-4 w-4" />
             Import
           </Button>
           <Dialog
@@ -239,11 +239,11 @@ const CustomRulesEditor: React.FC = () => {
           >
             <DialogTrigger asChild>
               <Button>
-                <Plus className="h-4 w-4 mr-2" />
+                <Plus className="mr-2 h-4 w-4" />
                 Create Rule
               </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[700px] max-h-[90vh] overflow-y-auto">
+            <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[700px]">
               <CreateRuleDialog
                 onSubmit={handleCreateRule}
                 onClose={() => setIsCreateDialogOpen(false)}
@@ -255,13 +255,13 @@ const CustomRulesEditor: React.FC = () => {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
         <Card>
           <CardContent className="pt-6">
             <div className="text-center">
-              <Code className="h-8 w-8 mx-auto mb-2 text-blue-600" />
+              <Code className="mx-auto mb-2 h-8 w-8 text-blue-600" />
               <div className="text-3xl font-bold">{rules.length}</div>
-              <div className="text-sm text-muted-foreground">Total Rules</div>
+              <div className="text-muted-foreground text-sm">Total Rules</div>
             </div>
           </CardContent>
         </Card>
@@ -269,11 +269,11 @@ const CustomRulesEditor: React.FC = () => {
         <Card>
           <CardContent className="pt-6">
             <div className="text-center">
-              <CheckCircle className="h-8 w-8 mx-auto mb-2 text-green-600" />
+              <CheckCircle className="mx-auto mb-2 h-8 w-8 text-green-600" />
               <div className="text-3xl font-bold">
                 {rules.filter((r) => r.enabled).length}
               </div>
-              <div className="text-sm text-muted-foreground">Active Rules</div>
+              <div className="text-muted-foreground text-sm">Active Rules</div>
             </div>
           </CardContent>
         </Card>
@@ -281,9 +281,9 @@ const CustomRulesEditor: React.FC = () => {
         <Card>
           <CardContent className="pt-6">
             <div className="text-center">
-              <Shield className="h-8 w-8 mx-auto mb-2 text-purple-600" />
+              <Shield className="mx-auto mb-2 h-8 w-8 text-purple-600" />
               <div className="text-3xl font-bold">{categories.length}</div>
-              <div className="text-sm text-muted-foreground">Categories</div>
+              <div className="text-muted-foreground text-sm">Categories</div>
             </div>
           </CardContent>
         </Card>
@@ -291,11 +291,11 @@ const CustomRulesEditor: React.FC = () => {
         <Card>
           <CardContent className="pt-6">
             <div className="text-center">
-              <AlertTriangle className="h-8 w-8 mx-auto mb-2 text-orange-600" />
+              <AlertTriangle className="mx-auto mb-2 h-8 w-8 text-orange-600" />
               <div className="text-3xl font-bold">
                 {rules.reduce((sum, r) => sum + (r.matchCount || 0), 0)}
               </div>
-              <div className="text-sm text-muted-foreground">Total Matches</div>
+              <div className="text-muted-foreground text-sm">Total Matches</div>
             </div>
           </CardContent>
         </Card>
@@ -337,13 +337,13 @@ const CustomRulesEditor: React.FC = () => {
             </CardHeader>
             <CardContent>
               {filteredRules.length === 0 ? (
-                <div className="text-center py-12">
-                  <Code className="h-12 w-12 mx-auto mb-4 opacity-20" />
+                <div className="py-12 text-center">
+                  <Code className="mx-auto mb-4 h-12 w-12 opacity-20" />
                   <p className="text-muted-foreground mb-4">
                     No custom rules yet
                   </p>
                   <Button onClick={() => setIsCreateDialogOpen(true)}>
-                    <Plus className="h-4 w-4 mr-2" />
+                    <Plus className="mr-2 h-4 w-4" />
                     Create Your First Rule
                   </Button>
                 </div>
@@ -373,7 +373,7 @@ const CustomRulesEditor: React.FC = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 {templates.map((template) => (
                   <TemplateCard
                     key={template.name}
@@ -407,8 +407,8 @@ const CustomRulesEditor: React.FC = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="text-center py-12">
-                <Shield className="h-12 w-12 mx-auto mb-4 opacity-20" />
+              <div className="py-12 text-center">
+                <Shield className="mx-auto mb-4 h-12 w-12 opacity-20" />
                 <p className="text-muted-foreground">
                   Community rules coming soon!
                 </p>
@@ -444,13 +444,13 @@ const RuleCard: React.FC<RuleCardProps> = ({
   return (
     <div
       className={cn(
-        "border rounded-lg p-4 transition-all",
+        "rounded-lg border p-4 transition-all",
         rule.enabled ? "border-primary/50" : "border-border opacity-60"
       )}
     >
       <div className="flex items-start justify-between">
         <div className="flex-1">
-          <div className="flex items-center gap-2 mb-2">
+          <div className="mb-2 flex items-center gap-2">
             <h3 className="font-semibold">{rule.name}</h3>
             <Badge className={cn("text-white", severityColors[rule.severity])}>
               {rule.severity}
@@ -463,11 +463,11 @@ const RuleCard: React.FC<RuleCardProps> = ({
             )}
           </div>
 
-          <p className="text-sm text-muted-foreground mb-2">
+          <p className="text-muted-foreground mb-2 text-sm">
             {rule.description}
           </p>
 
-          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+          <div className="text-muted-foreground flex items-center gap-2 text-xs">
             <span className="capitalize">{rule.language}</span>
             <span>•</span>
             <span>{rule.category}</span>
@@ -479,7 +479,7 @@ const RuleCard: React.FC<RuleCardProps> = ({
             )}
           </div>
 
-          <div className="flex flex-wrap gap-1 mt-2">
+          <div className="mt-2 flex flex-wrap gap-1">
             {rule.tags.map((tag) => (
               <Badge key={tag} variant="secondary" className="text-xs">
                 {tag}
@@ -523,7 +523,7 @@ const TemplateCard: React.FC<TemplateCardProps> = ({ template, onUse }) => {
   };
 
   return (
-    <Card className="hover:shadow-md transition-shadow">
+    <Card className="transition-shadow hover:shadow-md">
       <CardHeader>
         <div className="flex items-start justify-between">
           <CardTitle className="text-lg">{template.name}</CardTitle>
@@ -542,7 +542,7 @@ const TemplateCard: React.FC<TemplateCardProps> = ({ template, onUse }) => {
             <Badge variant="outline">{template.category}</Badge>
           </div>
           <Button size="sm" onClick={onUse}>
-            <Plus className="h-4 w-4 mr-2" />
+            <Plus className="mr-2 h-4 w-4" />
             Use Template
           </Button>
         </div>
@@ -631,7 +631,7 @@ const CreateRuleDialog: React.FC<CreateRuleDialogProps> = ({
         </DialogDescription>
       </DialogHeader>
 
-      <form onSubmit={handleSubmit} className="space-y-4 mt-4">
+      <form onSubmit={handleSubmit} className="mt-4 space-y-4">
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
             <Label htmlFor="name">Rule Name *</Label>
@@ -753,7 +753,7 @@ const CreateRuleDialog: React.FC<CreateRuleDialogProps> = ({
             }
             required
           />
-          <p className="text-xs text-muted-foreground">
+          <p className="text-muted-foreground text-xs">
             Enter a regex pattern or search string
           </p>
         </div>

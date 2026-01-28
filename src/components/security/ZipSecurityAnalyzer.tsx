@@ -223,7 +223,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
         <CardContent>
           <div className="space-y-4">
             <div
-              className={`border-2 border-dashed rounded-lg p-6 text-center transition-colors ${isDragging ? "border-blue-400 bg-blue-50" : "border-gray-300"}`}
+              className={`rounded-lg border-2 border-dashed p-6 text-center transition-colors ${isDragging ? "border-blue-400 bg-blue-50" : "border-gray-300"}`}
               onDragOver={(e) => {
                 e.preventDefault();
                 setIsDragging(true);
@@ -231,7 +231,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
               onDragLeave={() => setIsDragging(false)}
               onDrop={handleDrop}
             >
-              <Archive className="mx-auto h-12 w-12 text-gray-400 mb-4" />
+              <Archive className="mx-auto mb-4 h-12 w-12 text-gray-400" />
               <div className="space-y-2">
                 <h3 className="text-lg font-medium">Upload ZIP File</h3>
                 <p className="text-sm text-gray-600">
@@ -244,7 +244,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
                   disabled={isAnalyzing}
                   aria-label="Upload ZIP file for security analysis"
                   title="Upload ZIP file for security analysis"
-                  className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                  className="block w-full text-sm text-gray-500 file:mr-4 file:rounded-full file:border-0 file:bg-blue-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-blue-700 hover:file:bg-blue-100"
                 />
               </div>
               <div className="sr-only" aria-live="polite">
@@ -270,7 +270,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
       {/* Analysis Results */}
       {results.zipAnalysis && (
         <Tabs defaultValue="overview" className="w-full">
-          <TabsList className="grid w-full grid-cols-6 sticky top-0 z-10 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60 rounded-md shadow-sm">
+          <TabsList className="sticky top-0 z-10 grid w-full grid-cols-6 rounded-md bg-white/80 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-white/60">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="threats" className="flex items-center gap-2">
               Threats
@@ -309,12 +309,12 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
 
           {/* Overview Tab */}
           <TabsContent value="overview" className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
               {/* Security Score */}
               <Card>
                 <CardContent className="p-4">
                   <div className="flex items-center gap-3">
-                    <div className="p-2 bg-blue-500 rounded-lg">
+                    <div className="rounded-lg bg-blue-500 p-2">
                       <Shield className="h-5 w-5 text-white" />
                     </div>
                     <div>
@@ -331,7 +331,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
               <Card>
                 <CardContent className="p-4">
                   <div className="flex items-center gap-3">
-                    <div className="p-2 bg-green-500 rounded-lg">
+                    <div className="rounded-lg bg-green-500 p-2">
                       <FileText className="h-5 w-5 text-white" />
                     </div>
                     <div>
@@ -348,7 +348,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
               <Card>
                 <CardContent className="p-4">
                   <div className="flex items-center gap-3">
-                    <div className="p-2 bg-red-500 rounded-lg">
+                    <div className="rounded-lg bg-red-500 p-2">
                       <AlertTriangle className="h-5 w-5 text-white" />
                     </div>
                     <div>
@@ -365,7 +365,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
               <Card>
                 <CardContent className="p-4">
                   <div className="flex items-center gap-3">
-                    <div className="p-2 bg-orange-500 rounded-lg">
+                    <div className="rounded-lg bg-orange-500 p-2">
                       <Zap className="h-5 w-5 text-white" />
                     </div>
                     <div>
@@ -386,9 +386,9 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
                 <CardTitle>Analysis Summary</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                   <div>
-                    <h4 className="font-semibold mb-3">File Structure</h4>
+                    <h4 className="mb-3 font-semibold">File Structure</h4>
                     <div className="space-y-2">
                       <div className="flex justify-between">
                         <span>Total Size:</span>
@@ -422,7 +422,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
                   </div>
 
                   <div>
-                    <h4 className="font-semibold mb-3">Security Status</h4>
+                    <h4 className="mb-3 font-semibold">Security Status</h4>
                     <div className="space-y-2">
                       {results.zipAnalysis!.securityThreats.length === 0 ? (
                         <div className="flex items-center gap-2 text-green-600">
@@ -470,8 +470,8 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
               </CardHeader>
               <CardContent>
                 {results.zipAnalysis!.securityThreats.length === 0 ? (
-                  <div className="text-center py-8">
-                    <CheckCircle className="h-12 w-12 text-green-500 mx-auto mb-4" />
+                  <div className="py-8 text-center">
+                    <CheckCircle className="mx-auto mb-4 h-12 w-12 text-green-500" />
                     <h3 className="text-lg font-medium text-green-700">
                       No Security Threats Detected
                     </h3>
@@ -489,7 +489,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
                         >
                           <AlertTriangle className="h-4 w-4" />
                           <div className="ml-4">
-                            <div className="flex items-center gap-2 mb-2">
+                            <div className="mb-2 flex items-center gap-2">
                               <Badge variant="destructive">
                                 {threat.severity}
                               </Badge>
@@ -503,14 +503,14 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
                             <h4 className="font-semibold">
                               {threat.description}
                             </h4>
-                            <p className="text-sm text-gray-600 mb-2">
+                            <p className="mb-2 text-sm text-gray-600">
                               File: {threat.file}
                             </p>
 
                             {threat.evidence.length > 0 && (
                               <div className="mb-2">
                                 <p className="text-sm font-medium">Evidence:</p>
-                                <ul className="text-sm text-gray-600 list-disc list-inside">
+                                <ul className="list-inside list-disc text-sm text-gray-600">
                                   {threat.evidence.map((evidence, i) => (
                                     <li key={i}>{evidence}</li>
                                   ))}
@@ -518,7 +518,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
                               </div>
                             )}
 
-                            <div className="bg-blue-50 p-3 rounded-md">
+                            <div className="rounded-md bg-blue-50 p-3">
                               <p className="text-sm font-medium text-blue-800">
                                 Mitigation:
                               </p>
@@ -538,7 +538,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
 
           {/* File Structure Tab */}
           <TabsContent value="structure" className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
               {/* File Types Distribution */}
               <Card>
                 <CardHeader>
@@ -551,7 +551,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
                     ).map(([type, count]) => (
                       <div
                         key={type}
-                        className="flex justify-between items-center"
+                        className="flex items-center justify-between"
                       >
                         <span className="text-sm">
                           {type || "No extension"}
@@ -565,7 +565,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
                             )}
                             className="w-20"
                           />
-                          <span className="text-sm font-medium w-8">
+                          <span className="w-8 text-sm font-medium">
                             {count}
                           </span>
                         </div>
@@ -583,8 +583,8 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
                 <CardContent>
                   {results.zipAnalysis!.fileStructure.suspiciousFiles.length ===
                   0 ? (
-                    <div className="text-center py-4">
-                      <CheckCircle className="h-8 w-8 text-green-500 mx-auto mb-2" />
+                    <div className="py-4 text-center">
+                      <CheckCircle className="mx-auto mb-2 h-8 w-8 text-green-500" />
                       <p className="text-sm text-green-600">
                         No suspicious files detected
                       </p>
@@ -595,7 +595,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
                         (file, index) => (
                           <div
                             key={index}
-                            className="flex items-center gap-2 p-2 bg-yellow-50 rounded"
+                            className="flex items-center gap-2 rounded bg-yellow-50 p-2"
                           >
                             <AlertTriangle className="h-4 w-4 text-yellow-600" />
                             <span className="text-sm">{file}</span>
@@ -614,7 +614,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
             {results.dependencyAnalysis ? (
               <>
                 {/* Dependency Summary */}
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
                   <Card>
                     <CardContent className="p-4">
                       <div className="flex items-center gap-3">
@@ -691,8 +691,8 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
                   </CardHeader>
                   <CardContent>
                     {results.dependencyAnalysis.vulnerabilities.length === 0 ? (
-                      <div className="text-center py-8">
-                        <CheckCircle className="h-12 w-12 text-green-500 mx-auto mb-4" />
+                      <div className="py-8 text-center">
+                        <CheckCircle className="mx-auto mb-4 h-12 w-12 text-green-500" />
                         <h3 className="text-lg font-medium text-green-700">
                           No Vulnerabilities Found
                         </h3>
@@ -704,8 +704,8 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
                       <div className="space-y-4">
                         {results.dependencyAnalysis.vulnerabilities.map(
                           (vuln, index) => (
-                            <div key={index} className="border rounded-lg p-4">
-                              <div className="flex items-start justify-between mb-2">
+                            <div key={index} className="rounded-lg border p-4">
+                              <div className="mb-2 flex items-start justify-between">
                                 <div>
                                   <h4 className="font-semibold">
                                     {vuln.vulnerability.title}
@@ -728,12 +728,12 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
                                 </div>
                               </div>
 
-                              <p className="text-sm mb-3">
+                              <p className="mb-3 text-sm">
                                 {vuln.vulnerability.description}
                               </p>
 
                               {vuln.fixAvailable && (
-                                <div className="bg-green-50 p-3 rounded-md">
+                                <div className="rounded-md bg-green-50 p-3">
                                   <p className="text-sm font-medium text-green-800">
                                     Fix Available: Update to {vuln.fixVersion}
                                   </p>
@@ -750,7 +750,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
             ) : (
               <Card>
                 <CardContent className="p-8 text-center">
-                  <Package className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                  <Package className="mx-auto mb-4 h-12 w-12 text-gray-400" />
                   <p className="text-gray-600">
                     No dependency information available
                   </p>
@@ -766,7 +766,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
                 <CardTitle>Code Quality Metrics</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
                   <div className="text-center">
                     <p className="text-2xl font-bold">
                       {results.zipAnalysis!.codeQuality.codeFiles}
@@ -810,9 +810,9 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
                       (file, index) => (
                         <div
                           key={index}
-                          className="flex justify-between items-center p-2 bg-gray-50 rounded"
+                          className="flex items-center justify-between rounded bg-gray-50 p-2"
                         >
-                          <span className="text-sm truncate">{file.file}</span>
+                          <span className="truncate text-sm">{file.file}</span>
                           <span className="text-sm font-medium">
                             {(file.size / 1024).toFixed(1)}KB
                           </span>
@@ -833,8 +833,8 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
               </CardHeader>
               <CardContent>
                 {results.zipAnalysis!.complianceIssues.length === 0 ? (
-                  <div className="text-center py-8">
-                    <CheckCircle className="h-12 w-12 text-green-500 mx-auto mb-4" />
+                  <div className="py-8 text-center">
+                    <CheckCircle className="mx-auto mb-4 h-12 w-12 text-green-500" />
                     <h3 className="text-lg font-medium text-green-700">
                       No Compliance Issues
                     </h3>
@@ -886,7 +886,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
                       key={index}
                       className="border-l-4 border-l-blue-500 pl-4"
                     >
-                      <div className="flex items-center gap-2 mb-1">
+                      <div className="mb-1 flex items-center gap-2">
                         <Badge variant="outline">{rec.priority}</Badge>
                         <Badge variant="secondary">{rec.category}</Badge>
                       </div>

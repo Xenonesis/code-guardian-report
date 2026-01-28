@@ -58,7 +58,7 @@ export const Privacy: React.FC = () => {
               "Analysis preferences and settings",
             ]}
           />
-          <p className="mt-3 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
+          <p className="mt-3 rounded-lg border border-green-200 bg-green-50 p-4 dark:border-green-800 dark:bg-green-900/20">
             <strong>Important:</strong> Your source code is processed locally in
             your browser whenever possible. We do not permanently store your
             source code on our servers.
@@ -277,7 +277,7 @@ export const Privacy: React.FC = () => {
           please contact us:
         </p>
 
-        <div className="mt-6 p-6 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800">
+        <div className="mt-6 rounded-xl border border-blue-200 bg-blue-50 p-6 dark:border-blue-800 dark:bg-blue-900/20">
           <div className="space-y-3">
             <div className="flex items-center gap-3">
               <Mail className="h-5 w-5 text-blue-600" />

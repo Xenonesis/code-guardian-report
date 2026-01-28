@@ -90,37 +90,37 @@ export const EnhancedFeatureShowcase: React.FC = () => {
     features.find((f) => f.id === activeFeature) || features[0];
 
   return (
-    <section className="py-20 relative overflow-hidden">
+    <section className="relative overflow-hidden py-20">
       {/* Enhanced Background Elements */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-full blur-3xl float-animation"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 rounded-full blur-2xl float-animation delay-2s"></div>
+      <div className="pointer-events-none absolute inset-0">
+        <div className="float-animation absolute top-1/4 left-1/4 h-64 w-64 rounded-full bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 blur-3xl"></div>
+        <div className="float-animation delay-2s absolute right-1/4 bottom-1/4 h-48 w-48 rounded-full bg-gradient-to-r from-emerald-500/10 to-teal-500/10 blur-2xl"></div>
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-7xl mx-auto">
+      <div className="relative z-10 container mx-auto px-4">
+        <div className="mx-auto max-w-7xl">
           {/* Enhanced Header */}
-          <div className="text-center mb-16">
-            <div className="glass-card-ultra max-w-4xl mx-auto p-8 mb-8">
-              <h3 className="text-4xl sm:text-5xl font-bold gradient-text-animated mb-6">
+          <div className="mb-16 text-center">
+            <div className="glass-card-ultra mx-auto mb-8 max-w-4xl p-8">
+              <h3 className="gradient-text-animated mb-6 text-4xl font-bold sm:text-5xl">
                 Platform Capabilities
               </h3>
-              <p className="text-xl text-slate-700 dark:text-slate-300 leading-relaxed">
+              <p className="text-xl leading-relaxed text-slate-700 dark:text-slate-300">
                 Discover the powerful features that make Code Guardian the
                 ultimate security analysis platform
               </p>
             </div>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-12 items-start">
+          <div className="grid items-start gap-12 lg:grid-cols-2">
             {/* Enhanced Feature Tabs */}
             <div className="space-y-6">
               {features.map((feature, index) => (
                 <Card
                   key={feature.id}
-                  className={`cursor-pointer enhanced-card-hover glow-on-hover transition-all duration-700 ${
+                  className={`enhanced-card-hover glow-on-hover cursor-pointer transition-all duration-700 ${
                     activeFeature === feature.id
-                      ? "glass-card-ultra border-2 border-blue-400/50 dark:border-blue-500/50 shadow-2xl shadow-blue-500/30"
+                      ? "glass-card-ultra border-2 border-blue-400/50 shadow-2xl shadow-blue-500/30 dark:border-blue-500/50"
                       : "glass-card-ultra hover:border-white/40 dark:hover:border-white/20"
                   }`}
                   onClick={() => setActiveFeature(feature.id)}
@@ -130,7 +130,7 @@ export const EnhancedFeatureShowcase: React.FC = () => {
                     <div className="flex items-start gap-6">
                       {/* Enhanced Icon Container */}
                       <div
-                        className={`relative p-4 rounded-2xl bg-gradient-to-r ${feature.gradient} text-white shadow-xl ${
+                        className={`relative rounded-2xl bg-gradient-to-r p-4 ${feature.gradient} text-white shadow-xl ${
                           activeFeature === feature.id
                             ? "scale-110 rotate-3"
                             : ""
@@ -138,13 +138,13 @@ export const EnhancedFeatureShowcase: React.FC = () => {
                       >
                         {feature.icon}
                         {activeFeature === feature.id && (
-                          <div className="absolute inset-0 rounded-2xl bg-white/20 animate-pulse"></div>
+                          <div className="absolute inset-0 animate-pulse rounded-2xl bg-white/20"></div>
                         )}
                       </div>
 
                       <div className="flex-1">
                         <h4
-                          className={`font-bold text-xl mb-3 ${
+                          className={`mb-3 text-xl font-bold ${
                             activeFeature === feature.id
                               ? "gradient-text-animated"
                               : "text-slate-900 dark:text-white"
@@ -152,17 +152,17 @@ export const EnhancedFeatureShowcase: React.FC = () => {
                         >
                           {feature.title}
                         </h4>
-                        <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
+                        <p className="leading-relaxed text-slate-700 dark:text-slate-300">
                           {feature.description}
                         </p>
                       </div>
 
                       {/* Enhanced Arrow */}
                       <div
-                        className={`flex items-center justify-center w-10 h-10 rounded-full ${
+                        className={`flex h-10 w-10 items-center justify-center rounded-full ${
                           activeFeature === feature.id
-                            ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white scale-110"
-                            : "bg-slate-100 dark:bg-slate-700 text-slate-400"
+                            ? "scale-110 bg-gradient-to-r from-blue-500 to-purple-500 text-white"
+                            : "bg-slate-100 text-slate-400 dark:bg-slate-700"
                         } transition-all duration-500`}
                       >
                         <ArrowRight className="h-5 w-5" />
@@ -180,8 +180,8 @@ export const EnhancedFeatureShowcase: React.FC = () => {
                 <div
                   className={`absolute inset-0 bg-gradient-to-br ${activeFeatureData.gradient} opacity-10`}
                 ></div>
-                <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-blue-500/30 via-purple-500/20 to-pink-500/30 rounded-full blur-3xl float-animation"></div>
-                <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-br from-emerald-500/25 to-teal-500/25 rounded-full blur-2xl float-animation delay-2s"></div>
+                <div className="float-animation absolute top-0 right-0 h-40 w-40 rounded-full bg-gradient-to-br from-blue-500/30 via-purple-500/20 to-pink-500/30 blur-3xl"></div>
+                <div className="float-animation delay-2s absolute bottom-0 left-0 h-32 w-32 rounded-full bg-gradient-to-br from-emerald-500/25 to-teal-500/25 blur-2xl"></div>
 
                 {/* Particle System */}
                 <div className="particle-system">
@@ -201,19 +201,19 @@ export const EnhancedFeatureShowcase: React.FC = () => {
 
                 <CardContent className="relative z-10 p-10">
                   {/* Enhanced Header */}
-                  <div className="flex items-center gap-6 mb-8">
+                  <div className="mb-8 flex items-center gap-6">
                     <div
-                      className={`p-5 rounded-3xl bg-gradient-to-r ${activeFeatureData.gradient} text-white shadow-2xl animate-pulse`}
+                      className={`rounded-3xl bg-gradient-to-r p-5 ${activeFeatureData.gradient} animate-pulse text-white shadow-2xl`}
                     >
                       <div className="text-2xl">{activeFeatureData.icon}</div>
                     </div>
                     <div>
-                      <h4 className="text-3xl font-bold gradient-text-animated mb-2">
+                      <h4 className="gradient-text-animated mb-2 text-3xl font-bold">
                         {activeFeatureData.title}
                       </h4>
                       <div className="flex items-center gap-3">
-                        <Sparkles className="h-5 w-5 text-yellow-500 animate-pulse" />
-                        <span className="text-slate-700 dark:text-slate-300 font-medium">
+                        <Sparkles className="h-5 w-5 animate-pulse text-yellow-500" />
+                        <span className="font-medium text-slate-700 dark:text-slate-300">
                           Featured Capability
                         </span>
                       </div>
@@ -221,32 +221,32 @@ export const EnhancedFeatureShowcase: React.FC = () => {
                   </div>
 
                   {/* Enhanced Description */}
-                  <div className="glass-card-ultra p-6 mb-8">
-                    <p className="text-lg text-slate-800 dark:text-slate-200 leading-relaxed">
+                  <div className="glass-card-ultra mb-8 p-6">
+                    <p className="text-lg leading-relaxed text-slate-800 dark:text-slate-200">
                       {activeFeatureData.description}
                     </p>
                   </div>
 
                   {/* Enhanced Benefits Section */}
                   <div className="space-y-6">
-                    <h5 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
-                      <div className="p-2 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg">
+                    <h5 className="flex items-center gap-3 text-xl font-bold text-slate-900 dark:text-white">
+                      <div className="rounded-lg bg-gradient-to-r from-green-500 to-emerald-500 p-2">
                         <CheckCircle className="h-5 w-5 text-white" />
                       </div>
                       Key Benefits
                     </h5>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                       {activeFeatureData.benefits.map((benefit, index) => (
                         <div
                           key={index}
-                          className="glass-card-ultra p-4 enhanced-card-hover group"
+                          className="glass-card-ultra enhanced-card-hover group p-4"
                           style={{ animationDelay: `${index * 0.1}s` }}
                         >
                           <div className="flex items-center gap-4">
                             <div
-                              className={`w-3 h-3 rounded-full bg-gradient-to-r ${activeFeatureData.gradient} group-hover:scale-125 transition-transform duration-300`}
+                              className={`h-3 w-3 rounded-full bg-gradient-to-r ${activeFeatureData.gradient} transition-transform duration-300 group-hover:scale-125`}
                             ></div>
-                            <span className="text-slate-800 dark:text-slate-200 font-medium group-hover:text-slate-900 dark:group-hover:text-white transition-colors duration-300">
+                            <span className="font-medium text-slate-800 transition-colors duration-300 group-hover:text-slate-900 dark:text-slate-200 dark:group-hover:text-white">
                               {benefit}
                             </span>
                           </div>

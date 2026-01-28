@@ -116,7 +116,7 @@ const NotificationPreferences: React.FC = () => {
           <div className="flex items-center justify-between">
             <Label htmlFor="enabled" className="flex flex-col gap-1">
               <span>Enable Notifications</span>
-              <span className="text-sm text-muted-foreground font-normal">
+              <span className="text-muted-foreground text-sm font-normal">
                 Turn notifications on or off
               </span>
             </Label>
@@ -135,7 +135,7 @@ const NotificationPreferences: React.FC = () => {
               className="flex flex-col gap-1"
             >
               <span>Browser Notifications</span>
-              <span className="text-sm text-muted-foreground font-normal">
+              <span className="text-muted-foreground text-sm font-normal">
                 Show desktop notifications
               </span>
             </Label>
@@ -171,7 +171,7 @@ const NotificationPreferences: React.FC = () => {
                 <Volume2 className="h-4 w-4" />
                 Play Sound
               </span>
-              <span className="text-sm text-muted-foreground font-normal">
+              <span className="text-muted-foreground text-sm font-normal">
                 Play notification sounds
               </span>
             </Label>
@@ -199,7 +199,7 @@ const NotificationPreferences: React.FC = () => {
           <div className="flex items-center justify-between">
             <Label htmlFor="batching-enabled" className="flex flex-col gap-1">
               <span>Enable Batching</span>
-              <span className="text-sm text-muted-foreground font-normal">
+              <span className="text-muted-foreground text-sm font-normal">
                 Group notifications that arrive close together
               </span>
             </Label>
@@ -224,7 +224,7 @@ const NotificationPreferences: React.FC = () => {
                   max={5000}
                   step={500}
                 />
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                   Time to wait before showing batched notifications
                 </p>
               </div>
@@ -240,7 +240,7 @@ const NotificationPreferences: React.FC = () => {
                   max={10}
                   step={1}
                 />
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                   Maximum notifications to show at once
                 </p>
               </div>
@@ -264,7 +264,7 @@ const NotificationPreferences: React.FC = () => {
           <div className="flex items-center justify-between">
             <Label htmlFor="auto-mark-read" className="flex flex-col gap-1">
               <span>Enable Auto Mark as Read</span>
-              <span className="text-sm text-muted-foreground font-normal">
+              <span className="text-muted-foreground text-sm font-normal">
                 Mark notifications as read after a delay
               </span>
             </Label>
@@ -285,7 +285,7 @@ const NotificationPreferences: React.FC = () => {
                 max={30}
                 step={1}
               />
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 Time before automatically marking as read
               </p>
             </div>
@@ -306,7 +306,7 @@ const NotificationPreferences: React.FC = () => {
           <div className="flex items-center justify-between">
             <Label htmlFor="persist-history" className="flex flex-col gap-1">
               <span>Persist History</span>
-              <span className="text-sm text-muted-foreground font-normal">
+              <span className="text-muted-foreground text-sm font-normal">
                 Save notification history across sessions
               </span>
             </Label>
@@ -327,7 +327,7 @@ const NotificationPreferences: React.FC = () => {
                 max={500}
                 step={10}
               />
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 Maximum number of notifications to keep
               </p>
             </div>
@@ -360,7 +360,19 @@ const NotificationPreferences: React.FC = () => {
               <Switch
                 id={`category-${category}`}
                 checked={enabled}
-                onCheckedChange={() => handleCategoryToggle(category as "system" | "analysis" | "security" | "auth" | "storage" | "network" | "export" | "general")}
+                onCheckedChange={() =>
+                  handleCategoryToggle(
+                    category as
+                      | "system"
+                      | "analysis"
+                      | "security"
+                      | "auth"
+                      | "storage"
+                      | "network"
+                      | "export"
+                      | "general"
+                  )
+                }
               />
             </div>
           ))}
@@ -384,7 +396,11 @@ const NotificationPreferences: React.FC = () => {
               <Switch
                 id={`priority-${priority}`}
                 checked={enabled}
-                onCheckedChange={() => handlePriorityToggle(priority as "urgent" | "high" | "normal" | "low")}
+                onCheckedChange={() =>
+                  handlePriorityToggle(
+                    priority as "urgent" | "high" | "normal" | "low"
+                  )
+                }
               />
             </div>
           ))}
@@ -394,7 +410,7 @@ const NotificationPreferences: React.FC = () => {
       {/* Reset */}
       <div className="flex justify-end">
         <Button variant="outline" onClick={handleReset}>
-          <RotateCcw className="h-4 w-4 mr-2" />
+          <RotateCcw className="mr-2 h-4 w-4" />
           Reset to Defaults
         </Button>
       </div>

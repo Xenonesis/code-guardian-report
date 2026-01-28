@@ -19,10 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Collapsible,
-  CollapsibleContent,
-} from "@/components/ui/collapsible";
+import { Collapsible, CollapsibleContent } from "@/components/ui/collapsible";
 
 export interface SearchFilters {
   query: string;
@@ -153,7 +150,7 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
   return (
     <Card className={`w-full ${className}`}>
       <CardHeader className="pb-4">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
           <CardTitle className="text-lg font-semibold">
             Search & Filter
           </CardTitle>
@@ -171,15 +168,15 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
       <CardContent className="space-y-4">
         {/* Search Input */}
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
+          <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform text-slate-400" />
           <Input
             placeholder="Search issues, files, or descriptions..."
             value={filters.query}
             onChange={(e) => handleQueryChange(e.target.value)}
             onFocus={() => setSearchFocused(true)}
             onBlur={() => setSearchFocused(false)}
-            className={`pl-10 pr-4 transition-all duration-200 ${
-              searchFocused ? "ring-2 ring-blue-500 border-blue-500" : ""
+            className={`pr-4 pl-10 transition-all duration-200 ${
+              searchFocused ? "border-blue-500 ring-2 ring-blue-500" : ""
             }`}
             aria-label="Search issues"
           />
@@ -188,7 +185,7 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
               variant="ghost"
               size="sm"
               onClick={() => handleQueryChange("")}
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0"
+              className="absolute top-1/2 right-2 h-6 w-6 -translate-y-1/2 transform p-0"
               aria-label="Clear search"
             >
               <X className="h-3 w-3" />
@@ -197,7 +194,7 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
         </div>
 
         {/* Sort Controls */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+        <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center">
           <div className="flex items-center gap-2">
             <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
               Sort by:
@@ -325,11 +322,11 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
 
         {/* Filter Panel */}
         <Collapsible open={isFilterOpen} onOpenChange={setIsFilterOpen}>
-          <CollapsibleContent className="space-y-4 pt-4 border-t border-slate-200 dark:border-slate-700">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <CollapsibleContent className="space-y-4 border-t border-slate-200 pt-4 dark:border-slate-700">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
               {/* Severity Filters */}
               <div>
-                <h4 className="font-medium text-sm text-slate-700 dark:text-slate-300 mb-3">
+                <h4 className="mb-3 text-sm font-medium text-slate-700 dark:text-slate-300">
                   Severity
                 </h4>
                 <div className="space-y-2">
@@ -344,7 +341,7 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
                       />
                       <label
                         htmlFor={`severity-${severity}`}
-                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                        className="cursor-pointer text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                       >
                         <Badge
                           className={getSeverityColor(severity)}
@@ -360,7 +357,7 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
 
               {/* Type Filters */}
               <div>
-                <h4 className="font-medium text-sm text-slate-700 dark:text-slate-300 mb-3">
+                <h4 className="mb-3 text-sm font-medium text-slate-700 dark:text-slate-300">
                   Issue Type
                 </h4>
                 <div className="space-y-2">
@@ -373,7 +370,7 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
                       />
                       <label
                         htmlFor={`type-${type}`}
-                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                        className="cursor-pointer text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                       >
                         {type}
                       </label>
@@ -384,10 +381,10 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
 
               {/* File Filters */}
               <div>
-                <h4 className="font-medium text-sm text-slate-700 dark:text-slate-300 mb-3">
+                <h4 className="mb-3 text-sm font-medium text-slate-700 dark:text-slate-300">
                   Files
                 </h4>
-                <div className="space-y-2 max-h-40 overflow-y-auto">
+                <div className="max-h-40 space-y-2 overflow-y-auto">
                   {availableFilters.files.map((file) => (
                     <div key={file} className="flex items-center space-x-2">
                       <Checkbox
@@ -397,7 +394,7 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
                       />
                       <label
                         htmlFor={`file-${file}`}
-                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer truncate"
+                        className="cursor-pointer truncate text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                         title={file}
                       >
                         {file}

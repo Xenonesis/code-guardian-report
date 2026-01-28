@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { Shield, ChevronDown } from "lucide-react";
-import {
-  Card,
-  CardContent,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { AnalysisResults } from "@/hooks/useAnalysis";
 import { SecurityIssueItem } from "@/components/security/SecurityIssueItem";
 import { SecretDetectionCard } from "@/components/security/SecretDetectionCard";
@@ -133,11 +130,11 @@ ${suggestion.testingRecommendations.map((rec, i) => `${i + 1}. ${rec}`).join("\n
   if (isLoading) {
     return (
       <div className="space-y-6 px-4 sm:px-0" role="status" aria-live="polite">
-        <Card className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900/40 dark:to-slate-900/10 border-slate-200 dark:border-slate-800 shadow-sm">
+        <Card className="border-slate-200 bg-gradient-to-br from-slate-50 to-white shadow-sm dark:border-slate-800 dark:from-slate-900/40 dark:to-slate-900/10">
           <CardContent className="p-8">
             <div className="animate-pulse space-y-4">
               <div className="h-6 w-48 rounded bg-slate-200 dark:bg-slate-800" />
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                 <div className="h-32 rounded-lg bg-slate-200 dark:bg-slate-800" />
                 <div className="h-32 rounded-lg bg-slate-200 dark:bg-slate-800" />
                 <div className="h-32 rounded-lg bg-slate-200 dark:bg-slate-800" />
@@ -311,12 +308,12 @@ ${suggestion.testingRecommendations.map((rec, i) => `${i + 1}. ${rec}`).join("\n
       })()}
 
       {/* PDF Download Section */}
-      <div className="flex justify-end mb-4">
+      <div className="mb-4 flex justify-end">
         <PDFDownloadButton
           results={results}
           variant="default"
           size="sm"
-          className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg"
+          className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg hover:from-blue-700 hover:to-indigo-700"
         />
       </div>
 
@@ -340,16 +337,16 @@ ${suggestion.testingRecommendations.map((rec, i) => `${i + 1}. ${rec}`).join("\n
         }}
       />
 
-      <div className="bg-slate-900/50 border border-slate-700/50 rounded-lg">
+      <div className="rounded-lg border border-slate-700/50 bg-slate-900/50">
         {/* Header */}
-        <div className="p-6 border-b border-slate-700/50">
+        <div className="border-b border-slate-700/50 p-6">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-xl font-semibold text-white mb-2 flex items-center gap-2">
+              <h2 className="mb-2 flex items-center gap-2 text-xl font-semibold text-white">
                 <Shield className="h-5 w-5" />
                 Other Security Issues ({otherIssues.length})
               </h2>
-              <p className="text-slate-400 text-sm">
+              <p className="text-sm text-slate-400">
                 Comprehensive security analysis with OWASP classifications and
                 CVSS scoring
               </p>
@@ -359,7 +356,7 @@ ${suggestion.testingRecommendations.map((rec, i) => `${i + 1}. ${rec}`).join("\n
         </div>
 
         {/* Issues List */}
-        <div className="p-6 space-y-4">
+        <div className="space-y-4 p-6">
           {otherIssues.map((issue, index) => (
             <SecurityIssueItem
               key={`${issue.id}_${index}`}
@@ -376,7 +373,7 @@ ${suggestion.testingRecommendations.map((rec, i) => `${i + 1}. ${rec}`).join("\n
             />
           ))}
           {otherIssues.length === 0 && (
-            <p className="text-slate-400 text-center py-4">
+            <p className="py-4 text-center text-slate-400">
               No other security issues detected.
             </p>
           )}

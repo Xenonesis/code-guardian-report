@@ -184,13 +184,13 @@ export const CodeProvenanceCard: React.FC<CodeProvenanceCardProps> = ({
 
   return (
     <Card
-      className={`bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/20 dark:to-emerald-900/20 border-green-200 dark:border-green-800 ${className}`}
+      className={`border-green-200 bg-gradient-to-br from-green-50 to-emerald-50 dark:border-green-800 dark:from-green-950/20 dark:to-emerald-900/20 ${className}`}
     >
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Shield className="h-5 w-5 text-green-600" />
           Code Provenance & Integrity Monitoring
-          <Badge variant="outline" className="text-green-600 border-green-300">
+          <Badge variant="outline" className="border-green-300 text-green-600">
             {statistics.monitoringStatus ? "Active" : "Inactive"}
           </Badge>
         </CardTitle>
@@ -201,28 +201,28 @@ export const CodeProvenanceCard: React.FC<CodeProvenanceCardProps> = ({
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="overview" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 gap-1 sm:gap-0 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border shadow-lg rounded-xl p-1">
+          <TabsList className="grid w-full grid-cols-2 gap-1 rounded-xl border bg-white/80 p-1 shadow-lg backdrop-blur-sm sm:grid-cols-4 sm:gap-0 dark:bg-slate-800/80">
             <TabsTrigger
               value="overview"
-              className="flex items-center justify-center py-2 px-2 text-xs sm:text-sm font-medium data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-indigo-500 data-[state=active]:text-white transition-all duration-300 rounded-lg"
+              className="flex items-center justify-center rounded-lg px-2 py-2 text-xs font-medium transition-all duration-300 data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-indigo-500 data-[state=active]:text-white sm:text-sm"
             >
               Overview
             </TabsTrigger>
             <TabsTrigger
               value="alerts"
-              className="flex items-center justify-center py-2 px-2 text-xs sm:text-sm font-medium data-[state=active]:bg-gradient-to-r data-[state=active]:from-red-500 data-[state=active]:to-pink-500 data-[state=active]:text-white transition-all duration-300 rounded-lg"
+              className="flex items-center justify-center rounded-lg px-2 py-2 text-xs font-medium transition-all duration-300 data-[state=active]:bg-gradient-to-r data-[state=active]:from-red-500 data-[state=active]:to-pink-500 data-[state=active]:text-white sm:text-sm"
             >
               Alerts ({alerts.length})
             </TabsTrigger>
             <TabsTrigger
               value="monitoring"
-              className="flex items-center justify-center py-2 px-2 text-xs sm:text-sm font-medium data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-500 data-[state=active]:to-emerald-500 data-[state=active]:text-white transition-all duration-300 rounded-lg"
+              className="flex items-center justify-center rounded-lg px-2 py-2 text-xs font-medium transition-all duration-300 data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-500 data-[state=active]:to-emerald-500 data-[state=active]:text-white sm:text-sm"
             >
               Monitoring
             </TabsTrigger>
             <TabsTrigger
               value="reports"
-              className="flex items-center justify-center py-2 px-2 text-xs sm:text-sm font-medium data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-indigo-500 data-[state=active]:text-white transition-all duration-300 rounded-lg"
+              className="flex items-center justify-center rounded-lg px-2 py-2 text-xs font-medium transition-all duration-300 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-indigo-500 data-[state=active]:text-white sm:text-sm"
             >
               Reports
             </TabsTrigger>
@@ -230,11 +230,11 @@ export const CodeProvenanceCard: React.FC<CodeProvenanceCardProps> = ({
 
           <TabsContent value="overview" className="space-y-4">
             {/* Status Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
               <Card>
                 <CardContent className="p-4">
                   <div className="flex items-center gap-3">
-                    <div className="p-2 bg-blue-500 rounded-lg">
+                    <div className="rounded-lg bg-blue-500 p-2">
                       <Database className="h-4 w-4 text-white" />
                     </div>
                     <div>
@@ -252,7 +252,7 @@ export const CodeProvenanceCard: React.FC<CodeProvenanceCardProps> = ({
               <Card>
                 <CardContent className="p-4">
                   <div className="flex items-center gap-3">
-                    <div className="p-2 bg-red-500 rounded-lg">
+                    <div className="rounded-lg bg-red-500 p-2">
                       <Shield className="h-4 w-4 text-white" />
                     </div>
                     <div>
@@ -270,7 +270,7 @@ export const CodeProvenanceCard: React.FC<CodeProvenanceCardProps> = ({
               <Card>
                 <CardContent className="p-4">
                   <div className="flex items-center gap-3">
-                    <div className="p-2 bg-orange-500 rounded-lg">
+                    <div className="rounded-lg bg-orange-500 p-2">
                       <AlertTriangle className="h-4 w-4 text-white" />
                     </div>
                     <div>
@@ -288,7 +288,7 @@ export const CodeProvenanceCard: React.FC<CodeProvenanceCardProps> = ({
               <Card>
                 <CardContent className="p-4">
                   <div className="flex items-center gap-3">
-                    <div className="p-2 bg-green-500 rounded-lg">
+                    <div className="rounded-lg bg-green-500 p-2">
                       <TrendingUp className="h-4 w-4 text-white" />
                     </div>
                     <div>
@@ -315,7 +315,7 @@ export const CodeProvenanceCard: React.FC<CodeProvenanceCardProps> = ({
                 <CardContent>
                   <div className="space-y-4">
                     <div>
-                      <div className="flex justify-between mb-2">
+                      <div className="mb-2 flex justify-between">
                         <span className="text-sm font-medium">
                           Overall Risk Score
                         </span>
@@ -328,7 +328,7 @@ export const CodeProvenanceCard: React.FC<CodeProvenanceCardProps> = ({
                       <Progress value={report.riskScore} className="h-2" />
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                    <div className="grid grid-cols-1 gap-4 text-sm md:grid-cols-3">
                       <div>
                         <span className="font-medium">
                           Integrity Violations:
@@ -362,15 +362,15 @@ export const CodeProvenanceCard: React.FC<CodeProvenanceCardProps> = ({
                   onClick={initializeMonitoring}
                   disabled={isScanning || files.length === 0}
                 >
-                  <Upload className="h-4 w-4 mr-2" />
+                  <Upload className="mr-2 h-4 w-4" />
                   Initialize Monitoring
                 </Button>
               ) : (
                 <Button onClick={performIntegrityScan} disabled={isScanning}>
                   {isScanning ? (
-                    <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
+                    <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
                   ) : (
-                    <Scan className="h-4 w-4 mr-2" />
+                    <Scan className="mr-2 h-4 w-4" />
                   )}
                   {isScanning ? "Scanning..." : "Run Integrity Scan"}
                 </Button>
@@ -380,8 +380,8 @@ export const CodeProvenanceCard: React.FC<CodeProvenanceCardProps> = ({
 
           <TabsContent value="alerts" className="space-y-4">
             {alerts.length === 0 ? (
-              <div className="text-center py-8">
-                <CheckCircle className="h-12 w-12 text-green-500 mx-auto mb-4" />
+              <div className="py-8 text-center">
+                <CheckCircle className="mx-auto mb-4 h-12 w-12 text-green-500" />
                 <p className="text-slate-600 dark:text-slate-400">
                   No integrity alerts detected
                 </p>
@@ -396,7 +396,7 @@ export const CodeProvenanceCard: React.FC<CodeProvenanceCardProps> = ({
                     <CardHeader className="pb-3">
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
-                          <div className="flex items-center gap-2 mb-2">
+                          <div className="mb-2 flex items-center gap-2">
                             <Badge className={getSeverityColor(alert.severity)}>
                               {getAlertTypeIcon(alert.alertType)}
                               {alert.severity}
@@ -417,7 +417,7 @@ export const CodeProvenanceCard: React.FC<CodeProvenanceCardProps> = ({
                           size="sm"
                           onClick={() => resolveAlert(alert.id)}
                         >
-                          <CheckCircle className="h-4 w-4 mr-2" />
+                          <CheckCircle className="mr-2 h-4 w-4" />
                           Resolve
                         </Button>
                       </div>
@@ -425,7 +425,7 @@ export const CodeProvenanceCard: React.FC<CodeProvenanceCardProps> = ({
                     <CardContent>
                       <div className="space-y-4">
                         <div>
-                          <h4 className="font-semibold mb-2">
+                          <h4 className="mb-2 font-semibold">
                             Risk Assessment
                           </h4>
                           <p className="text-sm text-slate-600 dark:text-slate-400">
@@ -435,16 +435,16 @@ export const CodeProvenanceCard: React.FC<CodeProvenanceCardProps> = ({
 
                         {alert.changes.length > 0 && (
                           <div>
-                            <h4 className="font-semibold mb-2">
+                            <h4 className="mb-2 font-semibold">
                               Detected Changes
                             </h4>
                             <div className="space-y-2">
                               {alert.changes.map((change, index) => (
                                 <div
                                   key={index}
-                                  className="bg-slate-50 dark:bg-slate-800 p-3 rounded"
+                                  className="rounded bg-slate-50 p-3 dark:bg-slate-800"
                                 >
-                                  <div className="flex items-center gap-2 mb-1">
+                                  <div className="mb-1 flex items-center gap-2">
                                     <Badge
                                       variant="outline"
                                       className="text-xs"
@@ -474,7 +474,7 @@ export const CodeProvenanceCard: React.FC<CodeProvenanceCardProps> = ({
                         )}
 
                         <div>
-                          <h4 className="font-semibold mb-2">
+                          <h4 className="mb-2 font-semibold">
                             Recommended Actions
                           </h4>
                           <ul className="space-y-1">
@@ -483,7 +483,7 @@ export const CodeProvenanceCard: React.FC<CodeProvenanceCardProps> = ({
                                 key={index}
                                 className="flex items-start gap-2 text-sm"
                               >
-                                <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
+                                <CheckCircle className="mt-0.5 h-4 w-4 flex-shrink-0 text-green-600" />
                                 <span className="text-slate-600 dark:text-slate-400">
                                   {action}
                                 </span>
@@ -534,9 +534,9 @@ export const CodeProvenanceCard: React.FC<CodeProvenanceCardProps> = ({
                   </Badge>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                   <div>
-                    <h4 className="font-semibold mb-2">File Statistics</h4>
+                    <h4 className="mb-2 font-semibold">File Statistics</h4>
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between">
                         <span>Total Files:</span>
@@ -558,7 +558,7 @@ export const CodeProvenanceCard: React.FC<CodeProvenanceCardProps> = ({
                   </div>
 
                   <div>
-                    <h4 className="font-semibold mb-2">Last Activity</h4>
+                    <h4 className="mb-2 font-semibold">Last Activity</h4>
                     <div className="space-y-2 text-sm">
                       <div className="flex items-center gap-2">
                         <Clock className="h-4 w-4" />
@@ -588,7 +588,7 @@ export const CodeProvenanceCard: React.FC<CodeProvenanceCardProps> = ({
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                     {Object.entries(report.fileStatistics.byCategory).map(
                       ([category, count]) => (
                         <div key={category} className="text-center">
@@ -604,7 +604,7 @@ export const CodeProvenanceCard: React.FC<CodeProvenanceCardProps> = ({
                   </div>
 
                   <div>
-                    <h4 className="font-semibold mb-2">
+                    <h4 className="mb-2 font-semibold">
                       File Distribution by Importance
                     </h4>
                     <div className="space-y-2">
@@ -622,9 +622,9 @@ export const CodeProvenanceCard: React.FC<CodeProvenanceCardProps> = ({
                             </Badge>
                             <Progress
                               value={(count / report.totalFiles) * 100}
-                              className="flex-1 h-2"
+                              className="h-2 flex-1"
                             />
-                            <span className="text-sm w-12 text-right">
+                            <span className="w-12 text-right text-sm">
                               {count}
                             </span>
                           </div>
@@ -635,8 +635,8 @@ export const CodeProvenanceCard: React.FC<CodeProvenanceCardProps> = ({
                 </CardContent>
               </Card>
             ) : (
-              <div className="text-center py-8">
-                <Activity className="h-12 w-12 text-slate-400 mx-auto mb-4" />
+              <div className="py-8 text-center">
+                <Activity className="mx-auto mb-4 h-12 w-12 text-slate-400" />
                 <p className="text-slate-600 dark:text-slate-400">
                   No integrity reports available
                 </p>

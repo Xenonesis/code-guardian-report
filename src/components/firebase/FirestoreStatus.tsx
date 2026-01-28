@@ -27,20 +27,20 @@ export const FirestoreStatus: React.FC = () => {
 
   return (
     <div
-      className={`fixed top-4 right-4 z-50 p-3 rounded-lg shadow-lg flex items-center gap-2 ${
+      className={`fixed top-4 right-4 z-50 flex items-center gap-2 rounded-lg p-3 shadow-lg ${
         isOnline
-          ? "bg-green-100 text-green-800 border border-green-200"
-          : "bg-red-100 text-red-800 border border-red-200"
+          ? "border border-green-200 bg-green-100 text-green-800"
+          : "border border-red-200 bg-red-100 text-red-800"
       }`}
     >
       {isOnline ? (
         <>
-          <Wifi className="w-4 h-4" />
+          <Wifi className="h-4 w-4" />
           <span className="text-sm font-medium">Connection restored</span>
         </>
       ) : (
         <>
-          <WifiOff className="w-4 h-4" />
+          <WifiOff className="h-4 w-4" />
           <span className="text-sm font-medium">
             Connection issues detected
           </span>

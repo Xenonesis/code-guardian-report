@@ -34,10 +34,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Progress } from "@/components/ui/progress";
 import { AIService } from "../../services/ai/aiService";
 import { AnalysisResults } from "@/hooks/useAnalysis";
-import {
-  formatAIError,
-  getAIFeatureStatus,
-} from "@/utils/aiUtils";
+import { formatAIError, getAIFeatureStatus } from "@/utils/aiUtils";
 import { toast } from "sonner";
 
 interface AISecurityInsightsProps {
@@ -451,28 +448,28 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
     return (
       <Card className={className}>
         <CardHeader className="space-y-3">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <CardTitle className="flex items-center gap-3">
-              <Brain className="h-5 w-5 text-gray-400 flex-shrink-0" />
-              <span className="text-slate-900 dark:text-white font-bold">
+              <Brain className="h-5 w-5 flex-shrink-0 text-gray-400" />
+              <span className="font-bold text-slate-900 dark:text-white">
                 AI Security Insights
               </span>
             </CardTitle>
             <Badge
               variant="outline"
-              className="text-gray-600 dark:text-gray-400 border-gray-400 dark:border-gray-600 bg-gray-50 dark:bg-gray-950/30 px-3 py-1 font-semibold text-sm w-fit"
+              className="w-fit border-gray-400 bg-gray-50 px-3 py-1 text-sm font-semibold text-gray-600 dark:border-gray-600 dark:bg-gray-950/30 dark:text-gray-400"
             >
               Not Supported
             </Badge>
           </div>
-          <CardDescription className="text-slate-600 dark:text-slate-400 leading-relaxed">
+          <CardDescription className="leading-relaxed text-slate-600 dark:text-slate-400">
             AI features are not supported in this environment
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Alert className="border-gray-200 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-950/20">
+          <Alert className="border-gray-200 bg-gray-50/50 dark:border-gray-800 dark:bg-gray-950/20">
             <XCircle className="h-4 w-4 text-gray-600" />
-            <AlertDescription className="text-slate-700 dark:text-slate-300 leading-relaxed">
+            <AlertDescription className="leading-relaxed text-slate-700 dark:text-slate-300">
               AI security insights require a modern browser with localStorage
               and fetch API support.
             </AlertDescription>
@@ -486,28 +483,28 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
     return (
       <Card className={className}>
         <CardHeader className="space-y-3">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <CardTitle className="flex items-center gap-3">
-              <Brain className="h-5 w-5 text-purple-600 flex-shrink-0" />
-              <span className="text-slate-900 dark:text-white font-bold">
+              <Brain className="h-5 w-5 flex-shrink-0 text-purple-600" />
+              <span className="font-bold text-slate-900 dark:text-white">
                 AI Security Insights
               </span>
             </CardTitle>
             <Badge
               variant="outline"
-              className="text-orange-700 dark:text-orange-300 border-orange-400 dark:border-orange-600 bg-orange-50 dark:bg-orange-950/30 px-3 py-1 font-semibold text-sm w-fit"
+              className="w-fit border-orange-400 bg-orange-50 px-3 py-1 text-sm font-semibold text-orange-700 dark:border-orange-600 dark:bg-orange-950/30 dark:text-orange-300"
             >
               API Keys Required
             </Badge>
           </div>
-          <CardDescription className="text-slate-600 dark:text-slate-400 leading-relaxed">
+          <CardDescription className="leading-relaxed text-slate-600 dark:text-slate-400">
             {aiFeatureStatus.message}
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Alert className="border-orange-200 dark:border-orange-800 bg-orange-50/50 dark:bg-orange-950/20">
+          <Alert className="border-orange-200 bg-orange-50/50 dark:border-orange-800 dark:bg-orange-950/20">
             <Info className="h-4 w-4 text-orange-600" />
-            <AlertDescription className="text-slate-700 dark:text-slate-300 leading-relaxed">
+            <AlertDescription className="leading-relaxed text-slate-700 dark:text-slate-300">
               Please configure your AI API keys in the AI Configuration tab to
               enable intelligent security analysis, OWASP explanations, and
               personalized remediation strategies.
@@ -522,28 +519,28 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
     <div className={`space-y-6 ${className}`}>
       <Card>
         <CardHeader className="space-y-4">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div className="space-y-2">
-              <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                 <CardTitle className="flex items-center gap-3">
-                  <Brain className="h-5 w-5 text-purple-600 flex-shrink-0" />
-                  <span className="text-slate-900 dark:text-white font-bold">
+                  <Brain className="h-5 w-5 flex-shrink-0 text-purple-600" />
+                  <span className="font-bold text-slate-900 dark:text-white">
                     AI Security Insights
                   </span>
                 </CardTitle>
-                <Badge className="bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300 px-3 py-1 font-semibold text-sm w-fit">
+                <Badge className="w-fit bg-green-100 px-3 py-1 text-sm font-semibold text-green-800 dark:bg-green-900/30 dark:text-green-300">
                   {aiFeatureStatus.primaryProvider
                     ? `${aiFeatureStatus.primaryProvider.toUpperCase()} Connected`
                     : "API Connected"}
                 </Badge>
               </div>
-              <CardDescription className="text-slate-600 dark:text-slate-400 leading-relaxed">
+              <CardDescription className="leading-relaxed text-slate-600 dark:text-slate-400">
                 {aiFeatureStatus.message}
               </CardDescription>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="text-center sm:text-right p-4 rounded-2xl bg-gradient-to-r from-purple-50 to-indigo-50 dark:from-purple-950/30 dark:to-indigo-950/30 border border-purple-200 dark:border-purple-800">
-                <div className="text-sm font-semibold text-purple-700 dark:text-purple-300 mb-1">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="rounded-2xl border border-purple-200 bg-gradient-to-r from-purple-50 to-indigo-50 p-4 text-center sm:text-right dark:border-purple-800 dark:from-purple-950/30 dark:to-indigo-950/30">
+                <div className="mb-1 text-sm font-semibold text-purple-700 dark:text-purple-300">
                   Insights Generated
                 </div>
                 <div className="text-3xl font-bold text-purple-600 dark:text-purple-400">
@@ -557,7 +554,7 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
                 const summary = getInsightsSummary();
                 return (
                   summary.loading > 0 && (
-                    <div className="flex items-center justify-center gap-3 p-4 rounded-2xl bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/30 dark:to-indigo-950/30 border border-blue-200 dark:border-blue-800">
+                    <div className="flex items-center justify-center gap-3 rounded-2xl border border-blue-200 bg-gradient-to-r from-blue-50 to-indigo-50 p-4 dark:border-blue-800 dark:from-blue-950/30 dark:to-indigo-950/30">
                       <Loader2 className="h-5 w-5 animate-spin text-blue-600" />
                       <span className="text-sm font-semibold text-blue-700 dark:text-blue-300">
                         {summary.loading} generating...
@@ -571,10 +568,10 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="overview" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 h-auto bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl border shadow-xl rounded-2xl p-2">
+            <TabsList className="grid h-auto w-full grid-cols-2 gap-2 rounded-2xl border bg-white/90 p-2 shadow-xl backdrop-blur-xl sm:grid-cols-3 lg:grid-cols-6 dark:bg-slate-800/90">
               <TabsTrigger
                 value="overview"
-                className="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs sm:text-sm font-semibold py-3 px-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-indigo-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 rounded-xl hover:scale-105"
+                className="flex flex-col items-center justify-center gap-2 rounded-xl px-2 py-3 text-xs font-semibold transition-all duration-300 hover:scale-105 data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-indigo-500 data-[state=active]:text-white data-[state=active]:shadow-lg sm:flex-row sm:text-sm"
               >
                 <Shield className="h-4 w-4 flex-shrink-0" />
                 <span className="text-center leading-tight whitespace-nowrap">
@@ -583,7 +580,7 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
               </TabsTrigger>
               <TabsTrigger
                 value="remediation"
-                className="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs sm:text-sm font-semibold py-3 px-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 rounded-xl hover:scale-105"
+                className="flex flex-col items-center justify-center gap-2 rounded-xl px-2 py-3 text-xs font-semibold transition-all duration-300 hover:scale-105 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white data-[state=active]:shadow-lg sm:flex-row sm:text-sm"
               >
                 <Target className="h-4 w-4 flex-shrink-0" />
                 <span className="text-center leading-tight whitespace-nowrap">
@@ -592,7 +589,7 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
               </TabsTrigger>
               <TabsTrigger
                 value="owasp"
-                className="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs sm:text-sm font-semibold py-3 px-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-orange-500 data-[state=active]:to-red-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 rounded-xl hover:scale-105"
+                className="flex flex-col items-center justify-center gap-2 rounded-xl px-2 py-3 text-xs font-semibold transition-all duration-300 hover:scale-105 data-[state=active]:bg-gradient-to-r data-[state=active]:from-orange-500 data-[state=active]:to-red-500 data-[state=active]:text-white data-[state=active]:shadow-lg sm:flex-row sm:text-sm"
               >
                 <BookOpen className="h-4 w-4 flex-shrink-0" />
                 <span className="text-center leading-tight whitespace-nowrap">
@@ -601,7 +598,7 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
               </TabsTrigger>
               <TabsTrigger
                 value="threats"
-                className="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs sm:text-sm font-semibold py-3 px-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-emerald-500 data-[state=active]:to-teal-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 rounded-xl hover:scale-105"
+                className="flex flex-col items-center justify-center gap-2 rounded-xl px-2 py-3 text-xs font-semibold transition-all duration-300 hover:scale-105 data-[state=active]:bg-gradient-to-r data-[state=active]:from-emerald-500 data-[state=active]:to-teal-500 data-[state=active]:text-white data-[state=active]:shadow-lg sm:flex-row sm:text-sm"
               >
                 <Radar className="h-4 w-4 flex-shrink-0" />
                 <span className="text-center leading-tight whitespace-nowrap">
@@ -610,7 +607,7 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
               </TabsTrigger>
               <TabsTrigger
                 value="compliance"
-                className="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs sm:text-sm font-semibold py-3 px-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-yellow-500 data-[state=active]:to-orange-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 rounded-xl hover:scale-105"
+                className="flex flex-col items-center justify-center gap-2 rounded-xl px-2 py-3 text-xs font-semibold transition-all duration-300 hover:scale-105 data-[state=active]:bg-gradient-to-r data-[state=active]:from-yellow-500 data-[state=active]:to-orange-500 data-[state=active]:text-white data-[state=active]:shadow-lg sm:flex-row sm:text-sm"
               >
                 <Lock className="h-4 w-4 flex-shrink-0" />
                 <span className="text-center leading-tight whitespace-nowrap">
@@ -619,7 +616,7 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
               </TabsTrigger>
               <TabsTrigger
                 value="advanced"
-                className="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs sm:text-sm font-semibold py-3 px-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-indigo-500 data-[state=active]:to-purple-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 rounded-xl hover:scale-105"
+                className="flex flex-col items-center justify-center gap-2 rounded-xl px-2 py-3 text-xs font-semibold transition-all duration-300 hover:scale-105 data-[state=active]:bg-gradient-to-r data-[state=active]:from-indigo-500 data-[state=active]:to-purple-500 data-[state=active]:text-white data-[state=active]:shadow-lg sm:flex-row sm:text-sm"
               >
                 <Sparkles className="h-4 w-4 flex-shrink-0" />
                 <span className="text-center leading-tight whitespace-nowrap">
@@ -640,9 +637,9 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
                   size="sm"
                 >
                   {securityInsights.isLoading ? (
-                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   ) : (
-                    <RefreshCw className="h-4 w-4 mr-2" />
+                    <RefreshCw className="mr-2 h-4 w-4" />
                   )}
                   {securityInsights.isLoading ? "Generating..." : "Regenerate"}
                 </Button>
@@ -650,8 +647,8 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
 
               {securityInsights.isLoading && (
                 <div className="flex items-center justify-center p-8">
-                  <div className="text-center space-y-4">
-                    <Loader2 className="h-8 w-8 animate-spin mx-auto text-purple-600" />
+                  <div className="space-y-4 text-center">
+                    <Loader2 className="mx-auto h-8 w-8 animate-spin text-purple-600" />
                     <div className="space-y-2">
                       <p className="text-sm font-medium">
                         Analyzing security posture...
@@ -678,8 +675,8 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
 
               {securityInsights.content && (
                 <div className="space-y-4">
-                  <div className="bg-purple-50 dark:bg-purple-950/20 p-4 rounded-lg border border-purple-200 dark:border-purple-800">
-                    <div className="whitespace-pre-wrap text-sm text-slate-700 dark:text-slate-300">
+                  <div className="rounded-lg border border-purple-200 bg-purple-50 p-4 dark:border-purple-800 dark:bg-purple-950/20">
+                    <div className="text-sm whitespace-pre-wrap text-slate-700 dark:text-slate-300">
                       {securityInsights.content}
                     </div>
                   </div>
@@ -696,15 +693,15 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
               {!securityInsights.content &&
                 !securityInsights.isLoading &&
                 !securityInsights.error && (
-                  <div className="text-center py-8">
+                  <div className="py-8 text-center">
                     <Button
                       onClick={generateSecurityInsights}
                       className="bg-purple-600 hover:bg-purple-700"
                     >
-                      <Brain className="h-4 w-4 mr-2" />
+                      <Brain className="mr-2 h-4 w-4" />
                       Generate Security Insights
                     </Button>
-                    <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
+                    <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
                       Get AI-powered analysis of your security posture and risk
                       assessment
                     </p>
@@ -724,9 +721,9 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
                   size="sm"
                 >
                   {remediationStrategy.isLoading ? (
-                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   ) : (
-                    <Zap className="h-4 w-4 mr-2" />
+                    <Zap className="mr-2 h-4 w-4" />
                   )}
                   {remediationStrategy.isLoading
                     ? "Generating..."
@@ -736,8 +733,8 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
 
               {remediationStrategy.isLoading && (
                 <div className="flex items-center justify-center p-8">
-                  <div className="text-center space-y-4">
-                    <Loader2 className="h-8 w-8 animate-spin mx-auto text-blue-600" />
+                  <div className="space-y-4 text-center">
+                    <Loader2 className="mx-auto h-8 w-8 animate-spin text-blue-600" />
                     <div className="space-y-2">
                       <p className="text-sm font-medium">
                         Creating remediation strategy...
@@ -766,8 +763,8 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
 
               {remediationStrategy.content && (
                 <div className="space-y-4">
-                  <div className="bg-blue-50 dark:bg-blue-950/20 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
-                    <div className="whitespace-pre-wrap text-sm text-slate-700 dark:text-slate-300">
+                  <div className="rounded-lg border border-blue-200 bg-blue-50 p-4 dark:border-blue-800 dark:bg-blue-950/20">
+                    <div className="text-sm whitespace-pre-wrap text-slate-700 dark:text-slate-300">
                       {remediationStrategy.content}
                     </div>
                   </div>
@@ -784,15 +781,15 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
               {!remediationStrategy.content &&
                 !remediationStrategy.isLoading &&
                 !remediationStrategy.error && (
-                  <div className="text-center py-8">
+                  <div className="py-8 text-center">
                     <Button
                       onClick={generateRemediationStrategy}
                       className="bg-blue-600 hover:bg-blue-700"
                     >
-                      <Target className="h-4 w-4 mr-2" />
+                      <Target className="mr-2 h-4 w-4" />
                       Generate Remediation Strategy
                     </Button>
-                    <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
+                    <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
                       Get a prioritized action plan based on risk, effort, and
                       business impact
                     </p>
@@ -802,10 +799,10 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
 
             <TabsContent value="owasp" className="space-y-4">
               <div>
-                <h3 className="text-lg font-semibold mb-4">
+                <h3 className="mb-4 text-lg font-semibold">
                   OWASP Top 10 Analysis
                 </h3>
-                <p className="text-sm text-slate-600 dark:text-slate-400 mb-6">
+                <p className="mb-6 text-sm text-slate-600 dark:text-slate-400">
                   Get detailed explanations for each OWASP category detected in
                   your codebase
                 </p>
@@ -842,7 +839,7 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
                         <CardHeader>
                           <div className="flex items-center justify-between">
                             <div>
-                              <CardTitle className="text-base flex items-center gap-2">
+                              <CardTitle className="flex items-center gap-2 text-base">
                                 <AlertTriangle className="h-4 w-4 text-orange-600" />
                                 {categoryId}: {categoryName}
                               </CardTitle>
@@ -858,9 +855,9 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
                               size="sm"
                             >
                               {categoryState.isLoading ? (
-                                <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                               ) : (
-                                <Lightbulb className="h-4 w-4 mr-2" />
+                                <Lightbulb className="mr-2 h-4 w-4" />
                               )}
                               {categoryState.isLoading
                                 ? "Analyzing..."
@@ -900,8 +897,8 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
 
                             {categoryState.content && (
                               <div className="space-y-3">
-                                <div className="bg-orange-50 dark:bg-orange-950/20 p-4 rounded-lg border border-orange-200 dark:border-orange-800">
-                                  <div className="whitespace-pre-wrap text-sm text-slate-700 dark:text-slate-300">
+                                <div className="rounded-lg border border-orange-200 bg-orange-50 p-4 dark:border-orange-800 dark:bg-orange-950/20">
+                                  <div className="text-sm whitespace-pre-wrap text-slate-700 dark:text-slate-300">
                                     {categoryState.content}
                                   </div>
                                 </div>
@@ -937,9 +934,9 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
                   size="sm"
                 >
                   {threatModeling.isLoading ? (
-                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   ) : (
-                    <Radar className="h-4 w-4 mr-2" />
+                    <Radar className="mr-2 h-4 w-4" />
                   )}
                   {threatModeling.isLoading
                     ? "Analyzing..."
@@ -949,8 +946,8 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
 
               {threatModeling.isLoading && (
                 <div className="flex items-center justify-center p-8">
-                  <div className="text-center space-y-4">
-                    <Loader2 className="h-8 w-8 animate-spin mx-auto text-red-600" />
+                  <div className="space-y-4 text-center">
+                    <Loader2 className="mx-auto h-8 w-8 animate-spin text-red-600" />
                     <div className="space-y-2">
                       <p className="text-sm font-medium">
                         Modeling potential threats...
@@ -975,8 +972,8 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
 
               {threatModeling.content && (
                 <div className="space-y-4">
-                  <div className="bg-red-50 dark:bg-red-950/20 p-4 rounded-lg border border-red-200 dark:border-red-800">
-                    <div className="whitespace-pre-wrap text-sm text-slate-700 dark:text-slate-300">
+                  <div className="rounded-lg border border-red-200 bg-red-50 p-4 dark:border-red-800 dark:bg-red-950/20">
+                    <div className="text-sm whitespace-pre-wrap text-slate-700 dark:text-slate-300">
                       {threatModeling.content}
                     </div>
                   </div>
@@ -993,15 +990,15 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
               {!threatModeling.content &&
                 !threatModeling.isLoading &&
                 !threatModeling.error && (
-                  <div className="text-center py-8">
+                  <div className="py-8 text-center">
                     <Button
                       onClick={generateThreatModeling}
                       className="bg-red-600 hover:bg-red-700"
                     >
-                      <Radar className="h-4 w-4 mr-2" />
+                      <Radar className="mr-2 h-4 w-4" />
                       Generate Threat Model
                     </Button>
-                    <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
+                    <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
                       Identify potential attack vectors and security threats
                       specific to your codebase
                     </p>
@@ -1021,9 +1018,9 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
                   size="sm"
                 >
                   {complianceAnalysis.isLoading ? (
-                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   ) : (
-                    <Lock className="h-4 w-4 mr-2" />
+                    <Lock className="mr-2 h-4 w-4" />
                   )}
                   {complianceAnalysis.isLoading
                     ? "Analyzing..."
@@ -1033,8 +1030,8 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
 
               {complianceAnalysis.isLoading && (
                 <div className="flex items-center justify-center p-8">
-                  <div className="text-center space-y-4">
-                    <Loader2 className="h-8 w-8 animate-spin mx-auto text-green-600" />
+                  <div className="space-y-4 text-center">
+                    <Loader2 className="mx-auto h-8 w-8 animate-spin text-green-600" />
                     <div className="space-y-2">
                       <p className="text-sm font-medium">
                         Analyzing compliance requirements...
@@ -1060,8 +1057,8 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
 
               {complianceAnalysis.content && (
                 <div className="space-y-4">
-                  <div className="bg-green-50 dark:bg-green-950/20 p-4 rounded-lg border border-green-200 dark:border-green-800">
-                    <div className="whitespace-pre-wrap text-sm text-slate-700 dark:text-slate-300">
+                  <div className="rounded-lg border border-green-200 bg-green-50 p-4 dark:border-green-800 dark:bg-green-950/20">
+                    <div className="text-sm whitespace-pre-wrap text-slate-700 dark:text-slate-300">
                       {complianceAnalysis.content}
                     </div>
                   </div>
@@ -1078,15 +1075,15 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
               {!complianceAnalysis.content &&
                 !complianceAnalysis.isLoading &&
                 !complianceAnalysis.error && (
-                  <div className="text-center py-8">
+                  <div className="py-8 text-center">
                     <Button
                       onClick={generateComplianceAnalysis}
                       className="bg-green-600 hover:bg-green-700"
                     >
-                      <Lock className="h-4 w-4 mr-2" />
+                      <Lock className="mr-2 h-4 w-4" />
                       Generate Compliance Analysis
                     </Button>
-                    <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
+                    <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
                       Assess compliance with security standards like SOC 2, PCI
                       DSS, GDPR, and more
                     </p>
@@ -1095,12 +1092,12 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
             </TabsContent>
 
             <TabsContent value="advanced" className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                 {/* Risk Assessment Card */}
                 <Card className="border-l-4 border-l-yellow-500">
                   <CardHeader>
                     <div className="flex items-center justify-between">
-                      <CardTitle className="text-base flex items-center gap-2">
+                      <CardTitle className="flex items-center gap-2 text-base">
                         <BarChart3 className="h-4 w-4 text-yellow-600" />
                         Risk Assessment
                       </CardTitle>
@@ -1136,7 +1133,7 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
                       </div>
                     )}
                     {riskAssessment.content && (
-                      <div className="bg-yellow-50 dark:bg-yellow-950/20 p-3 rounded text-sm">
+                      <div className="rounded bg-yellow-50 p-3 text-sm dark:bg-yellow-950/20">
                         {riskAssessment.content.substring(0, 200)}...
                       </div>
                     )}
@@ -1157,7 +1154,7 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
                 <Card className="border-l-4 border-l-indigo-500">
                   <CardHeader>
                     <div className="flex items-center justify-between">
-                      <CardTitle className="text-base flex items-center gap-2">
+                      <CardTitle className="flex items-center gap-2 text-base">
                         <Activity className="h-4 w-4 text-indigo-600" />
                         Performance Impact
                       </CardTitle>
@@ -1193,7 +1190,7 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
                       </div>
                     )}
                     {performanceImpact.content && (
-                      <div className="bg-indigo-50 dark:bg-indigo-950/20 p-3 rounded text-sm">
+                      <div className="rounded bg-indigo-50 p-3 text-sm dark:bg-indigo-950/20">
                         {performanceImpact.content.substring(0, 200)}...
                       </div>
                     )}
@@ -1215,7 +1212,7 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
                 <Card className="border-l-4 border-l-teal-500">
                   <CardHeader>
                     <div className="flex items-center justify-between">
-                      <CardTitle className="text-base flex items-center gap-2">
+                      <CardTitle className="flex items-center gap-2 text-base">
                         <FileText className="h-4 w-4 text-teal-600" />
                         Code Quality Insights
                       </CardTitle>
@@ -1251,7 +1248,7 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
                       </div>
                     )}
                     {codeQualityInsights.content && (
-                      <div className="bg-teal-50 dark:bg-teal-950/20 p-3 rounded text-sm">
+                      <div className="rounded bg-teal-50 p-3 text-sm dark:bg-teal-950/20">
                         {codeQualityInsights.content.substring(0, 200)}...
                       </div>
                     )}
@@ -1273,7 +1270,7 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
                 <Card className="border-l-4 border-l-pink-500">
                   <CardHeader>
                     <div className="flex items-center justify-between">
-                      <CardTitle className="text-base flex items-center gap-2">
+                      <CardTitle className="flex items-center gap-2 text-base">
                         <TrendingUp className="h-4 w-4 text-pink-600" />
                         Security Trends
                       </CardTitle>
@@ -1309,7 +1306,7 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
                       </div>
                     )}
                     {trendsAnalysis.content && (
-                      <div className="bg-pink-50 dark:bg-pink-950/20 p-3 rounded text-sm">
+                      <div className="rounded bg-pink-50 p-3 text-sm dark:bg-pink-950/20">
                         {trendsAnalysis.content.substring(0, 200)}...
                       </div>
                     )}
@@ -1357,14 +1354,14 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
                       </CardHeader>
                       <CardContent>
                         <div
-                          className={`bg-${colors[index]}-50 dark:bg-${colors[index]}-950/20 p-4 rounded-lg border border-${colors[index]}-200 dark:border-${colors[index]}-800`}
+                          className={`bg-${colors[index]}-50 dark:bg-${colors[index]}-950/20 rounded-lg border p-4 border-${colors[index]}-200 dark:border-${colors[index]}-800`}
                         >
-                          <div className="whitespace-pre-wrap text-sm text-slate-700 dark:text-slate-300">
+                          <div className="text-sm whitespace-pre-wrap text-slate-700 dark:text-slate-300">
                             {insight.content}
                           </div>
                         </div>
                         {insight.lastGenerated && (
-                          <div className="flex items-center gap-2 text-xs text-slate-500 mt-3">
+                          <div className="mt-3 flex items-center gap-2 text-xs text-slate-500">
                             <CheckCircle className="h-3 w-3" />
                             Generated on{" "}
                             {formatTimestamp(insight.lastGenerated)}

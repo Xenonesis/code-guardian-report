@@ -26,8 +26,6 @@ interface LogEntry {
   userAgent?: string;
 }
 
- 
-
 const getSessionId = (): string => {
   if (
     typeof crypto !== "undefined" &&
@@ -115,8 +113,6 @@ class Logger {
   warn(message: string, data?: unknown): void {
     const entry = this.createLogEntry(LogLevel.WARN, message, data);
     this.addToBuffer(entry);
-
- 
 
     if (IS_DEV) {
       console.warn(`[WARN] ${message}`, data || "");

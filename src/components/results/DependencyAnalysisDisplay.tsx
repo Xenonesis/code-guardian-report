@@ -17,11 +17,11 @@ export const DependencyAnalysisDisplay: React.FC<
   if (isLoading) {
     return (
       <div className="space-y-6" role="status" aria-live="polite">
-        <Card className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900/40 dark:to-slate-900/10 border-slate-200 dark:border-slate-800 shadow-sm">
+        <Card className="border-slate-200 bg-gradient-to-br from-slate-50 to-white shadow-sm dark:border-slate-800 dark:from-slate-900/40 dark:to-slate-900/10">
           <CardContent className="p-8">
             <div className="animate-pulse space-y-4">
               <div className="h-6 w-48 rounded bg-slate-200 dark:bg-slate-800" />
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
                 <div className="h-24 rounded-lg bg-slate-200 dark:bg-slate-800" />
                 <div className="h-24 rounded-lg bg-slate-200 dark:bg-slate-800" />
                 <div className="h-24 rounded-lg bg-slate-200 dark:bg-slate-800" />
@@ -48,44 +48,44 @@ export const DependencyAnalysisDisplay: React.FC<
 
     return (
       <div className="space-y-6">
-        <Card className="bg-gradient-to-br from-slate-50 to-white dark:from-slate-900/40 dark:to-slate-900/10 border-slate-200 dark:border-slate-800 shadow-sm">
+        <Card className="border-slate-200 bg-gradient-to-br from-slate-50 to-white shadow-sm dark:border-slate-800 dark:from-slate-900/40 dark:to-slate-900/10">
           <CardContent className="p-8">
-            <div className="flex flex-col items-center text-center gap-4">
-              <div className="rounded-2xl p-3 bg-slate-100 dark:bg-slate-800">
+            <div className="flex flex-col items-center gap-4 text-center">
+              <div className="rounded-2xl bg-slate-100 p-3 dark:bg-slate-800">
                 <Package className="h-8 w-8 text-slate-600 dark:text-slate-300" />
               </div>
               <div>
-                <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-50 mb-1">
+                <h3 className="mb-1 text-xl font-semibold text-slate-900 dark:text-slate-50">
                   Dependency Analysis Unavailable
                 </h3>
-                <p className="text-sm text-slate-600 dark:text-slate-300 max-w-2xl">
+                <p className="max-w-2xl text-sm text-slate-600 dark:text-slate-300">
                   We couldn't complete dependency scanning. This often happens
                   when required package manifests are missing or the file
                   selection didn't include them.
                 </p>
               </div>
 
-              <div className="flex flex-col md:flex-row items-center gap-3 mt-2">
+              <div className="mt-2 flex flex-col items-center gap-3 md:flex-row">
                 <button
                   onClick={handleRetry}
-                  className="inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900 transition-colors"
+                  className="inline-flex items-center justify-center rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-emerald-700 focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:outline-none dark:focus:ring-offset-slate-900"
                 >
                   Try again
                 </button>
                 <a
                   href="#dependency-help"
-                  className="inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 hover:bg-emerald-50/60 dark:hover:bg-emerald-900/20 transition-colors"
+                  className="inline-flex items-center justify-center rounded-lg border border-emerald-200 px-4 py-2 text-sm font-medium text-emerald-700 transition-colors hover:bg-emerald-50/60 dark:border-emerald-800 dark:text-emerald-300 dark:hover:bg-emerald-900/20"
                 >
                   How to enable scanning
                 </a>
               </div>
 
-              <div id="dependency-help" className="w-full mt-4">
-                <div className="text-left mx-auto max-w-2xl">
-                  <h4 className="text-sm font-semibold text-slate-800 dark:text-slate-200 mb-2">
+              <div id="dependency-help" className="mt-4 w-full">
+                <div className="mx-auto max-w-2xl text-left">
+                  <h4 className="mb-2 text-sm font-semibold text-slate-800 dark:text-slate-200">
                     To enable Dependency Scanning:
                   </h4>
-                  <ul className="text-sm text-slate-700 dark:text-slate-300 list-disc pl-5 space-y-1">
+                  <ul className="list-disc space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
                     <li>
                       Include at least one supported manifest when running
                       analysis or uploading archives.
@@ -96,49 +96,49 @@ export const DependencyAnalysisDisplay: React.FC<
                     </li>
                   </ul>
 
-                  <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div className="rounded-lg border border-slate-200 dark:border-slate-800 p-3 bg-white/70 dark:bg-slate-900/30">
-                      <p className="text-xs font-semibold text-slate-900 dark:text-slate-100 mb-1">
+                  <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                    <div className="rounded-lg border border-slate-200 bg-white/70 p-3 dark:border-slate-800 dark:bg-slate-900/30">
+                      <p className="mb-1 text-xs font-semibold text-slate-900 dark:text-slate-100">
                         JavaScript/TypeScript
                       </p>
                       <p className="text-xs text-slate-600 dark:text-slate-400">
                         package.json, yarn.lock
                       </p>
                     </div>
-                    <div className="rounded-lg border border-slate-200 dark:border-slate-800 p-3 bg-white/70 dark:bg-slate-900/30">
-                      <p className="text-xs font-semibold text-slate-900 dark:text-slate-100 mb-1">
+                    <div className="rounded-lg border border-slate-200 bg-white/70 p-3 dark:border-slate-800 dark:bg-slate-900/30">
+                      <p className="mb-1 text-xs font-semibold text-slate-900 dark:text-slate-100">
                         Python
                       </p>
                       <p className="text-xs text-slate-600 dark:text-slate-400">
                         requirements.txt
                       </p>
                     </div>
-                    <div className="rounded-lg border border-slate-200 dark:border-slate-800 p-3 bg-white/70 dark:bg-slate-900/30">
-                      <p className="text-xs font-semibold text-slate-900 dark:text-slate-100 mb-1">
+                    <div className="rounded-lg border border-slate-200 bg-white/70 p-3 dark:border-slate-800 dark:bg-slate-900/30">
+                      <p className="mb-1 text-xs font-semibold text-slate-900 dark:text-slate-100">
                         Java (Maven/Gradle)
                       </p>
                       <p className="text-xs text-slate-600 dark:text-slate-400">
                         pom.xml, build.gradle
                       </p>
                     </div>
-                    <div className="rounded-lg border border-slate-200 dark:border-slate-800 p-3 bg-white/70 dark:bg-slate-900/30">
-                      <p className="text-xs font-semibold text-slate-900 dark:text-slate-100 mb-1">
+                    <div className="rounded-lg border border-slate-200 bg-white/70 p-3 dark:border-slate-800 dark:bg-slate-900/30">
+                      <p className="mb-1 text-xs font-semibold text-slate-900 dark:text-slate-100">
                         PHP
                       </p>
                       <p className="text-xs text-slate-600 dark:text-slate-400">
                         composer.json, composer.lock
                       </p>
                     </div>
-                    <div className="rounded-lg border border-slate-200 dark:border-slate-800 p-3 bg-white/70 dark:bg-slate-900/30">
-                      <p className="text-xs font-semibold text-slate-900 dark:text-slate-100 mb-1">
+                    <div className="rounded-lg border border-slate-200 bg-white/70 p-3 dark:border-slate-800 dark:bg-slate-900/30">
+                      <p className="mb-1 text-xs font-semibold text-slate-900 dark:text-slate-100">
                         Rust
                       </p>
                       <p className="text-xs text-slate-600 dark:text-slate-400">
                         Cargo.toml, Cargo.lock
                       </p>
                     </div>
-                    <div className="rounded-lg border border-slate-200 dark:border-slate-800 p-3 bg-white/70 dark:bg-slate-900/30">
-                      <p className="text-xs font-semibold text-slate-900 dark:text-slate-100 mb-1">
+                    <div className="rounded-lg border border-slate-200 bg-white/70 p-3 dark:border-slate-800 dark:bg-slate-900/30">
+                      <p className="mb-1 text-xs font-semibold text-slate-900 dark:text-slate-100">
                         Ruby
                       </p>
                       <p className="text-xs text-slate-600 dark:text-slate-400">
@@ -214,7 +214,7 @@ export const DependencyAnalysisDisplay: React.FC<
   return (
     <div className="space-y-6">
       {/* Scan Metadata Header */}
-      <Card className="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-950/10 dark:to-teal-950/10 border-emerald-200 dark:border-emerald-900">
+      <Card className="border-emerald-200 bg-gradient-to-br from-emerald-50 to-teal-50 dark:border-emerald-900 dark:from-emerald-950/10 dark:to-teal-950/10">
         <CardHeader className="pb-2">
           <CardTitle className="flex items-center gap-2 text-emerald-800 dark:text-emerald-200">
             <Package className="h-5 w-5" />
@@ -222,7 +222,7 @@ export const DependencyAnalysisDisplay: React.FC<
           </CardTitle>
         </CardHeader>
         <CardContent className="pt-0 text-sm text-emerald-900/80 dark:text-emerald-200/80">
-          <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex flex-wrap gap-3">
               <span className="inline-flex items-center gap-2">
                 <span className="font-medium">Scanned:</span>
@@ -260,8 +260,8 @@ export const DependencyAnalysisDisplay: React.FC<
         </CardContent>
       </Card>
       {/* Summary Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-950/20 border-blue-200 dark:border-blue-800">
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+        <Card className="border-blue-200 bg-gradient-to-br from-blue-50 to-indigo-50 dark:border-blue-800 dark:from-blue-950/20 dark:to-indigo-950/20">
           <CardContent className="p-4">
             <div className="flex items-center gap-2">
               <Package className="h-5 w-5 text-blue-600" />
@@ -277,7 +277,7 @@ export const DependencyAnalysisDisplay: React.FC<
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-red-50 to-pink-50 dark:from-red-950/20 dark:to-pink-950/20 border-red-200 dark:border-red-800">
+        <Card className="border-red-200 bg-gradient-to-br from-red-50 to-pink-50 dark:border-red-800 dark:from-red-950/20 dark:to-pink-950/20">
           <CardContent className="p-4">
             <div className="flex items-center gap-2">
               <AlertTriangle className="h-5 w-5 text-red-600" />
@@ -293,7 +293,7 @@ export const DependencyAnalysisDisplay: React.FC<
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-yellow-950/20 dark:to-orange-950/20 border-yellow-200 dark:border-yellow-800">
+        <Card className="border-yellow-200 bg-gradient-to-br from-yellow-50 to-orange-50 dark:border-yellow-800 dark:from-yellow-950/20 dark:to-orange-950/20">
           <CardContent className="p-4">
             <div className="flex items-center gap-2">
               <Clock className="h-5 w-5 text-yellow-600" />
@@ -309,7 +309,7 @@ export const DependencyAnalysisDisplay: React.FC<
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-purple-50 to-violet-50 dark:from-purple-950/20 dark:to-violet-950/20 border-purple-200 dark:border-purple-800">
+        <Card className="border-purple-200 bg-gradient-to-br from-purple-50 to-violet-50 dark:border-purple-800 dark:from-purple-950/20 dark:to-violet-950/20">
           <CardContent className="p-4">
             <div className="flex items-center gap-2">
               <Shield className="h-5 w-5 text-purple-600" />
@@ -356,11 +356,11 @@ export const DependencyAnalysisDisplay: React.FC<
               {vulnerabilities.slice(0, 10).map((vuln, index) => (
                 <div
                   key={`vulnerability-${vuln.package}-${vuln.vulnerability.id}-${vuln.version}-${index}`}
-                  className="border rounded-lg p-4 bg-red-50 dark:bg-red-950/10"
+                  className="rounded-lg border bg-red-50 p-4 dark:bg-red-950/10"
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-2">
+                      <div className="mb-2 flex items-center gap-2">
                         <Badge
                           className={getSeverityColor(
                             vuln.vulnerability.severity
@@ -372,10 +372,10 @@ export const DependencyAnalysisDisplay: React.FC<
                           {vuln.vulnerability.id}
                         </span>
                       </div>
-                      <h4 className="font-semibold text-gray-900 dark:text-white mb-1">
+                      <h4 className="mb-1 font-semibold text-gray-900 dark:text-white">
                         {vuln.vulnerability.title}
                       </h4>
-                      <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">
+                      <p className="mb-2 text-sm text-gray-600 dark:text-gray-300">
                         {vuln.vulnerability.description}
                       </p>
                       <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
@@ -385,7 +385,7 @@ export const DependencyAnalysisDisplay: React.FC<
                         {vuln.fixAvailable && (
                           <Badge
                             variant="outline"
-                            className="text-green-600 border-green-600"
+                            className="border-green-600 text-green-600"
                           >
                             Fix Available: {vuln.fixVersion}
                           </Badge>
@@ -396,7 +396,7 @@ export const DependencyAnalysisDisplay: React.FC<
                 </div>
               ))}
               {vulnerabilities.length > 10 && (
-                <p className="text-sm text-gray-500 text-center">
+                <p className="text-center text-sm text-gray-500">
                   ... and {vulnerabilities.length - 10} more vulnerabilities
                 </p>
               )}
@@ -419,14 +419,14 @@ export const DependencyAnalysisDisplay: React.FC<
               {licenseIssues.map((issue, index) => (
                 <div
                   key={`license-${issue.package}-${issue.license}-${index}`}
-                  className="border rounded-lg p-4 bg-yellow-50 dark:bg-yellow-950/10"
+                  className="rounded-lg border bg-yellow-50 p-4 dark:bg-yellow-950/10"
                 >
                   <div className="flex items-center justify-between">
                     <div>
                       <Badge className={getSeverityColor(issue.severity)}>
                         {issue.severity}
                       </Badge>
-                      <h4 className="font-semibold text-gray-900 dark:text-white mt-1">
+                      <h4 className="mt-1 font-semibold text-gray-900 dark:text-white">
                         {issue.package}: {issue.license}
                       </h4>
                       <p className="text-sm text-gray-600 dark:text-gray-300">
@@ -455,7 +455,7 @@ export const DependencyAnalysisDisplay: React.FC<
               {outdatedPackages.slice(0, 10).map((pkg, index) => (
                 <div
                   key={`outdated-${pkg.package}-${pkg.currentVersion}-${index}`}
-                  className="border rounded-lg p-4 bg-blue-50 dark:bg-blue-950/10"
+                  className="rounded-lg border bg-blue-50 p-4 dark:bg-blue-950/10"
                 >
                   <div className="flex items-center justify-between">
                     <div>
@@ -465,7 +465,7 @@ export const DependencyAnalysisDisplay: React.FC<
                       <p className="text-sm text-gray-600 dark:text-gray-300">
                         {pkg.currentVersion} → {pkg.latestVersion}
                       </p>
-                      <div className="flex items-center gap-2 mt-1">
+                      <div className="mt-1 flex items-center gap-2">
                         <Badge
                           variant="outline"
                           className={getUpdateRecommendationColor(
@@ -485,7 +485,7 @@ export const DependencyAnalysisDisplay: React.FC<
                 </div>
               ))}
               {outdatedPackages.length > 10 && (
-                <p className="text-sm text-gray-500 text-center">
+                <p className="text-center text-sm text-gray-500">
                   ... and {outdatedPackages.length - 10} more outdated packages
                 </p>
               )}
@@ -508,20 +508,20 @@ export const DependencyAnalysisDisplay: React.FC<
               {recommendations.map((rec, index) => (
                 <div
                   key={`recommendation-${rec.title}-${rec.priority}-${index}`}
-                  className={`border rounded-lg p-4 ${getPriorityColor(rec.priority)}`}
+                  className={`rounded-lg border p-4 ${getPriorityColor(rec.priority)}`}
                 >
                   <div className="flex items-start gap-3">
                     <Badge className={getSeverityColor(rec.priority)}>
                       {rec.priority}
                     </Badge>
                     <div className="flex-1">
-                      <h4 className="font-semibold text-gray-900 dark:text-white mb-1">
+                      <h4 className="mb-1 font-semibold text-gray-900 dark:text-white">
                         {rec.title}
                       </h4>
-                      <p className="text-sm text-gray-700 dark:text-gray-300 mb-2">
+                      <p className="mb-2 text-sm text-gray-700 dark:text-gray-300">
                         {rec.description}
                       </p>
-                      <p className="text-sm font-medium text-gray-800 dark:text-gray-200 mb-2">
+                      <p className="mb-2 text-sm font-medium text-gray-800 dark:text-gray-200">
                         Action: {rec.action}
                       </p>
                       {rec.packages.length > 0 && (
@@ -565,9 +565,9 @@ export const DependencyAnalysisDisplay: React.FC<
               {supplyChainRisks.map((risk, index) => (
                 <div
                   key={`risk-${risk.package}-${risk.riskType}-${index}`}
-                  className="border rounded-lg p-4 bg-purple-50 dark:bg-purple-950/10"
+                  className="rounded-lg border bg-purple-50 p-4 dark:bg-purple-950/10"
                 >
-                  <div className="flex items-center justify-between mb-2">
+                  <div className="mb-2 flex items-center justify-between">
                     <Badge className={getSeverityColor(risk.severity)}>
                       {risk.severity}
                     </Badge>
@@ -575,10 +575,10 @@ export const DependencyAnalysisDisplay: React.FC<
                       {risk.riskType.replace("_", " ").toUpperCase()}
                     </span>
                   </div>
-                  <h4 className="font-semibold text-gray-900 dark:text-white mb-1">
+                  <h4 className="mb-1 font-semibold text-gray-900 dark:text-white">
                     {risk.package}
                   </h4>
-                  <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">
+                  <p className="mb-2 text-sm text-gray-600 dark:text-gray-300">
                     {risk.description}
                   </p>
                   <p className="text-sm font-medium text-gray-800 dark:text-gray-200">

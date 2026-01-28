@@ -68,10 +68,10 @@ export const AccountConflictDemo: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 py-12 px-4">
-      <div className="max-w-4xl mx-auto space-y-8">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 px-4 py-12 dark:from-gray-900 dark:to-gray-800">
+      <div className="mx-auto max-w-4xl space-y-8">
         {/* Header */}
-        <div className="text-center space-y-4">
+        <div className="space-y-4 text-center">
           <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100">
             Account Conflict Modal Demo
           </h1>
@@ -81,7 +81,7 @@ export const AccountConflictDemo: React.FC = () => {
         </div>
 
         {/* Demo Controls */}
-        <Card className="shadow-xl border-2">
+        <Card className="border-2 shadow-xl">
           <CardHeader>
             <CardTitle>Demo Configuration</CardTitle>
             <CardDescription>
@@ -92,23 +92,23 @@ export const AccountConflictDemo: React.FC = () => {
           <CardContent className="space-y-6">
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                   Email Address
                 </label>
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-transparent focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100"
                   placeholder="user@example.com"
                 />
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                     Existing Provider
-                    <span className="text-xs text-gray-500 ml-2">
+                    <span className="ml-2 text-xs text-gray-500">
                       (Account already exists with)
                     </span>
                   </label>
@@ -132,9 +132,9 @@ export const AccountConflictDemo: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                     Attempted Provider
-                    <span className="text-xs text-gray-500 ml-2">
+                    <span className="ml-2 text-xs text-gray-500">
                       (User tried to sign in with)
                     </span>
                   </label>
@@ -163,7 +163,7 @@ export const AccountConflictDemo: React.FC = () => {
               <Button
                 onClick={() => setIsModalOpen(true)}
                 size="lg"
-                className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg"
+                className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg hover:from-blue-700 hover:to-indigo-700"
               >
                 Show Account Conflict Modal
               </Button>
@@ -180,7 +180,7 @@ export const AccountConflictDemo: React.FC = () => {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div className="space-y-4">
                 <FeatureItem
                   title="Modern Design"
@@ -230,7 +230,7 @@ export const AccountConflictDemo: React.FC = () => {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto text-sm">
+            <pre className="overflow-x-auto rounded-lg bg-gray-900 p-4 text-sm text-gray-100">
               {`import { AccountConflictModal } from '@/components/auth/AccountConflictModal';
 
 // In your auth error handler:
@@ -272,11 +272,11 @@ const FeatureItem: React.FC<{ title: string; description: string }> = ({
   description,
 }) => (
   <div className="flex gap-3">
-    <div className="flex-shrink-0 mt-1">
-      <div className="w-2 h-2 rounded-full bg-blue-600" />
+    <div className="mt-1 flex-shrink-0">
+      <div className="h-2 w-2 rounded-full bg-blue-600" />
     </div>
     <div>
-      <h4 className="font-semibold text-gray-900 dark:text-gray-100 text-sm">
+      <h4 className="text-sm font-semibold text-gray-900 dark:text-gray-100">
         {title}
       </h4>
       <p className="text-sm text-gray-600 dark:text-gray-400">{description}</p>

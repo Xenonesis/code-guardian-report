@@ -133,31 +133,31 @@ export const HelpPage: React.FC<HelpPageProps> = ({ className = "" }) => {
       className={`min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20 dark:from-slate-950 dark:via-blue-950/30 dark:to-purple-950/20 ${className}`}
     >
       <div className="pt-16">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="max-w-6xl mx-auto">
+        <div className="container mx-auto px-4 py-16 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-6xl">
             {/* Header */}
-            <div className="text-center mb-16">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-full mb-6">
+            <div className="mb-16 text-center">
+              <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/30">
                 <HelpCircle className="h-8 w-8 text-blue-600 dark:text-blue-400" />
               </div>
-              <h1 className="text-4xl font-bold text-slate-900 dark:text-white mb-4">
+              <h1 className="mb-4 text-4xl font-bold text-slate-900 dark:text-white">
                 Help & Documentation
               </h1>
-              <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
+              <p className="mx-auto max-w-3xl text-xl text-slate-600 dark:text-slate-400">
                 Everything you need to know about using Code Guardian for secure
                 code analysis
               </p>
             </div>
 
             {/* Help Sections */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+            <div className="mb-16 grid grid-cols-1 gap-8 md:grid-cols-2">
               {helpSections.map((section, index) => (
                 <div
                   key={index}
-                  className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 rounded-xl p-6"
+                  className="rounded-xl border border-slate-200/50 bg-white/80 p-6 backdrop-blur-sm dark:border-slate-700/50 dark:bg-slate-800/80"
                 >
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
+                  <div className="mb-4 flex items-center gap-3">
+                    <div className="rounded-lg bg-blue-100 p-2 dark:bg-blue-900/30">
                       {section.icon}
                     </div>
                     <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
@@ -169,12 +169,12 @@ export const HelpPage: React.FC<HelpPageProps> = ({ className = "" }) => {
                       <div key={itemIndex} className="group">
                         <a
                           href={item.link}
-                          className="block p-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors duration-200"
+                          className="block rounded-lg p-3 transition-colors duration-200 hover:bg-slate-50 dark:hover:bg-slate-700/50"
                         >
-                          <h4 className="font-medium text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">
+                          <h4 className="font-medium text-slate-900 transition-colors duration-200 group-hover:text-blue-600 dark:text-white dark:group-hover:text-blue-400">
                             {item.title}
                           </h4>
-                          <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
+                          <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
                             {item.description}
                           </p>
                         </a>
@@ -186,31 +186,31 @@ export const HelpPage: React.FC<HelpPageProps> = ({ className = "" }) => {
             </div>
 
             {/* Support Options */}
-            <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 rounded-xl p-8">
-              <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 text-center">
+            <div className="rounded-xl border border-slate-200/50 bg-white/80 p-8 backdrop-blur-sm dark:border-slate-700/50 dark:bg-slate-800/80">
+              <h2 className="mb-6 text-center text-2xl font-bold text-slate-900 dark:text-white">
                 Need More Help?
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
                 {supportOptions.map((option, index) => (
                   <a
                     key={index}
                     href={option.link}
                     target={option.external ? "_blank" : undefined}
                     rel={option.external ? "noopener noreferrer" : undefined}
-                    className="group block p-6 bg-slate-50 dark:bg-slate-700/50 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-600/50 transition-all duration-200 border border-transparent hover:border-slate-200 dark:hover:border-slate-600"
+                    className="group block rounded-lg border border-transparent bg-slate-50 p-6 transition-all duration-200 hover:border-slate-200 hover:bg-slate-100 dark:bg-slate-700/50 dark:hover:border-slate-600 dark:hover:bg-slate-600/50"
                   >
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
+                    <div className="mb-3 flex items-center gap-3">
+                      <div className="rounded-lg bg-blue-100 p-2 dark:bg-blue-900/30">
                         {option.icon}
                       </div>
                       {option.external && (
-                        <ExternalLink className="h-4 w-4 text-slate-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200" />
+                        <ExternalLink className="h-4 w-4 text-slate-400 transition-colors duration-200 group-hover:text-blue-600 dark:group-hover:text-blue-400" />
                       )}
                     </div>
-                    <h3 className="font-semibold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">
+                    <h3 className="font-semibold text-slate-900 transition-colors duration-200 group-hover:text-blue-600 dark:text-white dark:group-hover:text-blue-400">
                       {option.title}
                     </h3>
-                    <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
+                    <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
                       {option.description}
                     </p>
                   </a>
@@ -219,34 +219,34 @@ export const HelpPage: React.FC<HelpPageProps> = ({ className = "" }) => {
             </div>
 
             {/* Quick Tips */}
-            <div className="mt-12 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-6">
-              <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">
+            <div className="mt-12 rounded-xl border border-blue-200 bg-gradient-to-r from-blue-50 to-indigo-50 p-6 dark:border-blue-800 dark:from-blue-900/20 dark:to-indigo-900/20">
+              <h3 className="mb-4 text-lg font-semibold text-slate-900 dark:text-white">
                 💡 Quick Tips
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-slate-700 dark:text-slate-300">
+              <div className="grid grid-cols-1 gap-4 text-sm text-slate-700 md:grid-cols-2 dark:text-slate-300">
                 <div className="flex items-start gap-2">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="mt-2 h-2 w-2 flex-shrink-0 rounded-full bg-blue-500"></div>
                   <span>
                     Use the sidebar navigation to quickly switch between
                     different analysis features
                   </span>
                 </div>
                 <div className="flex items-start gap-2">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="mt-2 h-2 w-2 flex-shrink-0 rounded-full bg-blue-500"></div>
                   <span>
                     Configure your AI API keys in the AI Configuration tab for
                     enhanced analysis
                   </span>
                 </div>
                 <div className="flex items-start gap-2">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="mt-2 h-2 w-2 flex-shrink-0 rounded-full bg-blue-500"></div>
                   <span>
                     Export your analysis results to share with your team or for
                     record keeping
                   </span>
                 </div>
                 <div className="flex items-start gap-2">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                  <div className="mt-2 h-2 w-2 flex-shrink-0 rounded-full bg-blue-500"></div>
                   <span>
                     Use custom prompts to tailor the analysis to your specific
                     security requirements

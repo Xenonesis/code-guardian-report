@@ -17,12 +17,12 @@ export const FeatureBadges: React.FC<FeatureBadgesProps> = ({
 }) => {
   return (
     <div
-      className={`flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-sm text-slate-500 dark:text-slate-400 animate-fade-in animate-stagger-2 ${className}`}
+      className={`animate-fade-in animate-stagger-2 flex flex-col items-center justify-center gap-3 text-sm text-slate-500 sm:flex-row sm:gap-6 dark:text-slate-400 ${className}`}
     >
       {badges.map((badge, index) => (
         <div
           key={index}
-          className="flex items-center gap-2 bg-white/60 dark:bg-slate-800/60 px-3 sm:px-4 py-2 rounded-full backdrop-blur-sm hover:bg-white/80 dark:hover:bg-slate-800/80 transition-all duration-300 hover-lift animate-pulse-glow cursor-pointer group"
+          className="hover-lift animate-pulse-glow group flex cursor-pointer items-center gap-2 rounded-full bg-white/60 px-3 py-2 backdrop-blur-sm transition-all duration-300 hover:bg-white/80 sm:px-4 dark:bg-slate-800/60 dark:hover:bg-slate-800/80"
           style={{ animationDelay: `${index * 0.1}s` }}
         >
           <div

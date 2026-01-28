@@ -13,20 +13,20 @@ export function PWASettingsPage() {
     <PageLayout>
       <div className="container mx-auto px-4 py-8">
         {/* Breadcrumb */}
-        <nav className="flex items-center text-sm mb-6" aria-label="Breadcrumb">
+        <nav className="mb-6 flex items-center text-sm" aria-label="Breadcrumb">
           <button
             onClick={() => navigateTo("home")}
-            className="flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors"
+            className="text-muted-foreground hover:text-foreground flex items-center gap-1.5 transition-colors"
           >
             <Home className="h-4 w-4" />
             Home
           </button>
-          <ChevronRight className="h-4 w-4 mx-2 text-muted-foreground" />
-          <span className="flex items-center gap-1.5 text-muted-foreground">
+          <ChevronRight className="text-muted-foreground mx-2 h-4 w-4" />
+          <span className="text-muted-foreground flex items-center gap-1.5">
             <Settings className="h-4 w-4" />
             Settings
           </span>
-          <ChevronRight className="h-4 w-4 mx-2 text-muted-foreground" />
+          <ChevronRight className="text-muted-foreground mx-2 h-4 w-4" />
           <span className="flex items-center gap-1.5 font-medium">
             <Smartphone className="h-4 w-4" />
             PWA
@@ -35,7 +35,7 @@ export function PWASettingsPage() {
 
         {/* Page Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">PWA Settings</h1>
+          <h1 className="mb-2 text-3xl font-bold">PWA Settings</h1>
           <p className="text-muted-foreground">
             Manage your progressive web app experience, offline storage, and
             notifications.

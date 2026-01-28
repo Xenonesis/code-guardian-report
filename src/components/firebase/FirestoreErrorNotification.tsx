@@ -171,13 +171,13 @@ export const FirestoreErrorNotification: React.FC = () => {
     switch (action) {
       case "retry":
       case "refresh":
-        return <RefreshCw className="w-3.5 h-3.5 mr-1.5" />;
+        return <RefreshCw className="mr-1.5 h-3.5 w-3.5" />;
       case "login":
-        return <LogIn className="w-3.5 h-3.5 mr-1.5" />;
+        return <LogIn className="mr-1.5 h-3.5 w-3.5" />;
       case "check-connection":
-        return <Wifi className="w-3.5 h-3.5 mr-1.5" />;
+        return <Wifi className="mr-1.5 h-3.5 w-3.5" />;
       case "wait":
-        return <Clock className="w-3.5 h-3.5 mr-1.5" />;
+        return <Clock className="mr-1.5 h-3.5 w-3.5" />;
       default:
         return null;
     }
@@ -205,18 +205,13 @@ export const FirestoreErrorNotification: React.FC = () => {
   if (errors.length === 0) return null;
 
   return (
-    <div className="fixed top-4 right-4 z-50 space-y-3 max-w-sm w-full px-4 sm:px-0">
+    <div className="fixed top-4 right-4 z-50 w-full max-w-sm space-y-3 px-4 sm:px-0">
       {errors.map((error) => {
         const styles = getErrorStyles(error.errorInfo.code);
         return (
           <div
             key={error.id}
-            className={`
-              rounded-xl border backdrop-blur-sm p-4 shadow-xl
-              transition-all duration-200 ease-out
-              ${styles.container}
-              ${error.isExiting ? "opacity-0 translate-x-4 scale-95" : "opacity-100 translate-x-0 scale-100"}
-            `}
+            className={`rounded-xl border p-4 shadow-xl backdrop-blur-sm transition-all duration-200 ease-out ${styles.container} ${error.isExiting ? "translate-x-4 scale-95 opacity-0" : "translate-x-0 scale-100 opacity-100"} `}
             role="alert"
             aria-live="polite"
           >
@@ -224,28 +219,28 @@ export const FirestoreErrorNotification: React.FC = () => {
               <div className={`mt-0.5 ${styles.text}`}>
                 {getErrorIcon(error.errorInfo.code)}
               </div>
-              <div className="flex-1 min-w-0">
+              <div className="min-w-0 flex-1">
                 <p
-                  className={`text-sm font-medium leading-snug ${styles.text}`}
+                  className={`text-sm leading-snug font-medium ${styles.text}`}
                 >
                   {error.errorInfo.userMessage}
                 </p>
-                <p className={`text-xs mt-1 opacity-70 ${styles.text}`}>
+                <p className={`mt-1 text-xs opacity-70 ${styles.text}`}>
                   Error while {getOperationLabel(error.operation)}
                 </p>
                 {/* Only show technical details in development */}
                 {process.env.NODE_ENV === "development" && (
-                  <p className="text-xs mt-1.5 font-mono opacity-50 truncate text-gray-500 dark:text-gray-400">
+                  <p className="mt-1.5 truncate font-mono text-xs text-gray-500 opacity-50 dark:text-gray-400">
                     {error.docPath}
                   </p>
                 )}
               </div>
               <button
                 onClick={() => dismissError(error.id)}
-                className={`p-1 rounded-lg transition-colors opacity-60 hover:opacity-100 ${styles.text}`}
+                className={`rounded-lg p-1 opacity-60 transition-colors hover:opacity-100 ${styles.text}`}
                 aria-label="Dismiss notification"
               >
-                <X className="w-4 h-4" />
+                <X className="h-4 w-4" />
               </button>
             </div>
 
@@ -254,17 +249,14 @@ export const FirestoreErrorNotification: React.FC = () => {
                 <div className="mt-3 flex items-center gap-2">
                   <button
                     onClick={() => handleRecoveryAction(error.errorInfo)}
-                    className={`
-                    inline-flex items-center px-3 py-1.5 text-xs font-medium rounded-lg
-                    transition-colors ${styles.button}
-                  `}
+                    className={`inline-flex items-center rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${styles.button} `}
                   >
                     {getActionIcon(error.errorInfo.suggestedAction)}
                     {getActionLabel(error.errorInfo.suggestedAction)}
                   </button>
                   <button
                     onClick={() => dismissError(error.id)}
-                    className={`px-3 py-1.5 text-xs rounded-lg opacity-60 hover:opacity-100 transition-opacity ${styles.text}`}
+                    className={`rounded-lg px-3 py-1.5 text-xs opacity-60 transition-opacity hover:opacity-100 ${styles.text}`}
                   >
                     Dismiss
                   </button>
@@ -275,7 +267,7 @@ export const FirestoreErrorNotification: React.FC = () => {
               <div
                 className={`mt-3 flex items-center gap-2 text-xs ${styles.text} opacity-70`}
               >
-                <Clock className="w-3.5 h-3.5 animate-pulse" />
+                <Clock className="h-3.5 w-3.5 animate-pulse" />
                 <span>Retrying automatically...</span>
               </div>
             )}

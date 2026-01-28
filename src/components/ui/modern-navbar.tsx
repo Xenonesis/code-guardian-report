@@ -138,20 +138,20 @@ export function ModernNavbar({
 
   if (isMobile) {
     return (
-      <div className="fixed top-0 left-0 right-0 z-[9999] bg-background/80 backdrop-blur-lg border-b border-border">
+      <div className="bg-background/80 border-border fixed top-0 right-0 left-0 z-[9999] border-b backdrop-blur-lg">
         <div className="flex items-center justify-between px-4 py-3">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-sm">
+            <div className="bg-primary flex h-8 w-8 items-center justify-center rounded-lg">
+              <span className="text-primary-foreground text-sm font-bold">
                 CG
               </span>
             </div>
-            <span className="font-semibold text-foreground">Code Guardian</span>
+            <span className="text-foreground font-semibold">Code Guardian</span>
           </div>
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-lg hover:bg-muted transition-colors"
+            className="hover:bg-muted rounded-lg p-2 transition-colors"
           >
             {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
@@ -163,9 +163,9 @@ export function ModernNavbar({
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              className="border-t border-border bg-background/95 backdrop-blur-lg"
+              className="border-border bg-background/95 border-t backdrop-blur-lg"
             >
-              <div className="px-4 py-2 space-y-1">
+              <div className="space-y-1 px-4 py-2">
                 {items.map((item) => {
                   const Icon = item.icon;
                   const isActive = activeTab === item.name;
@@ -180,7 +180,7 @@ export function ModernNavbar({
                         setMobileMenuOpen(false);
                       }}
                       className={cn(
-                        "flex items-center gap-3 px-3 py-2 rounded-lg transition-colors",
+                        "flex items-center gap-3 rounded-lg px-3 py-2 transition-colors",
                         isActive
                           ? "bg-primary text-primary-foreground"
                           : "text-muted-foreground hover:text-foreground hover:bg-muted"
@@ -200,7 +200,7 @@ export function ModernNavbar({
   }
 
   return (
-    <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50">
+    <div className="fixed top-6 left-1/2 z-50 -translate-x-1/2">
       <motion.nav
         initial={{ y: -80, opacity: 0 }}
         animate={isExpanded ? "expanded" : "collapsed"}
@@ -209,17 +209,17 @@ export function ModernNavbar({
         whileTap={!isExpanded ? { scale: 0.95 } : {}}
         onClick={handleNavClick}
         className={cn(
-          "flex items-center overflow-hidden rounded-full border bg-background/80 shadow-lg backdrop-blur-sm h-12",
+          "bg-background/80 flex h-12 items-center overflow-hidden rounded-full border shadow-lg backdrop-blur-sm",
           !isExpanded && "cursor-pointer justify-center",
           className
         )}
       >
         <motion.div
           variants={itemVariants}
-          className="flex-shrink-0 flex items-center font-semibold pl-4 pr-2"
+          className="flex flex-shrink-0 items-center pr-2 pl-4 font-semibold"
         >
-          <div className="w-6 h-6 bg-primary rounded-md flex items-center justify-center">
-            <span className="text-primary-foreground font-bold text-xs">
+          <div className="bg-primary flex h-6 w-6 items-center justify-center rounded-md">
+            <span className="text-primary-foreground text-xs font-bold">
               CG
             </span>
           </div>
@@ -227,7 +227,7 @@ export function ModernNavbar({
 
         <motion.div
           className={cn(
-            "flex items-center gap-1 sm:gap-4 pr-4",
+            "flex items-center gap-1 pr-4 sm:gap-4",
             !isExpanded && "pointer-events-none"
           )}
         >
@@ -249,7 +249,7 @@ export function ModernNavbar({
                 onMouseEnter={() => setHoveredTab(item.name)}
                 onMouseLeave={() => setHoveredTab(null)}
                 className={cn(
-                  "relative text-sm font-medium transition-colors px-3 py-2 rounded-full",
+                  "relative rounded-full px-3 py-2 text-sm font-medium transition-colors",
                   isActive
                     ? "text-primary bg-primary/10"
                     : "text-muted-foreground hover:text-foreground hover:bg-muted"
@@ -258,7 +258,7 @@ export function ModernNavbar({
                 {isActive && (
                   <motion.div
                     layoutId="activeTab"
-                    className="absolute inset-0 bg-primary/10 rounded-full"
+                    className="bg-primary/10 absolute inset-0 rounded-full"
                     initial={false}
                     transition={{
                       type: "spring",
@@ -272,14 +272,14 @@ export function ModernNavbar({
 
                 {isActive && (
                   <motion.div
-                    className="absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-1 bg-primary rounded-t-full"
+                    className="bg-primary absolute -top-2 left-1/2 h-1 w-8 -translate-x-1/2 rounded-t-full"
                     initial={{ opacity: 0, scale: 0 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.1 }}
                   >
-                    <div className="absolute w-12 h-6 bg-primary/20 rounded-full blur-md -top-2 -left-2" />
-                    <div className="absolute w-8 h-6 bg-primary/20 rounded-full blur-md -top-1" />
-                    <div className="absolute w-4 h-4 bg-primary/20 rounded-full blur-sm top-0 left-2" />
+                    <div className="bg-primary/20 absolute -top-2 -left-2 h-6 w-12 rounded-full blur-md" />
+                    <div className="bg-primary/20 absolute -top-1 h-6 w-8 rounded-full blur-md" />
+                    <div className="bg-primary/20 absolute top-0 left-2 h-4 w-4 rounded-full blur-sm" />
                   </motion.div>
                 )}
 
@@ -289,7 +289,7 @@ export function ModernNavbar({
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.8 }}
-                      className="absolute inset-0 bg-muted rounded-full"
+                      className="bg-muted absolute inset-0 rounded-full"
                     />
                   )}
                 </AnimatePresence>
@@ -298,7 +298,7 @@ export function ModernNavbar({
           })}
         </motion.div>
 
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
           <motion.div
             variants={collapsedIconVariants}
             animate={isExpanded ? "expanded" : "collapsed"}

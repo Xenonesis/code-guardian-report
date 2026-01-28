@@ -77,11 +77,11 @@ export const SeverityChart: React.FC<SeverityChartProps> = ({
             </PieChart>
           </ResponsiveContainer>
         </div>
-        <div className="grid grid-cols-2 gap-4 mt-4">
+        <div className="mt-4 grid grid-cols-2 gap-4">
           {severityData.map((item) => (
             <div key={item.name} className="flex items-center gap-2">
               <div
-                className="w-3 h-3 rounded-full"
+                className="h-3 w-3 rounded-full"
                 style={{ backgroundColor: item.color }}
               />
               <span className="text-sm">

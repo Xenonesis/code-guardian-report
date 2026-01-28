@@ -210,14 +210,14 @@ export const AuthWithConflictHandling: React.FC = () => {
       <div className="space-y-4">
         <button
           onClick={handleGoogleSignIn}
-          className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700"
+          className="w-full rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
         >
           Sign in with Google
         </button>
 
         <button
           onClick={handleGitHubSignIn}
-          className="w-full bg-gray-800 text-white py-2 px-4 rounded-lg hover:bg-gray-900"
+          className="w-full rounded-lg bg-gray-800 px-4 py-2 text-white hover:bg-gray-900"
         >
           Sign in with GitHub
         </button>

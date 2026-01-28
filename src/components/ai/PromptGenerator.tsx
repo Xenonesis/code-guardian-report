@@ -52,7 +52,7 @@ const PROMPT_TEMPLATES: PromptTemplate[] = [
     title: "Security Vulnerability Scanner",
     description: "Find and fix security issues in your code",
     category: "security",
-    icon: <Shield className="w-4 h-4" />,
+    icon: <Shield className="h-4 w-4" />,
     tags: ["Security", "Vulnerabilities", "Fix"],
     prompt: `You are a security expert. Analyze this code and find security vulnerabilities.
 
@@ -96,7 +96,7 @@ Provide practical fixes I can copy-paste into my code.`,
     title: "Code Quality Fixer",
     description: "Improve code quality and fix bad practices",
     category: "quality",
-    icon: <Code className="w-4 h-4" />,
+    icon: <Code className="h-4 w-4" />,
     tags: ["Quality", "Clean Code", "Refactor"],
     prompt: `You are a senior developer. Review this code and fix quality issues.
 
@@ -138,7 +138,7 @@ Give me clean, readable code I can use immediately.`,
     title: "Performance Optimizer",
     description: "Make code faster while keeping it secure",
     category: "performance",
-    icon: <Zap className="w-4 h-4" />,
+    icon: <Zap className="h-4 w-4" />,
     tags: ["Performance", "Speed", "Optimization"],
     prompt: `You are a performance expert. Make this code faster while keeping it secure.
 
@@ -182,7 +182,7 @@ Give me production-ready optimized code.`,
     title: "Bug Hunter",
     description: "Find and fix bugs before they cause problems",
     category: "quality",
-    icon: <Bug className="w-4 h-4" />,
+    icon: <Bug className="h-4 w-4" />,
     tags: ["Bugs", "Errors", "Debug"],
     prompt: `You are a debugging expert. Find bugs in this code that could cause crashes or errors.
 
@@ -228,7 +228,7 @@ Help me catch bugs before users do.`,
     title: "API Security Checker",
     description: "Secure your APIs and endpoints",
     category: "security",
-    icon: <Shield className="w-4 h-4" />,
+    icon: <Shield className="h-4 w-4" />,
     tags: ["API", "Endpoints", "REST"],
     prompt: `You are an API security expert. Make my API endpoints secure.
 
@@ -273,7 +273,7 @@ Make my APIs bulletproof against attacks.`,
     title: "Dependency Checker",
     description: "Find vulnerable packages and outdated dependencies",
     category: "security",
-    icon: <Bug className="w-4 h-4" />,
+    icon: <Bug className="h-4 w-4" />,
     tags: ["Dependencies", "Packages", "Updates"],
     prompt: `You are a dependency security expert. Check my packages for vulnerabilities.
 
@@ -312,7 +312,7 @@ Give me exact commands to fix my dependencies safely.`,
     title: "Architecture & Design Review",
     description: "Review code architecture and design patterns",
     category: "quality",
-    icon: <Layers className="w-4 h-4" />,
+    icon: <Layers className="h-4 w-4" />,
     tags: ["Architecture", "Design Patterns", "Structure"],
     prompt: `You are a senior software architect. Review the codebase architecture and design.
 
@@ -358,7 +358,7 @@ Provide practical refactoring steps.`,
     title: "Testing & Coverage Analyzer",
     description: "Identify missing tests and improve coverage",
     category: "quality",
-    icon: <TestTube className="w-4 h-4" />,
+    icon: <TestTube className="h-4 w-4" />,
     tags: ["Testing", "Unit Tests", "Coverage"],
     prompt: `You are a testing expert. Analyze this code and identify missing tests.
 
@@ -416,7 +416,7 @@ Provide complete, runnable test code with good coverage.`,
     title: "Documentation Generator",
     description: "Generate comprehensive code documentation",
     category: "general",
-    icon: <BookOpen className="w-4 h-4" />,
+    icon: <BookOpen className="h-4 w-4" />,
     tags: ["Documentation", "Comments", "JSDoc"],
     prompt: `You are a technical writer. Generate comprehensive documentation for this code.
 
@@ -476,7 +476,7 @@ Make documentation clear, accurate, and helpful for developers.`,
     title: "Refactoring Assistant",
     description: "Suggest code refactoring improvements",
     category: "quality",
-    icon: <Sparkles className="w-4 h-4" />,
+    icon: <Sparkles className="h-4 w-4" />,
     tags: ["Refactoring", "Clean Code", "Optimization"],
     prompt: `You are a refactoring expert. Analyze this code and suggest improvements.
 
@@ -647,8 +647,10 @@ const PromptGenerator: React.FC<PromptGeneratorProps> = ({
     ];
 
     // Add code snippets for top issues
-    const addCodeSnippet = (issue: SecurityIssue | { snippet?: string }): string => {
-      const snippet = 'snippet' in issue ? issue.snippet : undefined;
+    const addCodeSnippet = (
+      issue: SecurityIssue | { snippet?: string }
+    ): string => {
+      const snippet = "snippet" in issue ? issue.snippet : undefined;
       if (snippet) {
         return `\n  Code snippet:\n  \`\`\`\n  ${snippet}\n  \`\`\``;
       }
@@ -877,7 +879,7 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Wand2 className="w-5 h-5" />
+            <Wand2 className="h-5 w-5" />
             AI Code Assistant Prompts
           </CardTitle>
           <CardDescription>
@@ -887,12 +889,12 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
         </CardHeader>
         <CardContent>
           <div className="mb-6">
-            <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950 dark:to-indigo-950 border-blue-200 dark:border-blue-800">
+            <Card className="border-blue-200 bg-gradient-to-r from-blue-50 to-indigo-50 dark:border-blue-800 dark:from-blue-950 dark:to-indigo-950">
               <CardContent className="p-4">
-                <div className="flex items-center justify-between flex-wrap gap-4">
+                <div className="flex flex-wrap items-center justify-between gap-4">
                   <div className="flex items-center gap-3">
-                    <div className="p-2 bg-blue-100 dark:bg-blue-900 rounded-lg">
-                      <Wand2 className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                    <div className="rounded-lg bg-blue-100 p-2 dark:bg-blue-900">
+                      <Wand2 className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                     </div>
                     <div>
                       <h3 className="font-semibold text-blue-900 dark:text-blue-100">
@@ -912,19 +914,19 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
                       size="sm"
                       className="border-blue-300 dark:border-blue-700"
                     >
-                      <Filter className="w-4 h-4 mr-2" />
+                      <Filter className="mr-2 h-4 w-4" />
                       Filters
                     </Button>
                     <Button
                       onClick={generateCodebasePrompt}
-                      className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                      className="bg-blue-600 hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-gray-400"
                       disabled={
                         !analysisResults ||
                         !analysisResults.issues ||
                         analysisResults.issues.length === 0
                       }
                     >
-                      <Wand2 className="w-4 h-4 mr-2" />
+                      <Wand2 className="mr-2 h-4 w-4" />
                       Generate
                     </Button>
                   </div>
@@ -932,8 +934,8 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
 
                 {/* Filters Section */}
                 {showFilters && analysisResults && (
-                  <div className="mt-4 p-4 bg-white dark:bg-gray-900 rounded-lg border border-blue-200 dark:border-blue-800">
-                    <h4 className="text-sm font-semibold mb-3 text-blue-900 dark:text-blue-100">
+                  <div className="mt-4 rounded-lg border border-blue-200 bg-white p-4 dark:border-blue-800 dark:bg-gray-900">
+                    <h4 className="mb-3 text-sm font-semibold text-blue-900 dark:text-blue-100">
                       Filter by Severity
                     </h4>
                     <div className="flex flex-wrap gap-2">
@@ -943,7 +945,7 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
                           className={`cursor-pointer transition-all ${
                             severityFilter.includes(severity)
                               ? "bg-blue-600 text-white hover:bg-blue-700"
-                              : "bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-300 hover:bg-gray-300"
+                              : "bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300"
                           }`}
                           onClick={() => {
                             setSeverityFilter((prev) =>
@@ -957,7 +959,7 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
                         </Badge>
                       ))}
                     </div>
-                    <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">
+                    <p className="mt-2 text-xs text-gray-600 dark:text-gray-400">
                       {severityFilter.length === 4
                         ? "All severities selected"
                         : `${severityFilter.length} severity level(s) selected`}
@@ -969,7 +971,7 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
           </div>
 
           {/* Category Filter for Templates */}
-          <div className="mb-4 flex items-center gap-2 flex-wrap">
+          <div className="mb-4 flex flex-wrap items-center gap-2">
             <span className="text-sm font-medium">Template Category:</span>
             {["all", "security", "quality", "performance", "general"].map(
               (cat) => (
@@ -991,13 +993,13 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
           {/* Default Security Scanner */}
           <div className="mb-4">
             <Card
-              className="cursor-pointer hover:shadow-md transition-shadow border-red-200 dark:border-red-800"
+              className="cursor-pointer border-red-200 transition-shadow hover:shadow-md dark:border-red-800"
               onClick={() => setSelectedTemplate(PROMPT_TEMPLATES[0])}
             >
               <CardHeader className="pb-3">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-2">
-                    <Shield className="w-4 h-4" />
+                    <Shield className="h-4 w-4" />
                     <CardTitle className="text-sm">
                       Security Vulnerability Scanner
                     </CardTitle>
@@ -1027,12 +1029,12 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
             <Button
               variant="outline"
               onClick={() => setShowAllPrompts(!showAllPrompts)}
-              className="w-full mb-4 flex items-center justify-center gap-2"
+              className="mb-4 flex w-full items-center justify-center gap-2"
             >
               {showAllPrompts ? (
-                <ChevronUp className="w-4 h-4" />
+                <ChevronUp className="h-4 w-4" />
               ) : (
-                <ChevronDown className="w-4 h-4" />
+                <ChevronDown className="h-4 w-4" />
               )}
               {showAllPrompts
                 ? "Hide Other AI Prompts"
@@ -1043,11 +1045,11 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
             </Button>
 
             {showAllPrompts && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 {filteredTemplates.slice(1).map((template) => (
                   <Card
                     key={template.id}
-                    className="cursor-pointer hover:shadow-md transition-shadow"
+                    className="cursor-pointer transition-shadow hover:shadow-md"
                     onClick={() => setSelectedTemplate(template)}
                   >
                     <CardHeader className="pb-3">
@@ -1090,14 +1092,14 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
       {generatedPrompt && (
         <Card className="border-green-200 dark:border-green-800">
           <CardHeader>
-            <div className="flex items-center justify-between flex-wrap gap-2">
+            <div className="flex flex-wrap items-center justify-between gap-2">
               <div className="flex items-center gap-2">
-                <FileCode className="w-5 h-5 text-green-600" />
+                <FileCode className="h-5 w-5 text-green-600" />
                 <CardTitle className="text-green-800 dark:text-green-200">
                   Your Custom Prompt
                 </CardTitle>
               </div>
-              <div className="flex items-center gap-2 flex-wrap">
+              <div className="flex flex-wrap items-center gap-2">
                 <Badge
                   variant="outline"
                   className="text-green-700 dark:text-green-300"
@@ -1111,7 +1113,7 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
                   className="bg-green-600 hover:bg-green-700"
                   size="sm"
                 >
-                  <Copy className="w-4 h-4 mr-2" />
+                  <Copy className="mr-2 h-4 w-4" />
                   Copy
                 </Button>
                 <Button
@@ -1120,18 +1122,18 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
                   }
                   variant="outline"
                   size="sm"
-                  className="border-green-600 text-green-700 dark:text-green-300 hover:bg-green-50 dark:hover:bg-green-950"
+                  className="border-green-600 text-green-700 hover:bg-green-50 dark:text-green-300 dark:hover:bg-green-950"
                 >
-                  <Download className="w-4 h-4 mr-2" />
+                  <Download className="mr-2 h-4 w-4" />
                   Export
                 </Button>
                 <Button
                   onClick={() => sharePrompt(generatedPrompt)}
                   variant="outline"
                   size="sm"
-                  className="border-green-600 text-green-700 dark:text-green-300 hover:bg-green-50 dark:hover:bg-green-950"
+                  className="border-green-600 text-green-700 hover:bg-green-50 dark:text-green-300 dark:hover:bg-green-950"
                 >
-                  <Share2 className="w-4 h-4 mr-2" />
+                  <Share2 className="mr-2 h-4 w-4" />
                   Share
                 </Button>
               </div>
@@ -1143,14 +1145,14 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="bg-green-50 dark:bg-green-950 p-4 rounded-lg mb-4 border border-green-200 dark:border-green-800">
-              <pre className="whitespace-pre-wrap text-sm font-mono text-green-900 dark:text-green-100">
+            <div className="mb-4 rounded-lg border border-green-200 bg-green-50 p-4 dark:border-green-800 dark:bg-green-950">
+              <pre className="font-mono text-sm whitespace-pre-wrap text-green-900 dark:text-green-100">
                 {generatedPrompt}
               </pre>
             </div>
-            <div className="p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
-              <h4 className="font-semibold text-sm mb-2">🚀 Ready to use:</h4>
-              <ol className="text-sm space-y-1 text-gray-600 dark:text-gray-300 list-decimal list-inside">
+            <div className="rounded-lg bg-blue-50 p-4 dark:bg-blue-950">
+              <h4 className="mb-2 text-sm font-semibold">🚀 Ready to use:</h4>
+              <ol className="list-inside list-decimal space-y-1 text-sm text-gray-600 dark:text-gray-300">
                 <li>Copy the prompt above</li>
                 <li>Open Cursor, Windsurf, or Copilot</li>
                 <li>Paste the prompt + your code</li>
@@ -1164,12 +1166,12 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
       {selectedTemplate && (
         <Card>
           <CardHeader>
-            <div className="flex items-center justify-between flex-wrap gap-2">
+            <div className="flex flex-wrap items-center justify-between gap-2">
               <div className="flex items-center gap-2">
                 {selectedTemplate.icon}
                 <CardTitle>{selectedTemplate.title}</CardTitle>
               </div>
-              <div className="flex items-center gap-2 flex-wrap">
+              <div className="flex flex-wrap items-center gap-2">
                 <Badge variant="outline">
                   ~{estimateTokens(selectedTemplate.prompt)} tokens
                 </Badge>
@@ -1182,7 +1184,7 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
                   }
                   size="sm"
                 >
-                  <Copy className="w-4 h-4 mr-2" />
+                  <Copy className="mr-2 h-4 w-4" />
                   Copy
                 </Button>
                 <Button
@@ -1195,7 +1197,7 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
                   variant="outline"
                   size="sm"
                 >
-                  <Download className="w-4 h-4 mr-2" />
+                  <Download className="mr-2 h-4 w-4" />
                   Export
                 </Button>
                 <Button
@@ -1208,7 +1210,7 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
                   variant="outline"
                   size="sm"
                 >
-                  <FileText className="w-4 h-4 mr-2" />
+                  <FileText className="mr-2 h-4 w-4" />
                   Markdown
                 </Button>
               </div>
@@ -1216,14 +1218,14 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
             <CardDescription>{selectedTemplate.description}</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="bg-gray-50 dark:bg-gray-900 p-4 rounded-lg mb-4">
-              <pre className="whitespace-pre-wrap text-sm font-mono">
+            <div className="mb-4 rounded-lg bg-gray-50 p-4 dark:bg-gray-900">
+              <pre className="font-mono text-sm whitespace-pre-wrap">
                 {selectedTemplate.prompt}
               </pre>
             </div>
-            <div className="p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
-              <h4 className="font-semibold text-sm mb-2">💡 How to use:</h4>
-              <ol className="text-sm space-y-1 text-gray-600 dark:text-gray-300 list-decimal list-inside">
+            <div className="rounded-lg bg-blue-50 p-4 dark:bg-blue-950">
+              <h4 className="mb-2 text-sm font-semibold">💡 How to use:</h4>
+              <ol className="list-inside list-decimal space-y-1 text-sm text-gray-600 dark:text-gray-300">
                 <li>Copy the prompt above</li>
                 <li>Open your AI assistant (Cursor, Windsurf, Copilot)</li>
                 <li>Paste the prompt</li>

@@ -57,7 +57,7 @@ export function PWAMobileBanner() {
   return (
     <div
       className={cn(
-        "fixed bottom-0 left-0 right-0 z-50",
+        "fixed right-0 bottom-0 left-0 z-50",
         "bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600",
         "text-white shadow-2xl",
         "transform transition-transform duration-500 ease-out",
@@ -66,42 +66,42 @@ export function PWAMobileBanner() {
       )}
     >
       {/* Decorative top border */}
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-yellow-400 via-pink-500 to-blue-400" />
+      <div className="absolute top-0 right-0 left-0 h-1 bg-gradient-to-r from-yellow-400 via-pink-500 to-blue-400" />
 
       <div className="relative px-4 py-4 sm:px-6">
         {/* Close button */}
         <button
           onClick={handleDismiss}
-          className="absolute top-2 right-2 p-1.5 rounded-full hover:bg-white/20 transition-colors"
+          className="absolute top-2 right-2 rounded-full p-1.5 transition-colors hover:bg-white/20"
           aria-label="Dismiss banner"
         >
           <X className="h-4 w-4" />
         </button>
 
-        <div className="flex flex-col sm:flex-row items-center gap-4">
+        <div className="flex flex-col items-center gap-4 sm:flex-row">
           {/* App Icon and Info */}
-          <div className="flex items-center gap-3 flex-1">
+          <div className="flex flex-1 items-center gap-3">
             <div className="relative">
-              <div className="p-3 bg-white/20 rounded-xl backdrop-blur-sm">
+              <div className="rounded-xl bg-white/20 p-3 backdrop-blur-sm">
                 <Shield className="h-8 w-8 text-white" />
               </div>
-              <div className="absolute -bottom-1 -right-1 p-1 bg-green-500 rounded-full">
+              <div className="absolute -right-1 -bottom-1 rounded-full bg-green-500 p-1">
                 <Smartphone className="h-3 w-3" />
               </div>
             </div>
 
             <div className="text-left">
-              <h3 className="font-bold text-base sm:text-lg leading-tight">
+              <h3 className="text-base leading-tight font-bold sm:text-lg">
                 Install Code Guardian
               </h3>
-              <p className="text-xs sm:text-sm text-white/80 mt-0.5">
+              <p className="mt-0.5 text-xs text-white/80 sm:text-sm">
                 Add to home screen for the best experience
               </p>
             </div>
           </div>
 
           {/* Features - Hidden on very small screens */}
-          <div className="hidden sm:flex items-center gap-4 px-4">
+          <div className="hidden items-center gap-4 px-4 sm:flex">
             {features.map((feature, index) => (
               <div
                 key={index}
@@ -116,16 +116,16 @@ export function PWAMobileBanner() {
           {/* Install Button */}
           <Button
             onClick={handleInstall}
-            className="w-full sm:w-auto bg-white text-blue-600 hover:bg-white/90 font-semibold shadow-lg"
+            className="w-full bg-white font-semibold text-blue-600 shadow-lg hover:bg-white/90 sm:w-auto"
             size="lg"
           >
-            <Download className="h-4 w-4 mr-2" />
+            <Download className="mr-2 h-4 w-4" />
             Install App
           </Button>
         </div>
 
         {/* Features for mobile - Shown only on small screens */}
-        <div className="flex sm:hidden items-center justify-center gap-4 mt-3 pt-3 border-t border-white/20">
+        <div className="mt-3 flex items-center justify-center gap-4 border-t border-white/20 pt-3 sm:hidden">
           {features.map((feature, index) => (
             <div
               key={index}

@@ -57,9 +57,9 @@ export function PWAShareButton({
       className={className}
     >
       {copied ? (
-        <Check className="h-4 w-4 mr-2" />
+        <Check className="mr-2 h-4 w-4" />
       ) : (
-        <Share2 className="h-4 w-4 mr-2" />
+        <Share2 className="mr-2 h-4 w-4" />
       )}
       {copied ? "Copied!" : "Share"}
     </Button>

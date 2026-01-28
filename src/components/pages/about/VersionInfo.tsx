@@ -27,18 +27,18 @@ export const VersionInfo: React.FC = () => {
   ];
 
   return (
-    <div className="flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-12">
+    <div className="flex flex-col items-center justify-center gap-6 lg:flex-row lg:gap-12">
       {/* Enhanced Version Badge */}
-      <div className="glass-card-ultra px-6 py-4 enhanced-card-hover">
+      <div className="glass-card-ultra enhanced-card-hover px-6 py-4">
         <div className="flex items-center gap-3">
-          <div className="p-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl">
+          <div className="rounded-xl bg-gradient-to-r from-blue-500 to-purple-500 p-2">
             <Code2 className="h-5 w-5 text-white" />
           </div>
           <div>
-            <span className="text-sm font-medium text-slate-600 dark:text-slate-400 block">
+            <span className="block text-sm font-medium text-slate-600 dark:text-slate-400">
               Version
             </span>
-            <span className="text-lg font-bold gradient-text-animated">
+            <span className="gradient-text-animated text-lg font-bold">
               {APP_VERSION}
             </span>
           </div>
@@ -46,8 +46,8 @@ export const VersionInfo: React.FC = () => {
       </div>
 
       {/* Enhanced Tech Stack */}
-      <div className="glass-card-ultra px-6 py-4 enhanced-card-hover">
-        <div className="flex flex-col sm:flex-row items-center gap-4">
+      <div className="glass-card-ultra enhanced-card-hover px-6 py-4">
+        <div className="flex flex-col items-center gap-4 sm:flex-row">
           <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">
             Built with
           </span>
@@ -55,16 +55,16 @@ export const VersionInfo: React.FC = () => {
             {techStack.map((tech, index) => (
               <div
                 key={tech.name}
-                className="glass-card-ultra px-3 py-2 enhanced-card-hover glow-on-hover group"
+                className="glass-card-ultra enhanced-card-hover glow-on-hover group px-3 py-2"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <div className="flex items-center gap-2">
                   <span
-                    className={`${tech.color} group-hover:scale-125 transition-transform duration-300`}
+                    className={`${tech.color} transition-transform duration-300 group-hover:scale-125`}
                   >
                     {tech.icon}
                   </span>
-                  <span className="text-sm font-medium text-slate-800 dark:text-slate-200 group-hover:text-slate-900 dark:group-hover:text-white transition-colors duration-300">
+                  <span className="text-sm font-medium text-slate-800 transition-colors duration-300 group-hover:text-slate-900 dark:text-slate-200 dark:group-hover:text-white">
                     {tech.name}
                   </span>
                 </div>

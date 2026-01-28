@@ -144,14 +144,14 @@ export const TestAuthConflict: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 py-6 sm:py-8 md:py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-6xl mx-auto space-y-6 sm:space-y-8">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 px-4 py-6 sm:px-6 sm:py-8 md:py-12 lg:px-8 dark:from-gray-900 dark:to-gray-800">
+      <div className="mx-auto max-w-6xl space-y-6 sm:space-y-8">
         {/* Header */}
-        <div className="text-center space-y-3 sm:space-y-4">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 break-words">
+        <div className="space-y-3 text-center sm:space-y-4">
+          <h1 className="text-2xl font-bold break-words text-gray-900 sm:text-3xl md:text-4xl dark:text-gray-100">
             🧪 Account Conflict Modal - Real Functionality Test
           </h1>
-          <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 px-2">
+          <p className="px-2 text-base text-gray-600 sm:text-lg dark:text-gray-400">
             Test the actual Firebase authentication with conflict handling
           </p>
         </div>
@@ -164,17 +164,17 @@ export const TestAuthConflict: React.FC = () => {
           <CardContent>
             {user ? (
               <div className="space-y-4">
-                <Alert className="bg-green-50 border-green-200 dark:bg-green-950/20 dark:border-green-900">
+                <Alert className="border-green-200 bg-green-50 dark:border-green-900 dark:bg-green-950/20">
                   <CheckCircle2 className="h-4 w-4 text-green-600 dark:text-green-400" />
                   <AlertDescription className="text-green-800 dark:text-green-200">
                     <strong>Signed In:</strong> {user.email || "No email"}
                   </AlertDescription>
                 </Alert>
-                <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3 sm:p-4 space-y-2">
-                  <p className="text-xs sm:text-sm break-all">
+                <div className="space-y-2 rounded-lg bg-gray-50 p-3 sm:p-4 dark:bg-gray-800">
+                  <p className="text-xs break-all sm:text-sm">
                     <strong>UID:</strong> {user.uid}
                   </p>
-                  <p className="text-xs sm:text-sm break-words">
+                  <p className="text-xs break-words sm:text-sm">
                     <strong>Display Name:</strong>{" "}
                     {user.displayName || "Not set"}
                   </p>
@@ -182,7 +182,7 @@ export const TestAuthConflict: React.FC = () => {
                     <strong>Email Verified:</strong>{" "}
                     {user.emailVerified ? "Yes" : "No"}
                   </p>
-                  <p className="text-xs sm:text-sm break-words">
+                  <p className="text-xs break-words sm:text-sm">
                     <strong>Provider(s):</strong>{" "}
                     {user.providerData.map((p) => p.providerId).join(", ")}
                   </p>
@@ -212,10 +212,10 @@ export const TestAuthConflict: React.FC = () => {
           <Alert
             className={
               message.type === "success"
-                ? "bg-green-50 border-green-200 dark:bg-green-950/20 dark:border-green-900"
+                ? "border-green-200 bg-green-50 dark:border-green-900 dark:bg-green-950/20"
                 : message.type === "error"
-                  ? "bg-red-50 border-red-200 dark:bg-red-950/20 dark:border-red-900"
-                  : "bg-blue-50 border-blue-200 dark:bg-blue-950/20 dark:border-blue-900"
+                  ? "border-red-200 bg-red-50 dark:border-red-900 dark:bg-red-950/20"
+                  : "border-blue-200 bg-blue-50 dark:border-blue-900 dark:bg-blue-950/20"
             }
           >
             <AlertDescription
@@ -233,7 +233,7 @@ export const TestAuthConflict: React.FC = () => {
         )}
 
         {/* Test Controls */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2">
           {/* OAuth Providers */}
           <Card>
             <CardHeader>
@@ -248,17 +248,17 @@ export const TestAuthConflict: React.FC = () => {
               <Button
                 onClick={handleGoogleSignIn}
                 disabled={loading}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white h-10 sm:h-11 text-sm sm:text-base"
+                className="h-10 w-full bg-blue-600 text-sm text-white hover:bg-blue-700 sm:h-11 sm:text-base"
               >
                 {loading ? (
                   <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin flex-shrink-0" />
+                    <Loader2 className="mr-2 h-4 w-4 flex-shrink-0 animate-spin" />
                     <span className="truncate">Processing...</span>
                   </>
                 ) : (
                   <>
                     <svg
-                      className="mr-2 h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0"
+                      className="mr-2 h-4 w-4 flex-shrink-0 sm:h-5 sm:w-5"
                       viewBox="0 0 24 24"
                     >
                       <path
@@ -286,17 +286,17 @@ export const TestAuthConflict: React.FC = () => {
               <Button
                 onClick={handleGitHubSignIn}
                 disabled={loading}
-                className="w-full bg-gray-800 hover:bg-gray-900 text-white h-10 sm:h-11 text-sm sm:text-base"
+                className="h-10 w-full bg-gray-800 text-sm text-white hover:bg-gray-900 sm:h-11 sm:text-base"
               >
                 {loading ? (
                   <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin flex-shrink-0" />
+                    <Loader2 className="mr-2 h-4 w-4 flex-shrink-0 animate-spin" />
                     <span className="truncate">Processing...</span>
                   </>
                 ) : (
                   <>
                     <svg
-                      className="mr-2 h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0"
+                      className="mr-2 h-4 w-4 flex-shrink-0 sm:h-5 sm:w-5"
                       fill="currentColor"
                       viewBox="0 0 24 24"
                     >
@@ -321,26 +321,26 @@ export const TestAuthConflict: React.FC = () => {
             </CardHeader>
             <CardContent className="space-y-3 sm:space-y-4">
               <div>
-                <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2">
+                <label className="mb-1.5 block text-xs font-medium sm:mb-2 sm:text-sm">
                   Email
                 </label>
                 <input
                   type="email"
                   value={testEmail}
                   onChange={(e) => setTestEmail(e.target.value)}
-                  className="w-full px-3 py-2 text-sm sm:text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:border-transparent focus:ring-2 focus:ring-blue-500 sm:text-base dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100"
                   placeholder="test@example.com"
                 />
               </div>
               <div>
-                <label className="block text-xs sm:text-sm font-medium mb-1.5 sm:mb-2">
+                <label className="mb-1.5 block text-xs font-medium sm:mb-2 sm:text-sm">
                   Password
                 </label>
                 <input
                   type="password"
                   value={testPassword}
                   onChange={(e) => setTestPassword(e.target.value)}
-                  className="w-full px-3 py-2 text-sm sm:text-base border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:border-transparent focus:ring-2 focus:ring-blue-500 sm:text-base dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100"
                   placeholder="password"
                 />
               </div>
@@ -348,11 +348,11 @@ export const TestAuthConflict: React.FC = () => {
                 onClick={handleEmailSignIn}
                 disabled={loading}
                 variant="outline"
-                className="w-full h-10 sm:h-11 text-sm sm:text-base"
+                className="h-10 w-full text-sm sm:h-11 sm:text-base"
               >
                 {loading ? (
                   <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin flex-shrink-0" />
+                    <Loader2 className="mr-2 h-4 w-4 flex-shrink-0 animate-spin" />
                     <span className="truncate">Processing...</span>
                   </>
                 ) : (
@@ -362,11 +362,11 @@ export const TestAuthConflict: React.FC = () => {
               <Button
                 onClick={handleCreateAccount}
                 disabled={loading}
-                className="w-full h-10 sm:h-11 text-sm sm:text-base"
+                className="h-10 w-full text-sm sm:h-11 sm:text-base"
               >
                 {loading ? (
                   <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin flex-shrink-0" />
+                    <Loader2 className="mr-2 h-4 w-4 flex-shrink-0 animate-spin" />
                     <span className="truncate">Processing...</span>
                   </>
                 ) : (
@@ -385,11 +385,11 @@ export const TestAuthConflict: React.FC = () => {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3 sm:space-y-4">
-            <div className="bg-blue-50 dark:bg-blue-950/20 rounded-lg p-3 sm:p-4 border border-blue-200 dark:border-blue-900">
-              <h3 className="font-semibold text-blue-900 dark:text-blue-100 mb-2 text-sm sm:text-base">
+            <div className="rounded-lg border border-blue-200 bg-blue-50 p-3 sm:p-4 dark:border-blue-900 dark:bg-blue-950/20">
+              <h3 className="mb-2 text-sm font-semibold text-blue-900 sm:text-base dark:text-blue-100">
                 Test Scenario 1: Google → Email/Password
               </h3>
-              <ol className="list-decimal list-inside space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-blue-800 dark:text-blue-200 pl-2">
+              <ol className="list-inside list-decimal space-y-1.5 pl-2 text-xs text-blue-800 sm:space-y-2 sm:text-sm dark:text-blue-200">
                 <li>Sign in with Google first</li>
                 <li>Sign out</li>
                 <li>
@@ -400,11 +400,11 @@ export const TestAuthConflict: React.FC = () => {
               </ol>
             </div>
 
-            <div className="bg-green-50 dark:bg-green-950/20 rounded-lg p-3 sm:p-4 border border-green-200 dark:border-green-900">
-              <h3 className="font-semibold text-green-900 dark:text-green-100 mb-2 text-sm sm:text-base">
+            <div className="rounded-lg border border-green-200 bg-green-50 p-3 sm:p-4 dark:border-green-900 dark:bg-green-950/20">
+              <h3 className="mb-2 text-sm font-semibold text-green-900 sm:text-base dark:text-green-100">
                 Test Scenario 2: Email/Password → Google
               </h3>
-              <ol className="list-decimal list-inside space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-green-800 dark:text-green-200 pl-2">
+              <ol className="list-inside list-decimal space-y-1.5 pl-2 text-xs text-green-800 sm:space-y-2 sm:text-sm dark:text-green-200">
                 <li>Create an account with Email/Password</li>
                 <li>Sign out</li>
                 <li>Try to sign in with Google using the same email</li>
@@ -412,11 +412,11 @@ export const TestAuthConflict: React.FC = () => {
               </ol>
             </div>
 
-            <div className="bg-purple-50 dark:bg-purple-950/20 rounded-lg p-3 sm:p-4 border border-purple-200 dark:border-purple-900">
-              <h3 className="font-semibold text-purple-900 dark:text-purple-100 mb-2 text-sm sm:text-base">
+            <div className="rounded-lg border border-purple-200 bg-purple-50 p-3 sm:p-4 dark:border-purple-900 dark:bg-purple-950/20">
+              <h3 className="mb-2 text-sm font-semibold text-purple-900 sm:text-base dark:text-purple-100">
                 Test Scenario 3: GitHub → Google
               </h3>
-              <ol className="list-decimal list-inside space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-purple-800 dark:text-purple-200 pl-2">
+              <ol className="list-inside list-decimal space-y-1.5 pl-2 text-xs text-purple-800 sm:space-y-2 sm:text-sm dark:text-purple-200">
                 <li>Sign in with GitHub first</li>
                 <li>Sign out</li>
                 <li>Try to sign in with Google using the same email</li>
@@ -430,20 +430,20 @@ export const TestAuthConflict: React.FC = () => {
         {accountConflict.isOpen && (
           <Card className="border-2 border-amber-500">
             <CardHeader>
-              <CardTitle className="text-amber-600 dark:text-amber-400 text-lg sm:text-xl">
+              <CardTitle className="text-lg text-amber-600 sm:text-xl dark:text-amber-400">
                 ⚠️ Account Conflict Detected!
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-2 bg-amber-50 dark:bg-amber-950/20 rounded-lg p-3 sm:p-4 overflow-x-auto">
-                <p className="text-xs sm:text-sm break-words">
+              <div className="space-y-2 overflow-x-auto rounded-lg bg-amber-50 p-3 sm:p-4 dark:bg-amber-950/20">
+                <p className="text-xs break-words sm:text-sm">
                   <strong>Email:</strong> {accountConflict.email}
                 </p>
-                <p className="text-xs sm:text-sm break-words">
+                <p className="text-xs break-words sm:text-sm">
                   <strong>Existing Provider:</strong>{" "}
                   {accountConflict.existingProvider}
                 </p>
-                <p className="text-xs sm:text-sm break-words">
+                <p className="text-xs break-words sm:text-sm">
                   <strong>Attempted Provider:</strong>{" "}
                   {accountConflict.attemptedProvider}
                 </p>

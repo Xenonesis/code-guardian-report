@@ -160,11 +160,11 @@ export function PWADashboard() {
   const installationStatus = getInstallationStatus(isInstalled, isInstallable);
 
   return (
-    <Card className="w-full max-w-4xl mx-auto">
+    <Card className="mx-auto w-full max-w-4xl">
       <CardHeader>
-        <div className="flex items-center justify-between flex-wrap gap-4">
+        <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-linear-to-br from-blue-500 to-indigo-600 rounded-xl">
+            <div className="rounded-xl bg-linear-to-br from-blue-500 to-indigo-600 p-2">
               <Zap className="h-6 w-6 text-white" />
             </div>
             <div>
@@ -194,7 +194,7 @@ export function PWADashboard() {
                 variant="secondary"
                 className="bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300"
               >
-                <Smartphone className="h-3 w-3 mr-1" />
+                <Smartphone className="mr-1 h-3 w-3" />
                 Installed
               </Badge>
             )}
@@ -204,7 +204,7 @@ export function PWADashboard() {
 
       <CardContent>
         <Tabs defaultValue="overview" className="w-full">
-          <TabsList className="grid w-full grid-cols-4 mb-6">
+          <TabsList className="mb-6 grid w-full grid-cols-4">
             <TabsTrigger value="overview" className="flex items-center gap-1.5">
               <Activity className="h-4 w-4" />
               <span className="hidden sm:inline">Overview</span>
@@ -229,7 +229,7 @@ export function PWADashboard() {
           {/* Overview Tab */}
           <TabsContent value="overview" className="space-y-6">
             {/* Status Cards */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
               <StatusCard
                 icon={isInstalled ? Smartphone : Monitor}
                 label="Installation"
@@ -258,11 +258,11 @@ export function PWADashboard() {
 
             {/* Quick Actions */}
             <div className="space-y-3">
-              <h3 className="text-sm font-semibold flex items-center gap-2">
+              <h3 className="flex items-center gap-2 text-sm font-semibold">
                 <Zap className="h-4 w-4 text-blue-600" />
                 Quick Actions
               </h3>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
                 {!isInstalled && isInstallable && (
                   <ActionButton
                     icon={Download}
@@ -316,11 +316,11 @@ export function PWADashboard() {
 
             {/* Capabilities Grid */}
             <div className="space-y-3">
-              <h3 className="text-sm font-semibold flex items-center gap-2">
+              <h3 className="flex items-center gap-2 text-sm font-semibold">
                 <CheckCircle2 className="h-4 w-4 text-green-600" />
                 Device Capabilities
               </h3>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4">
                 <CapabilityBadge
                   label="Service Worker"
                   enabled={capabilities.install}
@@ -360,15 +360,15 @@ export function PWADashboard() {
           {/* Storage Tab */}
           <TabsContent value="storage" className="space-y-6">
             {/* Cache Stats */}
-            <div className="p-4 bg-muted/50 rounded-lg space-y-4">
+            <div className="bg-muted/50 space-y-4 rounded-lg p-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-blue-100 dark:bg-blue-900 rounded-lg">
+                  <div className="rounded-lg bg-blue-100 p-2 dark:bg-blue-900">
                     <HardDrive className="h-5 w-5 text-blue-600" />
                   </div>
                   <div>
                     <p className="font-medium">Cache Storage</p>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-muted-foreground text-sm">
                       {metrics.cacheSizeFormatted} used
                     </p>
                   </div>
@@ -383,7 +383,7 @@ export function PWADashboard() {
                     onClick={handleClearCache}
                     disabled={isClearing || metrics.cacheSize === 0}
                   >
-                    <Trash2 className="h-4 w-4 mr-1" />
+                    <Trash2 className="mr-1 h-4 w-4" />
                     {isClearing ? "Clearing..." : "Clear"}
                   </Button>
                 </div>
@@ -407,15 +407,15 @@ export function PWADashboard() {
             </div>
 
             {/* Offline Data */}
-            <div className="p-4 bg-muted/50 rounded-lg space-y-3">
+            <div className="bg-muted/50 space-y-3 rounded-lg p-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-purple-100 dark:bg-purple-900 rounded-lg">
+                  <div className="rounded-lg bg-purple-100 p-2 dark:bg-purple-900">
                     <Database className="h-5 w-5 text-purple-600" />
                   </div>
                   <div>
                     <p className="font-medium">Offline Data</p>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-muted-foreground text-sm">
                       {metrics.offlineDataCount} items stored locally
                     </p>
                   </div>
@@ -426,12 +426,12 @@ export function PWADashboard() {
 
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div className="flex items-center gap-2">
-                  <Upload className="h-4 w-4 text-muted-foreground" />
+                  <Upload className="text-muted-foreground h-4 w-4" />
                   <span className="text-muted-foreground">Pending Syncs:</span>
                   <span className="font-medium">{metrics.pendingSyncs}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Clock className="h-4 w-4 text-muted-foreground" />
+                  <Clock className="text-muted-foreground h-4 w-4" />
                   <span className="text-muted-foreground">Last Sync:</span>
                   <span className="font-medium">
                     {metrics.lastSyncTime
@@ -451,11 +451,11 @@ export function PWADashboard() {
             </div>
 
             {/* Network Info */}
-            <div className="p-4 bg-muted/50 rounded-lg space-y-3">
+            <div className="bg-muted/50 space-y-3 rounded-lg p-4">
               <div className="flex items-center gap-3">
                 <div
                   className={cn(
-                    "p-2 rounded-lg",
+                    "rounded-lg p-2",
                     isOnline
                       ? "bg-green-100 dark:bg-green-900"
                       : "bg-red-100 dark:bg-red-900"
@@ -469,7 +469,7 @@ export function PWADashboard() {
                 </div>
                 <div>
                   <p className="font-medium">Network Status</p>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-muted-foreground text-sm">
                     {isOnline ? "Connected to the internet" : "Working offline"}
                   </p>
                 </div>
@@ -504,12 +504,12 @@ export function PWADashboard() {
           {/* Notifications Tab */}
           <TabsContent value="notifications" className="space-y-6">
             {/* Notification Status */}
-            <div className="p-4 bg-muted/50 rounded-lg space-y-4">
+            <div className="bg-muted/50 space-y-4 rounded-lg p-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div
                     className={cn(
-                      "p-2 rounded-lg",
+                      "rounded-lg p-2",
                       hasNotificationPermission
                         ? "bg-green-100 dark:bg-green-900"
                         : "bg-gray-100 dark:bg-gray-800"
@@ -523,7 +523,7 @@ export function PWADashboard() {
                   </div>
                   <div>
                     <p className="font-medium">Push Notifications</p>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-muted-foreground text-sm">
                       {hasNotificationPermission
                         ? "You will receive security alerts and updates"
                         : "Enable to get notified about security issues"}
@@ -541,15 +541,15 @@ export function PWADashboard() {
 
             {/* Test Notification */}
             {hasNotificationPermission && (
-              <div className="p-4 bg-muted/50 rounded-lg">
+              <div className="bg-muted/50 rounded-lg p-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="p-2 bg-blue-100 dark:bg-blue-900 rounded-lg">
+                    <div className="rounded-lg bg-blue-100 p-2 dark:bg-blue-900">
                       <TestTube className="h-5 w-5 text-blue-600" />
                     </div>
                     <div>
                       <p className="font-medium">Test Notification</p>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-muted-foreground text-sm">
                         Send a test notification to verify setup
                       </p>
                     </div>
@@ -561,7 +561,7 @@ export function PWADashboard() {
                     onClick={handleTestNotification}
                     disabled={isSendingTest}
                   >
-                    <Send className="h-4 w-4 mr-1" />
+                    <Send className="mr-1 h-4 w-4" />
                     {isSendingTest ? "Sending..." : "Send Test"}
                   </Button>
                 </div>
@@ -594,10 +594,10 @@ export function PWADashboard() {
           {/* Settings Tab */}
           <TabsContent value="settings" className="space-y-6">
             {/* Installation */}
-            <div className="p-4 bg-muted/50 rounded-lg space-y-4">
+            <div className="bg-muted/50 space-y-4 rounded-lg p-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-blue-100 dark:bg-blue-900 rounded-lg">
+                  <div className="rounded-lg bg-blue-100 p-2 dark:bg-blue-900">
                     {isInstalled ? (
                       <Smartphone className="h-5 w-5 text-blue-600" />
                     ) : (
@@ -608,7 +608,7 @@ export function PWADashboard() {
                     <p className="font-medium">
                       {isInstalled ? "App Installed" : "Install App"}
                     </p>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-muted-foreground text-sm">
                       {isInstalled
                         ? "Running in standalone mode"
                         : "Add to home screen for the best experience"}
@@ -618,7 +618,7 @@ export function PWADashboard() {
 
                 {!isInstalled && isInstallable && (
                   <Button onClick={handleInstall}>
-                    <Download className="h-4 w-4 mr-1" />
+                    <Download className="mr-1 h-4 w-4" />
                     Install
                   </Button>
                 )}
@@ -628,7 +628,7 @@ export function PWADashboard() {
                     variant="secondary"
                     className="bg-green-100 text-green-800"
                   >
-                    <CheckCircle2 className="h-3 w-3 mr-1" />
+                    <CheckCircle2 className="mr-1 h-3 w-3" />
                     Installed
                   </Badge>
                 )}
@@ -637,12 +637,12 @@ export function PWADashboard() {
 
             {/* Update */}
             {status.serviceWorkerReady && (
-              <div className="p-4 bg-muted/50 rounded-lg">
+              <div className="bg-muted/50 rounded-lg p-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <div
                       className={cn(
-                        "p-2 rounded-lg",
+                        "rounded-lg p-2",
                         isUpdateAvailable
                           ? "bg-orange-100 dark:bg-orange-900"
                           : "bg-green-100 dark:bg-green-900"
@@ -659,7 +659,7 @@ export function PWADashboard() {
                     </div>
                     <div>
                       <p className="font-medium">App Updates</p>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-muted-foreground text-sm">
                         {isUpdateAvailable
                           ? "A new version is available"
                           : "You have the latest version"}
@@ -672,7 +672,7 @@ export function PWADashboard() {
                     size="sm"
                     onClick={updateApp}
                   >
-                    <RefreshCw className="h-4 w-4 mr-1" />
+                    <RefreshCw className="mr-1 h-4 w-4" />
                     {isUpdateAvailable ? "Update Now" : "Check"}
                   </Button>
                 </div>
@@ -680,12 +680,12 @@ export function PWADashboard() {
             )}
 
             {/* Background Sync */}
-            <div className="p-4 bg-muted/50 rounded-lg">
+            <div className="bg-muted/50 rounded-lg p-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div
                     className={cn(
-                      "p-2 rounded-lg",
+                      "rounded-lg p-2",
                       status.backgroundSyncSupported
                         ? "bg-green-100 dark:bg-green-900"
                         : "bg-gray-100 dark:bg-gray-800"
@@ -702,7 +702,7 @@ export function PWADashboard() {
                   </div>
                   <div>
                     <p className="font-medium">Background Sync</p>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-muted-foreground text-sm">
                       {status.backgroundSyncSupported
                         ? "Changes sync automatically when online"
                         : "Not supported in this browser"}
@@ -756,9 +756,9 @@ function StatusCard({
   };
 
   return (
-    <div className={cn("p-3 rounded-lg border", statusColors[status])}>
-      <Icon className={cn("h-5 w-5 mb-2", iconColors[status])} />
-      <p className="text-xs text-muted-foreground">{label}</p>
+    <div className={cn("rounded-lg border p-3", statusColors[status])}>
+      <Icon className={cn("mb-2 h-5 w-5", iconColors[status])} />
+      <p className="text-muted-foreground text-xs">{label}</p>
       <p className="text-sm font-medium">{value}</p>
     </div>
   );
@@ -787,7 +787,7 @@ function ActionButton({
     <button
       onClick={onClick}
       className={cn(
-        "flex flex-col items-center gap-2 p-4 rounded-lg transition-colors",
+        "flex flex-col items-center gap-2 rounded-lg p-4 transition-colors",
         variantStyles[variant]
       )}
     >
@@ -807,7 +807,7 @@ function CapabilityBadge({
   return (
     <div
       className={cn(
-        "flex items-center gap-2 px-3 py-2 rounded-lg text-xs",
+        "flex items-center gap-2 rounded-lg px-3 py-2 text-xs",
         enabled
           ? "bg-green-50 text-green-700 dark:bg-green-900/20 dark:text-green-300"
           : "bg-gray-50 text-gray-500 dark:bg-gray-800/50 dark:text-gray-400"
@@ -833,10 +833,10 @@ function NotificationTypeRow({
   readonly enabled: boolean;
 }) {
   return (
-    <div className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
+    <div className="bg-muted/30 flex items-center justify-between rounded-lg p-3">
       <div>
         <p className="text-sm font-medium">{label}</p>
-        <p className="text-xs text-muted-foreground">{description}</p>
+        <p className="text-muted-foreground text-xs">{description}</p>
       </div>
       <Switch checked={enabled} disabled />
     </div>

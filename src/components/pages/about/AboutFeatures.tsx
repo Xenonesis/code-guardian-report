@@ -68,9 +68,9 @@ export const AboutFeatures = () => {
   return (
     <div className="relative py-16 sm:py-20">
       {/* Background Elements */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-full blur-3xl float-animation"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 rounded-full blur-2xl float-animation delay-2s"></div>
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="float-animation absolute top-1/4 left-1/4 h-64 w-64 rounded-full bg-gradient-to-r from-blue-500/10 to-purple-500/10 blur-3xl"></div>
+        <div className="float-animation delay-2s absolute right-1/4 bottom-1/4 h-48 w-48 rounded-full bg-gradient-to-r from-emerald-500/10 to-teal-500/10 blur-2xl"></div>
       </div>
 
       <div className="relative z-10">

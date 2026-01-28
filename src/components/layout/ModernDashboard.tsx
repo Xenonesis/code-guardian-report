@@ -44,18 +44,18 @@ export const ModernDashboard: React.FC<ModernDashboardProps> = ({
   return (
     <div className={`space-y-8 ${className}`}>
       {/* Header Section */}
-      <div className="text-center space-y-4">
-        <h2 className="text-3xl sm:text-4xl font-bold gradient-text-blue">
+      <div className="space-y-4 text-center">
+        <h2 className="gradient-text-blue text-3xl font-bold sm:text-4xl">
           Analysis Dashboard
         </h2>
-        <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+        <p className="mx-auto max-w-2xl text-slate-600 dark:text-slate-400">
           Comprehensive overview of your code analysis results with AI-powered
           insights
         </p>
       </div>
 
       {/* Key Metrics Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
         <MetricsCard
           title="Total Issues"
           value={metrics.totalIssues}
@@ -106,7 +106,7 @@ export const ModernDashboard: React.FC<ModernDashboardProps> = ({
       </div>
 
       {/* Score Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <MetricsCard
           title="Security Score"
           value={`${metrics.securityScore}%`}
@@ -137,7 +137,7 @@ export const ModernDashboard: React.FC<ModernDashboardProps> = ({
       </div>
 
       {/* Detailed Analysis Cards */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         {/* Issue Breakdown */}
         <EnhancedCard
           variant="modern"
@@ -155,9 +155,9 @@ export const ModernDashboard: React.FC<ModernDashboardProps> = ({
           </EnhancedCardHeader>
           <EnhancedCardContent>
             <div className="space-y-4">
-              <div className="flex items-center justify-between p-4 bg-red-50 dark:bg-red-900/20 rounded-xl">
+              <div className="flex items-center justify-between rounded-xl bg-red-50 p-4 dark:bg-red-900/20">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-red-100 dark:bg-red-900/40 rounded-lg">
+                  <div className="rounded-lg bg-red-100 p-2 dark:bg-red-900/40">
                     <AlertTriangle className="h-5 w-5 text-red-600 dark:text-red-400" />
                   </div>
                   <div>
@@ -174,9 +174,9 @@ export const ModernDashboard: React.FC<ModernDashboardProps> = ({
                 </span>
               </div>
 
-              <div className="flex items-center justify-between p-4 bg-orange-50 dark:bg-orange-900/20 rounded-xl">
+              <div className="flex items-center justify-between rounded-xl bg-orange-50 p-4 dark:bg-orange-900/20">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-orange-100 dark:bg-orange-900/40 rounded-lg">
+                  <div className="rounded-lg bg-orange-100 p-2 dark:bg-orange-900/40">
                     <Bug className="h-5 w-5 text-orange-600 dark:text-orange-400" />
                   </div>
                   <div>
@@ -193,9 +193,9 @@ export const ModernDashboard: React.FC<ModernDashboardProps> = ({
                 </span>
               </div>
 
-              <div className="flex items-center justify-between p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl">
+              <div className="flex items-center justify-between rounded-xl bg-blue-50 p-4 dark:bg-blue-900/20">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-blue-100 dark:bg-blue-900/40 rounded-lg">
+                  <div className="rounded-lg bg-blue-100 p-2 dark:bg-blue-900/40">
                     <CheckCircle className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                   </div>
                   <div>
@@ -234,7 +234,7 @@ export const ModernDashboard: React.FC<ModernDashboardProps> = ({
             <div className="space-y-6">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-emerald-100 dark:bg-emerald-900/40 rounded-lg">
+                  <div className="rounded-lg bg-emerald-100 p-2 dark:bg-emerald-900/40">
                     <Zap className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
                   </div>
                   <div>
@@ -244,14 +244,14 @@ export const ModernDashboard: React.FC<ModernDashboardProps> = ({
                     </p>
                   </div>
                 </div>
-                <span className="text-xl font-bold gradient-text-green">
+                <span className="gradient-text-green text-xl font-bold">
                   2.4K
                 </span>
               </div>
 
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-purple-100 dark:bg-purple-900/40 rounded-lg">
+                  <div className="rounded-lg bg-purple-100 p-2 dark:bg-purple-900/40">
                     <Activity className="h-5 w-5 text-purple-600 dark:text-purple-400" />
                   </div>
                   <div>
@@ -261,14 +261,14 @@ export const ModernDashboard: React.FC<ModernDashboardProps> = ({
                     </p>
                   </div>
                 </div>
-                <span className="text-xl font-bold gradient-text-purple">
+                <span className="gradient-text-purple text-xl font-bold">
                   128MB
                 </span>
               </div>
 
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-blue-100 dark:bg-blue-900/40 rounded-lg">
+                  <div className="rounded-lg bg-blue-100 p-2 dark:bg-blue-900/40">
                     <TrendingUp className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                   </div>
                   <div>
@@ -278,7 +278,7 @@ export const ModernDashboard: React.FC<ModernDashboardProps> = ({
                     </p>
                   </div>
                 </div>
-                <span className="text-xl font-bold gradient-text-blue">
+                <span className="gradient-text-blue text-xl font-bold">
                   94%
                 </span>
               </div>

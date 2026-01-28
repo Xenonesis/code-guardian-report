@@ -6,7 +6,5 @@ import HomeSection from "@/components/pages/home/HomeSection";
 export default function HomePageClient() {
   const { theme } = useDarkMode();
 
-  return (
-    <HomeSection theme={theme} />
-  );
+  return <HomeSection theme={theme} />;
 }

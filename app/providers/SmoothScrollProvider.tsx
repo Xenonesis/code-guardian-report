@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  useEffect,
-  createContext,
-  useRef as useReactRef,
-} from "react";
+import { useEffect, createContext, useRef as useReactRef } from "react";
 import type Lenis from "lenis";
 
 // Dynamically import Lenis only on client

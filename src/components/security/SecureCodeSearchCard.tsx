@@ -168,13 +168,13 @@ export const SecureCodeSearchCard: React.FC<SecureCodeSearchCardProps> = ({
 
   return (
     <Card
-      className={`bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-900/20 border-blue-200 dark:border-blue-800 ${className}`}
+      className={`border-blue-200 bg-gradient-to-br from-blue-50 to-indigo-50 dark:border-blue-800 dark:from-blue-950/20 dark:to-indigo-900/20 ${className}`}
     >
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Search className="h-5 w-5 text-blue-600" />
           Secure Code Search Engine
-          <Badge variant="outline" className="text-blue-600 border-blue-300">
+          <Badge variant="outline" className="border-blue-300 text-blue-600">
             Pattern Library
           </Badge>
         </CardTitle>
@@ -187,8 +187,8 @@ export const SecureCodeSearchCard: React.FC<SecureCodeSearchCardProps> = ({
         {/* Search Form */}
         <form onSubmit={handleSearch} className="space-y-4">
           <div className="flex gap-2">
-            <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
+            <div className="relative flex-1">
+              <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform text-slate-400" />
               <Input
                 placeholder="Search for secure code patterns, vulnerabilities, or implementations..."
                 value={searchQuery}
@@ -211,7 +211,7 @@ export const SecureCodeSearchCard: React.FC<SecureCodeSearchCardProps> = ({
 
           {/* Filters */}
           {showFilters && (
-            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
+            <div className="grid grid-cols-1 gap-4 rounded-lg bg-slate-50 p-4 md:grid-cols-3 lg:grid-cols-5 dark:bg-slate-800">
               <Select
                 value={filters.language || "all"}
                 onValueChange={(value) => updateFilter("language", value)}
@@ -317,20 +317,20 @@ export const SecureCodeSearchCard: React.FC<SecureCodeSearchCardProps> = ({
                   <CardHeader className="pb-3">
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-2">
+                        <div className="mb-2 flex items-center gap-2">
                           <Badge
                             className={getSecurityLevelColor(
                               result.snippet.securityLevel
                             )}
                           >
                             {result.snippet.securityLevel === "secure" && (
-                              <Shield className="h-3 w-3 mr-1" />
+                              <Shield className="mr-1 h-3 w-3" />
                             )}
                             {result.snippet.securityLevel === "insecure" && (
-                              <AlertTriangle className="h-3 w-3 mr-1" />
+                              <AlertTriangle className="mr-1 h-3 w-3" />
                             )}
                             {result.snippet.securityLevel === "improved" && (
-                              <Lightbulb className="h-3 w-3 mr-1" />
+                              <Lightbulb className="mr-1 h-3 w-3" />
                             )}
                             {result.snippet.securityLevel}
                           </Badge>
@@ -390,7 +390,7 @@ export const SecureCodeSearchCard: React.FC<SecureCodeSearchCardProps> = ({
                       </TabsList>
 
                       <TabsContent value="code" className="space-y-2">
-                        <pre className="bg-slate-900 text-slate-100 p-4 rounded-lg overflow-x-auto text-sm">
+                        <pre className="overflow-x-auto rounded-lg bg-slate-900 p-4 text-sm text-slate-100">
                           <code
                             dangerouslySetInnerHTML={{
                               __html: result.highlightedCode,
@@ -405,7 +405,7 @@ export const SecureCodeSearchCard: React.FC<SecureCodeSearchCardProps> = ({
 
                       <TabsContent value="explanation" className="space-y-4">
                         <div>
-                          <h4 className="font-semibold mb-2 flex items-center gap-2">
+                          <h4 className="mb-2 flex items-center gap-2 font-semibold">
                             <BookOpen className="h-4 w-4" />
                             Security Explanation
                           </h4>
@@ -417,7 +417,7 @@ export const SecureCodeSearchCard: React.FC<SecureCodeSearchCardProps> = ({
                         {result.snippet.alternatives &&
                           result.snippet.alternatives.length > 0 && (
                             <div>
-                              <h4 className="font-semibold mb-2">
+                              <h4 className="mb-2 font-semibold">
                                 Alternative Approaches
                               </h4>
                               <div className="flex flex-wrap gap-2">
@@ -436,9 +436,9 @@ export const SecureCodeSearchCard: React.FC<SecureCodeSearchCardProps> = ({
                       </TabsContent>
 
                       <TabsContent value="details" className="space-y-4">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                           <div>
-                            <h4 className="font-semibold mb-2">
+                            <h4 className="mb-2 font-semibold">
                               Security Information
                             </h4>
                             <div className="space-y-2 text-sm">
@@ -468,7 +468,7 @@ export const SecureCodeSearchCard: React.FC<SecureCodeSearchCardProps> = ({
                           </div>
 
                           <div>
-                            <h4 className="font-semibold mb-2">Metadata</h4>
+                            <h4 className="mb-2 font-semibold">Metadata</h4>
                             <div className="space-y-2 text-sm">
                               <div className="flex items-center gap-2">
                                 <Clock className="h-3 w-3" />
@@ -487,7 +487,7 @@ export const SecureCodeSearchCard: React.FC<SecureCodeSearchCardProps> = ({
 
                         {result.snippet.tags.length > 0 && (
                           <div>
-                            <h4 className="font-semibold mb-2">Tags</h4>
+                            <h4 className="mb-2 font-semibold">Tags</h4>
                             <div className="flex flex-wrap gap-2">
                               {result.snippet.tags.map((tag, i) => (
                                 <Badge
@@ -515,9 +515,9 @@ export const SecureCodeSearchCard: React.FC<SecureCodeSearchCardProps> = ({
           searchResults &&
           searchResults.length === 0 &&
           !isLoading && (
-            <div className="text-center py-8">
-              <Search className="h-12 w-12 text-slate-400 mx-auto mb-4" />
-              <p className="text-slate-600 dark:text-slate-400 mb-2">
+            <div className="py-8 text-center">
+              <Search className="mx-auto mb-4 h-12 w-12 text-slate-400" />
+              <p className="mb-2 text-slate-600 dark:text-slate-400">
                 No secure code patterns found for "{searchQuery}"
               </p>
               <p className="text-sm text-slate-500 dark:text-slate-500">
@@ -528,9 +528,9 @@ export const SecureCodeSearchCard: React.FC<SecureCodeSearchCardProps> = ({
 
         {/* Initial State */}
         {!searchQuery && (!searchResults || searchResults.length === 0) && (
-          <div className="text-center py-8">
-            <BookOpen className="h-12 w-12 text-slate-400 mx-auto mb-4" />
-            <p className="text-slate-600 dark:text-slate-400 mb-2">
+          <div className="py-8 text-center">
+            <BookOpen className="mx-auto mb-4 h-12 w-12 text-slate-400" />
+            <p className="mb-2 text-slate-600 dark:text-slate-400">
               Search for secure code patterns and implementations
             </p>
             <p className="text-sm text-slate-500 dark:text-slate-500">

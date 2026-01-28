@@ -26,7 +26,7 @@ const MeetDeveloperSection = () => {
     {
       name: "Aditya Kumar Tiwari",
       role: "Team Leader & Security Expert",
-      icon: <Crown className="w-5 h-5" />,
+      icon: <Crown className="h-5 w-5" />,
       description:
         "Cybersecurity expert and lead developer specializing in security architecture and vulnerability analysis",
       expertise: [
@@ -41,7 +41,7 @@ const MeetDeveloperSection = () => {
     {
       name: "Mohammad Ehshan",
       role: "Backend Developer",
-      icon: <Code className="w-5 h-5" />,
+      icon: <Code className="h-5 w-5" />,
       description:
         "Backend development specialist focused on API design and server-side architecture",
       expertise: [
@@ -56,7 +56,7 @@ const MeetDeveloperSection = () => {
     {
       name: "Vishupal Goyal",
       role: "Frontend Developer",
-      icon: <User className="w-5 h-5" />,
+      icon: <User className="h-5 w-5" />,
       description: "Frontend development and user experience design specialist",
       expertise: [
         "Frontend Development",
@@ -70,7 +70,7 @@ const MeetDeveloperSection = () => {
     {
       name: "Aayush Tonk",
       role: "Full-Stack Developer",
-      icon: <Zap className="w-5 h-5" />,
+      icon: <Zap className="h-5 w-5" />,
       description: "Full-stack development and system architecture specialist",
       expertise: [
         "Full-Stack Development",
@@ -84,7 +84,7 @@ const MeetDeveloperSection = () => {
     {
       name: "Muneer Ali",
       role: "Developer",
-      icon: <Star className="w-5 h-5" />,
+      icon: <Star className="h-5 w-5" />,
       description: "Developer contributing to various aspects of the project",
       expertise: [
         "Software Development",
@@ -98,24 +98,24 @@ const MeetDeveloperSection = () => {
 
   const projectHighlights = [
     {
-      icon: <Trophy className="w-5 h-5" />,
+      icon: <Trophy className="h-5 w-5" />,
       title: "Latest v3.3.0 Release",
       description: "Enhanced with persistent storage and advanced analytics",
     },
     {
-      icon: <Zap className="w-5 h-5" />,
+      icon: <Zap className="h-5 w-5" />,
       title: "AI-Powered Innovation",
       description:
         "Advanced GPT-4 & Claude integration with intelligent key management",
     },
     {
-      icon: <Star className="w-5 h-5" />,
+      icon: <Star className="h-5 w-5" />,
       title: "Developer-Centric",
       description:
         "Persistent results with cross-tab synchronization and export capabilities",
     },
     {
-      icon: <Globe className="w-5 h-5" />,
+      icon: <Globe className="h-5 w-5" />,
       title: "Production Ready",
       description:
         "Enterprise-grade security analysis with comprehensive reporting",
@@ -142,25 +142,25 @@ const MeetDeveloperSection = () => {
   ];
 
   return (
-    <section className="py-16 bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
+    <section className="bg-gradient-to-br from-slate-50 to-blue-50 py-16 dark:from-slate-900 dark:to-slate-800">
       <div className="container mx-auto px-4">
-        <div className="max-w-6xl mx-auto">
+        <div className="mx-auto max-w-6xl">
           {/* Section Header */}
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-4">
+          <div className="mb-12 text-center">
+            <h2 className="mb-4 text-3xl font-bold text-slate-900 sm:text-4xl dark:text-white">
               Meet the Development Team
             </h2>
-            <p className="text-lg text-slate-600 dark:text-slate-400 max-w-3xl mx-auto mb-6">
+            <p className="mx-auto mb-6 max-w-3xl text-lg text-slate-600 dark:text-slate-400">
               Code Guardian is proudly developed by Team Blitz - a passionate
               group of developers and security experts committed to making code
               security accessible to everyone.
             </p>
 
             {/* Team Blitz Card */}
-            <Card className="max-w-2xl mx-auto mb-8 bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0">
+            <Card className="mx-auto mb-8 max-w-2xl border-0 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
               <CardHeader>
-                <div className="flex items-center justify-center gap-3 mb-2">
-                  <Users className="w-6 h-6" />
+                <div className="mb-2 flex items-center justify-center gap-3">
+                  <Users className="h-6 w-6" />
                   <CardTitle className="text-2xl">Team Blitz</CardTitle>
                 </div>
                 <CardDescription className="text-blue-100">
@@ -169,17 +169,17 @@ const MeetDeveloperSection = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
                   <Button
                     variant="secondary"
-                    className="bg-white/20 hover:bg-white/30 text-white border-white/30"
+                    className="border-white/30 bg-white/20 text-white hover:bg-white/30"
                     onClick={() =>
                       window.open("https://teamblitz.netlify.app/", "_blank")
                     }
                   >
-                    <Globe className="w-4 h-4 mr-2" />
+                    <Globe className="mr-2 h-4 w-4" />
                     Visit Team Website
-                    <ExternalLink className="w-4 h-4 ml-2" />
+                    <ExternalLink className="ml-2 h-4 w-4" />
                   </Button>
                   <Badge variant="secondary" className="bg-white/20 text-white">
                     Hackathon Winners
@@ -190,16 +190,16 @@ const MeetDeveloperSection = () => {
           </div>
 
           {/* Project Highlights */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          <div className="mb-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {projectHighlights.map((highlight, index) => (
               <Card key={index} className="text-center">
                 <CardContent className="p-6">
-                  <div className="flex justify-center mb-3">
-                    <div className="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-lg text-blue-600 dark:text-blue-400">
+                  <div className="mb-3 flex justify-center">
+                    <div className="rounded-lg bg-blue-100 p-3 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400">
                       {highlight.icon}
                     </div>
                   </div>
-                  <h3 className="font-semibold text-slate-900 dark:text-white mb-2">
+                  <h3 className="mb-2 font-semibold text-slate-900 dark:text-white">
                     {highlight.title}
                   </h3>
                   <p className="text-sm text-slate-600 dark:text-slate-400">
@@ -212,34 +212,34 @@ const MeetDeveloperSection = () => {
 
           {/* Team Members */}
           <div className="mb-12">
-            <h3 className="text-2xl font-bold text-slate-900 dark:text-white text-center mb-8">
+            <h3 className="mb-8 text-center text-2xl font-bold text-slate-900 dark:text-white">
               Our Team Members
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               {teamMembers
                 .filter((member) => member.name === "Aditya Kumar Tiwari")
                 .map((member, index) => (
                   <Card
                     key={index}
-                    className="hover:shadow-lg transition-shadow"
+                    className="transition-shadow hover:shadow-lg"
                   >
                     <CardHeader>
                       <div className="flex items-start gap-4">
-                        <div className="p-3 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg text-white">
+                        <div className="rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 p-3 text-white">
                           {member.icon}
                         </div>
                         <div className="flex-1">
                           <CardTitle className="text-lg">
                             {member.name}
                           </CardTitle>
-                          <CardDescription className="text-blue-600 dark:text-blue-400 font-medium">
+                          <CardDescription className="font-medium text-blue-600 dark:text-blue-400">
                             {member.role}
                           </CardDescription>
                         </div>
                       </div>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-slate-600 dark:text-slate-400 mb-4">
+                      <p className="mb-4 text-slate-600 dark:text-slate-400">
                         {member.description}
                       </p>
                       <div className="flex flex-wrap gap-2">
@@ -263,7 +263,7 @@ const MeetDeveloperSection = () => {
           <Card className="mb-8">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <Code className="w-5 h-5" />
+                <Code className="h-5 w-5" />
                 Project Details
               </CardTitle>{" "}
               <CardDescription>
@@ -275,12 +275,12 @@ const MeetDeveloperSection = () => {
             <CardContent className="space-y-6">
               {/* USP */}
               <div>
-                <h4 className="font-semibold text-slate-900 dark:text-white mb-3">
+                <h4 className="mb-3 font-semibold text-slate-900 dark:text-white">
                   🚀 Unique Selling Proposition (USP)
                 </h4>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="p-4 bg-blue-50 dark:bg-blue-950/30 rounded-lg">
-                    <h5 className="font-medium text-blue-900 dark:text-blue-100 mb-2">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+                  <div className="rounded-lg bg-blue-50 p-4 dark:bg-blue-950/30">
+                    <h5 className="mb-2 font-medium text-blue-900 dark:text-blue-100">
                       Persistent Intelligence
                     </h5>
                     <p className="text-sm text-blue-800 dark:text-blue-200">
@@ -288,8 +288,8 @@ const MeetDeveloperSection = () => {
                       intelligent history management for continuous analysis
                     </p>
                   </div>
-                  <div className="p-4 bg-green-50 dark:bg-green-950/30 rounded-lg">
-                    <h5 className="font-medium text-green-900 dark:text-green-100 mb-2">
+                  <div className="rounded-lg bg-green-50 p-4 dark:bg-green-950/30">
+                    <h5 className="mb-2 font-medium text-green-900 dark:text-green-100">
                       Enhanced AI Integration
                     </h5>
                     <p className="text-sm text-green-800 dark:text-green-200">
@@ -297,8 +297,8 @@ const MeetDeveloperSection = () => {
                       integration for superior vulnerability detection
                     </p>
                   </div>
-                  <div className="p-4 bg-purple-50 dark:bg-purple-950/30 rounded-lg">
-                    <h5 className="font-medium text-purple-900 dark:text-purple-100 mb-2">
+                  <div className="rounded-lg bg-purple-50 p-4 dark:bg-purple-950/30">
+                    <h5 className="mb-2 font-medium text-purple-900 dark:text-purple-100">
                       Performance Analytics
                     </h5>
                     <p className="text-sm text-purple-800 dark:text-purple-200">
@@ -311,7 +311,7 @@ const MeetDeveloperSection = () => {
 
               {/* Technologies */}
               <div>
-                <h4 className="font-semibold text-slate-900 dark:text-white mb-3">
+                <h4 className="mb-3 font-semibold text-slate-900 dark:text-white">
                   🛠️ Technologies Used
                 </h4>
                 <div className="flex flex-wrap gap-2">
@@ -325,12 +325,12 @@ const MeetDeveloperSection = () => {
 
               {/* Impact */}
               <div>
-                <h4 className="font-semibold text-slate-900 dark:text-white mb-3">
+                <h4 className="mb-3 font-semibold text-slate-900 dark:text-white">
                   💡 Why It Matters
                 </h4>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                   <div className="flex items-start gap-3">
-                    <Shield className="w-5 h-5 text-red-500 mt-0.5" />
+                    <Shield className="mt-0.5 h-5 w-5 text-red-500" />
                     <div>
                       <h5 className="font-medium text-slate-900 dark:text-white">
                         Persistent Security
@@ -342,7 +342,7 @@ const MeetDeveloperSection = () => {
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <Zap className="w-5 h-5 text-yellow-500 mt-0.5" />
+                    <Zap className="mt-0.5 h-5 w-5 text-yellow-500" />
                     <div>
                       <h5 className="font-medium text-slate-900 dark:text-white">
                         Enhanced Productivity
@@ -354,7 +354,7 @@ const MeetDeveloperSection = () => {
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <Star className="w-5 h-5 text-blue-500 mt-0.5" />
+                    <Star className="mt-0.5 h-5 w-5 text-blue-500" />
                     <div>
                       <h5 className="font-medium text-slate-900 dark:text-white">
                         Enterprise Features
@@ -372,10 +372,10 @@ const MeetDeveloperSection = () => {
 
           {/* Call to Action */}
           <div className="text-center">
-            <Card className="bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0">
+            <Card className="border-0 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
               <CardContent className="p-8">
-                <h3 className="text-2xl font-bold mb-4">Join Our Mission</h3>
-                <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
+                <h3 className="mb-4 text-2xl font-bold">Join Our Mission</h3>
+                <p className="mx-auto mb-6 max-w-2xl text-blue-100">
                   Help us make code security accessible to developers worldwide.
                   Visit our team website to learn more about our projects and
                   initiatives.
@@ -388,9 +388,9 @@ const MeetDeveloperSection = () => {
                     window.open("https://teamblitz.netlify.app/", "_blank")
                   }
                 >
-                  <Users className="w-5 h-5 mr-2" />
+                  <Users className="mr-2 h-5 w-5" />
                   Visit Team Blitz
-                  <ExternalLink className="w-4 h-4 ml-2" />
+                  <ExternalLink className="ml-2 h-4 w-4" />
                 </Button>
               </CardContent>
             </Card>

@@ -203,7 +203,7 @@ export const MultiLanguageSupportDisplay: React.FC<
         <CardHeader>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <Languages className="w-8 h-8 text-primary" />
+              <Languages className="text-primary h-8 w-8" />
               <div>
                 <CardTitle className="text-2xl">
                   Multi-Language Security Analysis
@@ -214,17 +214,17 @@ export const MultiLanguageSupportDisplay: React.FC<
                 </CardDescription>
               </div>
             </div>
-            <Badge variant="secondary" className="text-lg px-4 py-2">
-              <TrendingUp className="w-4 h-4 mr-2" />
+            <Badge variant="secondary" className="px-4 py-2 text-lg">
+              <TrendingUp className="mr-2 h-4 w-4" />
               3-5x Market Reach
             </Badge>
           </div>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-blue-50 dark:bg-blue-950 p-4 rounded-lg">
-              <div className="flex items-center gap-2 mb-2">
-                <Code2 className="w-5 h-5 text-blue-600" />
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+            <div className="rounded-lg bg-blue-50 p-4 dark:bg-blue-950">
+              <div className="mb-2 flex items-center gap-2">
+                <Code2 className="h-5 w-5 text-blue-600" />
                 <span className="font-semibold text-blue-900 dark:text-blue-100">
                   Supported Languages
                 </span>
@@ -232,34 +232,34 @@ export const MultiLanguageSupportDisplay: React.FC<
               <p className="text-3xl font-bold text-blue-600">
                 {SUPPORTED_LANGUAGES.length}
               </p>
-              <p className="text-sm text-blue-700 dark:text-blue-300 mt-1">
+              <p className="mt-1 text-sm text-blue-700 dark:text-blue-300">
                 JavaScript, TypeScript, Python, Java, C++, C, Go, Rust, PHP, C#,
                 Ruby, Swift, Kotlin
               </p>
             </div>
 
-            <div className="bg-green-50 dark:bg-green-950 p-4 rounded-lg">
-              <div className="flex items-center gap-2 mb-2">
-                <Shield className="w-5 h-5 text-green-600" />
+            <div className="rounded-lg bg-green-50 p-4 dark:bg-green-950">
+              <div className="mb-2 flex items-center gap-2">
+                <Shield className="h-5 w-5 text-green-600" />
                 <span className="font-semibold text-green-900 dark:text-green-100">
                   Security Rules
                 </span>
               </div>
               <p className="text-3xl font-bold text-green-600">170+</p>
-              <p className="text-sm text-green-700 dark:text-green-300 mt-1">
+              <p className="mt-1 text-sm text-green-700 dark:text-green-300">
                 Language-specific vulnerability patterns
               </p>
             </div>
 
-            <div className="bg-purple-50 dark:bg-purple-950 p-4 rounded-lg">
-              <div className="flex items-center gap-2 mb-2">
-                <FileCode className="w-5 h-5 text-purple-600" />
+            <div className="rounded-lg bg-purple-50 p-4 dark:bg-purple-950">
+              <div className="mb-2 flex items-center gap-2">
+                <FileCode className="h-5 w-5 text-purple-600" />
                 <span className="font-semibold text-purple-900 dark:text-purple-100">
                   Files Analyzed
                 </span>
               </div>
               <p className="text-3xl font-bold text-purple-600">{totalFiles}</p>
-              <p className="text-sm text-purple-700 dark:text-purple-300 mt-1">
+              <p className="mt-1 text-sm text-purple-700 dark:text-purple-300">
                 {totalLines.toLocaleString()} lines of code scanned
               </p>
             </div>
@@ -271,7 +271,7 @@ export const MultiLanguageSupportDisplay: React.FC<
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Languages className="w-5 h-5" />
+            <Languages className="h-5 w-5" />
             Supported Programming Languages
           </CardTitle>
           <CardDescription>
@@ -279,7 +279,7 @@ export const MultiLanguageSupportDisplay: React.FC<
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
             {SUPPORTED_LANGUAGES.map((lang) => {
               const ruleCount = analyzer.getRuleCountForLanguage(
                 lang.name.toLowerCase() as any
@@ -291,15 +291,15 @@ export const MultiLanguageSupportDisplay: React.FC<
               return (
                 <Card
                   key={lang.name}
-                  className="hover:shadow-md transition-shadow"
+                  className="transition-shadow hover:shadow-md"
                 >
                   <CardContent className="p-4">
-                    <div className="flex items-start justify-between mb-3">
+                    <div className="mb-3 flex items-start justify-between">
                       <div className="flex items-center gap-3">
                         <span className="text-3xl">{lang.icon}</span>
                         <div>
-                          <h3 className="font-semibold text-lg">{lang.name}</h3>
-                          <p className="text-xs text-muted-foreground">
+                          <h3 className="text-lg font-semibold">{lang.name}</h3>
+                          <p className="text-muted-foreground text-xs">
                             {lang.ecosystem}
                           </p>
                         </div>
@@ -333,14 +333,14 @@ export const MultiLanguageSupportDisplay: React.FC<
 
                           {stats.securityIssues > 0 && (
                             <div className="flex items-center gap-2 text-sm text-orange-600 dark:text-orange-400">
-                              <AlertTriangle className="w-4 h-4" />
+                              <AlertTriangle className="h-4 w-4" />
                               <span>{stats.securityIssues} issues found</span>
                             </div>
                           )}
                         </>
                       )}
 
-                      <div className="flex flex-wrap gap-1 mt-2">
+                      <div className="mt-2 flex flex-wrap gap-1">
                         {lang.extensions.map((ext) => (
                           <Badge
                             key={ext}
@@ -365,7 +365,7 @@ export const MultiLanguageSupportDisplay: React.FC<
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Shield className="w-5 h-5" />
+              <Shield className="h-5 w-5" />
               Language-Specific Security Features
             </CardTitle>
             <CardDescription>
@@ -374,19 +374,19 @@ export const MultiLanguageSupportDisplay: React.FC<
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               {SECURITY_FEATURES.map((feature) => {
                 const Icon = feature.icon;
                 return (
                   <div
                     key={feature.title}
-                    className="border rounded-lg p-4 hover:bg-accent transition-colors"
+                    className="hover:bg-accent rounded-lg border p-4 transition-colors"
                   >
                     <div className="flex items-start gap-3">
-                      <Icon className="w-5 h-5 text-primary mt-1" />
+                      <Icon className="text-primary mt-1 h-5 w-5" />
                       <div className="flex-1">
-                        <h4 className="font-semibold mb-1">{feature.title}</h4>
-                        <p className="text-sm text-muted-foreground mb-2">
+                        <h4 className="mb-1 font-semibold">{feature.title}</h4>
+                        <p className="text-muted-foreground mb-2 text-sm">
                           {feature.description}
                         </p>
                         <div className="flex flex-wrap gap-1">
@@ -406,7 +406,7 @@ export const MultiLanguageSupportDisplay: React.FC<
                           )}
                         </div>
                       </div>
-                      <CheckCircle2 className="w-5 h-5 text-green-500" />
+                      <CheckCircle2 className="h-5 w-5 text-green-500" />
                     </div>
                   </div>
                 );
@@ -422,35 +422,35 @@ export const MultiLanguageSupportDisplay: React.FC<
           <CardTitle>Why Multi-Language Support Matters</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             <div>
-              <div className="flex items-center gap-2 mb-2">
-                <TrendingUp className="w-6 h-6 text-blue-600" />
+              <div className="mb-2 flex items-center gap-2">
+                <TrendingUp className="h-6 w-6 text-blue-600" />
                 <h4 className="font-semibold">Broader Market Appeal</h4>
               </div>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 Expand beyond web developers to backend, systems, and enterprise
                 developers
               </p>
             </div>
 
             <div>
-              <div className="flex items-center gap-2 mb-2">
-                <Shield className="w-6 h-6 text-green-600" />
+              <div className="mb-2 flex items-center gap-2">
+                <Shield className="h-6 w-6 text-green-600" />
                 <h4 className="font-semibold">Comprehensive Security</h4>
               </div>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 Language-specific vulnerability detection with tailored security
                 rules
               </p>
             </div>
 
             <div>
-              <div className="flex items-center gap-2 mb-2">
-                <Zap className="w-6 h-6 text-purple-600" />
+              <div className="mb-2 flex items-center gap-2">
+                <Zap className="h-6 w-6 text-purple-600" />
                 <h4 className="font-semibold">Faster Analysis</h4>
               </div>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 Optimized parsers and analyzers for each programming language
               </p>
             </div>

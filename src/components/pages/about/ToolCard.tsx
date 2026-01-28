@@ -49,18 +49,18 @@ export const ToolCard: React.FC<ToolCardProps> = ({
   if (viewMode === "list") {
     return (
       <Card
-        className="modern-card group relative overflow-hidden hover-float-subtle cursor-pointer transition-all duration-300"
+        className="modern-card group hover-float-subtle relative cursor-pointer overflow-hidden transition-all duration-300"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
         <div
-          className={`h-1 bg-gradient-to-r ${tool.gradient} group-hover:h-2 transition-all duration-300`}
+          className={`h-1 bg-gradient-to-r ${tool.gradient} transition-all duration-300 group-hover:h-2`}
         ></div>
 
         {tool.comingSoon && (
           <div className="absolute top-4 right-4 z-10">
-            <Badge className="bg-gradient-to-r from-purple-500 to-pink-500 text-white border-0 animate-pulse">
-              <Sparkles className="h-3 w-3 mr-1" />
+            <Badge className="animate-pulse border-0 bg-gradient-to-r from-purple-500 to-pink-500 text-white">
+              <Sparkles className="mr-1 h-3 w-3" />
               Coming Soon
             </Badge>
           </div>
@@ -71,15 +71,15 @@ export const ToolCard: React.FC<ToolCardProps> = ({
             {/* Icon and Basic Info */}
             <div className="flex items-center gap-4">
               <div
-                className={`p-3 rounded-xl bg-gradient-to-r ${tool.gradient} text-white shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300`}
+                className={`rounded-xl bg-gradient-to-r p-3 ${tool.gradient} text-white shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:rotate-3`}
               >
                 <ToolIcon className="h-6 w-6" />
               </div>
               <div>
-                <h4 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                <h4 className="text-xl font-bold text-slate-900 transition-colors group-hover:text-blue-600 dark:text-white dark:group-hover:text-blue-400">
                   {tool.name}
                 </h4>
-                <div className="flex items-center gap-2 mt-1">
+                <div className="mt-1 flex items-center gap-2">
                   <Badge variant="secondary" className="text-xs">
                     {tool.language}
                   </Badge>
@@ -91,7 +91,7 @@ export const ToolCard: React.FC<ToolCardProps> = ({
             </div>
 
             {/* Stats */}
-            <div className="flex items-center gap-6 ml-auto">
+            <div className="ml-auto flex items-center gap-6">
               <div className="flex items-center gap-1 text-amber-500">
                 <Star className="h-4 w-4 fill-current" />
                 <span className="text-sm font-medium">{tool.rating}</span>
@@ -102,7 +102,7 @@ export const ToolCard: React.FC<ToolCardProps> = ({
               </div>
               <button
                 onClick={() => setIsExpanded(!isExpanded)}
-                className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                className="rounded-lg p-2 transition-colors hover:bg-slate-100 dark:hover:bg-slate-800"
               >
                 {isExpanded ? (
                   <ChevronUp className="h-4 w-4" />
@@ -114,26 +114,26 @@ export const ToolCard: React.FC<ToolCardProps> = ({
           </div>
 
           {/* Description */}
-          <p className="text-slate-600 dark:text-slate-400 mt-4 leading-relaxed">
+          <p className="mt-4 leading-relaxed text-slate-600 dark:text-slate-400">
             {tool.description}
           </p>
 
           {/* Expandable Features */}
           {isExpanded && (
-            <div className="mt-6 pt-6 border-t border-slate-200 dark:border-slate-700 animate-fade-in">
-              <h5 className="font-semibold text-sm text-slate-900 dark:text-white mb-3">
+            <div className="animate-fade-in mt-6 border-t border-slate-200 pt-6 dark:border-slate-700">
+              <h5 className="mb-3 text-sm font-semibold text-slate-900 dark:text-white">
                 Key Features:
               </h5>
               <div className="grid grid-cols-2 gap-2">
                 {tool.features.map((feature, idx) => (
                   <div
                     key={idx}
-                    className="flex items-start gap-2 text-sm text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors duration-200 cursor-pointer group/feature"
+                    className="group/feature flex cursor-pointer items-start gap-2 text-sm text-slate-600 transition-colors duration-200 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200"
                   >
                     <div
-                      className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${tool.gradient} mt-2 flex-shrink-0 group-hover/feature:scale-125 transition-transform`}
+                      className={`h-1.5 w-1.5 rounded-full bg-gradient-to-r ${tool.gradient} mt-2 flex-shrink-0 transition-transform group-hover/feature:scale-125`}
                     ></div>
-                    <span className="leading-relaxed group-hover/feature:translate-x-1 transition-transform duration-200">
+                    <span className="leading-relaxed transition-transform duration-200 group-hover/feature:translate-x-1">
                       {feature}
                     </span>
                   </div>
@@ -148,42 +148,42 @@ export const ToolCard: React.FC<ToolCardProps> = ({
   // Grid view (default)
   return (
     <Card
-      className="group relative overflow-hidden cursor-pointer transition-all duration-500 hover:shadow-2xl hover:shadow-blue-500/10 dark:hover:shadow-blue-400/10 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-white/20 dark:border-slate-700/50 hover:border-blue-300/50 dark:hover:border-blue-600/50 hover:-translate-y-2 hover:scale-[1.02]"
+      className="group relative cursor-pointer overflow-hidden border border-white/20 bg-white/80 backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] hover:border-blue-300/50 hover:shadow-2xl hover:shadow-blue-500/10 dark:border-slate-700/50 dark:bg-slate-800/80 dark:hover:border-blue-600/50 dark:hover:shadow-blue-400/10"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Enhanced Gradient Top Border with Animation */}
       <div
-        className={`h-1 bg-gradient-to-r ${tool.gradient} group-hover:h-4 transition-all duration-500 relative overflow-hidden`}
+        className={`h-1 bg-gradient-to-r ${tool.gradient} relative overflow-hidden transition-all duration-500 group-hover:h-4`}
       >
         <div
-          className={`absolute inset-0 bg-gradient-to-r ${tool.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
+          className={`absolute inset-0 bg-gradient-to-r ${tool.gradient} opacity-0 transition-opacity duration-500 group-hover:opacity-100`}
         ></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+        <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-1000 group-hover:translate-x-full"></div>
       </div>
 
       {/* Coming Soon Badge */}
       {tool.comingSoon && (
         <div className="absolute top-6 right-6 z-10">
-          <Badge className="bg-gradient-to-r from-purple-500 to-pink-500 text-white border-0 shadow-lg animate-pulse hover:animate-none hover:scale-110 transition-transform duration-300">
-            <Sparkles className="h-3 w-3 mr-1 animate-spin" />
+          <Badge className="animate-pulse border-0 bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg transition-transform duration-300 hover:scale-110 hover:animate-none">
+            <Sparkles className="mr-1 h-3 w-3 animate-spin" />
             Coming Soon
           </Badge>
         </div>
       )}
 
-      <CardHeader className="pb-4 p-6">
-        <div className="flex items-center justify-between mb-6">
+      <CardHeader className="p-6 pb-4">
+        <div className="mb-6 flex items-center justify-between">
           <div
-            className={`relative p-4 rounded-2xl bg-gradient-to-r ${tool.gradient} text-white shadow-xl group-hover:scale-125 group-hover:rotate-6 transition-all duration-500 overflow-hidden`}
+            className={`relative rounded-2xl bg-gradient-to-r p-4 ${tool.gradient} overflow-hidden text-white shadow-xl transition-all duration-500 group-hover:scale-125 group-hover:rotate-6`}
           >
-            <ToolIcon className="h-6 w-6 relative z-10" />
-            <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+            <ToolIcon className="relative z-10 h-6 w-6" />
+            <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-white/0 via-white/20 to-white/0 transition-transform duration-700 group-hover:translate-x-full"></div>
             {isHovered && (
-              <div className="absolute inset-0 bg-white/10 rounded-2xl animate-pulse"></div>
+              <div className="absolute inset-0 animate-pulse rounded-2xl bg-white/10"></div>
             )}
           </div>
-          <div className="flex items-center gap-2 px-3 py-2 bg-amber-50 dark:bg-amber-950/30 rounded-full group-hover:bg-amber-100 dark:group-hover:bg-amber-900/40 transition-all duration-300 group-hover:scale-110">
+          <div className="flex items-center gap-2 rounded-full bg-amber-50 px-3 py-2 transition-all duration-300 group-hover:scale-110 group-hover:bg-amber-100 dark:bg-amber-950/30 dark:group-hover:bg-amber-900/40">
             <Star className="h-4 w-4 fill-amber-400 text-amber-400 group-hover:animate-spin" />
             <span className="text-sm font-bold text-amber-600 dark:text-amber-400">
               {tool.rating}
@@ -191,19 +191,19 @@ export const ToolCard: React.FC<ToolCardProps> = ({
           </div>
         </div>
 
-        <CardTitle className="text-2xl font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-all duration-300 leading-tight mb-4">
+        <CardTitle className="mb-4 text-2xl leading-tight font-bold text-slate-900 transition-all duration-300 group-hover:text-blue-600 dark:text-white dark:group-hover:text-blue-400">
           {tool.name}
         </CardTitle>
 
-        <div className="flex items-center gap-3 mb-4">
+        <div className="mb-4 flex items-center gap-3">
           <Badge
-            className={`px-3 py-1 text-sm font-medium bg-gradient-to-r ${tool.gradient} text-white border-0 shadow-md group-hover:shadow-lg group-hover:scale-105 transition-all duration-300`}
+            className={`bg-gradient-to-r px-3 py-1 text-sm font-medium ${tool.gradient} border-0 text-white shadow-md transition-all duration-300 group-hover:scale-105 group-hover:shadow-lg`}
           >
             {tool.language}
           </Badge>
           <Badge
             variant="outline"
-            className="px-3 py-1 text-sm font-medium bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm group-hover:border-blue-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 group-hover:bg-blue-50 dark:group-hover:bg-blue-950/30 transition-all duration-300 hover:scale-105"
+            className="bg-white/80 px-3 py-1 text-sm font-medium backdrop-blur-sm transition-all duration-300 group-hover:border-blue-400 group-hover:bg-blue-50 group-hover:text-blue-600 hover:scale-105 dark:bg-slate-800/80 dark:group-hover:bg-blue-950/30 dark:group-hover:text-blue-400"
           >
             {tool.type}
           </Badge>
@@ -211,14 +211,14 @@ export const ToolCard: React.FC<ToolCardProps> = ({
       </CardHeader>
 
       <CardContent className="space-y-6 p-6 pt-0">
-        <p className="text-base text-slate-600 dark:text-slate-400 leading-relaxed group-hover:text-slate-700 dark:group-hover:text-slate-300 transition-colors duration-300">
+        <p className="text-base leading-relaxed text-slate-600 transition-colors duration-300 group-hover:text-slate-700 dark:text-slate-400 dark:group-hover:text-slate-300">
           {tool.description}
         </p>
 
         <div className="space-y-4">
-          <h5 className="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-2">
+          <h5 className="flex items-center gap-2 text-sm font-bold text-slate-900 dark:text-white">
             <div
-              className={`w-2 h-2 rounded-full bg-gradient-to-r ${tool.gradient}`}
+              className={`h-2 w-2 rounded-full bg-gradient-to-r ${tool.gradient}`}
             ></div>
             Key Features
           </h5>
@@ -226,40 +226,40 @@ export const ToolCard: React.FC<ToolCardProps> = ({
             {tool.features.slice(0, 4).map((feature, idx) => (
               <div
                 key={idx}
-                className="flex items-start gap-3 text-sm text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-all duration-300 cursor-pointer group/feature p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50"
+                className="group/feature flex cursor-pointer items-start gap-3 rounded-lg p-2 text-sm text-slate-600 transition-all duration-300 hover:bg-slate-50 hover:text-slate-800 dark:text-slate-400 dark:hover:bg-slate-800/50 dark:hover:text-slate-200"
               >
                 <div
-                  className={`w-2 h-2 rounded-full bg-gradient-to-r ${tool.gradient} mt-2 flex-shrink-0 group-hover/feature:scale-150 group-hover/feature:shadow-lg transition-all duration-300`}
+                  className={`h-2 w-2 rounded-full bg-gradient-to-r ${tool.gradient} mt-2 flex-shrink-0 transition-all duration-300 group-hover/feature:scale-150 group-hover/feature:shadow-lg`}
                 ></div>
-                <span className="leading-relaxed group-hover/feature:translate-x-2 group-hover/feature:font-medium transition-all duration-300">
+                <span className="leading-relaxed transition-all duration-300 group-hover/feature:translate-x-2 group-hover/feature:font-medium">
                   {feature}
                 </span>
               </div>
             ))}
             {tool.features.length > 4 && (
-              <div className="text-sm text-slate-500 dark:text-slate-500 mt-3 px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded-lg inline-block">
+              <div className="mt-3 inline-block rounded-lg bg-slate-100 px-2 py-1 text-sm text-slate-500 dark:bg-slate-800 dark:text-slate-500">
                 +{tool.features.length - 4} more features
               </div>
             )}
           </div>
         </div>
 
-        <div className="flex items-center justify-between pt-4 border-t border-slate-200 dark:border-slate-700 group-hover:border-blue-300 dark:group-hover:border-blue-600 transition-all duration-300">
-          <div className="flex items-center gap-2 px-3 py-2 bg-slate-50 dark:bg-slate-800 rounded-full hover:bg-blue-50 dark:hover:bg-blue-950/30 transition-all duration-300 cursor-pointer group/download">
-            <Download className="h-4 w-4 text-slate-500 group-hover/download:text-blue-500 group-hover/download:animate-bounce transition-all duration-300" />
-            <span className="text-sm font-medium text-slate-600 dark:text-slate-400 group-hover/download:text-blue-600 dark:group-hover/download:text-blue-400 transition-all duration-300">
+        <div className="flex items-center justify-between border-t border-slate-200 pt-4 transition-all duration-300 group-hover:border-blue-300 dark:border-slate-700 dark:group-hover:border-blue-600">
+          <div className="group/download flex cursor-pointer items-center gap-2 rounded-full bg-slate-50 px-3 py-2 transition-all duration-300 hover:bg-blue-50 dark:bg-slate-800 dark:hover:bg-blue-950/30">
+            <Download className="h-4 w-4 text-slate-500 transition-all duration-300 group-hover/download:animate-bounce group-hover/download:text-blue-500" />
+            <span className="text-sm font-medium text-slate-600 transition-all duration-300 group-hover/download:text-blue-600 dark:text-slate-400 dark:group-hover/download:text-blue-400">
               {tool.downloads}
             </span>
           </div>
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2 px-3 py-2 bg-emerald-50 dark:bg-emerald-950/30 rounded-full cursor-pointer group/trending hover:bg-emerald-100 dark:hover:bg-emerald-900/40 transition-all duration-300">
-              <TrendingUp className="h-4 w-4 text-emerald-600 group-hover/trending:scale-125 group-hover/trending:text-emerald-500 transition-all duration-300" />
-              <span className="text-sm font-bold text-emerald-600 dark:text-emerald-400 group-hover/trending:text-emerald-500 transition-all duration-300">
+            <div className="group/trending flex cursor-pointer items-center gap-2 rounded-full bg-emerald-50 px-3 py-2 transition-all duration-300 hover:bg-emerald-100 dark:bg-emerald-950/30 dark:hover:bg-emerald-900/40">
+              <TrendingUp className="h-4 w-4 text-emerald-600 transition-all duration-300 group-hover/trending:scale-125 group-hover/trending:text-emerald-500" />
+              <span className="text-sm font-bold text-emerald-600 transition-all duration-300 group-hover/trending:text-emerald-500 dark:text-emerald-400">
                 Popular
               </span>
             </div>
             {isHovered && (
-              <button className="p-2 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 text-white hover:from-blue-600 hover:to-indigo-600 transition-all duration-300 shadow-lg hover:shadow-xl animate-fade-in hover:scale-110">
+              <button className="animate-fade-in rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 p-2 text-white shadow-lg transition-all duration-300 hover:scale-110 hover:from-blue-600 hover:to-indigo-600 hover:shadow-xl">
                 <ExternalLink className="h-4 w-4" />
               </button>
             )}

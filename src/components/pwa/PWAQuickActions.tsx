@@ -106,7 +106,7 @@ export function PWAQuickActions({
               className={cn(
                 "absolute -top-0.5 -right-0.5 h-2 w-2 rounded-full",
                 getStatusColor(),
-                "ring-2 ring-background"
+                "ring-background ring-2"
               )}
             />
           </div>
@@ -118,7 +118,7 @@ export function PWAQuickActions({
         <div className="space-y-3">
           {/* Header */}
           <div className="flex items-center justify-between">
-            <h4 className="text-sm font-semibold flex items-center gap-2">
+            <h4 className="flex items-center gap-2 text-sm font-semibold">
               <Zap className="h-4 w-4 text-blue-600" />
               Quick Actions
             </h4>
@@ -132,9 +132,9 @@ export function PWAQuickActions({
               )}
             >
               {isOnline ? (
-                <Wifi className="h-3 w-3 mr-1" />
+                <Wifi className="mr-1 h-3 w-3" />
               ) : (
-                <WifiOff className="h-3 w-3 mr-1" />
+                <WifiOff className="mr-1 h-3 w-3" />
               )}
               {isOnline ? "Online" : "Offline"}
             </Badge>
@@ -192,8 +192,8 @@ export function PWAQuickActions({
           </div>
 
           {/* Status Info */}
-          <div className="pt-2 border-t">
-            <div className="flex items-center justify-between text-xs text-muted-foreground">
+          <div className="border-t pt-2">
+            <div className="text-muted-foreground flex items-center justify-between text-xs">
               <span className="flex items-center gap-1">
                 {status.serviceWorkerReady ? (
                   <>
@@ -220,13 +220,13 @@ export function PWAQuickActions({
             <Button
               variant="ghost"
               size="sm"
-              className="w-full mt-2 text-xs"
+              className="mt-2 w-full text-xs"
               onClick={() => {
                 navigateTo("pwa-settings");
                 setOpen(false);
               }}
             >
-              <Settings className="h-3 w-3 mr-1" />
+              <Settings className="mr-1 h-3 w-3" />
               PWA Settings & Dashboard
             </Button>
           </div>
@@ -264,8 +264,8 @@ function ActionButton({
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        "flex flex-col items-center gap-1.5 p-3 rounded-lg transition-colors",
-        "disabled:opacity-50 disabled:cursor-not-allowed",
+        "flex flex-col items-center gap-1.5 rounded-lg p-3 transition-colors",
+        "disabled:cursor-not-allowed disabled:opacity-50",
         variantStyles[variant]
       )}
     >

@@ -164,7 +164,7 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({
         >
           <Bell className="h-4 w-4 sm:h-5 sm:w-5" />
           {unreadCount > 0 && (
-            <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-red-500 text-white text-xs flex items-center justify-center font-semibold">
+            <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-semibold text-white">
               {unreadCount > 9 ? "9+" : unreadCount}
             </span>
           )}
@@ -174,7 +174,7 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({
       <SheetContent className="w-full sm:max-w-xl">
         {showPreferences ? (
           <div>
-            <div className="flex items-center justify-between mb-4">
+            <div className="mb-4 flex items-center justify-between">
               <h2 className="text-lg font-semibold">
                 Notification Preferences
               </h2>
@@ -215,40 +215,40 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({
             </SheetHeader>
 
             {/* Stats */}
-            <div className="grid grid-cols-4 gap-2 my-4">
-              <div className="text-center p-2 rounded-lg bg-muted">
+            <div className="my-4 grid grid-cols-4 gap-2">
+              <div className="bg-muted rounded-lg p-2 text-center">
                 <div className="text-2xl font-bold">{stats.total}</div>
-                <div className="text-xs text-muted-foreground">Total</div>
+                <div className="text-muted-foreground text-xs">Total</div>
               </div>
-              <div className="text-center p-2 rounded-lg bg-muted">
+              <div className="bg-muted rounded-lg p-2 text-center">
                 <div className="text-2xl font-bold text-blue-600">
                   {stats.byType.info}
                 </div>
-                <div className="text-xs text-muted-foreground">Info</div>
+                <div className="text-muted-foreground text-xs">Info</div>
               </div>
-              <div className="text-center p-2 rounded-lg bg-muted">
+              <div className="bg-muted rounded-lg p-2 text-center">
                 <div className="text-2xl font-bold text-orange-600">
                   {stats.byType.warning}
                 </div>
-                <div className="text-xs text-muted-foreground">Warnings</div>
+                <div className="text-muted-foreground text-xs">Warnings</div>
               </div>
-              <div className="text-center p-2 rounded-lg bg-muted">
+              <div className="bg-muted rounded-lg p-2 text-center">
                 <div className="text-2xl font-bold text-red-600">
                   {stats.byType.error}
                 </div>
-                <div className="text-xs text-muted-foreground">Errors</div>
+                <div className="text-muted-foreground text-xs">Errors</div>
               </div>
             </div>
 
             {/* Actions */}
-            <div className="flex gap-2 mb-4">
+            <div className="mb-4 flex gap-2">
               <Button
                 variant="outline"
                 size="sm"
                 onClick={handleMarkAllAsRead}
                 disabled={unreadCount === 0}
               >
-                <Check className="h-4 w-4 mr-2" />
+                <Check className="mr-2 h-4 w-4" />
                 Mark all read
               </Button>
               <Button
@@ -257,7 +257,7 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({
                 onClick={handleClearAll}
                 disabled={notifications.length === 0}
               >
-                <Trash2 className="h-4 w-4 mr-2" />
+                <Trash2 className="mr-2 h-4 w-4" />
                 Clear all
               </Button>
             </div>
@@ -278,20 +278,33 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({
                   Unread ({unreadCount})
                 </TabsTrigger>
                 <TabsTrigger value="filters">
-                  <Filter className="h-4 w-4 mr-2" />
+                  <Filter className="mr-2 h-4 w-4" />
                   Filters
                 </TabsTrigger>
               </TabsList>
 
               <TabsContent value="filters" className="space-y-4">
                 <div>
-                  <label className="text-sm font-medium mb-2 block">
+                  <label className="mb-2 block text-sm font-medium">
                     Category
                   </label>
                   <select
-                    className="w-full p-2 border rounded-md"
+                    className="w-full rounded-md border p-2"
                     value={filterCategory}
-                    onChange={(e) => setFilterCategory(e.target.value as "all" | "system" | "analysis" | "security" | "auth" | "storage" | "network" | "export" | "general")}
+                    onChange={(e) =>
+                      setFilterCategory(
+                        e.target.value as
+                          | "all"
+                          | "system"
+                          | "analysis"
+                          | "security"
+                          | "auth"
+                          | "storage"
+                          | "network"
+                          | "export"
+                          | "general"
+                      )
+                    }
                   >
                     <option value="all">All Categories</option>
                     <option value="system">System</option>
@@ -306,13 +319,22 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({
                 </div>
 
                 <div>
-                  <label className="text-sm font-medium mb-2 block">
+                  <label className="mb-2 block text-sm font-medium">
                     Priority
                   </label>
                   <select
-                    className="w-full p-2 border rounded-md"
+                    className="w-full rounded-md border p-2"
                     value={filterPriority}
-                    onChange={(e) => setFilterPriority(e.target.value as "all" | "urgent" | "high" | "normal" | "low")}
+                    onChange={(e) =>
+                      setFilterPriority(
+                        e.target.value as
+                          | "all"
+                          | "urgent"
+                          | "high"
+                          | "normal"
+                          | "low"
+                      )
+                    }
                   >
                     <option value="all">All Priorities</option>
                     <option value="urgent">Urgent</option>
@@ -327,8 +349,8 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({
             {/* Notification List */}
             <ScrollArea className="h-[calc(100vh-400px)]">
               {filteredNotifications.length === 0 ? (
-                <div className="text-center py-12 text-muted-foreground">
-                  <Bell className="h-12 w-12 mx-auto mb-4 opacity-20" />
+                <div className="text-muted-foreground py-12 text-center">
+                  <Bell className="mx-auto mb-4 h-12 w-12 opacity-20" />
                   <p>No notifications</p>
                 </div>
               ) : (
@@ -337,7 +359,7 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({
                     <div
                       key={notification.id}
                       className={cn(
-                        "p-4 rounded-lg border transition-all",
+                        "rounded-lg border p-4 transition-all",
                         !notification.read && "bg-accent/50 border-primary/50",
                         notification.read && "opacity-60"
                       )}
@@ -346,7 +368,7 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({
                         {/* Icon */}
                         <div
                           className={cn(
-                            "w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 font-semibold",
+                            "flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full font-semibold",
                             getNotificationColor(notification.type)
                           )}
                         >
@@ -354,21 +376,21 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({
                         </div>
 
                         {/* Content */}
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-start justify-between gap-2 mb-1">
-                            <h4 className="font-semibold text-sm">
+                        <div className="min-w-0 flex-1">
+                          <div className="mb-1 flex items-start justify-between gap-2">
+                            <h4 className="text-sm font-semibold">
                               {notification.title}
                             </h4>
                             {getPriorityBadge(notification.priority)}
                           </div>
 
                           {notification.message && (
-                            <p className="text-sm text-muted-foreground mb-2">
+                            <p className="text-muted-foreground mb-2 text-sm">
                               {notification.message}
                             </p>
                           )}
 
-                          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                          <div className="text-muted-foreground flex items-center gap-2 text-xs">
                             <span>
                               {formatTimestamp(notification.timestamp)}
                             </span>
@@ -382,7 +404,7 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({
                             <Button
                               variant="link"
                               size="sm"
-                              className="p-0 h-auto mt-2"
+                              className="mt-2 h-auto p-0"
                               onClick={notification.action.onClick}
                             >
                               {notification.action.label}

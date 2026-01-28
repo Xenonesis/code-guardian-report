@@ -23,7 +23,7 @@ interface MainLayoutProps {
 const SkipLink = () => (
   <a
     href="#main-content"
-    className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-blue-600 focus:text-white focus:rounded-lg focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-600"
+    className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:rounded-lg focus:bg-blue-600 focus:px-4 focus:py-2 focus:text-white focus:shadow-lg focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-600 focus:outline-none"
     onClick={(e) => {
       e.preventDefault();
       const mainContent = document.getElementById("main-content");
@@ -44,12 +44,12 @@ export function MainLayout({ children }: MainLayoutProps) {
   const { theme, isDarkMode, setTheme } = useDarkMode();
   const { online, firebaseConnected, usingMockData } = useConnectionStatus();
   const { analysisResults } = useEnhancedAnalysis();
-  // Using navigation context just to ensure it's initialized if needed, 
+  // Using navigation context just to ensure it's initialized if needed,
   // but mostly relying on useNavigation inside components.
-  
+
   return (
     <div
-      className="min-h-screen flex flex-col"
+      className="flex min-h-screen flex-col"
       role="application"
       aria-label="Code Guardian Security Analysis Application"
     >
@@ -95,7 +95,10 @@ export function MainLayout({ children }: MainLayoutProps) {
       </div>
 
       {/* Navigation */}
-      <header role="banner" className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <header
+        role="banner"
+        className="bg-background/95 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-40 w-full border-b backdrop-blur"
+      >
         <Navigation theme={theme} onThemeChange={setTheme} />
       </header>
 

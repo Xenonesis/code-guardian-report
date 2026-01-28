@@ -21,7 +21,7 @@ const About = () => {
   const { theme, setTheme } = useDarkMode();
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
+    <div className="relative min-h-screen overflow-hidden">
       <AnimatedBackground />
 
       {/* Navigation - spans full width above everything */}

@@ -69,9 +69,9 @@ export const ConnectionStatusBanner: React.FC<ConnectionStatusBannerProps> = ({
   } = config[type];
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 animate-in slide-in-from-top duration-300">
+    <div className="animate-in slide-in-from-top fixed top-0 right-0 left-0 z-50 duration-300">
       <Alert className={`rounded-none border-x-0 border-t-0 ${className}`}>
-        <div className="flex items-center justify-between w-full">
+        <div className="flex w-full items-center justify-between">
           <div className="flex items-center gap-3">
             <Icon className={`h-5 w-5 ${iconClassName}`} />
             <AlertDescription className={textClassName}>

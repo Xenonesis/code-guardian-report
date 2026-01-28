@@ -25,22 +25,22 @@ export function PWAUpdateNotification() {
   };
 
   return (
-    <Card className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 max-w-sm w-full mx-4 p-4 bg-gradient-to-r from-green-600 to-emerald-600 text-white border-0 shadow-2xl animate-in zoom-in-95 duration-300">
+    <Card className="animate-in zoom-in-95 fixed top-1/2 left-1/2 z-50 mx-4 w-full max-w-sm -translate-x-1/2 -translate-y-1/2 border-0 bg-gradient-to-r from-green-600 to-emerald-600 p-4 text-white shadow-2xl duration-300">
       <div className="flex items-start gap-3">
         <div className="flex-shrink-0">
-          <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+          <div className="rounded-lg bg-white/20 p-2 backdrop-blur-sm">
             <Sparkles className="h-5 w-5" />
           </div>
         </div>
 
-        <div className="flex-1 min-w-0">
-          <h3 className="font-semibold text-sm mb-1 flex items-center gap-2">
+        <div className="min-w-0 flex-1">
+          <h3 className="mb-1 flex items-center gap-2 text-sm font-semibold">
             Update Available
-            <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-white/20">
+            <span className="inline-flex items-center rounded bg-white/20 px-1.5 py-0.5 text-[10px] font-medium">
               NEW
             </span>
           </h3>
-          <p className="text-xs text-white/90 mb-3">
+          <p className="mb-3 text-xs text-white/90">
             A new version of Code Guardian is ready with improvements and bug
             fixes
           </p>
@@ -55,14 +55,14 @@ export function PWAUpdateNotification() {
             >
               {isUpdating ? (
                 <>
-                  <RefreshCw className="h-4 w-4 mr-1 animate-spin" />
+                  <RefreshCw className="mr-1 h-4 w-4 animate-spin" />
                   Updating...
                 </>
               ) : (
                 <>
-                  <RefreshCw className="h-4 w-4 mr-1" />
+                  <RefreshCw className="mr-1 h-4 w-4" />
                   Update Now
-                  <ArrowRight className="h-3 w-3 ml-1" />
+                  <ArrowRight className="ml-1 h-3 w-3" />
                 </>
               )}
             </Button>

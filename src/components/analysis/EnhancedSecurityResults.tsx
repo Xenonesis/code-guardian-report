@@ -18,7 +18,7 @@ export const EnhancedSecurityResults: React.FC<
           results={results}
           variant="outline"
           size="sm"
-          className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm border-slate-200 dark:border-slate-700 hover:bg-white dark:hover:bg-slate-800"
+          className="border-slate-200 bg-white/90 backdrop-blur-sm hover:bg-white dark:border-slate-700 dark:bg-slate-800/90 dark:hover:bg-slate-800"
         />
       </div>
 

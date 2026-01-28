@@ -68,9 +68,9 @@ export const BreadcrumbContainer: React.FC<BreadcrumbContainerProps> = ({
 
   return (
     <div
-      className={`w-full bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-b border-slate-200/50 dark:border-slate-700/50 ${className}`}
+      className={`w-full border-b border-slate-200/50 bg-white/80 backdrop-blur-sm dark:border-slate-700/50 dark:bg-slate-800/80 ${className}`}
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-3">
+      <div className="container mx-auto px-4 py-3 sm:px-6 lg:px-8">
         <Breadcrumb
           items={breadcrumbItems}
           onNavigate={handleBreadcrumbNavigate}

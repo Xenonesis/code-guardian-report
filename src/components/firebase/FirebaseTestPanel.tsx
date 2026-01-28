@@ -103,7 +103,7 @@ export const FirebaseTestPanel = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 space-y-6">
+    <div className="mx-auto max-w-4xl space-y-6 p-6">
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
@@ -163,12 +163,12 @@ export const FirebaseTestPanel = () => {
             >
               {isRunning ? (
                 <>
-                  <Clock className="h-4 w-4 mr-2 animate-spin" />
+                  <Clock className="mr-2 h-4 w-4 animate-spin" />
                   Running Tests...
                 </>
               ) : (
                 <>
-                  <Play className="h-4 w-4 mr-2" />
+                  <Play className="mr-2 h-4 w-4" />
                   Run Tests
                 </>
               )}
@@ -194,25 +194,25 @@ export const FirebaseTestPanel = () => {
           {testResult && (
             <div className="space-y-4">
               <div className="grid grid-cols-4 gap-4">
-                <div className="text-center p-3 bg-blue-50 rounded-lg">
+                <div className="rounded-lg bg-blue-50 p-3 text-center">
                   <div className="text-2xl font-bold text-blue-600">
                     {testResult.results.total}
                   </div>
                   <div className="text-sm text-blue-700">Total Tests</div>
                 </div>
-                <div className="text-center p-3 bg-green-50 rounded-lg">
+                <div className="rounded-lg bg-green-50 p-3 text-center">
                   <div className="text-2xl font-bold text-green-600">
                     {testResult.results.passed}
                   </div>
                   <div className="text-sm text-green-700">Passed</div>
                 </div>
-                <div className="text-center p-3 bg-red-50 rounded-lg">
+                <div className="rounded-lg bg-red-50 p-3 text-center">
                   <div className="text-2xl font-bold text-red-600">
                     {testResult.results.failed}
                   </div>
                   <div className="text-sm text-red-700">Failed</div>
                 </div>
-                <div className="text-center p-3 bg-gray-50 rounded-lg">
+                <div className="rounded-lg bg-gray-50 p-3 text-center">
                   <div className="text-2xl font-bold text-gray-600">
                     {(
                       (testResult.results.passed / testResult.results.total) *
@@ -235,8 +235,8 @@ export const FirebaseTestPanel = () => {
               </div>
 
               {testResult.results.errors.length > 0 && (
-                <div className="p-4 bg-red-50 rounded-lg border border-red-200">
-                  <div className="flex items-center gap-2 mb-2">
+                <div className="rounded-lg border border-red-200 bg-red-50 p-4">
+                  <div className="mb-2 flex items-center gap-2">
                     <AlertCircle className="h-4 w-4 text-red-500" />
                     <span className="font-medium text-red-700">
                       Test Errors
@@ -269,7 +269,7 @@ export const FirebaseTestPanel = () => {
         <CardContent className="space-y-3">
           <div className="text-sm">
             <p className="mb-2 font-medium">What these tests verify:</p>
-            <ul className="space-y-1 ml-4 text-gray-600">
+            <ul className="ml-4 space-y-1 text-gray-600">
               <li>
                 • <strong>Connection Test:</strong> Firebase configuration and
                 connectivity
@@ -296,9 +296,9 @@ export const FirebaseTestPanel = () => {
             </ul>
           </div>
 
-          <div className="p-3 bg-blue-50 rounded-lg border border-blue-200">
+          <div className="rounded-lg border border-blue-200 bg-blue-50 p-3">
             <div className="text-sm">
-              <p className="font-medium text-blue-700 mb-1">Note:</p>
+              <p className="mb-1 font-medium text-blue-700">Note:</p>
               <p className="text-blue-600">
                 Firebase tests may show warnings if authentication isn't
                 configured. Local storage tests should pass regardless.

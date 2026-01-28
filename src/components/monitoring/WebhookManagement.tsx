@@ -129,8 +129,8 @@ const WebhookManagement: React.FC = () => {
 
   if (!user) {
     return (
-      <div className="text-center py-12">
-        <Bell className="h-12 w-12 mx-auto mb-4 opacity-20" />
+      <div className="py-12 text-center">
+        <Bell className="mx-auto mb-4 h-12 w-12 opacity-20" />
         <p className="text-muted-foreground">
           Please sign in to manage webhooks
         </p>
@@ -143,8 +143,8 @@ const WebhookManagement: React.FC = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-3xl font-bold flex items-center gap-3">
-            <Webhook className="h-8 w-8 text-primary" />
+          <h2 className="flex items-center gap-3 text-3xl font-bold">
+            <Webhook className="text-primary h-8 w-8" />
             Repository Monitoring
           </h2>
           <p className="text-muted-foreground mt-2">
@@ -154,7 +154,7 @@ const WebhookManagement: React.FC = () => {
         <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
           <DialogTrigger asChild>
             <Button>
-              <Plus className="h-4 w-4 mr-2" />
+              <Plus className="mr-2 h-4 w-4" />
               Add Webhook
             </Button>
           </DialogTrigger>
@@ -168,13 +168,13 @@ const WebhookManagement: React.FC = () => {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
         <Card>
           <CardContent className="pt-6">
             <div className="text-center">
-              <Webhook className="h-8 w-8 mx-auto mb-2 text-blue-600" />
+              <Webhook className="mx-auto mb-2 h-8 w-8 text-blue-600" />
               <div className="text-3xl font-bold">{webhooks.length}</div>
-              <div className="text-sm text-muted-foreground">
+              <div className="text-muted-foreground text-sm">
                 Active Webhooks
               </div>
             </div>
@@ -184,11 +184,11 @@ const WebhookManagement: React.FC = () => {
         <Card>
           <CardContent className="pt-6">
             <div className="text-center">
-              <Activity className="h-8 w-8 mx-auto mb-2 text-green-600" />
+              <Activity className="mx-auto mb-2 h-8 w-8 text-green-600" />
               <div className="text-3xl font-bold">
                 {webhooks.filter((w) => w.active).length}
               </div>
-              <div className="text-sm text-muted-foreground">Monitoring</div>
+              <div className="text-muted-foreground text-sm">Monitoring</div>
             </div>
           </CardContent>
         </Card>
@@ -196,9 +196,9 @@ const WebhookManagement: React.FC = () => {
         <Card>
           <CardContent className="pt-6">
             <div className="text-center">
-              <Shield className="h-8 w-8 mx-auto mb-2 text-purple-600" />
+              <Shield className="mx-auto mb-2 h-8 w-8 text-purple-600" />
               <div className="text-3xl font-bold">0</div>
-              <div className="text-sm text-muted-foreground">Alerts Today</div>
+              <div className="text-muted-foreground text-sm">Alerts Today</div>
             </div>
           </CardContent>
         </Card>
@@ -206,9 +206,9 @@ const WebhookManagement: React.FC = () => {
         <Card>
           <CardContent className="pt-6">
             <div className="text-center">
-              <Code className="h-8 w-8 mx-auto mb-2 text-orange-600" />
+              <Code className="mx-auto mb-2 h-8 w-8 text-orange-600" />
               <div className="text-3xl font-bold">0</div>
-              <div className="text-sm text-muted-foreground">Auto Scans</div>
+              <div className="text-muted-foreground text-sm">Auto Scans</div>
             </div>
           </CardContent>
         </Card>
@@ -224,13 +224,13 @@ const WebhookManagement: React.FC = () => {
         </CardHeader>
         <CardContent>
           {webhooks.length === 0 ? (
-            <div className="text-center py-12">
-              <Webhook className="h-12 w-12 mx-auto mb-4 opacity-20" />
+            <div className="py-12 text-center">
+              <Webhook className="mx-auto mb-4 h-12 w-12 opacity-20" />
               <p className="text-muted-foreground mb-4">
                 No webhooks configured yet
               </p>
               <Button onClick={() => setIsCreateDialogOpen(true)}>
-                <Plus className="h-4 w-4 mr-2" />
+                <Plus className="mr-2 h-4 w-4" />
                 Create Your First Webhook
               </Button>
             </div>
@@ -275,13 +275,13 @@ const WebhookCard: React.FC<WebhookCardProps> = ({
   return (
     <div
       className={cn(
-        "border rounded-lg p-4 transition-all",
+        "rounded-lg border p-4 transition-all",
         webhook.active ? "border-primary/50" : "border-border opacity-60"
       )}
     >
       <div className="flex items-start justify-between">
         <div className="flex-1">
-          <div className="flex items-center gap-3 mb-2">
+          <div className="mb-2 flex items-center gap-3">
             <Badge className={providerColors[webhook.provider]}>
               {webhook.provider}
             </Badge>
@@ -293,7 +293,7 @@ const WebhookCard: React.FC<WebhookCardProps> = ({
             )}
           </div>
 
-          <p className="text-sm text-muted-foreground mb-3">
+          <p className="text-muted-foreground mb-3 text-sm">
             {webhook.repositoryUrl}
           </p>
 
@@ -306,7 +306,7 @@ const WebhookCard: React.FC<WebhookCardProps> = ({
           </div>
 
           {webhook.lastTriggered && (
-            <p className="text-xs text-muted-foreground mt-2">
+            <p className="text-muted-foreground mt-2 text-xs">
               Last triggered: {new Date(webhook.lastTriggered).toLocaleString()}
             </p>
           )}
@@ -386,7 +386,7 @@ const CreateWebhookDialog: React.FC<CreateWebhookDialogProps> = ({
         </DialogDescription>
       </DialogHeader>
 
-      <form onSubmit={handleSubmit} className="space-y-4 mt-4">
+      <form onSubmit={handleSubmit} className="mt-4 space-y-4">
         <div className="space-y-2">
           <Label htmlFor="provider">Provider</Label>
           <Select

@@ -157,7 +157,9 @@ export const useGitHubRepositories = ({
       logger.debug(`Fetched ${repos.length} repositories for ${username}`);
     } catch (err: unknown) {
       logger.error("Error fetching repositories:", err);
-      setError(err instanceof Error ? err.message : "Failed to fetch repositories");
+      setError(
+        err instanceof Error ? err.message : "Failed to fetch repositories"
+      );
       setRepositories([]);
     } finally {
       setLoading(false);

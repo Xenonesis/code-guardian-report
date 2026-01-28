@@ -4,11 +4,11 @@
 @layer components {
   /* Professional Navigation Styles */
   .professional-nav {
-    @apply backdrop-blur-xl border-b shadow-sm;
+    @apply border-b shadow-sm backdrop-blur-xl;
   }
 
   .professional-nav-item {
-    @apply relative px-4 py-2.5 rounded-lg font-medium transition-all duration-300 text-sm;
+    @apply relative rounded-lg px-4 py-2.5 text-sm font-medium transition-all duration-300;
   }
 
   .professional-nav-item:hover {
@@ -16,7 +16,7 @@
   }
 
   .professional-nav-item.active {
-    @apply bg-slate-900 dark:bg-slate-700 text-white shadow-lg;
+    @apply bg-slate-900 text-white shadow-lg dark:bg-slate-700;
   }
 
   /* Professional Color Palette */
@@ -45,11 +45,11 @@
   }
 
   .prose h2 {
-    @apply text-2xl sm:text-3xl font-bold mb-6 mt-8 first:mt-0;
+    @apply mt-8 mb-6 text-2xl font-bold first:mt-0 sm:text-3xl;
   }
 
   .prose h3 {
-    @apply text-xl font-semibold mb-4 mt-6;
+    @apply mt-6 mb-4 text-xl font-semibold;
   }
 
   .prose p {
@@ -70,16 +70,16 @@
   }
 
   .prose a {
-    @apply text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 underline;
+    @apply text-blue-600 underline hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300;
   }
 
   /* Enhanced Card Styles */
   .enhanced-card {
-    @apply bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300;
+    @apply rounded-xl border border-slate-200/50 bg-white/80 shadow-lg backdrop-blur-sm transition-all duration-300 hover:shadow-xl dark:border-slate-700/50 dark:bg-slate-900/80;
   }
 
   .enhanced-card:hover {
-    @apply transform -translate-y-1 shadow-2xl;
+    @apply -translate-y-1 transform shadow-2xl;
   }
 
   /* Gradient Text Effects */
@@ -88,16 +88,16 @@
   }
 
   .gradient-text-secondary {
-    @apply bg-gradient-to-r from-slate-600 via-slate-700 to-slate-800 dark:from-slate-300 dark:via-slate-200 dark:to-slate-100 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-slate-600 via-slate-700 to-slate-800 bg-clip-text text-transparent dark:from-slate-300 dark:via-slate-200 dark:to-slate-100;
   }
 
   /* Enhanced Button Styles */
   .btn-primary {
-    @apply bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium px-6 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5;
+    @apply transform rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-3 font-medium text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:from-blue-700 hover:to-indigo-700 hover:shadow-xl;
   }
 
   .btn-secondary {
-    @apply bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 border border-slate-300 dark:border-slate-600 font-medium px-6 py-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5;
+    @apply transform rounded-lg border border-slate-300 bg-white px-6 py-3 font-medium text-slate-900 shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100;
   }
 
   /* Feature Grid Enhancements */
@@ -106,15 +106,15 @@
   }
 
   .feature-card {
-    @apply relative p-6 sm:p-8 bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500;
+    @apply relative rounded-2xl border border-slate-200/50 bg-white/90 p-6 shadow-lg backdrop-blur-sm transition-all duration-500 hover:shadow-2xl sm:p-8 dark:border-slate-700/50 dark:bg-slate-900/90;
   }
 
   .feature-card:hover {
-    @apply transform -translate-y-2 border-blue-300/50 dark:border-blue-600/50;
+    @apply -translate-y-2 transform border-blue-300/50 dark:border-blue-600/50;
   }
 
   .feature-icon {
-    @apply w-12 h-12 sm:w-16 sm:h-16 mb-4 sm:mb-6 text-blue-600 dark:text-blue-400 transition-transform duration-300;
+    @apply mb-4 h-12 w-12 text-blue-600 transition-transform duration-300 sm:mb-6 sm:h-16 sm:w-16 dark:text-blue-400;
   }
 
   .feature-card:hover .feature-icon {
@@ -123,32 +123,32 @@
 
   /* Stats Grid */
   .stats-grid {
-    @apply grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6;
+    @apply grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4;
   }
 
   .stat-card {
-    @apply text-center p-4 sm:p-6 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 rounded-xl shadow-md hover:shadow-lg transition-all duration-300;
+    @apply rounded-xl border border-slate-200/50 bg-white/80 p-4 text-center shadow-md backdrop-blur-sm transition-all duration-300 hover:shadow-lg sm:p-6 dark:border-slate-700/50 dark:bg-slate-900/80;
   }
 
   .stat-number {
-    @apply text-2xl sm:text-3xl lg:text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2;
+    @apply mb-2 text-2xl font-bold text-blue-600 sm:text-3xl lg:text-4xl dark:text-blue-400;
   }
 
   .stat-label {
-    @apply text-sm sm:text-base text-slate-600 dark:text-slate-400 font-medium;
+    @apply text-sm font-medium text-slate-600 sm:text-base dark:text-slate-400;
   }
 
   /* Hero Section Enhancements */
   .hero-title {
-    @apply text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight;
+    @apply text-4xl leading-tight font-bold sm:text-5xl lg:text-6xl xl:text-7xl;
   }
 
   .hero-subtitle {
-    @apply text-lg sm:text-xl lg:text-2xl text-slate-600 dark:text-slate-300 leading-relaxed;
+    @apply text-lg leading-relaxed text-slate-600 sm:text-xl lg:text-2xl dark:text-slate-300;
   }
 
   .hero-description {
-    @apply text-base sm:text-lg text-slate-500 dark:text-slate-400 leading-relaxed max-w-3xl;
+    @apply max-w-3xl text-base leading-relaxed text-slate-500 sm:text-lg dark:text-slate-400;
   }
 
   /* Animation Classes */
@@ -245,15 +245,15 @@
 /* Dark Mode Specific Enhancements */
 @media (prefers-color-scheme: dark) {
   .enhanced-card {
-    @apply bg-slate-900/90 border-slate-700/50;
+    @apply border-slate-700/50 bg-slate-900/90;
   }
 
   .feature-card {
-    @apply bg-slate-900/90 border-slate-700/50;
+    @apply border-slate-700/50 bg-slate-900/90;
   }
 
   .stat-card {
-    @apply bg-slate-900/90 border-slate-700/50;
+    @apply border-slate-700/50 bg-slate-900/90;
   }
 }
 
@@ -279,7 +279,7 @@
 /* Focus Styles for Accessibility */
 .btn-primary:focus,
 .btn-secondary:focus {
-  @apply outline-none ring-4 ring-blue-500/50;
+  @apply ring-4 ring-blue-500/50 outline-none;
 }
 
 /* High Contrast Mode Support */

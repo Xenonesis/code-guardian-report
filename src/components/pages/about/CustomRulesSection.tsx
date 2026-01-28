@@ -18,20 +18,20 @@ export const CustomRulesSection: React.FC = () => {
     <div className="space-y-8">
       {/* Section Header */}
       <div className="text-center">
-        <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
+        <h2 className="mb-4 bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-3xl font-bold text-transparent md:text-4xl">
           Custom Rules Engine
         </h2>
-        <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+        <p className="text-muted-foreground mx-auto max-w-3xl text-lg">
           Define your own security rules and patterns. Adapt Code Guardian to
           your unique organizational needs and policies.
         </p>
       </div>
 
       {/* Features Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="border-2 hover:border-green-500 transition-colors duration-300">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+        <Card className="border-2 transition-colors duration-300 hover:border-green-500">
           <CardHeader>
-            <Code className="h-8 w-8 mb-2 text-green-600" />
+            <Code className="mb-2 h-8 w-8 text-green-600" />
             <CardTitle>Custom Patterns</CardTitle>
           </CardHeader>
           <CardContent>
@@ -42,9 +42,9 @@ export const CustomRulesSection: React.FC = () => {
           </CardContent>
         </Card>
 
-        <Card className="border-2 hover:border-blue-500 transition-colors duration-300">
+        <Card className="border-2 transition-colors duration-300 hover:border-blue-500">
           <CardHeader>
-            <Target className="h-8 w-8 mb-2 text-blue-600" />
+            <Target className="mb-2 h-8 w-8 text-blue-600" />
             <CardTitle>Company Policies</CardTitle>
           </CardHeader>
           <CardContent>
@@ -55,9 +55,9 @@ export const CustomRulesSection: React.FC = () => {
           </CardContent>
         </Card>
 
-        <Card className="border-2 hover:border-purple-500 transition-colors duration-300">
+        <Card className="border-2 transition-colors duration-300 hover:border-purple-500">
           <CardHeader>
-            <Users className="h-8 w-8 mb-2 text-purple-600" />
+            <Users className="mb-2 h-8 w-8 text-purple-600" />
             <CardTitle>Share & Collaborate</CardTitle>
           </CardHeader>
           <CardContent>
@@ -70,7 +70,7 @@ export const CustomRulesSection: React.FC = () => {
       </div>
 
       {/* Benefits Section */}
-      <Card className="bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-950 dark:to-blue-950 border-2">
+      <Card className="border-2 bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-950 dark:to-blue-950">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Zap className="h-6 w-6 text-yellow-600" />
@@ -78,12 +78,12 @@ export const CustomRulesSection: React.FC = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             <div>
-              <h4 className="font-semibold mb-2 text-foreground">
+              <h4 className="text-foreground mb-2 font-semibold">
                 Adaptability
               </h4>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 Every organization has unique security requirements. Custom
                 rules let you enforce policies specific to your industry,
                 frameworks, and internal standards.
@@ -91,10 +91,10 @@ export const CustomRulesSection: React.FC = () => {
             </div>
 
             <div>
-              <h4 className="font-semibold mb-2 text-foreground">
+              <h4 className="text-foreground mb-2 font-semibold">
                 Increased Stickiness
               </h4>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 The more custom rules you create, the more valuable Code
                 Guardian becomes to your team. Your investment in rule creation
                 increases platform value over time.
@@ -102,10 +102,10 @@ export const CustomRulesSection: React.FC = () => {
             </div>
 
             <div>
-              <h4 className="font-semibold mb-2 text-foreground">
+              <h4 className="text-foreground mb-2 font-semibold">
                 Differentiation
               </h4>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 Generic scanners can't catch everything. Custom rules let you
                 detect vulnerabilities and anti-patterns that are specific to
                 your technology stack.
@@ -113,10 +113,10 @@ export const CustomRulesSection: React.FC = () => {
             </div>
 
             <div>
-              <h4 className="font-semibold mb-2 text-foreground">
+              <h4 className="text-foreground mb-2 font-semibold">
                 Knowledge Base
               </h4>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 Build an institutional knowledge base of security patterns and
                 anti-patterns. Onboard new developers faster with automated
                 policy enforcement.
@@ -136,47 +136,47 @@ export const CustomRulesSection: React.FC = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
-            <h4 className="font-semibold mb-2 text-foreground">Regex Rules</h4>
-            <p className="text-sm text-muted-foreground mb-2">
+            <h4 className="text-foreground mb-2 font-semibold">Regex Rules</h4>
+            <p className="text-muted-foreground mb-2 text-sm">
               Use regular expressions to match code patterns. Best for simple
               text-based patterns.
             </p>
-            <code className="text-xs bg-muted p-2 rounded block">
+            <code className="bg-muted block rounded p-2 text-xs">
               Pattern: api[_-]?key\s*=\s*["']([^"']+)["']
             </code>
-            <p className="text-xs text-muted-foreground mt-1">
+            <p className="text-muted-foreground mt-1 text-xs">
               Example: Detect hardcoded API keys
             </p>
           </div>
 
           <div>
-            <h4 className="font-semibold mb-2 text-foreground">
+            <h4 className="text-foreground mb-2 font-semibold">
               Pattern Rules
             </h4>
-            <p className="text-sm text-muted-foreground mb-2">
+            <p className="text-muted-foreground mb-2 text-sm">
               Simplified pattern matching with wildcards. Good for common code
               smells.
             </p>
-            <code className="text-xs bg-muted p-2 rounded block">
+            <code className="bg-muted block rounded p-2 text-xs">
               Pattern: console.log
             </code>
-            <p className="text-xs text-muted-foreground mt-1">
+            <p className="text-muted-foreground mt-1 text-xs">
               Example: Find console.log statements in production code
             </p>
           </div>
 
           <div>
-            <h4 className="font-semibold mb-2 text-foreground">
+            <h4 className="text-foreground mb-2 font-semibold">
               AST Query Rules
             </h4>
-            <p className="text-sm text-muted-foreground mb-2">
+            <p className="text-muted-foreground mb-2 text-sm">
               Advanced rules using Abstract Syntax Tree queries. Most powerful
               and precise.
             </p>
-            <code className="text-xs bg-muted p-2 rounded block">
+            <code className="bg-muted block rounded p-2 text-xs">
               Selector: FunctionDeclaration[async=true]:not(:has(TryStatement))
             </code>
-            <p className="text-xs text-muted-foreground mt-1">
+            <p className="text-muted-foreground mt-1 text-xs">
               Example: Find async functions without error handling
             </p>
           </div>
@@ -189,12 +189,12 @@ export const CustomRulesSection: React.FC = () => {
           <CardTitle>Common Use Cases</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             <div>
-              <h4 className="font-semibold mb-2 text-foreground">
+              <h4 className="text-foreground mb-2 font-semibold">
                 🔐 Security
               </h4>
-              <ul className="text-sm text-muted-foreground space-y-1">
+              <ul className="text-muted-foreground space-y-1 text-sm">
                 <li>• Detect hardcoded secrets and credentials</li>
                 <li>• Find usage of deprecated security APIs</li>
                 <li>• Enforce authentication checks</li>
@@ -203,10 +203,10 @@ export const CustomRulesSection: React.FC = () => {
             </div>
 
             <div>
-              <h4 className="font-semibold mb-2 text-foreground">
+              <h4 className="text-foreground mb-2 font-semibold">
                 ✨ Best Practices
               </h4>
-              <ul className="text-sm text-muted-foreground space-y-1">
+              <ul className="text-muted-foreground space-y-1 text-sm">
                 <li>• Enforce naming conventions</li>
                 <li>• Require JSDoc comments</li>
                 <li>• Prevent console.log in production</li>
@@ -215,10 +215,10 @@ export const CustomRulesSection: React.FC = () => {
             </div>
 
             <div>
-              <h4 className="font-semibold mb-2 text-foreground">
+              <h4 className="text-foreground mb-2 font-semibold">
                 🏢 Compliance
               </h4>
-              <ul className="text-sm text-muted-foreground space-y-1">
+              <ul className="text-muted-foreground space-y-1 text-sm">
                 <li>• PCI-DSS requirements</li>
                 <li>• HIPAA compliance checks</li>
                 <li>• GDPR data handling rules</li>
@@ -227,10 +227,10 @@ export const CustomRulesSection: React.FC = () => {
             </div>
 
             <div>
-              <h4 className="font-semibold mb-2 text-foreground">
+              <h4 className="text-foreground mb-2 font-semibold">
                 ⚡ Performance
               </h4>
-              <ul className="text-sm text-muted-foreground space-y-1">
+              <ul className="text-muted-foreground space-y-1 text-sm">
                 <li>• Detect inefficient algorithms</li>
                 <li>• Find memory leaks</li>
                 <li>• Identify blocking operations</li>

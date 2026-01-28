@@ -386,30 +386,30 @@ export const HistoryPage = ({
   }
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
+    <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
       <AnimatedBackground />
 
       {/* Decorative orbs */}
-      <div className="absolute top-20 left-10 w-72 h-72 bg-violet-500/20 rounded-full blur-[128px] pointer-events-none" />
-      <div className="absolute bottom-40 right-20 w-96 h-96 bg-cyan-500/15 rounded-full blur-[128px] pointer-events-none" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-fuchsia-500/10 rounded-full blur-[200px] pointer-events-none" />
+      <div className="pointer-events-none absolute top-20 left-10 h-72 w-72 rounded-full bg-violet-500/20 blur-[128px]" />
+      <div className="pointer-events-none absolute right-20 bottom-40 h-96 w-96 rounded-full bg-cyan-500/15 blur-[128px]" />
+      <div className="pointer-events-none absolute top-1/2 left-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-fuchsia-500/10 blur-[200px]" />
 
-      <div className="container mx-auto py-12 space-y-8 relative z-10">
+      <div className="relative z-10 container mx-auto space-y-8 py-12">
         {/* Premium Header */}
         <div className="relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-violet-600/20 via-fuchsia-600/20 to-cyan-600/20 rounded-3xl blur-xl" />
-          <div className="relative bg-white/[0.03] backdrop-blur-2xl border border-white/10 rounded-3xl p-8 shadow-2xl">
-            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+          <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-violet-600/20 via-fuchsia-600/20 to-cyan-600/20 blur-xl" />
+          <div className="relative rounded-3xl border border-white/10 bg-white/[0.03] p-8 shadow-2xl backdrop-blur-2xl">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
               <div className="space-y-3">
                 <div className="flex items-center gap-4">
-                  <div className="p-3 rounded-2xl bg-gradient-to-br from-violet-500 to-fuchsia-500 shadow-lg shadow-violet-500/30">
+                  <div className="rounded-2xl bg-gradient-to-br from-violet-500 to-fuchsia-500 p-3 shadow-lg shadow-violet-500/30">
                     <History className="h-7 w-7 text-white" />
                   </div>
                   <div>
-                    <h1 className="text-4xl font-bold bg-gradient-to-r from-white via-violet-200 to-fuchsia-200 bg-clip-text text-transparent tracking-tight">
+                    <h1 className="bg-gradient-to-r from-white via-violet-200 to-fuchsia-200 bg-clip-text text-4xl font-bold tracking-tight text-transparent">
                       Analysis History
                     </h1>
-                    <p className="text-slate-400 mt-1 text-lg">
+                    <p className="mt-1 text-lg text-slate-400">
                       Your personal security analysis results & statistics
                     </p>
                   </div>
@@ -421,16 +421,16 @@ export const HistoryPage = ({
                   <Button
                     variant="outline"
                     onClick={onNavigateBack}
-                    className="bg-white/5 border-white/10 text-white hover:bg-white/10 hover:border-white/20 transition-all duration-300 rounded-xl px-5"
+                    className="rounded-xl border-white/10 bg-white/5 px-5 text-white transition-all duration-300 hover:border-white/20 hover:bg-white/10"
                   >
                     Back to Home
                   </Button>
                 )}
                 <Button
                   onClick={exportAnalysisHistory}
-                  className="bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white border-0 shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40 transition-all duration-300 rounded-xl px-5"
+                  className="rounded-xl border-0 bg-gradient-to-r from-violet-600 to-fuchsia-600 px-5 text-white shadow-lg shadow-violet-500/25 transition-all duration-300 hover:from-violet-500 hover:to-fuchsia-500 hover:shadow-violet-500/40"
                 >
-                  <Download className="h-4 w-4 mr-2" />
+                  <Download className="mr-2 h-4 w-4" />
                   Export History
                 </Button>
               </div>
@@ -440,7 +440,7 @@ export const HistoryPage = ({
 
         {/* Stats Cards Row */}
         {userStats && (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
             {[
               {
                 label: "Total Analyses",
@@ -473,16 +473,16 @@ export const HistoryPage = ({
             ].map((stat, index) => (
               <div key={index} className="group relative">
                 <div
-                  className={`absolute inset-0 bg-gradient-to-r ${stat.gradient} opacity-0 group-hover:opacity-20 rounded-2xl blur-xl transition-opacity duration-500`}
+                  className={`absolute inset-0 bg-gradient-to-r ${stat.gradient} rounded-2xl opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-20`}
                 />
-                <div className="relative bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-2xl p-5 hover:bg-white/[0.06] hover:border-white/20 transition-all duration-300 h-full">
-                  <div className="flex items-center gap-3 mb-3">
+                <div className="relative h-full rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-xl transition-all duration-300 hover:border-white/20 hover:bg-white/[0.06]">
+                  <div className="mb-3 flex items-center gap-3">
                     <div
-                      className={`p-2 rounded-xl bg-gradient-to-br ${stat.gradient} shadow-lg`}
+                      className={`rounded-xl bg-gradient-to-br p-2 ${stat.gradient} shadow-lg`}
                     >
                       <stat.icon className="h-4 w-4 text-white" />
                     </div>
-                    <span className="text-slate-400 text-sm font-medium">
+                    <span className="text-sm font-medium text-slate-400">
                       {stat.label}
                     </span>
                   </div>
@@ -495,19 +495,19 @@ export const HistoryPage = ({
 
         {/* Premium Filters Section */}
         <div className="relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 rounded-2xl blur-lg" />
-          <div className="relative bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-2xl p-6 shadow-xl">
-            <div className="flex items-center gap-3 mb-5">
+          <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-500/10 to-blue-500/10 blur-lg" />
+          <div className="relative rounded-2xl border border-white/10 bg-white/[0.03] p-6 shadow-xl backdrop-blur-xl">
+            <div className="mb-5 flex items-center gap-3">
               <Filter className="h-5 w-5 text-cyan-400" />
-              <span className="text-white font-semibold">Filters & Search</span>
+              <span className="font-semibold text-white">Filters & Search</span>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
               <div className="sm:col-span-2">
                 <Input
                   placeholder="🔍 Search by filename, tags, or issue type..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full bg-white/5 border-white/10 text-white placeholder:text-slate-500 focus:border-cyan-500/50 focus:ring-cyan-500/20 rounded-xl h-11"
+                  className="h-11 w-full rounded-xl border-white/10 bg-white/5 text-white placeholder:text-slate-500 focus:border-cyan-500/50 focus:ring-cyan-500/20"
                 />
               </div>
               <select
@@ -517,7 +517,7 @@ export const HistoryPage = ({
                     e.target.value as "all" | "week" | "month" | "year"
                   )
                 }
-                className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white focus:border-cyan-500/50 focus:ring-2 focus:ring-cyan-500/20 transition-all duration-300 cursor-pointer h-11"
+                className="h-11 w-full cursor-pointer rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-white transition-all duration-300 focus:border-cyan-500/50 focus:ring-2 focus:ring-cyan-500/20"
                 aria-label="Time Range"
                 title="Time Range"
               >
@@ -546,7 +546,7 @@ export const HistoryPage = ({
                       | "low"
                   )
                 }
-                className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-white focus:border-cyan-500/50 focus:ring-2 focus:ring-cyan-500/20 transition-all duration-300 cursor-pointer h-11"
+                className="h-11 w-full cursor-pointer rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-white transition-all duration-300 focus:border-cyan-500/50 focus:ring-2 focus:ring-cyan-500/20"
                 aria-label="Severity"
                 title="Severity"
               >
@@ -568,9 +568,9 @@ export const HistoryPage = ({
               </select>
               <Button
                 onClick={loadAnalysisHistory}
-                className="w-full bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white border-0 shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 transition-all duration-300 rounded-xl h-11"
+                className="h-11 w-full rounded-xl border-0 bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-lg shadow-cyan-500/25 transition-all duration-300 hover:from-cyan-500 hover:to-blue-500 hover:shadow-cyan-500/40"
               >
-                <Filter className="h-4 w-4 mr-2" />
+                <Filter className="mr-2 h-4 w-4" />
                 Refresh
               </Button>
             </div>
@@ -579,21 +579,21 @@ export const HistoryPage = ({
 
         {/* Analysis History Section */}
         <div className="relative">
-          <div className="absolute inset-0 bg-gradient-to-br from-fuchsia-500/5 via-transparent to-violet-500/5 rounded-3xl" />
-          <div className="relative bg-white/[0.02] backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden">
+          <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-fuchsia-500/5 via-transparent to-violet-500/5" />
+          <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.02] backdrop-blur-xl">
             {/* Section Header */}
-            <div className="px-8 py-6 border-b border-white/5 bg-white/[0.02]">
+            <div className="border-b border-white/5 bg-white/[0.02] px-8 py-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-2xl font-bold text-white flex items-center gap-3">
-                    <span className="w-2 h-8 rounded-full bg-gradient-to-b from-fuchsia-500 to-violet-500" />
+                  <h2 className="flex items-center gap-3 text-2xl font-bold text-white">
+                    <span className="h-8 w-2 rounded-full bg-gradient-to-b from-fuchsia-500 to-violet-500" />
                     Your Analysis Results
-                    <span className="ml-2 px-3 py-1 rounded-full bg-white/10 text-sm font-medium text-violet-300">
+                    <span className="ml-2 rounded-full bg-white/10 px-3 py-1 text-sm font-medium text-violet-300">
                       {filteredHistory.length}
                     </span>
                   </h2>
                   {filteredHistory.length !== analysisHistory.length && (
-                    <p className="text-slate-500 mt-1 text-sm">
+                    <p className="mt-1 text-sm text-slate-500">
                       Showing {filteredHistory.length} of{" "}
                       {analysisHistory.length} analyses
                     </p>
@@ -607,9 +607,9 @@ export const HistoryPage = ({
               {isLoading ? (
                 <div className="flex flex-col items-center justify-center py-16">
                   <div className="relative">
-                    <div className="w-16 h-16 rounded-full border-4 border-white/10 border-t-violet-500 animate-spin" />
+                    <div className="h-16 w-16 animate-spin rounded-full border-4 border-white/10 border-t-violet-500" />
                     <div
-                      className="absolute inset-0 w-16 h-16 rounded-full border-4 border-transparent border-r-fuchsia-500 animate-spin"
+                      className="absolute inset-0 h-16 w-16 animate-spin rounded-full border-4 border-transparent border-r-fuchsia-500"
                       style={{
                         animationDirection: "reverse",
                         animationDuration: "1.5s",
@@ -621,19 +621,19 @@ export const HistoryPage = ({
                   </span>
                 </div>
               ) : filteredHistory.length === 0 ? (
-                <div className="text-center py-16">
+                <div className="py-16 text-center">
                   <div className="relative inline-block">
-                    <div className="absolute inset-0 bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20 rounded-full blur-2xl" />
-                    <div className="relative p-6 rounded-full bg-white/5 border border-white/10">
+                    <div className="absolute inset-0 rounded-full bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20 blur-2xl" />
+                    <div className="relative rounded-full border border-white/10 bg-white/5 p-6">
                       <History className="h-16 w-16 text-slate-600" />
                     </div>
                   </div>
-                  <h3 className="text-xl font-semibold text-white mt-6 mb-2">
+                  <h3 className="mt-6 mb-2 text-xl font-semibold text-white">
                     {analysisHistory.length === 0
                       ? "No Analysis History Yet"
                       : "No Results Found"}
                   </h3>
-                  <p className="text-slate-500 max-w-md mx-auto">
+                  <p className="mx-auto max-w-md text-slate-500">
                     {analysisHistory.length === 0
                       ? "Start analyzing your code to see results here. Your analysis history will appear once you upload and scan some code."
                       : "Try adjusting your search filters to find what you're looking for."}
@@ -648,12 +648,12 @@ export const HistoryPage = ({
                       style={{ animationDelay: `${index * 50}ms` }}
                     >
                       {/* Hover glow effect */}
-                      <div className="absolute inset-0 bg-gradient-to-r from-violet-500/0 via-fuchsia-500/0 to-cyan-500/0 group-hover:from-violet-500/10 group-hover:via-fuchsia-500/5 group-hover:to-cyan-500/10 rounded-2xl blur-xl transition-all duration-500 opacity-0 group-hover:opacity-100" />
+                      <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-violet-500/0 via-fuchsia-500/0 to-cyan-500/0 opacity-0 blur-xl transition-all duration-500 group-hover:from-violet-500/10 group-hover:via-fuchsia-500/5 group-hover:to-cyan-500/10 group-hover:opacity-100" />
 
-                      <div className="relative bg-white/[0.03] backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:bg-white/[0.05] hover:border-white/20 transition-all duration-300 group-hover:translate-x-1 group-hover:shadow-2xl group-hover:shadow-violet-500/10">
+                      <div className="relative rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-sm transition-all duration-300 group-hover:translate-x-1 group-hover:shadow-2xl group-hover:shadow-violet-500/10 hover:border-white/20 hover:bg-white/[0.05]">
                         {/* Severity indicator bar */}
                         <div
-                          className={`absolute left-0 top-0 bottom-0 w-1 rounded-l-2xl ${
+                          className={`absolute top-0 bottom-0 left-0 w-1 rounded-l-2xl ${
                             analysis.results.issues?.some(
                               (i) => i.severity.toLowerCase() === "critical"
                             )
@@ -671,28 +671,28 @@ export const HistoryPage = ({
                           }`}
                         />
 
-                        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5 pl-4">
+                        <div className="flex flex-col gap-5 pl-4 lg:flex-row lg:items-center lg:justify-between">
                           <div className="flex-1 space-y-4">
                             {/* File name and badges */}
                             <div className="flex flex-wrap items-center gap-3">
-                              <h3 className="font-bold text-lg text-white group-hover:text-violet-200 transition-colors duration-300">
+                              <h3 className="text-lg font-bold text-white transition-colors duration-300 group-hover:text-violet-200">
                                 {analysis.fileName}
                               </h3>
                               <span
-                                className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                                className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${
                                   analysis.syncStatus === "synced"
-                                    ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"
-                                    : "bg-amber-500/20 text-amber-400 border border-amber-500/30"
+                                    ? "border border-emerald-500/30 bg-emerald-500/20 text-emerald-400"
+                                    : "border border-amber-500/30 bg-amber-500/20 text-amber-400"
                                 }`}
                               >
                                 {analysis.syncStatus}
                               </span>
                               {analysis.tags && analysis.tags.length > 0 && (
-                                <div className="flex gap-1.5 flex-wrap">
+                                <div className="flex flex-wrap gap-1.5">
                                   {analysis.tags.map((tag, idx) => (
                                     <span
                                       key={idx}
-                                      className="px-2 py-0.5 rounded-md text-xs bg-white/5 text-slate-400 border border-white/10"
+                                      className="rounded-md border border-white/10 bg-white/5 px-2 py-0.5 text-xs text-slate-400"
                                     >
                                       {tag}
                                     </span>
@@ -702,7 +702,7 @@ export const HistoryPage = ({
                             </div>
 
                             {/* Stats grid */}
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
                               {[
                                 {
                                   icon: Calendar,
@@ -727,7 +727,7 @@ export const HistoryPage = ({
                               ].map((item, idx) => (
                                 <div
                                   key={idx}
-                                  className="flex items-center gap-2 text-sm text-slate-400 group-hover:text-slate-300 transition-colors duration-300"
+                                  className="flex items-center gap-2 text-sm text-slate-400 transition-colors duration-300 group-hover:text-slate-300"
                                 >
                                   <item.icon className="h-4 w-4 text-slate-500" />
                                   <span>{item.value}</span>
@@ -738,7 +738,7 @@ export const HistoryPage = ({
                             {/* Severity badges */}
                             {analysis.results.issues &&
                               analysis.results.issues.length > 0 && (
-                                <div className="flex gap-2 flex-wrap">
+                                <div className="flex flex-wrap gap-2">
                                   {["critical", "high", "medium", "low"].map(
                                     (severity) => {
                                       const count =
@@ -765,7 +765,7 @@ export const HistoryPage = ({
                                       return (
                                         <span
                                           key={severity}
-                                          className={`px-2.5 py-1 rounded-lg text-xs font-semibold uppercase tracking-wide border shadow-lg ${severityStyles[severity]}`}
+                                          className={`rounded-lg border px-2.5 py-1 text-xs font-semibold tracking-wide uppercase shadow-lg ${severityStyles[severity]}`}
                                         >
                                           {severity}: {count}
                                         </span>
@@ -780,15 +780,15 @@ export const HistoryPage = ({
                           <div className="flex items-center gap-2 lg:flex-col lg:gap-2">
                             <Button
                               onClick={() => handleViewAnalysis(analysis)}
-                              className="flex-1 lg:flex-none bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white border-0 rounded-xl shadow-lg shadow-violet-500/20 hover:shadow-violet-500/40 hover:scale-105 transition-all duration-300"
+                              className="flex-1 rounded-xl border-0 bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white shadow-lg shadow-violet-500/20 transition-all duration-300 hover:scale-105 hover:from-violet-500 hover:to-fuchsia-500 hover:shadow-violet-500/40 lg:flex-none"
                               size="sm"
                             >
-                              <Eye className="h-4 w-4 mr-1.5" />
+                              <Eye className="mr-1.5 h-4 w-4" />
                               View
                             </Button>
                             <Button
                               onClick={() => handleDeleteAnalysis(analysis.id)}
-                              className="bg-white/5 border border-white/10 text-slate-400 hover:bg-red-500/20 hover:border-red-500/30 hover:text-red-400 rounded-xl transition-all duration-300 hover:scale-105"
+                              className="rounded-xl border border-white/10 bg-white/5 text-slate-400 transition-all duration-300 hover:scale-105 hover:border-red-500/30 hover:bg-red-500/20 hover:text-red-400"
                               variant="outline"
                               size="sm"
                             >

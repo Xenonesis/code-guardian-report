@@ -51,15 +51,15 @@ export const RepositoryActivityAnalytics: React.FC<
   if (loading) {
     return (
       <div className="space-y-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
           {Array.from({ length: 4 }).map((_, i) => (
             <Card
               key={i}
-              className="p-6 border-slate-200 dark:border-slate-800"
+              className="border-slate-200 p-6 dark:border-slate-800"
             >
-              <div className="h-10 w-10 bg-slate-100 dark:bg-slate-800 rounded-lg animate-pulse mb-4"></div>
-              <div className="h-8 w-16 bg-slate-100 dark:bg-slate-800 rounded animate-pulse mb-2"></div>
-              <div className="h-4 w-28 bg-slate-100 dark:bg-slate-800 rounded animate-pulse"></div>
+              <div className="mb-4 h-10 w-10 animate-pulse rounded-lg bg-slate-100 dark:bg-slate-800"></div>
+              <div className="mb-2 h-8 w-16 animate-pulse rounded bg-slate-100 dark:bg-slate-800"></div>
+              <div className="h-4 w-28 animate-pulse rounded bg-slate-100 dark:bg-slate-800"></div>
             </Card>
           ))}
         </div>
@@ -70,8 +70,8 @@ export const RepositoryActivityAnalytics: React.FC<
   return (
     <div className="space-y-8">
       <div>
-        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2 flex items-center gap-2">
-          <Activity className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+        <h2 className="mb-2 flex items-center gap-2 text-2xl font-bold text-slate-900 dark:text-white">
+          <Activity className="h-6 w-6 text-purple-600 dark:text-purple-400" />
           Repository Activity
         </h2>
         <p className="text-slate-600 dark:text-slate-400">
@@ -80,12 +80,12 @@ export const RepositoryActivityAnalytics: React.FC<
       </div>
 
       {/* Activity Stats */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-        <Card className="p-6 border-slate-200 dark:border-slate-800 hover:shadow-lg transition-all duration-300 group">
-          <div className="p-3 bg-purple-50 dark:bg-purple-900/20 rounded-xl w-fit mb-4 group-hover:scale-110 transition-transform duration-300">
-            <BarChart2 className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
+        <Card className="group border-slate-200 p-6 transition-all duration-300 hover:shadow-lg dark:border-slate-800">
+          <div className="mb-4 w-fit rounded-xl bg-purple-50 p-3 transition-transform duration-300 group-hover:scale-110 dark:bg-purple-900/20">
+            <BarChart2 className="h-6 w-6 text-purple-600 dark:text-purple-400" />
           </div>
-          <div className="text-3xl font-bold text-slate-900 dark:text-white mb-1 tracking-tight">
+          <div className="mb-1 text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
             {activityStats.totalAnalyses.toLocaleString()}
           </div>
           <div className="text-sm font-medium text-slate-500 dark:text-slate-400">
@@ -93,11 +93,11 @@ export const RepositoryActivityAnalytics: React.FC<
           </div>
         </Card>
 
-        <Card className="p-6 border-slate-200 dark:border-slate-800 hover:shadow-lg transition-all duration-300 group">
-          <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-xl w-fit mb-4 group-hover:scale-110 transition-transform duration-300">
-            <Zap className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+        <Card className="group border-slate-200 p-6 transition-all duration-300 hover:shadow-lg dark:border-slate-800">
+          <div className="mb-4 w-fit rounded-xl bg-blue-50 p-3 transition-transform duration-300 group-hover:scale-110 dark:bg-blue-900/20">
+            <Zap className="h-6 w-6 text-blue-600 dark:text-blue-400" />
           </div>
-          <div className="text-3xl font-bold text-slate-900 dark:text-white mb-1 tracking-tight">
+          <div className="mb-1 text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
             {activityStats.averageDuration}s
           </div>
           <div className="text-sm font-medium text-slate-500 dark:text-slate-400">
@@ -105,12 +105,12 @@ export const RepositoryActivityAnalytics: React.FC<
           </div>
         </Card>
 
-        <Card className="p-6 border-slate-200 dark:border-slate-800 hover:shadow-lg transition-all duration-300 group">
-          <div className="p-3 bg-green-50 dark:bg-green-900/20 rounded-xl w-fit mb-4 group-hover:scale-110 transition-transform duration-300">
-            <GitBranch className="w-6 h-6 text-green-600 dark:text-green-400" />
+        <Card className="group border-slate-200 p-6 transition-all duration-300 hover:shadow-lg dark:border-slate-800">
+          <div className="mb-4 w-fit rounded-xl bg-green-50 p-3 transition-transform duration-300 group-hover:scale-110 dark:bg-green-900/20">
+            <GitBranch className="h-6 w-6 text-green-600 dark:text-green-400" />
           </div>
           <div
-            className="text-xl font-bold text-slate-900 dark:text-white mb-1 truncate"
+            className="mb-1 truncate text-xl font-bold text-slate-900 dark:text-white"
             title={activityStats.mostAnalyzedRepo}
           >
             {activityStats.mostAnalyzedRepo || "N/A"}
@@ -120,11 +120,11 @@ export const RepositoryActivityAnalytics: React.FC<
           </div>
         </Card>
 
-        <Card className="p-6 border-slate-200 dark:border-slate-800 hover:shadow-lg transition-all duration-300 group">
-          <div className="p-3 bg-orange-50 dark:bg-orange-900/20 rounded-xl w-fit mb-4 group-hover:scale-110 transition-transform duration-300">
-            <Code className="w-6 h-6 text-orange-600 dark:text-orange-400" />
+        <Card className="group border-slate-200 p-6 transition-all duration-300 hover:shadow-lg dark:border-slate-800">
+          <div className="mb-4 w-fit rounded-xl bg-orange-50 p-3 transition-transform duration-300 group-hover:scale-110 dark:bg-orange-900/20">
+            <Code className="h-6 w-6 text-orange-600 dark:text-orange-400" />
           </div>
-          <div className="text-xl font-bold text-slate-900 dark:text-white mb-1 truncate">
+          <div className="mb-1 truncate text-xl font-bold text-slate-900 dark:text-white">
             {activityStats.mostCommonLanguage || "N/A"}
           </div>
           <div className="text-sm font-medium text-slate-500 dark:text-slate-400">
@@ -135,30 +135,30 @@ export const RepositoryActivityAnalytics: React.FC<
 
       {/* Language Distribution */}
       {detailed && languageDistribution.length > 0 && (
-        <Card className="p-8 border-slate-200 dark:border-slate-800">
-          <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
-            <Code className="w-5 h-5 text-slate-500" />
+        <Card className="border-slate-200 p-8 dark:border-slate-800">
+          <h3 className="mb-6 flex items-center gap-2 text-lg font-bold text-slate-900 dark:text-white">
+            <Code className="h-5 w-5 text-slate-500" />
             Language Distribution
           </h3>
           <div className="space-y-6">
             {languageDistribution.map((lang, index) => (
               <div key={index} className="group">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-2">
+                <div className="mb-2 flex items-center justify-between">
+                  <span className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-300">
                     {lang.language}
                   </span>
-                  <span className="text-sm text-slate-500 dark:text-slate-400 font-medium">
+                  <span className="text-sm font-medium text-slate-500 dark:text-slate-400">
                     {lang.count} repos{" "}
-                    <span className="text-slate-300 dark:text-slate-600 mx-1">
+                    <span className="mx-1 text-slate-300 dark:text-slate-600">
                       |
                     </span>{" "}
                     {lang.percentage.toFixed(1)}%
                   </span>
                 </div>
-                <div className="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-3 overflow-hidden">
+                <div className="h-3 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
                   <div
                     className={cn(
-                      "h-full rounded-full transition-all duration-1000 ease-out relative",
+                      "relative h-full rounded-full transition-all duration-1000 ease-out",
                       index === 0
                         ? "bg-gradient-to-r from-blue-500 to-indigo-600"
                         : index === 1
@@ -169,7 +169,7 @@ export const RepositoryActivityAnalytics: React.FC<
                     )}
                     style={{ width: `${lang.percentage}%` }}
                   >
-                    <div className="absolute inset-0 bg-white/20 group-hover:bg-transparent transition-colors" />
+                    <div className="absolute inset-0 bg-white/20 transition-colors group-hover:bg-transparent" />
                   </div>
                 </div>
               </div>

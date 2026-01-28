@@ -25,9 +25,9 @@ export const LegalPageLayout: React.FC<LegalPageLayoutProps> = ({
   return (
     <PageLayout theme={theme} onThemeChange={setTheme}>
       {/* Enhanced Background */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-indigo-500/10 rounded-full blur-3xl float-animation"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 rounded-full blur-2xl float-animation delay-2s"></div>
+      <div className="pointer-events-none fixed inset-0 overflow-hidden">
+        <div className="float-animation absolute top-1/4 left-1/4 h-64 w-64 rounded-full bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-indigo-500/10 blur-3xl"></div>
+        <div className="float-animation delay-2s absolute right-1/4 bottom-1/4 h-48 w-48 rounded-full bg-gradient-to-r from-emerald-500/10 to-teal-500/10 blur-2xl"></div>
       </div>
 
       <div className="relative z-10">
@@ -38,17 +38,17 @@ export const LegalPageLayout: React.FC<LegalPageLayoutProps> = ({
           variant="gradient"
           className="py-16 sm:py-20 lg:py-24"
         >
-          <div className="max-w-4xl mx-auto">
+          <div className="mx-auto max-w-4xl">
             {/* Legal Info Card */}
-            <div className="glass-card-ultra p-6 sm:p-8 mb-8 enhanced-card-hover">
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-center sm:text-left">
-                <div className="p-4 bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl">
+            <div className="glass-card-ultra enhanced-card-hover mb-8 p-6 sm:p-8">
+              <div className="flex flex-col items-center justify-center gap-6 text-center sm:flex-row sm:text-left">
+                <div className="rounded-2xl bg-gradient-to-r from-blue-500 to-purple-500 p-4">
                   {icon}
-                  <div className="text-white text-lg font-bold">Legal</div>
+                  <div className="text-lg font-bold text-white">Legal</div>
                 </div>
 
                 <div className="flex-1 space-y-3">
-                  <div className="flex flex-col sm:flex-row items-center gap-4">
+                  <div className="flex flex-col items-center gap-4 sm:flex-row">
                     <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
                       <Calendar className="h-5 w-5 text-blue-500" />
                       <span className="font-medium">
@@ -61,7 +61,7 @@ export const LegalPageLayout: React.FC<LegalPageLayoutProps> = ({
                     </div>
                   </div>
 
-                  <div className="flex flex-col sm:flex-row items-center gap-4">
+                  <div className="flex flex-col items-center gap-4 sm:flex-row">
                     <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
                       <Shield className="h-5 w-5 text-purple-500" />
                       <span className="font-medium">
@@ -82,9 +82,9 @@ export const LegalPageLayout: React.FC<LegalPageLayoutProps> = ({
         </HeroSection>
 
         {/* Legal Content */}
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-16 sm:pb-20 lg:pb-24">
-          <div className="max-w-4xl mx-auto">
-            <div className="glass-card-ultra p-8 sm:p-12 enhanced-card-hover">
+        <div className="container mx-auto px-4 pb-16 sm:px-6 sm:pb-20 lg:px-8 lg:pb-24">
+          <div className="mx-auto max-w-4xl">
+            <div className="glass-card-ultra enhanced-card-hover p-8 sm:p-12">
               <div className="prose prose-slate dark:prose-invert max-w-none">
                 {children}
               </div>

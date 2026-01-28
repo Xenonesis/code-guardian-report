@@ -162,7 +162,7 @@ export const GitHubRepoInput: React.FC<GitHubRepoInputProps> = ({
     <div className="space-y-4 sm:space-y-6">
       <div className="flex flex-col gap-3">
         <div className="relative w-full">
-          <Github className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-slate-400 pointer-events-none z-10" />
+          <Github className="pointer-events-none absolute top-1/2 left-3 z-10 h-4 w-4 -translate-y-1/2 transform text-slate-400 sm:h-5 sm:w-5" />
           <Input
             type="url"
             placeholder="https://github.com/owner/repository"
@@ -172,20 +172,20 @@ export const GitHubRepoInput: React.FC<GitHubRepoInputProps> = ({
             disabled={isLoading}
             pattern="https://github\.com/[^\/]+/[^\/]+(/.*)?"
             title="Enter a valid GitHub repository URL"
-            className="pl-9 sm:pl-10 pr-10 h-11 sm:h-12 text-sm sm:text-base border-2 focus:border-blue-500 transition-all w-full"
+            className="h-11 w-full border-2 pr-10 pl-9 text-sm transition-all focus:border-blue-500 sm:h-12 sm:pl-10 sm:text-base"
           />
           {isFetchingInfo && (
-            <Loader2 className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-blue-500 animate-spin" />
+            <Loader2 className="absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 transform animate-spin text-blue-500 sm:h-5 sm:w-5" />
           )}
         </div>
         <Button
           onClick={handleAnalyze}
           disabled={isLoading || !repoUrl.trim()}
-          className="w-full h-11 sm:h-12 px-4 sm:px-6 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold shadow-lg hover:shadow-xl transition-all text-sm sm:text-base"
+          className="h-11 w-full bg-gradient-to-r from-blue-600 to-purple-600 px-4 text-sm font-semibold text-white shadow-lg transition-all hover:from-blue-700 hover:to-purple-700 hover:shadow-xl sm:h-12 sm:px-6 sm:text-base"
         >
           {isLoading ? (
             <>
-              <Loader2 className="mr-2 h-4 w-4 sm:h-5 sm:w-5 animate-spin" />
+              <Loader2 className="mr-2 h-4 w-4 animate-spin sm:h-5 sm:w-5" />
               Analyzing...
             </>
           ) : (
@@ -198,35 +198,35 @@ export const GitHubRepoInput: React.FC<GitHubRepoInputProps> = ({
       </div>
 
       {repoInfo && (
-        <Card className="p-3 sm:p-4 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-slate-800 dark:to-slate-900 border-blue-200 dark:border-slate-700">
+        <Card className="border-blue-200 bg-gradient-to-br from-blue-50 to-purple-50 p-3 sm:p-4 dark:border-slate-700 dark:from-slate-800 dark:to-slate-900">
           <div className="flex items-start gap-2 sm:gap-3">
-            <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
-            <div className="flex-1 space-y-2 min-w-0">
+            <CheckCircle className="mt-0.5 h-4 w-4 flex-shrink-0 text-green-600 sm:h-5 sm:w-5 dark:text-green-400" />
+            <div className="min-w-0 flex-1 space-y-2">
               <div>
-                <p className="font-semibold text-sm sm:text-base text-slate-900 dark:text-white break-words">
+                <p className="text-sm font-semibold break-words text-slate-900 sm:text-base dark:text-white">
                   {repoInfo.fullName}
                 </p>
                 {repoInfo.description && (
-                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mt-1 line-clamp-2">
+                  <p className="mt-1 line-clamp-2 text-xs text-slate-600 sm:text-sm dark:text-slate-300">
                     {repoInfo.description}
                   </p>
                 )}
               </div>
 
-              <div className="flex flex-wrap gap-2 sm:gap-3 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+              <div className="flex flex-wrap gap-2 text-xs text-slate-600 sm:gap-3 sm:text-sm dark:text-slate-300">
                 {repoInfo.language && (
                   <span className="flex items-center gap-1">
-                    <span className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-blue-500 flex-shrink-0"></span>
+                    <span className="h-2 w-2 flex-shrink-0 rounded-full bg-blue-500 sm:h-3 sm:w-3"></span>
                     <span className="truncate">{repoInfo.language}</span>
                   </span>
                 )}
                 {estimatedSize && (
                   <>
-                    <span className="hidden xs:inline">•</span>
+                    <span className="xs:inline hidden">•</span>
                     <span className="truncate">
                       {estimatedSize.fileCount} files
                     </span>
-                    <span className="hidden xs:inline">•</span>
+                    <span className="xs:inline hidden">•</span>
                     <span className="truncate">
                       {estimatedSize.formattedSize}
                     </span>
@@ -241,10 +241,10 @@ export const GitHubRepoInput: React.FC<GitHubRepoInputProps> = ({
       {isLoading && (
         <div className="space-y-2 sm:space-y-3">
           <div className="flex items-center justify-between text-xs sm:text-sm">
-            <span className="text-slate-600 dark:text-slate-300 font-medium truncate pr-2">
+            <span className="truncate pr-2 font-medium text-slate-600 dark:text-slate-300">
               {progressMessage}
             </span>
-            <span className="text-blue-600 dark:text-blue-400 font-semibold flex-shrink-0">
+            <span className="flex-shrink-0 font-semibold text-blue-600 dark:text-blue-400">
               {progress}%
             </span>
           </div>
@@ -254,18 +254,18 @@ export const GitHubRepoInput: React.FC<GitHubRepoInputProps> = ({
 
       {error && (
         <Alert className="border-l-4 border-l-red-500 bg-red-50 dark:bg-red-950/20">
-          <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5 text-red-600 dark:text-red-400 flex-shrink-0" />
-          <AlertDescription className="text-red-800 dark:text-red-200 text-xs sm:text-sm break-words">
+          <AlertCircle className="h-4 w-4 flex-shrink-0 text-red-600 sm:h-5 sm:w-5 dark:text-red-400" />
+          <AlertDescription className="text-xs break-words text-red-800 sm:text-sm dark:text-red-200">
             <strong>Error:</strong> {error}
           </AlertDescription>
         </Alert>
       )}
 
       <Alert className="border-l-4 border-l-blue-500 bg-blue-50 dark:bg-blue-950/20">
-        <Info className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600 dark:text-blue-400 flex-shrink-0" />
-        <AlertDescription className="text-blue-800 dark:text-blue-200 text-xs sm:text-sm">
-          <strong className="block mb-1">Supported formats:</strong>
-          <ul className="list-disc list-inside space-y-1 text-xs sm:text-sm">
+        <Info className="h-4 w-4 flex-shrink-0 text-blue-600 sm:h-5 sm:w-5 dark:text-blue-400" />
+        <AlertDescription className="text-xs text-blue-800 sm:text-sm dark:text-blue-200">
+          <strong className="mb-1 block">Supported formats:</strong>
+          <ul className="list-inside list-disc space-y-1 text-xs sm:text-sm">
             <li className="break-all">https://github.com/owner/repository</li>
             <li className="break-all">
               https://github.com/owner/repository/tree/branch

@@ -80,10 +80,10 @@ const Index = () => {
 
       {/* Storage Status Component */}
       {showStorageStatus && (
-        <div className="max-w-6xl mx-auto mb-6">
+        <div className="mx-auto mb-6 max-w-6xl">
           <Suspense
             fallback={
-              <div className="h-32 bg-gray-100 dark:bg-gray-800 rounded-lg animate-pulse"></div>
+              <div className="h-32 animate-pulse rounded-lg bg-gray-100 dark:bg-gray-800"></div>
             }
           >
             <StorageStatus

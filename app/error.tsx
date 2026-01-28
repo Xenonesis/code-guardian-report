@@ -54,21 +54,21 @@ export default function Error({ error, reset }: ErrorProps) {
   }, [error]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-background to-muted/30 p-4">
-      <div className="max-w-lg w-full">
+    <div className="from-background via-background to-muted/30 flex min-h-screen items-center justify-center bg-gradient-to-br p-4">
+      <div className="w-full max-w-lg">
         {/* Error Card */}
-        <div className="bg-card/80 backdrop-blur-xl border border-border/50 rounded-2xl shadow-2xl overflow-hidden">
+        <div className="bg-card/80 border-border/50 overflow-hidden rounded-2xl border shadow-2xl backdrop-blur-xl">
           {/* Header */}
-          <div className="bg-gradient-to-r from-red-500/10 via-orange-500/10 to-yellow-500/10 p-6 border-b border-border/30">
+          <div className="border-border/30 border-b bg-gradient-to-r from-red-500/10 via-orange-500/10 to-yellow-500/10 p-6">
             <div className="flex items-center gap-4">
-              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-red-500 via-orange-500 to-yellow-500 flex items-center justify-center shadow-lg">
-                <AlertTriangle className="w-7 h-7 text-white" />
+              <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-red-500 via-orange-500 to-yellow-500 shadow-lg">
+                <AlertTriangle className="h-7 w-7 text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-foreground">
+                <h1 className="text-foreground text-xl font-bold">
                   Something Went Wrong
                 </h1>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                   An unexpected error occurred
                 </p>
               </div>
@@ -76,7 +76,7 @@ export default function Error({ error, reset }: ErrorProps) {
           </div>
 
           {/* Content */}
-          <div className="p-6 space-y-6">
+          <div className="space-y-6 p-6">
             <p className="text-muted-foreground leading-relaxed">
               We apologize for the inconvenience. Our team has been notified and
               is working to fix the issue. Please try again or return to the
@@ -86,16 +86,16 @@ export default function Error({ error, reset }: ErrorProps) {
             {/* Error Details (collapsible in production) */}
             {process.env.NODE_ENV === "development" && (
               <details className="group">
-                <summary className="flex items-center gap-2 cursor-pointer text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-                  <ChevronDown className="w-4 h-4 transition-transform group-open:rotate-180" />
+                <summary className="text-muted-foreground hover:text-foreground flex cursor-pointer items-center gap-2 text-sm font-medium transition-colors">
+                  <ChevronDown className="h-4 w-4 transition-transform group-open:rotate-180" />
                   Technical Details
                 </summary>
-                <div className="mt-3 p-4 rounded-lg bg-muted/50 border border-border/50 overflow-auto max-h-48">
-                  <p className="text-xs font-mono text-red-500 dark:text-red-400 break-all">
+                <div className="bg-muted/50 border-border/50 mt-3 max-h-48 overflow-auto rounded-lg border p-4">
+                  <p className="font-mono text-xs break-all text-red-500 dark:text-red-400">
                     {error.message}
                   </p>
                   {error.digest && (
-                    <p className="text-xs font-mono text-muted-foreground mt-2">
+                    <p className="text-muted-foreground mt-2 font-mono text-xs">
                       Error ID: {error.digest}
                     </p>
                   )}
@@ -105,13 +105,13 @@ export default function Error({ error, reset }: ErrorProps) {
 
             {/* Error Digest for Support */}
             {error.digest && (
-              <div className="flex items-center gap-2 p-3 rounded-lg bg-muted/30 border border-border/30">
-                <Bug className="w-4 h-4 text-muted-foreground shrink-0" />
+              <div className="bg-muted/30 border-border/30 flex items-center gap-2 rounded-lg border p-3">
+                <Bug className="text-muted-foreground h-4 w-4 shrink-0" />
                 <div className="text-xs">
                   <span className="text-muted-foreground">
                     Error Reference:{" "}
                   </span>
-                  <code className="font-mono text-foreground">
+                  <code className="text-foreground font-mono">
                     {error.digest}
                   </code>
                 </div>
@@ -119,31 +119,31 @@ export default function Error({ error, reset }: ErrorProps) {
             )}
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-3">
+            <div className="flex flex-col gap-3 sm:flex-row">
               <button
                 onClick={reset}
-                className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium hover:from-blue-700 hover:to-indigo-700 transition-all shadow-lg hover:shadow-xl active:scale-[0.98]"
+                className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-3 font-medium text-white shadow-lg transition-all hover:from-blue-700 hover:to-indigo-700 hover:shadow-xl active:scale-[0.98]"
               >
-                <RefreshCcw className="w-4 h-4" />
+                <RefreshCcw className="h-4 w-4" />
                 Try Again
               </button>
               <Link
                 href="/"
-                className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-muted/50 text-foreground font-medium hover:bg-muted transition-all border border-border/50 active:scale-[0.98]"
+                className="bg-muted/50 text-foreground hover:bg-muted border-border/50 inline-flex flex-1 items-center justify-center gap-2 rounded-xl border px-5 py-3 font-medium transition-all active:scale-[0.98]"
               >
-                <Home className="w-4 h-4" />
+                <Home className="h-4 w-4" />
                 Go Home
               </Link>
             </div>
           </div>
 
           {/* Footer */}
-          <div className="p-4 bg-muted/20 border-t border-border/30 text-center">
-            <p className="text-xs text-muted-foreground">
+          <div className="bg-muted/20 border-border/30 border-t p-4 text-center">
+            <p className="text-muted-foreground text-xs">
               Need help?{" "}
               <Link
                 href="/help"
-                className="text-primary hover:underline font-medium"
+                className="text-primary font-medium hover:underline"
               >
                 Contact Support
               </Link>
@@ -152,9 +152,9 @@ export default function Error({ error, reset }: ErrorProps) {
         </div>
 
         {/* Decorative Elements */}
-        <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
-          <div className="absolute -top-40 -right-40 w-80 h-80 bg-red-500/5 rounded-full blur-3xl" />
-          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-orange-500/5 rounded-full blur-3xl" />
+        <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+          <div className="absolute -top-40 -right-40 h-80 w-80 rounded-full bg-red-500/5 blur-3xl" />
+          <div className="absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-orange-500/5 blur-3xl" />
         </div>
       </div>
     </div>

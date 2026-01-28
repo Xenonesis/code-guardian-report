@@ -21,9 +21,7 @@ import {
   Database,
   Cloud,
 } from "lucide-react";
-import {
-  DetectionResult,
-} from "@/services/detection/languageDetectionService";
+import { DetectionResult } from "@/services/detection/languageDetectionService";
 
 interface LanguageDetectionDisplayProps {
   detectionResult: DetectionResult;
@@ -153,11 +151,11 @@ export const LanguageDetectionDisplay: React.FC<
   return (
     <div className={`space-y-6 ${className}`}>
       {/* Enhanced Header with Better Spacing */}
-      <Card className="border-2 border-yellow-200 dark:border-yellow-800 bg-gradient-to-r from-yellow-50 to-amber-50 dark:from-yellow-950/30 dark:to-amber-950/30">
+      <Card className="border-2 border-yellow-200 bg-gradient-to-r from-yellow-50 to-amber-50 dark:border-yellow-800 dark:from-yellow-950/30 dark:to-amber-950/30">
         <CardHeader className="space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <CardTitle className="flex items-center gap-3">
-              <div className="p-2 rounded-xl bg-yellow-500 text-white">
+              <div className="rounded-xl bg-yellow-500 p-2 text-white">
                 <Zap className="h-6 w-6" />
               </div>
               <span className="text-xl font-bold text-slate-900 dark:text-white">
@@ -165,11 +163,11 @@ export const LanguageDetectionDisplay: React.FC<
               </span>
             </CardTitle>
             <div className="flex items-center gap-4 text-sm font-semibold text-slate-600 dark:text-slate-400">
-              <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/60 dark:bg-slate-800/60">
+              <div className="flex items-center gap-2 rounded-full bg-white/60 px-3 py-1 dark:bg-slate-800/60">
                 <FileCode className="h-4 w-4" />
                 <span>{totalFiles} files</span>
               </div>
-              <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/60 dark:bg-slate-800/60">
+              <div className="flex items-center gap-2 rounded-full bg-white/60 px-3 py-1 dark:bg-slate-800/60">
                 <Zap className="h-4 w-4" />
                 <span>{analysisTime}ms</span>
               </div>
@@ -197,10 +195,10 @@ export const LanguageDetectionDisplay: React.FC<
                 {getLanguageIcon(primaryLanguage.name)}
               </span>
               <div>
-                <h3 className="font-semibold text-lg capitalize">
+                <h3 className="text-lg font-semibold capitalize">
                   {primaryLanguage.name}
                 </h3>
-                <p className="text-sm text-muted-foreground flex items-center gap-1">
+                <p className="text-muted-foreground flex items-center gap-1 text-sm">
                   {getEcosystemIcon(primaryLanguage.ecosystem || "web")}
                   {String(primaryLanguage.ecosystem || "General Purpose")}
                 </p>
@@ -212,7 +210,7 @@ export const LanguageDetectionDisplay: React.FC<
               </div>
               <Progress
                 value={primaryLanguage.confidence}
-                className="w-24 h-2 mt-1"
+                className="mt-1 h-2 w-24"
               />
             </div>
           </div>
@@ -229,11 +227,11 @@ export const LanguageDetectionDisplay: React.FC<
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               {allLanguages.map((language, index) => (
                 <div
                   key={index}
-                  className="flex items-center justify-between p-3 rounded-lg border"
+                  className="flex items-center justify-between rounded-lg border p-3"
                 >
                   <div className="flex items-center gap-2">
                     <span className="text-lg">
@@ -243,7 +241,7 @@ export const LanguageDetectionDisplay: React.FC<
                       <span className="font-medium capitalize">
                         {language.name}
                       </span>
-                      <div className="text-xs text-muted-foreground">
+                      <div className="text-muted-foreground text-xs">
                         {language.category} •{" "}
                         {String(language.ecosystem || "general")}
                       </div>
@@ -252,7 +250,7 @@ export const LanguageDetectionDisplay: React.FC<
                   <div className="text-right">
                     <div className="font-semibold">{language.confidence}%</div>
                     <div
-                      className={`w-16 h-1 rounded-full ${getConfidenceColor(language.confidence)}`}
+                      className={`h-1 w-16 rounded-full ${getConfidenceColor(language.confidence)}`}
                     />
                   </div>
                 </div>
@@ -272,11 +270,11 @@ export const LanguageDetectionDisplay: React.FC<
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               {frameworks.map((framework, index) => (
                 <div
                   key={index}
-                  className="flex items-center justify-between p-3 rounded-lg border"
+                  className="flex items-center justify-between rounded-lg border p-3"
                 >
                   <div className="flex items-center gap-2">
                     <span className="text-lg">
@@ -284,7 +282,7 @@ export const LanguageDetectionDisplay: React.FC<
                     </span>
                     <div>
                       <span className="font-medium">{framework.name}</span>
-                      <div className="text-xs text-muted-foreground">
+                      <div className="text-muted-foreground text-xs">
                         {framework.category} • {framework.language}
                       </div>
                     </div>
@@ -326,7 +324,7 @@ export const LanguageDetectionDisplay: React.FC<
               </span>
               <Progress
                 value={projectStructure.confidence}
-                className="w-20 h-2"
+                className="h-2 w-20"
               />
             </div>
           </div>
@@ -338,9 +336,9 @@ export const LanguageDetectionDisplay: React.FC<
                 {projectStructure.indicators.map((indicator, index) => (
                   <div
                     key={index}
-                    className="text-sm text-muted-foreground flex items-center gap-1"
+                    className="text-muted-foreground flex items-center gap-1 text-sm"
                   >
-                    <div className="w-1 h-1 bg-green-500 rounded-full" />
+                    <div className="h-1 w-1 rounded-full bg-green-500" />
                     {indicator}
                   </div>
                 ))}
@@ -351,7 +349,7 @@ export const LanguageDetectionDisplay: React.FC<
       </Card>
 
       {/* Build Tools & Package Managers */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {buildTools.length > 0 && (
           <Card>
             <CardHeader>

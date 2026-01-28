@@ -41,15 +41,15 @@ export const FileStatus: React.FC<FileStatusProps> = ({
   analysisProgress,
 }) => {
   return (
-    <div className="space-y-4 sm:space-y-6 animate-slide-up">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 sm:p-6 bg-gradient-to-r from-slate-50 to-blue-50 dark:from-slate-800 dark:to-slate-700 rounded-xl border-2 border-slate-200 dark:border-slate-600">
-        <div className="flex items-center gap-3 sm:gap-4 min-w-0 flex-1">
-          <div className="p-2 sm:p-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl shadow-lg flex-shrink-0">
-            <FileCode className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
+    <div className="animate-slide-up space-y-4 sm:space-y-6">
+      <div className="flex flex-col items-start justify-between gap-4 rounded-xl border-2 border-slate-200 bg-gradient-to-r from-slate-50 to-blue-50 p-4 sm:flex-row sm:items-center sm:p-6 dark:border-slate-600 dark:from-slate-800 dark:to-slate-700">
+        <div className="flex min-w-0 flex-1 items-center gap-3 sm:gap-4">
+          <div className="flex-shrink-0 rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 p-2 shadow-lg sm:p-3">
+            <FileCode className="h-6 w-6 text-white sm:h-8 sm:w-8" />
           </div>
           <div className="min-w-0 flex-1">
             <p
-              className="font-bold text-base sm:text-lg text-slate-900 dark:text-white truncate"
+              className="truncate text-base font-bold text-slate-900 sm:text-lg dark:text-white"
               title={selectedFile.name}
             >
               {selectedFile.name}
@@ -63,7 +63,7 @@ export const FileStatus: React.FC<FileStatusProps> = ({
           variant="ghost"
           size="sm"
           onClick={onRemoveFile}
-          className="text-red-600 hover:text-red-700 hover:bg-red-100 dark:hover:bg-red-900/30 rounded-lg focus-ring flex-shrink-0"
+          className="focus-ring flex-shrink-0 rounded-lg text-red-600 hover:bg-red-100 hover:text-red-700 dark:hover:bg-red-900/30"
           disabled={isUploading || isAnalyzing}
           aria-label="Remove selected file"
         >
@@ -72,43 +72,43 @@ export const FileStatus: React.FC<FileStatusProps> = ({
       </div>
 
       {isUploading && (
-        <div className="space-y-3 sm:space-y-4 p-4 sm:p-6 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/30 dark:to-indigo-950/30 rounded-xl border border-blue-200 dark:border-blue-800 animate-fade-in">
+        <div className="animate-fade-in space-y-3 rounded-xl border border-blue-200 bg-gradient-to-r from-blue-50 to-indigo-50 p-4 sm:space-y-4 sm:p-6 dark:border-blue-800 dark:from-blue-950/30 dark:to-indigo-950/30">
           <div className="flex items-center justify-between">
             <span className="text-sm font-semibold text-blue-900 dark:text-blue-100">
               Uploading file...
             </span>
-            <span className="text-sm text-blue-700 dark:text-blue-300 font-mono">
+            <span className="font-mono text-sm text-blue-700 dark:text-blue-300">
               {uploadProgress}%
             </span>
           </div>
           <Progress
             value={uploadProgress}
-            className="w-full h-2 sm:h-3 bg-blue-100 dark:bg-blue-900"
+            className="h-2 w-full bg-blue-100 sm:h-3 dark:bg-blue-900"
           />
         </div>
       )}
 
       {isAnalyzing && (
-        <div className="space-y-4 p-4 sm:p-6 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/50 dark:to-pink-900/50 rounded-xl border border-purple-200 dark:border-purple-500 animate-fade-in">
+        <div className="animate-fade-in space-y-4 rounded-xl border border-purple-200 bg-gradient-to-r from-purple-50 to-pink-50 p-4 sm:p-6 dark:border-purple-500 dark:from-purple-900/50 dark:to-pink-900/50">
           {/* Header Row */}
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-2">
               <Sparkles
-                className="h-5 w-5 text-purple-600 dark:text-purple-300 animate-pulse flex-shrink-0"
+                className="h-5 w-5 flex-shrink-0 animate-pulse text-purple-600 dark:text-purple-300"
                 aria-hidden="true"
               />
               <span className="text-base font-bold text-purple-900 dark:text-purple-50">
                 Analyzing real code content...
               </span>
             </div>
-            <div className="flex items-center gap-3 flex-wrap">
+            <div className="flex flex-wrap items-center gap-3">
               {analysisProgress && analysisProgress.phaseNumber > 0 && (
-                <span className="text-xs font-bold text-white bg-purple-600 dark:bg-purple-500 px-3 py-1.5 rounded-full shadow-md border border-purple-400 dark:border-purple-400">
+                <span className="rounded-full border border-purple-400 bg-purple-600 px-3 py-1.5 text-xs font-bold text-white shadow-md dark:border-purple-400 dark:bg-purple-500">
                   Step {analysisProgress.phaseNumber}/
                   {analysisProgress.totalPhases}
                 </span>
               )}
-              <span className="text-sm font-semibold text-purple-700 dark:text-purple-200 bg-purple-100 dark:bg-purple-800/50 px-3 py-1 rounded-lg">
+              <span className="rounded-lg bg-purple-100 px-3 py-1 text-sm font-semibold text-purple-700 dark:bg-purple-800/50 dark:text-purple-200">
                 {analysisProgress?.phase || "Extracting & scanning"}
               </span>
             </div>
@@ -118,10 +118,10 @@ export const FileStatus: React.FC<FileStatusProps> = ({
           <div className="relative">
             <Progress
               value={analysisProgress?.percentComplete ?? 0}
-              className="w-full h-3 sm:h-4 bg-purple-200 dark:bg-purple-800 rounded-full overflow-hidden"
+              className="h-3 w-full overflow-hidden rounded-full bg-purple-200 sm:h-4 dark:bg-purple-800"
             />
             {analysisProgress && analysisProgress.percentComplete > 0 && (
-              <span className="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-bold text-purple-900 dark:text-white drop-shadow-sm">
+              <span className="absolute top-1/2 right-2 -translate-y-1/2 text-xs font-bold text-purple-900 drop-shadow-sm dark:text-white">
                 {Math.round(analysisProgress.percentComplete)}%
               </span>
             )}
@@ -129,13 +129,13 @@ export const FileStatus: React.FC<FileStatusProps> = ({
 
           {/* Footer Row */}
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-            <p className="text-xs sm:text-sm text-purple-600 dark:text-purple-300 font-medium leading-relaxed">
+            <p className="text-xs leading-relaxed font-medium text-purple-600 sm:text-sm dark:text-purple-300">
               Extracting files from ZIP • Running security pattern matching •
               Analyzing code quality • Detecting vulnerabilities
             </p>
             {analysisProgress &&
               analysisProgress.estimatedTimeRemaining > 0 && (
-                <div className="flex items-center gap-2 text-xs font-bold text-white bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-500 dark:to-pink-500 px-4 py-2 rounded-full shadow-lg whitespace-nowrap border border-purple-400/50">
+                <div className="flex items-center gap-2 rounded-full border border-purple-400/50 bg-gradient-to-r from-purple-600 to-pink-600 px-4 py-2 text-xs font-bold whitespace-nowrap text-white shadow-lg dark:from-purple-500 dark:to-pink-500">
                   <Clock className="h-4 w-4" aria-hidden="true" />
                   <span>
                     {formatTimeRemaining(
@@ -149,9 +149,9 @@ export const FileStatus: React.FC<FileStatusProps> = ({
       )}
 
       {uploadComplete && !isAnalyzing && (
-        <Alert className="border-2 border-emerald-200 bg-gradient-to-r from-emerald-50 to-green-50 dark:from-emerald-950/30 dark:to-green-950/30 dark:border-emerald-800 animate-bounce-in">
+        <Alert className="animate-bounce-in border-2 border-emerald-200 bg-gradient-to-r from-emerald-50 to-green-50 dark:border-emerald-800 dark:from-emerald-950/30 dark:to-green-950/30">
           <CheckCircle className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
-          <AlertDescription className="text-emerald-800 dark:text-emerald-200 font-semibold">
+          <AlertDescription className="font-semibold text-emerald-800 dark:text-emerald-200">
             File uploaded and analyzed successfully! You'll be automatically
             redirected to the results.
           </AlertDescription>

@@ -67,16 +67,16 @@ export const MetricsCard: React.FC<MetricsCardProps> = ({
   return (
     <Card variant={variant} className={cn("group cursor-pointer", className)}>
       <CardContent className="p-6">
-        <div className="flex items-start justify-between mb-4">
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 mb-2">
-              <p className="text-sm font-medium text-slate-600 dark:text-slate-400 truncate">
+        <div className="mb-4 flex items-start justify-between">
+          <div className="min-w-0 flex-1">
+            <div className="mb-2 flex items-center gap-2">
+              <p className="truncate text-sm font-medium text-slate-600 dark:text-slate-400">
                 {title}
               </p>
               {trend && trendValue && (
                 <div
                   className={cn(
-                    "flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium",
+                    "flex items-center gap-1 rounded-full px-2 py-1 text-xs font-medium",
                     trend === "up"
                       ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400"
                       : trend === "down"
@@ -95,21 +95,21 @@ export const MetricsCard: React.FC<MetricsCardProps> = ({
             </div>
             <p
               className={cn(
-                "text-3xl font-bold mb-1 transition-all duration-300 group-hover:scale-105",
+                "mb-1 text-3xl font-bold transition-all duration-300 group-hover:scale-105",
                 valueClassName || "text-slate-900 dark:text-white"
               )}
             >
               {value}
             </p>
             {subtitle && (
-              <p className="text-sm text-slate-500 dark:text-slate-400 leading-tight">
+              <p className="text-sm leading-tight text-slate-500 dark:text-slate-400">
                 {subtitle}
               </p>
             )}
           </div>
           <div
             className={cn(
-              "flex-shrink-0 p-3 rounded-xl transition-all duration-300 group-hover:scale-110 group-hover:rotate-3",
+              "flex-shrink-0 rounded-xl p-3 transition-all duration-300 group-hover:scale-110 group-hover:rotate-3",
               colors.bg
             )}
           >
@@ -119,7 +119,7 @@ export const MetricsCard: React.FC<MetricsCardProps> = ({
 
         {showProgress && score !== undefined && (
           <div className="space-y-2">
-            <div className="flex justify-between items-center">
+            <div className="flex items-center justify-between">
               <span className="text-xs font-medium text-slate-600 dark:text-slate-400">
                 Progress
               </span>
@@ -128,7 +128,7 @@ export const MetricsCard: React.FC<MetricsCardProps> = ({
               </span>
             </div>
             <div className="relative">
-              <div className="h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+              <div className="h-2 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700">
                 <div
                   className={cn(
                     "h-full rounded-full transition-all duration-1000 ease-out",

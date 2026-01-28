@@ -511,7 +511,7 @@ const DataExport: React.FC<DataExportProps> = ({ data, className = "" }) => {
       <CardContent className="space-y-6">
         {/* Format Selection */}
         <div>
-          <label className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-3 block">
+          <label className="mb-3 block text-sm font-medium text-slate-700 dark:text-slate-300">
             Export Format
           </label>
           <Select
@@ -547,7 +547,7 @@ const DataExport: React.FC<DataExportProps> = ({ data, className = "" }) => {
             Export Options
           </h4>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="flex items-center space-x-2">
               <Checkbox
                 id="include-summary"
@@ -558,7 +558,7 @@ const DataExport: React.FC<DataExportProps> = ({ data, className = "" }) => {
               />
               <label
                 htmlFor="include-summary"
-                className="text-sm font-medium cursor-pointer"
+                className="cursor-pointer text-sm font-medium"
               >
                 Include summary
               </label>
@@ -574,7 +574,7 @@ const DataExport: React.FC<DataExportProps> = ({ data, className = "" }) => {
               />
               <label
                 htmlFor="include-recommendations"
-                className="text-sm font-medium cursor-pointer"
+                className="cursor-pointer text-sm font-medium"
               >
                 Include recommendations
               </label>
@@ -590,7 +590,7 @@ const DataExport: React.FC<DataExportProps> = ({ data, className = "" }) => {
               />
               <label
                 htmlFor="include-code-snippets"
-                className="text-sm font-medium cursor-pointer"
+                className="cursor-pointer text-sm font-medium"
               >
                 Include code snippets
               </label>
@@ -607,7 +607,7 @@ const DataExport: React.FC<DataExportProps> = ({ data, className = "" }) => {
               />
               <label
                 htmlFor="group-by-file"
-                className="text-sm font-medium cursor-pointer"
+                className="cursor-pointer text-sm font-medium"
               >
                 Group by file
               </label>
@@ -617,7 +617,7 @@ const DataExport: React.FC<DataExportProps> = ({ data, className = "" }) => {
 
         {/* Severity Filter */}
         <div>
-          <h4 className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">
+          <h4 className="mb-3 text-sm font-medium text-slate-700 dark:text-slate-300">
             Filter by Severity (optional)
           </h4>
           <div className="flex flex-wrap gap-2">
@@ -637,7 +637,7 @@ const DataExport: React.FC<DataExportProps> = ({ data, className = "" }) => {
             ))}
           </div>
           {options.filterBySeverity.length > 0 && (
-            <p className="text-xs text-slate-500 mt-2">
+            <p className="mt-2 text-xs text-slate-500">
               {filteredIssueCount} of {data.issues.length} issues will be
               exported
             </p>
@@ -675,19 +675,19 @@ const DataExport: React.FC<DataExportProps> = ({ data, className = "" }) => {
         >
           {isExporting ? (
             <>
-              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               Exporting...
             </>
           ) : (
             <>
-              <Download className="h-4 w-4 mr-2" />
+              <Download className="mr-2 h-4 w-4" />
               Export as {selectedFormat.label}
             </>
           )}
         </Button>
 
         {data.issues.length === 0 && (
-          <p className="text-sm text-slate-500 text-center">
+          <p className="text-center text-sm text-slate-500">
             No analysis results available to export.
           </p>
         )}

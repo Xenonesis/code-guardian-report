@@ -108,6 +108,7 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "happy-dom": "^20.3.9",
     "prettier": "^3.8.1",
+    "prettier-plugin-tailwindcss": "^0.7.2",
     "rimraf": "^6.1.2",
     "tsx": "^4.21.0",
     "vitest": "^4.0.18"

@@ -103,7 +103,15 @@ const NotificationTest: React.FC = () => {
       setTimeout(() => {
         notify.info(`${category.toUpperCase()} Category`, {
           message: `Testing ${category} category`,
-          category: category as "system" | "analysis" | "security" | "auth" | "storage" | "network" | "export" | "general",
+          category: category as
+            | "system"
+            | "analysis"
+            | "security"
+            | "auth"
+            | "storage"
+            | "network"
+            | "export"
+            | "general",
         });
         logTest(`✓ ${category} category notification sent`);
       }, index * 300);
@@ -291,7 +299,7 @@ const NotificationTest: React.FC = () => {
 
   return (
     <PageLayout theme={theme} onThemeChange={setTheme}>
-      <div className="container mx-auto p-6 space-y-6 max-w-6xl">
+      <div className="container mx-auto max-w-6xl space-y-6 p-6">
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -307,13 +315,13 @@ const NotificationTest: React.FC = () => {
           </CardHeader>
           <CardContent className="space-y-6">
             {/* Statistics */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
               <Card>
                 <CardContent className="pt-6 text-center">
                   <div className="text-3xl font-bold text-blue-600">
                     {stats.total}
                   </div>
-                  <div className="text-sm text-muted-foreground">Total</div>
+                  <div className="text-muted-foreground text-sm">Total</div>
                 </CardContent>
               </Card>
               <Card>
@@ -321,7 +329,7 @@ const NotificationTest: React.FC = () => {
                   <div className="text-3xl font-bold text-green-600">
                     {stats.byType.success}
                   </div>
-                  <div className="text-sm text-muted-foreground">Success</div>
+                  <div className="text-muted-foreground text-sm">Success</div>
                 </CardContent>
               </Card>
               <Card>
@@ -329,7 +337,7 @@ const NotificationTest: React.FC = () => {
                   <div className="text-3xl font-bold text-red-600">
                     {stats.byType.error}
                   </div>
-                  <div className="text-sm text-muted-foreground">Errors</div>
+                  <div className="text-muted-foreground text-sm">Errors</div>
                 </CardContent>
               </Card>
               <Card>
@@ -337,15 +345,15 @@ const NotificationTest: React.FC = () => {
                   <div className="text-3xl font-bold text-orange-600">
                     {unreadCount}
                   </div>
-                  <div className="text-sm text-muted-foreground">Unread</div>
+                  <div className="text-muted-foreground text-sm">Unread</div>
                 </CardContent>
               </Card>
             </div>
 
             {/* Individual Tests */}
             <div className="space-y-3">
-              <h3 className="font-semibold text-lg">Individual Tests</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <h3 className="text-lg font-semibold">Individual Tests</h3>
+              <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
                 <Button
                   onClick={testBasicNotifications}
                   variant="outline"
@@ -432,7 +440,7 @@ const NotificationTest: React.FC = () => {
                 <CardTitle className="text-sm">Test Log (Real-Time)</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="bg-slate-50 dark:bg-slate-900 rounded p-4 max-h-96 overflow-y-auto font-mono text-xs space-y-1">
+                <div className="max-h-96 space-y-1 overflow-y-auto rounded bg-slate-50 p-4 font-mono text-xs dark:bg-slate-900">
                   {testResults.length === 0 ? (
                     <div className="text-muted-foreground">
                       No tests run yet. Click a test button to start!
@@ -460,14 +468,14 @@ const NotificationTest: React.FC = () => {
                 <CardDescription>Showing last 5 notifications</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="space-y-2 max-h-64 overflow-y-auto">
+                <div className="max-h-64 space-y-2 overflow-y-auto">
                   {notifications
                     .slice(0, 5)
                     .reverse()
                     .map((notif) => (
                       <div
                         key={notif.id}
-                        className={`p-3 rounded border text-sm ${
+                        className={`rounded border p-3 text-sm ${
                           !notif.read
                             ? "bg-accent/50 border-primary/50"
                             : "opacity-60"
@@ -477,11 +485,11 @@ const NotificationTest: React.FC = () => {
                           <div>
                             <div className="font-semibold">{notif.title}</div>
                             {notif.message && (
-                              <div className="text-muted-foreground text-xs mt-1">
+                              <div className="text-muted-foreground mt-1 text-xs">
                                 {notif.message}
                               </div>
                             )}
-                            <div className="text-xs text-muted-foreground mt-1">
+                            <div className="text-muted-foreground mt-1 text-xs">
                               <span className="inline-flex items-center gap-1">
                                 <Badge variant="secondary" className="text-xs">
                                   {notif.category}
@@ -507,7 +515,7 @@ const NotificationTest: React.FC = () => {
                       </div>
                     ))}
                   {notifications.length === 0 && (
-                    <div className="text-center text-muted-foreground py-8">
+                    <div className="text-muted-foreground py-8 text-center">
                       No notifications yet. Run a test to create some!
                     </div>
                   )}

@@ -74,16 +74,28 @@ vi.spyOn(console, "warn").mockImplementation(() => {});
 vi.mock("firebase/firestore", () => ({
   collection: vi.fn(),
   doc: vi.fn(),
-  getDocs: vi.fn().mockRejectedValue(new Error("Firebase not available in test")),
-  setDoc: vi.fn().mockRejectedValue(new Error("Firebase not available in test")),
-  getDoc: vi.fn().mockRejectedValue(new Error("Firebase not available in test")),
+  getDocs: vi
+    .fn()
+    .mockRejectedValue(new Error("Firebase not available in test")),
+  setDoc: vi
+    .fn()
+    .mockRejectedValue(new Error("Firebase not available in test")),
+  getDoc: vi
+    .fn()
+    .mockRejectedValue(new Error("Firebase not available in test")),
   query: vi.fn(),
   where: vi.fn(),
   orderBy: vi.fn(),
   limit: vi.fn(),
-  addDoc: vi.fn().mockRejectedValue(new Error("Firebase not available in test")),
-  updateDoc: vi.fn().mockRejectedValue(new Error("Firebase not available in test")),
-  deleteDoc: vi.fn().mockRejectedValue(new Error("Firebase not available in test")),
+  addDoc: vi
+    .fn()
+    .mockRejectedValue(new Error("Firebase not available in test")),
+  updateDoc: vi
+    .fn()
+    .mockRejectedValue(new Error("Firebase not available in test")),
+  deleteDoc: vi
+    .fn()
+    .mockRejectedValue(new Error("Firebase not available in test")),
   onSnapshot: vi.fn(),
   Timestamp: {
     now: vi.fn(() => ({ toDate: () => new Date() })),

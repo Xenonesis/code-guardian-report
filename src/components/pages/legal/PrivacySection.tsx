@@ -11,24 +11,24 @@ import { Shield, Eye, Database, Lock, Mail, Globe } from "lucide-react";
 
 export const PrivacySection: React.FC = () => {
   return (
-    <section id="privacy" className="min-h-screen relative overflow-hidden">
+    <section id="privacy" className="relative min-h-screen overflow-hidden">
       <AnimatedBackground />
-      <div className="pt-12 sm:pt-16 relative z-10">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
-          <div className="max-w-4xl mx-auto">
+      <div className="relative z-10 pt-12 sm:pt-16">
+        <div className="container mx-auto px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
+          <div className="mx-auto max-w-4xl">
             {/* Privacy Header */}
-            <div className="text-center mb-8 sm:mb-12 lg:mb-16">
-              <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 bg-blue-100 dark:bg-blue-900/30 rounded-full mb-4 sm:mb-6">
-                <Shield className="h-6 w-6 sm:h-8 sm:w-8 text-blue-600 dark:text-blue-400" />
+            <div className="mb-8 text-center sm:mb-12 lg:mb-16">
+              <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 sm:mb-6 sm:h-16 sm:w-16 dark:bg-blue-900/30">
+                <Shield className="h-6 w-6 text-blue-600 sm:h-8 sm:w-8 dark:text-blue-400" />
               </div>
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 dark:text-white mb-3 sm:mb-4 px-4">
+              <h1 className="mb-3 px-4 text-2xl font-bold text-slate-900 sm:mb-4 sm:text-3xl lg:text-4xl dark:text-white">
                 Privacy Policy
               </h1>
-              <p className="text-base sm:text-lg lg:text-xl text-slate-600 dark:text-slate-400 px-4">
+              <p className="px-4 text-base text-slate-600 sm:text-lg lg:text-xl dark:text-slate-400">
                 Your privacy is our priority. Learn how we protect and handle
                 your data.
               </p>
-              <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-500 mt-2">
+              <p className="mt-2 text-xs text-slate-500 sm:text-sm dark:text-slate-500">
                 Last updated: November 28, 2025
               </p>
             </div>
@@ -71,7 +71,7 @@ export const PrivacySection: React.FC = () => {
                       "Analysis preferences and settings",
                     ]}
                   />
-                  <p className="mt-3 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
+                  <p className="mt-3 rounded-lg border border-green-200 bg-green-50 p-4 dark:border-green-800 dark:bg-green-900/20">
                     <strong>Important:</strong> Your source code is processed
                     locally in your browser whenever possible. We do not
                     permanently store your source code on our servers.
@@ -108,7 +108,7 @@ export const PrivacySection: React.FC = () => {
                   If you have questions about this Privacy Policy or our data
                   practices, please contact us:
                 </p>
-                <div className="mt-6 p-6 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800">
+                <div className="mt-6 rounded-xl border border-blue-200 bg-blue-50 p-6 dark:border-blue-800 dark:bg-blue-900/20">
                   <div className="space-y-3">
                     <div className="flex items-center gap-3">
                       <Mail className="h-5 w-5 text-blue-600" />

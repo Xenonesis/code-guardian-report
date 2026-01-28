@@ -1,15 +1,8 @@
 // src/firebase.ts
 
 import { initializeApp } from "firebase/app";
-import {
-  enableNetwork,
-  disableNetwork,
-} from "firebase/firestore";
-import {
-  getAuth,
-  GoogleAuthProvider,
-  GithubAuthProvider,
-} from "firebase/auth";
+import { enableNetwork, disableNetwork } from "firebase/firestore";
+import { getAuth, GoogleAuthProvider, GithubAuthProvider } from "firebase/auth";
 import { logger } from "@/utils/logger";
 
 // Firebase configuration using environment variables

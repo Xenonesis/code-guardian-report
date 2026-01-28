@@ -17,7 +17,7 @@ import { CustomRulesSection } from "@/components/pages/about/CustomRulesSection"
 
 export const AboutSection: React.FC = () => {
   return (
-    <section id="about" className="min-h-screen relative overflow-hidden">
+    <section id="about" className="relative min-h-screen overflow-hidden">
       <AnimatedBackground />
 
       <div className="pt-12 sm:pt-16">

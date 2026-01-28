@@ -211,21 +211,21 @@ export const HowItWorksSection: React.FC = () => {
   ];
 
   return (
-    <section className="py-20 relative overflow-hidden">
+    <section className="relative overflow-hidden py-20">
       {/* Background Effects */}
       <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/30 dark:from-slate-900 dark:via-blue-900/10 dark:to-purple-900/10"></div>
-      <div className="absolute top-0 left-1/4 w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
-      <div className="absolute bottom-0 right-1/4 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-1000"></div>
+      <div className="absolute top-0 left-1/4 h-72 w-72 animate-pulse rounded-full bg-blue-300 opacity-20 mix-blend-multiply blur-xl filter"></div>
+      <div className="absolute right-1/4 bottom-0 h-72 w-72 animate-pulse rounded-full bg-purple-300 opacity-20 mix-blend-multiply blur-xl filter delay-1000"></div>
 
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="relative z-10 container mx-auto px-6">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+        <div className="mb-16 text-center">
+          <h2 className="mb-6 text-4xl font-bold md:text-5xl">
             <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-teal-600 bg-clip-text text-transparent">
               How Our Analysis Engine Works
             </span>
           </h2>
-          <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
+          <p className="mx-auto max-w-3xl text-xl text-slate-600 dark:text-slate-400">
             Deep dive into our comprehensive, multi-layered analysis system that
             provides real-time security, quality, and performance insights with
             industry-leading accuracy
@@ -234,20 +234,20 @@ export const HowItWorksSection: React.FC = () => {
 
         {/* Analysis Steps */}
         <div className="mb-20">
-          <h3 className="text-3xl font-bold text-center mb-12 text-slate-800 dark:text-slate-200">
+          <h3 className="mb-12 text-center text-3xl font-bold text-slate-800 dark:text-slate-200">
             5-Stage Analysis Pipeline
           </h3>
 
           {/* Step Navigation */}
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
+          <div className="mb-12 flex flex-wrap justify-center gap-4">
             {analysisSteps.map((step, index) => (
               <button
                 key={step.id}
                 onClick={() => setActiveStep(step.id)}
-                className={`flex items-center gap-3 px-6 py-3 rounded-full transition-all duration-300 ${
+                className={`flex items-center gap-3 rounded-full px-6 py-3 transition-all duration-300 ${
                   activeStep === step.id
-                    ? `bg-gradient-to-r ${step.color} text-white shadow-lg scale-105`
-                    : "bg-white/50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-400 hover:bg-white/80 dark:hover:bg-slate-800/80"
+                    ? `bg-gradient-to-r ${step.color} scale-105 text-white shadow-lg`
+                    : "bg-white/50 text-slate-600 hover:bg-white/80 dark:bg-slate-800/50 dark:text-slate-400 dark:hover:bg-slate-800/80"
                 }`}
               >
                 <span className="font-semibold">{index + 1}</span>
@@ -263,17 +263,17 @@ export const HowItWorksSection: React.FC = () => {
               key={step.id}
               className={`transition-all duration-500 ${
                 activeStep === step.id
-                  ? "opacity-100 max-h-full"
-                  : "opacity-0 max-h-0 overflow-hidden"
+                  ? "max-h-full opacity-100"
+                  : "max-h-0 overflow-hidden opacity-0"
               }`}
             >
-              <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-slate-200/50 dark:border-slate-700/50">
-                <div className="grid md:grid-cols-2 gap-8">
+              <div className="rounded-2xl border border-slate-200/50 bg-white/80 p-8 shadow-xl backdrop-blur-sm dark:border-slate-700/50 dark:bg-slate-800/80">
+                <div className="grid gap-8 md:grid-cols-2">
                   {/* Description & Details */}
                   <div>
-                    <div className="flex items-center gap-4 mb-6">
+                    <div className="mb-6 flex items-center gap-4">
                       <div
-                        className={`p-3 rounded-xl bg-gradient-to-r ${step.color} text-white`}
+                        className={`rounded-xl bg-gradient-to-r p-3 ${step.color} text-white`}
                       >
                         {step.icon}
                       </div>
@@ -288,7 +288,7 @@ export const HowItWorksSection: React.FC = () => {
                     </div>
 
                     <div className="space-y-3">
-                      <h5 className="font-semibold text-slate-800 dark:text-slate-200 flex items-center gap-2">
+                      <h5 className="flex items-center gap-2 font-semibold text-slate-800 dark:text-slate-200">
                         <Eye className="h-4 w-4" />
                         Analysis Components:
                       </h5>
@@ -298,7 +298,7 @@ export const HowItWorksSection: React.FC = () => {
                             key={index}
                             className="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-400"
                           >
-                            <CheckCircle className="h-4 w-4 text-green-500 flex-shrink-0" />
+                            <CheckCircle className="h-4 w-4 flex-shrink-0 text-green-500" />
                             <span>{detail}</span>
                           </div>
                         ))}
@@ -308,7 +308,7 @@ export const HowItWorksSection: React.FC = () => {
 
                   {/* Metrics */}
                   <div>
-                    <h5 className="font-semibold text-slate-800 dark:text-slate-200 flex items-center gap-2 mb-4">
+                    <h5 className="mb-4 flex items-center gap-2 font-semibold text-slate-800 dark:text-slate-200">
                       <TrendingUp className="h-4 w-4" />
                       Generated Metrics:
                     </h5>
@@ -316,7 +316,7 @@ export const HowItWorksSection: React.FC = () => {
                       {step.metrics.map((metric, index) => (
                         <div
                           key={index}
-                          className="flex items-center gap-3 p-3 bg-slate-50/50 dark:bg-slate-700/50 rounded-lg"
+                          className="flex items-center gap-3 rounded-lg bg-slate-50/50 p-3 dark:bg-slate-700/50"
                         >
                           <BarChart3 className="h-4 w-4 text-blue-500" />
                           <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
@@ -334,17 +334,17 @@ export const HowItWorksSection: React.FC = () => {
 
         {/* Advanced Metrics Grid */}
         <div className="mb-16">
-          <h3 className="text-3xl font-bold text-center mb-12 text-slate-800 dark:text-slate-200">
+          <h3 className="mb-12 text-center text-3xl font-bold text-slate-800 dark:text-slate-200">
             Comprehensive Scoring System
           </h3>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {advancedMetrics.map((category, index) => (
               <div
                 key={index}
-                className="bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-xl p-6 border border-slate-200/50 dark:border-slate-700/50 hover:shadow-lg transition-all duration-300"
+                className="rounded-xl border border-slate-200/50 bg-white/60 p-6 backdrop-blur-sm transition-all duration-300 hover:shadow-lg dark:border-slate-700/50 dark:bg-slate-800/60"
               >
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg text-white">
+                <div className="mb-4 flex items-center gap-3">
+                  <div className="rounded-lg bg-gradient-to-r from-blue-500 to-purple-500 p-2 text-white">
                     {category.icon}
                   </div>
                   <h4 className="font-bold text-slate-800 dark:text-slate-200">
@@ -357,7 +357,7 @@ export const HowItWorksSection: React.FC = () => {
                       key={itemIndex}
                       className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400"
                     >
-                      <div className="w-1.5 h-1.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></div>
+                      <div className="h-1.5 w-1.5 rounded-full bg-gradient-to-r from-blue-500 to-purple-500"></div>
                       <span>{item}</span>
                     </div>
                   ))}
@@ -369,7 +369,7 @@ export const HowItWorksSection: React.FC = () => {
 
         {/* Technology Stack */}
         <div className="text-center">
-          <h3 className="text-3xl font-bold mb-8 text-slate-800 dark:text-slate-200">
+          <h3 className="mb-8 text-3xl font-bold text-slate-800 dark:text-slate-200">
             Powered by Advanced Technology
           </h3>
           <div className="flex flex-wrap justify-center gap-4">
@@ -395,7 +395,7 @@ export const HowItWorksSection: React.FC = () => {
             ].map((tech, index) => (
               <div
                 key={index}
-                className="flex items-center gap-2 px-4 py-2 bg-white/50 dark:bg-slate-800/50 rounded-full border border-slate-200/50 dark:border-slate-700/50"
+                className="flex items-center gap-2 rounded-full border border-slate-200/50 bg-white/50 px-4 py-2 dark:border-slate-700/50 dark:bg-slate-800/50"
               >
                 <div className="text-blue-500">{tech.icon}</div>
                 <span className="text-sm font-medium text-slate-700 dark:text-slate-300">

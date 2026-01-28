@@ -45,7 +45,7 @@ const providerConfig = {
   "google.com": {
     name: "Google",
     icon: (
-      <svg className="w-full h-full" viewBox="0 0 24 24">
+      <svg className="h-full w-full" viewBox="0 0 24 24">
         <path
           fill="#4285F4"
           d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -72,7 +72,7 @@ const providerConfig = {
   "github.com": {
     name: "GitHub",
     icon: (
-      <svg className="w-full h-full" fill="currentColor" viewBox="0 0 24 24">
+      <svg className="h-full w-full" fill="currentColor" viewBox="0 0 24 24">
         <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
       </svg>
     ),
@@ -83,7 +83,7 @@ const providerConfig = {
   },
   password: {
     name: "Email/Password",
-    icon: <Mail className="w-full h-full" />,
+    icon: <Mail className="h-full w-full" />,
     color: "bg-indigo-500",
     hoverColor: "hover:bg-indigo-600",
     textColor: "text-indigo-600",
@@ -92,7 +92,7 @@ const providerConfig = {
   "facebook.com": {
     name: "Facebook",
     icon: (
-      <svg className="w-full h-full" fill="currentColor" viewBox="0 0 24 24">
+      <svg className="h-full w-full" fill="currentColor" viewBox="0 0 24 24">
         <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
       </svg>
     ),
@@ -104,7 +104,7 @@ const providerConfig = {
   "twitter.com": {
     name: "Twitter",
     icon: (
-      <svg className="w-full h-full" fill="currentColor" viewBox="0 0 24 24">
+      <svg className="h-full w-full" fill="currentColor" viewBox="0 0 24 24">
         <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
       </svg>
     ),
@@ -132,29 +132,29 @@ export const AccountConflictModal: React.FC<AccountConflictModalProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[480px] p-0 overflow-hidden bg-white/90 dark:bg-slate-950/90 backdrop-blur-xl border-white/20 dark:border-slate-800 shadow-2xl duration-300 animate-in fade-in zoom-in-95">
+      <DialogContent className="animate-in fade-in zoom-in-95 overflow-hidden border-white/20 bg-white/90 p-0 shadow-2xl backdrop-blur-xl duration-300 sm:max-w-[480px] dark:border-slate-800 dark:bg-slate-950/90">
         {/* Decorative Background Elements */}
-        <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-blue-500/10 to-transparent pointer-events-none" />
-        <div className="absolute -top-24 -right-24 w-48 h-48 bg-blue-500/20 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-purple-500/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="pointer-events-none absolute top-0 left-0 h-32 w-full bg-gradient-to-b from-blue-500/10 to-transparent" />
+        <div className="pointer-events-none absolute -top-24 -right-24 h-48 w-48 rounded-full bg-blue-500/20 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-24 -left-24 h-48 w-48 rounded-full bg-purple-500/20 blur-3xl" />
 
         {/* Header */}
-        <div className="relative pt-8 px-6 pb-2 text-center">
-          <div className="mx-auto w-20 h-20 mb-6 relative group cursor-default">
-            <div className="absolute inset-0 bg-gradient-to-tr from-blue-500 to-purple-500 rounded-2xl blur-lg opacity-40 group-hover:opacity-60 transition-opacity duration-500" />
-            <div className="relative bg-white dark:bg-slate-900 rounded-2xl p-5 shadow-xl ring-1 ring-black/5 dark:ring-white/10 transform transition-transform duration-500 group-hover:scale-105">
-              <ShieldCheck className="w-full h-full text-blue-500 dark:text-blue-400" />
+        <div className="relative px-6 pt-8 pb-2 text-center">
+          <div className="group relative mx-auto mb-6 h-20 w-20 cursor-default">
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-blue-500 to-purple-500 opacity-40 blur-lg transition-opacity duration-500 group-hover:opacity-60" />
+            <div className="relative transform rounded-2xl bg-white p-5 shadow-xl ring-1 ring-black/5 transition-transform duration-500 group-hover:scale-105 dark:bg-slate-900 dark:ring-white/10">
+              <ShieldCheck className="h-full w-full text-blue-500 dark:text-blue-400" />
             </div>
-            <div className="absolute -bottom-2 -right-2 bg-red-500 text-white p-1.5 rounded-full border-2 border-white dark:border-slate-900 shadow-sm">
-              <AlertTriangle className="w-3 h-3" />
+            <div className="absolute -right-2 -bottom-2 rounded-full border-2 border-white bg-red-500 p-1.5 text-white shadow-sm dark:border-slate-900">
+              <AlertTriangle className="h-3 w-3" />
             </div>
           </div>
 
-          <DialogTitle className="text-2xl sm:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 mb-3">
+          <DialogTitle className="mb-3 bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-2xl font-bold text-transparent sm:text-3xl dark:from-white dark:to-slate-300">
             Account Conflict
           </DialogTitle>
 
-          <DialogDescription className="text-base text-slate-600 dark:text-slate-400 max-w-xs mx-auto leading-relaxed">
+          <DialogDescription className="mx-auto max-w-xs text-base leading-relaxed text-slate-600 dark:text-slate-400">
             You already have an account linked to{" "}
             <span className="font-semibold text-slate-900 dark:text-white">
               {email}
@@ -165,29 +165,29 @@ export const AccountConflictModal: React.FC<AccountConflictModalProps> = ({
         {/* Main Content */}
         <div className="px-6 py-6">
           {/* Conflict Visualization Card */}
-          <div className="relative bg-slate-50/80 dark:bg-slate-900/50 rounded-2xl p-6 border border-slate-200/60 dark:border-slate-800/60 backdrop-blur-sm">
+          <div className="relative rounded-2xl border border-slate-200/60 bg-slate-50/80 p-6 backdrop-blur-sm dark:border-slate-800/60 dark:bg-slate-900/50">
             <div className="flex items-center justify-between gap-4">
               {/* Attempted Provider (Faded) */}
-              <div className="flex flex-col items-center gap-3 group">
-                <div className="relative w-14 h-14 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center p-3.5 opacity-50 grayscale group-hover:opacity-75 group-hover:grayscale-0 transition-all duration-300">
+              <div className="group flex flex-col items-center gap-3">
+                <div className="relative flex h-14 w-14 items-center justify-center rounded-xl border border-slate-200 bg-white p-3.5 opacity-50 grayscale transition-all duration-300 group-hover:opacity-75 group-hover:grayscale-0 dark:border-slate-700 dark:bg-slate-800">
                   {attemptedProviderInfo.icon}
-                  <div className="absolute -top-1.5 -right-1.5 bg-slate-200 dark:bg-slate-700 text-slate-500 p-0.5 rounded-full ring-2 ring-white dark:ring-slate-900">
-                    <X className="w-3 h-3" />
+                  <div className="absolute -top-1.5 -right-1.5 rounded-full bg-slate-200 p-0.5 text-slate-500 ring-2 ring-white dark:bg-slate-700 dark:ring-slate-900">
+                    <X className="h-3 w-3" />
                   </div>
                 </div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                <span className="text-[10px] font-bold tracking-wider text-slate-400 uppercase dark:text-slate-500">
                   Blocked
                 </span>
               </div>
 
               {/* Connection Line */}
-              <div className="flex-1 flex flex-col items-center -mt-4">
-                <div className="text-[10px] font-medium text-slate-400 mb-1">
+              <div className="-mt-4 flex flex-1 flex-col items-center">
+                <div className="mb-1 text-[10px] font-medium text-slate-400">
                   Use instead
                 </div>
-                <div className="w-full h-px bg-gradient-to-r from-transparent via-slate-300 dark:via-slate-600 to-transparent relative">
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-slate-50 dark:bg-slate-900 px-2">
-                    <ArrowRight className="w-4 h-4 text-slate-400" />
+                <div className="relative h-px w-full bg-gradient-to-r from-transparent via-slate-300 to-transparent dark:via-slate-600">
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-slate-50 px-2 dark:bg-slate-900">
+                    <ArrowRight className="h-4 w-4 text-slate-400" />
                   </div>
                 </div>
               </div>
@@ -195,23 +195,23 @@ export const AccountConflictModal: React.FC<AccountConflictModalProps> = ({
               {/* Existing Provider (Highlighted) */}
               <div className="flex flex-col items-center gap-3">
                 <div
-                  className="relative group cursor-pointer"
+                  className="group relative cursor-pointer"
                   onClick={onSignInWithExisting}
                 >
-                  <div className="absolute -inset-3 bg-blue-500/20 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="absolute -inset-3 rounded-full bg-blue-500/20 opacity-0 blur-md transition-opacity duration-500 group-hover:opacity-100" />
                   <div
                     className={cn(
-                      "relative w-16 h-16 rounded-xl bg-white dark:bg-slate-800 border-2 flex items-center justify-center p-4 shadow-lg transform transition-all duration-300 group-hover:scale-105 group-hover:-translate-y-1",
+                      "relative flex h-16 w-16 transform items-center justify-center rounded-xl border-2 bg-white p-4 shadow-lg transition-all duration-300 group-hover:-translate-y-1 group-hover:scale-105 dark:bg-slate-800",
                       existingProviderInfo.borderColor
                     )}
                   >
                     {existingProviderInfo.icon}
                   </div>
-                  <div className="absolute -top-2 -right-2 bg-blue-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm ring-2 ring-white dark:ring-slate-900 animate-bounce-slow">
+                  <div className="animate-bounce-slow absolute -top-2 -right-2 rounded-full bg-blue-600 px-2 py-0.5 text-[10px] font-bold text-white shadow-sm ring-2 ring-white dark:ring-slate-900">
                     USE THIS
                   </div>
                 </div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400">
+                <span className="text-[10px] font-bold tracking-wider text-blue-600 uppercase dark:text-blue-400">
                   Recommended
                 </span>
               </div>
@@ -220,8 +220,8 @@ export const AccountConflictModal: React.FC<AccountConflictModalProps> = ({
 
           {/* Explanation Text */}
           <div className="mt-6 flex gap-3 px-2">
-            <HelpCircle className="w-5 h-5 text-slate-400 flex-shrink-0 mt-0.5" />
-            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+            <HelpCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-slate-400" />
+            <p className="text-xs leading-relaxed text-slate-500 sm:text-sm dark:text-slate-400">
               To protect your security, please sign in with your existing
               account. You can link other login methods in your settings later.
             </p>
@@ -229,25 +229,25 @@ export const AccountConflictModal: React.FC<AccountConflictModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="p-6 pt-2 bg-slate-50/50 dark:bg-slate-900/30 border-t border-slate-100 dark:border-slate-800/50 flex flex-col gap-3">
+        <div className="flex flex-col gap-3 border-t border-slate-100 bg-slate-50/50 p-6 pt-2 dark:border-slate-800/50 dark:bg-slate-900/30">
           <Button
             onClick={onSignInWithExisting}
             disabled={isLinking}
             className={cn(
-              "w-full h-12 text-base font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.01] active:scale-[0.99] rounded-xl relative overflow-hidden",
-              "bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700 text-white border-0"
+              "relative h-12 w-full overflow-hidden rounded-xl text-base font-medium shadow-lg transition-all duration-300 hover:scale-[1.01] hover:shadow-xl active:scale-[0.99]",
+              "border-0 bg-gradient-to-r from-blue-600 to-violet-600 text-white hover:from-blue-700 hover:to-violet-700"
             )}
           >
-            <div className="absolute inset-0 bg-white/20 translate-y-full hover:translate-y-0 transition-transform duration-300" />
+            <div className="absolute inset-0 translate-y-full bg-white/20 transition-transform duration-300 hover:translate-y-0" />
             <div className="relative flex items-center justify-center gap-2">
               {isLinking ? (
                 <>
-                  <Loader2 className="w-5 h-5 animate-spin" />
+                  <Loader2 className="h-5 w-5 animate-spin" />
                   Connecting Accounts...
                 </>
               ) : (
                 <>
-                  <Lock className="w-4 h-4" />
+                  <Lock className="h-4 w-4" />
                   Sign in with {existingProviderInfo.name}
                 </>
               )}
@@ -258,25 +258,25 @@ export const AccountConflictModal: React.FC<AccountConflictModalProps> = ({
             variant="ghost"
             onClick={onTryDifferentMethod}
             disabled={isLinking}
-            className="w-full h-10 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl text-sm font-normal"
+            className="h-10 w-full rounded-xl text-sm font-normal text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
           >
             I want to use a different email address
           </Button>
         </div>
 
         {/* Technical Details (Subtle) */}
-        <div className="absolute bottom-2 right-2 opacity-0 hover:opacity-100 transition-opacity">
+        <div className="absolute right-2 bottom-2 opacity-0 transition-opacity hover:opacity-100">
           <button
             onClick={() => setShowTechnicalDetails(!showTechnicalDetails)}
-            className="p-1 text-slate-300 dark:text-slate-700 hover:text-slate-500 dark:hover:text-slate-500"
+            className="p-1 text-slate-300 hover:text-slate-500 dark:text-slate-700 dark:hover:text-slate-500"
           >
-            <HelpCircle className="w-3 h-3" />
+            <HelpCircle className="h-3 w-3" />
           </button>
         </div>
 
         {showTechnicalDetails && (
-          <div className="absolute inset-0 bg-white/95 dark:bg-slate-950/95 z-50 p-6 flex flex-col">
-            <div className="flex items-center justify-between mb-4">
+          <div className="absolute inset-0 z-50 flex flex-col bg-white/95 p-6 dark:bg-slate-950/95">
+            <div className="mb-4 flex items-center justify-between">
               <h3 className="font-bold text-slate-900 dark:text-white">
                 Technical Details
               </h3>
@@ -285,10 +285,10 @@ export const AccountConflictModal: React.FC<AccountConflictModalProps> = ({
                 size="sm"
                 onClick={() => setShowTechnicalDetails(false)}
               >
-                <X className="w-4 h-4" />
+                <X className="h-4 w-4" />
               </Button>
             </div>
-            <div className="flex-1 overflow-auto font-mono text-xs text-slate-600 dark:text-slate-400 space-y-2">
+            <div className="flex-1 space-y-2 overflow-auto font-mono text-xs text-slate-600 dark:text-slate-400">
               <p>Error: auth/account-exists-with-different-credential</p>
               <p>Email: {email}</p>
               <p>Existing Provider: {existingProvider}</p>

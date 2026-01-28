@@ -35,7 +35,7 @@ export const FileComplexityChart: React.FC<FileComplexityChartProps> = ({
   data,
 }) => {
   return (
-    <Card className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm border-0 shadow-xl">
+    <Card className="border-0 bg-white/90 shadow-xl backdrop-blur-sm dark:bg-slate-800/90">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <FileText className="h-5 w-5 text-indigo-600" />

@@ -70,18 +70,18 @@ export const StorageStatus: React.FC<StorageStatusProps> = ({
   const getStorageStatusBadge = (percentage: number): React.ReactNode => {
     if (percentage < 50)
       return (
-        <Badge variant="outline" className="text-green-600 border-green-600">
+        <Badge variant="outline" className="border-green-600 text-green-600">
           Good
         </Badge>
       );
     if (percentage < 80)
       return (
-        <Badge variant="outline" className="text-yellow-600 border-yellow-600">
+        <Badge variant="outline" className="border-yellow-600 text-yellow-600">
           Moderate
         </Badge>
       );
     return (
-      <Badge variant="outline" className="text-red-600 border-red-600">
+      <Badge variant="outline" className="border-red-600 text-red-600">
         High
       </Badge>
     );
@@ -107,7 +107,7 @@ export const StorageStatus: React.FC<StorageStatusProps> = ({
   };
 
   return (
-    <Card className="w-full bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm border-0 shadow-lg">
+    <Card className="w-full border-0 bg-white/95 shadow-lg backdrop-blur-sm dark:bg-slate-800/95">
       <CardHeader className="pb-4">
         <CardTitle className="flex items-center gap-2 text-lg">
           <Database className="h-5 w-5 text-blue-600" />
@@ -125,7 +125,7 @@ export const StorageStatus: React.FC<StorageStatusProps> = ({
                   <div className="font-semibold text-blue-900 dark:text-blue-100">
                     Stored Analysis Available
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-blue-800 dark:text-blue-200">
+                  <div className="grid grid-cols-1 gap-2 text-sm text-blue-800 md:grid-cols-2 dark:text-blue-200">
                     <div>
                       <strong>File:</strong> {storedAnalysis.fileName}
                     </div>
@@ -145,9 +145,9 @@ export const StorageStatus: React.FC<StorageStatusProps> = ({
                   {storedAnalysis.compressed && (
                     <Badge
                       variant="outline"
-                      className="text-blue-600 border-blue-600"
+                      className="border-blue-600 text-blue-600"
                     >
-                      <Zap className="h-3 w-3 mr-1" />
+                      <Zap className="mr-1 h-3 w-3" />
                       Compressed
                     </Badge>
                   )}
@@ -191,7 +191,7 @@ export const StorageStatus: React.FC<StorageStatusProps> = ({
           </div>
 
           <div className="grid grid-cols-2 gap-4 pt-2">
-            <div className="text-center p-3 bg-slate-50 dark:bg-slate-700/50 rounded-lg">
+            <div className="rounded-lg bg-slate-50 p-3 text-center dark:bg-slate-700/50">
               <div className="text-2xl font-bold text-slate-900 dark:text-white">
                 {storageStats.historyCount}
               </div>
@@ -200,7 +200,7 @@ export const StorageStatus: React.FC<StorageStatusProps> = ({
               </div>
             </div>
             {storageStats.compressionRatio && (
-              <div className="text-center p-3 bg-slate-50 dark:bg-slate-700/50 rounded-lg">
+              <div className="rounded-lg bg-slate-50 p-3 text-center dark:bg-slate-700/50">
                 <div className="text-2xl font-bold text-slate-900 dark:text-white">
                   {(storageStats.compressionRatio * 100).toFixed(0)}%
                 </div>
@@ -214,7 +214,7 @@ export const StorageStatus: React.FC<StorageStatusProps> = ({
 
         {/* Action Buttons */}
         <div className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
             {/* Export Options */}
             <div className="space-y-2">
               <label className="text-sm font-medium text-slate-700 dark:text-slate-300">
@@ -228,7 +228,7 @@ export const StorageStatus: React.FC<StorageStatusProps> = ({
                   disabled={!hasStoredData}
                   className="flex-1"
                 >
-                  <Download className="h-4 w-4 mr-1" />
+                  <Download className="mr-1 h-4 w-4" />
                   JSON
                 </Button>
                 <Button
@@ -238,7 +238,7 @@ export const StorageStatus: React.FC<StorageStatusProps> = ({
                   disabled={!hasStoredData}
                   className="flex-1"
                 >
-                  <Download className="h-4 w-4 mr-1" />
+                  <Download className="mr-1 h-4 w-4" />
                   Compressed
                 </Button>
               </div>
@@ -254,12 +254,12 @@ export const StorageStatus: React.FC<StorageStatusProps> = ({
                   type="file"
                   accept=".json,.txt"
                   onChange={handleImportFile}
-                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                  className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
                   aria-label="Import analysis data file"
                   title="Import analysis data file"
                 />
                 <Button variant="outline" size="sm" className="w-full">
-                  <Upload className="h-4 w-4 mr-1" />
+                  <Upload className="mr-1 h-4 w-4" />
                   Choose File
                 </Button>
               </div>
@@ -294,7 +294,7 @@ export const StorageStatus: React.FC<StorageStatusProps> = ({
               size="sm"
               onClick={onClearData}
               disabled={!hasStoredData}
-              className="flex items-center gap-1 text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950/20"
+              className="flex items-center gap-1 text-red-600 hover:bg-red-50 hover:text-red-700 dark:hover:bg-red-950/20"
             >
               <Trash2 className="h-4 w-4" />
               Clear Data

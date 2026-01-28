@@ -76,11 +76,11 @@ export const PDFDownloadButton: React.FC<PDFDownloadButtonProps> = ({
       className={`${className} ${isGenerating ? "cursor-not-allowed" : ""}`}
     >
       {isGenerating ? (
-        <Loader2 className="h-4 w-4 animate-spin mr-2" />
+        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
       ) : showIcon ? (
-        <Download className="h-4 w-4 mr-2" />
+        <Download className="mr-2 h-4 w-4" />
       ) : (
-        <FileText className="h-4 w-4 mr-2" />
+        <FileText className="mr-2 h-4 w-4" />
       )}
       {isGenerating ? "Generating PDF..." : "Download Report"}
     </Button>

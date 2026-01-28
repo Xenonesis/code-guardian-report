@@ -22,11 +22,11 @@ export const AnalysisTabs: React.FC<AnalysisTabsProps> = ({
   isRedirecting = false,
 }) => {
   return (
-    <section className="w-full px-4 sm:px-6 lg:px-8 mx-auto" role="main">
+    <section className="mx-auto w-full px-4 sm:px-6 lg:px-8" role="main">
       <Tabs
         value={currentTab}
         onValueChange={onTabChange}
-        className="w-full flex flex-col gap-4 sm:gap-6"
+        className="flex w-full flex-col gap-4 sm:gap-6"
         orientation="horizontal"
       >
         <div className="w-full overflow-x-auto overflow-y-hidden pb-2 sm:pb-0">
@@ -37,7 +37,7 @@ export const AnalysisTabs: React.FC<AnalysisTabsProps> = ({
           />
         </div>
 
-        <div className="w-full rounded-xl bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border shadow-sm p-4 sm:p-6">
+        <div className="w-full rounded-xl border bg-white/80 p-4 shadow-sm backdrop-blur-sm sm:p-6 dark:bg-slate-800/80">
           <TabContent
             analysisResults={analysisResults}
             onFileSelect={onFileSelect}

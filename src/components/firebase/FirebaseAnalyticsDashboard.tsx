@@ -168,8 +168,16 @@ export const FirebaseAnalyticsDashboard = ({
     }
   };
 
-  const formatDate = (timestamp: { toDate?: () => Date } | string | number | Date) => {
-    const date = timestamp && typeof timestamp === 'object' && 'toDate' in timestamp && timestamp.toDate ? timestamp.toDate() : new Date(timestamp as string | number | Date);
+  const formatDate = (
+    timestamp: { toDate?: () => Date } | string | number | Date
+  ) => {
+    const date =
+      timestamp &&
+      typeof timestamp === "object" &&
+      "toDate" in timestamp &&
+      timestamp.toDate
+        ? timestamp.toDate()
+        : new Date(timestamp as string | number | Date);
     return date.toLocaleString();
   };
 
@@ -262,7 +270,7 @@ export const FirebaseAnalyticsDashboard = ({
               placeholder="Search analyses by filename, tags, or issue type..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="flex-1 px-3 py-2 border rounded-md"
+              className="flex-1 rounded-md border px-3 py-2"
               onKeyPress={(e) => e.key === "Enter" && handleSearchAnalysis()}
             />
             <Button onClick={handleSearchAnalysis} disabled={isLoading}>
@@ -300,9 +308,9 @@ export const FirebaseAnalyticsDashboard = ({
           ) : analysisHistory.length === 0 ? (
             <Card>
               <CardContent className="pt-6">
-                <div className="text-center py-8">
-                  <Cloud className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-                  <h3 className="text-lg font-semibold mb-2">
+                <div className="py-8 text-center">
+                  <Cloud className="text-muted-foreground mx-auto mb-4 h-12 w-12" />
+                  <h3 className="mb-2 text-lg font-semibold">
                     No Analysis History
                   </h3>
                   <p className="text-muted-foreground">
@@ -317,9 +325,9 @@ export const FirebaseAnalyticsDashboard = ({
               {analysisHistory.map((analysis) => (
                 <Card
                   key={analysis.id}
-                  className={`cursor-pointer transition-colors hover:bg-muted/50 ${
+                  className={`hover:bg-muted/50 cursor-pointer transition-colors ${
                     selectedAnalysis?.id === analysis.id
-                      ? "ring-2 ring-primary"
+                      ? "ring-primary ring-2"
                       : ""
                   }`}
                   onClick={() => handleSelectAnalysis(analysis)}
@@ -327,7 +335,7 @@ export const FirebaseAnalyticsDashboard = ({
                   <CardContent className="pt-6">
                     <div className="flex items-center justify-between">
                       <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-2">
+                        <div className="mb-2 flex items-center gap-2">
                           <h3 className="font-semibold">{analysis.fileName}</h3>
                           <Badge
                             variant={
@@ -345,7 +353,7 @@ export const FirebaseAnalyticsDashboard = ({
                           )}
                         </div>
 
-                        <div className="flex items-center gap-4 text-sm text-muted-foreground mb-2">
+                        <div className="text-muted-foreground mb-2 flex items-center gap-4 text-sm">
                           <span>
                             📁 {(analysis.fileSize / 1024).toFixed(1)} KB
                           </span>
@@ -357,7 +365,7 @@ export const FirebaseAnalyticsDashboard = ({
                         </div>
 
                         {analysis.tags && analysis.tags.length > 0 && (
-                          <div className="flex gap-1 mb-2">
+                          <div className="mb-2 flex gap-1">
                             {analysis.tags.map((tag, index) => (
                               <Badge
                                 key={index}
@@ -373,7 +381,7 @@ export const FirebaseAnalyticsDashboard = ({
                         {/* Issue severity breakdown */}
                         {analysis.results.issues &&
                           analysis.results.issues.length > 0 && (
-                            <div className="flex gap-2 mt-2">
+                            <div className="mt-2 flex gap-2">
                               {["critical", "high", "medium", "low"].map(
                                 (severity) => {
                                   const count =
@@ -444,7 +452,7 @@ export const FirebaseAnalyticsDashboard = ({
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <h4 className="font-semibold mb-2">File Information</h4>
+                    <h4 className="mb-2 font-semibold">File Information</h4>
                     <div className="space-y-1 text-sm">
                       <p>
                         <strong>Size:</strong>{" "}
@@ -465,7 +473,7 @@ export const FirebaseAnalyticsDashboard = ({
                     </div>
                   </div>
                   <div>
-                    <h4 className="font-semibold mb-2">Analysis Results</h4>
+                    <h4 className="mb-2 font-semibold">Analysis Results</h4>
                     <div className="space-y-1 text-sm">
                       <p>
                         <strong>Total Issues:</strong>{" "}
@@ -489,29 +497,29 @@ export const FirebaseAnalyticsDashboard = ({
 
                 {selectedAnalysis.results.summary && (
                   <div>
-                    <h4 className="font-semibold mb-2">Summary</h4>
+                    <h4 className="mb-2 font-semibold">Summary</h4>
                     <div className="grid grid-cols-3 gap-4">
-                      <div className="text-center p-4 bg-muted rounded-lg">
+                      <div className="bg-muted rounded-lg p-4 text-center">
                         <div className="text-2xl font-bold text-red-600">
                           {selectedAnalysis.results.summary.criticalIssues}
                         </div>
-                        <div className="text-sm text-muted-foreground">
+                        <div className="text-muted-foreground text-sm">
                           Critical
                         </div>
                       </div>
-                      <div className="text-center p-4 bg-muted rounded-lg">
+                      <div className="bg-muted rounded-lg p-4 text-center">
                         <div className="text-2xl font-bold text-orange-600">
                           {selectedAnalysis.results.summary.highIssues}
                         </div>
-                        <div className="text-sm text-muted-foreground">
+                        <div className="text-muted-foreground text-sm">
                           High
                         </div>
                       </div>
-                      <div className="text-center p-4 bg-muted rounded-lg">
+                      <div className="bg-muted rounded-lg p-4 text-center">
                         <div className="text-2xl font-bold text-yellow-600">
                           {selectedAnalysis.results.summary.mediumIssues}
                         </div>
-                        <div className="text-sm text-muted-foreground">
+                        <div className="text-muted-foreground text-sm">
                           Medium
                         </div>
                       </div>
@@ -523,7 +531,7 @@ export const FirebaseAnalyticsDashboard = ({
           ) : (
             <Card>
               <CardContent className="pt-6">
-                <div className="text-center py-8">
+                <div className="py-8 text-center">
                   <p className="text-muted-foreground">
                     Select an analysis from the list to view details.
                   </p>
@@ -543,43 +551,43 @@ export const FirebaseAnalyticsDashboard = ({
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="grid grid-cols-3 gap-4">
-                <div className="text-center p-4 bg-muted rounded-lg">
+                <div className="bg-muted rounded-lg p-4 text-center">
                   <div className="text-2xl font-bold">
                     {analysisHistory.length}
                   </div>
-                  <div className="text-sm text-muted-foreground">
+                  <div className="text-muted-foreground text-sm">
                     Total Analyses
                   </div>
                 </div>
-                <div className="text-center p-4 bg-muted rounded-lg">
+                <div className="bg-muted rounded-lg p-4 text-center">
                   <div className="text-2xl font-bold">
                     {analysisHistory.reduce(
                       (sum, a) => sum + (a.results.issues?.length || 0),
                       0
                     )}
                   </div>
-                  <div className="text-sm text-muted-foreground">
+                  <div className="text-muted-foreground text-sm">
                     Total Issues Found
                   </div>
                 </div>
-                <div className="text-center p-4 bg-muted rounded-lg">
+                <div className="bg-muted rounded-lg p-4 text-center">
                   <div className="text-2xl font-bold">
                     {analysisHistory.reduce(
                       (sum, a) => sum + a.results.totalFiles,
                       0
                     )}
                   </div>
-                  <div className="text-sm text-muted-foreground">
+                  <div className="text-muted-foreground text-sm">
                     Total Files Analyzed
                   </div>
                 </div>
               </div>
 
               <div>
-                <h4 className="font-semibold mb-2">Storage Usage</h4>
+                <h4 className="mb-2 font-semibold">Storage Usage</h4>
                 <div className="space-y-2">
                   <Progress value={75} className="w-full" />
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-muted-foreground text-sm">
                     Using 75% of available cloud storage
                   </p>
                 </div>

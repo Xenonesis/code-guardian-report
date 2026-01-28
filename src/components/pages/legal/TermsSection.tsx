@@ -19,23 +19,23 @@ import {
 
 export const TermsSection: React.FC = () => {
   return (
-    <section id="terms" className="min-h-screen relative overflow-hidden">
+    <section id="terms" className="relative min-h-screen overflow-hidden">
       <AnimatedBackground />
-      <div className="pt-12 sm:pt-16 relative z-10">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
-          <div className="max-w-4xl mx-auto">
+      <div className="relative z-10 pt-12 sm:pt-16">
+        <div className="container mx-auto px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
+          <div className="mx-auto max-w-4xl">
             {/* Terms Header */}
-            <div className="text-center mb-8 sm:mb-12 lg:mb-16">
-              <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 bg-blue-100 dark:bg-blue-900/30 rounded-full mb-4 sm:mb-6">
-                <Scale className="h-6 w-6 sm:h-8 sm:w-8 text-blue-600 dark:text-blue-400" />
+            <div className="mb-8 text-center sm:mb-12 lg:mb-16">
+              <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 sm:mb-6 sm:h-16 sm:w-16 dark:bg-blue-900/30">
+                <Scale className="h-6 w-6 text-blue-600 sm:h-8 sm:w-8 dark:text-blue-400" />
               </div>
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 dark:text-white mb-3 sm:mb-4 px-4">
+              <h1 className="mb-3 px-4 text-2xl font-bold text-slate-900 sm:mb-4 sm:text-3xl lg:text-4xl dark:text-white">
                 Terms of Service
               </h1>
-              <p className="text-base sm:text-lg lg:text-xl text-slate-600 dark:text-slate-400 px-4">
+              <p className="px-4 text-base text-slate-600 sm:text-lg lg:text-xl dark:text-slate-400">
                 Please read these terms carefully before using Code Guardian.
               </p>
-              <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-500 mt-2">
+              <p className="mt-2 text-xs text-slate-500 sm:text-sm dark:text-slate-500">
                 Last updated: November 28, 2025
               </p>
             </div>
@@ -58,7 +58,7 @@ export const TermsSection: React.FC = () => {
                   continued use constitutes acceptance of any changes.
                 </p>
 
-                <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                <div className="mt-6 rounded-lg border border-blue-200 bg-blue-50 p-4 dark:border-blue-800 dark:bg-blue-900/20">
                   <p className="font-medium text-blue-900 dark:text-blue-100">
                     <strong>Important:</strong> Code Guardian is provided as a
                     free service for educational and professional use.
@@ -110,7 +110,7 @@ export const TermsSection: React.FC = () => {
                 icon={<AlertTriangle className="h-5 w-5" />}
               >
                 <LegalSubsection title="Service Disclaimers">
-                  <div className="p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border border-yellow-200 dark:border-yellow-800 mb-4">
+                  <div className="mb-4 rounded-lg border border-yellow-200 bg-yellow-50 p-4 dark:border-yellow-800 dark:bg-yellow-900/20">
                     <p className="font-medium text-yellow-900 dark:text-yellow-100">
                       <strong>Important:</strong> Code Guardian is provided "as
                       is" without warranties of any kind.
@@ -136,7 +136,7 @@ export const TermsSection: React.FC = () => {
                   If you have questions about these Terms of Service, please
                   contact us:
                 </p>
-                <div className="mt-6 p-6 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800">
+                <div className="mt-6 rounded-xl border border-blue-200 bg-blue-50 p-6 dark:border-blue-800 dark:bg-blue-900/20">
                   <div className="space-y-3">
                     <div className="flex items-center gap-3">
                       <Mail className="h-5 w-5 text-blue-600" />

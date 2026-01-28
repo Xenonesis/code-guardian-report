@@ -34,12 +34,11 @@ const nextConfig: NextConfig = {
 
   // Compiler optimizations - Remove console.log in production
   compiler: {
-    removeConsole:
-      isProd
-        ? {
-            exclude: ["error", "warn", "info"], // Keep error, warn, and info logs
-          }
-        : false,
+    removeConsole: isProd
+      ? {
+          exclude: ["error", "warn", "info"], // Keep error, warn, and info logs
+        }
+      : false,
   },
 
   // Optimize package imports for better tree-shaking

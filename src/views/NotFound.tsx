@@ -24,16 +24,16 @@ const NotFound = () => {
 
   return (
     <PageLayout theme={theme} onThemeChange={setTheme} showNavigation={false}>
-      <div className="min-h-[80vh] flex items-center justify-center">
-        <Card className="w-full max-w-2xl bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm border-0 shadow-2xl animate-fade-in">
-          <CardHeader className="text-center pb-6">
-            <div className="mx-auto mb-6 p-4 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full w-fit animate-bounce-in">
+      <div className="flex min-h-[80vh] items-center justify-center">
+        <Card className="animate-fade-in w-full max-w-2xl border-0 bg-white/95 shadow-2xl backdrop-blur-sm dark:bg-slate-800/95">
+          <CardHeader className="pb-6 text-center">
+            <div className="animate-bounce-in mx-auto mb-6 w-fit rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 p-4">
               <Shield className="h-12 w-12 text-white" />
             </div>
-            <CardTitle className="text-6xl sm:text-8xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-4">
+            <CardTitle className="mb-4 bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-6xl font-bold text-transparent sm:text-8xl">
               404
             </CardTitle>
-            <CardTitle className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-2">
+            <CardTitle className="mb-2 text-2xl font-bold text-slate-900 sm:text-3xl dark:text-white">
               Page Not Found
             </CardTitle>
             <CardDescription className="text-lg text-slate-600 dark:text-slate-300">
@@ -48,25 +48,25 @@ const NotFound = () => {
               </h3>
               <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-300">
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-600 dark:text-blue-400 mt-1">
+                  <span className="mt-1 text-blue-600 dark:text-blue-400">
                     •
                   </span>
                   Check the URL for any typos
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-600 dark:text-blue-400 mt-1">
+                  <span className="mt-1 text-blue-600 dark:text-blue-400">
                     •
                   </span>
                   Go back to the previous page
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-600 dark:text-blue-400 mt-1">
+                  <span className="mt-1 text-blue-600 dark:text-blue-400">
                     •
                   </span>
                   Return to the homepage to start fresh
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-600 dark:text-blue-400 mt-1">
+                  <span className="mt-1 text-blue-600 dark:text-blue-400">
                     •
                   </span>
                   Use the navigation to find what you need
@@ -74,10 +74,10 @@ const NotFound = () => {
               </ul>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-3 pt-4">
+            <div className="flex flex-col gap-3 pt-4 sm:flex-row">
               <Button
                 onClick={() => (window.location.href = "/")}
-                className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 focus-ring"
+                className="focus-ring flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
               >
                 <Home className="h-4 w-4" />
                 Go Home
@@ -85,14 +85,14 @@ const NotFound = () => {
               <Button
                 variant="outline"
                 onClick={() => window.history.back()}
-                className="flex items-center gap-2 focus-ring"
+                className="focus-ring flex items-center gap-2"
               >
                 <ArrowLeft className="h-4 w-4" />
                 Go Back
               </Button>
             </div>
 
-            <div className="pt-6 border-t border-slate-200 dark:border-slate-700">
+            <div className="border-t border-slate-200 pt-6 dark:border-slate-700">
               <div className="flex items-center justify-center gap-2 text-sm text-slate-500 dark:text-slate-400">
                 <Search className="h-4 w-4" />
                 <span>Looking for code analysis? Head to the homepage!</span>

@@ -94,9 +94,9 @@ export const AnalysisHistoryModal: React.FC<AnalysisHistoryModalProps> = ({
   ].sort((a, b) => b.timestamp - a.timestamp);
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <Card className="w-full max-w-4xl max-h-[80vh] bg-white dark:bg-slate-800 shadow-2xl">
-        <div className="flex items-center justify-between p-6 border-b dark:border-slate-700">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+      <Card className="max-h-[80vh] w-full max-w-4xl bg-white shadow-2xl dark:bg-slate-800">
+        <div className="flex items-center justify-between border-b p-6 dark:border-slate-700">
           <div className="flex items-center gap-3">
             <Clock className="h-6 w-6 text-blue-600" />
             <div>
@@ -120,11 +120,11 @@ export const AnalysisHistoryModal: React.FC<AnalysisHistoryModalProps> = ({
           </Button>
         </div>
 
-        <div className="overflow-y-auto max-h-[60vh] p-6">
+        <div className="max-h-[60vh] overflow-y-auto p-6">
           {allAnalyses.length === 0 ? (
-            <div className="text-center py-12 text-slate-500 dark:text-slate-400">
-              <FileText className="h-12 w-12 mx-auto mb-4 opacity-50" />
-              <p className="text-lg font-medium mb-2">No Analysis History</p>
+            <div className="py-12 text-center text-slate-500 dark:text-slate-400">
+              <FileText className="mx-auto mb-4 h-12 w-12 opacity-50" />
+              <p className="mb-2 text-lg font-medium">No Analysis History</p>
               <p className="text-sm">
                 Analyze some files to build your history.
               </p>
@@ -145,22 +145,22 @@ export const AnalysisHistoryModal: React.FC<AnalysisHistoryModalProps> = ({
                     key={analysis.id}
                     className={`relative transition-all duration-200 hover:shadow-md ${
                       analysis.isCurrent
-                        ? "ring-2 ring-blue-500 bg-blue-50/50 dark:bg-blue-950/20"
+                        ? "bg-blue-50/50 ring-2 ring-blue-500 dark:bg-blue-950/20"
                         : ""
                     }`}
                   >
                     <CardContent className="p-4">
                       <div className="flex items-start justify-between">
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 mb-2">
-                            <FileText className="h-4 w-4 text-slate-600 dark:text-slate-400 flex-shrink-0" />
-                            <h3 className="font-medium text-slate-900 dark:text-white truncate">
+                        <div className="min-w-0 flex-1">
+                          <div className="mb-2 flex items-center gap-2">
+                            <FileText className="h-4 w-4 flex-shrink-0 text-slate-600 dark:text-slate-400" />
+                            <h3 className="truncate font-medium text-slate-900 dark:text-white">
                               {analysis.fileName}
                             </h3>
                             {analysis.isCurrent && (
                               <Badge
                                 variant="outline"
-                                className="text-blue-600 border-blue-600 ml-2"
+                                className="ml-2 border-blue-600 text-blue-600"
                               >
                                 Current
                               </Badge>
@@ -168,14 +168,14 @@ export const AnalysisHistoryModal: React.FC<AnalysisHistoryModalProps> = ({
                             {analysis.compressed && (
                               <Badge
                                 variant="outline"
-                                className="text-purple-600 border-purple-600"
+                                className="border-purple-600 text-purple-600"
                               >
                                 Compressed
                               </Badge>
                             )}
                           </div>
 
-                          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm mb-3">
+                          <div className="mb-3 grid grid-cols-2 gap-4 text-sm md:grid-cols-4">
                             <div>
                               <span className="text-slate-500 dark:text-slate-400">
                                 Analyzed:
@@ -216,7 +216,7 @@ export const AnalysisHistoryModal: React.FC<AnalysisHistoryModalProps> = ({
                           </div>
 
                           {/* Issue Summary */}
-                          <div className="flex flex-wrap gap-2 mb-3">
+                          <div className="mb-3 flex flex-wrap gap-2">
                             {criticalIssues > 0 && (
                               <Badge className={getSeverityColor("Critical")}>
                                 {criticalIssues} Critical
@@ -253,13 +253,13 @@ export const AnalysisHistoryModal: React.FC<AnalysisHistoryModalProps> = ({
                         </div>
 
                         {/* Actions */}
-                        <div className="flex flex-col gap-2 ml-4">
+                        <div className="ml-4 flex flex-col gap-2">
                           {!analysis.isCurrent && (
                             <Button
                               variant="outline"
                               size="sm"
                               onClick={() => onRestoreAnalysis(analysis)}
-                              className="flex items-center gap-1 text-blue-600 hover:text-blue-700 hover:bg-blue-50 dark:hover:bg-blue-950/20"
+                              className="flex items-center gap-1 text-blue-600 hover:bg-blue-50 hover:text-blue-700 dark:hover:bg-blue-950/20"
                             >
                               <RotateCcw className="h-3 w-3" />
                               Restore
@@ -271,7 +271,7 @@ export const AnalysisHistoryModal: React.FC<AnalysisHistoryModalProps> = ({
                               variant="outline"
                               size="sm"
                               onClick={() => onDeleteAnalysis(analysis.id)}
-                              className="flex items-center gap-1 text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950/20"
+                              className="flex items-center gap-1 text-red-600 hover:bg-red-50 hover:text-red-700 dark:hover:bg-red-950/20"
                             >
                               <Trash2 className="h-3 w-3" />
                               Delete
@@ -288,7 +288,7 @@ export const AnalysisHistoryModal: React.FC<AnalysisHistoryModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="border-t dark:border-slate-700 p-4">
+        <div className="border-t p-4 dark:border-slate-700">
           <div className="flex items-center justify-between text-sm text-slate-500 dark:text-slate-400">
             <span>
               Showing {allAnalyses.length} of {history.maxHistorySize} maximum

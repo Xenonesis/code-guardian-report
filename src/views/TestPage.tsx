@@ -34,7 +34,7 @@ export const TestPage = ({ onBack }: TestPageProps) => {
       <div className="container mx-auto py-8">
         {/* Header */}
         <div className="mb-8">
-          <div className="flex items-center gap-4 mb-6">
+          <div className="mb-6 flex items-center gap-4">
             {onBack && (
               <Button
                 variant="outline"
@@ -47,11 +47,11 @@ export const TestPage = ({ onBack }: TestPageProps) => {
               </Button>
             )}
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 flex items-center gap-2">
+              <h1 className="flex items-center gap-2 text-3xl font-bold text-gray-900 dark:text-gray-100">
                 <TestTube className="h-8 w-8" />
                 Firebase Integration Tests
               </h1>
-              <p className="text-gray-600 dark:text-gray-400 mt-1">
+              <p className="mt-1 text-gray-600 dark:text-gray-400">
                 Test and verify Firebase storage functionality
               </p>
             </div>
@@ -59,7 +59,7 @@ export const TestPage = ({ onBack }: TestPageProps) => {
         </div>
 
         {/* Test Panel */}
-        <div className="text-center p-8">Firebase Test Panel Not Available</div>
+        <div className="p-8 text-center">Firebase Test Panel Not Available</div>
 
         {/* Additional Information */}
         <Card className="mt-8">
@@ -70,10 +70,10 @@ export const TestPage = ({ onBack }: TestPageProps) => {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div>
-                <h4 className="font-semibold mb-2">Integration Features</h4>
-                <ul className="text-sm text-gray-600 dark:text-gray-400 space-y-1">
+                <h4 className="mb-2 font-semibold">Integration Features</h4>
+                <ul className="space-y-1 text-sm text-gray-600 dark:text-gray-400">
                   <li>• Dual storage (Local + Firebase)</li>
                   <li>• Automatic fallback mechanisms</li>
                   <li>• Real-time synchronization</li>
@@ -83,8 +83,8 @@ export const TestPage = ({ onBack }: TestPageProps) => {
                 </ul>
               </div>
               <div>
-                <h4 className="font-semibold mb-2">Test Coverage</h4>
-                <ul className="text-sm text-gray-600 dark:text-gray-400 space-y-1">
+                <h4 className="mb-2 font-semibold">Test Coverage</h4>
+                <ul className="space-y-1 text-sm text-gray-600 dark:text-gray-400">
                   <li>• Firebase connection & configuration</li>
                   <li>• Local storage functionality</li>
                   <li>• Cloud storage operations</li>
@@ -95,13 +95,13 @@ export const TestPage = ({ onBack }: TestPageProps) => {
               </div>
             </div>
 
-            <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border">
-              <h4 className="font-semibold mb-2 text-blue-800 dark:text-blue-200">
+            <div className="rounded-lg border bg-blue-50 p-4 dark:bg-blue-900/20">
+              <h4 className="mb-2 font-semibold text-blue-800 dark:text-blue-200">
                 Access this page anytime:
               </h4>
               <p className="text-sm text-blue-700 dark:text-blue-300">
                 Add{" "}
-                <code className="bg-blue-100 dark:bg-blue-800 px-1 rounded">
+                <code className="rounded bg-blue-100 px-1 dark:bg-blue-800">
                   ?test=firebase
                 </code>{" "}
                 to the URL to access these tests

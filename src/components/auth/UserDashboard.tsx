@@ -325,18 +325,16 @@ const UserDashboard: React.FC = () => {
       }
     } catch (error: unknown) {
       const errMsg = error instanceof Error ? error.message : "Unknown error";
-      toast.error(
-        `Failed to analyze repository: ${errMsg}`
-      );
+      toast.error(`Failed to analyze repository: ${errMsg}`);
       logger.error("Error in handleAnalyzeRepository:", error);
     }
   };
 
   if (!user || !userProfile) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-white dark:bg-black text-gray-900 dark:text-white">
+      <div className="flex min-h-screen items-center justify-center bg-white text-gray-900 dark:bg-black dark:text-white">
         <div className="text-center">
-          <h2 className="text-2xl font-bold mb-4">Access Denied</h2>
+          <h2 className="mb-4 text-2xl font-bold">Access Denied</h2>
           <p>Please sign in to view your dashboard.</p>
         </div>
       </div>
@@ -344,7 +342,7 @@ const UserDashboard: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gradient-to-br dark:from-[#0d0d1f] dark:via-[#1b1b3a] dark:to-[#0d0d1f] text-gray-900 dark:text-gray-100">
+    <div className="min-h-screen bg-gray-50 text-gray-900 dark:bg-gradient-to-br dark:from-[#0d0d1f] dark:via-[#1b1b3a] dark:to-[#0d0d1f] dark:text-gray-100">
       {/* GitHub Permission Modal */}
       <GitHubRepositoryPermissionModal
         isOpen={showPermissionModal}
@@ -363,9 +361,9 @@ const UserDashboard: React.FC = () => {
         onClose={() => setShowUsernameInput(false)}
       />
 
-      <header className="bg-white dark:bg-[#1e1e2f] shadow border-b border-gray-200 dark:border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
+      <header className="border-b border-gray-200 bg-white shadow dark:border-gray-700 dark:bg-[#1e1e2f]">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between py-4">
             <div>
               <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
                 Dashboard
@@ -376,7 +374,7 @@ const UserDashboard: React.FC = () => {
             </div>
             <button
               onClick={handleLogout}
-              className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
+              className="rounded-md bg-red-600 px-4 py-2 text-white hover:bg-red-700 focus:ring-2 focus:ring-red-500 focus:outline-none"
             >
               Logout
             </button>
@@ -384,23 +382,23 @@ const UserDashboard: React.FC = () => {
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         {/* GitHub Repositories Section - Show if permission granted */}
         {permissionGranted && repositories.length > 0 && (
           <div className="mb-8">
-            <div className="flex items-center justify-between mb-4">
+            <div className="mb-4 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Github className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+                <Github className="h-6 w-6 text-purple-600 dark:text-purple-400" />
                 <h2 className="text-xl font-bold text-gray-900 dark:text-white">
                   Your GitHub Repositories
                 </h2>
-                <span className="px-2 py-1 text-xs bg-purple-100 dark:bg-purple-500/20 text-purple-700 dark:text-purple-300 rounded-full">
+                <span className="rounded-full bg-purple-100 px-2 py-1 text-xs text-purple-700 dark:bg-purple-500/20 dark:text-purple-300">
                   {repositories.length} repos
                 </span>
               </div>
               <button
                 onClick={() => setShowGitHubRepos(!showGitHubRepos)}
-                className="text-sm text-purple-600 dark:text-purple-400 hover:text-purple-500 dark:hover:text-purple-300 transition-colors"
+                className="text-sm text-purple-600 transition-colors hover:text-purple-500 dark:text-purple-400 dark:hover:text-purple-300"
               >
                 {showGitHubRepos ? "Hide" : "Show"}
               </button>
@@ -416,11 +414,11 @@ const UserDashboard: React.FC = () => {
           </div>
         )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           {/* Profile and Stats */}
-          <div className="lg:col-span-1 space-y-6">
-            <div className="bg-white dark:bg-[#252538] rounded-lg shadow p-6 border border-gray-200 dark:border-transparent">
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+          <div className="space-y-6 lg:col-span-1">
+            <div className="rounded-lg border border-gray-200 bg-white p-6 shadow dark:border-transparent dark:bg-[#252538]">
+              <h2 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
                 Profile Information
               </h2>
               <div className="space-y-3">
@@ -443,8 +441,8 @@ const UserDashboard: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-white dark:bg-[#252538] rounded-lg shadow p-6 border border-gray-200 dark:border-transparent">
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+            <div className="rounded-lg border border-gray-200 bg-white p-6 shadow dark:border-transparent dark:bg-[#252538]">
+              <h2 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
                 Task Statistics
               </h2>
               <div className="space-y-3">
@@ -470,20 +468,20 @@ const UserDashboard: React.FC = () => {
 
           {/* Tasks Manager */}
           <div className="lg:col-span-2">
-            <div className="bg-white dark:bg-[#252538] rounded-lg shadow p-6 border border-gray-200 dark:border-transparent">
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+            <div className="rounded-lg border border-gray-200 bg-white p-6 shadow dark:border-transparent dark:bg-[#252538]">
+              <h2 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
                 Task Manager
               </h2>
 
               <form
                 onSubmit={addTask}
-                className="mb-6 p-4 bg-gray-50 dark:bg-[#1e1e2f] rounded-lg border border-gray-200 dark:border-gray-700"
+                className="mb-6 rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-[#1e1e2f]"
               >
                 <div className="grid grid-cols-1 gap-4">
                   <div>
                     <label
                       htmlFor="taskTitle"
-                      className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                      className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
                     >
                       Task Title
                     </label>
@@ -492,7 +490,7 @@ const UserDashboard: React.FC = () => {
                       id="taskTitle"
                       value={newTaskTitle}
                       onChange={(e) => setNewTaskTitle(e.target.value)}
-                      className="w-full px-3 py-2 bg-white dark:bg-[#2c2c3e] text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-purple-500 focus:outline-none dark:border-gray-600 dark:bg-[#2c2c3e] dark:text-white"
                       placeholder="Enter task title..."
                       required
                     />
@@ -500,7 +498,7 @@ const UserDashboard: React.FC = () => {
                   <div>
                     <label
                       htmlFor="taskDescription"
-                      className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                      className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
                     >
                       Description (Optional)
                     </label>
@@ -508,7 +506,7 @@ const UserDashboard: React.FC = () => {
                       id="taskDescription"
                       value={newTaskDescription}
                       onChange={(e) => setNewTaskDescription(e.target.value)}
-                      className="w-full px-3 py-2 bg-white dark:bg-[#2c2c3e] text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-purple-500 focus:outline-none dark:border-gray-600 dark:bg-[#2c2c3e] dark:text-white"
                       placeholder="Enter task description..."
                       rows={3}
                     />
@@ -516,7 +514,7 @@ const UserDashboard: React.FC = () => {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="bg-gradient-to-r from-purple-600 to-blue-500 text-white px-4 py-2 rounded-md hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:opacity-50"
+                    className="rounded-md bg-gradient-to-r from-purple-600 to-blue-500 px-4 py-2 text-white hover:opacity-90 focus:ring-2 focus:ring-blue-400 focus:outline-none disabled:opacity-50"
                   >
                     {loading ? "Adding..." : "Add Task"}
                   </button>
@@ -525,17 +523,17 @@ const UserDashboard: React.FC = () => {
 
               <div className="space-y-3">
                 {tasks.length === 0 ? (
-                  <p className="text-gray-500 dark:text-gray-400 text-center py-8">
+                  <p className="py-8 text-center text-gray-500 dark:text-gray-400">
                     No tasks yet. Add your first task above!
                   </p>
                 ) : (
                   tasks.map((task) => (
                     <div
                       key={task.id}
-                      className={`p-4 border rounded-lg ${
+                      className={`rounded-lg border p-4 ${
                         task.completed
-                          ? "bg-green-50 dark:bg-green-900/30 border-green-200 dark:border-green-600"
-                          : "bg-white dark:bg-[#2a2a3d] border-gray-200 dark:border-gray-600"
+                          ? "border-green-200 bg-green-50 dark:border-green-600 dark:bg-green-900/30"
+                          : "border-gray-200 bg-white dark:border-gray-600 dark:bg-[#2a2a3d]"
                       }`}
                     >
                       <div className="flex items-start justify-between">
@@ -544,13 +542,13 @@ const UserDashboard: React.FC = () => {
                             type="checkbox"
                             checked={task.completed}
                             onChange={() => toggleTask(task.id, task.completed)}
-                            className="mt-1 h-4 w-4 text-blue-500 focus:ring-blue-400 border-gray-300 rounded"
+                            className="mt-1 h-4 w-4 rounded border-gray-300 text-blue-500 focus:ring-blue-400"
                           />
                           <div>
                             <h3
                               className={`font-medium ${
                                 task.completed
-                                  ? "text-gray-500 dark:text-gray-400 line-through"
+                                  ? "text-gray-500 line-through dark:text-gray-400"
                                   : "text-gray-900 dark:text-white"
                               }`}
                             >
@@ -558,7 +556,7 @@ const UserDashboard: React.FC = () => {
                             </h3>
                             {task.description && (
                               <p
-                                className={`text-sm mt-1 ${
+                                className={`mt-1 text-sm ${
                                   task.completed
                                     ? "text-gray-500"
                                     : "text-gray-600 dark:text-gray-300"
@@ -567,14 +565,14 @@ const UserDashboard: React.FC = () => {
                                 {task.description}
                               </p>
                             )}
-                            <p className="text-xs text-gray-500 mt-2">
+                            <p className="mt-2 text-xs text-gray-500">
                               Created: {task.createdAt.toLocaleDateString()}
                             </p>
                           </div>
                         </div>
                         <button
                           onClick={() => deleteTask(task.id)}
-                          className="text-red-500 hover:text-red-700 text-sm font-medium"
+                          className="text-sm font-medium text-red-500 hover:text-red-700"
                         >
                           Delete
                         </button>

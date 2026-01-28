@@ -41,9 +41,9 @@ export const LegalNavigation: React.FC<LegalNavigationProps> = ({
   if (!otherPage) return null;
 
   return (
-    <div className="mt-12 pt-8 border-t border-slate-200 dark:border-slate-700">
-      <div className="text-center mb-6">
-        <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
+    <div className="mt-12 border-t border-slate-200 pt-8 dark:border-slate-700">
+      <div className="mb-6 text-center">
+        <h3 className="mb-2 text-lg font-semibold text-slate-900 dark:text-white">
           Related Legal Documents
         </h3>
         <p className="text-slate-600 dark:text-slate-400">
@@ -53,25 +53,25 @@ export const LegalNavigation: React.FC<LegalNavigationProps> = ({
 
       <button
         onClick={() => scrollToSection(otherPage.id)}
-        className="glass-card-ultra enhanced-card-hover glow-on-hover block p-6 rounded-2xl group w-full text-left"
+        className="glass-card-ultra enhanced-card-hover glow-on-hover group block w-full rounded-2xl p-6 text-left"
       >
         <div className="flex items-center gap-4">
           <div
-            className={`p-3 bg-gradient-to-r ${otherPage.gradient} rounded-xl text-white group-hover:scale-110 transition-transform duration-300`}
+            className={`bg-gradient-to-r p-3 ${otherPage.gradient} rounded-xl text-white transition-transform duration-300 group-hover:scale-110`}
           >
             {otherPage.icon}
           </div>
 
           <div className="flex-1">
-            <h4 className="text-lg font-semibold text-slate-900 dark:text-white mb-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+            <h4 className="mb-1 text-lg font-semibold text-slate-900 transition-colors duration-300 group-hover:text-blue-600 dark:text-white dark:group-hover:text-blue-400">
               {otherPage.title}
             </h4>
-            <p className="text-slate-600 dark:text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-300 transition-colors duration-300">
+            <p className="text-slate-600 transition-colors duration-300 group-hover:text-slate-700 dark:text-slate-400 dark:group-hover:text-slate-300">
               {otherPage.description}
             </p>
           </div>
 
-          <ArrowRight className="h-5 w-5 text-slate-400 group-hover:text-blue-500 group-hover:translate-x-1 transition-all duration-300" />
+          <ArrowRight className="h-5 w-5 text-slate-400 transition-all duration-300 group-hover:translate-x-1 group-hover:text-blue-500" />
         </div>
       </button>
     </div>

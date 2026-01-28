@@ -373,7 +373,7 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
-        <Code2 className="w-8 h-8 animate-pulse text-blue-600" />
+        <Code2 className="h-8 w-8 animate-pulse text-blue-600" />
       </div>
     );
   }
@@ -381,8 +381,8 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({
   if (!aggregateMetrics) {
     return (
       <Card className="p-12 text-center">
-        <Code2 className="w-16 h-16 mx-auto text-slate-300 mb-4" />
-        <h3 className="text-xl font-semibold text-slate-700 dark:text-slate-300 mb-2">
+        <Code2 className="mx-auto mb-4 h-16 w-16 text-slate-300" />
+        <h3 className="mb-2 text-xl font-semibold text-slate-700 dark:text-slate-300">
           No quality data available
         </h3>
         <p className="text-slate-600 dark:text-slate-400">
@@ -396,7 +396,7 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
+        <h2 className="mb-2 text-2xl font-bold text-slate-900 dark:text-white">
           Code Quality Analytics
         </h2>
         <p className="text-slate-600 dark:text-slate-400">
@@ -405,12 +405,12 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({
       </div>
 
       {/* Overview Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
         {/* Complexity */}
         <Card className="p-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="p-3 bg-purple-100 dark:bg-purple-900/20 rounded-lg">
-              <Layers className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+          <div className="mb-4 flex items-center justify-between">
+            <div className="rounded-lg bg-purple-100 p-3 dark:bg-purple-900/20">
+              <Layers className="h-6 w-6 text-purple-600 dark:text-purple-400" />
             </div>
             <Badge
               className={getRatingColor(aggregateMetrics.complexity.rating)}
@@ -418,7 +418,7 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({
               {aggregateMetrics.complexity.rating}
             </Badge>
           </div>
-          <div className="text-3xl font-bold text-slate-900 dark:text-white mb-1">
+          <div className="mb-1 text-3xl font-bold text-slate-900 dark:text-white">
             {aggregateMetrics.complexity.average.toFixed(1)}
           </div>
           <div className="text-sm text-slate-600 dark:text-slate-400">
@@ -428,9 +428,9 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({
 
         {/* Maintainability */}
         <Card className="p-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="p-3 bg-blue-100 dark:bg-blue-900/20 rounded-lg">
-              <Activity className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+          <div className="mb-4 flex items-center justify-between">
+            <div className="rounded-lg bg-blue-100 p-3 dark:bg-blue-900/20">
+              <Activity className="h-6 w-6 text-blue-600 dark:text-blue-400" />
             </div>
             <Badge
               className={getRatingColor(
@@ -440,7 +440,7 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({
               {aggregateMetrics.maintainability.rating}
             </Badge>
           </div>
-          <div className="text-3xl font-bold text-slate-900 dark:text-white mb-1">
+          <div className="mb-1 text-3xl font-bold text-slate-900 dark:text-white">
             {aggregateMetrics.maintainability.index}
           </div>
           <div className="text-sm text-slate-600 dark:text-slate-400">
@@ -450,9 +450,9 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({
 
         {/* Test Coverage */}
         <Card className="p-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="p-3 bg-green-100 dark:bg-green-900/20 rounded-lg">
-              <CheckCircle2 className="w-6 h-6 text-green-600 dark:text-green-400" />
+          <div className="mb-4 flex items-center justify-between">
+            <div className="rounded-lg bg-green-100 p-3 dark:bg-green-900/20">
+              <CheckCircle2 className="h-6 w-6 text-green-600 dark:text-green-400" />
             </div>
             <Badge
               className={getRatingColor(aggregateMetrics.testCoverage.rating)}
@@ -460,7 +460,7 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({
               {aggregateMetrics.testCoverage.rating}
             </Badge>
           </div>
-          <div className="text-3xl font-bold text-slate-900 dark:text-white mb-1">
+          <div className="mb-1 text-3xl font-bold text-slate-900 dark:text-white">
             {aggregateMetrics.testCoverage.percentage}%
           </div>
           <div className="text-sm text-slate-600 dark:text-slate-400">
@@ -470,9 +470,9 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({
 
         {/* Documentation */}
         <Card className="p-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="p-3 bg-orange-100 dark:bg-orange-900/20 rounded-lg">
-              <FileCode className="w-6 h-6 text-orange-600 dark:text-orange-400" />
+          <div className="mb-4 flex items-center justify-between">
+            <div className="rounded-lg bg-orange-100 p-3 dark:bg-orange-900/20">
+              <FileCode className="h-6 w-6 text-orange-600 dark:text-orange-400" />
             </div>
             <Badge
               className={getRatingColor(aggregateMetrics.documentation.rating)}
@@ -480,7 +480,7 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({
               {aggregateMetrics.documentation.rating}
             </Badge>
           </div>
-          <div className="text-3xl font-bold text-slate-900 dark:text-white mb-1">
+          <div className="mb-1 text-3xl font-bold text-slate-900 dark:text-white">
             {aggregateMetrics.documentation.coverage}%
           </div>
           <div className="text-sm text-slate-600 dark:text-slate-400">
@@ -490,10 +490,10 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({
       </div>
 
       {/* Detailed Metrics */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* Maintainability Factors */}
         <Card className="p-6">
-          <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">
+          <h3 className="mb-4 text-lg font-semibold text-slate-900 dark:text-white">
             Maintainability Factors
           </h3>
           <div className="space-y-4">
@@ -526,7 +526,7 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({
 
         {/* Test Coverage Details */}
         <Card className="p-6">
-          <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">
+          <h3 className="mb-4 text-lg font-semibold text-slate-900 dark:text-white">
             Test Coverage Details
           </h3>
           <div className="space-y-4">
@@ -560,18 +560,18 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({
 
       {/* Per-Repository Breakdown */}
       <Card className="p-6">
-        <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">
+        <h3 className="mb-4 text-lg font-semibold text-slate-900 dark:text-white">
           Repository Breakdown
         </h3>
         <div className="space-y-4">
           {qualityData.map((repo, idx) => (
             <div
               key={idx}
-              className="border-b border-slate-200 dark:border-slate-700 last:border-0 pb-4 last:pb-0"
+              className="border-b border-slate-200 pb-4 last:border-0 last:pb-0 dark:border-slate-700"
             >
-              <div className="flex items-center justify-between mb-3">
+              <div className="mb-3 flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <GitBranch className="w-4 h-4 text-slate-600 dark:text-slate-400" />
+                  <GitBranch className="h-4 w-4 text-slate-600 dark:text-slate-400" />
                   <span className="font-semibold text-slate-900 dark:text-white">
                     {repo.repositoryName}
                   </span>
@@ -581,9 +581,9 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({
                 </span>
               </div>
 
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
                 <div>
-                  <div className="text-xs text-slate-600 dark:text-slate-400 mb-1">
+                  <div className="mb-1 text-xs text-slate-600 dark:text-slate-400">
                     Complexity
                   </div>
                   <Badge
@@ -594,7 +594,7 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({
                   </Badge>
                 </div>
                 <div>
-                  <div className="text-xs text-slate-600 dark:text-slate-400 mb-1">
+                  <div className="mb-1 text-xs text-slate-600 dark:text-slate-400">
                     Maintainability
                   </div>
                   <Badge
@@ -607,7 +607,7 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({
                   </Badge>
                 </div>
                 <div>
-                  <div className="text-xs text-slate-600 dark:text-slate-400 mb-1">
+                  <div className="mb-1 text-xs text-slate-600 dark:text-slate-400">
                     Test Coverage
                   </div>
                   <Badge
@@ -618,7 +618,7 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({
                   </Badge>
                 </div>
                 <div>
-                  <div className="text-xs text-slate-600 dark:text-slate-400 mb-1">
+                  <div className="mb-1 text-xs text-slate-600 dark:text-slate-400">
                     Documentation
                   </div>
                   <Badge

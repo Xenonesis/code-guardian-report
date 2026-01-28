@@ -48,13 +48,13 @@ import {
 
 // Real AI Provider Icons
 const OpenAIIcon = () => (
-  <svg viewBox="0 0 24 24" className="w-6 h-6" fill="currentColor">
+  <svg viewBox="0 0 24 24" className="h-6 w-6" fill="currentColor">
     <path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z" />
   </svg>
 );
 
 const GeminiIcon = () => (
-  <svg viewBox="0 0 28 28" className="w-6 h-6" fill="none">
+  <svg viewBox="0 0 28 28" className="h-6 w-6" fill="none">
     <path
       d="M14 28C14 26.0633 13.6267 24.2433 12.88 22.54C12.1567 20.8367 11.165 19.355 9.905 18.095C8.645 16.835 7.16333 15.8433 5.46 15.12C3.75667 14.3733 1.93667 14 0 14C1.93667 14 3.75667 13.6383 5.46 12.915C7.16333 12.1683 8.645 11.165 9.905 9.905C11.165 8.645 12.1567 7.16333 12.88 5.46C13.6267 3.75667 14 1.93667 14 0C14 1.93667 14.3617 3.75667 15.085 5.46C15.8317 7.16333 16.835 8.645 18.095 9.905C19.355 11.165 20.8367 12.1683 22.54 12.915C24.2433 13.6383 26.0633 14 28 14C26.0633 14 24.2433 14.3733 22.54 15.12C20.8367 15.8433 19.355 16.835 18.095 18.095C16.835 19.355 15.8317 20.8367 15.085 22.54C14.3617 24.2433 14 26.0633 14 28Z"
       fill="url(#gemini-gradient)"
@@ -80,12 +80,12 @@ const ClaudeIcon = () => (
   <img
     src="https://img.icons8.com/?size=100&id=H5H0mqCCr5AV&format=png&color=000000"
     alt="Claude"
-    className="w-6 h-6"
+    className="h-6 w-6"
   />
 );
 
 const MistralIcon = () => (
-  <svg viewBox="0 0 365 258" className="w-6 h-6" fill="none">
+  <svg viewBox="0 0 365 258" className="h-6 w-6" fill="none">
     <path d="M104.107 0H52.0525V51.57H104.107V0Z" fill="#FFD800" />
     <path d="M312.351 0H260.296V51.57H312.351V0Z" fill="#FFD800" />
     <path d="M156.161 51.5701H52.0525V103.14H156.161V51.5701Z" fill="#FFAF00" />
@@ -112,7 +112,7 @@ const LlamaIcon = () => (
   <img
     src="https://static.xx.fbcdn.net/rsrc.php/y9/r/tL_v571NdZ0.svg"
     alt="Meta Llama"
-    className="w-6 h-6 dark:invert dark:brightness-200"
+    className="h-6 w-6 dark:brightness-200 dark:invert"
   />
 );
 
@@ -120,12 +120,12 @@ const CohereIcon = () => (
   <img
     src="https://cohere.com/logo.svg"
     alt="Cohere"
-    className="w-6 h-6 dark:invert dark:brightness-200"
+    className="h-6 w-6 dark:brightness-200 dark:invert"
   />
 );
 
 const PerplexityIcon = () => (
-  <svg viewBox="0 0 336 400" className="w-6 h-6" fill="currentColor">
+  <svg viewBox="0 0 336 400" className="h-6 w-6" fill="currentColor">
     <path
       fillRule="evenodd"
       clipRule="evenodd"
@@ -135,7 +135,7 @@ const PerplexityIcon = () => (
 );
 
 const GroqIcon = () => (
-  <svg viewBox="0 0 24 24" className="w-6 h-6" fill="currentColor">
+  <svg viewBox="0 0 24 24" className="h-6 w-6" fill="currentColor">
     <path d="M13 3L4 14h7l-2 7 9-11h-7l2-7z" />
   </svg>
 );
@@ -473,27 +473,27 @@ export const AIKeyManager: React.FC = () => {
   // logger.debug("AIKeyManager: Current apiKeys state during render:", apiKeys); // Debug log removed for PR
 
   return (
-    <div className="w-full max-w-6xl mx-auto space-y-6 sm:space-y-8">
+    <div className="mx-auto w-full max-w-6xl space-y-6 sm:space-y-8">
       {/* Hero Section */}
       <Card variant="modern" className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-purple-600/10 via-blue-600/10 to-indigo-600/10 dark:from-purple-400/10 dark:via-blue-400/10 dark:to-indigo-400/10" />
         <CardHeader className="relative z-10 pb-6">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+          <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
             <div className="flex items-center gap-3">
-              <div className="p-3 bg-gradient-to-br from-purple-500 to-blue-600 rounded-2xl shadow-lg">
+              <div className="rounded-2xl bg-gradient-to-br from-purple-500 to-blue-600 p-3 shadow-lg">
                 <Bot className="h-6 w-6 text-white" />
               </div>
               <div>
-                <CardTitle className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 dark:from-purple-400 dark:via-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">
+                <CardTitle className="bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 bg-clip-text text-2xl font-bold text-transparent sm:text-3xl dark:from-purple-400 dark:via-blue-400 dark:to-indigo-400">
                   AI Analysis Integration
                 </CardTitle>
-                <CardDescription className="text-base mt-1 text-slate-600 dark:text-slate-300">
+                <CardDescription className="mt-1 text-base text-slate-600 dark:text-slate-300">
                   Supercharge your code analysis with AI-powered insights
                 </CardDescription>
               </div>
             </div>
-            <div className="flex items-center gap-2 ml-auto">
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-green-100 dark:bg-green-900/30 rounded-full border border-green-200 dark:border-green-800">
+            <div className="ml-auto flex items-center gap-2">
+              <div className="flex items-center gap-2 rounded-full border border-green-200 bg-green-100 px-3 py-1.5 dark:border-green-800 dark:bg-green-900/30">
                 <CheckCircle className="h-4 w-4 text-green-600 dark:text-green-400" />
                 <span className="text-xs font-medium text-green-700 dark:text-green-300">
                   Secure Storage
@@ -509,7 +509,7 @@ export const AIKeyManager: React.FC = () => {
         <CardHeader>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl">
+              <div className="rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 p-2">
                 <Sparkles className="h-5 w-5 text-white" />
               </div>
               <div>
@@ -531,7 +531,7 @@ export const AIKeyManager: React.FC = () => {
           </div>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
             {aiProviders.map((provider, _index) => {
               const isConfigured = apiKeys.some(
                 (key) => key.provider === provider.id
@@ -542,13 +542,13 @@ export const AIKeyManager: React.FC = () => {
                   variant="glass"
                   className={`group relative overflow-hidden transition-all duration-300 hover:scale-105 ${
                     isConfigured
-                      ? "ring-2 ring-green-400/50 dark:ring-green-500/50 bg-green-50/50 dark:bg-green-900/20"
+                      ? "bg-green-50/50 ring-2 ring-green-400/50 dark:bg-green-900/20 dark:ring-green-500/50"
                       : "hover:ring-2 hover:ring-blue-400/50 dark:hover:ring-blue-500/50"
                   }`}
                 >
                   {isConfigured && (
                     <div className="absolute top-3 right-3">
-                      <div className="flex items-center gap-1 px-2 py-1 bg-green-100 dark:bg-green-900/50 rounded-full border border-green-300 dark:border-green-700">
+                      <div className="flex items-center gap-1 rounded-full border border-green-300 bg-green-100 px-2 py-1 dark:border-green-700 dark:bg-green-900/50">
                         <CheckCircle className="h-3 w-3 text-green-600 dark:text-green-400" />
                         <span className="text-xs font-medium text-green-700 dark:text-green-300">
                           Active
@@ -558,14 +558,14 @@ export const AIKeyManager: React.FC = () => {
                   )}
                   <CardHeader className="pb-3">
                     <div className="flex items-center gap-3">
-                      <div className="p-2 bg-white/50 dark:bg-black/20 rounded-xl border border-white/30 dark:border-white/10 group-hover:scale-110 transition-transform duration-200 text-slate-700 dark:text-slate-200">
+                      <div className="rounded-xl border border-white/30 bg-white/50 p-2 text-slate-700 transition-transform duration-200 group-hover:scale-110 dark:border-white/10 dark:bg-black/20 dark:text-slate-200">
                         {provider.icon}
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <h4 className="font-semibold text-base text-slate-900 dark:text-white truncate">
+                      <div className="min-w-0 flex-1">
+                        <h4 className="truncate text-base font-semibold text-slate-900 dark:text-white">
                           {provider.name}
                         </h4>
-                        <p className="text-sm text-slate-600 dark:text-slate-400 line-clamp-2">
+                        <p className="line-clamp-2 text-sm text-slate-600 dark:text-slate-400">
                           {provider.description}
                         </p>
                       </div>
@@ -575,7 +575,7 @@ export const AIKeyManager: React.FC = () => {
                     <div className="space-y-3">
                       <div className="flex items-center justify-between">
                         <Badge variant="outline" className="text-xs">
-                          <Sparkles className="h-3 w-3 mr-1" />
+                          <Sparkles className="mr-1 h-3 w-3" />
                           Live Discovery
                         </Badge>
                         <div className="flex items-center gap-1 text-xs text-slate-500 dark:text-slate-400">
@@ -599,9 +599,9 @@ export const AIKeyManager: React.FC = () => {
       {/* Current API Keys */}
       <Card variant="modern">
         <CardHeader>
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl">
+              <div className="rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 p-2">
                 <Key className="h-5 w-5 text-white" />
               </div>
               <div>
@@ -616,7 +616,7 @@ export const AIKeyManager: React.FC = () => {
             <Button
               onClick={() => setIsAdding(true)}
               variant="default"
-              className="flex items-center gap-2 focus-ring"
+              className="focus-ring flex items-center gap-2"
               disabled={isAdding}
               size="sm"
             >
@@ -629,14 +629,14 @@ export const AIKeyManager: React.FC = () => {
         <CardContent>
           {/* Empty State */}
           {apiKeys.length === 0 && !isAdding && (
-            <div className="text-center py-12 animate-fade-in">
-              <div className="mx-auto w-16 h-16 bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 rounded-2xl flex items-center justify-center mb-4">
+            <div className="animate-fade-in py-12 text-center">
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900">
                 <Key className="h-8 w-8 text-slate-400" />
               </div>
-              <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
+              <h3 className="mb-2 text-lg font-semibold text-slate-900 dark:text-white">
                 No API Keys Configured
               </h3>
-              <p className="text-slate-600 dark:text-slate-300 mb-6 max-w-md mx-auto">
+              <p className="mx-auto mb-6 max-w-md text-slate-600 dark:text-slate-300">
                 Add your first API key to unlock AI-powered code analysis,
                 intelligent insights, and chat assistance.
               </p>
@@ -646,7 +646,7 @@ export const AIKeyManager: React.FC = () => {
                 size="lg"
                 className="animate-pulse"
               >
-                <Plus className="h-5 w-5 mr-2" />
+                <Plus className="mr-2 h-5 w-5" />
                 Get Started
               </Button>
             </div>
@@ -660,31 +660,31 @@ export const AIKeyManager: React.FC = () => {
                 <Card
                   key={key.id}
                   variant="glass"
-                  className="group relative overflow-hidden transition-all duration-300 hover:scale-[1.02] border border-slate-200/50 dark:border-slate-700/50"
+                  className="group relative overflow-hidden border border-slate-200/50 transition-all duration-300 hover:scale-[1.02] dark:border-slate-700/50"
                 >
                   <CardContent className="p-4">
                     <div className="flex items-start justify-between gap-4">
-                      <div className="flex items-start gap-3 flex-1 min-w-0">
-                        <div className="p-2 bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-900 rounded-xl border border-slate-200/50 dark:border-slate-700/50 group-hover:scale-110 transition-transform duration-200">
+                      <div className="flex min-w-0 flex-1 items-start gap-3">
+                        <div className="rounded-xl border border-slate-200/50 bg-gradient-to-br from-white to-slate-50 p-2 transition-transform duration-200 group-hover:scale-110 dark:border-slate-700/50 dark:from-slate-800 dark:to-slate-900">
                           <span className="text-lg">{provider?.icon}</span>
                         </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 mb-2">
-                            <h4 className="font-semibold text-base text-slate-900 dark:text-white truncate">
+                        <div className="min-w-0 flex-1">
+                          <div className="mb-2 flex items-center gap-2">
+                            <h4 className="truncate text-base font-semibold text-slate-900 dark:text-white">
                               {key.name}
                             </h4>
-                            <div className="flex items-center gap-1 px-2 py-0.5 bg-green-100 dark:bg-green-900/30 rounded-full">
-                              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                            <div className="flex items-center gap-1 rounded-full bg-green-100 px-2 py-0.5 dark:bg-green-900/30">
+                              <div className="h-2 w-2 animate-pulse rounded-full bg-green-500" />
                               <span className="text-xs font-medium text-green-700 dark:text-green-300">
                                 Active
                               </span>
                             </div>
                           </div>
 
-                          <div className="flex flex-wrap items-center gap-2 mb-3">
+                          <div className="mb-3 flex flex-wrap items-center gap-2">
                             <Badge
                               variant="outline"
-                              className="text-xs bg-white/50 dark:bg-black/20"
+                              className="bg-white/50 text-xs dark:bg-black/20"
                             >
                               {provider?.name}
                             </Badge>
@@ -696,12 +696,12 @@ export const AIKeyManager: React.FC = () => {
                             {model?.capabilities && (
                               <div className="flex items-center gap-1">
                                 {model.capabilities.includes("code") && (
-                                  <div className="w-5 h-5 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
+                                  <div className="flex h-5 w-5 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/30">
                                     <span className="text-xs">🔍</span>
                                   </div>
                                 )}
                                 {model.capabilities.includes("vision") && (
-                                  <div className="w-5 h-5 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center">
+                                  <div className="flex h-5 w-5 items-center justify-center rounded-full bg-purple-100 dark:bg-purple-900/30">
                                     <span className="text-xs">👁️</span>
                                   </div>
                                 )}
@@ -710,9 +710,9 @@ export const AIKeyManager: React.FC = () => {
                           </div>
 
                           <div className="flex items-center gap-3">
-                            <div className="flex-1 min-w-0">
-                              <div className="flex items-center gap-2 p-2 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-200/50 dark:border-slate-700/50">
-                                <span className="text-xs font-mono text-slate-600 dark:text-slate-400 truncate flex-1">
+                            <div className="min-w-0 flex-1">
+                              <div className="flex items-center gap-2 rounded-lg border border-slate-200/50 bg-slate-50 p-2 dark:border-slate-700/50 dark:bg-slate-800/50">
+                                <span className="flex-1 truncate font-mono text-xs text-slate-600 dark:text-slate-400">
                                   {showKeys[key.id]
                                     ? key.key
                                     : maskKey(key.key)}
@@ -744,7 +744,7 @@ export const AIKeyManager: React.FC = () => {
                         variant="ghost"
                         size="sm"
                         onClick={() => removeAPIKey(key.id)}
-                        className="text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 p-2 rounded-xl"
+                        className="rounded-xl p-2 text-red-500 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20"
                         aria-label={`Remove ${key.name} API key`}
                       >
                         <Trash2 className="h-4 w-4" />
@@ -752,7 +752,7 @@ export const AIKeyManager: React.FC = () => {
                     </div>
 
                     {model && (
-                      <div className="mt-3 pt-3 border-t border-slate-200/50 dark:border-slate-700/50">
+                      <div className="mt-3 border-t border-slate-200/50 pt-3 dark:border-slate-700/50">
                         <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
                           <span>
                             Max Context:{" "}
@@ -771,12 +771,12 @@ export const AIKeyManager: React.FC = () => {
             {isAdding && (
               <Card
                 variant="modern"
-                className="relative overflow-hidden animate-slide-down"
+                className="animate-slide-down relative overflow-hidden"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-indigo-50/30 to-purple-50/50 dark:from-blue-900/20 dark:via-indigo-900/10 dark:to-purple-900/20" />
                 <CardHeader className="relative z-10 pb-4">
                   <div className="flex items-center gap-3">
-                    <div className="p-2 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl">
+                    <div className="rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 p-2">
                       <Plus className="h-5 w-5 text-white" />
                     </div>
                     <div>
@@ -799,7 +799,7 @@ export const AIKeyManager: React.FC = () => {
                     </Alert>
                   )}
 
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
                     <div className="space-y-2">
                       <Label
                         htmlFor="provider-select"
@@ -813,7 +813,7 @@ export const AIKeyManager: React.FC = () => {
                       >
                         <SelectTrigger
                           id="provider-select"
-                          className={`h-12 border-2 rounded-xl transition-all duration-200 ${
+                          className={`h-12 rounded-xl border-2 transition-all duration-200 ${
                             errors.provider
                               ? "border-red-300 focus:border-red-500 focus:ring-red-200"
                               : "border-slate-200 focus:border-blue-400 focus:ring-blue-100 dark:border-slate-700 dark:focus:border-blue-500"
@@ -821,12 +821,12 @@ export const AIKeyManager: React.FC = () => {
                         >
                           <SelectValue placeholder="Choose your AI provider" />
                         </SelectTrigger>
-                        <SelectContent className="rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-800/95 backdrop-blur-xl shadow-2xl">
+                        <SelectContent className="rounded-xl border-2 border-slate-200 bg-white/95 shadow-2xl backdrop-blur-xl dark:border-slate-700 dark:bg-slate-800/95">
                           {aiProviders.map((provider) => (
                             <SelectItem
                               key={provider.id}
                               value={provider.id}
-                              className="rounded-lg my-1 hover:bg-slate-50 dark:hover:bg-slate-700/50"
+                              className="my-1 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700/50"
                             >
                               <div className="flex items-center gap-3 py-1">
                                 <div className="text-slate-700 dark:text-slate-200">
@@ -846,7 +846,7 @@ export const AIKeyManager: React.FC = () => {
                         </SelectContent>
                       </Select>
                       {errors.provider && (
-                        <p className="text-red-500 text-xs mt-1 flex items-center gap-1">
+                        <p className="mt-1 flex items-center gap-1 text-xs text-red-500">
                           <AlertTriangle className="h-3 w-3" />
                           {errors.provider}
                         </p>
@@ -861,7 +861,7 @@ export const AIKeyManager: React.FC = () => {
                         AI Model <span className="text-red-500">*</span>
                         {discoveredModels.length > 0 && (
                           <Badge variant="outline" className="ml-2 text-xs">
-                            <Sparkles className="h-3 w-3 mr-1" />
+                            <Sparkles className="mr-1 h-3 w-3" />
                             {discoveredModels.length} Live Models
                           </Badge>
                         )}
@@ -878,9 +878,9 @@ export const AIKeyManager: React.FC = () => {
                       >
                         <SelectTrigger
                           id="model-select"
-                          className={`h-12 border-2 rounded-xl transition-all duration-200 ${
+                          className={`h-12 rounded-xl border-2 transition-all duration-200 ${
                             !newKey.provider
-                              ? "bg-slate-50 dark:bg-slate-800/50 cursor-not-allowed opacity-60"
+                              ? "cursor-not-allowed bg-slate-50 opacity-60 dark:bg-slate-800/50"
                               : errors.model
                                 ? "border-red-300 focus:border-red-500 focus:ring-red-200"
                                 : "border-slate-200 focus:border-blue-400 focus:ring-blue-100 dark:border-slate-700 dark:focus:border-blue-500"
@@ -896,12 +896,12 @@ export const AIKeyManager: React.FC = () => {
                             }
                           />
                         </SelectTrigger>
-                        <SelectContent className="rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-800/95 backdrop-blur-xl shadow-2xl max-h-96">
+                        <SelectContent className="max-h-96 rounded-xl border-2 border-slate-200 bg-white/95 shadow-2xl backdrop-blur-xl dark:border-slate-700 dark:bg-slate-800/95">
                           {newKey.provider ? (
                             <>
                               {discoveredModels.length > 0 ? (
                                 <>
-                                  <div className="px-2 py-1.5 text-xs font-semibold text-slate-600 dark:text-slate-400 bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20 sticky top-0 z-10">
+                                  <div className="sticky top-0 z-10 bg-gradient-to-r from-green-50 to-blue-50 px-2 py-1.5 text-xs font-semibold text-slate-600 dark:from-green-900/20 dark:to-blue-900/20 dark:text-slate-400">
                                     <div className="flex items-center gap-2">
                                       <Sparkles className="h-3 w-3 text-green-600 dark:text-green-400" />
                                       Available Models (
@@ -912,7 +912,7 @@ export const AIKeyManager: React.FC = () => {
                                     <SelectItem
                                       key={model.id}
                                       value={model.id}
-                                      className="rounded-lg my-1 hover:bg-slate-50 dark:hover:bg-slate-700/50"
+                                      className="my-1 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700/50"
                                     >
                                       <div className="flex flex-col items-start py-1">
                                         <div className="flex items-center gap-2">
@@ -963,10 +963,10 @@ export const AIKeyManager: React.FC = () => {
                                             )}
                                           </div>
                                         </div>
-                                        <span className="text-xs text-slate-500 dark:text-slate-400 line-clamp-1">
+                                        <span className="line-clamp-1 text-xs text-slate-500 dark:text-slate-400">
                                           {model.description}
                                         </span>
-                                        <span className="text-xs text-green-600 dark:text-green-400 mt-0.5 font-medium">
+                                        <span className="mt-0.5 text-xs font-medium text-green-600 dark:text-green-400">
                                           {model.maxTokens?.toLocaleString()}{" "}
                                           tokens
                                         </span>
@@ -975,7 +975,7 @@ export const AIKeyManager: React.FC = () => {
                                   ))}
                                 </>
                               ) : (
-                                <div className="p-4 text-sm text-slate-500 dark:text-slate-400 text-center">
+                                <div className="p-4 text-center text-sm text-slate-500 dark:text-slate-400">
                                   {isScanning ? (
                                     <div className="flex items-center justify-center gap-2">
                                       <RefreshCw className="h-4 w-4 animate-spin" />
@@ -1009,7 +1009,7 @@ export const AIKeyManager: React.FC = () => {
                               )}
                             </>
                           ) : (
-                            <div className="p-4 text-sm text-slate-500 dark:text-slate-400 text-center">
+                            <div className="p-4 text-center text-sm text-slate-500 dark:text-slate-400">
                               <div className="flex flex-col items-center gap-2">
                                 <Key className="h-8 w-8 text-slate-400" />
                                 <span className="font-medium">
@@ -1021,7 +1021,7 @@ export const AIKeyManager: React.FC = () => {
                         </SelectContent>
                       </Select>
                       {errors.model && (
-                        <p className="text-red-500 text-xs mt-1 flex items-center gap-1">
+                        <p className="mt-1 flex items-center gap-1 text-xs text-red-500">
                           <AlertTriangle className="h-3 w-3" />
                           {errors.model}
                         </p>
@@ -1030,7 +1030,7 @@ export const AIKeyManager: React.FC = () => {
                         discoveredModels.length === 0 &&
                         !isScanning &&
                         !scanStatus && (
-                          <p className="text-blue-600 dark:text-blue-400 text-xs mt-1 flex items-center gap-1">
+                          <p className="mt-1 flex items-center gap-1 text-xs text-blue-600 dark:text-blue-400">
                             <Sparkles className="h-3 w-3" />
                             Tip: Models will be discovered automatically from
                             the API
@@ -1056,7 +1056,7 @@ export const AIKeyManager: React.FC = () => {
                           setErrors((prev) => ({ ...prev, name: "" }));
                         }
                       }}
-                      className={`h-12 border-2 rounded-xl transition-all duration-200 ${
+                      className={`h-12 rounded-xl border-2 transition-all duration-200 ${
                         errors.name
                           ? "border-red-300 focus:border-red-500 focus:ring-red-200"
                           : "border-slate-200 focus:border-blue-400 focus:ring-blue-100 dark:border-slate-700 dark:focus:border-blue-500"
@@ -1066,7 +1066,7 @@ export const AIKeyManager: React.FC = () => {
                     {errors.name && (
                       <p
                         id="name-error"
-                        className="text-red-500 text-xs mt-1 flex items-center gap-1"
+                        className="mt-1 flex items-center gap-1 text-xs text-red-500"
                       >
                         <AlertTriangle className="h-3 w-3" />
                         {errors.name}
@@ -1095,7 +1095,7 @@ export const AIKeyManager: React.FC = () => {
                             setErrors((prev) => ({ ...prev, key: "" }));
                           }
                         }}
-                        className={`h-12 border-2 rounded-xl transition-all duration-200 font-mono pr-12 ${
+                        className={`h-12 rounded-xl border-2 pr-12 font-mono transition-all duration-200 ${
                           errors.key
                             ? "border-red-300 focus:border-red-500 focus:ring-red-200"
                             : "border-slate-200 focus:border-blue-400 focus:ring-blue-100 dark:border-slate-700 dark:focus:border-blue-500"
@@ -1103,17 +1103,17 @@ export const AIKeyManager: React.FC = () => {
                         aria-describedby={errors.key ? "key-error" : undefined}
                       />
                       {isScanning && (
-                        <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                        <div className="absolute top-1/2 right-3 -translate-y-1/2">
                           <RefreshCw className="h-5 w-5 animate-spin text-blue-600 dark:text-blue-400" />
                         </div>
                       )}
                       {scanStatus?.type === "success" && (
-                        <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                        <div className="absolute top-1/2 right-3 -translate-y-1/2">
                           <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400" />
                         </div>
                       )}
                       {scanStatus?.type === "error" && (
-                        <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                        <div className="absolute top-1/2 right-3 -translate-y-1/2">
                           <AlertTriangle className="h-5 w-5 text-red-600 dark:text-red-400" />
                         </div>
                       )}
@@ -1121,7 +1121,7 @@ export const AIKeyManager: React.FC = () => {
                     {errors.key && (
                       <p
                         id="key-error"
-                        className="text-red-500 text-xs mt-1 flex items-center gap-1"
+                        className="mt-1 flex items-center gap-1 text-xs text-red-500"
                       >
                         <AlertTriangle className="h-3 w-3" />
                         {errors.key}
@@ -1142,7 +1142,7 @@ export const AIKeyManager: React.FC = () => {
                         ) : scanStatus.type === "error" ? (
                           <AlertTriangle className="h-4 w-4 text-red-600" />
                         ) : (
-                          <RefreshCw className="h-4 w-4 text-blue-600 animate-spin" />
+                          <RefreshCw className="h-4 w-4 animate-spin text-blue-600" />
                         )}
                         <AlertDescription
                           className={
@@ -1166,13 +1166,13 @@ export const AIKeyManager: React.FC = () => {
                       className="bg-slate-50/50 dark:bg-slate-800/30"
                     >
                       <CardContent className="p-4">
-                        <div className="flex items-center gap-2 mb-3">
+                        <div className="mb-3 flex items-center gap-2">
                           <Shield className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                           <h5 className="text-sm font-semibold text-slate-800 dark:text-slate-200">
                             Configuration Preview
                           </h5>
                         </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                        <div className="grid grid-cols-1 gap-4 text-sm md:grid-cols-2">
                           <div className="space-y-2">
                             <div className="flex items-center gap-2">
                               <span className="text-slate-600 dark:text-slate-400">
@@ -1244,7 +1244,7 @@ export const AIKeyManager: React.FC = () => {
                     </Card>
                   )}
 
-                  <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                  <div className="flex flex-col gap-3 pt-2 sm:flex-row">
                     <Button
                       onClick={addAPIKey}
                       disabled={
@@ -1265,12 +1265,12 @@ export const AIKeyManager: React.FC = () => {
                     >
                       {isSubmitting ? (
                         <>
-                          <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent mr-2" />
+                          <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
                           Adding Key...
                         </>
                       ) : (
                         <>
-                          <Plus className="h-4 w-4 mr-2" />
+                          <Plus className="mr-2 h-4 w-4" />
                           Add API Key
                         </>
                       )}
@@ -1307,7 +1307,7 @@ export const AIKeyManager: React.FC = () => {
       <Card variant="modern">
         <CardHeader className="pb-4">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-gradient-to-br from-violet-500 to-purple-600 rounded-xl">
+            <div className="rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 p-2">
               <Zap className="h-5 w-5 text-white" />
             </div>
             <div>
@@ -1321,19 +1321,19 @@ export const AIKeyManager: React.FC = () => {
           </div>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
             <Card
               variant="glass"
               className={`group transition-all duration-300 hover:scale-105 ${
                 apiKeys.length > 0
-                  ? "bg-gradient-to-br from-purple-50/50 to-blue-50/50 dark:from-purple-900/20 dark:to-blue-900/20 ring-2 ring-purple-200/50 dark:ring-purple-800/50"
+                  ? "bg-gradient-to-br from-purple-50/50 to-blue-50/50 ring-2 ring-purple-200/50 dark:from-purple-900/20 dark:to-blue-900/20 dark:ring-purple-800/50"
                   : "bg-gradient-to-br from-slate-50/50 to-slate-100/50 dark:from-slate-800/20 dark:to-slate-900/20"
               }`}
             >
               <CardContent className="p-4">
                 <div className="flex items-start gap-3">
                   <div
-                    className={`p-2.5 rounded-xl transition-all duration-200 ${
+                    className={`rounded-xl p-2.5 transition-all duration-200 ${
                       apiKeys.length > 0
                         ? "bg-gradient-to-br from-purple-500 to-blue-600 group-hover:scale-110"
                         : "bg-slate-400"
@@ -1342,7 +1342,7 @@ export const AIKeyManager: React.FC = () => {
                     <Bot className="h-5 w-5 text-white" />
                   </div>
                   <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
+                    <div className="mb-1 flex items-center gap-2">
                       <h4 className="font-semibold text-slate-900 dark:text-white">
                         AI Fix Suggestions
                       </h4>
@@ -1352,12 +1352,12 @@ export const AIKeyManager: React.FC = () => {
                         <Clock className="h-4 w-4 text-slate-400" />
                       )}
                     </div>
-                    <p className="text-sm text-slate-600 dark:text-slate-400 mb-2">
+                    <p className="mb-2 text-sm text-slate-600 dark:text-slate-400">
                       Intelligent code fixes and security recommendations
                     </p>
                     <div className="flex items-center gap-1">
                       <div
-                        className={`w-2 h-2 rounded-full ${apiKeys.length > 0 ? "bg-green-500 animate-pulse" : "bg-slate-400"}`}
+                        className={`h-2 w-2 rounded-full ${apiKeys.length > 0 ? "animate-pulse bg-green-500" : "bg-slate-400"}`}
                       />
                       <span
                         className={`text-xs font-medium ${
@@ -1376,25 +1376,25 @@ export const AIKeyManager: React.FC = () => {
 
             <Card
               variant="glass"
-              className="bg-gradient-to-br from-blue-50/50 to-indigo-50/50 dark:from-blue-900/20 dark:to-indigo-900/20 ring-2 ring-blue-200/50 dark:ring-blue-800/50 group transition-all duration-300 hover:scale-105"
+              className="group bg-gradient-to-br from-blue-50/50 to-indigo-50/50 ring-2 ring-blue-200/50 transition-all duration-300 hover:scale-105 dark:from-blue-900/20 dark:to-indigo-900/20 dark:ring-blue-800/50"
             >
               <CardContent className="p-4">
                 <div className="flex items-start gap-3">
-                  <div className="p-2.5 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl group-hover:scale-110 transition-transform duration-200">
+                  <div className="rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 p-2.5 transition-transform duration-200 group-hover:scale-110">
                     <Shield className="h-5 w-5 text-white" />
                   </div>
                   <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
+                    <div className="mb-1 flex items-center gap-2">
                       <h4 className="font-semibold text-slate-900 dark:text-white">
                         Secure Code Search
                       </h4>
                       <CheckCircle className="h-4 w-4 text-green-500" />
                     </div>
-                    <p className="text-sm text-slate-600 dark:text-slate-400 mb-2">
+                    <p className="mb-2 text-sm text-slate-600 dark:text-slate-400">
                       Advanced pattern matching and vulnerability detection
                     </p>
                     <div className="flex items-center gap-1">
-                      <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                      <div className="h-2 w-2 animate-pulse rounded-full bg-green-500" />
                       <span className="text-xs font-medium text-green-700 dark:text-green-300">
                         Always Available
                       </span>
@@ -1406,26 +1406,26 @@ export const AIKeyManager: React.FC = () => {
 
             <Card
               variant="glass"
-              className="bg-gradient-to-br from-emerald-50/50 to-teal-50/50 dark:from-emerald-900/20 dark:to-teal-900/20 ring-2 ring-emerald-200/50 dark:ring-emerald-800/50 group transition-all duration-300 hover:scale-105"
+              className="group bg-gradient-to-br from-emerald-50/50 to-teal-50/50 ring-2 ring-emerald-200/50 transition-all duration-300 hover:scale-105 dark:from-emerald-900/20 dark:to-teal-900/20 dark:ring-emerald-800/50"
             >
               <CardContent className="p-4">
                 <div className="flex items-start gap-3">
-                  <div className="p-2.5 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl group-hover:scale-110 transition-transform duration-200">
+                  <div className="rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 p-2.5 transition-transform duration-200 group-hover:scale-110">
                     <Star className="h-5 w-5 text-white" />
                   </div>
                   <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
+                    <div className="mb-1 flex items-center gap-2">
                       <h4 className="font-semibold text-slate-900 dark:text-white">
                         Code Provenance
                       </h4>
                       <CheckCircle className="h-4 w-4 text-green-500" />
                     </div>
-                    <p className="text-sm text-slate-600 dark:text-slate-400 mb-2">
+                    <p className="mb-2 text-sm text-slate-600 dark:text-slate-400">
                       Track code origins and identify potential supply chain
                       risks
                     </p>
                     <div className="flex items-center gap-1">
-                      <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                      <div className="h-2 w-2 animate-pulse rounded-full bg-green-500" />
                       <span className="text-xs font-medium text-green-700 dark:text-green-300">
                         Always Available
                       </span>
@@ -1439,18 +1439,18 @@ export const AIKeyManager: React.FC = () => {
           {apiKeys.length === 0 && (
             <Card
               variant="glass"
-              className="mt-6 bg-gradient-to-r from-amber-50/50 to-orange-50/50 dark:from-amber-900/20 dark:to-orange-900/20 border border-amber-200/50 dark:border-amber-800/50"
+              className="mt-6 border border-amber-200/50 bg-gradient-to-r from-amber-50/50 to-orange-50/50 dark:border-amber-800/50 dark:from-amber-900/20 dark:to-orange-900/20"
             >
               <CardContent className="p-4">
                 <div className="flex items-start gap-3">
-                  <div className="p-2 bg-amber-500 rounded-xl">
+                  <div className="rounded-xl bg-amber-500 p-2">
                     <AlertTriangle className="h-5 w-5 text-white" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-amber-900 dark:text-amber-200 mb-1">
+                    <h4 className="mb-1 font-semibold text-amber-900 dark:text-amber-200">
                       Unlock AI-Powered Analysis
                     </h4>
-                    <p className="text-sm text-amber-800 dark:text-amber-300 mb-3">
+                    <p className="mb-3 text-sm text-amber-800 dark:text-amber-300">
                       Add your first API key to enable intelligent fix
                       suggestions, contextual code analysis, and AI-powered chat
                       assistance. Your keys are stored securely in your browser
@@ -1460,9 +1460,9 @@ export const AIKeyManager: React.FC = () => {
                       onClick={() => setIsAdding(true)}
                       variant="default"
                       size="sm"
-                      className="bg-amber-600 hover:bg-amber-700 text-white"
+                      className="bg-amber-600 text-white hover:bg-amber-700"
                     >
-                      <Plus className="h-4 w-4 mr-2" />
+                      <Plus className="mr-2 h-4 w-4" />
                       Add Your First API Key
                     </Button>
                   </div>
@@ -1480,20 +1480,20 @@ export const AIKeyManager: React.FC = () => {
       >
         <CardContent className="p-6">
           <div className="flex items-start gap-4">
-            <div className="p-3 bg-slate-200 dark:bg-slate-700 rounded-2xl">
+            <div className="rounded-2xl bg-slate-200 p-3 dark:bg-slate-700">
               <Shield className="h-6 w-6 text-slate-600 dark:text-slate-300" />
             </div>
             <div>
-              <h4 className="font-semibold text-slate-900 dark:text-white mb-2">
+              <h4 className="mb-2 font-semibold text-slate-900 dark:text-white">
                 🔒 Privacy & Security Guarantee
               </h4>
-              <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+              <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
                 Your API keys are encrypted and stored locally in your browser.
                 They are never transmitted to our servers and are only used to
                 communicate directly with your chosen AI providers. You maintain
                 complete control over your credentials at all times.
               </p>
-              <div className="flex items-center gap-4 mt-3 text-xs text-slate-500 dark:text-slate-400">
+              <div className="mt-3 flex items-center gap-4 text-xs text-slate-500 dark:text-slate-400">
                 <div className="flex items-center gap-1">
                   <CheckCircle className="h-3 w-3 text-green-500" />
                   <span>Local Storage Only</span>

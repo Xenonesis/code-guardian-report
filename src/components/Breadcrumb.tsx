@@ -51,10 +51,10 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({
           <button
             onClick={() => onNavigate(item)}
             className={cn(
-              "flex items-center gap-1.5 px-2 py-1 rounded-md transition-all duration-200 hover:bg-slate-100 dark:hover:bg-slate-800",
+              "flex items-center gap-1.5 rounded-md px-2 py-1 transition-all duration-200 hover:bg-slate-100 dark:hover:bg-slate-800",
               index === items.length - 1
-                ? "text-blue-600 dark:text-blue-400 font-semibold cursor-default hover:bg-transparent"
-                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200"
+                ? "cursor-default font-semibold text-blue-600 hover:bg-transparent dark:text-blue-400"
+                : "text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200"
             )}
             disabled={index === items.length - 1}
             aria-current={index === items.length - 1 ? "page" : undefined}

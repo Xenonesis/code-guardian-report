@@ -97,22 +97,22 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
   return (
     <>
-      <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
-        <div className="bg-white dark:bg-gradient-to-b dark:from-[#121829] dark:to-[#1E293B] text-gray-900 dark:text-white rounded-xl p-8 w-full max-w-md mx-4 shadow-2xl border border-gray-200 dark:border-[#2A3B5F]">
-          <div className="flex justify-between items-center mb-6">
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+        <div className="mx-4 w-full max-w-md rounded-xl border border-gray-200 bg-white p-8 text-gray-900 shadow-2xl dark:border-[#2A3B5F] dark:bg-gradient-to-b dark:from-[#121829] dark:to-[#1E293B] dark:text-white">
+          <div className="mb-6 flex items-center justify-between">
             <h2 className="text-2xl font-bold">
               {isLogin ? "Sign In" : "Sign Up"}
             </h2>
             <button
               onClick={onClose}
-              className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white text-xl font-bold"
+              className="text-xl font-bold text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white"
             >
               ×
             </button>
           </div>
 
           {error && (
-            <div className="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-500 text-red-600 dark:text-red-300 px-4 py-3 rounded mb-4 text-sm">
+            <div className="mb-4 rounded border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600 dark:border-red-500 dark:bg-red-900/30 dark:text-red-300">
               {error}
             </div>
           )}
@@ -122,7 +122,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               <div>
                 <label
                   htmlFor="displayName"
-                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                  className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
                 >
                   Display Name
                 </label>
@@ -131,7 +131,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   id="displayName"
                   value={displayName}
                   onChange={(e) => setDisplayName(e.target.value)}
-                  className="w-full px-3 py-2 text-base bg-white dark:bg-[#0F172A] border border-gray-300 dark:border-[#334155] text-gray-900 dark:text-white rounded-md focus:outline-none focus:ring-2 focus:ring-[#9333ea]"
+                  className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base text-gray-900 focus:ring-2 focus:ring-[#9333ea] focus:outline-none dark:border-[#334155] dark:bg-[#0F172A] dark:text-white"
                   autoComplete="name"
                   required={!isLogin}
                 />
@@ -141,7 +141,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
               >
                 Email
               </label>
@@ -150,7 +150,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-3 py-2 text-base bg-white dark:bg-[#0F172A] border border-gray-300 dark:border-[#334155] text-gray-900 dark:text-white rounded-md focus:outline-none focus:ring-2 focus:ring-[#3b82f6]"
+                className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base text-gray-900 focus:ring-2 focus:ring-[#3b82f6] focus:outline-none dark:border-[#334155] dark:bg-[#0F172A] dark:text-white"
                 autoComplete="email"
                 required
               />
@@ -159,7 +159,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             <div>
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
               >
                 Password
               </label>
@@ -168,7 +168,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-3 py-2 text-base bg-white dark:bg-[#0F172A] border border-gray-300 dark:border-[#334155] text-gray-900 dark:text-white rounded-md focus:outline-none focus:ring-2 focus:ring-[#3b82f6]"
+                className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base text-gray-900 focus:ring-2 focus:ring-[#3b82f6] focus:outline-none dark:border-[#334155] dark:bg-[#0F172A] dark:text-white"
                 autoComplete={isLogin ? "current-password" : "new-password"}
                 required
                 minLength={6}
@@ -178,7 +178,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white py-2 px-4 rounded-md hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-pink-500 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full rounded-md bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 px-4 py-2 text-white hover:opacity-90 focus:ring-2 focus:ring-pink-500 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
             >
               {loading ? "Loading..." : isLogin ? "Sign In" : "Sign Up"}
             </button>
@@ -190,7 +190,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 <div className="w-full border-t border-gray-300 dark:border-gray-600" />
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white dark:bg-[#1E293B] text-gray-500 dark:text-gray-400">
+                <span className="bg-white px-2 text-gray-500 dark:bg-[#1E293B] dark:text-gray-400">
                   Or
                 </span>
               </div>
@@ -200,9 +200,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               <button
                 onClick={handleGoogleSignIn}
                 disabled={loading}
-                className="w-full bg-gradient-to-r from-blue-600 to-pink-600 text-white py-2 px-4 rounded-md hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="flex w-full items-center justify-center gap-2 rounded-md bg-gradient-to-r from-blue-600 to-pink-600 px-4 py-2 text-white hover:opacity-90 focus:ring-2 focus:ring-red-500 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
               >
-                <svg className="w-5 h-5" viewBox="0 0 24 24">
+                <svg className="h-5 w-5" viewBox="0 0 24 24">
                   <path
                     fill="currentColor"
                     d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -226,10 +226,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               <button
                 onClick={handleGithubSignIn}
                 disabled={loading}
-                className="w-full bg-gray-900 dark:bg-gradient-to-r dark:from-gray-800 dark:to-gray-900 text-white py-2 px-4 rounded-md hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-gray-500 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="flex w-full items-center justify-center gap-2 rounded-md bg-gray-900 px-4 py-2 text-white hover:opacity-90 focus:ring-2 focus:ring-gray-500 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 dark:bg-gradient-to-r dark:from-gray-800 dark:to-gray-900"
               >
                 <svg
-                  className="w-5 h-5"
+                  className="h-5 w-5"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                 >
@@ -243,7 +243,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           <div className="mt-6 text-center">
             <button
               onClick={toggleMode}
-              className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
+              className="text-sm text-blue-600 hover:underline dark:text-blue-400"
             >
               {isLogin
                 ? "Don't have an account? Sign up"

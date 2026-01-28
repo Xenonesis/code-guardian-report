@@ -139,7 +139,7 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
       <Star
         key={i}
         className={`h-3 w-3 ${
-          i < priority ? "text-yellow-400 fill-current" : "text-gray-300"
+          i < priority ? "fill-current text-yellow-400" : "text-gray-300"
         }`}
       />
     ));
@@ -147,14 +147,14 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
 
   if (isLoading) {
     return (
-      <Card className="bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-950/20 dark:to-blue-900/20 border-purple-200 dark:border-purple-800">
+      <Card className="border-purple-200 bg-gradient-to-br from-purple-50 to-blue-50 dark:border-purple-800 dark:from-purple-950/20 dark:to-blue-900/20">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Brain className="h-5 w-5 text-purple-600" />
             AI Fix Suggestions
             <Badge
               variant="outline"
-              className="text-purple-600 border-purple-300"
+              className="border-purple-300 text-purple-600"
             >
               Generating...
             </Badge>
@@ -177,14 +177,14 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
 
   if (!codeContext || codeContext.trim() === "") {
     return (
-      <Card className="bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-yellow-950/20 dark:to-orange-900/20 border-yellow-200 dark:border-yellow-800">
+      <Card className="border-yellow-200 bg-gradient-to-br from-yellow-50 to-orange-50 dark:border-yellow-800 dark:from-yellow-950/20 dark:to-orange-900/20">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Brain className="h-5 w-5 text-yellow-600" />
             AI Fix Suggestions
             <Badge
               variant="outline"
-              className="text-yellow-600 border-yellow-300"
+              className="border-yellow-300 text-yellow-600"
             >
               Code Required
             </Badge>
@@ -204,12 +204,12 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
 
   if (error) {
     return (
-      <Card className="bg-gradient-to-br from-red-50 to-orange-50 dark:from-red-950/20 dark:to-orange-900/20 border-red-200 dark:border-red-800">
+      <Card className="border-red-200 bg-gradient-to-br from-red-50 to-orange-50 dark:border-red-800 dark:from-red-950/20 dark:to-orange-900/20">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Brain className="h-5 w-5 text-red-600" />
             AI Fix Suggestions
-            <Badge variant="outline" className="text-red-600 border-red-300">
+            <Badge variant="outline" className="border-red-300 text-red-600">
               Error
             </Badge>
           </CardTitle>
@@ -224,7 +224,7 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
             className="mt-4"
             variant="outline"
           >
-            <Zap className="h-4 w-4 mr-2" />
+            <Zap className="mr-2 h-4 w-4" />
             Retry Generation
           </Button>
         </CardContent>
@@ -233,14 +233,14 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
   }
 
   return (
-    <Card className="bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-950/20 dark:to-blue-900/20 border-purple-200 dark:border-purple-800">
+    <Card className="border-purple-200 bg-gradient-to-br from-purple-50 to-blue-50 dark:border-purple-800 dark:from-purple-950/20 dark:to-blue-900/20">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Brain className="h-5 w-5 text-purple-600" />
           AI Fix Suggestions ({suggestions?.length || 0})
           <Badge
             variant="outline"
-            className="text-purple-600 border-purple-300"
+            className="border-purple-300 text-purple-600"
           >
             AI-Powered
           </Badge>
@@ -252,8 +252,8 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
       </CardHeader>
       <CardContent>
         {!suggestions || suggestions.length === 0 ? (
-          <div className="text-center py-8">
-            <Lightbulb className="h-12 w-12 text-slate-400 mx-auto mb-4" />
+          <div className="py-8 text-center">
+            <Lightbulb className="mx-auto mb-4 h-12 w-12 text-slate-400" />
             <p className="text-slate-600 dark:text-slate-400">
               No fix suggestions available for this issue.
             </p>
@@ -262,7 +262,7 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
               className="mt-4"
               variant="outline"
             >
-              <Zap className="h-4 w-4 mr-2" />
+              <Zap className="mr-2 h-4 w-4" />
               Generate Suggestions
             </Button>
           </div>
@@ -271,16 +271,16 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
             {suggestions?.map((suggestion) => (
               <div
                 key={suggestion.id}
-                className="border rounded-lg overflow-hidden"
+                className="overflow-hidden rounded-lg border"
               >
                 <button
                   type="button"
                   onClick={() => toggleSuggestionExpansion(suggestion.id)}
-                  className="w-full p-4 text-left hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                  className="w-full p-4 text-left transition-colors hover:bg-slate-50 dark:hover:bg-slate-800"
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-2">
+                      <div className="mb-2 flex items-center gap-2">
                         <Badge
                           className={getConfidenceColor(suggestion.confidence)}
                         >
@@ -296,7 +296,7 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
                           </div>
                         </div>
                       </div>
-                      <h3 className="font-semibold text-slate-900 dark:text-white mb-1">
+                      <h3 className="mb-1 font-semibold text-slate-900 dark:text-white">
                         {suggestion.title}
                       </h3>
                       <p className="text-sm text-slate-600 dark:text-slate-400">
@@ -314,9 +314,9 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
                 </button>
 
                 {expandedSuggestion === suggestion.id && (
-                  <div className="border-t bg-slate-50 dark:bg-slate-800/50 p-4">
+                  <div className="border-t bg-slate-50 p-4 dark:bg-slate-800/50">
                     <Tabs defaultValue="overview" className="w-full">
-                      <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 gap-1">
+                      <TabsList className="grid w-full grid-cols-2 gap-1 sm:grid-cols-4">
                         <TabsTrigger value="overview">Overview</TabsTrigger>
                         <TabsTrigger value="code">Code Changes</TabsTrigger>
                         <TabsTrigger value="testing">Testing</TabsTrigger>
@@ -325,7 +325,7 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
 
                       <TabsContent value="overview" className="space-y-4">
                         <div>
-                          <h4 className="font-semibold mb-2 flex items-center gap-2">
+                          <h4 className="mb-2 flex items-center gap-2 font-semibold">
                             <Info className="h-4 w-4" />
                             Explanation
                           </h4>
@@ -335,7 +335,7 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
                         </div>
 
                         <div>
-                          <h4 className="font-semibold mb-2 flex items-center gap-2">
+                          <h4 className="mb-2 flex items-center gap-2 font-semibold">
                             <Shield className="h-4 w-4" />
                             Security Benefit
                           </h4>
@@ -345,7 +345,7 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
                         </div>
 
                         <div>
-                          <h4 className="font-semibold mb-2 flex items-center gap-2">
+                          <h4 className="mb-2 flex items-center gap-2 font-semibold">
                             <AlertTriangle className="h-4 w-4" />
                             Risk Assessment
                           </h4>
@@ -356,7 +356,7 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
 
                         {suggestion.relatedPatterns.length > 0 && (
                           <div>
-                            <h4 className="font-semibold mb-2">
+                            <h4 className="mb-2 font-semibold">
                               Related Security Patterns
                             </h4>
                             <div className="flex flex-wrap gap-2">
@@ -380,7 +380,7 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
                         {suggestion.codeChanges.map((change, index) => (
                           <div key={index} className="space-y-2">
                             <div className="flex items-center justify-between">
-                              <h4 className="font-semibold text-sm">
+                              <h4 className="text-sm font-semibold">
                                 {change.type.charAt(0).toUpperCase() +
                                   change.type.slice(1)}{" "}
                                 in {change.filename}
@@ -392,7 +392,7 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
 
                             {change.originalCode && (
                               <div>
-                                <div className="flex items-center justify-between mb-2">
+                                <div className="mb-2 flex items-center justify-between">
                                   <span className="text-sm font-medium text-red-600">
                                     Before:
                                   </span>
@@ -414,14 +414,14 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
                                     )}
                                   </Button>
                                 </div>
-                                <pre className="bg-red-50 dark:bg-red-950/20 p-3 rounded border text-sm overflow-x-auto">
+                                <pre className="overflow-x-auto rounded border bg-red-50 p-3 text-sm dark:bg-red-950/20">
                                   <code>{change.originalCode}</code>
                                 </pre>
                               </div>
                             )}
 
                             <div>
-                              <div className="flex items-center justify-between mb-2">
+                              <div className="mb-2 flex items-center justify-between">
                                 <span className="text-sm font-medium text-green-600">
                                   After:
                                 </span>
@@ -443,12 +443,12 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
                                   )}
                                 </Button>
                               </div>
-                              <pre className="bg-green-50 dark:bg-green-950/20 p-3 rounded border text-sm overflow-x-auto">
+                              <pre className="overflow-x-auto rounded border bg-green-50 p-3 text-sm dark:bg-green-950/20">
                                 <code>{change.suggestedCode}</code>
                               </pre>
                             </div>
 
-                            <p className="text-xs text-slate-600 dark:text-slate-400 italic">
+                            <p className="text-xs text-slate-600 italic dark:text-slate-400">
                               {change.reasoning}
                             </p>
                           </div>
@@ -460,7 +460,7 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
                             className="bg-green-600 hover:bg-green-700"
                             size="sm"
                           >
-                            <Play className="h-4 w-4 mr-2" />
+                            <Play className="mr-2 h-4 w-4" />
                             Apply Fix
                           </Button>
                           <Button
@@ -475,7 +475,7 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
                             variant="outline"
                             size="sm"
                           >
-                            <Download className="h-4 w-4 mr-2" />
+                            <Download className="mr-2 h-4 w-4" />
                             Export Changes
                           </Button>
                         </div>
@@ -483,7 +483,7 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
 
                       <TabsContent value="testing" className="space-y-4">
                         <div>
-                          <h4 className="font-semibold mb-2 flex items-center gap-2">
+                          <h4 className="mb-2 flex items-center gap-2 font-semibold">
                             <Target className="h-4 w-4" />
                             Testing Recommendations
                           </h4>
@@ -494,7 +494,7 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
                                   key={index}
                                   className="flex items-start gap-2 text-sm"
                                 >
-                                  <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
+                                  <CheckCircle className="mt-0.5 h-4 w-4 flex-shrink-0 text-green-600" />
                                   <span className="text-slate-600 dark:text-slate-400">
                                     {test}
                                   </span>
@@ -506,9 +506,9 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
                       </TabsContent>
 
                       <TabsContent value="security" className="space-y-4">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                           <div>
-                            <h4 className="font-semibold mb-2">
+                            <h4 className="mb-2 font-semibold">
                               Security Metrics
                             </h4>
                             <div className="space-y-2 text-sm">
@@ -530,7 +530,7 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
                                   {suggestion.effort}
                                 </Badge>
                               </div>
-                              <div className="flex justify-between items-center">
+                              <div className="flex items-center justify-between">
                                 <span>Priority:</span>
                                 <div className="flex">
                                   {renderPriorityStars(suggestion.priority)}
@@ -541,7 +541,7 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
 
                           {suggestion.frameworkSpecific && (
                             <div>
-                              <h4 className="font-semibold mb-2">
+                              <h4 className="mb-2 font-semibold">
                                 Framework-Specific
                               </h4>
                               <div className="space-y-2 text-sm">
@@ -564,7 +564,7 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
                                     <span className="font-medium">
                                       Dependencies:
                                     </span>
-                                    <div className="flex flex-wrap gap-1 mt-1">
+                                    <div className="mt-1 flex flex-wrap gap-1">
                                       {suggestion.frameworkSpecific.dependencies.map(
                                         (dep, index) => (
                                           <Badge

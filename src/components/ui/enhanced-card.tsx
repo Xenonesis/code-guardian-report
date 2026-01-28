@@ -114,10 +114,10 @@ const EnhancedCardTitle = React.forwardRef<
     <h3
       ref={ref}
       className={cn(
-        "font-bold leading-tight tracking-tight",
+        "leading-tight font-bold tracking-tight",
         sizes[size],
         gradient
-          ? "bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-200 bg-clip-text text-transparent"
+          ? "bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent dark:from-white dark:to-slate-200"
           : "text-slate-900 dark:text-white",
         className
       )}
@@ -134,7 +134,7 @@ const EnhancedCardDescription = React.forwardRef<
   <p
     ref={ref}
     className={cn(
-      "text-sm text-slate-600 dark:text-slate-400 leading-relaxed",
+      "text-sm leading-relaxed text-slate-600 dark:text-slate-400",
       className
     )}
     {...props}
@@ -146,7 +146,7 @@ const EnhancedCardContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("p-6 sm:p-8 pt-0", className)} {...props} />
+  <div ref={ref} className={cn("p-6 pt-0 sm:p-8", className)} {...props} />
 ));
 EnhancedCardContent.displayName = "EnhancedCardContent";
 
@@ -156,7 +156,7 @@ const EnhancedCardFooter = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex items-center p-6 sm:p-8 pt-0", className)}
+    className={cn("flex items-center p-6 pt-0 sm:p-8", className)}
     {...props}
   />
 ));

@@ -61,21 +61,21 @@ export function AnalysisTestRunner() {
 
   const getStatusIcon = (status: "PASS" | "FAIL") => {
     return status === "PASS" ? (
-      <CheckCircle className="w-5 h-5 text-green-600" />
+      <CheckCircle className="h-5 w-5 text-green-600" />
     ) : (
-      <XCircle className="w-5 h-5 text-red-600" />
+      <XCircle className="h-5 w-5 text-red-600" />
     );
   };
 
   return (
-    <div className="w-full max-w-6xl mx-auto p-6 space-y-6">
+    <div className="mx-auto w-full max-w-6xl space-y-6 p-6">
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <AlertCircle className="w-6 h-6" />
+            <AlertCircle className="h-6 w-6" />
             Analysis Accuracy Test Suite
           </CardTitle>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-sm">
             Verify that the analysis engine detects real vulnerabilities
             accurately and doesn't return mock/fake data
           </p>
@@ -89,12 +89,12 @@ export function AnalysisTestRunner() {
           >
             {isRunning ? (
               <>
-                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 Running Tests...
               </>
             ) : (
               <>
-                <PlayCircle className="w-4 h-4 mr-2" />
+                <PlayCircle className="mr-2 h-4 w-4" />
                 Run Analysis Tests
               </>
             )}
@@ -110,41 +110,41 @@ export function AnalysisTestRunner() {
               <CardTitle>Test Results Summary</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-                <div className="text-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-4">
+                <div className="rounded-lg bg-blue-50 p-4 text-center dark:bg-blue-900/20">
                   <div className="text-3xl font-bold text-blue-600">
                     {results.total}
                   </div>
-                  <div className="text-sm text-muted-foreground">
+                  <div className="text-muted-foreground text-sm">
                     Total Tests
                   </div>
                 </div>
-                <div className="text-center p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                <div className="rounded-lg bg-green-50 p-4 text-center dark:bg-green-900/20">
                   <div className="text-3xl font-bold text-green-600">
                     {results.passed}
                   </div>
-                  <div className="text-sm text-muted-foreground">Passed</div>
+                  <div className="text-muted-foreground text-sm">Passed</div>
                 </div>
-                <div className="text-center p-4 bg-red-50 dark:bg-red-900/20 rounded-lg">
+                <div className="rounded-lg bg-red-50 p-4 text-center dark:bg-red-900/20">
                   <div className="text-3xl font-bold text-red-600">
                     {results.failed}
                   </div>
-                  <div className="text-sm text-muted-foreground">Failed</div>
+                  <div className="text-muted-foreground text-sm">Failed</div>
                 </div>
-                <div className="text-center p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+                <div className="rounded-lg bg-purple-50 p-4 text-center dark:bg-purple-900/20">
                   <div className="text-3xl font-bold text-purple-600">
                     {getSuccessRate()}%
                   </div>
-                  <div className="text-sm text-muted-foreground">
+                  <div className="text-muted-foreground text-sm">
                     Success Rate
                   </div>
                 </div>
               </div>
 
               {results.passed === results.total ? (
-                <div className="mt-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
+                <div className="mt-6 rounded-lg border border-green-200 bg-green-50 p-4 dark:border-green-800 dark:bg-green-900/20">
                   <div className="flex items-start gap-3">
-                    <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" />
+                    <CheckCircle className="mt-0.5 h-6 w-6 flex-shrink-0 text-green-600" />
                     <div>
                       <h3 className="font-semibold text-green-900 dark:text-green-100">
                         🎉 All Tests Passed!
@@ -160,9 +160,9 @@ export function AnalysisTestRunner() {
                   </div>
                 </div>
               ) : (
-                <div className="mt-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+                <div className="mt-6 rounded-lg border border-red-200 bg-red-50 p-4 dark:border-red-800 dark:bg-red-900/20">
                   <div className="flex items-start gap-3">
-                    <XCircle className="w-6 h-6 text-red-600 flex-shrink-0 mt-0.5" />
+                    <XCircle className="mt-0.5 h-6 w-6 flex-shrink-0 text-red-600" />
                     <div>
                       <h3 className="font-semibold text-red-900 dark:text-red-100">
                         Some Tests Failed
@@ -189,10 +189,10 @@ export function AnalysisTestRunner() {
                 {results.details.map((detail) => (
                   <div
                     key={`${detail.testName}-${detail.status}`}
-                    className={`p-4 border rounded-lg ${
+                    className={`rounded-lg border p-4 ${
                       detail.status === "PASS"
-                        ? "bg-green-50 dark:bg-green-900/10 border-green-200 dark:border-green-800"
-                        : "bg-red-50 dark:bg-red-900/10 border-red-200 dark:border-red-800"
+                        ? "border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-900/10"
+                        : "border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-900/10"
                     }`}
                   >
                     <div className="flex items-start gap-3">
@@ -203,11 +203,11 @@ export function AnalysisTestRunner() {
                         >
                           {detail.testName}
                         </h4>
-                        <p className="text-sm text-muted-foreground mt-1">
+                        <p className="text-muted-foreground mt-1 text-sm">
                           {detail.message}
                         </p>
                         {detail.actualIssues !== undefined && (
-                          <div className="mt-2 text-xs text-muted-foreground">
+                          <div className="text-muted-foreground mt-2 text-xs">
                             Issues found: {detail.actualIssues}
                             {detail.expectedMin &&
                               ` (expected: ${detail.expectedMin}+)`}

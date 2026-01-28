@@ -135,7 +135,7 @@ export const LanguageDetectionSummary: React.FC<
               </span>
               <span className="text-sm">{frameworks[0].name}</span>
               {frameworks.length > 1 && (
-                <Badge variant="outline" className="text-xs px-1 py-0">
+                <Badge variant="outline" className="px-1 py-0 text-xs">
                   +{frameworks.length - 1}
                 </Badge>
               )}
@@ -155,9 +155,9 @@ export const LanguageDetectionSummary: React.FC<
       <CardContent className="p-4">
         <div className="space-y-3">
           {/* Enhanced Header with Better Spacing */}
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
             <div className="flex items-center gap-3">
-              <div className="p-1.5 rounded-lg bg-yellow-100 dark:bg-yellow-900/30">
+              <div className="rounded-lg bg-yellow-100 p-1.5 dark:bg-yellow-900/30">
                 <Zap className="h-4 w-4 text-yellow-600 dark:text-yellow-400" />
               </div>
               <span className="font-semibold text-slate-900 dark:text-white">
@@ -165,11 +165,11 @@ export const LanguageDetectionSummary: React.FC<
               </span>
             </div>
             <div className="flex items-center gap-3 text-xs font-medium text-slate-600 dark:text-slate-400">
-              <div className="flex items-center gap-1 px-2 py-1 rounded-md bg-slate-100 dark:bg-slate-800">
+              <div className="flex items-center gap-1 rounded-md bg-slate-100 px-2 py-1 dark:bg-slate-800">
                 <Code2 className="h-3 w-3" />
                 <span>{totalFiles} files</span>
               </div>
-              <div className="flex items-center gap-1 px-2 py-1 rounded-md bg-slate-100 dark:bg-slate-800">
+              <div className="flex items-center gap-1 rounded-md bg-slate-100 px-2 py-1 dark:bg-slate-800">
                 <Zap className="h-3 w-3" />
                 <span>{analysisTime}ms</span>
               </div>
@@ -186,7 +186,7 @@ export const LanguageDetectionSummary: React.FC<
                 <span className="font-medium capitalize">
                   {primaryLanguage.name}
                 </span>
-                <div className="text-xs text-muted-foreground">
+                <div className="text-muted-foreground text-xs">
                   Primary Language
                 </div>
               </div>
@@ -204,7 +204,7 @@ export const LanguageDetectionSummary: React.FC<
           {/* Additional Languages */}
           {allLanguages.length > 1 && (
             <div>
-              <div className="text-xs text-muted-foreground mb-1">
+              <div className="text-muted-foreground mb-1 text-xs">
                 Other Languages:
               </div>
               <div className="flex flex-wrap gap-1">
@@ -234,7 +234,7 @@ export const LanguageDetectionSummary: React.FC<
           {/* Frameworks */}
           {frameworks.length > 0 && (
             <div>
-              <div className="text-xs text-muted-foreground mb-1">
+              <div className="text-muted-foreground mb-1 text-xs">
                 Frameworks:
               </div>
               <div className="flex flex-wrap gap-1">
@@ -266,7 +266,7 @@ export const LanguageDetectionSummary: React.FC<
 
           {/* Project Type */}
           <div className="flex items-center justify-between">
-            <span className="text-sm text-muted-foreground">Project Type:</span>
+            <span className="text-muted-foreground text-sm">Project Type:</span>
             <div className="flex items-center gap-1">
               <Badge variant="outline" className="text-xs">
                 {projectStructure.type}
@@ -274,7 +274,7 @@ export const LanguageDetectionSummary: React.FC<
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Info className="h-3 w-3 text-muted-foreground" />
+                    <Info className="text-muted-foreground h-3 w-3" />
                   </TooltipTrigger>
                   <TooltipContent>
                     <p>{projectStructure.confidence}% confidence</p>
