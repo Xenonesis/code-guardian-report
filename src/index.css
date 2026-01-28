@@ -13,6 +13,9 @@ html {
   -webkit-overflow-scrolling: touch;
   background-color: #ffffff;
   color: #0f172a;
+  /* Prevent text size adjustment on orientation change */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 html.dark {
@@ -32,10 +35,14 @@ body {
     "rlig" 1,
     "calt" 1;
   line-height: 1.6;
-  font-size: 14px;
+  font-size: clamp(14px, 0.875rem + 0.1vw, 16px);
   background-color: #ffffff;
   color: #0f172a;
   min-height: 100vh;
+  min-height: 100dvh; /* Dynamic viewport height for mobile */
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .dark body {
@@ -45,11 +52,25 @@ body {
 
 #root {
   min-height: 100vh;
+  min-height: 100dvh;
   background-color: inherit;
   color: inherit;
 }
 
+/* Responsive base font sizing */
+@media (max-width: 320px) {
+  body {
+    font-size: 13px;
+  }
+}
+
 @media (min-width: 640px) {
+  body {
+    font-size: 15px;
+  }
+}
+
+@media (min-width: 1024px) {
   body {
     font-size: 16px;
   }
@@ -528,12 +549,44 @@ a:active,
 /* Mobile optimizations */
 @media (max-width: 640px) {
   .modern-card {
-    padding: 1.5rem;
-    border-radius: 1rem;
+    padding: 1rem;
+    border-radius: 0.75rem;
   }
 
   .btn-modern {
-    padding: 0.75rem 1.5rem;
+    padding: 0.625rem 1.25rem;
+    min-height: 44px; /* Touch-friendly minimum */
+  }
+  
+  /* Improve touch targets */
+  button,
+  [role="button"],
+  a {
+    min-height: 44px;
+  }
+  
+  /* Better spacing on mobile */
+  .container-modern {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Extra small screen optimizations (< 375px) */
+@media (max-width: 374px) {
+  .modern-card {
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+  }
+
+  .btn-modern {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+  
+  .container-modern {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
   }
 }
 

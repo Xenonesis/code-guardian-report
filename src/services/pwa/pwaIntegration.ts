@@ -18,7 +18,7 @@ export interface PWAStatus {
 }
 
 class PWAIntegrationService {
-  private installPrompt: any = null;
+  private installPrompt: import("../../utils/pwaUtils").BeforeInstallPromptEvent | null = null;
   private status: PWAStatus = {
     isInstalled: false,
     isOnline: typeof navigator !== "undefined" ? navigator.onLine : true,
@@ -210,13 +210,19 @@ class PWAIntegrationService {
     if (!this.installPrompt) return false;
 
     try {
-      const result = await this.installPrompt.prompt();
-      const accepted = result.outcome === "accepted";
+      // `prompt()` must be triggered from a user gesture (e.g. button click)
+      await this.installPrompt.prompt();
+
+      const choice = await this.installPrompt.userChoice;
+      const accepted = choice.outcome === "accepted";
+
+      // The event can only be used once
+      this.installPrompt = null;
+      this.status.installPromptAvailable = false;
 
       if (accepted) {
+        // `appinstalled` will also fire, but update state immediately for UX
         this.status.isInstalled = true;
-        this.status.installPromptAvailable = false;
-        this.installPrompt = null;
       }
 
       this.dispatchStatusUpdate();

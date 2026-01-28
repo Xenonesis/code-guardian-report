@@ -1,11 +1,16 @@
 @import "tailwindcss";
 
+/* Import responsive utilities */
+@import "./responsive-utilities.css";
+
 /* Force class-based dark mode strategy */
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  /* Custom xs breakpoint for extra small screens */
+  /* Custom breakpoints for comprehensive responsive design */
+  --breakpoint-2xs: 320px;
   --breakpoint-xs: 475px;
+  --breakpoint-3xl: 1920px;
 
   --color-border: hsl(var(--border));
   --color-input: hsl(var(--input));

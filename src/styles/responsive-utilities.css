@@ -1,0 +1,515 @@
+/* Production-Ready Responsive Utilities */
+/* Comprehensive breakpoint support from xs (320px) to 2xl (1536px) */
+
+/* ===================================
+   RESPONSIVE CONTAINER QUERIES
+   =================================== */
+@supports (container-type: inline-size) {
+  .container-query {
+    container-type: inline-size;
+  }
+
+  /* Container query responsive utilities */
+  @container (min-width: 320px) {
+    .cq\:xs\:block { display: block; }
+    .cq\:xs\:flex { display: flex; }
+    .cq\:xs\:grid { display: grid; }
+    .cq\:xs\:hidden { display: none; }
+  }
+
+  @container (min-width: 640px) {
+    .cq\:sm\:block { display: block; }
+    .cq\:sm\:flex { display: flex; }
+    .cq\:sm\:grid { display: grid; }
+    .cq\:sm\:hidden { display: none; }
+  }
+
+  @container (min-width: 768px) {
+    .cq\:md\:block { display: block; }
+    .cq\:md\:flex { display: flex; }
+    .cq\:md\:grid { display: grid; }
+    .cq\:md\:hidden { display: none; }
+  }
+}
+
+/* ===================================
+   RESPONSIVE TYPOGRAPHY
+   =================================== */
+
+/* Fluid typography using clamp() */
+.text-fluid-xs {
+  font-size: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+}
+
+.text-fluid-sm {
+  font-size: clamp(0.875rem, 0.8rem + 0.375vw, 1rem);
+}
+
+.text-fluid-base {
+  font-size: clamp(1rem, 0.925rem + 0.375vw, 1.125rem);
+}
+
+.text-fluid-lg {
+  font-size: clamp(1.125rem, 1rem + 0.625vw, 1.25rem);
+}
+
+.text-fluid-xl {
+  font-size: clamp(1.25rem, 1.1rem + 0.75vw, 1.5rem);
+}
+
+.text-fluid-2xl {
+  font-size: clamp(1.5rem, 1.25rem + 1.25vw, 2rem);
+}
+
+.text-fluid-3xl {
+  font-size: clamp(1.875rem, 1.5rem + 1.875vw, 2.5rem);
+}
+
+.text-fluid-4xl {
+  font-size: clamp(2.25rem, 1.75rem + 2.5vw, 3rem);
+}
+
+.text-fluid-5xl {
+  font-size: clamp(3rem, 2rem + 5vw, 4.5rem);
+}
+
+.text-fluid-hero {
+  font-size: clamp(2rem, 1rem + 5vw, 5rem);
+  line-height: 1.1;
+}
+
+/* ===================================
+   RESPONSIVE SPACING
+   =================================== */
+
+/* Fluid padding */
+.p-fluid-xs { padding: clamp(0.5rem, 0.25rem + 1vw, 1rem); }
+.p-fluid-sm { padding: clamp(0.75rem, 0.5rem + 1.25vw, 1.5rem); }
+.p-fluid-md { padding: clamp(1rem, 0.75rem + 1.5vw, 2rem); }
+.p-fluid-lg { padding: clamp(1.5rem, 1rem + 2vw, 3rem); }
+.p-fluid-xl { padding: clamp(2rem, 1.5rem + 2.5vw, 4rem); }
+
+.px-fluid-xs { padding-left: clamp(0.5rem, 0.25rem + 1vw, 1rem); padding-right: clamp(0.5rem, 0.25rem + 1vw, 1rem); }
+.px-fluid-sm { padding-left: clamp(0.75rem, 0.5rem + 1.25vw, 1.5rem); padding-right: clamp(0.75rem, 0.5rem + 1.25vw, 1.5rem); }
+.px-fluid-md { padding-left: clamp(1rem, 0.75rem + 1.5vw, 2rem); padding-right: clamp(1rem, 0.75rem + 1.5vw, 2rem); }
+.px-fluid-lg { padding-left: clamp(1.5rem, 1rem + 2vw, 3rem); padding-right: clamp(1.5rem, 1rem + 2vw, 3rem); }
+
+.py-fluid-xs { padding-top: clamp(0.5rem, 0.25rem + 1vw, 1rem); padding-bottom: clamp(0.5rem, 0.25rem + 1vw, 1rem); }
+.py-fluid-sm { padding-top: clamp(0.75rem, 0.5rem + 1.25vw, 1.5rem); padding-bottom: clamp(0.75rem, 0.5rem + 1.25vw, 1.5rem); }
+.py-fluid-md { padding-top: clamp(1rem, 0.75rem + 1.5vw, 2rem); padding-bottom: clamp(1rem, 0.75rem + 1.5vw, 2rem); }
+.py-fluid-lg { padding-top: clamp(1.5rem, 1rem + 2vw, 3rem); padding-bottom: clamp(1.5rem, 1rem + 2vw, 3rem); }
+
+/* Fluid margins */
+.m-fluid-xs { margin: clamp(0.5rem, 0.25rem + 1vw, 1rem); }
+.m-fluid-sm { margin: clamp(0.75rem, 0.5rem + 1.25vw, 1.5rem); }
+.m-fluid-md { margin: clamp(1rem, 0.75rem + 1.5vw, 2rem); }
+.m-fluid-lg { margin: clamp(1.5rem, 1rem + 2vw, 3rem); }
+
+/* Fluid gaps */
+.gap-fluid-xs { gap: clamp(0.5rem, 0.25rem + 0.5vw, 0.75rem); }
+.gap-fluid-sm { gap: clamp(0.75rem, 0.5rem + 0.75vw, 1.25rem); }
+.gap-fluid-md { gap: clamp(1rem, 0.75rem + 1vw, 1.5rem); }
+.gap-fluid-lg { gap: clamp(1.5rem, 1rem + 1.5vw, 2.5rem); }
+.gap-fluid-xl { gap: clamp(2rem, 1.5rem + 2vw, 4rem); }
+
+/* ===================================
+   RESPONSIVE GRID LAYOUTS
+   =================================== */
+
+/* Auto-fit responsive grids */
+.grid-auto-fit-xs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+  gap: clamp(0.75rem, 0.5rem + 1vw, 1.5rem);
+}
+
+.grid-auto-fit-sm {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: clamp(1rem, 0.75rem + 1.25vw, 2rem);
+}
+
+.grid-auto-fit-md {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  gap: clamp(1.25rem, 1rem + 1.5vw, 2.5rem);
+}
+
+.grid-auto-fit-lg {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr));
+  gap: clamp(1.5rem, 1.25rem + 1.5vw, 3rem);
+}
+
+/* ===================================
+   RESPONSIVE FLEX LAYOUTS
+   =================================== */
+
+.flex-responsive {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(0.75rem, 0.5rem + 1vw, 1.5rem);
+}
+
+.flex-responsive-center {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.75rem, 0.5rem + 1vw, 1.5rem);
+}
+
+/* Stack on mobile, row on larger screens */
+.flex-stack-to-row {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.75rem, 0.5rem + 1vw, 1.5rem);
+}
+
+@media (min-width: 640px) {
+  .flex-stack-to-row {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+/* ===================================
+   MOBILE-FIRST TOUCH ENHANCEMENTS
+   =================================== */
+
+/* Touch-friendly buttons and interactive elements */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+  padding: clamp(0.75rem, 0.5rem + 0.5vw, 1rem);
+}
+
+/* Improve tap targets on mobile */
+@media (pointer: coarse) {
+  button,
+  [role="button"],
+  a,
+  input[type="submit"],
+  input[type="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Add larger hit areas for small icons */
+  .icon-button {
+    position: relative;
+  }
+
+  .icon-button::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+  }
+}
+
+/* ===================================
+   RESPONSIVE VISIBILITY
+   =================================== */
+
+/* Extra small screens (< 475px) */
+@media (max-width: 474px) {
+  .hide-xs-only { display: none !important; }
+}
+
+/* Small screens (< 640px) */
+@media (max-width: 639px) {
+  .hide-below-sm { display: none !important; }
+  .stack-on-mobile { flex-direction: column !important; }
+  .full-width-mobile { width: 100% !important; }
+  .text-center-mobile { text-align: center !important; }
+}
+
+/* Medium screens and below (< 768px) */
+@media (max-width: 767px) {
+  .hide-below-md { display: none !important; }
+}
+
+/* Large screens and below (< 1024px) */
+@media (max-width: 1023px) {
+  .hide-below-lg { display: none !important; }
+}
+
+/* Show only on specific breakpoints */
+@media (min-width: 475px) {
+  .show-xs-only { display: none !important; }
+}
+
+@media (min-width: 640px) {
+  .show-below-sm { display: none !important; }
+}
+
+@media (min-width: 768px) {
+  .show-below-md { display: none !important; }
+}
+
+@media (min-width: 1024px) {
+  .show-below-lg { display: none !important; }
+}
+
+/* ===================================
+   RESPONSIVE CARD LAYOUTS
+   =================================== */
+
+.card-responsive {
+  padding: clamp(1rem, 0.75rem + 1.5vw, 2rem);
+  border-radius: clamp(0.75rem, 0.5rem + 0.5vw, 1.5rem);
+}
+
+.card-responsive-compact {
+  padding: clamp(0.75rem, 0.5rem + 1vw, 1.5rem);
+  border-radius: clamp(0.5rem, 0.375rem + 0.375vw, 1rem);
+}
+
+/* ===================================
+   RESPONSIVE MODAL/DIALOG
+   =================================== */
+
+.modal-responsive {
+  width: min(95vw, 32rem);
+  max-height: 90vh;
+  padding: clamp(1rem, 0.75rem + 1.5vw, 2rem);
+  border-radius: clamp(0.75rem, 0.5rem + 0.5vw, 1.5rem);
+  overflow-y: auto;
+}
+
+.modal-responsive-lg {
+  width: min(95vw, 48rem);
+}
+
+.modal-responsive-xl {
+  width: min(95vw, 64rem);
+}
+
+.modal-responsive-full {
+  width: min(95vw, 90rem);
+}
+
+/* ===================================
+   SAFE AREA SUPPORT (iPhone notch, etc.)
+   =================================== */
+
+.safe-area-inset-top {
+  padding-top: env(safe-area-inset-top);
+}
+
+.safe-area-inset-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.safe-area-inset-left {
+  padding-left: env(safe-area-inset-left);
+}
+
+.safe-area-inset-right {
+  padding-right: env(safe-area-inset-right);
+}
+
+.safe-area-inset-all {
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+/* ===================================
+   LANDSCAPE/PORTRAIT UTILITIES
+   =================================== */
+
+@media (orientation: landscape) {
+  .landscape\:hidden { display: none !important; }
+  .landscape\:flex { display: flex !important; }
+  .landscape\:grid { display: grid !important; }
+}
+
+@media (orientation: portrait) {
+  .portrait\:hidden { display: none !important; }
+  .portrait\:flex { display: flex !important; }
+  .portrait\:grid { display: grid !important; }
+}
+
+/* Landscape phone handling */
+@media (orientation: landscape) and (max-height: 500px) {
+  .landscape-phone\:py-2 { padding-top: 0.5rem !important; padding-bottom: 0.5rem !important; }
+  .landscape-phone\:py-4 { padding-top: 1rem !important; padding-bottom: 1rem !important; }
+  .landscape-phone\:h-auto { height: auto !important; }
+  .landscape-phone\:min-h-auto { min-height: auto !important; }
+}
+
+/* ===================================
+   HIGH DPI / RETINA DISPLAY
+   =================================== */
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  /* Sharper borders on retina */
+  .retina-border {
+    border-width: 0.5px;
+  }
+
+  /* Better shadows on retina */
+  .retina-shadow {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08),
+                0 4px 6px rgba(0, 0, 0, 0.05);
+  }
+}
+
+/* ===================================
+   DARK MODE RESPONSIVE
+   =================================== */
+
+@media (prefers-color-scheme: dark) {
+  .auto-dark {
+    color-scheme: dark;
+  }
+}
+
+/* ===================================
+   REDUCED MOTION
+   =================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reduce-motion\:static {
+    transform: none !important;
+  }
+}
+
+/* ===================================
+   RESPONSIVE HERO SECTIONS
+   =================================== */
+
+.hero-responsive {
+  min-height: clamp(50vh, 40vh + 20vw, 100vh);
+  padding-top: clamp(4rem, 3rem + 5vw, 8rem);
+  padding-bottom: clamp(4rem, 3rem + 5vw, 8rem);
+}
+
+.hero-compact {
+  min-height: clamp(40vh, 30vh + 15vw, 70vh);
+  padding-top: clamp(2rem, 1.5rem + 3vw, 5rem);
+  padding-bottom: clamp(2rem, 1.5rem + 3vw, 5rem);
+}
+
+/* ===================================
+   RESPONSIVE TABLES
+   =================================== */
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 767px) {
+  .table-stack-mobile thead {
+    display: none;
+  }
+
+  .table-stack-mobile tbody tr {
+    display: block;
+    margin-bottom: 1rem;
+    border: 1px solid hsl(var(--border));
+    border-radius: 0.5rem;
+    padding: 1rem;
+  }
+
+  .table-stack-mobile tbody td {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border: none;
+  }
+
+  .table-stack-mobile tbody td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    margin-right: 1rem;
+  }
+}
+
+/* ===================================
+   RESPONSIVE FORMS
+   =================================== */
+
+.form-responsive {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 0.75rem + 1vw, 1.5rem);
+}
+
+.form-row-responsive {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.75rem, 0.5rem + 0.75vw, 1.25rem);
+}
+
+@media (min-width: 640px) {
+  .form-row-responsive {
+    flex-direction: row;
+  }
+
+  .form-row-responsive > * {
+    flex: 1;
+  }
+}
+
+.input-responsive {
+  width: 100%;
+  padding: clamp(0.625rem, 0.5rem + 0.5vw, 0.875rem) clamp(0.75rem, 0.5rem + 0.75vw, 1rem);
+  font-size: clamp(0.875rem, 0.8rem + 0.25vw, 1rem);
+  border-radius: clamp(0.375rem, 0.25rem + 0.25vw, 0.5rem);
+}
+
+/* ===================================
+   RESPONSIVE NAVIGATION
+   =================================== */
+
+.nav-responsive {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.5rem, 0.25rem + 0.75vw, 1rem);
+}
+
+.nav-item-responsive {
+  padding: clamp(0.375rem, 0.25rem + 0.5vw, 0.625rem) clamp(0.75rem, 0.5rem + 0.75vw, 1rem);
+  font-size: clamp(0.8125rem, 0.75rem + 0.25vw, 0.9375rem);
+  border-radius: clamp(0.375rem, 0.25rem + 0.25vw, 0.5rem);
+  white-space: nowrap;
+}
+
+/* ===================================
+   PRINT STYLES
+   =================================== */
+
+@media print {
+  .no-print { display: none !important; }
+  .print-only { display: block !important; }
+  
+  body {
+    font-size: 12pt;
+    line-height: 1.5;
+    color: #000 !important;
+    background: #fff !important;
+  }
+
+  a {
+    text-decoration: underline;
+    color: #000 !important;
+  }
+
+  .page-break-before { page-break-before: always; }
+  .page-break-after { page-break-after: always; }
+  .page-break-avoid { page-break-inside: avoid; }
+}

@@ -13,6 +13,9 @@ const isProd = process.env.NODE_ENV === "production";
 const nextConfig: NextConfig = {
   // Enable React strict mode for better development experience
   reactStrictMode: true,
+  
+  // Enable standalone output for Docker deployments
+  output: isProd ? "standalone" : undefined,
 
   // Production: Ignore TypeScript errors during build (run type-check separately)
   // Note: Run `npm run type-check` before deploying to catch type errors
@@ -196,7 +199,19 @@ const nextConfig: NextConfig = {
           {
             key: "Permissions-Policy",
             value:
-              "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+              "camera=(), microphone=(), geolocation=(), interest-cohort=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()",
+          },
+          {
+            key: "X-DNS-Prefetch-Control",
+            value: "on",
+          },
+          {
+            key: "X-Download-Options",
+            value: "noopen",
+          },
+          {
+            key: "X-Permitted-Cross-Domain-Policies",
+            value: "none",
           },
           // HSTS - Strict Transport Security
           ...(isProd

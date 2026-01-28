@@ -104,13 +104,9 @@ class PWAAnalyticsService {
   }
 
   private setupEventListeners(): void {
-    // Install prompt tracking
-    window.addEventListener("beforeinstallprompt", (e) => {
+    // Install prompt tracking (do not call preventDefault here; install UI is handled by pwaIntegrationService)
+    window.addEventListener("beforeinstallprompt", () => {
       this.trackInstallPrompt();
-      e.preventDefault();
-
-      // Store the event for later use
-      (window as any).deferredPrompt = e;
     });
 
     // Installation tracking
