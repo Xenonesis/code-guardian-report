@@ -12,6 +12,8 @@
     "start:prod": "NODE_ENV=production next start -p ${PORT:-3000}",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
+    "lint:css": "stylelint \"src/**/*.css\"",
+    "lint:css:fix": "stylelint \"src/**/*.css\" --fix",
     "format": "prettier --write .",
     "lint:strict": "next lint --max-warnings 0",
     "type-check": "tsc --noEmit",
@@ -19,7 +21,7 @@
     "clean": "rimraf .next node_modules/.cache dist out",
     "clean:all": "rimraf .next node_modules/.cache dist out .turbo",
     "postbuild": "echo 'Build completed successfully!'",
-    "prepare": "node scripts/setup-git-hooks.js",
+    "prepare": "husky",
     "update-contributors": "node scripts/update-contributors.js",
     "setup-git-hooks": "node scripts/setup-git-hooks.js",
     "test": "vitest run",
@@ -38,6 +40,19 @@
     "health-check": "curl -f http://localhost:3000/api/health || exit 1",
     "deploy:vercel": "vercel --prod",
     "deploy:preview": "vercel"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{css,scss}": [
+      "stylelint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md}": [
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "@babel/parser": "^7.28.6",
@@ -95,6 +110,7 @@
     "@eslint/markdown": "^7.5.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
+    "@types/jest": "^30.0.0",
     "@types/node": "^25.0.10",
     "@types/react": "^19.2.9",
     "@types/react-dom": "^19.2.3",
@@ -107,9 +123,15 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.1",
     "happy-dom": "^20.3.9",
+    "husky": "^9.1.7",
+    "jest": "^30.2.0",
+    "jest-environment-jsdom": "^30.2.0",
+    "lint-staged": "^16.2.7",
     "prettier": "^3.8.1",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "rimraf": "^6.1.2",
+    "stylelint": "^17.0.0",
+    "stylelint-config-standard": "^40.0.0",
     "tsx": "^4.21.0",
     "vitest": "^4.0.18"
   },

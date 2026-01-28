@@ -18,7 +18,9 @@ export interface PWAStatus {
 }
 
 class PWAIntegrationService {
-  private installPrompt: import("../../utils/pwaUtils").BeforeInstallPromptEvent | null = null;
+  private installPrompt:
+    | import("../../utils/pwaUtils").BeforeInstallPromptEvent
+    | null = null;
   private status: PWAStatus = {
     isInstalled: false,
     isOnline: typeof navigator !== "undefined" ? navigator.onLine : true,
@@ -86,9 +88,11 @@ class PWAIntegrationService {
     if (typeof window === "undefined") return;
 
     // Install prompt
-    window.addEventListener("beforeinstallprompt", (e) => {
+    window.addEventListener("beforeinstallprompt", (e: Event) => {
       e.preventDefault();
-      this.installPrompt = e;
+      // `beforeinstallprompt` isn't in the default DOM lib types in all TS configs.
+      this.installPrompt =
+        e as unknown as import("../../utils/pwaUtils").BeforeInstallPromptEvent;
       this.status.installPromptAvailable = true;
       pwaAnalyticsService.trackInstallPrompt();
       this.dispatchStatusUpdate();

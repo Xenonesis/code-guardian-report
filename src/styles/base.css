@@ -1,7 +1,7 @@
-@import "tailwindcss";
+@import url("tailwindcss");
 
 /* Import responsive utilities */
-@import "./responsive-utilities.css";
+@import url("./responsive-utilities.css");
 
 /* Force class-based dark mode strategy */
 @custom-variant dark (&:where(.dark, .dark *));
@@ -11,7 +11,6 @@
   --breakpoint-2xs: 320px;
   --breakpoint-xs: 475px;
   --breakpoint-3xl: 1920px;
-
   --color-border: hsl(var(--border));
   --color-input: hsl(var(--input));
   --color-ring: hsl(var(--ring));
@@ -39,24 +38,22 @@
   --color-sidebar-accent-foreground: hsl(var(--sidebar-accent-foreground));
   --color-sidebar-border: hsl(var(--sidebar-border));
   --color-sidebar-ring: hsl(var(--sidebar-ring));
-
   --radius-lg: var(--radius);
   --radius-md: calc(var(--radius) - 2px);
   --radius-sm: calc(var(--radius) - 4px);
-
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
   --animate-float: float 3s ease-in-out infinite;
   --animate-float-delayed: float-delayed 4s ease-in-out infinite;
   --animate-bounce-slow: bounce-slow 2s ease-in-out infinite;
   --animate-float-slow: float-slow 6s ease-in-out infinite;
-
-  --shadow-3xl: 0 15px 30px -10px rgba(0, 0, 0, 0.3);
+  --shadow-3xl: 0 15px 30px -10px rgb(0 0 0 / 30%);
 
   @keyframes accordion-down {
     from {
       height: 0;
     }
+
     to {
       height: var(--radix-accordion-content-height);
     }
@@ -66,6 +63,7 @@
     from {
       height: var(--radix-accordion-content-height);
     }
+
     to {
       height: 0;
     }
@@ -76,6 +74,7 @@
     100% {
       transform: translateY(0);
     }
+
     50% {
       transform: translateY(-10px);
     }
@@ -86,6 +85,7 @@
     100% {
       transform: translateY(0);
     }
+
     50% {
       transform: translateY(-15px);
     }
@@ -96,6 +96,7 @@
     100% {
       transform: translateY(0);
     }
+
     50% {
       transform: translateY(-20%);
     }
@@ -106,6 +107,7 @@
     100% {
       transform: translateY(0);
     }
+
     50% {
       transform: translateY(-5px);
     }
@@ -181,6 +183,6 @@
   body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
-    font-family: "Inter", sans-serif;
+    font-family: Inter, sans-serif;
   }
 }

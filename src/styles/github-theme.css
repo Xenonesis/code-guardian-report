@@ -5,26 +5,26 @@
 }
 
 .github-card {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgb(255 255 255 / 5%);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgb(255 255 255 / 10%);
   transition: all 0.3s ease;
 }
 
 .github-card:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.2);
+  background: rgb(255 255 255 / 8%);
+  border-color: rgb(255 255 255 / 20%);
   transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 30px rgb(0 0 0 / 30%);
 }
 
 .github-stat-card {
   background: linear-gradient(
     135deg,
-    rgba(33, 136, 255, 0.1) 0%,
-    rgba(79, 70, 229, 0.1) 100%
+    rgb(33 136 255 / 10%) 0%,
+    rgb(79 70 229 / 10%) 100%
   );
-  border: 1px solid rgba(33, 136, 255, 0.2);
+  border: 1px solid rgb(33 136 255 / 20%);
 }
 
 .github-button-primary {
@@ -37,7 +37,7 @@
 .github-button-primary:hover {
   background: linear-gradient(135deg, #0366d6 0%, #044289 100%);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(33, 136, 255, 0.4);
+  box-shadow: 0 4px 12px rgb(33 136 255 / 40%);
 }
 
 .github-badge-success {
@@ -61,6 +61,7 @@
   100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.6;
   }
@@ -77,8 +78,7 @@
 
 /* GitHub code-style typography */
 .github-code-font {
-  font-family:
-    "SFMono-Regular", "Consolas", "Liberation Mono", "Menlo", monospace;
+  font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
 }
 
 /* Repository card specific styles */
@@ -104,6 +104,7 @@
   100% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
@@ -139,7 +140,7 @@
   top: 0;
   bottom: 0;
   width: 2px;
-  background: linear-gradient(180deg, #2188ff 0%, rgba(33, 136, 255, 0.1) 100%);
+  background: linear-gradient(180deg, #2188ff 0%, rgb(33 136 255 / 10%) 100%);
 }
 
 .timeline-dot {
@@ -181,7 +182,7 @@
 }
 
 /* Responsive adjustments */
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .github-card {
     padding: 1rem;
   }
@@ -193,11 +194,11 @@
 
 /* Dark mode specific enhancements */
 .dark .github-card {
-  background: rgba(255, 255, 255, 0.03);
-  border-color: rgba(255, 255, 255, 0.08);
+  background: rgb(255 255 255 / 3%);
+  border-color: rgb(255 255 255 / 8%);
 }
 
 .dark .github-card:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.15);
+  background: rgb(255 255 255 / 6%);
+  border-color: rgb(255 255 255 / 15%);
 }

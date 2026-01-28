@@ -711,7 +711,7 @@ export const HistoryPage = ({
                       {/* Hover glow effect */}
                       <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-violet-500/0 via-fuchsia-500/0 to-cyan-500/0 opacity-0 blur-xl transition-all duration-500 group-hover:from-violet-500/10 group-hover:via-fuchsia-500/5 group-hover:to-cyan-500/10 group-hover:opacity-100" />
 
-                      <div className="relative rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-sm transition-all duration-300 group-active:scale-[0.99] group-hover:translate-x-1 group-hover:shadow-2xl group-hover:shadow-violet-500/10 hover:border-white/20 hover:bg-white/[0.05]">
+                      <div className="relative rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-sm transition-all duration-300 group-hover:translate-x-1 group-hover:shadow-2xl group-hover:shadow-violet-500/10 group-active:scale-[0.99] hover:border-white/20 hover:bg-white/[0.05]">
                         {/* Severity indicator bar */}
                         <div
                           className={`absolute top-0 bottom-0 left-0 w-1 rounded-l-2xl ${

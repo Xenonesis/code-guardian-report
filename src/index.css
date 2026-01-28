@@ -1,20 +1,22 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap");
 
 /* Code Guardian - Additional Styles */
+
 /* Tailwind base, components, utilities are imported via base.css in main.tsx */
 
 /* Professional enhancements and github theme use standard CSS */
-@import "./styles/professional-enhancements.css";
-@import "./styles/github-theme.css";
+@import url("./styles/professional-enhancements.css");
+@import url("./styles/github-theme.css");
 
 /* Base styling */
 html {
   scroll-behavior: auto;
   -webkit-overflow-scrolling: touch;
-  background-color: #ffffff;
+  background-color: #fff;
   color: #0f172a;
+
   /* Prevent text size adjustment on orientation change */
-  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
 
@@ -25,18 +27,18 @@ html.dark {
 
 body {
   font-family:
-    "Inter",
+    Inter,
     -apple-system,
     BlinkMacSystemFont,
     "Segoe UI",
-    "Roboto",
+    Roboto,
     sans-serif;
   font-feature-settings:
     "rlig" 1,
     "calt" 1;
   line-height: 1.6;
   font-size: clamp(14px, 0.875rem + 0.1vw, 16px);
-  background-color: #ffffff;
+  background-color: #fff;
   color: #0f172a;
   min-height: 100vh;
   min-height: 100dvh; /* Dynamic viewport height for mobile */
@@ -58,19 +60,19 @@ body {
 }
 
 /* Responsive base font sizing */
-@media (max-width: 320px) {
+@media (width <= 320px) {
   body {
     font-size: 13px;
   }
 }
 
-@media (min-width: 640px) {
+@media (width >= 640px) {
   body {
     font-size: 15px;
   }
 }
 
-@media (min-width: 1024px) {
+@media (width >= 1024px) {
   body {
     font-size: 16px;
   }
@@ -95,7 +97,7 @@ button:focus,
 a:focus,
 .btn:focus {
   outline: none;
-  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.18);
+  box-shadow: 0 0 0 2px rgb(102 126 234 / 18%);
 }
 
 button:active,
@@ -152,7 +154,7 @@ a:active,
 .gradient-text {
   background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
   background-clip: text;
-  -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   background-size: 200% 200%;
   animation: gradientFlow 6s ease infinite;
@@ -162,9 +164,11 @@ a:active,
   0% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
+
   100% {
     background-position: 0% 50%;
   }
@@ -173,71 +177,71 @@ a:active,
 /* Glass Morphism - Light Mode */
 .glass-card {
   backdrop-filter: blur(20px);
-  background-color: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+  background-color: rgb(255 255 255 / 80%);
+  border: 1px solid rgb(255 255 255 / 30%);
+  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 15%);
 }
 
 .dark .glass-card {
-  background-color: rgba(0, 0, 0, 0.5);
-  border-color: rgba(255, 255, 255, 0.1);
+  background-color: rgb(0 0 0 / 50%);
+  border-color: rgb(255 255 255 / 10%);
 }
 
 .glass-nav {
   backdrop-filter: blur(20px);
-  background-color: rgba(255, 255, 255, 0.95);
-  border-bottom: 1px solid rgba(226, 232, 240, 0.5);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  background-color: rgb(255 255 255 / 95%);
+  border-bottom: 1px solid rgb(226 232 240 / 50%);
+  box-shadow: 0 10px 25px -5px rgb(0 0 0 / 10%);
 }
 
 .dark .glass-nav {
-  background-color: rgba(15, 23, 42, 0.95);
-  border-color: rgba(51, 65, 85, 0.5);
+  background-color: rgb(15 23 42 / 95%);
+  border-color: rgb(51 65 85 / 50%);
 }
 
 /* Modern Cards - Light Mode */
 .modern-card {
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: rgb(255 255 255 / 95%);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgb(255 255 255 / 20%);
+  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 15%);
   border-radius: 1.5rem;
   padding: 2rem;
   transition: all 0.5s ease;
   background-image: linear-gradient(
     135deg,
-    rgba(255, 255, 255, 0.1) 0%,
-    rgba(255, 255, 255, 0.05) 100%
+    rgb(255 255 255 / 10%) 0%,
+    rgb(255 255 255 / 5%) 100%
   );
 }
 
 .dark .modern-card {
-  background-color: rgba(30, 41, 59, 0.95);
-  border-color: rgba(255, 255, 255, 0.1);
+  background-color: rgb(30 41 59 / 95%);
+  border-color: rgb(255 255 255 / 10%);
 }
 
 .modern-card:hover {
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 25%);
   transform: translateY(-12px) scale(1.03);
 }
 
 /* Card Glass Modern - Light Mode */
 .card-glass-modern {
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: rgb(255 255 255 / 95%);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(226, 232, 240, 0.5);
-  box-shadow: 0 10px 40px -15px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgb(226 232 240 / 50%);
+  box-shadow: 0 10px 40px -15px rgb(0 0 0 / 10%);
   border-radius: 1rem;
   transition: all 0.3s ease;
 }
 
 .dark .card-glass-modern {
-  background-color: rgba(30, 41, 59, 0.9);
-  border-color: rgba(51, 65, 85, 0.5);
+  background-color: rgb(30 41 59 / 90%);
+  border-color: rgb(51 65 85 / 50%);
 }
 
 .card-glass-modern:hover {
-  box-shadow: 0 20px 50px -15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 20px 50px -15px rgb(0 0 0 / 20%);
   transform: translateY(-4px);
 }
 
@@ -258,34 +262,34 @@ a:active,
 
 .btn-modern:focus {
   outline: none;
-  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 0 0 4px rgb(102 126 234 / 30%);
 }
 
 .btn-primary-modern {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
-  box-shadow: 0 10px 30px -10px rgba(102, 126, 234, 0.5);
+  box-shadow: 0 10px 30px -10px rgb(102 126 234 / 50%);
 }
 
 .btn-primary-modern:hover {
-  box-shadow: 0 15px 40px -10px rgba(102, 126, 234, 0.6);
+  box-shadow: 0 15px 40px -10px rgb(102 126 234 / 60%);
 }
 
 .btn-secondary-modern {
-  background-color: rgba(241, 245, 249, 0.9);
+  background-color: rgb(241 245 249 / 90%);
   color: #475569;
-  border: 1px solid rgba(226, 232, 240, 0.5);
+  border: 1px solid rgb(226 232 240 / 50%);
 }
 
 .dark .btn-secondary-modern {
-  background-color: rgba(51, 65, 85, 0.9);
+  background-color: rgb(51 65 85 / 90%);
   color: #e2e8f0;
-  border-color: rgba(71, 85, 105, 0.5);
+  border-color: rgb(71 85 105 / 50%);
 }
 
 /* Modern Inputs - Light Mode */
 .input-modern {
-  background-color: rgba(241, 245, 249, 0.9);
+  background-color: rgb(241 245 249 / 90%);
   border: 2px solid transparent;
   border-radius: 0.75rem;
   padding: 0.75rem 1rem;
@@ -294,14 +298,14 @@ a:active,
 }
 
 .dark .input-modern {
-  background-color: rgba(30, 41, 59, 0.9);
+  background-color: rgb(30 41 59 / 90%);
   color: #e2e8f0;
 }
 
 .input-modern:focus {
   outline: none;
   border-color: #667eea;
-  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+  box-shadow: 0 0 0 4px rgb(102 126 234 / 15%);
 }
 
 /* Badge Styles */
@@ -319,8 +323,8 @@ a:active,
 .badge-primary {
   background: linear-gradient(
     135deg,
-    rgba(102, 126, 234, 0.1),
-    rgba(118, 75, 162, 0.1)
+    rgb(102 126 234 / 10%),
+    rgb(118 75 162 / 10%)
   );
   color: #667eea;
 }
@@ -332,8 +336,8 @@ a:active,
 .badge-success {
   background: linear-gradient(
     135deg,
-    rgba(16, 185, 129, 0.1),
-    rgba(5, 150, 105, 0.1)
+    rgb(16 185 129 / 10%),
+    rgb(5 150 105 / 10%)
   );
   color: #10b981;
 }
@@ -341,8 +345,8 @@ a:active,
 .badge-warning {
   background: linear-gradient(
     135deg,
-    rgba(245, 158, 11, 0.1),
-    rgba(217, 119, 6, 0.1)
+    rgb(245 158 11 / 10%),
+    rgb(217 119 6 / 10%)
   );
   color: #f59e0b;
 }
@@ -350,8 +354,8 @@ a:active,
 .badge-danger {
   background: linear-gradient(
     135deg,
-    rgba(239, 68, 68, 0.1),
-    rgba(220, 38, 38, 0.1)
+    rgb(239 68 68 / 10%),
+    rgb(220 38 38 / 10%)
   );
   color: #ef4444;
 }
@@ -388,8 +392,9 @@ a:active,
 @keyframes floating {
   0%,
   100% {
-    transform: translateY(0px);
+    transform: translateY(0);
   }
+
   50% {
     transform: translateY(-10px);
   }
@@ -400,7 +405,7 @@ a:active,
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(255, 255, 255, 0.2) 50%,
+    rgb(255 255 255 / 20%) 50%,
     transparent 100%
   );
   background-size: 200% 100%;
@@ -411,6 +416,7 @@ a:active,
   0% {
     background-position: -200% 0;
   }
+
   100% {
     background-position: 200% 0;
   }
@@ -424,24 +430,25 @@ a:active,
 @keyframes pulseGlow {
   0%,
   100% {
-    box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 0 20px rgb(102 126 234 / 30%);
   }
+
   50% {
-    box-shadow: 0 0 40px rgba(102, 126, 234, 0.5);
+    box-shadow: 0 0 40px rgb(102 126 234 / 50%);
   }
 }
 
 /* Custom shadows for light mode */
 .shadow-3xl {
-  box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 35px 60px -12px rgb(0 0 0 / 20%);
 }
 
 .shadow-glow {
-  box-shadow: 0 0 40px rgba(102, 126, 234, 0.15);
+  box-shadow: 0 0 40px rgb(102 126 234 / 15%);
 }
 
 .dark .shadow-glow {
-  box-shadow: 0 0 40px rgba(102, 126, 234, 0.25);
+  box-shadow: 0 0 40px rgb(102 126 234 / 25%);
 }
 
 /* Extra rounded corners */
@@ -455,7 +462,7 @@ a:active,
 
 /* Section backgrounds for light mode */
 .section-gradient {
-  background: linear-gradient(180deg, #f8fafc 0%, #ffffff 50%, #f8fafc 100%);
+  background: linear-gradient(180deg, #f8fafc 0%, #fff 50%, #f8fafc 100%);
 }
 
 .dark .section-gradient {
@@ -532,14 +539,14 @@ a:active,
   padding-right: 1.5rem;
 }
 
-@media (min-width: 640px) {
+@media (width >= 640px) {
   .container-modern {
     padding-left: 2rem;
     padding-right: 2rem;
   }
 }
 
-@media (min-width: 1024px) {
+@media (width >= 1024px) {
   .container-modern {
     padding-left: 3rem;
     padding-right: 3rem;
@@ -547,7 +554,7 @@ a:active,
 }
 
 /* Mobile optimizations */
-@media (max-width: 640px) {
+@media (width <= 640px) {
   .modern-card {
     padding: 1rem;
     border-radius: 0.75rem;
@@ -557,14 +564,14 @@ a:active,
     padding: 0.625rem 1.25rem;
     min-height: 44px; /* Touch-friendly minimum */
   }
-  
+
   /* Improve touch targets */
   button,
   [role="button"],
   a {
     min-height: 44px;
   }
-  
+
   /* Better spacing on mobile */
   .container-modern {
     padding-left: 1rem;
@@ -573,7 +580,7 @@ a:active,
 }
 
 /* Extra small screen optimizations (< 375px) */
-@media (max-width: 374px) {
+@media (width <= 374px) {
   .modern-card {
     padding: 0.75rem;
     border-radius: 0.5rem;
@@ -583,7 +590,7 @@ a:active,
     padding: 0.5rem 1rem;
     font-size: 0.875rem;
   }
-  
+
   .container-modern {
     padding-left: 0.75rem;
     padding-right: 0.75rem;
@@ -591,7 +598,7 @@ a:active,
 }
 
 /* High DPI display optimizations */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+@media (min-device-pixel-ratio: 2), (resolution >= 192dpi) {
   .modern-card,
   .card-glass-modern {
     backdrop-filter: blur(20px);

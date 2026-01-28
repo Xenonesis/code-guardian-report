@@ -1,4 +1,5 @@
 /* Production-Ready Responsive Utilities */
+
 /* Comprehensive breakpoint support from xs (320px) to 2xl (1536px) */
 
 /* ===================================
@@ -11,24 +12,57 @@
 
   /* Container query responsive utilities */
   @container (min-width: 320px) {
-    .cq\:xs\:block { display: block; }
-    .cq\:xs\:flex { display: flex; }
-    .cq\:xs\:grid { display: grid; }
-    .cq\:xs\:hidden { display: none; }
+    .cq\:xs\:block {
+      display: block;
+    }
+
+    .cq\:xs\:flex {
+      display: flex;
+    }
+
+    .cq\:xs\:grid {
+      display: grid;
+    }
+
+    .cq\:xs\:hidden {
+      display: none;
+    }
   }
 
   @container (min-width: 640px) {
-    .cq\:sm\:block { display: block; }
-    .cq\:sm\:flex { display: flex; }
-    .cq\:sm\:grid { display: grid; }
-    .cq\:sm\:hidden { display: none; }
+    .cq\:sm\:block {
+      display: block;
+    }
+
+    .cq\:sm\:flex {
+      display: flex;
+    }
+
+    .cq\:sm\:grid {
+      display: grid;
+    }
+
+    .cq\:sm\:hidden {
+      display: none;
+    }
   }
 
   @container (min-width: 768px) {
-    .cq\:md\:block { display: block; }
-    .cq\:md\:flex { display: flex; }
-    .cq\:md\:grid { display: grid; }
-    .cq\:md\:hidden { display: none; }
+    .cq\:md\:block {
+      display: block;
+    }
+
+    .cq\:md\:flex {
+      display: flex;
+    }
+
+    .cq\:md\:grid {
+      display: grid;
+    }
+
+    .cq\:md\:hidden {
+      display: none;
+    }
   }
 }
 
@@ -83,34 +117,103 @@
    =================================== */
 
 /* Fluid padding */
-.p-fluid-xs { padding: clamp(0.5rem, 0.25rem + 1vw, 1rem); }
-.p-fluid-sm { padding: clamp(0.75rem, 0.5rem + 1.25vw, 1.5rem); }
-.p-fluid-md { padding: clamp(1rem, 0.75rem + 1.5vw, 2rem); }
-.p-fluid-lg { padding: clamp(1.5rem, 1rem + 2vw, 3rem); }
-.p-fluid-xl { padding: clamp(2rem, 1.5rem + 2.5vw, 4rem); }
+.p-fluid-xs {
+  padding: clamp(0.5rem, 0.25rem + 1vw, 1rem);
+}
 
-.px-fluid-xs { padding-left: clamp(0.5rem, 0.25rem + 1vw, 1rem); padding-right: clamp(0.5rem, 0.25rem + 1vw, 1rem); }
-.px-fluid-sm { padding-left: clamp(0.75rem, 0.5rem + 1.25vw, 1.5rem); padding-right: clamp(0.75rem, 0.5rem + 1.25vw, 1.5rem); }
-.px-fluid-md { padding-left: clamp(1rem, 0.75rem + 1.5vw, 2rem); padding-right: clamp(1rem, 0.75rem + 1.5vw, 2rem); }
-.px-fluid-lg { padding-left: clamp(1.5rem, 1rem + 2vw, 3rem); padding-right: clamp(1.5rem, 1rem + 2vw, 3rem); }
+.p-fluid-sm {
+  padding: clamp(0.75rem, 0.5rem + 1.25vw, 1.5rem);
+}
 
-.py-fluid-xs { padding-top: clamp(0.5rem, 0.25rem + 1vw, 1rem); padding-bottom: clamp(0.5rem, 0.25rem + 1vw, 1rem); }
-.py-fluid-sm { padding-top: clamp(0.75rem, 0.5rem + 1.25vw, 1.5rem); padding-bottom: clamp(0.75rem, 0.5rem + 1.25vw, 1.5rem); }
-.py-fluid-md { padding-top: clamp(1rem, 0.75rem + 1.5vw, 2rem); padding-bottom: clamp(1rem, 0.75rem + 1.5vw, 2rem); }
-.py-fluid-lg { padding-top: clamp(1.5rem, 1rem + 2vw, 3rem); padding-bottom: clamp(1.5rem, 1rem + 2vw, 3rem); }
+.p-fluid-md {
+  padding: clamp(1rem, 0.75rem + 1.5vw, 2rem);
+}
+
+.p-fluid-lg {
+  padding: clamp(1.5rem, 1rem + 2vw, 3rem);
+}
+
+.p-fluid-xl {
+  padding: clamp(2rem, 1.5rem + 2.5vw, 4rem);
+}
+
+.px-fluid-xs {
+  padding-left: clamp(0.5rem, 0.25rem + 1vw, 1rem);
+  padding-right: clamp(0.5rem, 0.25rem + 1vw, 1rem);
+}
+
+.px-fluid-sm {
+  padding-left: clamp(0.75rem, 0.5rem + 1.25vw, 1.5rem);
+  padding-right: clamp(0.75rem, 0.5rem + 1.25vw, 1.5rem);
+}
+
+.px-fluid-md {
+  padding-left: clamp(1rem, 0.75rem + 1.5vw, 2rem);
+  padding-right: clamp(1rem, 0.75rem + 1.5vw, 2rem);
+}
+
+.px-fluid-lg {
+  padding-left: clamp(1.5rem, 1rem + 2vw, 3rem);
+  padding-right: clamp(1.5rem, 1rem + 2vw, 3rem);
+}
+
+.py-fluid-xs {
+  padding-top: clamp(0.5rem, 0.25rem + 1vw, 1rem);
+  padding-bottom: clamp(0.5rem, 0.25rem + 1vw, 1rem);
+}
+
+.py-fluid-sm {
+  padding-top: clamp(0.75rem, 0.5rem + 1.25vw, 1.5rem);
+  padding-bottom: clamp(0.75rem, 0.5rem + 1.25vw, 1.5rem);
+}
+
+.py-fluid-md {
+  padding-top: clamp(1rem, 0.75rem + 1.5vw, 2rem);
+  padding-bottom: clamp(1rem, 0.75rem + 1.5vw, 2rem);
+}
+
+.py-fluid-lg {
+  padding-top: clamp(1.5rem, 1rem + 2vw, 3rem);
+  padding-bottom: clamp(1.5rem, 1rem + 2vw, 3rem);
+}
 
 /* Fluid margins */
-.m-fluid-xs { margin: clamp(0.5rem, 0.25rem + 1vw, 1rem); }
-.m-fluid-sm { margin: clamp(0.75rem, 0.5rem + 1.25vw, 1.5rem); }
-.m-fluid-md { margin: clamp(1rem, 0.75rem + 1.5vw, 2rem); }
-.m-fluid-lg { margin: clamp(1.5rem, 1rem + 2vw, 3rem); }
+.m-fluid-xs {
+  margin: clamp(0.5rem, 0.25rem + 1vw, 1rem);
+}
+
+.m-fluid-sm {
+  margin: clamp(0.75rem, 0.5rem + 1.25vw, 1.5rem);
+}
+
+.m-fluid-md {
+  margin: clamp(1rem, 0.75rem + 1.5vw, 2rem);
+}
+
+.m-fluid-lg {
+  margin: clamp(1.5rem, 1rem + 2vw, 3rem);
+}
 
 /* Fluid gaps */
-.gap-fluid-xs { gap: clamp(0.5rem, 0.25rem + 0.5vw, 0.75rem); }
-.gap-fluid-sm { gap: clamp(0.75rem, 0.5rem + 0.75vw, 1.25rem); }
-.gap-fluid-md { gap: clamp(1rem, 0.75rem + 1vw, 1.5rem); }
-.gap-fluid-lg { gap: clamp(1.5rem, 1rem + 1.5vw, 2.5rem); }
-.gap-fluid-xl { gap: clamp(2rem, 1.5rem + 2vw, 4rem); }
+.gap-fluid-xs {
+  gap: clamp(0.5rem, 0.25rem + 0.5vw, 0.75rem);
+}
+
+.gap-fluid-sm {
+  gap: clamp(0.75rem, 0.5rem + 0.75vw, 1.25rem);
+}
+
+.gap-fluid-md {
+  gap: clamp(1rem, 0.75rem + 1vw, 1.5rem);
+}
+
+.gap-fluid-lg {
+  gap: clamp(1.5rem, 1rem + 1.5vw, 2.5rem);
+}
+
+.gap-fluid-xl {
+  gap: clamp(2rem, 1.5rem + 2vw, 4rem);
+}
 
 /* ===================================
    RESPONSIVE GRID LAYOUTS
@@ -166,7 +269,7 @@
   gap: clamp(0.75rem, 0.5rem + 1vw, 1.5rem);
 }
 
-@media (min-width: 640px) {
+@media (width >= 640px) {
   .flex-stack-to-row {
     flex-direction: row;
     align-items: center;
@@ -201,7 +304,7 @@
   }
 
   .icon-button::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: -8px;
   }
@@ -212,43 +315,68 @@
    =================================== */
 
 /* Extra small screens (< 475px) */
-@media (max-width: 474px) {
-  .hide-xs-only { display: none !important; }
+@media (width <= 474px) {
+  .hide-xs-only {
+    display: none !important;
+  }
 }
 
 /* Small screens (< 640px) */
-@media (max-width: 639px) {
-  .hide-below-sm { display: none !important; }
-  .stack-on-mobile { flex-direction: column !important; }
-  .full-width-mobile { width: 100% !important; }
-  .text-center-mobile { text-align: center !important; }
+@media (width <= 639px) {
+  .hide-below-sm {
+    display: none !important;
+  }
+
+  .stack-on-mobile {
+    flex-direction: column !important;
+  }
+
+  .full-width-mobile {
+    width: 100% !important;
+  }
+
+  .text-center-mobile {
+    text-align: center !important;
+  }
 }
 
 /* Medium screens and below (< 768px) */
-@media (max-width: 767px) {
-  .hide-below-md { display: none !important; }
+@media (width <= 767px) {
+  .hide-below-md {
+    display: none !important;
+  }
 }
 
 /* Large screens and below (< 1024px) */
-@media (max-width: 1023px) {
-  .hide-below-lg { display: none !important; }
+@media (width <= 1023px) {
+  .hide-below-lg {
+    display: none !important;
+  }
 }
 
 /* Show only on specific breakpoints */
-@media (min-width: 475px) {
-  .show-xs-only { display: none !important; }
+@media (width >= 475px) {
+  .show-xs-only {
+    display: none !important;
+  }
 }
 
-@media (min-width: 640px) {
-  .show-below-sm { display: none !important; }
+@media (width >= 640px) {
+  .show-below-sm {
+    display: none !important;
+  }
 }
 
-@media (min-width: 768px) {
-  .show-below-md { display: none !important; }
+@media (width >= 768px) {
+  .show-below-md {
+    display: none !important;
+  }
 }
 
-@media (min-width: 1024px) {
-  .show-below-lg { display: none !important; }
+@media (width >= 1024px) {
+  .show-below-lg {
+    display: none !important;
+  }
 }
 
 /* ===================================
@@ -310,10 +438,8 @@
 }
 
 .safe-area-inset-all {
-  padding-top: env(safe-area-inset-top);
-  padding-bottom: env(safe-area-inset-bottom);
-  padding-left: env(safe-area-inset-left);
-  padding-right: env(safe-area-inset-right);
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
 /* ===================================
@@ -321,30 +447,59 @@
    =================================== */
 
 @media (orientation: landscape) {
-  .landscape\:hidden { display: none !important; }
-  .landscape\:flex { display: flex !important; }
-  .landscape\:grid { display: grid !important; }
+  .landscape\:hidden {
+    display: none !important;
+  }
+
+  .landscape\:flex {
+    display: flex !important;
+  }
+
+  .landscape\:grid {
+    display: grid !important;
+  }
 }
 
 @media (orientation: portrait) {
-  .portrait\:hidden { display: none !important; }
-  .portrait\:flex { display: flex !important; }
-  .portrait\:grid { display: grid !important; }
+  .portrait\:hidden {
+    display: none !important;
+  }
+
+  .portrait\:flex {
+    display: flex !important;
+  }
+
+  .portrait\:grid {
+    display: grid !important;
+  }
 }
 
 /* Landscape phone handling */
-@media (orientation: landscape) and (max-height: 500px) {
-  .landscape-phone\:py-2 { padding-top: 0.5rem !important; padding-bottom: 0.5rem !important; }
-  .landscape-phone\:py-4 { padding-top: 1rem !important; padding-bottom: 1rem !important; }
-  .landscape-phone\:h-auto { height: auto !important; }
-  .landscape-phone\:min-h-auto { min-height: auto !important; }
+@media (orientation: landscape) and (height <= 500px) {
+  .landscape-phone\:py-2 {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+  }
+
+  .landscape-phone\:py-4 {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+
+  .landscape-phone\:h-auto {
+    height: auto !important;
+  }
+
+  .landscape-phone\:min-h-auto {
+    min-height: auto !important;
+  }
 }
 
 /* ===================================
    HIGH DPI / RETINA DISPLAY
    =================================== */
 
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+@media (min-device-pixel-ratio: 2), (resolution >= 192dpi) {
   /* Sharper borders on retina */
   .retina-border {
     border-width: 0.5px;
@@ -352,8 +507,9 @@
 
   /* Better shadows on retina */
   .retina-shadow {
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08),
-                0 4px 6px rgba(0, 0, 0, 0.05);
+    box-shadow:
+      0 1px 3px rgb(0 0 0 / 8%),
+      0 4px 6px rgb(0 0 0 / 5%);
   }
 }
 
@@ -412,7 +568,7 @@
   -webkit-overflow-scrolling: touch;
 }
 
-@media (max-width: 767px) {
+@media (width <= 767px) {
   .table-stack-mobile thead {
     display: none;
   }
@@ -455,7 +611,7 @@
   gap: clamp(0.75rem, 0.5rem + 0.75vw, 1.25rem);
 }
 
-@media (min-width: 640px) {
+@media (width >= 640px) {
   .form-row-responsive {
     flex-direction: row;
   }
@@ -467,7 +623,8 @@
 
 .input-responsive {
   width: 100%;
-  padding: clamp(0.625rem, 0.5rem + 0.5vw, 0.875rem) clamp(0.75rem, 0.5rem + 0.75vw, 1rem);
+  padding: clamp(0.625rem, 0.5rem + 0.5vw, 0.875rem)
+    clamp(0.75rem, 0.5rem + 0.75vw, 1rem);
   font-size: clamp(0.875rem, 0.8rem + 0.25vw, 1rem);
   border-radius: clamp(0.375rem, 0.25rem + 0.25vw, 0.5rem);
 }
@@ -483,7 +640,8 @@
 }
 
 .nav-item-responsive {
-  padding: clamp(0.375rem, 0.25rem + 0.5vw, 0.625rem) clamp(0.75rem, 0.5rem + 0.75vw, 1rem);
+  padding: clamp(0.375rem, 0.25rem + 0.5vw, 0.625rem)
+    clamp(0.75rem, 0.5rem + 0.75vw, 1rem);
   font-size: clamp(0.8125rem, 0.75rem + 0.25vw, 0.9375rem);
   border-radius: clamp(0.375rem, 0.25rem + 0.25vw, 0.5rem);
   white-space: nowrap;
@@ -494,9 +652,14 @@
    =================================== */
 
 @media print {
-  .no-print { display: none !important; }
-  .print-only { display: block !important; }
-  
+  .no-print {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
   body {
     font-size: 12pt;
     line-height: 1.5;
@@ -509,7 +672,15 @@
     color: #000 !important;
   }
 
-  .page-break-before { page-break-before: always; }
-  .page-break-after { page-break-after: always; }
-  .page-break-avoid { page-break-inside: avoid; }
+  .page-break-before {
+    break-before: always;
+  }
+
+  .page-break-after {
+    break-after: always;
+  }
+
+  .page-break-avoid {
+    break-inside: avoid;
+  }
 }

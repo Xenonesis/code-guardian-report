@@ -18,6 +18,21 @@ import {
 import { logger } from "@/utils/logger";
 import { toast } from "@/hooks/use-toast";
 
+function structuredCloneSafe<T>(value: T): T {
+  // structuredClone isn't available everywhere (and can be expensive). We only need a cheap deep copy.
+  try {
+    const sc = (globalThis as any).structuredClone as ((v: T) => T) | undefined;
+    if (typeof sc === "function") {
+      return sc(value);
+    }
+  } catch {
+    // ignore
+  }
+
+  // Fallback: JSON clone. Good enough for our plain data objects.
+  return JSON.parse(JSON.stringify(value)) as T;
+}
+
 // Custom error class for storage-related errors
 export class StorageError extends Error {
   constructor(
@@ -113,21 +128,15 @@ export class AnalysisStorageService {
         },
       };
 
-      // Compress large results
-      if (
-        this.getDataSize(analysisData) >
-        AnalysisStorageService.COMPRESSION_THRESHOLD
-      ) {
-        analysisData.compressed = true;
-        analysisData.results = this.compressResults(results);
-      }
+      // Prepare payload (compress/reduce) before writing to localStorage.
+      const { payloadToStore, serialized } = this.preparePayloadForStorage(
+        analysisData,
+        AnalysisStorageService.DEFAULT_ITEM_BUDGET_BYTES
+      );
 
       // Store current analysis with quota error handling
       try {
-        setLocalStorageItem(
-          AnalysisStorageService.STORAGE_KEY,
-          JSON.stringify(analysisData)
-        );
+        setLocalStorageItem(AnalysisStorageService.STORAGE_KEY, serialized);
       } catch (storageError) {
         // Check if it's a quota exceeded error
         if (
@@ -138,14 +147,15 @@ export class AnalysisStorageService {
           logger.warn("Storage quota exceeded, attempting cleanup...");
           await this.optimizeStorage();
           // Retry after cleanup
-          setLocalStorageItem(
-            AnalysisStorageService.STORAGE_KEY,
-            JSON.stringify(analysisData)
-          );
+          setLocalStorageItem(AnalysisStorageService.STORAGE_KEY, serialized);
         } else {
           throw storageError;
         }
       }
+
+      // Ensure in-memory/history uses the same payload as persisted
+      analysisData.compressed = payloadToStore.compressed;
+      analysisData.results = payloadToStore.results;
 
       // Update history
       await this.updateAnalysisHistory(analysisData);
@@ -486,8 +496,233 @@ export class AnalysisStorageService {
     return atob(data);
   }
 
+  private static readonly DEFAULT_ITEM_BUDGET_BYTES = 4.5 * 1024 * 1024; // ~4.5MB per item (safe across browsers)
+  private static readonly MAX_ISSUES_STORED = 2000;
+  private static readonly MAX_ISSUES_STORED_MIN = 200;
+
+  private safeStringify(value: unknown): string {
+    // JSON.stringify can throw (e.g. RangeError: Invalid string length) on extremely large payloads.
+    try {
+      return JSON.stringify(value);
+    } catch (error) {
+      if (error instanceof RangeError) {
+        throw error;
+      }
+      // Re-throw other errors for visibility
+      throw error;
+    }
+  }
+
+  private getUtf8ByteLength(str: string): number {
+    // TextEncoder exists in browsers + happy-dom; fallback to Blob if needed.
+    try {
+      return new TextEncoder().encode(str).byteLength;
+    } catch {
+      return new Blob([str]).size;
+    }
+  }
+
   private getDataSize(data: StoredAnalysisData): number {
-    return new Blob([JSON.stringify(data)]).size;
+    // Avoid RangeError by estimating size when payload is too large to stringify.
+    try {
+      return this.getUtf8ByteLength(this.safeStringify(data));
+    } catch (error) {
+      if (error instanceof RangeError) {
+        return this.estimateDataSize(data);
+      }
+      throw error;
+    }
+  }
+
+  private estimateDataSize(data: StoredAnalysisData): number {
+    // Estimate based on sampling issues to avoid serializing the entire payload.
+    const baseOverhead = 4 * 1024; // conservative fixed overhead
+    const issues = data.results?.issues ?? [];
+
+    const sampleCount = Math.min(50, issues.length);
+    let sampleBytes = 0;
+    for (let i = 0; i < sampleCount; i++) {
+      try {
+        sampleBytes += this.getUtf8ByteLength(this.safeStringify(issues[i]));
+      } catch {
+        // If even a single issue can't stringify, assume it's huge.
+        sampleBytes += 50 * 1024;
+      }
+    }
+
+    const avgIssueBytes = sampleCount > 0 ? sampleBytes / sampleCount : 512;
+    return baseOverhead + Math.ceil(avgIssueBytes * issues.length);
+  }
+
+  private preparePayloadForStorage(
+    original: StoredAnalysisData,
+    budgetBytes: number
+  ): { payloadToStore: StoredAnalysisData; serialized: string } {
+    // Strategy:
+    // 1) Try original
+    // 2) If above threshold, compress snippets
+    // 3) If still too big, strip heavy optional fields
+    // 4) If still too big, progressively truncate issues list
+
+    const steps: Array<(d: StoredAnalysisData) => StoredAnalysisData> = [
+      (d) => d,
+      (d) => {
+        // Only compress when we expect it to help (or when forced due to size issues)
+        const shouldCompress =
+          this.getDataSize(d) > AnalysisStorageService.COMPRESSION_THRESHOLD;
+        if (!shouldCompress) return d;
+        return {
+          ...d,
+          compressed: true,
+          results: this.compressResults(d.results),
+        };
+      },
+      (d) => this.stripHeavyFields(d),
+    ];
+
+    for (const transform of steps) {
+      const candidate = transform(structuredCloneSafe(original));
+      const attempt = this.trySerializeWithinBudget(candidate, budgetBytes);
+      if (attempt) return attempt;
+    }
+
+    // Last resort: truncate issues progressively
+    const base = this.stripHeavyFields({
+      ...original,
+      compressed: true,
+      results: this.compressResults(original.results),
+    });
+
+    const total = base.results.issues.length;
+    let keep = Math.min(AnalysisStorageService.MAX_ISSUES_STORED, total);
+    keep = Math.max(keep, AnalysisStorageService.MAX_ISSUES_STORED_MIN);
+
+    while (keep >= AnalysisStorageService.MAX_ISSUES_STORED_MIN) {
+      const truncated = this.truncateIssues(base, keep, total);
+      const attempt = this.trySerializeWithinBudget(truncated, budgetBytes);
+      if (attempt) return attempt;
+      keep = Math.floor(keep * 0.7);
+    }
+
+    // Absolute last resort: store only summary/metadata without issues
+    const minimal = this.truncateIssues(base, 0, total);
+    const serialized = this.safeStringify(minimal);
+    return { payloadToStore: minimal, serialized };
+  }
+
+  private trySerializeWithinBudget(
+    payload: StoredAnalysisData,
+    budgetBytes: number
+  ): { payloadToStore: StoredAnalysisData; serialized: string } | null {
+    try {
+      const serialized = this.safeStringify(payload);
+      const bytes = this.getUtf8ByteLength(serialized);
+      if (bytes <= budgetBytes) {
+        return { payloadToStore: payload, serialized };
+      }
+      return null;
+    } catch (error) {
+      // If stringify fails due to size, fall back to next step.
+      if (error instanceof RangeError) return null;
+      throw error;
+    }
+  }
+
+  private stripHeavyFields(data: StoredAnalysisData): StoredAnalysisData {
+    const strippedResults: AnalysisResults = {
+      ...data.results,
+      // Keep issues but strip the largest optional fields.
+      issues: data.results.issues.map((issue) => ({
+        ...issue,
+        codeSnippet: undefined,
+        aiSummary: undefined,
+        naturalLanguageDescription: undefined,
+        remediation: {
+          ...issue.remediation,
+          codeExample: undefined,
+          fixExample: undefined,
+        },
+        references: issue.references?.slice(0, 10),
+        tags: issue.tags?.slice(0, 10),
+      })),
+      // zipAnalysis/dependencyAnalysis can be very large; drop for local storage to keep UI stable.
+      zipAnalysis: undefined,
+      dependencyAnalysis: undefined,
+    };
+
+    return {
+      ...data,
+      results: strippedResults,
+      compressed: data.compressed ?? false,
+    };
+  }
+
+  private truncateIssues(
+    data: StoredAnalysisData,
+    keepCount: number,
+    totalCount: number
+  ): StoredAnalysisData {
+    const keptIssues = data.results.issues.slice(0, keepCount);
+
+    const recalculatedSummary = this.recalculateSummaryFromIssues(
+      keptIssues,
+      data.results.summary
+    );
+
+    return {
+      ...data,
+      results: {
+        ...data.results,
+        issues: keptIssues,
+        summary: {
+          ...recalculatedSummary,
+          // Signal truncation to UI/exporters if they want to show a warning.
+          // (extra fields are safe as consumers treat summary as a plain object)
+          ...(totalCount > keepCount
+            ? { truncated: true, originalIssueCount: totalCount }
+            : {}),
+        } as AnalysisResults["summary"] & {
+          truncated?: boolean;
+          originalIssueCount?: number;
+        },
+      },
+    };
+  }
+
+  private recalculateSummaryFromIssues(
+    issues: AnalysisResults["issues"],
+    existingSummary: AnalysisResults["summary"]
+  ): AnalysisResults["summary"] {
+    // Keep scores/coverage/linesAnalyzed from existing summary; recompute severity counts.
+    let criticalIssues = 0;
+    let highIssues = 0;
+    let mediumIssues = 0;
+    let lowIssues = 0;
+
+    for (const issue of issues) {
+      switch (issue.severity) {
+        case "Critical":
+          criticalIssues++;
+          break;
+        case "High":
+          highIssues++;
+          break;
+        case "Medium":
+          mediumIssues++;
+          break;
+        case "Low":
+          lowIssues++;
+          break;
+      }
+    }
+
+    return {
+      ...existingSummary,
+      criticalIssues,
+      highIssues,
+      mediumIssues,
+      lowIssues,
+    };
   }
 
   private formatBytes(bytes: number): string {
