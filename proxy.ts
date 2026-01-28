@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 /**
- * Production Security Middleware
+ * Production Security Proxy
  * Handles security headers, rate limiting headers, and request validation
  */
 
@@ -156,7 +156,7 @@ function validateRequest(request: NextRequest): {
   return { valid: true };
 }
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   // Validate the request
   const validation = validateRequest(request);
   if (!validation.valid) {
