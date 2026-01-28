@@ -21,7 +21,7 @@
     "clean": "rimraf .next node_modules/.cache dist out",
     "clean:all": "rimraf .next node_modules/.cache dist out .turbo",
     "postbuild": "echo 'Build completed successfully!'",
-    "prepare": "husky",
+    "prepare": "node -e \"if (process.env.CI !== 'true') { require('child_process').execSync('husky', { stdio: 'inherit' }) }\"",
     "update-contributors": "node scripts/update-contributors.js",
     "setup-git-hooks": "node scripts/setup-git-hooks.js",
     "test": "vitest run",
