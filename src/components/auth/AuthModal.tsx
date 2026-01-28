@@ -1,5 +1,7 @@
+"use client";
 // components/auth-modal.tsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { useAuth } from "@/lib/auth-context";
 import { AccountConflictModal } from "./AccountConflictModal";
 
@@ -15,6 +17,12 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   const [displayName, setDisplayName] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    return () => setMounted(false);
+  }, []);
 
   const {
     signInWithEmailAndPassword,
@@ -94,8 +102,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   };
 
   if (!isOpen) return null;
+  if (!mounted) return null;
 
-  return (
+  return createPortal(
     <>
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
         <div className="mx-4 w-full max-w-md rounded-xl border border-gray-200 bg-white p-8 text-gray-900 shadow-2xl dark:border-[#2A3B5F] dark:bg-gradient-to-b dark:from-[#121829] dark:to-[#1E293B] dark:text-white">
@@ -266,6 +275,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         onTryDifferentMethod={handleTryDifferentMethod}
         isLinking={isLinkingAccounts}
       />
-    </>
+    </>,
+    document.body
   );
 };
