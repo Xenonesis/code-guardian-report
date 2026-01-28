@@ -10,7 +10,6 @@ interface CallToActionSectionProps {
 export const CallToActionSection: React.FC<CallToActionSectionProps> = ({
   className = "",
 }) => {
-  // Smooth scroll to home section
   const scrollToHome = () => {
     const homeSection = document.getElementById("home");
     if (homeSection) {

@@ -52,7 +52,6 @@ export function showToast(
  * Specific toast notifications for common scenarios
  */
 export const toastNotifications = {
-  // Connection issues
   offline: () => {
     showToast(
       "warning",
@@ -89,7 +88,6 @@ export const toastNotifications = {
     );
   },
 
-  // Data operations
   dataLoadError: () => {
     showToast(
       "error",
@@ -117,7 +115,6 @@ export const toastNotifications = {
     );
   },
 
-  // Analysis
   analysisStarted: (filename: string) => {
     showToast("info", "Analysis Started", `Analyzing ${filename}...`, 3000);
   },
@@ -140,7 +137,6 @@ export const toastNotifications = {
     );
   },
 
-  // Authentication
   signInSuccess: (username?: string) => {
     showToast(
       "success",
@@ -168,7 +164,6 @@ export const toastNotifications = {
     );
   },
 
-  // Mock data warning (development only)
   mockDataWarning: () => {
     if (process.env.NODE_ENV === "development") {
       showToast(
@@ -180,7 +175,6 @@ export const toastNotifications = {
     }
   },
 
-  // Generic messages
   success: (message: string) => {
     showToast("success", message, undefined, 3000);
   },
@@ -203,7 +197,6 @@ export const toastNotifications = {
  */
 export function setupGlobalToast() {
   if (typeof window !== "undefined") {
-    // Make showToast available globally for services
     (window as any).showToast = showToast;
     (window as any).toastNotifications = toastNotifications;
   }
@@ -309,7 +302,6 @@ export const serviceToasts = {
   },
 };
 
-// Export a combined object for easy import
 export default {
   show: showToast,
   notifications: toastNotifications,

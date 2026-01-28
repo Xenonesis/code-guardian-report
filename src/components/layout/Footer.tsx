@@ -26,7 +26,6 @@ interface FooterProps {
 export const Footer: React.FC<FooterProps> = ({ className = "" }) => {
   const currentYear = new Date().getFullYear();
 
-  // Smooth scroll to section
   const scrollToSection = (sectionId: string) => {
     const section = document.getElementById(sectionId);
     if (section) {

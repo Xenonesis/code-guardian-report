@@ -1,4 +1,3 @@
-// components/github/GitHubUsernameInput.tsx
 import React, { useState } from "react";
 import { Github, Check, X, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";

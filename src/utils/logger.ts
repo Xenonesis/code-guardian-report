@@ -26,7 +26,8 @@ interface LogEntry {
   userAgent?: string;
 }
 
-// Generate a session ID for tracking (lazy initialization)
+ 
+
 const getSessionId = (): string => {
   if (
     typeof crypto !== "undefined" &&
@@ -115,7 +116,8 @@ class Logger {
     const entry = this.createLogEntry(LogLevel.WARN, message, data);
     this.addToBuffer(entry);
 
-    // Only show warnings in development
+ 
+
     if (IS_DEV) {
       console.warn(`[WARN] ${message}`, data || "");
     }

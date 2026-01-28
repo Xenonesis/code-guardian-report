@@ -97,7 +97,6 @@ export class GitHubAnalysisStorageService {
         "⚠️ Using offline mode - Firebase unavailable. Returning empty data."
       );
 
-      // Show toast notification asynchronously to avoid setState during render
       if (typeof window !== "undefined") {
         setTimeout(() => {
           const toastNotifications = (window as any).toastNotifications;
@@ -169,7 +168,6 @@ export class GitHubAnalysisStorageService {
         "⚠️ Using offline mode - Firebase unavailable. Returning empty data."
       );
 
-      // Show toast notification asynchronously to avoid setState during render
       if (typeof window !== "undefined") {
         setTimeout(() => {
           const serviceToasts = (window as any).toastNotifications?.services;

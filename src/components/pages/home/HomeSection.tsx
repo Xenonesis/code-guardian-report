@@ -11,7 +11,6 @@ import { AnalysisResults } from "@/hooks/useAnalysis";
 import { useNavigation } from "@/lib/navigation-context";
 import type { Theme } from "@/hooks/useDarkMode";
 
-// Retry wrapper for dynamic imports that may fail during dev server startup
 const retryImport = <T,>(
   importFn: () => Promise<T>,
   retries = 3,

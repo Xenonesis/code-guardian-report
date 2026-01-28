@@ -1,8 +1,6 @@
 /**
  * Custom storage event utilities for same-tab localStorage changes
  */
-
-// Custom event for API key changes
 export const AI_API_KEYS_CHANGED_EVENT = "aiApiKeysChanged";
 
 /**
@@ -20,7 +18,6 @@ export function setLocalStorageItem(key: string, value: string): void {
   if (typeof window === "undefined") return;
   localStorage.setItem(key, value);
 
-  // Dispatch custom event for same-tab changes
   if (key === "aiApiKeys") {
     dispatchApiKeysChanged();
   }
@@ -33,7 +30,6 @@ export function removeLocalStorageItem(key: string): void {
   if (typeof window === "undefined") return;
   localStorage.removeItem(key);
 
-  // Dispatch custom event for same-tab changes
   if (key === "aiApiKeys") {
     dispatchApiKeysChanged();
   }
@@ -51,27 +47,23 @@ export function createStorageChangeListener(
     return () => {}; // No-op cleanup for SSR
   }
 
-  // Handle cross-tab storage changes
   const handleStorageChange = (event: StorageEvent) => {
     if (event.key === key) {
       callback(event.newValue);
     }
   };
 
-  // Handle same-tab custom events
   const handleCustomEvent = () => {
     const newValue = localStorage.getItem(key);
     callback(newValue);
   };
 
-  // Add listeners
   window.addEventListener("storage", handleStorageChange);
 
   if (key === "aiApiKeys") {
     window.addEventListener(AI_API_KEYS_CHANGED_EVENT, handleCustomEvent);
   }
 
-  // Return cleanup function
   return () => {
     window.removeEventListener("storage", handleStorageChange);
     if (key === "aiApiKeys") {
@@ -89,9 +81,7 @@ export function useStorageListener(
 ): void {
   if (typeof window === "undefined") return;
 
-  // This would be used in a useEffect hook in React components
   const cleanup = createStorageChangeListener(key, callback);
 
-  // Return cleanup function (to be called in useEffect cleanup)
   return cleanup();
 }

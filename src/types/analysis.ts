@@ -1,5 +1,3 @@
-// Analysis-related types
-
 export interface AnalysisResult {
   id: string;
   fileName: string;
