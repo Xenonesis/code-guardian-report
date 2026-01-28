@@ -58,7 +58,7 @@ export async function GET() {
     version:
       process.env.NEXT_PUBLIC_APP_VERSION ||
       process.env.npm_package_version ||
-      "10.0.0",
+      "11.0.0",
     timestamp: new Date().toISOString(),
     uptime: Math.floor((Date.now() - startTime) / 1000),
     environment: process.env.NODE_ENV || "development",

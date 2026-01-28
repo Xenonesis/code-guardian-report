@@ -303,7 +303,7 @@ server {
 curl https://your-domain.com/api/health
 
 # Expected response:
-# {"status":"healthy","version":"10.0.0",...}
+# {"status":"healthy","version":"11.0.0",...}
 ```
 
 ---
@@ -388,7 +388,7 @@ NODE_OPTIONS="--max-old-space-size=4096" npm run build
 
 | Version | Date       | Changes                  |
 | ------- | ---------- | ------------------------ |
-| 10.0.0  | 2026-01-01 | Production-ready release |
+| 11.0.0  | 2026-01-01 | Production-ready release |
 
 ---
 

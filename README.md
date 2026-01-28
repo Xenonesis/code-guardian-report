@@ -16,7 +16,7 @@
 
 <!-- Version and Status Badges with Animation -->
 <p align="center">
-  <img src="https://img.shields.io/badge/version-9.0.0-blue?style=for-the-badge&logo=semver&logoColor=white&labelColor=1e293b" alt="Version 9.0.0">
+  <img src="https://img.shields.io/badge/version-11.0.0-blue?style=for-the-badge&logo=semver&logoColor=white&labelColor=1e293b" alt="Version 11.0.0">
   <img src="https://img.shields.io/badge/build-passing-brightgreen?style=for-the-badge&logo=github-actions&logoColor=white&labelColor=1e293b" alt="Build Passing">
   <img src="https://img.shields.io/badge/production-ready-success?style=for-the-badge&logo=vercel&logoColor=white&labelColor=1e293b" alt="Production Ready">
   <img src="https://img.shields.io/badge/license-MIT-purple?style=for-the-badge&logo=open-source-initiative&logoColor=white&labelColor=1e293b" alt="MIT License">
@@ -29,7 +29,7 @@
   <img src="https://img.shields.io/github/forks/adityakumar-in/code-guardian-report?style=for-the-badge&logo=github&logoColor=white&labelColor=1e293b&color=cyan" alt="GitHub Forks">
 </p>
 
-**Current Version: 9.0.0** | **Developed by** [Aditya Kumar Tiwari](https://github.com/adityakumar-in)
+**Current Version: 11.0.0** | **Developed by** [Aditya Kumar Tiwari](https://github.com/adityakumar-in)
 
 <p align="center">
   <em>🌟 Trusted by developers worldwide for production-grade security analysis</em>
@@ -61,27 +61,27 @@
 <table>
 <tr>
 <td align="center" width="16%">
-  <img src="https://img.shields.io/badge/React-19.2.0-61DAFB?style=for-the-badge&logo=react&logoColor=white&labelColor=1e293b" alt="React"/>
+  <img src="https://img.shields.io/badge/React-19.2.4-61DAFB?style=for-the-badge&logo=react&logoColor=white&labelColor=1e293b" alt="React"/>
   <br><sub><b>React 19</b></sub>
 </td>
 <td align="center" width="16%">
   <img src="https://img.shields.io/badge/TypeScript-5.9.3-3178C6?style=for-the-badge&logo=typescript&logoColor=white&labelColor=1e293b" alt="TypeScript"/>
-  <br><sub><b>TypeScript</b></sub>
+  <br><sub><b>TypeScript 5.9</b></sub>
 </td>
 <td align="center" width="16%">
-  <img src="https://img.shields.io/badge/Vite-7.2.4-646CFF?style=for-the-badge&logo=vite&logoColor=white&labelColor=1e293b" alt="Vite"/>
-  <br><sub><b>Vite 7</b></sub>
+  <img src="https://img.shields.io/badge/Next.js-16.1.5-000000?style=for-the-badge&logo=next.js&logoColor=white&labelColor=1e293b" alt="Next.js"/>
+  <br><sub><b>Next.js 16</b></sub>
 </td>
 <td align="center" width="16%">
-  <img src="https://img.shields.io/badge/Tailwind-4.1.17-06B6D4?style=for-the-badge&logo=tailwind-css&logoColor=white&labelColor=1e293b" alt="Tailwind"/>
+  <img src="https://img.shields.io/badge/Tailwind-4.1.18-06B6D4?style=for-the-badge&logo=tailwind-css&logoColor=white&labelColor=1e293b" alt="Tailwind"/>
   <br><sub><b>Tailwind 4</b></sub>
 </td>
 <td align="center" width="16%">
-  <img src="https://img.shields.io/badge/Firebase-12.6.0-FFCA28?style=for-the-badge&logo=firebase&logoColor=white&labelColor=1e293b" alt="Firebase"/>
-  <br><sub><b>Firebase</b></sub>
+  <img src="https://img.shields.io/badge/Firebase-12.8.0-FFCA28?style=for-the-badge&logo=firebase&logoColor=white&labelColor=1e293b" alt="Firebase"/>
+  <br><sub><b>Firebase 12</b></sub>
 </td>
 <td align="center" width="16%">
-  <img src="https://img.shields.io/badge/Framer-12.23.24-0055FF?style=for-the-badge&logo=framer&logoColor=white&labelColor=1e293b" alt="Framer"/>
+  <img src="https://img.shields.io/badge/Framer-12.29.2-0055FF?style=for-the-badge&logo=framer&logoColor=white&labelColor=1e293b" alt="Framer"/>
   <br><sub><b>Framer Motion</b></sub>
 </td>
 </tr>
@@ -127,11 +127,11 @@
   <br><sub><b>Shadcn/ui</b></sub>
 </td>
 <td align="center" width="20%">
-  <img src="https://img.shields.io/badge/Recharts-3.5.1-22b5bf?style=for-the-badge&logo=chartdotjs&logoColor=white&labelColor=1e293b" alt="Recharts"/>
+  <img src="https://img.shields.io/badge/Recharts-3.7.0-22b5bf?style=for-the-badge&logo=chartdotjs&logoColor=white&labelColor=1e293b" alt="Recharts"/>
   <br><sub><b>Recharts</b></sub>
 </td>
 <td align="center" width="20%">
-  <img src="https://img.shields.io/badge/Lucide-0.555.0-F56565?style=for-the-badge&logo=lucide&logoColor=white&labelColor=1e293b" alt="Lucide"/>
+  <img src="https://img.shields.io/badge/Lucide-0.563.0-F56565?style=for-the-badge&logo=lucide&logoColor=white&labelColor=1e293b" alt="Lucide"/>
   <br><sub><b>Lucide Icons</b></sub>
 </td>
 <td align="center" width="20%">
@@ -371,13 +371,13 @@ graph TB
 
 ---
 
-## 🌟 What's New in v9.0.0
+## 🌟 What's New in v11.0.0
 
 <div align="center">
   
 <!-- Animated Release Badge -->
 <img src="https://img.shields.io/badge/🎉_Major_Release-Production_Ready-00C851?style=for-the-badge&logoColor=white&labelColor=1e293b&logo=rocket" alt="Major Release"/>
-<img src="https://img.shields.io/badge/Release_Date-January_2025-blue?style=for-the-badge&labelColor=1e293b&logo=calendar" alt="Release Date"/>
+<img src="https://img.shields.io/badge/Release_Date-January_2026-blue?style=for-the-badge&labelColor=1e293b&logo=calendar" alt="Release Date"/>
 
 </div>
 
@@ -447,7 +447,7 @@ graph TB
 
 <!-- Additional Features Section -->
 <details>
-<summary><b>🎨 Click to see more new features in v9.0.0</b></summary>
+<summary><b>🎨 Click to see more new features in v11.0.0</b></summary>
 
 <br>
 
@@ -1332,7 +1332,7 @@ gantt
 | -------------- | ------------ | ------- | --------------------------- |
 | **Frontend**   | React        | 18.3.1  | Component-based UI library  |
 | **Language**   | TypeScript   | 5.9     | Type-safe development       |
-| **Build Tool** | Vite         | 7.0.5   | Lightning-fast bundling     |
+| **Build Tool** | Next.js         | 16.1.5   | Lightning-fast React framework with built-in optimizations |
 | **Styling**    | Tailwind CSS | 3.4.11  | Utility-first CSS framework |
 
 </div>
@@ -1362,7 +1362,7 @@ gantt
 
 ### 🔧 Build & Optimization
 
-- **⚡ Lightning Fast Builds**: Vite 7.0.5 with SWC for sub-second rebuilds
+- **⚡ Lightning Fast Builds**: Next.js 16 with SWC for sub-second rebuilds
 - **📦 Smart Bundling**: Advanced manual chunk splitting for React, Radix UI, and vendor libraries
 - **🎯 Performance**: Optimized asset handling with intelligent file naming
 - **🔄 Hot Reload**: Instant feedback with HMR overlay during development
@@ -1379,7 +1379,7 @@ gantt
 
 **Required:**
 
-- 🟢 **Node.js** v18.0.0+ ([Download](https://nodejs.org/))
+- 🟢 **Node.js** v22.0.0+ ([Download](https://nodejs.org/))
 - 📦 **Package Manager**: npm, yarn, or bun
 - 🌐 **Modern Browser**: Chrome 90+, Firefox 88+, Safari 14+
 
@@ -1425,7 +1425,7 @@ yarn dev           # Using yarn
 bun dev            # Using bun
 
 # 4️⃣ Open in browser
-# Navigate to http://localhost:5173
+# Navigate to http://localhost:3000
 ```
 
 </details>
@@ -1503,7 +1503,7 @@ NEXT_PUBLIC_FIREBASE_APP_ID=
 
 # Application Settings
 NEXT_PUBLIC_APP_NAME="Code Guardian Enterprise"
-NEXT_PUBLIC_APP_VERSION="10.0.0"
+NEXT_PUBLIC_APP_VERSION="11.0.0"
 ```
 
 Security note: create .env.local only; ensure .gitignore excludes it.
@@ -2460,7 +2460,7 @@ If you encounter any issues or have questions:
 
 ---
 
-**Made with ❤️ by Code Guardian Team | © 2025 Code Guardian Report**
+**Made with ❤️ by Code Guardian Team | © 2026 Code Guardian Report**
 
 <!-- Animated Footer -->
 <div align="center">
@@ -2531,7 +2531,7 @@ If you encounter any issues or have questions:
 </picture>
 
 <p align="center">
-  <strong>Made with ❤️ by Code Guardian Team | © 2025 Code Guardian Report</strong>
+  <strong>Made with ❤️ by Code Guardian Team | © 2026 Code Guardian Report</strong>
   <br>
   <sub>Empowering developers to build secure software, one line of code at a time.</sub>
 </p>

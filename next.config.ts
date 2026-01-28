@@ -169,7 +169,7 @@ const nextConfig: NextConfig = {
 
   // Environment variables to expose to the browser
   env: {
-    NEXT_PUBLIC_APP_VERSION: process.env.npm_package_version || "10.0.0",
+    NEXT_PUBLIC_APP_VERSION: process.env.npm_package_version || "11.0.0",
     NEXT_PUBLIC_BUILD_TIME: new Date().toISOString(),
   },
 
