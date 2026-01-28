@@ -2,7 +2,6 @@
 
 import { Toaster } from "sonner";
 import { useDarkMode } from "@/hooks/useDarkMode";
-import { useNavigation } from "@/lib/navigation-context";
 import { useEnhancedAnalysis } from "@/hooks/useEnhancedAnalysis";
 import { Navigation } from "@/components/layout/Navigation";
 import { Footer } from "@/components/layout/Footer";

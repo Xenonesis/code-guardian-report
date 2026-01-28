@@ -156,7 +156,7 @@ export class DataFlowAnalyzer {
    * Track data flow through the code
    */
   private trackDataFlow(ast: t.File, fileName: string, content: string): void {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const traverseFunction =
       typeof traverse === "function" ? traverse : (traverse as any).default;
     traverseFunction(ast as any, {

@@ -90,7 +90,7 @@ jobs:
 
       - name: 📈 Upload test coverage
         uses: codecov/codecov-action@v4
-        if: matrix.node-version == '20.x' && matrix.os == 'ubuntu-latest'
+        if: matrix.node-version == '20.x' && matrix.os == 'ubuntu-latest' && secrets.CODECOV_TOKEN != ''
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./coverage/lcov.info
