@@ -2221,6 +2221,7 @@ If you encounter any issues or have questions:
   
 
 
+  
   <table style="margin: 0 auto;">
     <tr>
       <td align="center" style="padding: 15px;">
@@ -2270,7 +2271,7 @@ If you encounter any issues or have questions:
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">238 commits</span>
         </div>
       </td>
-
+    
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/in/15368?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
@@ -2282,7 +2283,7 @@ If you encounter any issues or have questions:
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">27 commits</span>
         </div>
       </td>
-
+    
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/186174121?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
@@ -2294,7 +2295,7 @@ If you encounter any issues or have questions:
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">5 commits</span>
         </div>
       </td>
-
+    
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/164482191?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
@@ -2306,9 +2307,8 @@ If you encounter any issues or have questions:
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">4 commits</span>
         </div>
       </td>
-
+    
     </tr>
-
 <tr>
 
       <td align="center" style="padding: 20px;">
@@ -2321,7 +2321,7 @@ If you encounter any issues or have questions:
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">3 commits</span>
         </div>
       </td>
-
+    
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/118842369?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
@@ -2333,7 +2333,7 @@ If you encounter any issues or have questions:
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">3 commits</span>
         </div>
       </td>
-
+    
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/180313267?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
@@ -2345,7 +2345,7 @@ If you encounter any issues or have questions:
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">2 commits</span>
         </div>
       </td>
-
+    
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/180231504?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
@@ -2357,7 +2357,7 @@ If you encounter any issues or have questions:
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">2 commits</span>
         </div>
       </td>
-
+    
     </tr>
 
   </table>
