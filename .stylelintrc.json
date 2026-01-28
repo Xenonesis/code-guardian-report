@@ -26,6 +26,7 @@
         "ignoreMediaFeatureNames": ["min-device-pixel-ratio"]
       }
     ],
-    "declaration-block-no-duplicate-properties": null
+    "declaration-block-no-duplicate-properties": null,
+    "import-notation": null
   }
 }
