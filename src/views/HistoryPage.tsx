@@ -15,6 +15,21 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { AnimatedBackground } from "@/components/pages/about/AnimatedBackground";
 import {
   History,
@@ -28,6 +43,9 @@ import {
   Shield,
   User,
   Database,
+  Search,
+  X,
+  AlertTriangle,
 } from "lucide-react";
 import {
   firebaseAnalysisStorage,
@@ -62,6 +80,9 @@ export const HistoryPage = ({
   const [selectedSeverity, setSelectedSeverity] = useState<
     "all" | "critical" | "high" | "medium" | "low"
   >("all");
+  const [analysisToDelete, setAnalysisToDelete] = useState<string | null>(null);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+
   type UserStats = {
     totalAnalyses?: number;
     totalIssuesFound?: number;
@@ -234,10 +255,20 @@ export const HistoryPage = ({
     setFilteredHistory(filtered);
   };
 
-  const handleDeleteAnalysis = async (analysisId: string) => {
+  const confirmDelete = (analysisId: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setAnalysisToDelete(analysisId);
+    setIsDeleteOpen(true);
+  };
+
+  const executeDelete = async () => {
+    if (!analysisToDelete) return;
+
     try {
-      await firebaseAnalysisStorage.deleteAnalysisResults(analysisId);
-      setAnalysisHistory((prev) => prev.filter((a) => a.id !== analysisId));
+      await firebaseAnalysisStorage.deleteAnalysisResults(analysisToDelete);
+      setAnalysisHistory((prev) =>
+        prev.filter((a) => a.id !== analysisToDelete)
+      );
 
       toast({
         title: "🗑️ Analysis Deleted",
@@ -253,10 +284,18 @@ export const HistoryPage = ({
         description: "Could not delete analysis.",
         variant: "destructive",
       });
+    } finally {
+      setIsDeleteOpen(false);
+      setAnalysisToDelete(null);
     }
   };
 
-  const handleViewAnalysis = (analysis: FirebaseAnalysisData) => {
+  const handleViewAnalysis = (
+    analysis: FirebaseAnalysisData,
+    e?: React.MouseEvent
+  ) => {
+    if (e) e.stopPropagation();
+
     if (onAnalysisSelect) {
       onAnalysisSelect(analysis);
     }
@@ -324,10 +363,15 @@ export const HistoryPage = ({
         | number
         | null
         | undefined;
-      if (t && typeof (t as FireTimestamp).toDate === "function") {
+      // Handle null, undefined, or empty values silently
+      if (!t || t === "") {
+        return "N/A";
+      }
+
+      if (typeof (t as FireTimestamp).toDate === "function") {
         // Firebase Timestamp
         date = (t as FireTimestamp).toDate!();
-      } else if (t && typeof (t as FireTimestamp).seconds === "number") {
+      } else if (typeof (t as FireTimestamp).seconds === "number") {
         // Firebase Timestamp object with seconds
         date = new Date((t as FireTimestamp).seconds! * 1000);
       } else if (timestamp instanceof Date) {
@@ -335,11 +379,15 @@ export const HistoryPage = ({
         date = timestamp;
       } else if (typeof t === "string" || typeof t === "number") {
         // String or number timestamp
-        date = new Date(t);
+        const parsed = new Date(t);
+        // Check if the date is valid
+        if (isNaN(parsed.getTime())) {
+          return "N/A";
+        }
+        date = parsed;
       } else {
-        // Fallback to current date
-        logger.warn("Unable to parse timestamp:", t);
-        date = new Date();
+        // Unknown format - return N/A instead of logging warning
+        return "N/A";
       }
 
       return date.toLocaleDateString() + " " + date.toLocaleTimeString();
@@ -497,82 +545,94 @@ export const HistoryPage = ({
         <div className="relative">
           <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-500/10 to-blue-500/10 blur-lg" />
           <div className="relative rounded-2xl border border-white/10 bg-white/[0.03] p-6 shadow-xl backdrop-blur-xl">
-            <div className="mb-5 flex items-center gap-3">
-              <Filter className="h-5 w-5 text-cyan-400" />
-              <span className="font-semibold text-white">Filters & Search</span>
+            <div className="mb-5 flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <Filter className="h-5 w-5 text-cyan-400" />
+                <span className="font-semibold text-white">
+                  Filters & Search
+                </span>
+              </div>
+              {(searchTerm ||
+                selectedTimeRange !== "all" ||
+                selectedSeverity !== "all") && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => {
+                    setSearchTerm("");
+                    setSelectedTimeRange("all");
+                    setSelectedSeverity("all");
+                  }}
+                  className="h-8 rounded-lg text-slate-400 hover:bg-white/5 hover:text-white"
+                >
+                  <X className="mr-2 h-3 w-3" />
+                  Clear Filters
+                </Button>
+              )}
             </div>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
-              <div className="sm:col-span-2">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-12">
+              <div className="relative lg:col-span-4">
+                <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-slate-500" />
                 <Input
-                  placeholder="🔍 Search by filename, tags, or issue type..."
+                  placeholder="Search by filename, tags, or issue..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="h-11 w-full rounded-xl border-white/10 bg-white/5 text-white placeholder:text-slate-500 focus:border-cyan-500/50 focus:ring-cyan-500/20"
+                  className="h-10 w-full rounded-xl border-white/10 bg-white/5 pl-9 text-white placeholder:text-slate-500 focus:border-cyan-500/50 focus:ring-cyan-500/20"
                 />
               </div>
-              <select
-                value={selectedTimeRange}
-                onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                  setSelectedTimeRange(
-                    e.target.value as "all" | "week" | "month" | "year"
-                  )
-                }
-                className="h-11 w-full cursor-pointer rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-white transition-all duration-300 focus:border-cyan-500/50 focus:ring-2 focus:ring-cyan-500/20"
-                aria-label="Time Range"
-                title="Time Range"
-              >
-                <option value="all" className="bg-slate-900">
-                  📅 All Time
-                </option>
-                <option value="week" className="bg-slate-900">
-                  📅 Past Week
-                </option>
-                <option value="month" className="bg-slate-900">
-                  📅 Past Month
-                </option>
-                <option value="year" className="bg-slate-900">
-                  📅 Past Year
-                </option>
-              </select>
-              <select
-                value={selectedSeverity}
-                onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                  setSelectedSeverity(
-                    e.target.value as
-                      | "all"
-                      | "critical"
-                      | "high"
-                      | "medium"
-                      | "low"
-                  )
-                }
-                className="h-11 w-full cursor-pointer rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-white transition-all duration-300 focus:border-cyan-500/50 focus:ring-2 focus:ring-cyan-500/20"
-                aria-label="Severity"
-                title="Severity"
-              >
-                <option value="all" className="bg-slate-900">
-                  ⚡ All Severities
-                </option>
-                <option value="critical" className="bg-slate-900">
-                  🔴 Critical
-                </option>
-                <option value="high" className="bg-slate-900">
-                  🟠 High
-                </option>
-                <option value="medium" className="bg-slate-900">
-                  🟡 Medium
-                </option>
-                <option value="low" className="bg-slate-900">
-                  🟢 Low
-                </option>
-              </select>
-              <Button
-                onClick={loadAnalysisHistory}
-                className="h-11 w-full rounded-xl border-0 bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-lg shadow-cyan-500/25 transition-all duration-300 hover:from-cyan-500 hover:to-blue-500 hover:shadow-cyan-500/40"
-              >
-                <Filter className="mr-2 h-4 w-4" />
-                Refresh
-              </Button>
+
+              <div className="lg:col-span-3">
+                <Select
+                  value={selectedTimeRange}
+                  onValueChange={(value) =>
+                    setSelectedTimeRange(
+                      value as "all" | "week" | "month" | "year"
+                    )
+                  }
+                >
+                  <SelectTrigger className="h-10 border-white/10 bg-white/5 text-white focus:ring-cyan-500/20">
+                    <SelectValue placeholder="Time Range" />
+                  </SelectTrigger>
+                  <SelectContent className="border-white/10 bg-slate-900 text-white">
+                    <SelectItem value="all">📅 All Time</SelectItem>
+                    <SelectItem value="week">📅 Past Week</SelectItem>
+                    <SelectItem value="month">📅 Past Month</SelectItem>
+                    <SelectItem value="year">📅 Past Year</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="lg:col-span-3">
+                <Select
+                  value={selectedSeverity}
+                  onValueChange={(value) =>
+                    setSelectedSeverity(
+                      value as "all" | "critical" | "high" | "medium" | "low"
+                    )
+                  }
+                >
+                  <SelectTrigger className="h-10 border-white/10 bg-white/5 text-white focus:ring-cyan-500/20">
+                    <SelectValue placeholder="Severity" />
+                  </SelectTrigger>
+                  <SelectContent className="border-white/10 bg-slate-900 text-white">
+                    <SelectItem value="all">⚡ All Severities</SelectItem>
+                    <SelectItem value="critical">🔴 Critical</SelectItem>
+                    <SelectItem value="high">🟠 High</SelectItem>
+                    <SelectItem value="medium">🟡 Medium</SelectItem>
+                    <SelectItem value="low">🟢 Low</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="lg:col-span-2">
+                <Button
+                  onClick={loadAnalysisHistory}
+                  className="h-10 w-full rounded-xl border-0 bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-lg shadow-cyan-500/25 transition-all duration-300 hover:from-cyan-500 hover:to-blue-500 hover:shadow-cyan-500/40"
+                >
+                  <Filter className="mr-2 h-4 w-4" />
+                  Refresh
+                </Button>
+              </div>
             </div>
           </div>
         </div>
@@ -644,13 +704,14 @@ export const HistoryPage = ({
                   {filteredHistory.map((analysis, index) => (
                     <div
                       key={analysis.id}
-                      className="group relative"
+                      className="group relative cursor-pointer"
                       style={{ animationDelay: `${index * 50}ms` }}
+                      onClick={(e) => handleViewAnalysis(analysis, e)}
                     >
                       {/* Hover glow effect */}
                       <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-violet-500/0 via-fuchsia-500/0 to-cyan-500/0 opacity-0 blur-xl transition-all duration-500 group-hover:from-violet-500/10 group-hover:via-fuchsia-500/5 group-hover:to-cyan-500/10 group-hover:opacity-100" />
 
-                      <div className="relative rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-sm transition-all duration-300 group-hover:translate-x-1 group-hover:shadow-2xl group-hover:shadow-violet-500/10 hover:border-white/20 hover:bg-white/[0.05]">
+                      <div className="relative rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-sm transition-all duration-300 group-active:scale-[0.99] group-hover:translate-x-1 group-hover:shadow-2xl group-hover:shadow-violet-500/10 hover:border-white/20 hover:bg-white/[0.05]">
                         {/* Severity indicator bar */}
                         <div
                           className={`absolute top-0 bottom-0 left-0 w-1 rounded-l-2xl ${
@@ -779,7 +840,7 @@ export const HistoryPage = ({
                           {/* Action buttons */}
                           <div className="flex items-center gap-2 lg:flex-col lg:gap-2">
                             <Button
-                              onClick={() => handleViewAnalysis(analysis)}
+                              onClick={(e) => handleViewAnalysis(analysis, e)}
                               className="flex-1 rounded-xl border-0 bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white shadow-lg shadow-violet-500/20 transition-all duration-300 hover:scale-105 hover:from-violet-500 hover:to-fuchsia-500 hover:shadow-violet-500/40 lg:flex-none"
                               size="sm"
                             >
@@ -787,7 +848,7 @@ export const HistoryPage = ({
                               View
                             </Button>
                             <Button
-                              onClick={() => handleDeleteAnalysis(analysis.id)}
+                              onClick={(e) => confirmDelete(analysis.id, e)}
                               className="rounded-xl border border-white/10 bg-white/5 text-slate-400 transition-all duration-300 hover:scale-105 hover:border-red-500/30 hover:bg-red-500/20 hover:text-red-400"
                               variant="outline"
                               size="sm"
@@ -804,6 +865,38 @@ export const HistoryPage = ({
             </div>
           </div>
         </div>
+
+        {/* Delete Confirmation Dialog */}
+        <Dialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
+          <DialogContent className="border-white/10 bg-slate-900 text-white sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2 text-red-400">
+                <AlertTriangle className="h-5 w-5" />
+                Confirm Deletion
+              </DialogTitle>
+              <DialogDescription className="text-slate-400">
+                Are you sure you want to delete this analysis? This action
+                cannot be undone.
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter className="gap-2 sm:gap-0">
+              <Button
+                variant="ghost"
+                onClick={() => setIsDeleteOpen(false)}
+                className="hover:bg-white/10 hover:text-white"
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="destructive"
+                onClick={executeDelete}
+                className="bg-red-600 hover:bg-red-700"
+              >
+                Delete Analysis
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );
