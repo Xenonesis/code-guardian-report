@@ -139,7 +139,7 @@ export const useEnhancedAnalysis = () => {
           );
         }
       } else {
-        logger.error("❌ No selected file - cannot store analysis results");
+        logger.error("No selected file - cannot store analysis results");
       }
     },
     [selectedFile, updateStorageStats, user]

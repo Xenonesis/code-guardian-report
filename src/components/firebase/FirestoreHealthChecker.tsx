@@ -2,6 +2,7 @@
 
 // src/components/FirestoreHealthChecker.tsx
 import React, { useState, useEffect } from "react";
+import { ChevronDown, ChevronRight, Circle } from "lucide-react";
 import { connectionManager } from "../../lib/connection-manager";
 
 interface HealthStatus {
@@ -47,9 +48,11 @@ export const FirestoreHealthChecker: React.FC = () => {
   };
 
   const getStatusIcon = () => {
-    if (!healthStatus.isOnline) return "🔴";
-    if (!healthStatus.firestoreConnected) return "🟡";
-    return "🟢";
+    if (!healthStatus.isOnline)
+      return <Circle className="h-3 w-3 fill-red-500 text-red-500" />;
+    if (!healthStatus.firestoreConnected)
+      return <Circle className="h-3 w-3 fill-yellow-500 text-yellow-500" />;
+    return <Circle className="h-3 w-3 fill-green-500 text-green-500" />;
   };
 
   const getStatusText = () => {
@@ -78,7 +81,9 @@ export const FirestoreHealthChecker: React.FC = () => {
       <div className="min-w-[200px] rounded-lg border border-gray-200 bg-white p-3 shadow-lg dark:border-gray-700 dark:bg-gray-800">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <span className="text-lg">{getStatusIcon()}</span>
+            <span className="flex h-4 w-4 items-center justify-center">
+              {getStatusIcon()}
+            </span>
             <span className={`text-sm font-medium ${getStatusColor()}`}>
               {getStatusText()}
             </span>
@@ -87,7 +92,11 @@ export const FirestoreHealthChecker: React.FC = () => {
             onClick={() => setShowDetails(!showDetails)}
             className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
           >
-            {showDetails ? "▼" : "▶"}
+            {showDetails ? (
+              <ChevronDown className="h-4 w-4" aria-hidden="true" />
+            ) : (
+              <ChevronRight className="h-4 w-4" aria-hidden="true" />
+            )}
           </button>
         </div>
 

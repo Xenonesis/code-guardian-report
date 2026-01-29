@@ -150,15 +150,15 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
       // Set a fallback summary if API fails
       setAiSummary(`Unable to generate AI summary. Manual analysis shows:
       
-      📊 **Analysis Overview:**
+      **Analysis Overview:**
       - Total Issues: ${issues.length}
       - High Severity: ${issues.filter((i) => i.severity === "High").length}
       - Medium Severity: ${issues.filter((i) => i.severity === "Medium").length}
       - Low Severity: ${issues.filter((i) => i.severity === "Low").length}
       
-      🔒 **Security Issues:** ${issues.filter((i) => i.type?.toLowerCase() === "security").length}
-      🐛 **Bug Issues:** ${issues.filter((i) => i.type?.toLowerCase() === "bug").length}
-      📝 **Code Quality Issues:** ${issues.filter((i) => i.type?.toLowerCase() === "code smell").length}
+      **Security Issues:** ${issues.filter((i) => i.type?.toLowerCase() === "security").length}
+      **Bug Issues:** ${issues.filter((i) => i.type?.toLowerCase() === "bug").length}
+      **Code Quality Issues:** ${issues.filter((i) => i.type?.toLowerCase() === "code smell").length}
       
       Please configure your AI API keys to get detailed insights and recommendations.`);
     } finally {
@@ -806,7 +806,7 @@ const DetailedIssuesTable: React.FC<DetailedIssuesTableProps> = ({
                         className="truncate text-xs text-slate-600 dark:text-slate-400"
                         title={issue.recommendation}
                       >
-                        💡 {issue.recommendation}
+                        Recommendation: {issue.recommendation}
                       </p>
                       {issue.cveId && (
                         <Badge

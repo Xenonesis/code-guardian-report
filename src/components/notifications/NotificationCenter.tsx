@@ -4,7 +4,18 @@
  */
 
 import React, { useState, useEffect } from "react";
-import { Bell, Settings, Check, Trash2, Filter, X } from "lucide-react";
+import {
+  Bell,
+  Settings,
+  Check,
+  Trash2,
+  Filter,
+  X,
+  CheckCircle,
+  XCircle,
+  AlertTriangle,
+  Info,
+} from "lucide-react";
 import {
   NotificationManager,
   Notification,
@@ -90,14 +101,14 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({
   const getNotificationIcon = (type: Notification["type"]) => {
     switch (type) {
       case "success":
-        return "✓";
+        return <CheckCircle className="h-4 w-4" />;
       case "error":
-        return "✕";
+        return <XCircle className="h-4 w-4" />;
       case "warning":
-        return "⚠";
+        return <AlertTriangle className="h-4 w-4" />;
       case "info":
       default:
-        return "ℹ";
+        return <Info className="h-4 w-4" />;
     }
   };
 

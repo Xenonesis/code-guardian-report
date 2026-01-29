@@ -11,6 +11,7 @@ import {
   AlertCircle,
   CheckCircle,
   XCircle,
+  Check,
   PlayCircle,
   Loader2,
 } from "lucide-react";
@@ -147,14 +148,25 @@ export function AnalysisTestRunner() {
                     <CheckCircle className="mt-0.5 h-6 w-6 flex-shrink-0 text-green-600" />
                     <div>
                       <h3 className="font-semibold text-green-900 dark:text-green-100">
-                        🎉 All Tests Passed!
+                        All Tests Passed
                       </h3>
                       <ul className="mt-2 space-y-1 text-sm text-green-800 dark:text-green-200">
-                        <li>
-                          ✅ Analysis engine is providing accurate, real results
+                        <li className="flex items-start gap-2">
+                          <Check className="mt-0.5 h-4 w-4 text-green-600" />
+                          <span>
+                            Analysis engine is providing accurate, real results
+                          </span>
                         </li>
-                        <li>✅ No mock or fake data detected</li>
-                        <li>✅ Vulnerability detection is working correctly</li>
+                        <li className="flex items-start gap-2">
+                          <Check className="mt-0.5 h-4 w-4 text-green-600" />
+                          <span>No mock or fake data detected</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <Check className="mt-0.5 h-4 w-4 text-green-600" />
+                          <span>
+                            Vulnerability detection is working correctly
+                          </span>
+                        </li>
                       </ul>
                     </div>
                   </div>

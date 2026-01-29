@@ -10,6 +10,7 @@ import {
   Shield,
   Settings,
   BarChart3,
+  Lightbulb,
 } from "lucide-react";
 
 interface HelpPageProps {
@@ -220,8 +221,9 @@ export const HelpPage: React.FC<HelpPageProps> = ({ className = "" }) => {
 
             {/* Quick Tips */}
             <div className="mt-12 rounded-xl border border-blue-200 bg-gradient-to-r from-blue-50 to-indigo-50 p-6 dark:border-blue-800 dark:from-blue-900/20 dark:to-indigo-900/20">
-              <h3 className="mb-4 text-lg font-semibold text-slate-900 dark:text-white">
-                💡 Quick Tips
+              <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold text-slate-900 dark:text-white">
+                <Lightbulb className="h-5 w-5 text-amber-500" />
+                Quick Tips
               </h3>
               <div className="grid grid-cols-1 gap-4 text-sm text-slate-700 md:grid-cols-2 dark:text-slate-300">
                 <div className="flex items-start gap-2">

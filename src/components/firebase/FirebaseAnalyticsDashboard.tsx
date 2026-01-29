@@ -86,7 +86,7 @@ export const FirebaseAnalyticsDashboard = ({
     } catch (error) {
       logger.error("Error loading analysis history:", error);
       toast({
-        title: "❌ Failed to Load History",
+        title: "Failed to Load History",
         description: "Could not load analysis history from cloud storage.",
         variant: "destructive",
       });
@@ -109,7 +109,7 @@ export const FirebaseAnalyticsDashboard = ({
   const handleRefresh = () => {
     loadAnalysisHistory();
     toast({
-      title: "🔄 Refreshing",
+      title: "Refreshing",
       description: "Updating analysis history...",
     });
   };
@@ -124,13 +124,13 @@ export const FirebaseAnalyticsDashboard = ({
       }
 
       toast({
-        title: "🗑️ Analysis Deleted",
+        title: "Analysis Deleted",
         description: "Analysis has been deleted from cloud storage.",
       });
     } catch (error) {
       logger.error("Error deleting analysis:", error);
       toast({
-        title: "❌ Delete Failed",
+        title: "Delete Failed",
         description: "Could not delete analysis. Please try again.",
         variant: "destructive",
       });
@@ -153,13 +153,13 @@ export const FirebaseAnalyticsDashboard = ({
       setAnalysisHistory(results);
 
       toast({
-        title: "🔍 Search Complete",
+        title: "Search Complete",
         description: `Found ${results.length} matching analyses.`,
       });
     } catch (error) {
       logger.error("Error searching analysis:", error);
       toast({
-        title: "❌ Search Failed",
+        title: "Search Failed",
         description: "Could not search analyses. Please try again.",
         variant: "destructive",
       });
@@ -355,13 +355,13 @@ export const FirebaseAnalyticsDashboard = ({
 
                         <div className="text-muted-foreground mb-2 flex items-center gap-4 text-sm">
                           <span>
-                            📁 {(analysis.fileSize / 1024).toFixed(1)} KB
+                            {(analysis.fileSize / 1024).toFixed(1)} KB
                           </span>
                           <span>
-                            🐛 {analysis.results.issues?.length || 0} issues
+                            {analysis.results.issues?.length || 0} issues
                           </span>
-                          <span>📄 {analysis.results.totalFiles} files</span>
-                          <span>⏱️ {formatDate(analysis.createdAt)}</span>
+                          <span>{analysis.results.totalFiles} files</span>
+                          <span>{formatDate(analysis.createdAt)}</span>
                         </div>
 
                         {analysis.tags && analysis.tags.length > 0 && (

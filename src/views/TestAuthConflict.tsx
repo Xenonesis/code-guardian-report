@@ -11,14 +11,20 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
+import {
+  CheckCircle2,
+  AlertCircle,
+  Loader2,
+  ShieldAlert,
+  ClipboardList,
+} from "lucide-react";
 
 import { logger } from "@/utils/logger";
 export const TestAuthConflict: React.FC = () => {
   // Prevent access in production
   useEffect(() => {
     if (process.env.NODE_ENV === "production") {
-      logger.warn("⚠️ Test pages are not available in production");
+      logger.warn("Test pages are not available in production");
       window.location.href = "/";
     }
   }, []);
@@ -149,7 +155,10 @@ export const TestAuthConflict: React.FC = () => {
         {/* Header */}
         <div className="space-y-3 text-center sm:space-y-4">
           <h1 className="text-2xl font-bold break-words text-gray-900 sm:text-3xl md:text-4xl dark:text-gray-100">
-            🧪 Account Conflict Modal - Real Functionality Test
+            <span className="inline-flex items-center justify-center gap-2">
+              <ShieldAlert className="h-6 w-6 text-indigo-600 dark:text-indigo-400" />
+              Account Conflict Modal - Real Functionality Test
+            </span>
           </h1>
           <p className="px-2 text-base text-gray-600 sm:text-lg dark:text-gray-400">
             Test the actual Firebase authentication with conflict handling
@@ -381,7 +390,10 @@ export const TestAuthConflict: React.FC = () => {
         <Card>
           <CardHeader>
             <CardTitle className="text-lg sm:text-xl">
-              📝 How to Test Account Conflict
+              <span className="inline-flex items-center gap-2">
+                <ClipboardList className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
+                How to Test Account Conflict
+              </span>
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3 sm:space-y-4">
@@ -431,7 +443,7 @@ export const TestAuthConflict: React.FC = () => {
           <Card className="border-2 border-amber-500">
             <CardHeader>
               <CardTitle className="text-lg text-amber-600 sm:text-xl dark:text-amber-400">
-                ⚠️ Account Conflict Detected!
+                Account Conflict Detected
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -448,7 +460,7 @@ export const TestAuthConflict: React.FC = () => {
                   {accountConflict.attemptedProvider}
                 </p>
                 <p className="text-xs sm:text-sm">
-                  <strong>Modal Open:</strong> Yes ✅
+                  <strong>Modal Open:</strong> Yes
                 </p>
               </div>
             </CardContent>

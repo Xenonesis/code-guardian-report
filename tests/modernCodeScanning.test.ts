@@ -84,12 +84,12 @@ let passedTests = 0;
 let failedTests = 0;
 
 function describe(suiteName: string, fn: () => void) {
-  console.log(`\n📋 ${suiteName}`);
+  console.log(`\nSuite: ${suiteName}`);
   try {
     fn();
   } catch (error) {
     console.log(
-      `  ❌ Suite Error: ${error instanceof Error ? error.message : String(error)}`
+      `  ERROR: ${error instanceof Error ? error.message : String(error)}`
     );
     if (error instanceof Error && error.stack) {
       console.log(error.stack);
@@ -101,10 +101,10 @@ function describe(suiteName: string, fn: () => void) {
 function it(testName: string, fn: () => void) {
   try {
     fn();
-    console.log(`  ✅ ${testName}`);
+    console.log(`  PASS ${testName}`);
     passedTests++;
   } catch (error) {
-    console.log(`  ❌ ${testName}`);
+    console.log(`  FAIL ${testName}`);
     console.log(
       `     Error: ${error instanceof Error ? error.message : String(error)}`
     );
@@ -152,7 +152,7 @@ function expect(actual: unknown) {
 }
 
 // ====== Run Tests ======
-console.log("🧪 Running Modern Code Scanning Tests...\n");
+console.log("Running Modern Code Scanning Tests...\n");
 
 describe("Modern Code Scanning Service - Real Results Verification", () => {
   describe("SQL Injection Detection", () => {
@@ -481,8 +481,8 @@ function test() {
 
 // Print summary
 console.log(`\n\n${"=".repeat(60)}`);
-console.log(`✅ Passed: ${passedTests}`);
-console.log(`❌ Failed: ${failedTests}`);
+console.log(`Passed: ${passedTests}`);
+console.log(`Failed: ${failedTests}`);
 console.log(`Total: ${passedTests + failedTests}`);
 console.log("=".repeat(60));
 

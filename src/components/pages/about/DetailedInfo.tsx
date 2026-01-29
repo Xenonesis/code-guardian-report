@@ -12,6 +12,7 @@ import {
   Database,
   CheckCircle,
   Star,
+  Rocket,
 } from "lucide-react";
 import { BentoGrid, type BentoItem } from "@/components/ui/bento-grid";
 
@@ -161,8 +162,9 @@ export const DetailedInfo: React.FC = () => {
             </div>
 
             <div className="mt-8 rounded-lg border border-blue-200 bg-gradient-to-r from-blue-50 to-indigo-50 p-6 dark:border-blue-800 dark:from-blue-950 dark:to-indigo-950">
-              <h4 className="mb-3 font-semibold text-blue-900 dark:text-blue-100">
-                🚀 What Makes Us Different
+              <h4 className="mb-3 flex items-center gap-2 font-semibold text-blue-900 dark:text-blue-100">
+                <Rocket className="h-4 w-4" />
+                What Makes Us Different
               </h4>
               <ul className="space-y-2 text-sm text-blue-800 dark:text-blue-200">
                 <li>

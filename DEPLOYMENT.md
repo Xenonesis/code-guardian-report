@@ -1,4 +1,4 @@
-# 🚀 Production Deployment Guide
+# Production Deployment Guide
 
 ## Code Guardian Enterprise - Deployment Documentation
 

@@ -8,7 +8,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 async function testAutomation() {
-  console.log("🧪 Testing contributor automation system...\n");
+  console.log("Testing contributor automation system...\n");
 
   const tests = [
     {
@@ -52,7 +52,7 @@ async function testAutomation() {
       name: "README has contributors section",
       test: () => {
         const readme = fs.readFileSync("README.md", "utf8");
-        return readme.includes("## 🌟 Community & Contributors");
+        return readme.includes("## Community & Contributors");
       },
     },
     {
@@ -74,35 +74,35 @@ async function testAutomation() {
     try {
       const result = test.test();
       if (result) {
-        console.log(`✅ ${test.name}`);
+        console.log(`${test.name}`);
         passed++;
       } else {
-        console.log(`❌ ${test.name}`);
+        console.log(`${test.name}`);
         failed++;
       }
     } catch (error) {
-      console.log(`❌ ${test.name} - Error: ${error.message}`);
+      console.log(`${test.name} - Error: ${error.message}`);
       failed++;
     }
   }
 
-  console.log(`\n📊 Test Results: ${passed} passed, ${failed} failed\n`);
+  console.log(`\nTest Results: ${passed} passed, ${failed} failed\n`);
 
   if (failed === 0) {
     console.log(
-      "🎉 All tests passed! The contributor automation system is fully set up.\n"
+      "All tests passed! The contributor automation system is fully set up.\n"
     );
-    console.log("🔄 The system will now automatically:");
+    console.log("The system will now automatically:");
     console.log("  • Update contributors when code is pushed");
     console.log("  • Welcome new contributors on PR merges");
     console.log("  • Run daily maintenance updates");
     console.log("  • Update after local commits (if git hooks are enabled)\n");
     console.log(
-      "🚀 Your README.md will always show real, up-to-date contributor information!"
+      "Your README.md will always show real, up-to-date contributor information!"
     );
   } else {
-    console.log("⚠️  Some tests failed. Please check the issues above.");
-    console.log("💡 You may need to run: npm run setup-git-hooks");
+    console.log("Some tests failed. Please check the issues above.");
+    console.log("You may need to run: npm run setup-git-hooks");
   }
 
   return failed === 0;

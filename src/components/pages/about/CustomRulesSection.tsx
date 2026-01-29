@@ -11,7 +11,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Code, Zap, Users, Target } from "lucide-react";
+import {
+  Code,
+  Zap,
+  Users,
+  Target,
+  ShieldCheck,
+  CheckCircle2,
+  Building2,
+  Gauge,
+} from "lucide-react";
 
 export const CustomRulesSection: React.FC = () => {
   return (
@@ -191,8 +200,9 @@ export const CustomRulesSection: React.FC = () => {
         <CardContent>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             <div>
-              <h4 className="text-foreground mb-2 font-semibold">
-                🔐 Security
+              <h4 className="text-foreground mb-2 flex items-center gap-2 font-semibold">
+                <ShieldCheck className="h-4 w-4 text-emerald-600" />
+                Security
               </h4>
               <ul className="text-muted-foreground space-y-1 text-sm">
                 <li>• Detect hardcoded secrets and credentials</li>
@@ -203,8 +213,9 @@ export const CustomRulesSection: React.FC = () => {
             </div>
 
             <div>
-              <h4 className="text-foreground mb-2 font-semibold">
-                ✨ Best Practices
+              <h4 className="text-foreground mb-2 flex items-center gap-2 font-semibold">
+                <CheckCircle2 className="h-4 w-4 text-blue-600" />
+                Best Practices
               </h4>
               <ul className="text-muted-foreground space-y-1 text-sm">
                 <li>• Enforce naming conventions</li>
@@ -215,8 +226,9 @@ export const CustomRulesSection: React.FC = () => {
             </div>
 
             <div>
-              <h4 className="text-foreground mb-2 font-semibold">
-                🏢 Compliance
+              <h4 className="text-foreground mb-2 flex items-center gap-2 font-semibold">
+                <Building2 className="h-4 w-4 text-slate-600" />
+                Compliance
               </h4>
               <ul className="text-muted-foreground space-y-1 text-sm">
                 <li>• PCI-DSS requirements</li>
@@ -227,8 +239,9 @@ export const CustomRulesSection: React.FC = () => {
             </div>
 
             <div>
-              <h4 className="text-foreground mb-2 font-semibold">
-                ⚡ Performance
+              <h4 className="text-foreground mb-2 flex items-center gap-2 font-semibold">
+                <Gauge className="h-4 w-4 text-amber-600" />
+                Performance
               </h4>
               <ul className="text-muted-foreground space-y-1 text-sm">
                 <li>• Detect inefficient algorithms</li>

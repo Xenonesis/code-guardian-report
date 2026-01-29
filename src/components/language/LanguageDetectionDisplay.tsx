@@ -28,67 +28,68 @@ interface LanguageDetectionDisplayProps {
   className?: string;
 }
 
-const getLanguageIcon = (language: string) => {
-  switch (language.toLowerCase()) {
-    case "javascript":
-    case "typescript":
-      return "🟨";
-    case "python":
-      return "🐍";
-    case "java":
-      return "☕";
-    case "php":
-      return "🐘";
-    case "ruby":
-      return "💎";
-    case "go":
-      return "🐹";
-    case "rust":
-      return "🦀";
-    case "csharp":
-      return "🔷";
-    case "cpp":
-    case "c":
-      return "⚙️";
-    default:
-      return "📄";
-  }
+const getLanguageBadge = (language: string) => {
+  const normalized = language.toLowerCase();
+  const map: Record<string, { label: string; color: string }> = {
+    javascript: { label: "JS", color: "bg-yellow-500" },
+    typescript: { label: "TS", color: "bg-blue-600" },
+    python: { label: "PY", color: "bg-blue-500" },
+    java: { label: "JAVA", color: "bg-red-600" },
+    php: { label: "PHP", color: "bg-indigo-600" },
+    ruby: { label: "RB", color: "bg-red-500" },
+    go: { label: "GO", color: "bg-cyan-600" },
+    rust: { label: "RS", color: "bg-orange-600" },
+    csharp: { label: "C#", color: "bg-purple-600" },
+    cpp: { label: "C++", color: "bg-purple-700" },
+    c: { label: "C", color: "bg-gray-600" },
+  };
+  const { label, color } = map[normalized] ?? {
+    label: "CODE",
+    color: "bg-slate-500",
+  };
+
+  return (
+    <span
+      className={`inline-flex h-7 min-w-7 items-center justify-center rounded-md px-1 text-[11px] font-semibold text-white ${color}`}
+    >
+      {label}
+    </span>
+  );
 };
 
-const getFrameworkIcon = (framework: string) => {
-  switch (framework.toLowerCase()) {
-    case "react":
-    case "next.js":
-      return "⚛️";
-    case "vue.js":
-    case "nuxt.js":
-      return "💚";
-    case "angular":
-      return "🅰️";
-    case "svelte":
-    case "sveltekit":
-      return "🧡";
-    case "django":
-      return "🎸";
-    case "flask":
-    case "fastapi":
-      return "🐍";
-    case "spring boot":
-      return "🍃";
-    case "express.js":
-    case "nestjs":
-      return "🚀";
-    case "laravel":
-      return "🎭";
-    case "react native":
-      return "📱";
-    case "flutter":
-      return "🦋";
-    case "ionic":
-      return "⚡";
-    default:
-      return "🔧";
-  }
+const getFrameworkBadge = (framework: string) => {
+  const normalized = framework.toLowerCase();
+  const map: Record<string, { label: string; color: string }> = {
+    react: { label: "React", color: "bg-cyan-600" },
+    "next.js": { label: "Next", color: "bg-slate-900" },
+    "vue.js": { label: "Vue", color: "bg-emerald-600" },
+    "nuxt.js": { label: "Nuxt", color: "bg-emerald-700" },
+    angular: { label: "Ng", color: "bg-red-600" },
+    svelte: { label: "Svelte", color: "bg-orange-600" },
+    sveltekit: { label: "Svelte", color: "bg-orange-700" },
+    django: { label: "Django", color: "bg-green-700" },
+    flask: { label: "Flask", color: "bg-slate-700" },
+    fastapi: { label: "FastAPI", color: "bg-teal-600" },
+    "spring boot": { label: "Spring", color: "bg-green-600" },
+    "express.js": { label: "Express", color: "bg-slate-600" },
+    nestjs: { label: "Nest", color: "bg-red-500" },
+    laravel: { label: "Laravel", color: "bg-red-700" },
+    "react native": { label: "RN", color: "bg-indigo-600" },
+    flutter: { label: "Flutter", color: "bg-blue-600" },
+    ionic: { label: "Ionic", color: "bg-blue-700" },
+  };
+  const { label, color } = map[normalized] ?? {
+    label: "FW",
+    color: "bg-slate-500",
+  };
+
+  return (
+    <span
+      className={`inline-flex h-6 min-w-6 items-center justify-center rounded-md px-1 text-[10px] font-semibold text-white ${color}`}
+    >
+      {label}
+    </span>
+  );
 };
 
 const getEcosystemIcon = (ecosystem: string) => {
@@ -191,9 +192,7 @@ export const LanguageDetectionDisplay: React.FC<
         <CardContent>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <span className="text-2xl">
-                {getLanguageIcon(primaryLanguage.name)}
-              </span>
+              {getLanguageBadge(primaryLanguage.name)}
               <div>
                 <h3 className="text-lg font-semibold capitalize">
                   {primaryLanguage.name}
@@ -234,9 +233,7 @@ export const LanguageDetectionDisplay: React.FC<
                   className="flex items-center justify-between rounded-lg border p-3"
                 >
                   <div className="flex items-center gap-2">
-                    <span className="text-lg">
-                      {getLanguageIcon(language.name)}
-                    </span>
+                    {getLanguageBadge(language.name)}
                     <div>
                       <span className="font-medium capitalize">
                         {language.name}
@@ -277,9 +274,7 @@ export const LanguageDetectionDisplay: React.FC<
                   className="flex items-center justify-between rounded-lg border p-3"
                 >
                   <div className="flex items-center gap-2">
-                    <span className="text-lg">
-                      {getFrameworkIcon(framework.name)}
-                    </span>
+                    {getFrameworkBadge(framework.name)}
                     <div>
                       <span className="font-medium">{framework.name}</span>
                       <div className="text-muted-foreground text-xs">

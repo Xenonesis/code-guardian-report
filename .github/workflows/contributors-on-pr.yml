@@ -50,7 +50,7 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add README.md
-          git commit -m "🎉 Update contributors after PR #${{ github.event.pull_request.number }} merge
+          git commit -m "Update contributors after PR #${{ github.event.pull_request.number }} merge
 
           - Added @${{ github.event.pull_request.user.login }} to contributors
           - Updated repository statistics
@@ -68,9 +68,9 @@ jobs:
               issue_number: context.payload.pull_request.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `🎉 **Thank you for your contribution!** 
+              body: `**Thank you for your contribution!** 
               
               Your contribution has been automatically added to our contributors section in the README.md. 
               
-              Welcome to the Code Guardian community! 🚀`
+              Welcome to the Code Guardian community!`
             })

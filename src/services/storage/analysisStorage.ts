@@ -163,9 +163,9 @@ export class AnalysisStorageService {
       // Notify listeners
       this.notifyListeners(analysisData);
 
-      logger.debug("✅ Analysis results stored successfully");
+      logger.debug("Analysis results stored successfully");
     } catch (error) {
-      logger.error("❌ Failed to store analysis results:", error);
+      logger.error("Failed to store analysis results:", error);
       const errorMessage =
         error instanceof Error ? error.message : "Unknown error";
       throw new StorageError(

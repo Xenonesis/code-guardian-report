@@ -1,7 +1,7 @@
 # Contributing to Code Guardian Report
 
 Welcome to **Code Guardian v5.9** – a next-generation AI-powered security analysis platform.
-We are excited that you want to contribute! 🚀
+We are excited that you want to contribute!
 
 This guide explains how to set up your environment, follow our workflow, and make high-quality contributions.
 

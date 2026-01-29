@@ -537,11 +537,11 @@ function doEverything(data) {
 \`\`\`
 
 Improvements:
-✅ Single Responsibility Principle
-✅ Easier to test
-✅ Better readability
-✅ Reduced complexity
-✅ Reusable components
+Single Responsibility Principle
+Easier to test
+Better readability
+Reduced complexity
+Reusable components
 
 Provide clean, maintainable code following SOLID principles and best practices.`,
   },
@@ -1151,7 +1151,7 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
               </pre>
             </div>
             <div className="rounded-lg bg-blue-50 p-4 dark:bg-blue-950">
-              <h4 className="mb-2 text-sm font-semibold">🚀 Ready to use:</h4>
+              <h4 className="mb-2 text-sm font-semibold">Ready to use:</h4>
               <ol className="list-inside list-decimal space-y-1 text-sm text-gray-600 dark:text-gray-300">
                 <li>Copy the prompt above</li>
                 <li>Open Cursor, Windsurf, or Copilot</li>
@@ -1224,7 +1224,7 @@ Provide complete, copy-paste ready code fixes that I can implement immediately i
               </pre>
             </div>
             <div className="rounded-lg bg-blue-50 p-4 dark:bg-blue-950">
-              <h4 className="mb-2 text-sm font-semibold">💡 How to use:</h4>
+              <h4 className="mb-2 text-sm font-semibold">How to use:</h4>
               <ol className="list-inside list-decimal space-y-1 text-sm text-gray-600 dark:text-gray-300">
                 <li>Copy the prompt above</li>
                 <li>Open your AI assistant (Cursor, Windsurf, Copilot)</li>

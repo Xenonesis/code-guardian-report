@@ -12,6 +12,10 @@ import {
   Brain,
   Lightbulb,
   MessageSquare,
+  AlertTriangle,
+  Info,
+  Settings,
+  Wrench,
 } from "lucide-react";
 import { SecurityIssue } from "@/hooks/useAnalysis";
 import { AIFixSuggestionsCard } from "./AIFixSuggestionsCard";
@@ -260,7 +264,7 @@ export const SecurityIssueItem: React.FC<SecurityIssueItemProps> = ({
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div className="rounded-lg border border-amber-800 bg-amber-950/20 p-3 sm:p-4">
                   <h4 className="mb-1 flex items-center gap-1 text-sm font-semibold text-amber-100 sm:mb-2 sm:gap-2 sm:text-base">
-                    <span className="text-sm text-amber-600">⚠️</span>
+                    <AlertTriangle className="h-4 w-4 text-amber-500" />
                     Risk Level
                   </h4>
                   <p className="text-xs text-amber-200 sm:text-sm">
@@ -276,7 +280,7 @@ export const SecurityIssueItem: React.FC<SecurityIssueItemProps> = ({
 
                 <div className="rounded-lg border border-green-800 bg-green-950/20 p-3 sm:p-4">
                   <h4 className="mb-1 flex items-center gap-1 text-sm font-semibold text-green-100 sm:mb-2 sm:gap-2 sm:text-base">
-                    <span className="text-sm text-green-400">🛠️</span>
+                    <Wrench className="h-4 w-4 text-green-400" />
                     What to do
                   </h4>
                   <p className="text-xs text-green-200 sm:text-sm">
@@ -318,7 +322,7 @@ export const SecurityIssueItem: React.FC<SecurityIssueItemProps> = ({
                 {/* Issue Details Section */}
                 <div className="rounded-lg border border-slate-700/50 bg-slate-800/50 p-3 sm:p-4">
                   <h4 className="mb-3 flex items-center gap-2 text-base font-semibold text-white">
-                    <span className="text-blue-400">ℹ️</span>
+                    <Info className="h-4 w-4 text-blue-400" />
                     Issue Details
                   </h4>
                   <div className="space-y-2.5 text-sm">
@@ -374,7 +378,7 @@ export const SecurityIssueItem: React.FC<SecurityIssueItemProps> = ({
                 {/* Technical Information Section */}
                 <div className="rounded-lg border border-slate-700/50 bg-slate-800/50 p-3 sm:p-4">
                   <h4 className="mb-3 flex items-center gap-2 text-base font-semibold text-white">
-                    <span className="text-purple-400">⚙️</span>
+                    <Settings className="h-4 w-4 text-purple-400" />
                     Technical Information
                   </h4>
                   <div className="space-y-2.5 text-sm">
@@ -415,8 +419,8 @@ export const SecurityIssueItem: React.FC<SecurityIssueItemProps> = ({
             <TabsContent value="remediation" className="space-y-3 sm:space-y-4">
               <div className="rounded-lg border border-slate-700/50 bg-slate-800/50 p-3 sm:p-4">
                 <h4 className="mb-3 flex items-center gap-2 text-base font-semibold text-white">
-                  <span className="text-green-400">🛠️</span> Remediation
-                  Guidance
+                  <Wrench className="h-4 w-4 text-green-400" />
+                  Remediation Guidance
                 </h4>
                 <div className="space-y-3 text-sm">
                   <p className="leading-relaxed text-slate-300">
@@ -462,7 +466,8 @@ export const SecurityIssueItem: React.FC<SecurityIssueItemProps> = ({
                     <div className="rounded-lg border border-red-800 bg-red-950/20 p-3 sm:p-4">
                       <div className="mb-3 flex items-center justify-between gap-2">
                         <h4 className="flex items-center gap-2 text-sm font-semibold text-red-400 sm:text-base">
-                          <span className="text-lg">⚠️</span> Vulnerable Code
+                          <AlertTriangle className="h-4 w-4" />
+                          Vulnerable Code
                         </h4>
                         <Button
                           size="sm"
@@ -499,7 +504,8 @@ export const SecurityIssueItem: React.FC<SecurityIssueItemProps> = ({
                     <div className="rounded-lg border border-green-800 bg-green-950/20 p-3 sm:p-4">
                       <div className="mb-3 flex items-center justify-between gap-2">
                         <h4 className="flex items-center gap-2 text-sm font-semibold text-green-400 sm:text-base">
-                          <span className="text-lg">✅</span> Fixed Code
+                          <CheckCircle className="h-4 w-4 text-green-400" />
+                          Fixed Code
                         </h4>
                         <Button
                           size="sm"

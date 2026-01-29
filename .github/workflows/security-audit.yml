@@ -56,7 +56,7 @@ jobs:
           if [ -s audit-report.json ]; then
             VULN_COUNT=$(cat audit-report.json | jq '.metadata.vulnerabilities.total // 0')
             if [ "$VULN_COUNT" -gt 0 ]; then
-              echo "⚠️ Found $VULN_COUNT vulnerabilities" >> $GITHUB_STEP_SUMMARY
+              echo "Found $VULN_COUNT vulnerabilities" >> $GITHUB_STEP_SUMMARY
               echo "" >> $GITHUB_STEP_SUMMARY
               echo "| Severity | Count |" >> $GITHUB_STEP_SUMMARY
               echo "|----------|-------|" >> $GITHUB_STEP_SUMMARY
@@ -65,10 +65,10 @@ jobs:
               echo "| Moderate | $(cat audit-report.json | jq '.metadata.vulnerabilities.moderate // 0') |" >> $GITHUB_STEP_SUMMARY
               echo "| Low | $(cat audit-report.json | jq '.metadata.vulnerabilities.low // 0') |" >> $GITHUB_STEP_SUMMARY
             else
-              echo "✅ No vulnerabilities found!" >> $GITHUB_STEP_SUMMARY
+              echo "No vulnerabilities found!" >> $GITHUB_STEP_SUMMARY
             fi
           else
-            echo "✅ No vulnerabilities found!" >> $GITHUB_STEP_SUMMARY
+            echo "No vulnerabilities found!" >> $GITHUB_STEP_SUMMARY
           fi
 
   audit-functions:
@@ -101,10 +101,10 @@ jobs:
           if [ -s audit-report.json ]; then
             VULN_COUNT=$(cat audit-report.json | jq '.metadata.vulnerabilities.total // 0')
             if [ "$VULN_COUNT" -gt 0 ]; then
-              echo "⚠️ Found $VULN_COUNT vulnerabilities in functions" >> $GITHUB_STEP_SUMMARY
+              echo "Found $VULN_COUNT vulnerabilities in functions" >> $GITHUB_STEP_SUMMARY
             else
-              echo "✅ No vulnerabilities found in functions!" >> $GITHUB_STEP_SUMMARY
+              echo "No vulnerabilities found in functions!" >> $GITHUB_STEP_SUMMARY
             fi
           else
-            echo "✅ No vulnerabilities found in functions!" >> $GITHUB_STEP_SUMMARY
+            echo "No vulnerabilities found in functions!" >> $GITHUB_STEP_SUMMARY
           fi

@@ -42,15 +42,18 @@
     "deploy:preview": "vercel"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
+    "*.{js,jsx,ts,tsx,cjs,mjs}": [
+      "node scripts/no-emoji-check.cjs",
       "eslint --fix",
       "prettier --write"
     ],
     "*.{css,scss}": [
+      "node scripts/no-emoji-check.cjs",
       "stylelint --fix",
       "prettier --write"
     ],
-    "*.{json,md}": [
+    "*.{json,md,yml,yaml,sh,html,xml}": [
+      "node scripts/no-emoji-check.cjs",
       "prettier --write"
     ]
   },

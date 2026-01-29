@@ -10,7 +10,7 @@
 <!-- Typing Animation Effect -->
 <p align="center">
   <a href="https://git.io/typing-svg">
-    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=22&duration=3000&pause=1000&color=6366F1&center=true&vCenter=true&multiline=true&repeat=true&width=800&height=100&lines=🚀+Production-Ready+Code+Security+Analysis;🤖+Multi-Model+AI+Integration+(OpenAI%2C+Claude%2C+Gemini);🔍+8%2B+Languages+•+100%2B+Vulnerabilities+•+OWASP+%26+CWE+Compliant;⚡+Real-Time+Insights+•+Enterprise+Scale+•+Zero+False+Positives" alt="Typing SVG">
+    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=22&duration=3000&pause=1000&color=6366F1&center=true&vCenter=true&multiline=true&repeat=true&width=800&height=100&lines=Production-Ready+Code+Security+Analysis;Multi-Model+AI+Integration+(OpenAI%2C+Claude%2C+Gemini);8%2B+Languages+•+100%2B+Vulnerabilities+•+OWASP+%26+CWE+Compliant;Real-Time+Insights+•+Enterprise+Scale+•+Zero+False+Positives" alt="Typing SVG">
   </a>
 </p>
 
@@ -32,7 +32,7 @@
 **Current Version: 11.0.0** | **Developed by** [Aditya Kumar Tiwari](https://github.com/adityakumar-in)
 
 <p align="center">
-  <em>🌟 Trusted by developers worldwide for production-grade security analysis</em>
+  <em>Trusted by developers worldwide for production-grade security analysis</em>
 </p>
 
 <!-- Main Screenshot with Hover Effect -->
@@ -44,10 +44,9 @@
 
 <br>
 
-<!-- Animated Separator -->
-<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
+<hr />
 
-## 🛠️ Technology Stack & Core Dependencies
+## Technology Stack & Core Dependencies
 
 <!-- Tech Stack with Animated Icons -->
 <div align="center">
@@ -146,39 +145,39 @@
 <!-- Platform Features Grid -->
 <div align="center">
 
-## 🎯 Platform Capabilities
+## Platform Capabilities
 
 <table>
 <tr>
 <td align="center" width="33%">
-  <img src="https://img.shields.io/badge/🌐_Languages-8+-00C851?style=for-the-badge&labelColor=1e293b" alt="Languages"/>
+  <img src="https://img.shields.io/badge/Languages-8+-00C851?style=for-the-badge&labelColor=1e293b" alt="Languages"/>
   <br><b>Multi-Language Support</b>
   <br><sub>JS • TS • Python • Java • C++ • Go • Rust • PHP • C#</sub>
 </td>
 <td align="center" width="33%">
-  <img src="https://img.shields.io/badge/🔐_Vulnerabilities-100+-FF4444?style=for-the-badge&labelColor=1e293b" alt="Vulnerabilities"/>
+  <img src="https://img.shields.io/badge/Vulnerabilities-100+-FF4444?style=for-the-badge&labelColor=1e293b" alt="Vulnerabilities"/>
   <br><b>Security Detection</b>
   <br><sub>OWASP Top 10 • CWE Mapping • Secret Detection</sub>
 </td>
 <td align="center" width="33%">
-  <img src="https://img.shields.io/badge/📊_Code_Lines-57K+-33B5E5?style=for-the-badge&labelColor=1e293b" alt="Code Lines"/>
+  <img src="https://img.shields.io/badge/Code_Lines-57K+-33B5E5?style=for-the-badge&labelColor=1e293b" alt="Code Lines"/>
   <br><b>Enterprise Scale</b>
   <br><sub>257 Files • 153 Components • Full Type Safety</sub>
 </td>
 </tr>
 <tr>
 <td align="center" width="33%">
-  <img src="https://img.shields.io/badge/🤖_AI_Models-3+-9C27B0?style=for-the-badge&labelColor=1e293b" alt="AI Models"/>
+  <img src="https://img.shields.io/badge/AI_Models-3+-9C27B0?style=for-the-badge&labelColor=1e293b" alt="AI Models"/>
   <br><b>AI Integration</b>
   <br><sub>OpenAI • Claude • Gemini • Auto-Fix Suggestions</sub>
 </td>
 <td align="center" width="33%">
-  <img src="https://img.shields.io/badge/📱_PWA-Enabled-5A0FC8?style=for-the-badge&labelColor=1e293b" alt="PWA"/>
+  <img src="https://img.shields.io/badge/PWA-Enabled-5A0FC8?style=for-the-badge&labelColor=1e293b" alt="PWA"/>
   <br><b>Progressive Web App</b>
   <br><sub>Offline Mode • Push Notifications • Install Prompt</sub>
 </td>
 <td align="center" width="33%">
-  <img src="https://img.shields.io/badge/⚡_Performance-95%2F100-FFB300?style=for-the-badge&labelColor=1e293b" alt="Performance"/>
+  <img src="https://img.shields.io/badge/Performance-95%2F100-FFB300?style=for-the-badge&labelColor=1e293b" alt="Performance"/>
   <br><b>Optimized Performance</b>
   <br><sub>20.93s Build • Code Splitting • 3MB Bundle</sub>
 </td>
@@ -187,42 +186,39 @@
 
 </div>
 
-<!-- Animated Separator -->
-<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
+<hr />
 
 <!-- Quick Action Buttons with Glow Effect -->
 <div align="center">
-  <h2>🎯 Transform Your Development Workflow Today</h2>
+  <h2>Transform Your Development Workflow Today</h2>
   <p><em>"Security is not a product, but a process" - Bruce Schneier</em></p>
   
   <br>
   
   <a href="https://code-guardian-report.vercel.app" target="_blank">
-    <img src="https://img.shields.io/badge/🚀_Launch_Live_Demo-4F46E5?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="Live Demo" height="50"/>
+    <img src="https://img.shields.io/badge/Launch_Live_Demo-4F46E5?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="Live Demo" height="50"/>
   </a>
   &nbsp;&nbsp;
   <a href="#-quick-start-guide">
-    <img src="https://img.shields.io/badge/⚡_Quick_Start_Guide-10B981?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="Quick Start" height="50"/>
+    <img src="https://img.shields.io/badge/Quick_Start_Guide-10B981?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="Quick Start" height="50"/>
   </a>
   &nbsp;&nbsp;
   <a href="#-screenshots--demo">
-    <img src="https://img.shields.io/badge/📸_View_Screenshots-F59E0B?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="Screenshots" height="50"/>
+    <img src="https://img.shields.io/badge/View_Screenshots-F59E0B?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="Screenshots" height="50"/>
   </a>
   &nbsp;&nbsp;
   <a href="#-whats-new-in-v900">
-    <img src="https://img.shields.io/badge/✨_What's_New-FF6B6B?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="What's New" height="50"/>
+    <img src="https://img.shields.io/badge/Whats_New-FF6B6B?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="What's New" height="50"/>
   </a>
 </div>
 
 </div>
 
-<!-- Animated Separator -->
-<br>
-<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
+<hr />
 
 ---
 
-## 📊 Platform Statistics & Performance
+## Platform Statistics & Performance
 
 <div align="center">
 
@@ -231,34 +227,34 @@
 ```mermaid
 %%{init: {'theme':'dark', 'themeVariables': { 'primaryColor':'#6366f1','primaryTextColor':'#fff','primaryBorderColor':'#4f46e5','lineColor':'#8b5cf6','secondaryColor':'#ec4899','tertiaryColor':'#10b981'}}}%%
 graph TB
-    Start([📁 Code Upload]) -->|ZIP/GitHub/Direct| Analysis[🔍 Analysis Engine]
+    Start([Code Upload]) -->|ZIP/GitHub/Direct| Analysis[Analysis Engine]
 
-    Analysis --> Pattern[🎯 Pattern Detection]
-    Analysis --> AST[🌳 AST Analysis]
-    Analysis --> DataFlow[🔄 Data Flow Analysis]
-    Analysis --> Secret[🔐 Secret Detection]
+    Analysis --> Pattern[Pattern Detection]
+    Analysis --> AST[AST Analysis]
+    Analysis --> DataFlow[Data Flow Analysis]
+    Analysis --> Secret[Secret Detection]
 
-    Pattern --> OWASP[🛡️ OWASP/CWE Mapping]
+    Pattern --> OWASP[OWASP/CWE Mapping]
     AST --> OWASP
     DataFlow --> OWASP
     Secret --> OWASP
 
-    OWASP --> AI[🤖 AI Enhancement]
+    OWASP --> AI[AI Enhancement]
     AI --> GPT[OpenAI GPT-4]
     AI --> Claude[Anthropic Claude]
     AI --> Gemini[Google Gemini]
 
-    GPT --> Results[✨ Smart Results]
+    GPT --> Results[Smart Results]
     Claude --> Results
     Gemini --> Results
 
-    Results --> Report[📊 Reports & Insights]
-    Results --> Fixes[🔧 Auto-Fix Suggestions]
-    Results --> Export[📤 Export Options]
+    Results --> Report[Reports & Insights]
+    Results --> Fixes[Auto-Fix Suggestions]
+    Results --> Export[Export Options]
 
-    Report --> Dashboard[📈 Dashboard]
-    Fixes --> Preview[👁️ Preview & Apply]
-    Export --> PDF[📄 PDF/JSON/SARIF]
+    Report --> Dashboard[Dashboard]
+    Fixes --> Preview[Preview & Apply]
+    Export --> PDF[PDF/JSON/SARIF]
 
     style Start fill:#6366f1,stroke:#4f46e5,stroke-width:3px,color:#fff
     style Analysis fill:#8b5cf6,stroke:#7c3aed,stroke-width:3px,color:#fff
@@ -268,39 +264,39 @@ graph TB
     style Dashboard fill:#3b82f6,stroke:#2563eb,stroke-width:3px,color:#fff
 ```
 
-### 🎯 Real-Time Performance Metrics
+### Real-Time Performance Metrics
 
 <table>
 <tr>
 <td align="center" width="20%">
-  <img src="https://img.shields.io/badge/⏱️-20.93s-success?style=for-the-badge&labelColor=1e293b" alt="Build Time"/>
+  <img src="https://img.shields.io/badge/Build_Time-20.93s-success?style=for-the-badge&labelColor=1e293b" alt="Build Time"/>
   <br><b>Build Time</b>
-  <br><sub>✅ Optimized</sub>
+  <br><sub>Optimized</sub>
 </td>
 <td align="center" width="20%">
-  <img src="https://img.shields.io/badge/📊-85%25-success?style=for-the-badge&labelColor=1e293b" alt="Coverage"/>
+  <img src="https://img.shields.io/badge/Coverage-85%25-success?style=for-the-badge&labelColor=1e293b" alt="Coverage"/>
   <br><b>Code Coverage</b>
-  <br><sub>✅ High Quality</sub>
+  <br><sub>High Quality</sub>
 </td>
 <td align="center" width="20%">
-  <img src="https://img.shields.io/badge/🔐-100+-critical?style=for-the-badge&labelColor=1e293b" alt="Rules"/>
+  <img src="https://img.shields.io/badge/Rules-100+-critical?style=for-the-badge&labelColor=1e293b" alt="Rules"/>
   <br><b>Security Rules</b>
-  <br><sub>✅ Production Ready</sub>
+  <br><sub>Production Ready</sub>
 </td>
 <td align="center" width="20%">
-  <img src="https://img.shields.io/badge/🌐-8+-blue?style=for-the-badge&labelColor=1e293b" alt="Languages"/>
+  <img src="https://img.shields.io/badge/Languages-8+-blue?style=for-the-badge&labelColor=1e293b" alt="Languages"/>
   <br><b>Languages</b>
-  <br><sub>✅ Multi-language</sub>
+  <br><sub>Multi-language</sub>
 </td>
 <td align="center" width="20%">
-  <img src="https://img.shields.io/badge/⚡-95%2F100-yellow?style=for-the-badge&labelColor=1e293b" alt="Performance"/>
+  <img src="https://img.shields.io/badge/Performance-95%2F100-yellow?style=for-the-badge&labelColor=1e293b" alt="Performance"/>
   <br><b>Performance</b>
-  <br><sub>✅ Fast</sub>
+  <br><sub>Fast</sub>
 </td>
 </tr>
 </table>
 
-### 📈 Detailed Statistics
+### Detailed Statistics
 
 <table>
 <tr>
@@ -310,52 +306,52 @@ graph TB
 <th>Status</th>
 </tr>
 <tr>
-<td rowspan="3"><b>🔍 Detection</b></td>
+<td rowspan="3"><b>Detection</b></td>
 <td>Security Patterns</td>
 <td>17+ per language</td>
-<td>✅ Comprehensive</td>
+<td>Comprehensive</td>
 </tr>
 <tr>
 <td>Secret Detection Types</td>
 <td>9 patterns</td>
-<td>✅ Enterprise-grade</td>
+<td>Enterprise-grade</td>
 </tr>
 <tr>
 <td>Vulnerability Database</td>
 <td>100+ CVE mappings</td>
-<td>✅ Updated</td>
+<td>Updated</td>
 </tr>
 <tr>
-<td rowspan="3"><b>💻 Code Quality</b></td>
+<td rowspan="3"><b>Code Quality</b></td>
 <td>TypeScript Files</td>
 <td>257 files</td>
-<td>✅ Type-safe</td>
+<td>Type-safe</td>
 </tr>
 <tr>
 <td>Lines of Code</td>
 <td>57,397 lines</td>
-<td>✅ Well-structured</td>
+<td>Well-structured</td>
 </tr>
 <tr>
 <td>React Components</td>
 <td>153 components</td>
-<td>✅ Modular</td>
+<td>Modular</td>
 </tr>
 <tr>
-<td rowspan="3"><b>⚙️ Performance</b></td>
+<td rowspan="3"><b>Performance</b></td>
 <td>Bundle Size</td>
 <td>~3MB (gzipped)</td>
-<td>✅ Code splitting</td>
+<td>Code splitting</td>
 </tr>
 <tr>
 <td>Load Time</td>
 <td>&lt;2s (avg)</td>
-<td>✅ Fast</td>
+<td>Fast</td>
 </tr>
 <tr>
 <td>Lighthouse Score</td>
 <td>95/100</td>
-<td>✅ Optimized</td>
+<td>Optimized</td>
 </tr>
 </table>
 
@@ -366,17 +362,16 @@ graph TB
 
 </div>
 
-<!-- Animated Separator -->
-<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
+<hr />
 
 ---
 
-## 🌟 What's New in v11.0.0
+## What's New in v11.0.0
 
 <div align="center">
   
 <!-- Animated Release Badge -->
-<img src="https://img.shields.io/badge/🎉_Major_Release-Production_Ready-00C851?style=for-the-badge&logoColor=white&labelColor=1e293b&logo=rocket" alt="Major Release"/>
+<img src="https://img.shields.io/badge/Major_Release-Production_Ready-00C851?style=for-the-badge&logoColor=white&labelColor=1e293b&logo=rocket" alt="Major Release"/>
 <img src="https://img.shields.io/badge/Release_Date-January_2026-blue?style=for-the-badge&labelColor=1e293b&logo=calendar" alt="Release Date"/>
 
 </div>
@@ -386,27 +381,27 @@ graph TB
 <tr>
 <td width="50%" valign="top">
 
-### 🚀 Production Readiness Enhancements
+### Production Readiness Enhancements
 
-<img src="https://user-images.githubusercontent.com/74038190/212257454-16e3712e-945a-4ca2-b238-408ad0bf87e6.gif" width="25" height="25"/> **Production-Safe Logging**
+<img src="./public/icons/shield-check.svg" width="18" height="18" alt="Logging"/> **Production-Safe Logging**
 
 - Replaced 373 console statements with enterprise logger service
 - Structured logging with severity levels
 - Production-ready error handling
 
-<img src="https://user-images.githubusercontent.com/74038190/212257472-08e52665-c503-4bd9-aa20-f5a4dae769b5.gif" width="25" height="25"/> **Zero Debug Statements**
+<img src="./public/icons/bug.svg" width="18" height="18" alt="Debug"/> **Zero Debug Statements**
 
 - Complete production code quality verification
 - No development artifacts in production build
 - Clean, professional codebase
 
-<img src="https://user-images.githubusercontent.com/74038190/212257465-7ce8d493-cac5-494e-982a-5a9deb852c4b.gif" width="25" height="25"/> **Build Optimization**
+<img src="./public/icons/activity.svg" width="18" height="18" alt="Build"/> **Build Optimization**
 
 - 20.93s build time with zero errors
 - Tree-shaking and code splitting
 - Optimized bundle size (~3MB)
 
-<img src="https://user-images.githubusercontent.com/74038190/212257460-738ff738-247f-4445-a718-cdd0ca76e2db.gif" width="25" height="25"/> **Comprehensive Testing**
+<img src="./public/icons/shield-check.svg" width="18" height="18" alt="Testing"/> **Comprehensive Testing**
 
 - All 100+ functionalities verified as working
 - Real implementation (no mocks)
@@ -415,27 +410,27 @@ graph TB
 </td>
 <td width="50%" valign="top">
 
-### 🤖 AI-Powered Features
+### AI-Powered Features
 
-<img src="https://user-images.githubusercontent.com/74038190/212257467-871d32b7-e401-42e8-a166-fcfd7baa4c6b.gif" width="25" height="25"/> **Multi-Model Orchestration**
+<img src="./public/icons/brain.svg" width="18" height="18" alt="Models"/> **Multi-Model Orchestration**
 
 - OpenAI GPT-4, Anthropic Claude, Google Gemini
 - Automatic provider failover
 - Load balancing across models
 
-<img src="https://user-images.githubusercontent.com/74038190/212257468-1e9a91f1-b626-4baa-b15d-5c385dfa7ed2.gif" width="25" height="25"/> **AI Patch Preview**
+<img src="./public/icons/search.svg" width="18" height="18" alt="Patch"/> **AI Patch Preview**
 
 - Unified diff visualization
 - Risk scoring for changes
 - One-click apply functionality
 
-<img src="https://user-images.githubusercontent.com/74038190/212257463-4d082cb4-7483-4eaf-bc25-6dde2628aabd.gif" width="25" height="25"/> **Context-Aware Analysis**
+<img src="./public/icons/brain.svg" width="18" height="18" alt="Context"/> **Context-Aware Analysis**
 
 - In-context learning for repo-aware suggestions
 - Embeddings cache for performance
 - Smart pattern recognition
 
-<img src="https://user-images.githubusercontent.com/74038190/212257465-7ce8d493-cac5-494e-982a-5a9deb852c4b.gif" width="25" height="25"/> **SARIF Integration**
+<img src="./public/icons/layout-dashboard.svg" width="18" height="18" alt="SARIF"/> **SARIF Integration**
 
 - Standard output format
 - CI/CD pipeline integration
@@ -447,32 +442,32 @@ graph TB
 
 <!-- Additional Features Section -->
 <details>
-<summary><b>🎨 Click to see more new features in v11.0.0</b></summary>
+<summary><b>Click to see more new features in v11.0.0</b></summary>
 
 <br>
 
-### 🔐 Enhanced Security Features
+### Enhanced Security Features
 
 - **Secret Detection**: 9 pattern types including API keys, tokens, certificates
 - **Dependency Scanning**: CVE database with 100+ vulnerability mappings
 - **Code Provenance**: Track code origins and licensing
 - **Zero-Day Protection**: Real-time vulnerability database updates
 
-### 📊 Advanced Analytics
+### Advanced Analytics
 
 - **GitHub Repository Analytics**: Commit history, contributor insights
 - **Vulnerability Trends**: Time-series analysis of security issues
 - **Quality Metrics**: Code complexity, maintainability index
 - **Performance Monitoring**: Real-time dashboard with Vercel Analytics
 
-### 🎯 Developer Experience
+### Developer Experience
 
 - **PWA Support**: Install as desktop/mobile app
 - **Offline Mode**: Full functionality without internet
 - **Dark Mode**: System-aware theme switching
 - **Keyboard Shortcuts**: Power user productivity features
 
-### 🌐 Multi-Language Support
+### Multi-Language Support
 
 - **8+ Languages**: JavaScript, TypeScript, Python, Java, C++, Go, Rust, PHP, C#
 - **17+ Patterns per Language**: Language-specific security checks
@@ -484,55 +479,55 @@ graph TB
 <table>
 <tr>
 <td width="50%" align="center">
-  <img src="https://img.icons8.com/fluency/96/artificial-intelligence.png" alt="AI Fix" width="64"/>
-  <h4>🔧 AI Fix Suggestions</h4>
+  <img src="./public/icons/brain.svg" alt="AI Fix" width="48" height="48"/>
+  <h4>AI Fix Suggestions</h4>
  <p><strong>Intelligent code remediation powered by GPT-4 & Claude</strong></p>
   <ul align="left">
-    <li>✨ Context-aware security fixes</li>
-    <li>🎯 Automated vulnerability patching</li>
-    <li>📝 Natural language explanations</li>
-    <li>⚡ Real-time code improvements</li>
+    <li>Context-aware security fixes</li>
+    <li>Automated vulnerability patching</li>
+    <li>Natural language explanations</li>
+    <li>Real-time code improvements</li>
   </ul>
 </td>
 <td width="50%" align="center">
-  <img src="https://img.icons8.com/fluency/96/search.png" alt="Secure Search" width="64"/>
-  <h4>🔍 Secure Code Search</h4>
+  <img src="./public/icons/search.svg" alt="Secure Search" width="48" height="48"/>
+  <h4>Secure Code Search</h4>
   <p><strong>Advanced pattern detection & vulnerability discovery</strong></p>
   <ul align="left">
-    <li>🔎 Intelligent code pattern analysis</li>
-    <li>🛡️ Security vulnerability scanning</li>
-    <li>📊 Risk assessment algorithms</li>
-    <li>🎨 Interactive search interface</li>
+    <li>Intelligent code pattern analysis</li>
+    <li>Security vulnerability scanning</li>
+    <li>Risk assessment algorithms</li>
+    <li>Interactive search interface</li>
  </ul>
 </td>
 </tr>
 <tr>
 <td width="50%" align="center">
-  <img src="https://img.icons8.com/fluency/96/blockchain-technology.png" alt="Provenance" width="64"/>
-  <h4>🔗 Code Provenance Tracking</h4>
+  <img src="./public/icons/fingerprint.svg" alt="Provenance" width="48" height="48"/>
+  <h4>Code Provenance Tracking</h4>
  <p><strong>Comprehensive code integrity & origin monitoring</strong></p>
   <ul align="left">
-    <li>📋 File integrity verification</li>
-    <li>🕒 Change history tracking</li>
-    <li>🔐 Digital signature validation</li>
-    <li>📈 Compliance reporting</li>
+    <li>File integrity verification</li>
+    <li>Change history tracking</li>
+    <li>Digital signature validation</li>
+    <li>Compliance reporting</li>
   </ul>
 </td>
 <td width="50%" align="center">
-  <img src="https://img.icons8.com/fluency/96/spy.png" alt="Secret Detection" width="64"/>
-  <h4>🕵️ Advanced Secret Detection</h4>
+  <img src="./public/icons/shield-check.svg" alt="Secret Detection" width="48" height="48"/>
+  <h4>Advanced Secret Detection</h4>
   <p><strong>Enterprise-grade credential & secret scanning</strong></p>
   <ul align="left">
-    <li>🔑 API key detection</li>
-    <li>🗝️ Password & token scanning</li>
-    <li>🚨 Real-time alerts</li>
-    <li>📊 Security metrics dashboard</li>
+    <li>API key detection</li>
+    <li>Password & token scanning</li>
+    <li>Real-time alerts</li>
+    <li>Security metrics dashboard</li>
   </ul>
 </td>
 </tr>
 </table>
 
-### 🎨 Enhanced User Experience
+### Enhanced User Experience
 
 - Redesigned navigation with keyboard-first flows and progressive disclosure
 - New compact density mode (+ grid density persistence)
@@ -543,17 +538,17 @@ graph TB
 <tr>
 <td width="3%" align="center">
   <img src="https://img.icons8.com/fluency/96/animation.png" alt="Animations" width="64"/>
-  <h4>✨ Smooth Animations</h4>
+  <h4>Smooth Animations</h4>
   <p>Framer Motion powered interactions with Lenis smooth scrolling</p>
 </td>
 <td width="33%" align="center">
-  <img src="https://img.icons8.com/fluency/96/dashboard.png" alt="Dashboard" width="64"/>
-  <h4>📊 Modern Dashboard</h4>
+  <img src="./public/icons/layout-dashboard.svg" alt="Dashboard" width="48" height="48"/>
+  <h4>Modern Dashboard</h4>
   <p>Real-time analytics with interactive charts and metrics</p>
 </td>
 <td width="33%" align="center">
-  <img src="https://img.icons8.com/fluency/96/chatbot.png" alt="ChatBot" width="64"/>
-  <h4>🤖 Floating ChatBot</h4>
+  <img src="./public/icons/bot.svg" alt="ChatBot" width="48" height="48"/>
+  <h4>Floating ChatBot</h4>
   <p>AI-powered assistance with contextual help</p>
 </td>
 </tr>
@@ -561,14 +556,14 @@ graph TB
 
 ---
 
-## 🎯 **Core Platform Capabilities**
+## **Core Platform Capabilities**
 
 - CI/CD Integrations: GitHub Actions, GitLab CI, Jenkins, with status checks and artifact uploads
 - SCM Integrations: GitHub App flow, PAT fallback, rate-limit aware fetches
 - Policy Engine: Organization-level rules, branch protection validations, enforcement modes (warn/block)
 
 <div align="center">
-  <img src="https://img.shields.io/badge/🔥%20Enterprise%20Grade-Production%20Ready%20Platform-4F46E5?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="Enterprise Grade"/>
+  <img src="https://img.shields.io/badge/Enterprise%20Grade-Production%20Ready%20Platform-4F46E5?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="Enterprise Grade"/>
 </div>
 
 <table>
@@ -576,42 +571,42 @@ graph TB
 <td width="33%" align="center">
   <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; border-radius: 15px; margin: 10px;">
     <img src="./public/cc.png" alt="Security" width="64" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));"/>
-    <h4 style="color: white; margin: 15px 0 10px 0;">🛡️ Enterprise Security</h4>
+    <h4 style="color: white; margin: 15px 0 10px 0;">Enterprise Security</h4>
     <p style="color: rgba(255,255,255,0.9); font-size: 14px; line-height: 1.5;">
       <strong>OWASP Top 10 Compliance</strong><br/>
       Advanced vulnerability detection with CVE database integration and real-time threat intelligence
     </p>
     <div style="margin-top: 10px;">
-      <span style="background: rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: white;">🔍 Deep Scanning</span>
-      <span style="background: rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: white; margin-left: 5px;">⚡ Real-time</span>
+      <span style="background: rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: white;">Deep Scanning</span>
+      <span style="background: rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: white; margin-left: 5px;">Real-time</span>
     </div>
   </div>
 </td>
 <td width="33%" align="center">
   <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 20px; border-radius: 15px; margin: 10px;">
     <img src="https://img.icons8.com/fluency/96/artificial-intelligence.png" alt="AI" width="64" style="filter: drop-shadow(0 4px 8px rgba(0,0,0.3));"/>
-    <h4 style="color: white; margin: 15px 0 10px 0;">🤖 AI-Powered Intelligence</h4>
+    <h4 style="color: white; margin: 15px 0 10px 0;">AI-Powered Intelligence</h4>
     <p style="color: rgba(255,255,0.9); font-size: 14px; line-height: 1.5;">
       <strong>GPT-4, Claude & Gemini Integration</strong><br/>
       Context-aware analysis with natural language explanations and automated fix suggestions
     </p>
     <div style="margin-top: 10px;">
-      <span style="background: rgba(255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: white;">🧠 Smart Analysis</span>
-      <span style="background: rgba(25,255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: white; margin-left: 5px;">🔧 Auto-Fix</span>
+      <span style="background: rgba(255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: white;">Smart Analysis</span>
+      <span style="background: rgba(25,255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: white; margin-left: 5px;">Auto-Fix</span>
     </div>
   </div>
 </td>
 <td width="33%" align="center">
   <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 20px; border-radius: 15px; margin: 10px;">
     <img src="https://img.icons8.com/fluency/96/analytics.png" alt="Analytics" width="64" style="filter: drop-shadow(0 4px 8px rgba(0,0,0.3));"/>
-    <h4 style="color: white; margin: 15px 0 10px 0;">📊 Advanced Analytics</h4>
+    <h4 style="color: white; margin: 15px 0 10px 0;">Advanced Analytics</h4>
     <p style="color: rgba(255,255,255,0.9); font-size: 14px; line-height: 1.5;">
       <strong>Interactive Dashboards & Metrics</strong><br/>
       Real-time charts, trend analysis, and comprehensive reporting with export capabilities
     </p>
     <div style="margin-top: 10px;">
-      <span style="background: rgba(255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: white;">📈 Live Charts</span>
-      <span style="background: rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: white; margin-left: 5px;">📊 Metrics</span>
+      <span style="background: rgba(255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: white;">Live Charts</span>
+      <span style="background: rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: white; margin-left: 5px;">Metrics</span>
     </div>
   </div>
 </td>
@@ -620,49 +615,49 @@ graph TB
 <td width="33%" align="center">
   <div style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); padding: 20px; border-radius: 15px; margin: 10px;">
     <img src="https://img.icons8.com/fluency/96/code.png" alt="Quality" width="64" style="filter: drop-shadow(0 4px 8px rgba(0,0,0.3));"/>
-    <h4 style="color: white; margin: 15px 0 10px 0;">📈 Quality Excellence</h4>
+    <h4 style="color: white; margin: 15px 0 10px 0;">Quality Excellence</h4>
     <p style="color: rgba(255,255,255,0.9); font-size: 14px; line-height: 1.5;">
       <strong>Comprehensive Quality Scoring</strong><br/>
       Maintainability metrics, complexity analysis, and code health monitoring
     </p>
     <div style="margin-top: 10px;">
-      <span style="background: rgba(25,255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: white;">⭐ Quality Score</span>
-      <span style="background: rgba(25,255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: white; margin-left: 5px;">🔄 Continuous</span>
+      <span style="background: rgba(25,255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: white;">Quality Score</span>
+      <span style="background: rgba(25,255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: white; margin-left: 5px;">Continuous</span>
     </div>
   </div>
 </td>
 <td width="33%" align="center">
   <div style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); padding: 20px; border-radius: 15px; margin: 10px;">
     <img src="https://img.icons8.com/fluency/96/export.png" alt="Export" width="64" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));"/>
-    <h4 style="color: #333; margin: 15px 0 10px 0;">📤 Multi-Format Export</h4>
+    <h4 style="color: #333; margin: 15px 0 10px 0;">Multi-Format Export</h4>
     <p style="color: #555; font-size: 14px; line-height: 1.5;">
       <strong>Flexible Data Export Options</strong><br/>
       JSON, CSV, PDF, HTML, XML formats with customizable templates and branding
     </p>
     <div style="margin-top: 10px;">
-      <span style="background: rgba(0,0,0,0.1); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: #333;">📄 5 Formats</span>
-      <span style="background: rgba(0,0,0.1); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: #333; margin-left: 5px;">🎨 Custom</span>
+      <span style="background: rgba(0,0,0,0.1); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: #333;">5 Formats</span>
+      <span style="background: rgba(0,0,0.1); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: #333; margin-left: 5px;">Custom</span>
     </div>
   </div>
 </td>
 <td width="33%" align="center">
   <div style="background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%); padding: 20px; border-radius: 15px; margin: 10px;">
     <img src="https://img.icons8.com/fluency/96/speed.png" alt="Performance" width="64" style="filter: drop-shadow(0 4px 8px rgba(0,0,0.3));"/>
-    <h4 style="color: #333; margin: 15px 0 10px 0;">⚡ Lightning Performance</h4>
+    <h4 style="color: #333; margin: 15px 0 10px 0;">Lightning Performance</h4>
     <p style="color: #55; font-size: 14px; line-height: 1.5;">
       <strong>Optimized for Speed & Scale</strong><br/>
       Sub-second loading times with advanced caching and performance monitoring
     </p>
     <div style="margin-top: 10px;">
-      <span style="background: rgba(0,0,0,0.1); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: #333;">🚀 < 1s Load</span>
-      <span style="background: rgba(0,0,0,0.1); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: #33; margin-left: 5px;">📊 Monitoring</span>
+      <span style="background: rgba(0,0,0,0.1); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: #333;">< 1s Load</span>
+      <span style="background: rgba(0,0,0,0.1); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: #33; margin-left: 5px;">Monitoring</span>
     </div>
   </div>
 </td>
 </tr>
 </table>
 
-### 🚀 Platform Capabilities & Performance
+### Platform Capabilities & Performance
 
 <div align="center">
 
@@ -675,7 +670,7 @@ pie title Security Detection Categories
     "Configuration Issues" : 10
 ```
 
-### 📊 Technical Specifications
+### Technical Specifications
 
 | Category        | Metric            | Value                                                               |
 | --------------- | ----------------- | ------------------------------------------------------------------- |
@@ -705,7 +700,7 @@ pie title Security Detection Categories
 
 ---
 
-## 🏗️ Architecture Overview
+## Architecture Overview
 
 <div align="center">
 
@@ -759,7 +754,7 @@ graph TB
     style T fill:#ffca28
 ```
 
-### 🔄 Analysis Workflow
+### Analysis Workflow
 
 ```mermaid
 sequenceDiagram
@@ -791,42 +786,42 @@ sequenceDiagram
 
 ---
 
-## 📖 Table of Contents
+## Table of Contents
 
-- [✨ Key Features](#-key-features)
-- [🏗️ Architecture Overview](#%EF%B8%8F-architecture-overview)
-- [🚀 Technology Stack](#-technology-stack)
-- [🛠️ Quick Start Guide](#%EF%B8%8F-quick-start-guide)
-  - [📋 Prerequisites](#-prerequisites)
-  - [⚡ Installation](#-installation)
-  - [📜 Available Scripts](#-available-scripts)
-  - [🔧 Environment Setup](#-environment-setup)
-- [📱 Usage Guide](#-usage-guide)
-- [🎯 Supported Analysis Tools](#-supported-analysis-tools)
-- [📸 Screenshots & Demo](#-screenshots--demo)
-- [🔧 Configuration](#-configuration)
-- [🚀 Deployment](#-deployment)
-- [🛡️ Security & Privacy](#-security--privacy)
-- [📋 Browser Support](#-browser-support)
-- [🔧 Troubleshooting](#-troubleshooting)
-- [🤝 Contributing](#-contributing)
-- [📊 Performance Metrics](#-performance-metrics)
-- [📊 Project Activity & Health](#-project-activity--health)
-- [📈 Changelog](#-changelog)
-- [🔮 Roadmap](#-roadmap)
-- [📄 License](#-license)
-- [👤 Author](#-author)
-- [🙏 Acknowledgments](#-acknowledgments)
-- [📞 Support](#-support)
-- [🌟 Show Your Support](#-show-your-support)
+- [Key Features](#-key-features)
+- [Architecture Overview](#-architecture-overview)
+- [Technology Stack](#-technology-stack)
+- [Quick Start Guide](#-quick-start-guide)
+  - [Prerequisites](#-prerequisites)
+  - [Installation](#-installation)
+  - [Available Scripts](#-available-scripts)
+  - [Environment Setup](#-environment-setup)
+- [Usage Guide](#-usage-guide)
+- [Supported Analysis Tools](#-supported-analysis-tools)
+- [Screenshots & Demo](#-screenshots--demo)
+- [Configuration](#-configuration)
+- [Deployment](#-deployment)
+- [Security & Privacy](#-security--privacy)
+- [Browser Support](#-browser-support)
+- [Troubleshooting](#-troubleshooting)
+- [Contributing](#-contributing)
+- [Performance Metrics](#-performance-metrics)
+- [Project Activity & Health](#-project-activity--health)
+- [Changelog](#-changelog)
+- [Roadmap](#-roadmap)
+- [License](#-license)
+- [Author](#-author)
+- [Acknowledgments](#-acknowledgments)
+- [Support](#-support)
+- [Show Your Support](#-show-your-support)
 
 ---
 
-## 🛡️ Security Detection Capabilities
+## Security Detection Capabilities
 
 <div align="center">
 
-### 🔍 Vulnerability Detection Matrix
+### Vulnerability Detection Matrix
 
 ```mermaid
 mindmap
@@ -856,21 +851,21 @@ mindmap
       Complexity
 ```
 
-### 🔐 Secret Detection Patterns
+### Secret Detection Patterns
 
-| Secret Type       | Pattern Example                | Confidence |
-| ----------------- | ------------------------------ | ---------- |
-| 🔑 AWS Access Key | `AKIA[0-9A-Z]{16}`             | 95%        |
-| 🐙 GitHub Token   | `ghp_[A-Za-z0-9]{36}`          | 95%        |
-| 🔐 JWT Token      | `eyJ[A-Za-z0-9_-]*\.eyJ...`    | 90%        |
-| 💬 Slack Token    | `xox[bpars]-[0-9A-Za-z]{12}`   | 95%        |
-| 💳 Stripe Key     | `sk_test_xxxx...`              | 90%        |
-| 🌐 Google API     | `AIza[0-9A-Za-z_-]{35}`        | 90%        |
-| 🔒 Private Key    | `-----BEGIN.*PRIVATE KEY-----` | 95%        |
-| 🗄️ DB Connection  | `mongodb://`, `postgres://`    | 85%        |
-| 🎲 High Entropy   | Shannon entropy > 4.5          | 70%        |
+| Secret Type    | Pattern Example                | Confidence |
+| -------------- | ------------------------------ | ---------- |
+| AWS Access Key | `AKIA[0-9A-Z]{16}`             | 95%        |
+| GitHub Token   | `ghp_[A-Za-z0-9]{36}`          | 95%        |
+| JWT Token      | `eyJ[A-Za-z0-9_-]*\.eyJ...`    | 90%        |
+| Slack Token    | `xox[bpars]-[0-9A-Za-z]{12}`   | 95%        |
+| Stripe Key     | `sk_test_xxxx...`              | 90%        |
+| Google API     | `AIza[0-9A-Za-z_-]{35}`        | 90%        |
+| Private Key    | `-----BEGIN.*PRIVATE KEY-----` | 95%        |
+| DB Connection  | `mongodb://`, `postgres://`    | 85%        |
+| High Entropy   | Shannon entropy > 4.5          | 70%        |
 
-### 📊 Language-Specific Detection
+### Language-Specific Detection
 
 ```mermaid
 gantt
@@ -907,17 +902,17 @@ gantt
 
 ---
 
-## 🎨 **Technology Showcase**
+## **Technology Showcase**
 
 <div align="center">
-  <img src="https://img.shields.io/badge/🚀%20Powered%20By-Cutting%20Edge%20Technology-4F46E5?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="Technology Showcase"/>
+  <img src="https://img.shields.io/badge/Powered%20By-Cutting%20Edge%20Technology-4F46E5?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="Technology Showcase"/>
 </div>
 
 <table>
 <tr>
 <td width="50%" align="center">
   <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 25px; border-radius: 20px; margin: 15px;">
-    <h3 style="color: white; margin-bottom: 20px;">🎯 **Frontend Excellence**</h3>
+    <h3 style="color: white; margin-bottom: 20px;">**Frontend Excellence**</h3>
     <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
       <img src="https://img.shields.io/badge/React-19.2.4-61DAFB?style=flat-square&logo=react&logoColor=white" alt="React"/>
 <img src="https://img.shields.io/badge/TypeScript-5.9-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript"/>
@@ -931,7 +926,7 @@ gantt
 </td>
 <td width="50%" align="center">
   <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 25px; border-radius: 20px; margin: 15px;">
-    <h3 style="color: white; margin-bottom: 20px;">🤖 **AI & Backend**</h3>
+    <h3 style="color: white; margin-bottom: 20px;">**AI & Backend**</h3>
     <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
       <img src="https://img.shields.io/badge/OpenAI-GPT--4-412991?style=flat-square&logo=openai&logoColor=white" alt="OpenAI"/>
       <img src="https://img.shields.io/badge/Anthropic-Claude-8B5A3C?style=flat-square&logo=anthropic&logoColor=white" alt="Claude"/>
@@ -946,7 +941,7 @@ gantt
 </tr>
 </table>
 
-### 🎭 Interactive Demo Features
+### Interactive Demo Features
 
 <div align="center">
   <table>
@@ -990,11 +985,11 @@ gantt
   </table>
 </div>
 
-### 🏆 Awards & Recognition
+### Awards & Recognition
 
 <div align="center">
   <div style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); padding: 25px; border-radius: 20px; margin: 20px 0;">
-    <h3 style="color: white; margin-bottom: 20px;">🏅 **Platform Achievements** 🏅</h3>
+    <h3 style="color: white; margin-bottom: 20px;">**Platform Achievements**</h3>
     
     <table style="margin: 0 auto;">
       <tr>
@@ -1023,10 +1018,10 @@ gantt
   </div>
 </div>
 
-### 🎮 Interactive Elements & Animations
+### Interactive Elements & Animations
 
 <div align="center">
-  <img src="https://img.shields.io/badge/🎨%20Interactive%20Experience-Smooth%20Animations%20&%20Micro%20Interactions-9C27B0?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="Interactive Experience"/>
+  <img src="https://img.shields.io/badge/Interactive%20Experience-Smooth%20Animations%20&%20Micro%20Interactions-9C27B0?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="Interactive Experience"/>
 </div>
 
 <table>
@@ -1034,14 +1029,14 @@ gantt
 <td width="50%" align="center">
   <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 25px; border-radius: 20px; margin: 15px; position: relative; overflow: hidden;">
     <div style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); animation: rotate 20s linear infinite;"></div>
-    <h3 style="color: white; margin-bottom: 20px; position: relative; z-index: 1;">✨ **Framer Motion Animations**</h3>
+    <h3 style="color: white; margin-bottom: 20px; position: relative; z-index: 1;">**Framer Motion Animations**</h3>
     <div style="position: relative; z-index: 1;">
       <ul style="color: rgba(255,255,255,0.9); text-align: left; list-style: none; padding: 0;">
-        <li style="margin: 8px 0;">🌊 <strong>Smooth Page Transitions:</strong> Lenis scroll integration</li>
-        <li style="margin: 8px 0;">🎭 <strong>Component Animations:</strong> Enter/exit transitions</li>
-        <li style="margin: 8px 0;">🎪 <strong>Hover Effects:</strong> Interactive button states</li>
-        <li style="margin: 8px 0;">📱 <strong>Mobile Optimized:</strong> Touch-friendly animations</li>
-        <li style="margin: 8px 0;">⚡ <strong>Performance First:</strong> 60fps smooth animations</li>
+        <li style="margin: 8px 0;"><strong>Smooth Page Transitions:</strong> Lenis scroll integration</li>
+        <li style="margin: 8px 0;"><strong>Component Animations:</strong> Enter/exit transitions</li>
+        <li style="margin: 8px 0;"><strong>Hover Effects:</strong> Interactive button states</li>
+        <li style="margin: 8px 0;"><strong>Mobile Optimized:</strong> Touch-friendly animations</li>
+        <li style="margin: 8px 0;"><strong>Performance First:</strong> 60fps smooth animations</li>
       </ul>
     </div>
   </div>
@@ -1049,14 +1044,14 @@ gantt
 <td width="50%" align="center">
   <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 25px; border-radius: 20px; margin: 15px; position: relative; overflow: hidden;">
     <div style="position: absolute; top: -50%; right: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); animation: rotate 15s linear infinite reverse;"></div>
-    <h3 style="color: white; margin-bottom: 20px; position: relative; z-index: 1;">🎯 **Interactive Components**</h3>
+    <h3 style="color: white; margin-bottom: 20px; position: relative; z-index: 1;">**Interactive Components**</h3>
     <div style="position: relative; z-index: 1;">
       <ul style="color: rgba(255,255,0.9); text-align: left; list-style: none; padding: 0;">
-        <li style="margin: 8px 0;">🤖 <strong>Floating ChatBot:</strong> AI-powered assistance</li>
-        <li style="margin: 8px 0;">📊 <strong>Live Charts:</strong> Real-time data visualization</li>
-        <li style="margin: 8px 0;">🎨 <strong>Theme Switcher:</strong> Dark/Light mode toggle</li>
-        <li style="margin: 8px 0;">📱 <strong>Responsive Design:</strong> Adaptive layouts</li>
-        <li style="margin: 8px 0;">🔄 <strong>Progress Indicators:</strong> Visual feedback</li>
+        <li style="margin: 8px 0;"><strong>Floating ChatBot:</strong> AI-powered assistance</li>
+        <li style="margin: 8px 0;"><strong>Live Charts:</strong> Real-time data visualization</li>
+        <li style="margin: 8px 0;"><strong>Theme Switcher:</strong> Dark/Light mode toggle</li>
+        <li style="margin: 8px 0;"><strong>Responsive Design:</strong> Adaptive layouts</li>
+        <li style="margin: 8px 0;"><strong>Progress Indicators:</strong> Visual feedback</li>
       </ul>
     </div>
   </div>
@@ -1064,11 +1059,11 @@ gantt
 </tr>
 </table>
 
-### 🎨 Visual Design System
+### Visual Design System
 
 <div align="center">
   <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 30px; border-radius: 20px; margin: 20px 0;">
-    <h3 style="color: white; margin-bottom: 25px;">🎭 **Design Language & Components**</h3>
+    <h3 style="color: white; margin-bottom: 25px;">**Design Language & Components**</h3>
     
     <table style="margin: 0 auto;">
       <tr>
@@ -1105,10 +1100,10 @@ gantt
   </div>
 </div>
 
-### 🚀 Performance Optimization Features
+### Performance Optimization Features
 
 <div style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); padding: 30px; border-radius: 20px; margin: 20px 0;">
-  <h3 style="color: white; margin-bottom: 25px; text-align: center;">⚡ **Lightning Fast Performance**</h3>
+  <h3 style="color: white; margin-bottom: 25px; text-align: center;">**Lightning Fast Performance**</h3>
   
   <table style="margin: 0 auto; width: 100%;">
     <tr>
@@ -1144,11 +1139,11 @@ gantt
   </table>
 </div>
 
-### 🎪 Interactive Demo Playground
+### Interactive Demo Playground
 
 <div align="center">
   <div style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); padding: 30px; border-radius: 20px; margin: 20px 0;">
-    <h3 style="color: #333; margin-bottom: 25px;">🎮 **Try These Interactive Features**</h3>
+    <h3 style="color: #333; margin-bottom: 25px;">**Try These Interactive Features**</h3>
     
     <table style="margin: 0 auto;">
       <tr>
@@ -1158,7 +1153,7 @@ gantt
             <br/><strong style="color: #333; font-size: 14px; margin-top: 10px; display: block;">Drag & Drop Upload</strong>
             <span style="color: #666; font-size: 12px;">Try uploading files</span>
             <br/><a href="https://code-guardian-report.vercel.app" target="_blank" style="text-decoration: none;">
-              <img src="https://img.shields.io/badge/🎯%20Try%20Now-Live%20Demo-4F46E5?style=flat-square&logoColor=white" alt="Try Now" style="margin-top: 8px;"/>
+              <img src="https://img.shields.io/badge/Try%20Now-Live%20Demo-4F46E5?style=flat-square&logoColor=white" alt="Try Now" style="margin-top: 8px;"/>
             </a>
           </div>
         </td>
@@ -1168,7 +1163,7 @@ gantt
             <br/><strong style="color: #333; font-size: 14px; margin-top: 10px; display: block;">AI ChatBot</strong>
             <span style="color: #666; font-size: 12px;">Ask questions</span>
             <br/><a href="https://code-guardian-report.vercel.app" target="_blank" style="text-decoration: none;">
-              <img src="https://img.shields.io/badge/💬%20Chat%20Now-AI%20Assistant-10B981?style=flat-square&logoColor=white" alt="Chat Now" style="margin-top: 8px;"/>
+              <img src="https://img.shields.io/badge/Chat%20Now-AI%20Assistant-10B981?style=flat-square&logoColor=white" alt="Chat Now" style="margin-top: 8px;"/>
             </a>
           </div>
         </td>
@@ -1178,7 +1173,7 @@ gantt
             <br/><strong style="color: #333; font-size: 14px; margin-top: 10px; display: block;">Live Dashboard</strong>
             <span style="color: #666; font-size: 12px;">Real-time analytics</span>
             <br/><a href="https://code-guardian-report.vercel.app" target="_blank" style="text-decoration: none;">
-              <img src="https://img.shields.io/badge/📊%20View%20Dashboard-Analytics-F59E0B?style=flat-square&logoColor=white" alt="View Dashboard" style="margin-top: 8px;"/>
+              <img src="https://img.shields.io/badge/View%20Dashboard-Analytics-F59E0B?style=flat-square&logoColor=white" alt="View Dashboard" style="margin-top: 8px;"/>
             </a>
           </div>
         </td>
@@ -1189,33 +1184,33 @@ gantt
 
 ---
 
-## ✨ Key Features
+## Key Features
 
 <table>
 <tr>
 <td width="50%">
 
-### 🔍 Advanced Code Analysis
+### Advanced Code Analysis
 
-- 🛡️ **Security Vulnerability Detection**
+- **Security Vulnerability Detection**
   - OWASP Top 10 compliance checking
   - Injection flaw identification
   - Authentication & authorization issues
   - Cryptographic vulnerability detection
-- 🔐 **Secret Detection Engine**
+- **Secret Detection Engine**
   - API key and token detection (AWS, GitHub, Stripe, etc.)
   - JWT token identification and validation
-- 🧠 **AI-Powered Fix Suggestions** ⭐ NEW
+- **AI-Powered Fix Suggestions**
   - Intelligent vulnerability remediation with multiple approaches
   - Confidence scoring and effort estimation
   - Automated code refactoring capabilities
   - Framework-specific security optimizations
-- 🔍 **Secure Code Search Engine** ⭐ NEW
+- **Secure Code Search Engine**
   - Comprehensive database of secure coding patterns
   - Language-specific secure implementations
   - Vulnerability alternatives and best practices
   - Interactive code examples with explanations
-- 🛡️ **Code Provenance & Tampering Detection** ⭐ NEW
+- **Code Provenance & Tampering Detection**
 - File integrity monitoring with SHA-256 checksums
 - Real-time change detection and alerts
 - Security-critical file identification
@@ -1223,28 +1218,28 @@ gantt
 - Database credential exposure detection
 - ML-powered entropy analysis for unknown secrets
 - Pattern matching with 95%+ accuracy
-- 🐛 **Intelligent Bug Detection**
+- **Intelligent Bug Detection**
   - Logic error identification
   - Null pointer exception prevention
 - Memory leak detection
 - Performance bottleneck analysis
-- 📏 **Code Quality Assessment**
+- **Code Quality Assessment**
   - Code smell detection
   - Complexity analysis (Cyclomatic, Cognitive)
   - Maintainability scoring
   - Technical debt calculation
 
-### 🤖 AI-Powered Intelligence
+### AI-Powered Intelligence
 
-- 🧠 **Natural Language Processing**
+- **Natural Language Processing**
   - Human-readable issue explanations
   - Context-aware recommendations
   - Smart code suggestions
-- 🔗 **Multi-Provider Support**
+- **Multi-Provider Support**
   - OpenAI GPT-4/GPT-3.5 integration
   - Anthropic Claude support
   - Custom AI model compatibility
-- 💡 **Contextual Analysis**
+- **Contextual Analysis**
   - Codebase-specific insights
   - Project pattern recognition
   - Historical trend analysis
@@ -1252,37 +1247,37 @@ gantt
 </td>
 <td width="50%">
 
-### 📊 Rich Analytics Dashboard
+### Rich Analytics Dashboard
 
-- 📈 **Interactive Visualizations**
+- **Interactive Visualizations**
   - Real-time charts with Recharts
 - Responsive design across devices
 - Customizable dashboard layouts
-- 🎯 **Risk Assessment Matrix**
+- **Risk Assessment Matrix**
   - Severity-based issue categorization
   - Security posture scoring
   - Compliance tracking
-- 📤 **Advanced Export Options**
+- **Advanced Export Options**
   - JSON, CSV, PDF, HTML, XML formats
   - Custom report templates
   - Automated report generation
 
-### 🎨 Modern User Experience
+### Modern User Experience
 
-- 📱 **Mobile-First Design**
+- **Mobile-First Design**
   - Responsive across all screen sizes
 - Touch-optimized interactions
 - Progressive Web App capabilities
-- 🌓 **Adaptive Theming**
+- **Adaptive Theming**
   - Dark/Light mode with system detection
   - Custom theme creation
   - Accessibility-focused color schemes
-- ♿ **Accessibility Excellence**
+- **Accessibility Excellence**
   - WCAG 2.1 AA compliance
   - Screen reader optimization
 - Keyboard navigation support
 - High contrast mode
-- ✨ **Smooth Interactions**
+- **Smooth Interactions**
   - Hardware-accelerated animations
   - Glass morphism effects
 - Micro-interactions for better UX
@@ -1291,7 +1286,7 @@ gantt
 </tr>
 </table>
 
-## 🔌 API and Integration Guide
+## API and Integration Guide
 
 - REST Endpoints (beta):
   - POST /api/analyze: Submit archive URL or Git URL for analysis
@@ -1303,7 +1298,7 @@ gantt
 - SARIF Export: Supported for GitHub code scanning ingestion
 - Rate limits: 60 req/min per token (burst 120)
 
-## 🏗️ Self-Hosting
+## Self-Hosting
 
 - Requirements: Node 18+, pnpm/yarn/npm, optional Firebase project
 - Steps:
@@ -1314,7 +1309,7 @@ gantt
   - Firebase: auth, Firestore, storage (see FIREBASE_INTEGRATION.md)
   - Push notifications: see push/ and VAPID_SETUP_GUIDE.md
 
-## 🏢 Enterprise Features (Add-on)
+## Enterprise Features (Add-on)
 
 - SSO: SAML 2.0, OIDC (Okta, Azure AD, Google Workspace)
 - RBAC: Roles (Viewer, Analyst, Admin, OrgOwner), project scoping
@@ -1322,56 +1317,56 @@ gantt
 - Data Residency: Region pinning, BYO storage bucket
 - Advanced DLP: Inline redaction for tokens and PII in exported reports
 
-## 🚀 Technology Stack
+## Technology Stack
 
 <div align="center">
 
 ### Core Technologies
 
-| Category       | Technology   | Version | Purpose                     |
-| -------------- | ------------ | ------- | --------------------------- |
-| **Frontend**   | React        | 19.2.4  | Component-based UI library  |
-| **Language**   | TypeScript   | 5.9.3   | Type-safe development       |
-| **Build Tool** | Next.js         | 16.1.5   | Lightning-fast React framework with built-in optimizations |
-| **Styling**    | Tailwind CSS | 4.1.18  | Utility-first CSS framework |
+| Category       | Technology   | Version | Purpose                                                    |
+| -------------- | ------------ | ------- | ---------------------------------------------------------- |
+| **Frontend**   | React        | 19.2.4  | Component-based UI library                                 |
+| **Language**   | TypeScript   | 5.9.3   | Type-safe development                                      |
+| **Build Tool** | Next.js      | 16.1.5  | Lightning-fast React framework with built-in optimizations |
+| **Styling**    | Tailwind CSS | 4.1.18  | Utility-first CSS framework                                |
 
 </div>
 
-### 🎨 UI & Design System
+### UI & Design System
 
-- 🎯 **Radix UI**: 12+ accessible, unstyled component primitives (Dialog, Tabs, Toast, etc.)
-- 🎨 **shadcn/ui**: Beautiful, customizable component library with dark/light themes
-- 🔍 **Lucide React 0.462.0**: 1000+ modern, consistent icons
-- ✨ **Tailwind CSS 4.1.18**: Utility-first styling with custom design tokens
-- 🌈 **Framer Motion 12.29.2**: Smooth animations and micro-interactions
+- **Radix UI**: 12+ accessible, unstyled component primitives (Dialog, Tabs, Toast, etc.)
+- **shadcn/ui**: Beautiful, customizable component library with dark/light themes
+- **Lucide React 0.462.0**: 1000+ modern, consistent icons
+- **Tailwind CSS 4.1.18**: Utility-first styling with custom design tokens
+- **Framer Motion 12.29.2**: Smooth animations and micro-interactions
 
-### 📊 Data & State Management
+### Data & State Management
 
-- 📈 **Recharts 2.15.3**: Interactive data visualization and charts
-- 🎨 **React Router DOM 6.26.2**: Client-side routing with lazy loading
-- 🔄 **React State**: Built-in state management with hooks and context
-- 📊 **Vercel Analytics 1.5.0**: Real-time user analytics and insights
+- **Recharts 2.15.3**: Interactive data visualization and charts
+- **React Router DOM 6.26.2**: Client-side routing with lazy loading
+- **React State**: Built-in state management with hooks and context
+- **Vercel Analytics 1.5.0**: Real-time user analytics and insights
 
-### 🛠️ Development Tools
+### Development Tools
 
-- 🎯 **TypeScript 5.9**: Advanced type checking and IntelliSense
-- 🎨 **PostCSS 8.47**: CSS post-processing with autoprefixer
-- ⚡ **Vite SWC Plugin 3.5.0**: Ultra-fast React refresh and builds
-- 📦 **Advanced Code Splitting**: Intelligent chunk optimization
-- 🔧 **Path Aliases**: Clean imports with @ syntax
+- **TypeScript 5.9**: Advanced type checking and IntelliSense
+- **PostCSS 8.47**: CSS post-processing with autoprefixer
+- **Vite SWC Plugin 3.5.0**: Ultra-fast React refresh and builds
+- **Advanced Code Splitting**: Intelligent chunk optimization
+- **Path Aliases**: Clean imports with @ syntax
 
-### 🔧 Build & Optimization
+### Build & Optimization
 
-- **⚡ Lightning Fast Builds**: Next.js 16 with SWC for sub-second rebuilds
-- **📦 Smart Bundling**: Advanced manual chunk splitting for React, Radix UI, and vendor libraries
-- **🎯 Performance**: Optimized asset handling with intelligent file naming
-- **🔄 Hot Reload**: Instant feedback with HMR overlay during development
-- **🗜️ Compression**: Terser optimization with tree shaking and dead code elimination
-- **🚀 PWA Ready**: Service worker with advanced caching strategies
+- **Lightning Fast Builds**: Next.js 16 with SWC for sub-second rebuilds
+- **Smart Bundling**: Advanced manual chunk splitting for React, Radix UI, and vendor libraries
+- **Performance**: Optimized asset handling with intelligent file naming
+- **Hot Reload**: Instant feedback with HMR overlay during development
+- **Compression**: Terser optimization with tree shaking and dead code elimination
+- **PWA Ready**: Service worker with advanced caching strategies
 
-## 🛠️ Quick Start Guide
+## Quick Start Guide
 
-### 📋 Prerequisites
+### Prerequisites
 
 <table>
 <tr>
@@ -1379,27 +1374,27 @@ gantt
 
 **Required:**
 
-- 🟢 **Node.js** v22.0.0+ ([Download](https://nodejs.org/))
-- 📦 **Package Manager**: npm, yarn, or bun
-- 🌐 **Modern Browser**: Chrome 90+, Firefox 88+, Safari 14+
+- **Node.js** v22.0.0+ ([Download](https://nodejs.org/))
+- **Package Manager**: npm, yarn, or bun
+- **Modern Browser**: Chrome 90+, Firefox 88+, Safari 14+
 
 </td>
 <td width="50%">
 
 **Recommended:**
 
-- 💻 **VS Code** with TypeScript extension
-- 🔧 **Git** for version control
-- 🚀 **Bun** for faster package management
+- **VS Code** with TypeScript extension
+- **Git** for version control
+- **Bun** for faster package management
 
 </td>
 </tr>
 </table>
 
-### ⚡ Installation
+### Installation
 
 <details>
-<summary><b>🚀 Option 1: One-Click Deploy (Recommended)</b></summary>
+<summary><b>Option 1: One-Click Deploy (Recommended)</b></summary>
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Xenonesis/code-guardian-report)
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/Xenonesis/code-guardian-report)
@@ -1407,30 +1402,30 @@ gantt
 </details>
 
 <details>
-<summary><b>💻 Option 2: Local Development</b></summary>
+<summary><b>Option 2: Local Development</b></summary>
 
 ```bash
-# 1️⃣ Clone the repository
+# 1. Clone the repository
 git clone https://github.com/Xenonesis/code-guardian-report.git
 cd code-guardian-report
 
-# 2️⃣ Install dependencies (choose one)
+# 2. Install dependencies (choose one)
 npm install        # Using npm
 yarn install       # Using yarn
 bun install        # Using bun (fastest)
 
-# 3️⃣ Start development server
+# 3. Start development server
 npm run dev        # Using npm
 yarn dev           # Using yarn
 bun dev            # Using bun
 
-# 4️⃣ Open in browser
+# 4. Open in browser
 # Navigate to http://localhost:3000
 ```
 
 </details>
 
-### 🔧 Environment Setup
+### Environment Setup
 
 Create a `.env.local` file in the root directory:
 
@@ -1453,7 +1448,7 @@ GITHUB_CLIENT_ID=your_client_id
 GITHUB_CLIENT_SECRET=your_secret
 ```
 
-### 📜 Available Scripts
+### Available Scripts
 
 ```mermaid
 graph LR
@@ -1474,7 +1469,7 @@ graph LR
 | `lint`       | Run ESLint                   | `npm run lint`       |
 | `type-check` | Run TypeScript type checking | `npm run type-check` |
 
-### 🔧 Environment Setup
+### Environment Setup
 
 Create a `.env.local` file in the root directory:
 
@@ -1508,7 +1503,7 @@ NEXT_PUBLIC_APP_VERSION="11.0.0"
 
 Security note: create .env.local only; ensure .gitignore excludes it.
 
-## 📱 Usage Guide
+## Usage Guide
 
 ### CI/CD Usage (GitHub Actions)
 
@@ -1548,7 +1543,7 @@ curl -H "Authorization: Bearer $TOKEN" \
   https://your-host/api/report/ANALYSIS_ID
 ```
 
-### 🚀 Getting Started in 3 Steps
+### Getting Started in 3 Steps
 
 <div align="center">
 
@@ -1556,19 +1551,19 @@ curl -H "Authorization: Bearer $TOKEN" \
 <tr>
 <td width="33%" align="center">
   <img src="https://img.icons8.com/fluency/96/upload-to-cloud.png" alt="Upload" width="64"/>
-  <h4>1️⃣ Upload Code</h4>
+  <h4>1. Upload Code</h4>
   <p>Drag & drop ZIP files or analyze GitHub repos directly</p>
   <code>ZIP Upload | GitHub URL</code>
 </td>
 <td width="33%" align="center">
   <img src="https://img.icons8.com/fluency/96/artificial-intelligence.png" alt="Analyze" width="64"/>
-  <h4>2️⃣ AI Analysis</h4>
+  <h4>2. AI Analysis</h4>
   <p>Configure AI providers for enhanced insights</p>
   <code>GPT-4 | Claude | Custom</code>
 </td>
 <td width="33%" align="center">
   <img src="https://img.icons8.com/fluency/96/dashboard.png" alt="Results" width="64"/>
-  <h4>3️⃣ View Results</h4>
+  <h4>3. View Results</h4>
   <p>Interactive dashboard with detailed reports</p>
   <code>Export in 5+ formats</code>
 </td>
@@ -1577,39 +1572,39 @@ curl -H "Authorization: Bearer $TOKEN" \
 
 </div>
 
-### 🎯 Key Features Overview
+### Key Features Overview
 
 <div align="center">
 
-| Feature                   | Description                                             | Details                                                           |
-| ------------------------- | ------------------------------------------------------- | ----------------------------------------------------------------- |
-| 🔗 **GitHub Analysis**    | Direct repository analysis from URL                     | Public repos, all branches, automatic ZIP packaging               |
-| 📁 **File Upload**        | Drag & drop ZIP file analysis                           | Intelligent parsing, progress tracking, validation                |
-| 🔍 **Multi-Language**     | 8+ programming languages                                | JavaScript, TypeScript, Python, Java, PHP, Ruby, Go, C#           |
-| 🛡️ **Security Detection** | 100+ vulnerability patterns                             | SQL Injection, XSS, Code Injection, Command Injection, etc.       |
-| 🔐 **Secret Scanning**    | 9 secret detection types                                | API keys, tokens, credentials, private keys, entropy analysis     |
-| 🎯 **OWASP & CWE**        | Industry standard mapping                               | Top 10 + 90+ additional patterns with CWE IDs                     |
-| 🤖 **AI Integration**     | Multi-model AI support                                  | OpenAI GPT-4, Claude, Google Gemini with failover                 |
-| 📊 **4-Phase Analysis**   | Comprehensive scanning                                  | Pattern → AST → Data Flow → Dependencies                          |
-| 💾 **Dual Storage**       | Local + Cloud persistence                               | IndexedDB for local, Firebase for cloud sync                      |
-| 📈 **Real-time Results**  | Interactive dashboard                                   | Sortable, filterable, exportable reports                          |
-| 🔔 **Notifications**      | Smart alert system                                      | Priority-based, batched, browser notifications                    |
-| 🪝 **Webhook Support**    | CI/CD integration                                       | GitHub, GitLab, Bitbucket webhooks                                |
-| 📄 **Export Options**     | Multiple formats                                        | PDF, JSON, XML, CSV with compression                              |
-| 📱 **PWA Ready**          | Progressive Web App                                     | Offline support, installable, service worker                      |
-| 🎨 **Dark Mode**          | Theme switching                                         | Persistent user preference                                        |
-| 🔒 **Authentication**     | Secure OAuth                                            | Google and GitHub sign-in with Firebase                           |
-| 🔐 **Secret Detection**   | AI-powered secret and credential detection              | `API Keys`, `JWT Tokens`, `DB Credentials`, `Private Keys`        |
-| 🧠 **AI Fix Suggestions** | Intelligent vulnerability remediation with code patches | `Multiple approaches`, `Confidence scoring`, `Risk assessment`    |
-| 🔍 **Secure Code Search** | Comprehensive database of secure coding patterns        | `Secure examples`, `Vulnerability alternatives`, `Best practices` |
-| 🛡️ **Code Provenance**    | File integrity monitoring and tampering detection       | `SHA-256 checksums`, `Change tracking`, `Alert system`            |
-| 📊 **Quality Metrics**    | Comprehensive code quality assessment                   | `Complexity`, `Maintainability`, `Technical Debt`                 |
-| 🤖 **AI Insights**        | Intelligent recommendations and fixes                   | `GPT-4`, `Claude-3`, `Gemini`, `Custom Models`                    |
-| 📤 **Export Options**     | Multiple export formats for reports                     | `JSON`, `CSV`, `PDF`, `HTML`, `XML`                               |
+| Feature                | Description                                             | Details                                                           |
+| ---------------------- | ------------------------------------------------------- | ----------------------------------------------------------------- |
+| **GitHub Analysis**    | Direct repository analysis from URL                     | Public repos, all branches, automatic ZIP packaging               |
+| **File Upload**        | Drag & drop ZIP file analysis                           | Intelligent parsing, progress tracking, validation                |
+| **Multi-Language**     | 8+ programming languages                                | JavaScript, TypeScript, Python, Java, PHP, Ruby, Go, C#           |
+| **Security Detection** | 100+ vulnerability patterns                             | SQL Injection, XSS, Code Injection, Command Injection, etc.       |
+| **Secret Scanning**    | 9 secret detection types                                | API keys, tokens, credentials, private keys, entropy analysis     |
+| **OWASP & CWE**        | Industry standard mapping                               | Top 10 + 90+ additional patterns with CWE IDs                     |
+| **AI Integration**     | Multi-model AI support                                  | OpenAI GPT-4, Claude, Google Gemini with failover                 |
+| **4-Phase Analysis**   | Comprehensive scanning                                  | Pattern → AST → Data Flow → Dependencies                          |
+| **Dual Storage**       | Local + Cloud persistence                               | IndexedDB for local, Firebase for cloud sync                      |
+| **Real-time Results**  | Interactive dashboard                                   | Sortable, filterable, exportable reports                          |
+| **Notifications**      | Smart alert system                                      | Priority-based, batched, browser notifications                    |
+| **Webhook Support**    | CI/CD integration                                       | GitHub, GitLab, Bitbucket webhooks                                |
+| **Export Options**     | Multiple formats                                        | PDF, JSON, XML, CSV with compression                              |
+| **PWA Ready**          | Progressive Web App                                     | Offline support, installable, service worker                      |
+| **Dark Mode**          | Theme switching                                         | Persistent user preference                                        |
+| **Authentication**     | Secure OAuth                                            | Google and GitHub sign-in with Firebase                           |
+| **Secret Detection**   | AI-powered secret and credential detection              | `API Keys`, `JWT Tokens`, `DB Credentials`, `Private Keys`        |
+| **AI Fix Suggestions** | Intelligent vulnerability remediation with code patches | `Multiple approaches`, `Confidence scoring`, `Risk assessment`    |
+| **Secure Code Search** | Comprehensive database of secure coding patterns        | `Secure examples`, `Vulnerability alternatives`, `Best practices` |
+| **Code Provenance**    | File integrity monitoring and tampering detection       | `SHA-256 checksums`, `Change tracking`, `Alert system`            |
+| **Quality Metrics**    | Comprehensive code quality assessment                   | `Complexity`, `Maintainability`, `Technical Debt`                 |
+| **AI Insights**        | Intelligent recommendations and fixes                   | `GPT-4`, `Claude-3`, `Gemini`, `Custom Models`                    |
+| **Export Options**     | Multiple export formats for reports                     | `JSON`, `CSV`, `PDF`, `HTML`, `XML`                               |
 
 </div>
 
-## 🎯 Supported Analysis Tools
+## Supported Analysis Tools
 
 <table>
 <thead>
@@ -1660,7 +1655,7 @@ curl -H "Authorization: Bearer $TOKEN" \
 </tbody>
 </table>
 
-### 🔧 Advanced Tools & Integrations
+### Advanced Tools & Integrations
 
 <div align="center">
 
@@ -1668,22 +1663,22 @@ curl -H "Authorization: Bearer $TOKEN" \
 <tr>
 <td width="25%" align="center">
   <img src="https://img.icons8.com/fluency/64/settings.png" alt="Custom Rules"/>
-  <h5>⚙️ Custom Rules</h5>
+  <h5>Custom Rules</h5>
   <p>Define specific vulnerability patterns</p>
 </td>
 <td width="25%" align="center">
   <img src="https://img.icons8.com/fluency/64/traffic-light.png" alt="Configurable"/>
-  <h5>🚦 Configurable</h5>
+  <h5>Configurable</h5>
   <p>Adjust severity levels and rule sets</p>
 </td>
 <td width="25%" align="center">
   <img src="https://img.icons8.com/fluency/64/continuous-integration.png" alt="CI/CD"/>
-  <h5>🔗 CI/CD Ready</h5>
+  <h5>CI/CD Ready</h5>
  <p>GitHub Actions, Jenkins, GitLab CI</p>
 </td>
 <td width="25%" align="center">
   <img src="https://img.icons8.com/fluency/64/api.png" alt="API"/>
-  <h5>🔌 API Access</h5>
+  <h5>API Access</h5>
   <p>RESTful API for automation</p>
 </td>
 </tr>
@@ -1691,17 +1686,17 @@ curl -H "Authorization: Bearer $TOKEN" \
 
 </div>
 
-## 📸 Screenshots & Demo
+## Screenshots & Demo
 
 <div align="center">
-  <img src="https://img.shields.io/badge/📱%20Visual%20Experience-Interactive%20Screenshots%20&%20Live%20Demo-FF6B6B?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="Visual Experience"/>
+  <img src="https://img.shields.io/badge/Visual%20Experience-Interactive%20Screenshots%20&%20Live%20Demo-FF6B6B?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="Visual Experience"/>
 </div>
 
-### 🎬 Live Demo & Interactive Features
+### Live Demo & Interactive Features
 
 <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 20px; margin: 20px 0;">
   <div align="center">
-    <h3 style="color: white; margin-bottom: 20px;">🌐 **Experience Code Guardian Live**</h3>
+    <h3 style="color: white; margin-bottom: 20px;">**Experience Code Guardian Live**</h3>
     <p style="color: rgba(255,255,255,0.9); margin-bottom: 25px; font-size: 16px;">Try our platform with real-time analysis and interactive features</p>
     
     <table style="margin: 0 auto;">
@@ -1712,7 +1707,7 @@ curl -H "Authorization: Bearer $TOKEN" \
             <br/><strong style="color: white; font-size: 16px;">Desktop Experience</strong>
             <br/><span style="color: rgba(25,255,255,0.9); font-size: 12px;">Full-featured dashboard</span>
             <br/><a href="https://code-guardian-report.vercel.app" target="_blank" style="text-decoration: none;">
-              <img src="https://img.shields.io/badge/🚀%20Try%20Desktop-Live%20Demo-4F46E5?style=flat-square&logoColor=white" alt="Desktop Demo" style="margin-top: 10px;"/>
+              <img src="https://img.shields.io/badge/Try%20Desktop-Live%20Demo-4F46E5?style=flat-square&logoColor=white" alt="Desktop Demo" style="margin-top: 10px;"/>
             </a>
           </div>
         </td>
@@ -1722,7 +1717,7 @@ curl -H "Authorization: Bearer $TOKEN" \
             <br/><strong style="color: white; font-size: 16px;">Mobile Experience</strong>
             <br/><span style="color: rgba(25,255,255,0.9); font-size: 12px;">Responsive design</span>
             <br/><a href="https://code-guardian-report.vercel.app" target="_blank" style="text-decoration: none;">
-              <img src="https://img.shields.io/badge/📱%20Try%20Mobile-Live%20Demo-10B981?style=flat-square&logoColor=white" alt="Mobile Demo" style="margin-top: 10px;"/>
+              <img src="https://img.shields.io/badge/Try%20Mobile-Live%20Demo-10B981?style=flat-square&logoColor=white" alt="Mobile Demo" style="margin-top: 10px;"/>
             </a>
           </div>
         </td>
@@ -1732,7 +1727,7 @@ curl -H "Authorization: Bearer $TOKEN" \
             <br/><strong style="color: white; font-size: 16px;">API Integration</strong>
             <br/><span style="color: rgba(25,255,255,0.9); font-size: 12px;">Developer tools</span>
             <br/><a href="#-api-documentation" style="text-decoration: none;">
-              <img src="https://img.shields.io/badge/🔌%20API%20Docs-Documentation-F59E0B?style=flat-square&logoColor=white" alt="API Docs" style="margin-top: 10px;"/>
+              <img src="https://img.shields.io/badge/API%20Docs-Documentation-F59E0B?style=flat-square&logoColor=white" alt="API Docs" style="margin-top: 10px;"/>
             </a>
           </div>
         </td>
@@ -1741,63 +1736,63 @@ curl -H "Authorization: Bearer $TOKEN" \
   </div>
 </div>
 
-### 🎨 Feature Comparison Matrix
+### Feature Comparison Matrix
 
 <div align="center">
   <table style="border-collapse: collapse; margin: 20px auto; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
     <thead>
       <tr style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-        <th style="padding: 15px; color: white; font-size: 16px;">🚀 Feature</th>
-        <th style="padding: 15px; color: white; font-size: 16px;">🆓 Free Version</th>
-        <th style="padding: 15px; color: white; font-size: 16px;">💎 Pro Version</th>
-        <th style="padding: 15px; color: white; font-size: 16px;">🏢 Enterprise</th>
+        <th style="padding: 15px; color: white; font-size: 16px;">Feature</th>
+        <th style="padding: 15px; color: white; font-size: 16px;">Free Version</th>
+        <th style="padding: 15px; color: white; font-size: 16px;">Pro Version</th>
+        <th style="padding: 15px; color: white; font-size: 16px;">Enterprise</th>
       </tr>
     </thead>
     <tbody>
       <tr style="background: #f8f9fa;">
-        <td style="padding: 12px; font-weight: bold;">🔍 Basic Security Scan</td>
-        <td style="padding: 12px; text-align: center;">✅</td>
-        <td style="padding: 12px; text-align: center;">✅</td>
-        <td style="padding: 12px; text-align: center;">✅</td>
+        <td style="padding: 12px; font-weight: bold;">Basic Security Scan</td>
+        <td style="padding: 12px; text-align: center;">Yes</td>
+        <td style="padding: 12px; text-align: center;">Yes</td>
+        <td style="padding: 12px; text-align: center;">Yes</td>
       </tr>
       <tr style="background: white;">
-        <td style="padding: 12px; font-weight: bold;">🤖 AI Fix Suggestions</td>
-        <td style="padding: 12px; text-align: center;">❌</td>
-        <td style="padding: 12px; text-align: center;">✅</td>
-        <td style="padding: 12px; text-align: center;">✅</td>
+        <td style="padding: 12px; font-weight: bold;">AI Fix Suggestions</td>
+        <td style="padding: 12px; text-align: center;">No</td>
+        <td style="padding: 12px; text-align: center;">Yes</td>
+        <td style="padding: 12px; text-align: center;">Yes</td>
       </tr>
       <tr style="background: #f8f9fa;">
-        <td style="padding: 12px; font-weight: bold;">🔗 Code Provenance</td>
-        <td style="padding: 12px; text-align: center;">❌</td>
-        <td style="padding: 12px; text-align: center;">✅</td>
-        <td style="padding: 12px; text-align: center;">✅</td>
+        <td style="padding: 12px; font-weight: bold;">Code Provenance</td>
+        <td style="padding: 12px; text-align: center;">No</td>
+        <td style="padding: 12px; text-align: center;">Yes</td>
+        <td style="padding: 12px; text-align: center;">Yes</td>
       </tr>
       <tr style="background: white;">
-        <td style="padding: 12px; font-weight: bold;">🕵️ Advanced Secret Detection</td>
-        <td style="padding: 12px; text-align: center;">❌</td>
-        <td style="padding: 12px; text-align: center;">✅</td>
-        <td style="padding: 12px; text-align: center;">✅</td>
+        <td style="padding: 12px; font-weight: bold;">Advanced Secret Detection</td>
+        <td style="padding: 12px; text-align: center;">No</td>
+        <td style="padding: 12px; text-align: center;">Yes</td>
+        <td style="padding: 12px; text-align: center;">Yes</td>
       </tr>
       <tr style="background: #f8f9fa;">
-        <td style="padding: 12px; font-weight: bold;">📊 Analytics Dashboard</td>
+        <td style="padding: 12px; font-weight: bold;">Analytics Dashboard</td>
         <td style="padding: 12px; text-align: center;">Basic</td>
         <td style="padding: 12px; text-align: center;">Advanced</td>
         <td style="padding: 12px; text-align: center;">Enterprise</td>
       </tr>
       <tr style="background: white;">
-        <td style="padding: 12px; font-weight: bold;">🔌 API Access</td>
-        <td style="padding: 12px; text-align: center;">❌</td>
+        <td style="padding: 12px; font-weight: bold;">API Access</td>
+        <td style="padding: 12px; text-align: center;">No</td>
         <td style="padding: 12px; text-align: center;">Limited</td>
         <td style="padding: 12px; text-align: center;">Unlimited</td>
       </tr>
       <tr style="background: #f8f9fa;">
-        <td style="padding: 12px; font-weight: bold;">👥 Team Collaboration</td>
-        <td style="padding: 12px; text-align: center;">❌</td>
+        <td style="padding: 12px; font-weight: bold;">Team Collaboration</td>
+        <td style="padding: 12px; text-align: center;">No</td>
         <td style="padding: 12px; text-align: center;">5 Users</td>
         <td style="padding: 12px; text-align: center;">Unlimited</td>
       </tr>
       <tr style="background: white;">
-        <td style="padding: 12px; font-weight: bold;">🛡️ SLA & Support</td>
+        <td style="padding: 12px; font-weight: bold;">SLA & Support</td>
         <td style="padding: 12px; text-align: center;">Community</td>
         <td style="padding: 12px; text-align: center;">Email</td>
         <td style="padding: 12px; text-align: center;">24/7 Priority</td>
@@ -1811,52 +1806,52 @@ _Interactive Mermaid diagram of system flow_
 
 <div align="center">
 
-### 🖥️ Desktop Experience
+### Desktop Experience
 
 <table>
 <tr>
 <td width="50%">
-  <h4>🏠 Dashboard Overview</h4>
+  <h4>Dashboard Overview</h4>
   <img src="./public/home.png" alt="Dashboard" style="border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.1);" width="100%"/>
   <p><em>Clean, intuitive dashboard with real-time analytics</em></p>
 </td>
 <td width="50%">
-  <h4>🔍 Security Analysis</h4>
+  <h4>Security Analysis</h4>
   <img src="./public/cc.png" alt="Security Analysis" style="border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.1);" width="100%"/>
   <p><em>Comprehensive security vulnerability detection</em></p>
 </td>
 </tr>
 <tr>
 <td width="50%">
-  <h4>📊 Interactive Charts</h4>
+  <h4>Interactive Charts</h4>
   <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop&auto=format&q=80" alt="Charts" style="border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.1);" width="100%"/>
   <p><em>Beautiful data visualization with Recharts</em></p>
 </td>
 <td width="50%">
-  <h4>🤖 AI Insights</h4>
+  <h4>AI Insights</h4>
   <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=400&fit=crop&auto=format&q=80" alt="AI Insights" style="border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.1);" width="100%"/>
   <p><em>AI-powered recommendations and insights</em></p>
 </td>
 </tr>
 </table>
 
-### 📱 Mobile Experience
+### Mobile Experience
 
 <div align="center">
   <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=300&h=600&fit=crop&auto=format&q=80" alt="Mobile View" style="border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.15);" width="300"/>
   <p><em>Fully responsive design optimized for mobile devices</em></p>
 </div>
 
-### 🎨 Theme Showcase
+### Theme Showcase
 
 <table>
 <tr>
 <td width="50%" align="center">
-  <h4>☀️ Light Mode</h4>
+  <h4>Light Mode</h4>
   <img src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=50&h=300&fit=crop&auto=format&q=80" alt="Light Theme" style="border-radius: 8px;" width="100%"/>
 </td>
 <td width="50%" align="center">
-  <h4>🌙 Dark Mode</h4>
+  <h4>Dark Mode</h4>
   <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=500&h=300&fit=crop&auto=format&q=80" alt="Dark Theme" style="border-radius: 8px;" width="100%"/>
 </td>
 </tr>
@@ -1864,7 +1859,7 @@ _Interactive Mermaid diagram of system flow_
 
 </div>
 
-## 🔧 Configuration
+## Configuration
 
 ### Customization Options
 
@@ -1872,7 +1867,7 @@ _Interactive Mermaid diagram of system flow_
 - **Component Customization**: Update `components.json` for shadcn/ui component paths
 - **Analysis Rules**: Configure analysis tool settings in the upload form
 
-## 🚀 Deployment
+## Deployment
 
 ### Build for Production
 
@@ -1910,7 +1905,7 @@ npm run build
 - **Asset Optimization**: Images and icons optimized for web
 - **Caching Strategy**: Service worker integration for offline support
 
-## 🛡️ Security & Privacy
+## Security & Privacy
 
 ### Compliance and Controls
 
@@ -1933,7 +1928,7 @@ npm run build
 - **Easy Management**: Add, remove, and update keys safely
 - **Provider Isolation**: Each provider's keys stored separately
 
-## 📋 Browser Support
+## Browser Support
 
 ### Fully Supported
 
@@ -1956,7 +1951,7 @@ npm run build
 - **High Contrast**: Support for high contrast mode
 - **Reduced Motion**: Respects user motion preferences
 
-## 🤝 Contributing
+## Contributing
 
 We welcome contributions! Please follow these steps:
 
@@ -1976,9 +1971,9 @@ We welcome contributions! Please follow these steps:
 - Update documentation as needed
 - Follow conventional commit messages
 
-## 📊 Performance Metrics
+## Performance Metrics
 
-### 🏆 Performance Metrics
+### Performance Metrics
 
 <div align="center">
 
@@ -2034,9 +2029,9 @@ We welcome contributions! Please follow these steps:
 
 </div>
 
-## 📈 Changelog
+## Changelog
 
-### 🔄 Version 8.6.0 - Current Release ⭐
+### Version 8.6.0 - Current Release
 
 - New API and CI/CD documentation; added SARIF export guidance
 - Expanded environment configuration with multi-provider keys
@@ -2044,21 +2039,21 @@ We welcome contributions! Please follow these steps:
 - Enterprise documentation: SSO, RBAC, audit logs, data residency
 - Self-hosting section with optional Firebase and push setup
 
-### 🔄 Version 8.5.0
+### Version 8.5.0
 
-- 🔄 **Version Synchronization**: Updated all version references across the entire project for consistency
-- 📦 **Dependency Alignment**: Synchronized package.json, manifest, and service worker versions
-- 🛠️ **Build Optimization**: Enhanced Vite configuration with advanced chunk splitting strategies
-- 🎯 **TypeScript Updates**: Upgraded to TypeScript 5.9 with improved type checking
-- 📋 **Documentation**: Updated README.md with current accurate project details and dependencies
+- **Version Synchronization**: Updated all version references across the entire project for consistency
+- **Dependency Alignment**: Synchronized package.json, manifest, and service worker versions
+- **Build Optimization**: Enhanced Vite configuration with advanced chunk splitting strategies
+- **TypeScript Updates**: Upgraded to TypeScript 5.9 with improved type checking
+- **Documentation**: Updated README.md with current accurate project details and dependencies
 
 See [changelogs.md](./changelogs.md) for the full version history.
 
-## 🔮 Roadmap
+## Roadmap
 
 <div align="center">
 
-### 🚀 Development Timeline
+### Development Timeline
 
 ![UML Class Diagram](./UML%20class%20Diagram.png)
 _UML Class Diagram of the system_
@@ -2084,22 +2079,22 @@ gantt
 </div>
 
 <details>
-<summary><b>🎯 Detailed Feature Breakdown</b></summary>
+<summary><b>Detailed Feature Breakdown</b></summary>
 
-### 🌟 Next Release (v3.9.0) - Q1 2025
+### Next Release (v3.9.0) - Q1 2025
 
 <table>
 <tr>
 <td width="50%">
 
-**🌍 Internationalization**
+**Internationalization**
 
 - [ ] Support for 15+ languages
 - [ ] RTL language support
 - [ ] Cultural date/time formatting
 - [ ] Localized error messages
 
-**📱 Progressive Web App**
+**Progressive Web App**
 
 - [ ] Offline functionality
 - [ ] App-like experience
@@ -2109,14 +2104,14 @@ gantt
 </td>
 <td width="50%">
 
-**🔗 Git Integration**
+**Git Integration**
 
 - [ ] GitHub direct integration
 - [ ] GitLab CI/CD support
 - [ ] Bitbucket pipelines
 - [ ] Automated PR analysis
 
-**👥 Team Features**
+**Team Features**
 
 - [ ] Shared workspaces
 - [ ] Role-based permissions
@@ -2127,41 +2122,41 @@ gantt
 </tr>
 </table>
 
-### 🚀 Future Releases (v4.6.0+) - 2025 and Beyond
+### Future Releases (v4.6.0+) - 2025 and Beyond
 
-- 🤖 **AI Model Marketplace**: Integrate and deploy custom AI models
-- 🎤 **Voice Commands**: Voice-controlled navigation and file upload
-- 🧠 **Custom ML Models**: Project-specific analysis with machine learning
-- 🏢 **Enterprise Suite**: SSO, audit logs, compliance reporting
-- 🔌 **Plugin Ecosystem**: Extensible architecture for third-party integrations
-- 📊 **Predictive Analytics**: Trend forecasting and risk prediction
-- 🔒 **Advanced Security**: Zero-trust architecture and enhanced encryption
-- 🌐 **Internationalization**: Support for more languages and locales
-- 📱 **Mobile App**: Native mobile companion app
+- **AI Model Marketplace**: Integrate and deploy custom AI models
+- **Voice Commands**: Voice-controlled navigation and file upload
+- **Custom ML Models**: Project-specific analysis with machine learning
+- **Enterprise Suite**: SSO, audit logs, compliance reporting
+- **Plugin Ecosystem**: Extensible architecture for third-party integrations
+- **Predictive Analytics**: Trend forecasting and risk prediction
+- **Advanced Security**: Zero-trust architecture and enhanced encryption
+- **Internationalization**: Support for more languages and locales
+- **Mobile App**: Native mobile companion app
 
 </details>
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-## 👤 Author
+## Author
 
 **Aditya Kumar Tiwari**
 
-- 🎓 BCA in Cybersecurity, Sushant University
-- 💼 Cybersecurity Enthusiast | Full-Stack Developer | Lifelong Learner
-- 📧 Email: [itisaddy7@gmail.com](mailto:itisaddy7@gmail.com)
-- 🐙 GitHub: [@Xenonesis](https://github.com/Xenonesis)
-- 💼 LinkedIn: [Aditya Kumar Tiwari](https://linkedin.com/in/itisaddy)
-- 📸 Instagram: [@i\_\_aditya7](https://instagram.com/i__aditya7)
-- 🌐 Portfolio: [iaddy.netlify.app](https://iaddy.netlify.app)
+- BCA in Cybersecurity, Sushant University
+- Cybersecurity Enthusiast | Full-Stack Developer | Lifelong Learner
+- Email: [itisaddy7@gmail.com](mailto:itisaddy7@gmail.com)
+- GitHub: [@Xenonesis](https://github.com/Xenonesis)
+- LinkedIn: [Aditya Kumar Tiwari](https://linkedin.com/in/itisaddy)
+- Instagram: [@i\_\_aditya7](https://instagram.com/i__aditya7)
+- Portfolio: [iaddy.netlify.app](https://iaddy.netlify.app)
 
-### 🚀 About the Developer
+### About the Developer
 
 Passionate about the intersection of cybersecurity and development, Aditya specializes in creating secure and scalable solutions. Currently pursuing BCA in Cybersecurity with expertise in Python, JavaScript, Linux, and Cloud Computing. Committed to building impactful digital experiences that prioritize security and innovation.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - **React Team** - For the amazing React framework
 - **Vite Team** - For the excellent Vite build tool
@@ -2170,7 +2165,7 @@ Passionate about the intersection of cybersecurity and development, Aditya speci
 - **shadcn** - For the beautiful component library
 - **Open Source Community** - For the incredible tools and libraries
 
-## 📞 Support
+## Support
 
 If you encounter any issues or have questions:
 
@@ -2181,7 +2176,7 @@ If you encounter any issues or have questions:
 
 ---
 
-## 📊 Project Activity & Health
+## Project Activity & Health
 
 <div align="center">
   <img src="https://img.shields.io/github/commit-activity/m/Xenonesis/code-guardian-report?style=for-the-badge&labelColor=1a1a1a" alt="Commit activity (monthly)"/>
@@ -2198,14 +2193,14 @@ If you encounter any issues or have questions:
 
 <!-- CONTRIBUTORS:START -->
 
-## 🌟 Community & Contributors
+## Community & Contributors
 
 <div align="center">
 
-### 👥 Our Amazing Community
+### Our Amazing Community
 
 <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 20px; margin: 20px 0;">
-  <h3 style="color: white; margin-bottom: 20px;">📊 **Repository Statistics** 📊</h3>
+  <h3 style="color: white; margin-bottom: 20px;">**Repository Statistics**</h3>
   <p style="color: rgba(255,255,255,0.9); margin-bottom: 25px;">Thank you to our amazing community for making Code Guardian possible!</p>
   
   
@@ -2216,39 +2211,31 @@ If you encounter any issues or have questions:
   
   
   
-  
 
 
-  
-  
-  
-  
-  
-  
-  
   <table style="margin: 0 auto;">
     <tr>
       <td align="center" style="padding: 15px;">
         <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px;">
-          <h4 style="color: white; margin: 0; font-size: 24px;">⭐ 42</h4>
+          <h4 style="color: white; margin: 0; font-size: 24px;">42</h4>
           <p style="color: rgba(255,255,255,0.8); margin: 5px 0 0 0; font-size: 14px;">Stars</p>
         </div>
       </td>
       <td align="center" style="padding: 15px;">
         <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px;">
-          <h4 style="color: white; margin: 0; font-size: 24px;">🍴 31</h4>
+          <h4 style="color: white; margin: 0; font-size: 24px;">31</h4>
           <p style="color: rgba(255,255,255,0.8); margin: 5px 0 0 0; font-size: 14px;">Forks</p>
         </div>
       </td>
       <td align="center" style="padding: 15px;">
         <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px;">
-          <h4 style="color: white; margin: 0; font-size: 24px;">👥 16</h4>
+          <h4 style="color: white; margin: 0; font-size: 24px;">16</h4>
           <p style="color: rgba(255,255,255,0.8); margin: 5px 0 0 0; font-size: 14px;">Contributors</p>
         </div>
       </td>
       <td align="center" style="padding: 15px;">
         <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px;">
-          <h4 style="color: white; margin: 0; font-size: 24px;">👀 1</h4>
+          <h4 style="color: white; margin: 0; font-size: 24px;">1</h4>
           <p style="color: rgba(255,255,255,0.8); margin: 5px 0 0 0; font-size: 14px;">Watchers</p>
         </div>
       </td>
@@ -2256,10 +2243,10 @@ If you encounter any issues or have questions:
   </table>
 </div>
 
-### 🤝 Core Contributors
+### Core Contributors
 
 <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 30px; border-radius: 20px; margin: 20px 0;">
-  <h3 style="color: white; margin-bottom: 20px;">💻 **Top Contributors** 💻</h3>
+  <h3 style="color: white; margin-bottom: 20px;">**Top Contributors**</h3>
   <p style="color: rgba(255,255,255,0.9); margin-bottom: 25px; text-align: center;">Meet the amazing developers who have contributed to Code Guardian</p>
   
   <table style="margin: 0 auto;">
@@ -2269,108 +2256,121 @@ If you encounter any issues or have questions:
         <img src="https://avatars.githubusercontent.com/u/115968670?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
         <br/><strong style="color: white; font-size: 16px;">Xenonesis</strong>
         <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@Xenonesis</span>
-        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">👤 Contributor</span>
+        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">Contributor</span>
         <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
         <div style="margin-top: 10px;">
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">259 commits</span>
         </div>
       </td>
-    
+
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/in/15368?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
         <br/><strong style="color: white; font-size: 16px;">github-actions[bot]</strong>
         <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@github-actions[bot]</span>
-        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">👤 Contributor</span>
+        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">Contributor</span>
         <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
         <div style="margin-top: 10px;">
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">28 commits</span>
         </div>
       </td>
-    
+
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/65916846?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
         <br/><strong style="color: white; font-size: 16px;">actions-user</strong>
         <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@actions-user</span>
-        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">👤 Contributor</span>
+        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">Contributor</span>
         <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
         <div style="margin-top: 10px;">
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">6 commits</span>
         </div>
       </td>
-    
+
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/186174121?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
         <br/><strong style="color: white; font-size: 16px;">Muneerali199</strong>
         <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@Muneerali199</span>
-        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">👤 Contributor</span>
+        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">Contributor</span>
         <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
         <div style="margin-top: 10px;">
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">5 commits</span>
         </div>
       </td>
-    
+
     </tr>
+
 <tr>
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/164482191?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
         <br/><strong style="color: white; font-size: 16px;">sudharshanpaul</strong>
         <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@sudharshanpaul</span>
-        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">👤 Contributor</span>
+        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">Contributor</span>
         <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
         <div style="margin-top: 10px;">
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">4 commits</span>
         </div>
       </td>
-    
+
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/176881379?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
         <br/><strong style="color: white; font-size: 16px;">Jils31</strong>
         <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@Jils31</span>
-        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">👤 Contributor</span>
+        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">Contributor</span>
         <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
         <div style="margin-top: 10px;">
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">3 commits</span>
         </div>
       </td>
-    
+
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/118842369?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
         <br/><strong style="color: white; font-size: 16px;">raghavendra-24</strong>
         <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@raghavendra-24</span>
-        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">👤 Contributor</span>
+        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">Contributor</span>
         <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
         <div style="margin-top: 10px;">
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">3 commits</span>
         </div>
       </td>
-    
+
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/180313267?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
         <br/><strong style="color: white; font-size: 16px;">Baranidharanv06</strong>
         <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@Baranidharanv06</span>
-        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">👤 Contributor</span>
+        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">Contributor</span>
         <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
         <div style="margin-top: 10px;">
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">2 commits</span>
         </div>
       </td>
-    
+
+      <td align="center" style="padding: 20px;">
+        <img src="https://avatars.githubusercontent.com/u/180231504?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
+        <br/><strong style="color: white; font-size: 16px;">shubhranshu-sahu</strong>
+        <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@shubhranshu-sahu</span>
+        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">Contributor</span>
+        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
+        <div style="margin-top: 10px;">
+          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">2 commits</span>
+        </div>
+      </td>
+
+    </tr>
     </tr>
 
   </table>
 </div>
 
-### 🏅 All Contributors
+### All Contributors
 
 <div style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); padding: 25px; border-radius: 20px; margin: 20px 0;">
-  <h3 style="color: #333; margin-bottom: 20px;">🌟 **Thank You to All Contributors** 🌟</h3>
+  <h3 style="color: #333; margin-bottom: 20px;">**Thank You to All Contributors**</h3>
   
   <div style="text-align: center; margin-bottom: 20px;">
     <p style="color: #666; font-size: 16px;">We appreciate every contribution, no matter how big or small!</p>
@@ -2396,7 +2396,7 @@ If you encounter any issues or have questions:
       <img src="https://avatars.githubusercontent.com/u/132596404?v=4" width="50" height="50" style="border-radius: 50%; border: 2px solid #333; margin: 2px;" title="Pathan Mo. Faizan Khan (1 contributions)"/>
     </a>
     <a href="https://github.com/shubhranshu-sahu" target="_blank" style="text-decoration: none;">
-      <img src="https://avatars.githubusercontent.com/u/180231504?v=4" width="50" height="50" style="border-radius: 50%; border: 2px solid #333; margin: 2px;" title="Shubhranshu Sahu (1 contributions)"/>
+      <img src="https://avatars.githubusercontent.com/u/180231504?v=4" width="50" height="50" style="border-radius: 50%; border: 2px solid #333; margin: 2px;" title="Shubhranshu Sahu (2 contributions)"/>
     </a>
     <a href="https://github.com/bhuvnaaaaaa" target="_blank" style="text-decoration: none;">
       <img src="https://avatars.githubusercontent.com/u/200819625?v=4" width="50" height="50" style="border-radius: 50%; border: 2px solid #33; margin: 2px;" title="Bhuvaneshwari Mallesh (1 contributions)"/>
@@ -2404,25 +2404,25 @@ If you encounter any issues or have questions:
   </div>
   
   <div style="margin-top: 20px; text-align: center;">
-    <span style="color: #666; font-size: 14px;">🙏 <strong>Thank you to all 8 contributors who make Code Guardian possible!</strong></span>
+    <span style="color: #666; font-size: 14px;"><strong>Thank you to all 8 contributors who make Code Guardian possible!</strong></span>
   </div>
 </div>
 
 <!-- CONTRIBUTORS:END -->
 
-## 🌟 Show Your Support
+## Show Your Support
 
 <div align="center">
 
-### 💖 Love Code Guardian? Here's how you can help:
+### Love Code Guardian? Here's how you can help:
 
 <table>
 <tr>
 <td width="25%" align="center">
   <div style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); padding: 20px; border-radius: 15px; margin: 10px;">
     <a href="https://github.com/Xenonesis/code-guardian-report/stargazers" style="text-decoration: none;">
-      <img src="https://img.icons8.com/fluency/64/star.png" alt="Star" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));"/>
-      <br/><strong style="color: white; font-size: 16px;">⭐ Star</strong>
+      <img src="./public/icons/activity.svg" alt="Star" width="48" height="48"/>
+      <br/><strong style="color: white; font-size: 16px;">Star</strong>
       <br/><span style="color: rgba(25,255,255,0.9); font-size: 14px;">Give us a star on GitHub</span>
     </a>
   </div>
@@ -2430,8 +2430,8 @@ If you encounter any issues or have questions:
 <td width="25%" align="center">
   <div style="background: linear-gradient(135deg, #32CD32 0%, #228B22 100%); padding: 20px; border-radius: 15px; margin: 10px;">
     <a href="https://github.com/Xenonesis/code-guardian-report/network/members" style="text-decoration: none;">
-      <img src="https://img.icons8.com/fluency/64/code-fork.png" alt="Fork" style="filter: drop-shadow(0 4px 8px rgba(0,0,0.3));"/>
-      <br/><strong style="color: white; font-size: 16px;">🍴 Fork</strong>
+      <img src="./public/icons/layout-dashboard.svg" alt="Fork" width="48" height="48"/>
+      <br/><strong style="color: white; font-size: 16px;">Fork</strong>
       <br/><span style="color: rgba(25,255,255,0.9); font-size: 14px;">Fork and contribute</span>
     </a>
   </div>
@@ -2439,8 +2439,8 @@ If you encounter any issues or have questions:
 <td width="25%" align="center">
   <div style="background: linear-gradient(135deg, #FF6B6B 0%, #FF4757 100%); padding: 20px; border-radius: 15px; margin: 10px;">
     <a href="https://github.com/Xenonesis/code-guardian-report/issues" style="text-decoration: none;">
-      <img src="https://img.icons8.com/fluency/64/bug.png" alt="Issues" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));"/>
-      <br/><strong style="color: white; font-size: 16px;">🐛 Report</strong>
+      <img src="./public/icons/bug.svg" alt="Issues" width="48" height="48"/>
+      <br/><strong style="color: white; font-size: 16px;">Report</strong>
       <br/><span style="color: rgba(25,255,255,0.9); font-size: 14px;">Report bugs & issues</span>
     </a>
   </div>
@@ -2448,8 +2448,8 @@ If you encounter any issues or have questions:
 <td width="25%" align="center">
   <div style="background: linear-gradient(135deg, #1E90FF 0%, #0066CC 100%); padding: 20px; border-radius: 15px; margin: 10px;">
     <a href="https://twitter.com/intent/tweet?text=Check%20out%20Code%20Guardian%20-%20AI-powered%20security%20analysis%20platform!%20https://github.com/Xenonesis/code-guardian-report" style="text-decoration: none;">
-      <img src="https://img.icons8.com/fluency/64/share.png" alt="Share" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));"/>
-      <br/><strong style="color: white; font-size: 16px;">📢 Share</strong>
+      <img src="./public/icons/search.svg" alt="Share" width="48" height="48"/>
+      <br/><strong style="color: white; font-size: 16px;">Share</strong>
       <br/><span style="color: rgba(25,255,255,0.9); font-size: 14px;">Spread the word</span>
     </a>
   </div>
@@ -2463,38 +2463,38 @@ If you encounter any issues or have questions:
 
 ---
 
-**Made with ❤️ by Code Guardian Team | © 2026 Code Guardian Report**
+**Made with care by Code Guardian Team | Copyright 2026 Code Guardian Report**
 
-<!-- Animated Footer -->
+<!-- Footer -->
 <div align="center">
 
-<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%">
+<hr />
 
 <br>
 
 <!-- Social Links with Animation -->
 <p align="center">
   <a href="https://code-guardian-report.vercel.app" target="_blank">
-    <img src="https://img.shields.io/badge/🌐_Live_Demo-Visit_Now-4F46E5?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="Live Demo"/>
+    <img src="https://img.shields.io/badge/Live_Demo-Visit_Now-4F46E5?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="Live Demo"/>
   </a>
   &nbsp;
   <a href="https://github.com/adityakumar-in/code-guardian-report" target="_blank">
-    <img src="https://img.shields.io/badge/⭐_Star_on_GitHub-yellow?style=for-the-badge&logo=github&logoColor=white&labelColor=1a1a1a" alt="Star on GitHub"/>
+    <img src="https://img.shields.io/badge/Star_on_GitHub-yellow?style=for-the-badge&logo=github&logoColor=white&labelColor=1a1a1a" alt="Star on GitHub"/>
   </a>
   &nbsp;
   <a href="https://github.com/adityakumar-in/code-guardian-report/issues" target="_blank">
-    <img src="https://img.shields.io/badge/🐛_Report_Bug-red?style=for-the-badge&logo=github&logoColor=white&labelColor=1a1a1a" alt="Report Bug"/>
+    <img src="https://img.shields.io/badge/Report_Bug-red?style=for-the-badge&logo=github&logoColor=white&labelColor=1a1a1a" alt="Report Bug"/>
   </a>
   &nbsp;
   <a href="https://github.com/adityakumar-in/code-guardian-report/fork" target="_blank">
-    <img src="https://img.shields.io/badge/🍴_Fork-cyan?style=for-the-badge&logo=github&logoColor=white&labelColor=1a1a1a" alt="Fork"/>
+    <img src="https://img.shields.io/badge/Fork-cyan?style=for-the-badge&logo=github&logoColor=white&labelColor=1a1a1a" alt="Fork"/>
   </a>
 </p>
 
 <br>
 
 <!-- Contributors Table -->
-<h3>🤝 Maintained With Love By</h3>
+<h3>Maintained By</h3>
 
 <table>
 <tr>
@@ -2515,14 +2515,14 @@ If you encounter any issues or have questions:
 <!-- License and Copyright -->
 <p align="center">
   <img src="https://img.shields.io/badge/License-MIT-success?style=for-the-badge&logo=opensourceinitiative&logoColor=white&labelColor=1e293b" alt="MIT License"/>
-  <img src="https://img.shields.io/badge/Made_with-❤️-red?style=for-the-badge&labelColor=1e293b" alt="Made with Love"/>
+  <img src="https://img.shields.io/badge/Made_with-Care-red?style=for-the-badge&labelColor=1e293b" alt="Made with Care"/>
   <img src="https://img.shields.io/badge/TypeScript-100%25-blue?style=for-the-badge&logo=typescript&logoColor=white&labelColor=1e293b" alt="TypeScript"/>
 </p>
 
 <br>
 
 <!-- Final Quote -->
-<h3>💡 Remember</h3>
+<h3>Remember</h3>
 <p><em>"The only way to do great work is to love what you do." - Steve Jobs</em></p>
 
 <br>
@@ -2534,7 +2534,7 @@ If you encounter any issues or have questions:
 </picture>
 
 <p align="center">
-  <strong>Made with ❤️ by Code Guardian Team | © 2026 Code Guardian Report</strong>
+  <strong>Made with care by Code Guardian Team | Copyright 2026 Code Guardian Report</strong>
   <br>
   <sub>Empowering developers to build secure software, one line of code at a time.</sub>
 </p>
@@ -2542,7 +2542,7 @@ If you encounter any issues or have questions:
 <!-- Back to Top -->
 <p align="center">
   <a href="#-code-guardian">
-    <img src="https://img.shields.io/badge/⬆️_Back_to_Top-4F46E5?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="Back to Top"/>
+    <img src="https://img.shields.io/badge/Back_to_Top-4F46E5?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="Back to Top"/>
   </a>
 </p>
 
@@ -2550,7 +2550,7 @@ If you encounter any issues or have questions:
 
 ---
 
-## 📘 Extended Documentation Hub
+## Extended Documentation Hub
 
 This section consolidates the most requested enablement assets so that security teams, platform engineers, and AI practitioners can ship Code Guardian to production environments with confidence. Everything below is curated from internal runbooks, customer enablement calls, and product experiments performed inside this repository.
 
@@ -2609,12 +2609,12 @@ Each scenario above maps to tracked OKRs stored in `md/changelogs.md`, ensuring 
 
 ### 4. Reference Implementation Journey
 
-| Phase      | Goal                                                              | Checklist                                                                      |
-| ---------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------ |
-| Discovery  | Understand target repositories, data residency, and AI providers. | ✅ Inventory source control, ✅ confirm legal posture, ✅ map AI credits.      |
-| Prototype  | Stand up dev tenants and align sample workflows.                  | 🚧 Configure `.env.local`, 🚧 seed Firebase emulators, 🚧 test webhooks.       |
-| Hardening  | Bake in observability, RBAC, and policy guardrails.               | 🔐 Enable audit logging, 🔐 wire SARIF uploads, 🔐 configure backup rotations. |
-| Production | Roll out to org-wide engineering teams.                           | 🚀 Tag release in git, 🚀 publish changelog, 🚀 schedule Brown Bag training.   |
+| Phase      | Goal                                                              | Checklist                                                             |
+| ---------- | ----------------------------------------------------------------- | --------------------------------------------------------------------- |
+| Discovery  | Understand target repositories, data residency, and AI providers. | Inventory source control, confirm legal posture, map AI credits.      |
+| Prototype  | Stand up dev tenants and align sample workflows.                  | Configure `.env.local`, seed Firebase emulators, test webhooks.       |
+| Hardening  | Bake in observability, RBAC, and policy guardrails.               | Enable audit logging, wire SARIF uploads, configure backup rotations. |
+| Production | Roll out to org-wide engineering teams.                           | Tag release in git, publish changelog, schedule Brown Bag training.   |
 
 ### 5. Architecture Deep Dive
 
@@ -2763,16 +2763,16 @@ Run internal table-top exercises quarterly to validate the incident workflows do
 
 ### 18. Resource Links
 
-- 🔗 [md/CODE_OF_CONDUCT.md](md/CODE_OF_CONDUCT.md)
-- 🔗 [md/CONTRIBUTING.md](md/CONTRIBUTING.md)
-- 🔗 [next.config.ts](next.config.ts)
-- 🔗 [scripts/run-all-tests.ts](scripts/run-all-tests.ts)
+- [md/CODE_OF_CONDUCT.md](md/CODE_OF_CONDUCT.md)
+- [md/CONTRIBUTING.md](md/CONTRIBUTING.md)
+- [next.config.ts](next.config.ts)
+- [scripts/run-all-tests.ts](scripts/run-all-tests.ts)
 
 > **Tip:** Bookmark this extended hub so onboarding engineers can self-serve the majority of answers before opening a support ticket.
 
 ---
 
-## 📡 API Reference & Integration Contracts
+## API Reference & Integration Contracts
 
 The public API surface is intentionally compact so that organizations can audit every payload that leaves their networks. All routes are implemented inside the Vercel api/ directory and share a common authentication middleware with support for PATs, signed JWTs, or HMAC headers. The contract described here mirrors the code paths you will find in api/analytics.ts, api/analytics/pwa.ts, and api/push/\*.
 
@@ -2874,7 +2874,7 @@ query RecentFindings($limit: Int = 20!) {
 }
 ```
 
-## 🧰 CLI & Automation Recipes
+## CLI & Automation Recipes
 
 Leverage the scripts under /scripts to orchestrate Code Guardian in any CI/CD provider:
 
@@ -2892,7 +2892,7 @@ Leverage the scripts under /scripts to orchestrate Code Guardian in any CI/CD pr
 - Use CI=1 environment flag to force non-interactive progress bars.
 - Cache the .guardian-cache directory between jobs to reuse AST + AI embeddings.
 
-## ☁️ Multi-Cloud Deployment Guides
+## Multi-Cloud Deployment Guides
 
 ### AWS Reference Stack
 
@@ -2922,7 +2922,7 @@ Leverage the scripts under /scripts to orchestrate Code Guardian in any CI/CD pr
 - Mirror AI providers through approved gateways; update VITE\_\*\_API_URL variables accordingly.
 - Publish SARIF artifacts to internal GitHub Enterprise servers for persistent evidence.
 
-## 🔎 Observability & Telemetry
+## Observability & Telemetry
 
 | Layer        | Signal                                             | Tooling                                                               |
 | ------------ | -------------------------------------------------- | --------------------------------------------------------------------- |
@@ -2937,7 +2937,7 @@ Recommended action items:
 2. Push logs to the same index patterns documented in the Security Operations Guide for faster triage.
 3. Set SLOs for analysis.completed under 3 minutes for medium repositories; alert when breaches occur twice consecutively.
 
-## 🧪 Validation Matrix
+## Validation Matrix
 
 | Validation Layer    | Tool / Script                                  | Cadence                   | Owner                 |
 | ------------------- | ---------------------------------------------- | ------------------------- | --------------------- |
@@ -2948,14 +2948,14 @@ Recommended action items:
 | Security Regression | scripts/run-multi-language-tests.js            | Nightly + pre-release     | AppSec                |
 | AI Benchmarking     | scripts/run-accuracy-test.ts                   | Weekly or on model change | AI Steering Committee |
 
-## 🔐 Policy as Code Highlights
+## Policy as Code Highlights
 
 - **Role Mapping**: The policy engine associates Firebase auth claims (or custom headers) with GuardRails (viewer, contributor, admin). Customize the mapping in src/components/auth.
 - **Branch Enforcement**: Example GitHub Actions workflow (Appendix D) blocks merges if severity ≥ high.
 - **Data Classification**: Findings inherit tags such as confidential, restricted, public according to src/config/security.ts.
 - **Retention**: JSON exports auto-expire after 30 days unless archived via the CLI.
 
-## 📈 KPI Workbook
+## KPI Workbook
 
 | KPI                           | Calculation                                                | Widget                                                   |
 | ----------------------------- | ---------------------------------------------------------- | -------------------------------------------------------- |
@@ -2966,7 +2966,7 @@ Recommended action items:
 
 Export KPIs to CSV or plug them into PowerBI/Tableau using Appendix C as the canonical schema.
 
-## 🚑 Incident Runbooks
+## Incident Runbooks
 
 1. **Critical Finding Escalation**
    - Confirm alert details in the notification center.
@@ -2981,7 +2981,7 @@ Export KPIs to CSV or plug them into PowerBI/Tableau using Appendix C as the can
    - Temporarily disable the webhook from the dashboard.
    - Patch the consumer and re-enable; Code Guardian auto-replays buffered events.
 
-## 🧠 Training Plans
+## Training Plans
 
 | Session           | Audience           | Duration | Outcomes                                                             |
 | ----------------- | ------------------ | -------- | -------------------------------------------------------------------- |
@@ -2992,7 +2992,7 @@ Export KPIs to CSV or plug them into PowerBI/Tableau using Appendix C as the can
 
 Each training module references assets tracked in tmp_rovodev_QUICK_START.md and tmp_rovodev_FINAL_REPORT.md so lessons remain consistent.
 
-## 🛡️ Appendix A: Control Catalogue
+## Appendix A: Control Catalogue
 
 #### Control CG-SQL-JS
 
@@ -5082,7 +5082,7 @@ Each training module references assets tracked in tmp_rovodev_QUICK_START.md and
 - **Automation Level:** scripts/test-pattern.js --mode ast ensures coverage.
 - **Validation Steps:** Monitor telemetry counters for parser fallbacks.
 
-## 📜 Appendix B: OpenAPI 3.1 Snapshot
+## Appendix B: OpenAPI 3.1 Snapshot
 
 ```yaml
 openapi: 3.1.0
@@ -5366,7 +5366,7 @@ components:
           type: string
 ```
 
-## 📦 Appendix C: Sample Analysis Artifact (JSON)
+## Appendix C: Sample Analysis Artifact (JSON)
 
 ```json
 {
@@ -5463,7 +5463,7 @@ components:
 }
 ```
 
-## 🧬 Appendix D: GitHub Actions Workflow (Hardened)
+## Appendix D: GitHub Actions Workflow (Hardened)
 
 ```yaml
 name: code-guardian

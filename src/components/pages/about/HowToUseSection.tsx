@@ -20,6 +20,7 @@ import {
   AlertTriangle,
   Code,
   Eye,
+  Lightbulb,
 } from "lucide-react";
 
 const HowToUseSection = () => {
@@ -386,8 +387,9 @@ const HowToUseSection = () => {
 
               {/* Tips */}
               <div className="rounded-lg border border-amber-200 bg-amber-50 p-4 dark:border-amber-800 dark:bg-amber-950">
-                <h4 className="mb-2 font-semibold text-amber-800 dark:text-amber-200">
-                  💡 Pro Tips:
+                <h4 className="mb-2 flex items-center gap-2 font-semibold text-amber-800 dark:text-amber-200">
+                  <Lightbulb className="h-4 w-4" />
+                  Pro Tips:
                 </h4>
                 <ul className="space-y-1">
                   {steps[activeStep].tips.map((tip, index) => (

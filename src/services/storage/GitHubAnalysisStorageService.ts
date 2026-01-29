@@ -94,7 +94,7 @@ export class GitHubAnalysisStorageService {
     } catch (error) {
       logger.error("Error fetching repositories:", error);
       logger.warn(
-        "⚠️ Using offline mode - Firebase unavailable. Returning empty data."
+        "Using offline mode - Firebase unavailable. Returning empty data."
       );
 
       if (typeof window !== "undefined") {
@@ -165,7 +165,7 @@ export class GitHubAnalysisStorageService {
     } catch (error) {
       logger.error("Error fetching analysis history:", error);
       logger.warn(
-        "⚠️ Using offline mode - Firebase unavailable. Returning empty data."
+        "Using offline mode - Firebase unavailable. Returning empty data."
       );
 
       if (typeof window !== "undefined") {
@@ -261,7 +261,7 @@ export class GitHubAnalysisStorageService {
       };
     } catch (error) {
       logger.error("Error fetching security trends:", error);
-      logger.warn("⚠️ Using offline mode - Firebase unavailable.");
+      logger.warn("Using offline mode - Firebase unavailable.");
       // Return empty data in production
       if (process.env.NODE_ENV === "production") {
         return {
@@ -348,7 +348,7 @@ export class GitHubAnalysisStorageService {
       };
     } catch (error) {
       logger.error("Error fetching activity analytics:", error);
-      logger.warn("⚠️ Using offline mode - Firebase unavailable.");
+      logger.warn("Using offline mode - Firebase unavailable.");
       // Return empty data in production
       if (process.env.NODE_ENV === "production") {
         return {

@@ -11,7 +11,7 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-console.log("🚀 Multi-Language Security Analysis - Test Suite\n");
+console.log("Multi-Language Security Analysis - Test Suite\n");
 console.log("=".repeat(60));
 
 // Test configurations
@@ -80,7 +80,7 @@ let totalTests = 0;
 let passedTests = 0;
 let failedTests = 0;
 
-console.log("\n📋 Running Language Detection Tests...\n");
+console.log("\nRunning Language Detection Tests...\n");
 
 // Test language detection
 Object.keys(testCases).forEach((lang) => {
@@ -90,15 +90,15 @@ Object.keys(testCases).forEach((lang) => {
 
   try {
     // In a real implementation, this would call the analyzer
-    console.log(`  ✅ ${lang} detected correctly from ${testCase.file}`);
+    console.log(`  ${lang} detected correctly from ${testCase.file}`);
     passedTests++;
   } catch (error) {
-    console.log(`  ❌ Failed to detect ${lang}`);
+    console.log(`  Failed to detect ${lang}`);
     failedTests++;
   }
 });
 
-console.log("\n🔍 Running Security Rule Tests...\n");
+console.log("\nRunning Security Rule Tests...\n");
 
 // Test security rules
 Object.entries(testCases).forEach(([lang, testCase]) => {
@@ -108,10 +108,10 @@ Object.entries(testCases).forEach(([lang, testCase]) => {
     totalTests++;
     try {
       // In a real implementation, this would analyze the code
-      console.log(`  ✅ Detected: ${issue}`);
+      console.log(`  Detected: ${issue}`);
       passedTests++;
     } catch (error) {
-      console.log(`  ❌ Failed to detect: ${issue}`);
+      console.log(`  Failed to detect: ${issue}`);
       failedTests++;
     }
   });
@@ -119,22 +119,22 @@ Object.entries(testCases).forEach(([lang, testCase]) => {
 
 // Summary
 console.log("\n" + "=".repeat(60));
-console.log("📊 Test Summary\n");
+console.log("Test Summary\n");
 console.log(`Total Tests:  ${totalTests}`);
 console.log(
-  `✅ Passed:    ${passedTests} (${Math.round((passedTests / totalTests) * 100)}%)`
+  `Passed:    ${passedTests} (${Math.round((passedTests / totalTests) * 100)}%)`
 );
-console.log(`❌ Failed:    ${failedTests}`);
+console.log(`Failed:    ${failedTests}`);
 console.log("\n" + "=".repeat(60));
 
 if (failedTests === 0) {
   console.log(
-    "\n🎉 All tests passed! Multi-language support is working correctly.\n"
+    "\nAll tests passed! Multi-language support is working correctly.\n"
   );
   process.exit(0);
 } else {
   console.log(
-    `\n⚠️  ${failedTests} test(s) failed. Please review the output above.\n`
+    `\n${failedTests} test(s) failed. Please review the output above.\n`
   );
   process.exit(1);
 }

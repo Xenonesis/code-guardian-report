@@ -19,6 +19,9 @@ import {
   Zap,
   Star,
   Globe,
+  Rocket,
+  Wrench,
+  Lightbulb,
 } from "lucide-react";
 
 const MeetDeveloperSection = () => {
@@ -275,8 +278,9 @@ const MeetDeveloperSection = () => {
             <CardContent className="space-y-6">
               {/* USP */}
               <div>
-                <h4 className="mb-3 font-semibold text-slate-900 dark:text-white">
-                  🚀 Unique Selling Proposition (USP)
+                <h4 className="mb-3 flex items-center gap-2 font-semibold text-slate-900 dark:text-white">
+                  <Rocket className="h-4 w-4 text-indigo-600" />
+                  Unique Selling Proposition (USP)
                 </h4>
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                   <div className="rounded-lg bg-blue-50 p-4 dark:bg-blue-950/30">
@@ -311,8 +315,9 @@ const MeetDeveloperSection = () => {
 
               {/* Technologies */}
               <div>
-                <h4 className="mb-3 font-semibold text-slate-900 dark:text-white">
-                  🛠️ Technologies Used
+                <h4 className="mb-3 flex items-center gap-2 font-semibold text-slate-900 dark:text-white">
+                  <Wrench className="h-4 w-4 text-slate-600" />
+                  Technologies Used
                 </h4>
                 <div className="flex flex-wrap gap-2">
                   {technologies.map((tech, index) => (
@@ -325,8 +330,9 @@ const MeetDeveloperSection = () => {
 
               {/* Impact */}
               <div>
-                <h4 className="mb-3 font-semibold text-slate-900 dark:text-white">
-                  💡 Why It Matters
+                <h4 className="mb-3 flex items-center gap-2 font-semibold text-slate-900 dark:text-white">
+                  <Lightbulb className="h-4 w-4 text-amber-500" />
+                  Why It Matters
                 </h4>
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                   <div className="flex items-start gap-3">

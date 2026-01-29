@@ -21,34 +21,34 @@ const tests = [
   },
 ];
 
-console.log("🚀 Running All Functionality Tests...\n");
+console.log("Running All Functionality Tests...\n");
 
 let passed = 0;
 let failed = 0;
 
 for (const test of tests) {
-  console.log(`\n📋 Running ${test.name}...`);
+  console.log(`\nRunning ${test.name}...`);
   try {
     execSync(test.command, { stdio: "inherit" });
-    console.log(`✅ ${test.name} Passed`);
+    console.log(`${test.name} Passed`);
     passed++;
   } catch (error) {
-    console.log(`❌ ${test.name} Failed`);
+    console.log(`${test.name} Failed`);
     failed++;
   }
 }
 
 console.log("\n" + "=".repeat(60));
-console.log("📊 Final Test Summary\n");
+console.log("Final Test Summary\n");
 console.log(`Total Tests:  ${tests.length}`);
-console.log(`✅ Passed:    ${passed}`);
-console.log(`❌ Failed:    ${failed}`);
+console.log(`Passed:    ${passed}`);
+console.log(`Failed:    ${failed}`);
 console.log("\n" + "=".repeat(60));
 
 if (failed === 0) {
-  console.log("\n🎉 All functionalities are working correctly!");
+  console.log("\nAll functionalities are working correctly!");
   process.exit(0);
 } else {
-  console.log(`\n⚠️  ${failed} test suite(s) failed.`);
+  console.log(`\n${failed} test suite(s) failed.`);
   process.exit(1);
 }

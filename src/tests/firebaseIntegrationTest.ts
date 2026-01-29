@@ -88,7 +88,7 @@ const createTestFile = (): File => {
 
 // Test functions
 export const testFirebaseIntegration = async () => {
-  logger.debug("🧪 Starting Firebase Integration Tests...");
+  logger.debug("Starting Firebase Integration Tests...");
 
   const results = {
     total: 0,
@@ -99,18 +99,18 @@ export const testFirebaseIntegration = async () => {
 
   // Test 1: Storage Service Initialization
   try {
-    logger.debug("📋 Test 1: Storage Service Initialization");
+    logger.debug("Test 1: Storage Service Initialization");
     results.total++;
 
     const storageStatus = analysisIntegrationService.getStorageStatus();
     if (storageStatus.local && typeof storageStatus.firebase === "object") {
-      logger.debug("✅ Storage service initialized successfully");
+      logger.debug("Storage service initialized successfully");
       results.passed++;
     } else {
       throw new Error("Storage service not properly initialized");
     }
   } catch (error) {
-    logger.error("❌ Test 1 Failed:", error);
+    logger.error("Test 1 Failed:", error);
     results.failed++;
     results.errors.push(
       `Test 1: ${error instanceof Error ? error.message : "Unknown error"}`
@@ -119,7 +119,7 @@ export const testFirebaseIntegration = async () => {
 
   // Test 2: Local Storage (Anonymous User)
   try {
-    logger.debug("📋 Test 2: Local Storage (Anonymous User)");
+    logger.debug("Test 2: Local Storage (Anonymous User)");
     results.total++;
 
     const testFile = createTestFile();
@@ -135,13 +135,13 @@ export const testFirebaseIntegration = async () => {
       );
 
     if (storageResult.local.success && !storageResult.firebase.success) {
-      logger.debug("✅ Local storage working for anonymous users");
+      logger.debug("Local storage working for anonymous users");
       results.passed++;
     } else {
       throw new Error("Local storage test failed");
     }
   } catch (error) {
-    logger.error("❌ Test 2 Failed:", error);
+    logger.error("Test 2 Failed:", error);
     results.failed++;
     results.errors.push(
       `Test 2: ${error instanceof Error ? error.message : "Unknown error"}`
@@ -150,13 +150,13 @@ export const testFirebaseIntegration = async () => {
 
   // Test 3: Firebase Storage (Mock Authenticated User)
   try {
-    logger.debug("📋 Test 3: Firebase Storage (Mock User)");
+    logger.debug("Test 3: Firebase Storage (Mock User)");
     results.total++;
 
     // Check connection first
     const isConnected = await testFirebaseConnection();
     if (!isConnected) {
-      logger.warn("⚠️ Skipping Firebase storage test due to no connection");
+      logger.warn("Skipping Firebase storage test due to no connection");
       results.passed++; // Skip but count as passed (or ignored)
     } else {
       const testFile = createTestFile();
@@ -175,40 +175,40 @@ export const testFirebaseIntegration = async () => {
 
       // Note: This might fail if Firebase isn't configured or network issues
       // We'll log the result regardless
-      logger.debug("📊 Firebase storage result:", storageResult.firebase);
+      logger.debug("Firebase storage result:", storageResult.firebase);
 
       if (storageResult.local.success) {
-        logger.debug("✅ At least local storage is working");
+        logger.debug("At least local storage is working");
         results.passed++;
       } else {
         throw new Error("Both local and Firebase storage failed");
       }
     }
   } catch (error) {
-    logger.error("⚠️ Test 3 Partial:", error);
+    logger.error("Test 3 Partial:", error);
     logger.debug(
-      "ℹ️ This is expected if Firebase isn't configured for testing"
+      "Note: This is expected if Firebase isn't configured for testing"
     );
     results.passed++; // Pass if local works
   }
 
   // Test 4: Data Retrieval
   try {
-    logger.debug("📋 Test 4: Data Retrieval");
+    logger.debug("Test 4: Data Retrieval");
     results.total++;
 
     const currentAnalysis =
       await analysisIntegrationService.getCurrentAnalysis();
 
     if (currentAnalysis && currentAnalysis.data) {
-      logger.debug("✅ Data retrieval working:", currentAnalysis.source);
+      logger.debug("Data retrieval working:", currentAnalysis.source);
       results.passed++;
     } else {
-      logger.debug("ℹ️ No stored data found (expected for clean test)");
+      logger.debug("Note: No stored data found (expected for clean test)");
       results.passed++; // This is acceptable
     }
   } catch (error) {
-    logger.error("❌ Test 4 Failed:", error);
+    logger.error("Test 4 Failed:", error);
     results.failed++;
     results.errors.push(
       `Test 4: ${error instanceof Error ? error.message : "Unknown error"}`
@@ -217,7 +217,7 @@ export const testFirebaseIntegration = async () => {
 
   // Test 5: Integration Service Methods
   try {
-    logger.debug("📋 Test 5: Integration Service Methods");
+    logger.debug("Test 5: Integration Service Methods");
     results.total++;
 
     // Test storage status
@@ -227,13 +227,13 @@ export const testFirebaseIntegration = async () => {
     analysisIntegrationService.clearAllAnalysisData();
 
     if (typeof status === "object" && status.local && status.firebase) {
-      logger.debug("✅ Integration service methods working");
+      logger.debug("Integration service methods working");
       results.passed++;
     } else {
       throw new Error("Integration service methods not working properly");
     }
   } catch (error) {
-    logger.error("❌ Test 5 Failed:", error);
+    logger.error("Test 5 Failed:", error);
     results.failed++;
     results.errors.push(
       `Test 5: ${error instanceof Error ? error.message : "Unknown error"}`
@@ -241,16 +241,16 @@ export const testFirebaseIntegration = async () => {
   }
 
   // Test Summary
-  logger.debug("\n🏁 Test Results Summary:");
-  logger.debug(`📊 Total Tests: ${results.total}`);
-  logger.debug(`✅ Passed: ${results.passed}`);
-  logger.debug(`❌ Failed: ${results.failed}`);
+  logger.debug("\nTest Results Summary:");
+  logger.debug(`Total Tests: ${results.total}`);
+  logger.debug(`Passed: ${results.passed}`);
+  logger.debug(`Failed: ${results.failed}`);
   logger.debug(
-    `📈 Success Rate: ${((results.passed / results.total) * 100).toFixed(1)}%`
+    `Success Rate: ${((results.passed / results.total) * 100).toFixed(1)}%`
   );
 
   if (results.errors.length > 0) {
-    logger.debug("\n❌ Errors:");
+    logger.debug("\nErrors:");
     results.errors.forEach((error, index) => {
       logger.debug(`${index + 1}. ${error}`);
     });
@@ -260,10 +260,10 @@ export const testFirebaseIntegration = async () => {
 
   if (isSuccess) {
     logger.debug(
-      "\n🎉 All tests passed! Firebase integration is working correctly."
+      "\nAll tests passed! Firebase integration is working correctly."
     );
   } else {
-    logger.debug("\n⚠️ Some tests failed. Check the errors above for details.");
+    logger.debug("\nSome tests failed. Check the errors above for details.");
   }
 
   return {
@@ -275,7 +275,7 @@ export const testFirebaseIntegration = async () => {
 
 // Utility function to test Firebase connection
 export const testFirebaseConnection = async () => {
-  logger.debug("🔥 Testing Firebase Connection...");
+  logger.debug("Testing Firebase Connection...");
 
   try {
     // Import Firebase configuration
@@ -289,7 +289,7 @@ export const testFirebaseConnection = async () => {
 
     // Try to access Firestore with a timeout
     if (db) {
-      logger.debug("✅ Firebase configuration loaded successfully");
+      logger.debug("Firebase configuration loaded successfully");
 
       // Try a real connection check
       try {
@@ -305,17 +305,17 @@ export const testFirebaseConnection = async () => {
         return true;
       } catch (e) {
         logger.warn(
-          "⚠️ Firebase connection check failed (offline or no permission):",
+          "Firebase connection check failed (offline or no permission):",
           e
         );
         return false;
       }
     } else {
-      logger.error("❌ Firebase database not initialized");
+      logger.error("Firebase database not initialized");
       return false;
     }
   } catch (error) {
-    logger.error("❌ Firebase connection failed:", error);
+    logger.error("Firebase connection failed:", error);
     return false;
   }
 };
@@ -323,8 +323,8 @@ export const testFirebaseConnection = async () => {
 // Auto-run tests if this file is executed directly
 if (typeof window !== "undefined" && window.location) {
   // Only run in browser environment
-  logger.debug("🔧 Firebase Integration Test Module Loaded");
-  logger.debug("💡 Run testFirebaseIntegration() to execute tests");
+  logger.debug("Firebase Integration Test Module Loaded");
+  logger.debug("Run testFirebaseIntegration() to execute tests");
 
   // Add to window for manual testing
   (window as any).testFirebaseIntegration = testFirebaseIntegration;

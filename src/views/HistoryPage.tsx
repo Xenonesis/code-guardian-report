@@ -95,22 +95,22 @@ export const HistoryPage = ({
 
   const loadAnalysisHistory = useCallback(async () => {
     if (!currentUser?.uid) {
-      logger.debug("🚫 No user authenticated for history loading");
+      logger.debug("No user authenticated for history loading");
       return;
     }
 
-    logger.debug("📊 Loading analysis history for user:", currentUser.uid);
+    logger.debug("Loading analysis history for user:", currentUser.uid);
     setIsLoading(true);
 
     try {
       firebaseAnalysisStorage.setUserId(currentUser.uid);
-      logger.debug("🔧 Firebase service user ID set");
+      logger.debug("Firebase service user ID set");
 
       const history = await firebaseAnalysisStorage.getUserAnalysisHistory(
         currentUser.uid
       );
-      logger.debug(`📈 Retrieved history: ${history.length} analyses`);
-      logger.debug("📋 History data:", history);
+      logger.debug(`Retrieved history: ${history.length} analyses`);
+      logger.debug("History data:", history);
 
       // Deduplicate history entries based on fileName and fileHash
       const deduplicatedHistory = history.filter((analysis, index, array) => {
@@ -123,28 +123,28 @@ export const HistoryPage = ({
       });
 
       logger.debug(
-        `🔄 Deduplicated history: ${deduplicatedHistory.length} unique analyses`
+        `Deduplicated history: ${deduplicatedHistory.length} unique analyses`
       );
 
       setAnalysisHistory(deduplicatedHistory);
 
       toast({
-        title: "📊 History Loaded",
+        title: "History Loaded",
         description: `Found ${deduplicatedHistory.length} unique analysis results.`,
       });
 
       if (deduplicatedHistory.length === 0) {
-        logger.debug("ℹ️ No analysis history found for this user");
+        logger.debug("No analysis history found for this user");
         toast({
-          title: "📝 No History Yet",
+          title: "No History Yet",
           description: "Upload and analyze some code to see your history here.",
         });
       }
     } catch (err) {
-      logger.error("❌ Error loading analysis history:", err);
+      logger.error("Error loading analysis history:", err);
 
       toast({
-        title: "❌ Failed to Load History",
+        title: "Failed to Load History",
         description: `Could not load your analysis history: ${err instanceof Error ? err.message : String(err)}`,
         variant: "destructive",
       });
@@ -271,7 +271,7 @@ export const HistoryPage = ({
       );
 
       toast({
-        title: "🗑️ Analysis Deleted",
+        title: "Analysis Deleted",
         description: "Analysis has been permanently deleted.",
       });
 
@@ -280,7 +280,7 @@ export const HistoryPage = ({
     } catch (error) {
       logger.error("Error deleting analysis:", error);
       toast({
-        title: "❌ Delete Failed",
+        title: "Delete Failed",
         description: "Could not delete analysis.",
         variant: "destructive",
       });
@@ -301,7 +301,7 @@ export const HistoryPage = ({
     }
 
     toast({
-      title: "👁️ Analysis Loaded",
+      title: "Analysis Loaded",
       description: `Viewing results for ${analysis.fileName}`,
     });
   };
@@ -339,12 +339,12 @@ export const HistoryPage = ({
       URL.revokeObjectURL(url);
 
       toast({
-        title: "📤 Export Complete",
+        title: "Export Complete",
         description: "Your analysis history has been exported.",
       });
     } catch {
       toast({
-        title: "❌ Export Failed",
+        title: "Export Failed",
         description: "Could not export analysis history.",
         variant: "destructive",
       });
@@ -594,10 +594,10 @@ export const HistoryPage = ({
                     <SelectValue placeholder="Time Range" />
                   </SelectTrigger>
                   <SelectContent className="border-white/10 bg-slate-900 text-white">
-                    <SelectItem value="all">📅 All Time</SelectItem>
-                    <SelectItem value="week">📅 Past Week</SelectItem>
-                    <SelectItem value="month">📅 Past Month</SelectItem>
-                    <SelectItem value="year">📅 Past Year</SelectItem>
+                    <SelectItem value="all">All Time</SelectItem>
+                    <SelectItem value="week">Past Week</SelectItem>
+                    <SelectItem value="month">Past Month</SelectItem>
+                    <SelectItem value="year">Past Year</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -615,11 +615,11 @@ export const HistoryPage = ({
                     <SelectValue placeholder="Severity" />
                   </SelectTrigger>
                   <SelectContent className="border-white/10 bg-slate-900 text-white">
-                    <SelectItem value="all">⚡ All Severities</SelectItem>
-                    <SelectItem value="critical">🔴 Critical</SelectItem>
-                    <SelectItem value="high">🟠 High</SelectItem>
-                    <SelectItem value="medium">🟡 Medium</SelectItem>
-                    <SelectItem value="low">🟢 Low</SelectItem>
+                    <SelectItem value="all">All Severities</SelectItem>
+                    <SelectItem value="critical">Critical</SelectItem>
+                    <SelectItem value="high">High</SelectItem>
+                    <SelectItem value="medium">Medium</SelectItem>
+                    <SelectItem value="low">Low</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

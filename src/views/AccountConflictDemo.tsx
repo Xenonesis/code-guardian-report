@@ -29,7 +29,7 @@ export const AccountConflictDemo: React.FC = () => {
   // Prevent access in production
   useEffect(() => {
     if (process.env.NODE_ENV === "production") {
-      logger.warn("⚠️ Demo pages are not available in production");
+      logger.warn("Demo pages are not available in production");
       window.location.href = "/";
     }
   }, []);

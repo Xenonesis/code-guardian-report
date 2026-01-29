@@ -64,7 +64,7 @@ export const FirebaseTestPanel = () => {
     setTestResult(null);
 
     try {
-      logger.debug("🚀 Starting Firebase integration tests...");
+      logger.debug("Starting Firebase integration tests...");
       const result = await testFirebaseIntegration();
       setTestResult(result);
     } catch (error) {

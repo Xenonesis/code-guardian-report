@@ -39,7 +39,7 @@ export const useAnalysisHandlers = ({
     onSetIsRedirecting(true);
 
     toast({
-      title: "✅ Analysis Complete!",
+      title: "Analysis Complete",
       description: `Found ${results.issues.length} issues across ${results.totalFiles} files. Results saved automatically. Redirecting...`,
       variant: "default",
       duration: 2000,
@@ -50,7 +50,7 @@ export const useAnalysisHandlers = ({
       onSetIsRedirecting(false);
 
       toast({
-        title: "📊 Results Ready!",
+        title: "Results Ready",
         description: hasStoredData
           ? "Analysis results are now displayed below and saved for future access."
           : "Analysis results are now displayed below.",
@@ -63,7 +63,7 @@ export const useAnalysisHandlers = ({
   const handleClearStoredData = () => {
     onClearStoredData();
     toast({
-      title: "🗑️ Data Cleared",
+      title: "Data Cleared",
       description: "Stored analysis data has been cleared successfully.",
       variant: "default",
       duration: 2000,
@@ -74,14 +74,14 @@ export const useAnalysisHandlers = ({
     try {
       onExportAnalysis(format);
       toast({
-        title: "📤 Export Complete",
+        title: "Export Complete",
         description: `Analysis data exported as ${format.toUpperCase()} file.`,
         variant: "default",
         duration: 2000,
       });
     } catch (error) {
       toast({
-        title: "❌ Export Failed",
+        title: "Export Failed",
         description: "Failed to export analysis data. Please try again.",
         variant: "destructive",
         duration: 3000,
@@ -93,14 +93,14 @@ export const useAnalysisHandlers = ({
     try {
       onImportAnalysis(data, compressed);
       toast({
-        title: "📥 Import Complete",
+        title: "Import Complete",
         description: "Analysis data imported successfully.",
         variant: "default",
         duration: 2000,
       });
     } catch (error) {
       toast({
-        title: "❌ Import Failed",
+        title: "Import Failed",
         description:
           "Failed to import analysis data. Please check the file format.",
         variant: "destructive",
@@ -113,14 +113,14 @@ export const useAnalysisHandlers = ({
     try {
       await onOptimizeStorage();
       toast({
-        title: "🧹 Storage Optimized",
+        title: "Storage Optimized",
         description: "Storage has been optimized successfully.",
         variant: "default",
         duration: 2000,
       });
     } catch (error) {
       toast({
-        title: "❌ Optimization Failed",
+        title: "Optimization Failed",
         description: "Failed to optimize storage. Please try again.",
         variant: "destructive",
         duration: 3000,
@@ -132,7 +132,7 @@ export const useAnalysisHandlers = ({
     onRestoreFromHistory(analysisData);
     onSetCurrentTab("results");
     toast({
-      title: "📋 Analysis Restored",
+      title: "Analysis Restored",
       description: `Successfully restored analysis for ${analysisData.fileName}.`,
       variant: "default",
       duration: 2000,

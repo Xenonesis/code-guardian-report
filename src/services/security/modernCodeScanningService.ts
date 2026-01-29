@@ -1235,7 +1235,7 @@ export class ModernCodeScanningService {
     const debtDays = (technicalDebt / (8 * 60)).toFixed(1); // Convert to days
 
     return `
-Quality Gate: ${qualityGate.passed ? "✓ PASSED" : "✗ FAILED"}
+Quality Gate: ${qualityGate.passed ? "PASSED" : "FAILED"}
 
 Reliability Rating: ${this.getReliabilityRating(metrics.bugs)}
 Security Rating: ${this.getSecurityRating(metrics.vulnerabilities)}

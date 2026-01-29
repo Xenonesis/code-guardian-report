@@ -681,14 +681,14 @@ class CustomRulesEngineClass {
    */
   private getCategoryIcon(category: string): string {
     const icons: Record<string, string> = {
-      Security: "🔒",
-      Performance: "⚡",
-      "Best Practices": "✨",
-      Maintainability: "🔧",
-      Accessibility: "♿",
-      Testing: "🧪",
+      Security: "SEC",
+      Performance: "PERF",
+      "Best Practices": "BP",
+      Maintainability: "MAINT",
+      Accessibility: "A11Y",
+      Testing: "TEST",
     };
-    return icons[category] || "📋";
+    return icons[category] || "CAT";
   }
 
   /**

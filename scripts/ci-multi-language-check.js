@@ -10,7 +10,7 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-console.log("🔧 CI/CD Multi-Language Validation\n");
+console.log("CI/CD Multi-Language Validation\n");
 
 // Configuration
 const config = {
@@ -37,25 +37,25 @@ const config = {
 let allChecksPassed = true;
 
 // Check 1: Parser file exists
-console.log("✓ Checking parser file...");
+console.log("Checking parser file...");
 if (!fs.existsSync(config.parserFile)) {
-  console.error(`  ❌ Parser file not found: ${config.parserFile}`);
+  console.error(`  Parser file not found: ${config.parserFile}`);
   allChecksPassed = false;
 } else {
-  console.log(`  ✅ Parser file exists`);
+  console.log("  Parser file exists");
 }
 
 // Check 2: Analyzer file exists
-console.log("✓ Checking analyzer file...");
+console.log("Checking analyzer file...");
 if (!fs.existsSync(config.analyzerFile)) {
-  console.error(`  ❌ Analyzer file not found: ${config.analyzerFile}`);
+  console.error(`  Analyzer file not found: ${config.analyzerFile}`);
   allChecksPassed = false;
 } else {
-  console.log(`  ✅ Analyzer file exists`);
+  console.log("  Analyzer file exists");
 }
 
 // Check 3: All languages are defined
-console.log("✓ Checking language support...");
+console.log("Checking language support...");
 const parserContent = fs.readFileSync(config.parserFile, "utf8");
 const analyzerContent = fs.readFileSync(config.analyzerFile, "utf8");
 
@@ -64,21 +64,21 @@ config.requiredLanguages.forEach((lang) => {
   const inAnalyzer = analyzerContent.includes(`'${lang}'`);
 
   if (!inParser || !inAnalyzer) {
-    console.error(`  ❌ Language '${lang}' not properly configured`);
+    console.error(`  Language '${lang}' not properly configured`);
     allChecksPassed = false;
   } else {
-    console.log(`  ✅ ${lang} configured`);
+    console.log(`  ${lang} configured`);
   }
 });
 
 // Check 4: Security rules exist
-console.log("✓ Checking security rules...");
+console.log("Checking security rules...");
 const rulePattern = /id:\s*'(\w+-\w+-\w+)'/g;
 const rules = [...analyzerContent.matchAll(rulePattern)];
-console.log(`  ✅ Found ${rules.length} security rules`);
+console.log(`  Found ${rules.length} security rules`);
 
 // Check 5: Each language has minimum rules
-console.log("✓ Checking rules per language...");
+console.log("Checking rules per language...");
 config.requiredLanguages.forEach((lang) => {
   const langRulePattern = new RegExp(
     `languages:\\s*\\[([^\\]])*'${lang}'`,
@@ -88,47 +88,47 @@ config.requiredLanguages.forEach((lang) => {
 
   if (langRules.length < config.minRulesPerLanguage) {
     console.warn(
-      `  ⚠️  ${lang} has only ${langRules.length} rules (minimum: ${config.minRulesPerLanguage})`
+      `  ${lang} has only ${langRules.length} rules (minimum: ${config.minRulesPerLanguage})`
     );
   } else {
-    console.log(`  ✅ ${lang}: ${langRules.length} rules`);
+    console.log(`  ${lang}: ${langRules.length} rules`);
   }
 });
 
 // Check 6: UI components updated
-console.log("✓ Checking UI components...");
+console.log("Checking UI components...");
 const displayFile = "src/components/language/MultiLanguageSupportDisplay.tsx";
 if (fs.existsSync(displayFile)) {
   const displayContent = fs.readFileSync(displayFile, "utf8");
   const languageCount = (displayContent.match(/name:\s*'/g) || []).length;
-  console.log(`  ✅ UI component has ${languageCount} languages configured`);
+  console.log(`  UI component has ${languageCount} languages configured`);
 
   if (languageCount < config.requiredLanguages.length) {
     console.warn(
-      `  ⚠️  UI might not show all languages (found ${languageCount}, expected ${config.requiredLanguages.length})`
+      `  UI might not show all languages (found ${languageCount}, expected ${config.requiredLanguages.length})`
     );
   }
 } else {
-  console.warn(`  ⚠️  UI component file not found`);
+  console.warn("  UI component file not found");
 }
 
 // Check 7: Test file exists
-console.log("✓ Checking test files...");
+console.log("Checking test files...");
 const testFile = "src/tests/multiLanguageAnalysis.test.ts";
 if (fs.existsSync(testFile)) {
-  console.log(`  ✅ Test file exists`);
+  console.log("  Test file exists");
 } else {
-  console.warn(`  ⚠️  Test file not found: ${testFile}`);
+  console.warn(`  Test file not found: ${testFile}`);
 }
 
 // Final summary
 console.log("\n" + "=".repeat(60));
 if (allChecksPassed) {
   console.log(
-    "✅ All checks passed! Multi-language support is properly configured.\n"
+    "All checks passed! Multi-language support is properly configured.\n"
   );
   process.exit(0);
 } else {
-  console.log("❌ Some checks failed. Please review the output above.\n");
+  console.log("Some checks failed. Please review the output above.\n");
   process.exit(1);
 }

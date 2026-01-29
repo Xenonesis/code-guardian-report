@@ -44,91 +44,91 @@ interface MultiLanguageSupportDisplayProps {
 const SUPPORTED_LANGUAGES = [
   {
     name: "JavaScript",
-    icon: "🟨",
+    iconLabel: "JS",
     extensions: [".js", ".jsx", ".mjs", ".cjs"],
     color: "bg-yellow-500",
     ecosystem: "Web",
   },
   {
     name: "TypeScript",
-    icon: "🔷",
+    iconLabel: "TS",
     extensions: [".ts", ".tsx", ".d.ts"],
     color: "bg-blue-500",
     ecosystem: "Web",
   },
   {
     name: "Python",
-    icon: "🐍",
+    iconLabel: "PY",
     extensions: [".py", ".pyw", ".pyi"],
     color: "bg-blue-600",
     ecosystem: "Backend / Data Science",
   },
   {
     name: "Java",
-    icon: "☕",
+    iconLabel: "JAVA",
     extensions: [".java"],
     color: "bg-red-600",
     ecosystem: "Enterprise / Backend",
   },
   {
     name: "C++",
-    icon: "⚙️",
+    iconLabel: "C++",
     extensions: [".cpp", ".cxx", ".cc", ".hpp"],
     color: "bg-purple-600",
     ecosystem: "Systems / Performance",
   },
   {
     name: "C",
-    icon: "🔧",
+    iconLabel: "C",
     extensions: [".c", ".h"],
     color: "bg-gray-600",
     ecosystem: "Systems / Embedded",
   },
   {
     name: "Go",
-    icon: "🐹",
+    iconLabel: "GO",
     extensions: [".go"],
     color: "bg-cyan-500",
     ecosystem: "Backend / Cloud",
   },
   {
     name: "Rust",
-    icon: "🦀",
+    iconLabel: "RS",
     extensions: [".rs"],
     color: "bg-orange-600",
     ecosystem: "Systems / WebAssembly",
   },
   {
     name: "PHP",
-    icon: "🐘",
+    iconLabel: "PHP",
     extensions: [".php", ".phtml"],
     color: "bg-indigo-600",
     ecosystem: "Web / Backend",
   },
   {
     name: "C#",
-    icon: "💜",
+    iconLabel: "C#",
     extensions: [".cs", ".csx"],
     color: "bg-purple-700",
     ecosystem: "Enterprise / Gaming",
   },
   {
     name: "Ruby",
-    icon: "💎",
+    iconLabel: "RB",
     extensions: [".rb", ".rake"],
     color: "bg-red-500",
     ecosystem: "Web / Backend",
   },
   {
     name: "Swift",
-    icon: "🦅",
+    iconLabel: "Swift",
     extensions: [".swift"],
     color: "bg-orange-500",
     ecosystem: "iOS / macOS",
   },
   {
     name: "Kotlin",
-    icon: "🤖",
+    iconLabel: "KT",
     extensions: [".kt", ".kts"],
     color: "bg-purple-500",
     ecosystem: "Android / Backend",
@@ -296,7 +296,11 @@ export const MultiLanguageSupportDisplay: React.FC<
                   <CardContent className="p-4">
                     <div className="mb-3 flex items-start justify-between">
                       <div className="flex items-center gap-3">
-                        <span className="text-3xl">{lang.icon}</span>
+                        <span
+                          className={`inline-flex h-10 w-10 items-center justify-center rounded-lg text-xs font-semibold text-white ${lang.color}`}
+                        >
+                          {lang.iconLabel}
+                        </span>
                         <div>
                           <h3 className="text-lg font-semibold">{lang.name}</h3>
                           <p className="text-muted-foreground text-xs">

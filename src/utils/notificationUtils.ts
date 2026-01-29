@@ -17,14 +17,14 @@ export const createNotification = (
 export const getNotificationIcon = (type: string) => {
   switch (type) {
     case "success":
-      return "✅";
+      return "OK";
     case "error":
-      return "❌";
+      return "ERR";
     case "warning":
-      return "⚠️";
+      return "WARN";
     case "info":
     default:
-      return "ℹ️";
+      return "INFO";
   }
 };
 

@@ -116,25 +116,25 @@ function renderRepositoryStatsHTML(stats) {
     <tr>
       <td align="center" style="padding: 15px;">
         <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px;">
-          <h4 style="color: white; margin: 0; font-size: 24px;">⭐ ${stats.stars}</h4>
+          <h4 style="color: white; margin: 0; font-size: 24px;">Stars: ${stats.stars}</h4>
           <p style="color: rgba(255,255,255,0.8); margin: 5px 0 0 0; font-size: 14px;">Stars</p>
         </div>
       </td>
       <td align="center" style="padding: 15px;">
         <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px;">
-          <h4 style="color: white; margin: 0; font-size: 24px;">🍴 ${stats.forks}</h4>
+          <h4 style="color: white; margin: 0; font-size: 24px;">Forks: ${stats.forks}</h4>
           <p style="color: rgba(255,255,255,0.8); margin: 5px 0 0 0; font-size: 14px;">Forks</p>
         </div>
       </td>
       <td align="center" style="padding: 15px;">
         <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px;">
-          <h4 style="color: white; margin: 0; font-size: 24px;">👥 ${stats.contributorsCount}</h4>
+          <h4 style="color: white; margin: 0; font-size: 24px;">Contributors: ${stats.contributorsCount}</h4>
           <p style="color: rgba(255,255,255,0.8); margin: 5px 0 0 0; font-size: 14px;">Contributors</p>
         </div>
       </td>
       <td align="center" style="padding: 15px;">
         <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px;">
-          <h4 style="color: white; margin: 0; font-size: 24px;">👀 ${stats.watchers}</h4>
+          <h4 style="color: white; margin: 0; font-size: 24px;">Watchers: ${stats.watchers}</h4>
           <p style="color: rgba(255,255,255,0.8); margin: 5px 0 0 0; font-size: 14px;">Watchers</p>
         </div>
       </td>
@@ -159,7 +159,7 @@ function renderTopContributorsTable(top) {
         <img src="${c.avatar_url}" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
         <br/><strong style="color: white; font-size: 16px;">${c.login}</strong>
         <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@${c.login}</span>
-        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">👤 Contributor</span>
+        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">Contributor</span>
         <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
         <div style="margin-top: 10px;">
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">${c.contributions} commits</span>
@@ -176,7 +176,7 @@ function renderTopContributorsTable(top) {
 
 function safeReplaceRepositoryStats(readme, stats) {
   const start =
-    '<h3 style="color: white; margin-bottom: 20px;">📊 **Repository Statistics** 📊</h3>';
+    '<h3 style="color: white; margin-bottom: 20px;">**Repository Statistics**</h3>';
   // We replace the immediate following <table>...</table> block within the stats container
   const tableStart = '<table style="margin: 0 auto;">';
   const tableEnd = "</table>";
@@ -195,8 +195,8 @@ function safeReplaceRepositoryStats(readme, stats) {
 }
 
 function safeReplaceTopContributors(readme, top) {
-  const header = "💻 **Top Contributors** 💻";
-  const headerAlt = "💻 **Top Contributors** 💻</h3>"; // in case of exact h3 markup
+  const header = "**Top Contributors**";
+  const headerAlt = "**Top Contributors**</h3>"; // in case of exact h3 markup
   const sectionStartIdx = readme.indexOf(header);
   const sectionIdx =
     sectionStartIdx !== -1 ? sectionStartIdx : readme.indexOf(headerAlt);

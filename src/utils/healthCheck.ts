@@ -193,9 +193,9 @@ class ProductionHealthChecker {
     logger.group("Production Health Check Results");
 
     this.checks.forEach((check) => {
-      const emoji = check.status === "pass" ? "✅" : "❌";
+      const statusLabel = check.status === "pass" ? "PASS" : "FAIL";
       const message = check.message ? ` - ${check.message}` : "";
-      logger.info(`${emoji} ${check.name}${message}`);
+      logger.info(`${statusLabel} ${check.name}${message}`);
     });
 
     logger.groupEnd();
@@ -221,6 +221,6 @@ export async function runProductionHealthChecks(): Promise<void> {
       `Production health check completed with ${results.failed} failures`
     );
   } else {
-    logger.info("All production health checks passed! ✅");
+    logger.info("All production health checks passed!");
   }
 }

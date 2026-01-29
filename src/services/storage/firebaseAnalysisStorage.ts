@@ -115,7 +115,7 @@ export class FirebaseAnalysisStorageService {
     }
 
     try {
-      logger.debug("🔥 Storing analysis results to Firebase...", {
+      logger.debug("Storing analysis results to Firebase...", {
         fileName: file.name,
         fileSize: file.size,
         userId: this.userId,
@@ -166,7 +166,7 @@ export class FirebaseAnalysisStorageService {
         sanitizedData
       );
 
-      logger.debug("✅ Analysis stored successfully with ID:", docRef.id);
+      logger.debug("Analysis stored successfully with ID:", docRef.id);
 
       // Update sync status
       await updateDoc(docRef, { syncStatus: "synced" });
@@ -174,7 +174,7 @@ export class FirebaseAnalysisStorageService {
 
       return docRef.id;
     } catch (error) {
-      logger.error("❌ Failed to store analysis results to Firebase:", error);
+      logger.error("Failed to store analysis results to Firebase:", error);
       throw new Error(
         `Failed to store analysis results: ${error instanceof Error ? error.message : "Unknown error"}`
       );
@@ -516,7 +516,7 @@ export class FirebaseAnalysisStorageService {
 
       return analysisId;
     } catch (error) {
-      logger.error("❌ Failed to update analysis results:", error);
+      logger.error("Failed to update analysis results:", error);
       throw error;
     }
   }
@@ -627,7 +627,7 @@ export class FirebaseAnalysisStorageService {
           // Handle permission errors gracefully
           if (error?.code === "permission-denied") {
             logger.warn(
-              "⚠️ Firebase real-time listener: Permission denied. User may not be authenticated or lacks access rights."
+              "Firebase real-time listener: Permission denied. User may not be authenticated or lacks access rights."
             );
             // Clean up the listener
             if (this.unsubscribeSnapshot) {
@@ -635,12 +635,12 @@ export class FirebaseAnalysisStorageService {
               this.unsubscribeSnapshot = null;
             }
           } else {
-            logger.error("❌ Real-time listener error:", error);
+            logger.error("Real-time listener error:", error);
           }
         }
       );
     } catch (error) {
-      logger.error("❌ Failed to setup real-time listener:", error);
+      logger.error("Failed to setup real-time listener:", error);
     }
   }
 

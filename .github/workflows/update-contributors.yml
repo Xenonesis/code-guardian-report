@@ -57,7 +57,7 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add README.md
-          git commit -m "🤖 Auto-update contributors in README.md
+          git commit -m "Auto-update contributors in README.md
 
           - Updated contributor list with latest GitHub data
           - Refreshed repository statistics
@@ -69,12 +69,12 @@ jobs:
       - name: Create summary
         if: steps.verify-changed-files.outputs.changed == 'true'
         run: |
-          echo "✅ Contributors section updated successfully!" >> $GITHUB_STEP_SUMMARY
-          echo "📊 README.md has been updated with the latest contributor information." >> $GITHUB_STEP_SUMMARY
-          echo "🔄 This update was triggered by: ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "Contributors section updated successfully!" >> $GITHUB_STEP_SUMMARY
+          echo "README.md has been updated with the latest contributor information." >> $GITHUB_STEP_SUMMARY
+          echo "This update was triggered by: ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
 
       - name: No changes summary
         if: steps.verify-changed-files.outputs.changed == 'false'
         run: |
-          echo "ℹ️ No changes detected in contributors section." >> $GITHUB_STEP_SUMMARY
-          echo "📊 README.md is already up to date." >> $GITHUB_STEP_SUMMARY
+          echo "No changes detected in contributors section." >> $GITHUB_STEP_SUMMARY
+          echo "README.md is already up to date." >> $GITHUB_STEP_SUMMARY

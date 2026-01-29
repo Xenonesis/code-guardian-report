@@ -248,10 +248,10 @@ api_key = "sk-1234567890abcdefghijklmnopqrstuvwx"
    * Run a single test case
    */
   private async runTestCase(testCase: TestCase): Promise<void> {
-    logger.group(`🧪 ${testCase.name}`);
-    logger.debug(`📝 ${testCase.description}`);
-    logger.debug(`📄 Filename: ${testCase.filename}`);
-    logger.debug(`📋 Test Code:\n${testCase.code}`);
+    logger.group(`${testCase.name}`);
+    logger.debug(`${testCase.description}`);
+    logger.debug(`Filename: ${testCase.filename}`);
+    logger.debug(`Test Code:\n${testCase.code}`);
 
     try {
       // Create test ZIP
@@ -259,10 +259,10 @@ api_key = "sk-1234567890abcdefghijklmnopqrstuvwx"
         testCase.filename,
         testCase.code
       );
-      logger.debug(`📦 Created ZIP blob: ${zipBlob.size} bytes`);
+      logger.debug(`Created ZIP blob: ${zipBlob.size} bytes`);
 
       // Run analysis
-      logger.debug(`⚙️  Running analysis...`);
+      logger.debug("Running analysis...");
       const results = await this.engine.analyzeCodebase(zipBlob as any);
 
       logger.debug(`� Analysis Complete:`);
@@ -279,7 +279,7 @@ api_key = "sk-1234567890abcdefghijklmnopqrstuvwx"
           );
         }
       } else {
-        logger.warn(`   ⚠️  NO ISSUES DETECTED!`);
+        logger.warn("NO ISSUES DETECTED!");
       }
 
       // Verify results are real (not mock)
@@ -288,8 +288,7 @@ api_key = "sk-1234567890abcdefghijklmnopqrstuvwx"
         this.results.details.push({
           testName: testCase.name,
           status: "FAIL",
-          message:
-            "❌ MOCK DATA DETECTED - Results appear to be fake/hardcoded",
+          message: "MOCK DATA DETECTED - Results appear to be fake/hardcoded",
         });
         this.results.errors.push(`${testCase.name}: Mock data detected`);
         return;
@@ -310,7 +309,7 @@ api_key = "sk-1234567890abcdefghijklmnopqrstuvwx"
         this.results.details.push({
           testName: testCase.name,
           status: "FAIL",
-          message: `❌ INSUFFICIENT DETECTION - Expected at least ${testCase.expectedIssues.minCount} issues, found ${issueCount}`,
+          message: `INSUFFICIENT DETECTION - Expected at least ${testCase.expectedIssues.minCount} issues, found ${issueCount}`,
           actualIssues: issueCount,
           expectedMin: testCase.expectedIssues.minCount,
         });
@@ -335,7 +334,7 @@ api_key = "sk-1234567890abcdefghijklmnopqrstuvwx"
         this.results.details.push({
           testName: testCase.name,
           status: "FAIL",
-          message: `⚠️ WRONG ISSUE TYPES - Expected one of [${testCase.expectedIssues.types.join(", ")}], found [${Array.from(foundTypes).join(", ")}]`,
+          message: `WRONG ISSUE TYPES - Expected one of [${testCase.expectedIssues.types.join(", ")}], found [${Array.from(foundTypes).join(", ")}]`,
           actualIssues: issueCount,
         });
         this.results.errors.push(
@@ -350,7 +349,7 @@ api_key = "sk-1234567890abcdefghijklmnopqrstuvwx"
       );
 
       if (!hasExpectedSeverity) {
-        logger.debug(`   ⚠️ Warning: Expected severities not found`);
+        logger.debug("Warning: Expected severities not found");
       }
 
       // Test PASSED
@@ -358,11 +357,11 @@ api_key = "sk-1234567890abcdefghijklmnopqrstuvwx"
       this.results.details.push({
         testName: testCase.name,
         status: "PASS",
-        message: `✅ ACCURATE DETECTION - Found ${issueCount} real issues with correct types`,
+        message: `ACCURATE DETECTION - Found ${issueCount} real issues with correct types`,
         actualIssues: issueCount,
         expectedMin: testCase.expectedIssues.minCount,
       });
-      logger.debug(`   ✅ Test PASSED`);
+      logger.debug("Test PASSED");
       logger.groupEnd();
     } catch (error) {
       this.results.failed++;
@@ -370,10 +369,10 @@ api_key = "sk-1234567890abcdefghijklmnopqrstuvwx"
       this.results.details.push({
         testName: testCase.name,
         status: "FAIL",
-        message: `❌ ERROR: ${errorMsg}`,
+        message: `ERROR: ${errorMsg}`,
       });
       this.results.errors.push(`${testCase.name}: ${errorMsg}`);
-      logger.error(`   ❌ Test FAILED:`, errorMsg);
+      logger.error("Test FAILED:", errorMsg);
       logger.groupEnd();
     }
   }
@@ -411,7 +410,7 @@ api_key = "sk-1234567890abcdefghijklmnopqrstuvwx"
    * Run all tests
    */
   public async runAllTests(): Promise<void> {
-    logger.debug("🔬 ANALYSIS ACCURACY TEST SUITE");
+    logger.debug("ANALYSIS ACCURACY TEST SUITE");
     logger.debug("================================\n");
     logger.debug("Testing real vulnerability detection...\n");
 
@@ -429,17 +428,17 @@ api_key = "sk-1234567890abcdefghijklmnopqrstuvwx"
    * Print test results summary
    */
   private printResults(): void {
-    logger.debug("\n\n📊 TEST RESULTS SUMMARY");
+    logger.debug("\n\nTEST RESULTS SUMMARY");
     logger.debug("================================");
     logger.debug(`Total Tests: ${this.results.total}`);
-    logger.debug(`✅ Passed: ${this.results.passed}`);
-    logger.debug(`❌ Failed: ${this.results.failed}`);
+    logger.debug(`Passed: ${this.results.passed}`);
+    logger.debug(`Failed: ${this.results.failed}`);
     logger.debug(
-      `📈 Success Rate: ${((this.results.passed / this.results.total) * 100).toFixed(1)}%`
+      `Success Rate: ${((this.results.passed / this.results.total) * 100).toFixed(1)}%`
     );
 
     if (this.results.failed > 0) {
-      logger.debug("\n❌ FAILED TESTS:");
+      logger.debug("\nFAILED TESTS:");
       this.results.details
         .filter((d) => d.status === "FAIL")
         .forEach((detail, index) => {
@@ -449,12 +448,12 @@ api_key = "sk-1234567890abcdefghijklmnopqrstuvwx"
     }
 
     if (this.results.passed === this.results.total) {
-      logger.debug("\n🎉 ALL TESTS PASSED!");
-      logger.debug("✅ Analysis engine is providing accurate, real results");
-      logger.debug("✅ No mock or fake data detected");
-      logger.debug("✅ Vulnerability detection is working correctly");
+      logger.debug("\nALL TESTS PASSED!");
+      logger.debug("Analysis engine is providing accurate, real results");
+      logger.debug("No mock or fake data detected");
+      logger.debug("Vulnerability detection is working correctly");
     } else {
-      logger.debug("\n⚠️ SOME TESTS FAILED");
+      logger.debug("\nSOME TESTS FAILED");
       logger.debug(
         "The analysis engine may not be detecting all vulnerabilities correctly."
       );

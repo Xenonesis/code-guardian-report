@@ -18,6 +18,20 @@ import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import { PageLayout } from "@/components/layout/PageLayout";
 import { useDarkMode } from "@/hooks/useDarkMode";
+import {
+  Activity,
+  Bell,
+  BellRing,
+  ClipboardList,
+  Database,
+  Folder,
+  Gauge,
+  Layers,
+  Loader2,
+  MousePointerClick,
+  Play,
+  RefreshCw,
+} from "lucide-react";
 
 const NotificationTest: React.FC = () => {
   const [testResults, setTestResults] = useState<string[]>([]);
@@ -35,20 +49,20 @@ const NotificationTest: React.FC = () => {
 
   // Test 1: Basic Notifications
   const testBasicNotifications = () => {
-    logTest("🧪 Testing basic notifications...");
+    logTest("TEST: Basic notifications");
 
     notify.success("Success Test", {
       message: "This is a success notification",
       category: "general",
     });
-    logTest("✓ Success notification sent");
+    logTest("PASS: Success notification sent");
 
     setTimeout(() => {
       notify.error("Error Test", {
         message: "This is an error notification",
         category: "general",
       });
-      logTest("✓ Error notification sent");
+      logTest("PASS: Error notification sent");
     }, 500);
 
     setTimeout(() => {
@@ -56,7 +70,7 @@ const NotificationTest: React.FC = () => {
         message: "This is a warning notification",
         category: "general",
       });
-      logTest("✓ Warning notification sent");
+      logTest("PASS: Warning notification sent");
     }, 1000);
 
     setTimeout(() => {
@@ -64,13 +78,13 @@ const NotificationTest: React.FC = () => {
         message: "This is an info notification",
         category: "general",
       });
-      logTest("✓ Info notification sent");
+      logTest("PASS: Info notification sent");
     }, 1500);
   };
 
   // Test 2: Priority Levels
   const testPriorityLevels = () => {
-    logTest("🧪 Testing priority levels...");
+    logTest("TEST: Priority levels");
 
     ["urgent", "high", "normal", "low"].forEach((priority, index) => {
       setTimeout(() => {
@@ -79,14 +93,14 @@ const NotificationTest: React.FC = () => {
           priority: priority as "urgent" | "high" | "normal" | "low",
           category: "system",
         });
-        logTest(`✓ ${priority} priority notification sent`);
+        logTest(`PASS: ${priority} priority notification sent`);
       }, index * 500);
     });
   };
 
   // Test 3: Categories
   const testCategories = () => {
-    logTest("🧪 Testing different categories...");
+    logTest("TEST: Categories");
 
     const categories = [
       "system",
@@ -113,14 +127,14 @@ const NotificationTest: React.FC = () => {
             | "export"
             | "general",
         });
-        logTest(`✓ ${category} category notification sent`);
+        logTest(`PASS: ${category} category notification sent`);
       }, index * 300);
     });
   };
 
   // Test 4: Notification with Action
   const testNotificationWithAction = () => {
-    logTest("🧪 Testing notification with action...");
+    logTest("TEST: Notification with action");
 
     notify.info("Action Test", {
       message: "This notification has an action button",
@@ -128,16 +142,16 @@ const NotificationTest: React.FC = () => {
         label: "Click Me",
         onClick: () => {
           toast.success("Action button clicked!");
-          logTest("✓ Action button executed");
+          logTest("PASS: Action button executed");
         },
       },
     });
-    logTest("✓ Notification with action sent");
+    logTest("PASS: Notification with action sent");
   };
 
   // Test 5: Batching
   const testBatching = () => {
-    logTest("🧪 Testing notification batching (5 notifications)...");
+    logTest("TEST: Notification batching (5 notifications)");
 
     for (let i = 1; i <= 5; i++) {
       setTimeout(() => {
@@ -145,14 +159,14 @@ const NotificationTest: React.FC = () => {
           message: `This is batch notification ${i} of 5`,
           priority: "normal",
         });
-        logTest(`✓ Batch notification ${i} sent`);
+        logTest(`PASS: Batch notification ${i} sent`);
       }, i * 100);
     }
   };
 
   // Test 6: Real-time Updates
   const testRealTimeUpdates = () => {
-    logTest("🧪 Testing real-time updates (10 seconds)...");
+    logTest("TEST: Real-time updates (10 seconds)");
     let count = 0;
 
     const interval = setInterval(() => {
@@ -161,18 +175,18 @@ const NotificationTest: React.FC = () => {
         message: `Update at ${new Date().toLocaleTimeString()}`,
         priority: "low",
       });
-      logTest(`✓ Real-time update ${count} sent`);
+      logTest(`PASS: Real-time update ${count} sent`);
 
       if (count >= 10) {
         clearInterval(interval);
-        logTest("✓ Real-time test completed");
+        logTest("DONE: Real-time test completed");
       }
     }, 1000);
   };
 
   // Test 7: Stress Test
   const testStressTest = () => {
-    logTest("🧪 Starting stress test (20 notifications)...");
+    logTest("TEST: Stress test (20 notifications)");
 
     const types = ["success", "error", "warning", "info"] as const;
     const priorities = ["urgent", "high", "normal", "low"] as const;
@@ -190,51 +204,51 @@ const NotificationTest: React.FC = () => {
         });
 
         if (i % 5 === 0) {
-          logTest(`✓ ${i} notifications sent`);
+          logTest(`PASS: ${i} notifications sent`);
         }
       }, i * 100);
     }
 
     setTimeout(() => {
-      logTest("✓ Stress test completed");
+      logTest("DONE: Stress test completed");
     }, 2500);
   };
 
   // Test 8: Toast Integration Test
   const testToastIntegration = () => {
-    logTest("🧪 Testing toast integration...");
+    logTest("TEST: Toast integration");
 
     toast.success("Direct Toast Success", {
       description: "This is using sonner directly",
     });
-    logTest("✓ Direct toast sent");
+    logTest("PASS: Direct toast sent");
 
     setTimeout(() => {
       toast.error("Direct Toast Error", {
         description: "Testing error toast",
       });
-      logTest("✓ Error toast sent");
+      logTest("PASS: Error toast sent");
     }, 500);
 
     setTimeout(() => {
       toast.warning("Direct Toast Warning", {
         description: "Testing warning toast",
       });
-      logTest("✓ Warning toast sent");
+      logTest("PASS: Warning toast sent");
     }, 1000);
   };
 
   // Test 9: Persistence Test
   const testPersistence = () => {
-    logTest("🧪 Testing localStorage persistence...");
+    logTest("TEST: localStorage persistence");
 
     try {
       const stored = localStorage.getItem("notificationHistory");
       if (stored) {
         const parsed = JSON.parse(stored);
-        logTest(`✓ Found ${parsed.length} stored notifications`);
+        logTest(`PASS: Found ${parsed.length} stored notifications`);
       } else {
-        logTest("✓ No stored notifications (fresh start)");
+        logTest("PASS: No stored notifications (fresh start)");
       }
 
       // Create a test notification
@@ -245,20 +259,20 @@ const NotificationTest: React.FC = () => {
       setTimeout(() => {
         const updated = localStorage.getItem("notificationHistory");
         if (updated) {
-          logTest("✓ Notification successfully persisted");
+          logTest("PASS: Notification successfully persisted");
         } else {
-          logTest("⚠️ Notification not persisted");
+          logTest("WARN: Notification not persisted");
         }
       }, 500);
     } catch (error) {
-      logTest(`❌ Persistence test failed: ${error}`);
+      logTest(`FAIL: Persistence test failed: ${error}`);
     }
   };
 
   // Test 10: Comprehensive Test
   const runComprehensiveTest = async () => {
     setIsRunning(true);
-    logTest("🚀 Starting comprehensive notification test suite...");
+    logTest("START: Comprehensive notification test suite");
 
     await new Promise((resolve) => setTimeout(resolve, 500));
     testBasicNotifications();
@@ -282,7 +296,7 @@ const NotificationTest: React.FC = () => {
     testPersistence();
 
     await new Promise((resolve) => setTimeout(resolve, 2000));
-    logTest("✅ Comprehensive test suite completed!");
+    logTest("DONE: Comprehensive test suite completed");
     setIsRunning(false);
   };
 
@@ -303,7 +317,8 @@ const NotificationTest: React.FC = () => {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              🔔 Real-Time Notification System Test
+              <Bell className="h-5 w-5 text-indigo-600" />
+              Real-Time Notification System Test
               {unreadCount > 0 && (
                 <Badge variant="destructive">{unreadCount} unread</Badge>
               )}
@@ -359,63 +374,72 @@ const NotificationTest: React.FC = () => {
                   variant="outline"
                   className="w-full"
                 >
-                  📝 Basic Notifications
+                  <ClipboardList className="mr-2 h-4 w-4" />
+                  Basic Notifications
                 </Button>
                 <Button
                   onClick={testPriorityLevels}
                   variant="outline"
                   className="w-full"
                 >
-                  ⚡ Priority Levels
+                  <Gauge className="mr-2 h-4 w-4" />
+                  Priority Levels
                 </Button>
                 <Button
                   onClick={testCategories}
                   variant="outline"
                   className="w-full"
                 >
-                  📁 Categories
+                  <Folder className="mr-2 h-4 w-4" />
+                  Categories
                 </Button>
                 <Button
                   onClick={testNotificationWithAction}
                   variant="outline"
                   className="w-full"
                 >
-                  🎯 With Action
+                  <MousePointerClick className="mr-2 h-4 w-4" />
+                  With Action
                 </Button>
                 <Button
                   onClick={testBatching}
                   variant="outline"
                   className="w-full"
                 >
-                  📦 Batching
+                  <Layers className="mr-2 h-4 w-4" />
+                  Batching
                 </Button>
                 <Button
                   onClick={testRealTimeUpdates}
                   variant="outline"
                   className="w-full"
                 >
-                  🔄 Real-time Updates
+                  <RefreshCw className="mr-2 h-4 w-4" />
+                  Real-time Updates
                 </Button>
                 <Button
                   onClick={testStressTest}
                   variant="outline"
                   className="w-full"
                 >
-                  💪 Stress Test
+                  <Activity className="mr-2 h-4 w-4" />
+                  Stress Test
                 </Button>
                 <Button
                   onClick={testToastIntegration}
                   variant="outline"
                   className="w-full"
                 >
-                  🍞 Toast Integration
+                  <BellRing className="mr-2 h-4 w-4" />
+                  Toast Integration
                 </Button>
                 <Button
                   onClick={testPersistence}
                   variant="outline"
                   className="w-full"
                 >
-                  💾 Persistence
+                  <Database className="mr-2 h-4 w-4" />
+                  Persistence
                 </Button>
               </div>
             </div>
@@ -428,9 +452,17 @@ const NotificationTest: React.FC = () => {
                 className="w-full"
                 size="lg"
               >
-                {isRunning
-                  ? "⏳ Running Tests..."
-                  : "🚀 Run Comprehensive Test Suite"}
+                {isRunning ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Running Tests...
+                  </>
+                ) : (
+                  <>
+                    <Play className="mr-2 h-4 w-4" />
+                    Run Comprehensive Test Suite
+                  </>
+                )}
               </Button>
             </div>
 

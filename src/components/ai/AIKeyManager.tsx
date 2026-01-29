@@ -16,6 +16,9 @@ import {
   Clock,
   Star,
   RefreshCw,
+  Code2,
+  Volume2,
+  Brain,
 } from "lucide-react";
 import {
   Card,
@@ -431,7 +434,7 @@ export const AIKeyManager: React.FC = () => {
       if (result.success && result.models.length > 0) {
         setDiscoveredModels(result.models);
         setScanStatus({
-          message: `✓ Successfully discovered ${result.models.length} available models!`,
+          message: `Successfully discovered ${result.models.length} available models!`,
           type: "success",
         });
       } else if (result.error) {
@@ -697,12 +700,12 @@ export const AIKeyManager: React.FC = () => {
                               <div className="flex items-center gap-1">
                                 {model.capabilities.includes("code") && (
                                   <div className="flex h-5 w-5 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/30">
-                                    <span className="text-xs">🔍</span>
+                                    <Code2 className="h-3 w-3 text-blue-600 dark:text-blue-300" />
                                   </div>
                                 )}
                                 {model.capabilities.includes("vision") && (
                                   <div className="flex h-5 w-5 items-center justify-center rounded-full bg-purple-100 dark:bg-purple-900/30">
-                                    <span className="text-xs">👁️</span>
+                                    <Eye className="h-3 w-3 text-purple-600 dark:text-purple-300" />
                                   </div>
                                 )}
                               </div>
@@ -928,7 +931,7 @@ export const AIKeyManager: React.FC = () => {
                                                 className="text-xs"
                                                 title="Code"
                                               >
-                                                🔍
+                                                <Code2 className="h-3 w-3 text-blue-600" />
                                               </span>
                                             )}
                                             {model.capabilities.includes(
@@ -938,7 +941,7 @@ export const AIKeyManager: React.FC = () => {
                                                 className="text-xs"
                                                 title="Vision"
                                               >
-                                                👁️
+                                                <Eye className="h-3 w-3 text-purple-600" />
                                               </span>
                                             )}
                                             {model.capabilities.includes(
@@ -948,7 +951,7 @@ export const AIKeyManager: React.FC = () => {
                                                 className="text-xs"
                                                 title="Audio"
                                               >
-                                                🎵
+                                                <Volume2 className="h-3 w-3 text-emerald-600" />
                                               </span>
                                             )}
                                             {model.capabilities.includes(
@@ -958,7 +961,7 @@ export const AIKeyManager: React.FC = () => {
                                                 className="text-xs"
                                                 title="Advanced Reasoning"
                                               >
-                                                🧠
+                                                <Brain className="h-3 w-3 text-amber-600" />
                                               </span>
                                             )}
                                           </div>
@@ -1485,7 +1488,7 @@ export const AIKeyManager: React.FC = () => {
             </div>
             <div>
               <h4 className="mb-2 font-semibold text-slate-900 dark:text-white">
-                🔒 Privacy & Security Guarantee
+                Privacy & Security Guarantee
               </h4>
               <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
                 Your API keys are encrypted and stored locally in your browser.
