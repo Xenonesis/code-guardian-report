@@ -437,9 +437,36 @@ export class AnalysisStorageService {
 
   private async calculateFileHash(file: File): Promise<string> {
     const buffer = await file.arrayBuffer();
-    const hashBuffer = await crypto.subtle.digest("SHA-256", buffer);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
+
+    // crypto.subtle is only available in secure contexts (HTTPS/localhost)
+    // Provide a fallback for HTTP development environments
+    if (typeof crypto !== "undefined" && crypto.subtle) {
+      try {
+        const hashBuffer = await crypto.subtle.digest("SHA-256", buffer);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
+      } catch {
+        // Fall through to fallback
+      }
+    }
+
+    // Fallback: simple hash based on file properties and content sampling
+    const uint8Array = new Uint8Array(buffer);
+    let hash = 0x811c9dc5; // FNV-1a offset basis
+    const sampleSize = Math.min(uint8Array.length, 8192); // Sample first 8KB
+
+    for (let i = 0; i < sampleSize; i++) {
+      hash ^= uint8Array[i];
+      hash = Math.imul(hash, 0x01000193); // FNV-1a prime
+    }
+
+    // Include file size and name in hash for uniqueness
+    const sizeHash = file.size.toString(36);
+    const nameHash = file.name.split("").reduce((acc, char) => {
+      return ((acc << 5) - acc + char.charCodeAt(0)) | 0;
+    }, 0);
+
+    return `${(hash >>> 0).toString(16).padStart(8, "0")}-${sizeHash}-${(nameHash >>> 0).toString(16)}`;
   }
 
   private generateAnalysisId(): string {
