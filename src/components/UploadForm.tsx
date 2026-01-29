@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FileCode, AlertTriangle, Github, Upload } from "lucide-react";
+import { FileCode, AlertTriangle, Github, Upload, Shield } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -14,6 +14,7 @@ import { useFileUpload } from "@/hooks/useFileUpload";
 import { FileUploadArea } from "@/components/upload/FileUploadArea";
 import { FileStatus } from "@/components/upload/FileStatus";
 import { GitHubRepoInput } from "@/components/upload/GitHubRepoInput";
+import { cn } from "@/lib/utils";
 
 interface UploadFormProps {
   onFileSelect: (file: File) => void;
@@ -48,112 +49,113 @@ export const UploadForm: React.FC<UploadFormProps> = ({
   };
 
   return (
-    <Card className="hover:shadow-3xl mx-auto w-full max-w-4xl rounded-2xl border-2 border-slate-200/60 bg-gradient-to-br from-white via-slate-50/50 to-blue-50/30 shadow-2xl backdrop-blur-sm transition-all duration-300 sm:rounded-3xl dark:border-slate-700/60 dark:from-slate-800 dark:via-slate-800/90 dark:to-slate-900">
-      <CardHeader className="px-4 pt-6 pb-6 text-center sm:px-6 sm:pt-8 sm:pb-8 lg:pt-10 lg:pb-10">
-        <CardTitle className="flex flex-col items-center justify-center gap-3 text-2xl font-bold sm:flex-row sm:gap-4 sm:text-3xl lg:text-4xl">
-          <div className="animate-float-gentle rounded-xl bg-gradient-to-br from-blue-500 via-blue-600 to-indigo-600 p-2.5 shadow-2xl transition-transform duration-300 hover:scale-110 sm:rounded-2xl sm:p-3 lg:p-4">
-            <FileCode className="h-7 w-7 text-white sm:h-8 sm:w-8 lg:h-10 lg:w-10" />
+    <div className="mx-auto w-full max-w-3xl">
+      <Card className="border-muted/40 overflow-hidden shadow-2xl shadow-black/5 backdrop-blur-xl dark:border-white/5 dark:bg-slate-900/50 dark:shadow-black/20">
+        <CardHeader className="border-border/40 bg-muted/20 border-b pt-10 pb-8 text-center dark:bg-white/[0.02]">
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-lg ring-4 shadow-blue-500/20 ring-blue-500/10">
+            <FileCode className="h-8 w-8 text-white" />
           </div>
-          <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text font-extrabold text-transparent">
+          <CardTitle className="from-foreground to-foreground/70 bg-gradient-to-b bg-clip-text text-3xl font-extrabold tracking-tight text-transparent sm:text-4xl">
             Analyze Your Code
-          </span>
-        </CardTitle>
-        <CardDescription className="mt-3 px-2 text-sm leading-relaxed font-medium text-slate-700 sm:mt-4 sm:px-4 sm:text-base lg:mt-5 lg:px-6 lg:text-lg dark:text-slate-300">
-          Upload a .zip file or analyze directly from a GitHub repository
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-4 px-3 pb-6 sm:space-y-6 sm:px-4 sm:pb-8 lg:space-y-8 lg:px-6">
-        {!selectedFile && !error && (
-          <Tabs
-            value={uploadMethod}
-            onValueChange={(value) =>
-              setUploadMethod(value as "file" | "github")
-            }
-            className="w-full"
-          >
-            <TabsList className="mb-6 grid w-full grid-cols-2 rounded-2xl border border-slate-700/50 bg-slate-900/90 p-1.5 shadow-2xl ring-1 shadow-black/20 ring-white/5 backdrop-blur-xl sm:mb-8 sm:rounded-3xl sm:p-2 dark:border-slate-600/30 dark:bg-slate-950/95">
-              <TabsTrigger
-                value="file"
-                className="group relative flex items-center justify-center gap-2 overflow-hidden rounded-xl px-4 py-3.5 text-sm font-bold text-slate-400 transition-all duration-300 ease-out hover:bg-slate-800/50 hover:text-slate-200 data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:via-blue-600 data-[state=active]:to-cyan-500 data-[state=active]:text-white data-[state=active]:shadow-[0_0_30px_rgba(59,130,246,0.5)] data-[state=active]:ring-2 data-[state=active]:ring-blue-400/30 sm:gap-3 sm:rounded-2xl sm:px-6 sm:py-4 sm:text-base dark:text-slate-500"
-              >
-                <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-600/20 to-cyan-600/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100 data-[state=active]:opacity-0 sm:rounded-2xl" />
-                <Upload className="h-4 w-4 transition-transform duration-300 group-hover:scale-110 sm:h-5 sm:w-5" />
-                <span className="xs:inline hidden tracking-wide">
+          </CardTitle>
+          <CardDescription className="text-muted-foreground/80 mx-auto mt-3 max-w-lg text-base">
+            Securely analyze your codebase for patterns, languages, and quality
+            metrics using our local-first engine.
+          </CardDescription>
+        </CardHeader>
+
+        <CardContent className="space-y-8 p-6 sm:p-8">
+          {!selectedFile && !error && (
+            <Tabs
+              value={uploadMethod}
+              onValueChange={(value) =>
+                setUploadMethod(value as "file" | "github")
+              }
+              className="w-full"
+            >
+              <TabsList className="bg-muted/50 mb-8 grid h-12 w-full grid-cols-2 rounded-lg p-1">
+                <TabsTrigger
+                  value="file"
+                  className="data-[state=active]:bg-background data-[state=active]:text-foreground h-10 gap-2 rounded-md font-medium transition-all data-[state=active]:shadow-sm"
+                >
+                  <Upload className="h-4 w-4" />
                   Upload ZIP
-                </span>
-                <span className="xs:hidden font-semibold">ZIP</span>
-              </TabsTrigger>
-              <TabsTrigger
-                value="github"
-                className="group relative flex items-center justify-center gap-2 overflow-hidden rounded-xl px-4 py-3.5 text-sm font-bold text-slate-400 transition-all duration-300 ease-out hover:bg-slate-800/50 hover:text-slate-200 data-[state=active]:bg-gradient-to-r data-[state=active]:from-violet-500 data-[state=active]:via-purple-600 data-[state=active]:to-fuchsia-500 data-[state=active]:text-white data-[state=active]:shadow-[0_0_30px_rgba(139,92,246,0.5)] data-[state=active]:ring-2 data-[state=active]:ring-purple-400/30 sm:gap-3 sm:rounded-2xl sm:px-6 sm:py-4 sm:text-base dark:text-slate-500"
-              >
-                <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-violet-600/20 to-fuchsia-600/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100 data-[state=active]:opacity-0 sm:rounded-2xl" />
-                <Github className="h-4 w-4 transition-transform duration-300 group-hover:scale-110 sm:h-5 sm:w-5" />
-                <span className="xs:inline hidden tracking-wide">GitHub</span>
-                <span className="xs:hidden font-semibold">GitHub</span>
-              </TabsTrigger>
-            </TabsList>
+                </TabsTrigger>
+                <TabsTrigger
+                  value="github"
+                  className="data-[state=active]:bg-background data-[state=active]:text-foreground h-10 gap-2 rounded-md font-medium transition-all data-[state=active]:shadow-sm"
+                >
+                  <Github className="h-4 w-4" />
+                  GitHub Repo
+                </TabsTrigger>
+              </TabsList>
 
-            <TabsContent value="file" className="mt-0">
-              <FileUploadArea
-                isDragOver={isDragOver}
-                onDragOver={handleDragOver}
-                onDragLeave={handleDragLeave}
-                onDrop={handleDrop}
-                onFileInput={handleFileInput}
+              <div className="mt-2 min-h-[280px]">
+                <TabsContent
+                  value="file"
+                  className="animate-in fade-in slide-in-from-bottom-2 mt-0 h-full duration-300"
+                >
+                  <FileUploadArea
+                    isDragOver={isDragOver}
+                    onDragOver={handleDragOver}
+                    onDragLeave={handleDragLeave}
+                    onDrop={handleDrop}
+                    onFileInput={handleFileInput}
+                  />
+                </TabsContent>
+
+                <TabsContent
+                  value="github"
+                  className="animate-in fade-in slide-in-from-bottom-2 mt-0 h-full duration-300"
+                >
+                  <GitHubRepoInput onFileReady={handleGitHubFileReady} />
+                </TabsContent>
+              </div>
+            </Tabs>
+          )}
+
+          {selectedFile && (
+            <div className="animate-in fade-in zoom-in-95 duration-300">
+              <FileStatus
+                selectedFile={selectedFile}
+                isUploading={isUploading}
+                isAnalyzing={isAnalyzing}
+                uploadComplete={uploadComplete}
+                uploadProgress={uploadProgress}
+                onRemoveFile={removeFile}
+                analysisProgress={analysisProgress}
               />
-            </TabsContent>
+            </div>
+          )}
 
-            <TabsContent value="github" className="mt-0">
-              <GitHubRepoInput onFileReady={handleGitHubFileReady} />
-            </TabsContent>
-          </Tabs>
-        )}
+          {error && (
+            <Alert
+              variant="destructive"
+              className="animate-in fade-in slide-in-from-bottom-2 border-red-500/20 bg-red-500/10 text-red-600 duration-300 dark:text-red-400"
+            >
+              <AlertTriangle className="h-4 w-4" />
+              <AlertDescription className="ml-2 font-medium">
+                {error}
+              </AlertDescription>
+            </Alert>
+          )}
+        </CardContent>
 
-        {selectedFile && (
-          <FileStatus
-            selectedFile={selectedFile}
-            isUploading={isUploading}
-            isAnalyzing={isAnalyzing}
-            uploadComplete={uploadComplete}
-            uploadProgress={uploadProgress}
-            onRemoveFile={removeFile}
-            analysisProgress={analysisProgress}
-          />
-        )}
-
-        {error && (
-          <Alert
-            className="border-l-4 border-l-red-500 bg-red-50 dark:border-l-red-400 dark:bg-red-950/20"
-            role="alert"
-          >
-            <AlertTriangle
-              className="h-4 w-4 text-red-600 sm:h-5 sm:w-5 dark:text-red-400"
-              aria-hidden="true"
-            />
-            <AlertDescription className="text-xs text-red-800 sm:text-sm lg:text-base dark:text-red-200">
-              <strong>Error:</strong> {error}
-            </AlertDescription>
-          </Alert>
-        )}
-
-        <Alert
-          className="rounded-xl border-l-4 border-l-amber-500 bg-gradient-to-r from-amber-50 via-amber-50/80 to-yellow-50/50 shadow-lg dark:border-l-amber-400 dark:from-amber-950/30 dark:via-amber-950/20 dark:to-yellow-950/10"
-          role="note"
-        >
-          <AlertTriangle
-            className="h-4 w-4 text-amber-600 sm:h-5 sm:w-5 dark:text-amber-400"
-            aria-hidden="true"
-          />
-          <AlertDescription className="text-xs leading-relaxed text-amber-900 sm:text-sm lg:text-base dark:text-amber-100">
-            <strong className="font-bold">Privacy & Security:</strong> Your code
-            is analyzed locally and securely. Files are processed in-browser
-            with persistent storage for your convenience. Analysis results are
-            automatically saved until you upload a new file.
-          </AlertDescription>
-        </Alert>
-      </CardContent>
-    </Card>
+        <div className="bg-muted/30 border-border/40 border-t p-4 px-6 sm:px-8">
+          <div className="text-muted-foreground/80 flex items-start gap-3 text-xs">
+            <Shield className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" />
+            <p className="leading-relaxed">
+              <span className="text-foreground/90 font-semibold">
+                Privacy & Security:
+              </span>{" "}
+              Your code is analyzed completely locally in your browser. No files
+              are uploaded to any server. Data is stored persistently on your
+              device for your convenience.
+            </p>
+          </div>
+        </div>
+      </Card>
+    </div>
   );
 };
 
