@@ -134,10 +134,10 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
   const navContent = (
     <nav
       className={cn(
-        "portal-navbar transition-all duration-500 ease-out",
+        "portal-navbar bg-white transition-all duration-500 ease-out dark:bg-slate-950",
         isScrolled
-          ? "border-border/60 bg-background/80 border-b shadow-lg shadow-black/5 backdrop-blur-xl dark:shadow-black/30"
-          : "bg-background/60 border-b border-transparent backdrop-blur-md"
+          ? "border-border/60 border-b shadow-lg shadow-black/5 dark:shadow-black/30"
+          : "border-b border-transparent"
       )}
       style={{
         position: "fixed",
@@ -147,6 +147,7 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
         zIndex: 10000,
         width: "100%",
         paddingTop: "env(safe-area-inset-top)",
+        backgroundColor: "var(--background)",
       }}
     >
       <div className="xs:px-4 mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
@@ -362,7 +363,7 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
         {/* Mobile Menu - Enhanced Full Screen Overlay */}
         <div
           className={cn(
-            "bg-background/95 fixed inset-0 backdrop-blur-xl transition-all duration-300 ease-out md:hidden",
+            "fixed inset-0 bg-white transition-all duration-300 ease-out md:hidden dark:bg-slate-950",
             isMobileMenuOpen
               ? "pointer-events-auto translate-y-0 opacity-100"
               : "pointer-events-none -translate-y-4 opacity-0"
@@ -370,6 +371,7 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
           style={{
             top: "calc(56px + env(safe-area-inset-top))",
             height: "calc(100vh - 56px - env(safe-area-inset-top))",
+            backgroundColor: "var(--background)",
           }}
         >
           <div className="xs:px-4 xs:py-6 h-full overflow-y-auto px-3 py-4">
@@ -404,7 +406,7 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
                     className={cn(
                       "xs:p-2.5 xs:rounded-xl flex-shrink-0 rounded-lg p-2 transition-all duration-200",
                       isActive(item.id)
-                        ? "bg-background/20"
+                        ? "bg-white/30 dark:bg-slate-700"
                         : "bg-slate-100 group-hover:bg-slate-200 dark:bg-slate-800 dark:group-hover:bg-slate-700"
                     )}
                   >
