@@ -30,7 +30,9 @@ interface NavigationProps {
   className?: string;
 }
 
-export const Navigation: React.FC<NavigationProps> = ({ className }) => {
+export const Navigation: React.FC<NavigationProps> = ({
+  className: _className,
+}) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
