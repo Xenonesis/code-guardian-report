@@ -3,7 +3,7 @@ import "@/styles/background-effects.css";
 
 export const AnimatedBackground: React.FC = () => {
   return (
-    <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+    <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
       {/* Large Gradient Orbs with Enhanced Animation */}
       <div className="gentle-pulse float-animation absolute top-1/4 left-1/4 h-96 w-96 rounded-full bg-gradient-to-r from-blue-400/20 to-purple-600/20 blur-3xl"></div>
       <div className="gentle-pulse float-animation delay-2s absolute top-3/4 right-1/4 h-80 w-80 rounded-full bg-gradient-to-r from-indigo-400/20 to-pink-600/20 blur-3xl"></div>

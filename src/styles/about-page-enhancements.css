@@ -19,7 +19,7 @@
     @apply bg-slate-900 text-white shadow-lg dark:bg-slate-700;
   }
 
-  /* Professional Color Palette */
+  /* Professional Color Palette - Dark Mode (Always Active) */
   :root {
     --color-primary: #1e293b;
     --color-primary-hover: #334155;
@@ -28,14 +28,6 @@
     --color-success: #10b981;
     --color-warning: #f59e0b;
     --color-error: #ef4444;
-    --color-surface: #fff;
-    --color-surface-dark: #0f172a;
-    --color-border: #e2e8f0;
-    --color-border-dark: #334155;
-  }
-
-  /* next-themes uses a `.dark` class on <html> */
-  .dark {
     --color-surface: #0f172a;
     --color-border: #334155;
   }

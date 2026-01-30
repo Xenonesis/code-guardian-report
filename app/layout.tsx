@@ -81,11 +81,8 @@ export const viewport: Viewport = {
   minimumScale: 1,
   userScalable: true,
   viewportFit: "cover",
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f8fafc" },
-    { media: "(prefers-color-scheme: dark)", color: "#1e293b" },
-  ],
-  colorScheme: "light dark",
+  themeColor: "#1e293b",
+  colorScheme: "dark",
 };
 
 export default function RootLayout({
@@ -94,7 +91,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="dark" suppressHydrationWarning>
       <head>
         {/* Preconnect to critical origins */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />

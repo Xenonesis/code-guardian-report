@@ -434,7 +434,7 @@ export const HistoryPage = ({
   }
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
+    <div className="relative min-h-screen overflow-hidden bg-white dark:bg-slate-950">
       <AnimatedBackground />
 
       {/* Decorative orbs */}

@@ -362,7 +362,7 @@
 - AI-powered security insights and recommendations
 - Advanced analytics dashboard with interactive charts
 - Accessibility compliance (WCAG 2.1 AA)
-- Modern UI/UX with dark/light theme support
+- Modern UI/UX with professional dark theme
 - Comprehensive code analysis engine
 - Added support for React, TypeScript, Tailwind CSS, Vite
 - Implemented initial test suite and CI workflow

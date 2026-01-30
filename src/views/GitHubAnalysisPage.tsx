@@ -384,11 +384,11 @@ export const GitHubAnalysisPage: React.FC = () => {
   // Not signed in with GitHub and no permission granted
   if (!isGitHubUser && !permissionGranted && !user) {
     return (
-      <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-slate-50 p-4 dark:bg-slate-950">
+      <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-white p-4 dark:bg-slate-950">
         {/* Background Elements */}
         <div className="pointer-events-none absolute top-0 left-0 h-full w-full overflow-hidden">
-          <div className="absolute -top-[20%] -left-[10%] h-[50%] w-[50%] rounded-full bg-blue-500/10 blur-[100px]" />
-          <div className="absolute top-[40%] -right-[10%] h-[40%] w-[40%] rounded-full bg-purple-500/10 blur-[100px]" />
+          <div className="absolute -top-[20%] -left-[10%] h-[50%] w-[50%] rounded-full bg-blue-500/10 blur-[100px] dark:bg-blue-500/10" />
+          <div className="absolute top-[40%] -right-[10%] h-[40%] w-[40%] rounded-full bg-purple-500/10 blur-[100px] dark:bg-purple-500/10" />
         </div>
 
         <Card className="w-full max-w-4xl overflow-hidden border-0 bg-white/80 p-0 shadow-2xl ring-1 ring-slate-200 backdrop-blur-xl dark:bg-slate-900/80 dark:ring-slate-800">
@@ -489,9 +489,9 @@ export const GitHubAnalysisPage: React.FC = () => {
   if (!user) return null;
 
   return (
-    <div className="relative min-h-screen overflow-hidden">
+    <div className="relative min-h-screen overflow-hidden bg-white dark:bg-slate-950">
       <AnimatedBackground />
-      <div className="relative z-10">
+      <div className="relative z-10 bg-transparent">
         <GitHubRepositoryPermissionModal
           isOpen={showPermissionModal}
           email={userProfile?.email || ""}

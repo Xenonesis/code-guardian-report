@@ -975,10 +975,10 @@ gantt
         </div>
       </td>
       <td width="20%" align="center">
-        <div style="background: linear-gradient(45deg, #FF8A80, #82B1FF); padding: 15px; border-radius: 15px; margin: 10px;">
+        <div style="background: linear-gradient(45deg, #1e293b, #334155); padding: 15px; border-radius: 15px; margin: 10px;">
           <img src="https://img.icons8.com/fluency/48/theme.png" alt="Themes" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));"/>
-          <br/><strong style="color: white; font-size: 14px;">Themes</strong>
-          <br/><span style="color: rgba(25,255,255,0.9); font-size: 11px;">Dark/Light mode</span>
+          <br/><strong style="color: white; font-size: 14px;">Dark Theme</strong>
+          <br/><span style="color: rgba(25,255,255,0.9); font-size: 11px;">Professional dark UI</span>
         </div>
       </td>
     </tr>
@@ -1049,7 +1049,7 @@ gantt
       <ul style="color: rgba(255,255,0.9); text-align: left; list-style: none; padding: 0;">
         <li style="margin: 8px 0;"><strong>Floating ChatBot:</strong> AI-powered assistance</li>
         <li style="margin: 8px 0;"><strong>Live Charts:</strong> Real-time data visualization</li>
-        <li style="margin: 8px 0;"><strong>Theme Switcher:</strong> Dark/Light mode toggle</li>
+        <li style="margin: 8px 0;"><strong>Dark Theme:</strong> Professional dark UI experience</li>
         <li style="margin: 8px 0;"><strong>Responsive Design:</strong> Adaptive layouts</li>
         <li style="margin: 8px 0;"><strong>Progress Indicators:</strong> Visual feedback</li>
       </ul>
@@ -1268,9 +1268,8 @@ gantt
   - Responsive across all screen sizes
 - Touch-optimized interactions
 - Progressive Web App capabilities
-- **Adaptive Theming**
-  - Dark/Light mode with system detection
-  - Custom theme creation
+- **Professional Dark Theme**
+  - Optimized dark mode interface
   - Accessibility-focused color schemes
 - **Accessibility Excellence**
   - WCAG 2.1 AA compliance
@@ -1335,7 +1334,7 @@ gantt
 ### UI & Design System
 
 - **Radix UI**: 12+ accessible, unstyled component primitives (Dialog, Tabs, Toast, etc.)
-- **shadcn/ui**: Beautiful, customizable component library with dark/light themes
+- **shadcn/ui**: Beautiful, customizable component library with dark theme
 - **Lucide React 0.462.0**: 1000+ modern, consistent icons
 - **Tailwind CSS 4.1.18**: Utility-first styling with custom design tokens
 - **Framer Motion 12.29.2**: Smooth animations and micro-interactions
@@ -1842,20 +1841,12 @@ _Interactive Mermaid diagram of system flow_
   <p><em>Fully responsive design optimized for mobile devices</em></p>
 </div>
 
-### Theme Showcase
+### Professional Dark Theme
 
-<table>
-<tr>
-<td width="50%" align="center">
-  <h4>Light Mode</h4>
-  <img src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=50&h=300&fit=crop&auto=format&q=80" alt="Light Theme" style="border-radius: 8px;" width="100%"/>
-</td>
-<td width="50%" align="center">
-  <h4>Dark Mode</h4>
-  <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=500&h=300&fit=crop&auto=format&q=80" alt="Dark Theme" style="border-radius: 8px;" width="100%"/>
-</td>
-</tr>
-</table>
+<div align="center">
+  <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800&h=400&fit=crop&auto=format&q=80" alt="Dark Theme" style="border-radius: 8px;" width="80%"/>
+  <p><em>Sleek, professional dark interface designed for extended coding sessions</em></p>
+</div>
 
 </div>
 
@@ -2210,19 +2201,8 @@ If you encounter any issues or have questions:
   
   
   
-  
 
 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   <table style="margin: 0 auto;">
     <tr>
       <td align="center" style="padding: 15px;">
@@ -2272,7 +2252,7 @@ If you encounter any issues or have questions:
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">266 commits</span>
         </div>
       </td>
-    
+
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/in/15368?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
@@ -2284,7 +2264,7 @@ If you encounter any issues or have questions:
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">30 commits</span>
         </div>
       </td>
-    
+
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/65916846?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
@@ -2296,7 +2276,7 @@ If you encounter any issues or have questions:
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">14 commits</span>
         </div>
       </td>
-    
+
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/186174121?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
@@ -2308,8 +2288,9 @@ If you encounter any issues or have questions:
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">5 commits</span>
         </div>
       </td>
-    
+
     </tr>
+
 <tr>
 
       <td align="center" style="padding: 20px;">
@@ -2322,7 +2303,7 @@ If you encounter any issues or have questions:
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">4 commits</span>
         </div>
       </td>
-    
+
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/176881379?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
@@ -2334,7 +2315,7 @@ If you encounter any issues or have questions:
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">3 commits</span>
         </div>
       </td>
-    
+
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/118842369?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
@@ -2346,7 +2327,7 @@ If you encounter any issues or have questions:
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">3 commits</span>
         </div>
       </td>
-    
+
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/180313267?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
@@ -2358,7 +2339,7 @@ If you encounter any issues or have questions:
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">2 commits</span>
         </div>
       </td>
-    
+
     </tr>
 
   </table>

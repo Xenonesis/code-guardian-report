@@ -7,42 +7,7 @@
 
 @layer base {
   :root {
-    /* Light mode - Optimized for readability and modern appearance */
-
-    /* Requested light background: #FCF8F8 (hsl(0 40% 98%)) */
-    --background: 0 40% 98%;
-    --foreground: 222 47% 11%;
-    --card: 0 40% 99%;
-    --card-foreground: 222 47% 11%;
-    --popover: 0 40% 99%;
-    --popover-foreground: 222 47% 11%;
-    --primary: 262 83% 58%;
-    --primary-foreground: 210 40% 98%;
-
-    /* Warmer neutrals to harmonize with #FCF8F8 */
-    --secondary: 0 25% 96%;
-    --secondary-foreground: 222 47% 11%;
-    --muted: 0 20% 95%;
-    --muted-foreground: 215 16% 47%;
-    --accent: 0 25% 96%;
-    --accent-foreground: 222 47% 11%;
-    --destructive: 0 72% 51%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 0 18% 90%;
-    --input: 0 18% 90%;
-    --ring: 262 83% 58%;
-    --radius: 0.75rem;
-    --sidebar-background: 0 40% 98%;
-    --sidebar-foreground: 222 47% 11%;
-    --sidebar-primary: 262 83% 58%;
-    --sidebar-primary-foreground: 210 40% 98%;
-    --sidebar-accent: 0 25% 96%;
-    --sidebar-accent-foreground: 222 47% 11%;
-    --sidebar-border: 0 18% 90%;
-    --sidebar-ring: 262 83% 58%;
-  }
-
-  .dark {
+    /* Dark mode colors - Now the default and only theme */
     --background: 224 71% 4%;
     --foreground: 210 20% 98%;
     --card: 224 71% 4%;
@@ -62,6 +27,7 @@
     --border: 215 28% 17%;
     --input: 215 28% 17%;
     --ring: 263 70% 50%;
+    --radius: 0.75rem;
     --sidebar-background: 224 71% 4%;
     --sidebar-foreground: 210 20% 98%;
     --sidebar-primary: 263 70% 50%;

@@ -12,6 +12,7 @@ import {
   BarChart3,
   Lightbulb,
 } from "lucide-react";
+import { AnimatedBackground } from "@/components/pages/about/AnimatedBackground";
 
 interface HelpPageProps {
   className?: string;
@@ -131,9 +132,10 @@ export const HelpPage: React.FC<HelpPageProps> = ({ className = "" }) => {
 
   return (
     <div
-      className={`min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20 dark:from-slate-950 dark:via-blue-950/30 dark:to-purple-950/20 ${className}`}
+      className={`relative min-h-screen overflow-hidden bg-white dark:bg-slate-950 ${className}`}
     >
-      <div className="pt-16">
+      <AnimatedBackground />
+      <div className="relative z-10 pt-16">
         <div className="container mx-auto px-4 py-16 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-6xl">
             {/* Header */}

@@ -19,7 +19,10 @@ import {
 
 export const TermsSection: React.FC = () => {
   return (
-    <section id="terms" className="relative min-h-screen overflow-hidden">
+    <section
+      id="terms"
+      className="relative min-h-screen overflow-hidden bg-white dark:bg-slate-950"
+    >
       <AnimatedBackground />
       <div className="relative z-10 pt-12 sm:pt-16">
         <div className="container mx-auto px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">

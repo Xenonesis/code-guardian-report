@@ -9,6 +9,7 @@ import { useAnalysisHandlers } from "@/components/pages/home/AnalysisHandlers";
 import { useEnhancedAnalysis } from "@/hooks/useEnhancedAnalysis";
 import { AnalysisResults } from "@/hooks/useAnalysis";
 import { useNavigation } from "@/lib/navigation-context";
+import { AnimatedBackground } from "@/components/pages/about/AnimatedBackground";
 
 const retryImport = <T,>(
   importFn: () => Promise<T>,
@@ -124,7 +125,11 @@ export const HomeSection: React.FC = () => {
   };
 
   return (
-    <section id="home" className="min-h-screen">
+    <section
+      id="home"
+      className="relative min-h-screen overflow-hidden bg-white dark:bg-slate-950"
+    >
+      <AnimatedBackground />
       <PageLayout showNavigation={false}>
         <HomeHero onStartAnalysis={handleStartAnalysis} />
 

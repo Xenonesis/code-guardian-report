@@ -53,9 +53,6 @@ export interface ButtonProps extends BaseProps {
   onClick?: () => void;
 }
 
-// Theme types
-export type ThemeMode = "light" | "dark" | "system";
-
 // Navigation types
 export type NavigationSection =
   | "home"

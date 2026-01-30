@@ -251,14 +251,6 @@ export function prefersReducedMotion(): boolean {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
-/**
- * Check if device is in dark mode
- */
-export function prefersDarkMode(): boolean {
-  if (typeof window === "undefined") return false;
-  return window.matchMedia("(prefers-color-scheme: dark)").matches;
-}
-
 // =================================
 // Storage Utilities
 // =================================
