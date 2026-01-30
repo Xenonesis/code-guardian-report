@@ -100,6 +100,7 @@ Our mission is to democratize enterprise-grade security analysis by providing de
 ### 1. Advanced Security Analysis
 
 #### Vulnerability Detection
+
 - **OWASP Top 10 Coverage**: Complete detection suite for all OWASP Top 10 vulnerabilities
 - **CWE Mapping**: Maps vulnerabilities to Common Weakness Enumeration (CWE) identifiers
 - **Severity Classification**: Categorizes issues as Critical, High, Medium, Low, or Info
@@ -107,6 +108,7 @@ Our mission is to democratize enterprise-grade security analysis by providing de
 - **Framework-Specific Checks**: Tailored security patterns for popular frameworks
 
 #### Supported Vulnerability Types
+
 - SQL Injection (SQLi)
 - Cross-Site Scripting (XSS)
 - Cross-Site Request Forgery (CSRF)
@@ -125,6 +127,7 @@ Our mission is to democratize enterprise-grade security analysis by providing de
 ### 2. Multi-Language Code Analysis
 
 #### Supported Programming Languages (15+)
+
 - **JavaScript/TypeScript**: Advanced AST-based analysis with ESLint integration
 - **Python**: Full support for Python 2.x and 3.x with framework detection
 - **Java**: Enterprise Java and Android application analysis
@@ -142,6 +145,7 @@ Our mission is to democratize enterprise-grade security analysis by providing de
 - **SQL**: Database query security
 
 #### Language Detection Features
+
 - **Automatic Detection**: Identifies languages from file extensions and content patterns
 - **Confidence Scoring**: Provides accuracy scores for language detection (up to 100%)
 - **Multi-Layer Analysis**: Uses extension matching, syntax patterns, keywords, and unique signatures
@@ -152,23 +156,27 @@ Our mission is to democratize enterprise-grade security analysis by providing de
 ### 3. AI-Powered Intelligence
 
 #### Natural Language Descriptions
+
 - **Plain English Explanations**: Translates technical security issues into understandable language
 - **Context-Aware**: Provides explanations based on the specific code context
 - **Multiple Detail Levels**: Offers brief, standard, and detailed explanation modes
 
 #### AI Fix Suggestions
+
 - **Automated Remediation**: Generates secure code replacements for vulnerabilities
 - **Framework-Specific Fixes**: Provides fixes tailored to detected frameworks
 - **Best Practice Recommendations**: Suggests industry-standard security patterns
 - **Code Diff Generation**: Shows before/after comparisons for proposed fixes
 
 #### Intelligent Chatbot
+
 - **Interactive Q&A**: Ask questions about detected vulnerabilities
 - **Code Explanation**: Request explanations for specific code patterns
 - **Security Guidance**: Get advice on security best practices
 - **Custom Queries**: Perform natural language searches across analysis results
 
 #### AI Model Support
+
 - **OpenAI Integration**: GPT-4, GPT-3.5-turbo support
 - **Anthropic Claude**: Claude 3 Opus, Sonnet, and Haiku
 - **Google Gemini**: Gemini Pro and Gemini Ultra
@@ -178,6 +186,7 @@ Our mission is to democratize enterprise-grade security analysis by providing de
 ### 4. GitHub Repository Analysis
 
 #### Repository Integration
+
 - **OAuth Authentication**: Secure GitHub login with token management
 - **Repository Listing**: Browse all accessible repositories
 - **Direct Analysis**: Analyze repositories without manual download
@@ -185,6 +194,7 @@ Our mission is to democratize enterprise-grade security analysis by providing de
 - **Private Repository Support**: Full support for private repositories with proper permissions
 
 #### Repository Features
+
 - **Commit History Analysis**: Track security issues across commits
 - **Pull Request Scanning**: Automated security checks for PRs
 - **Issue Tracking Integration**: Link vulnerabilities to GitHub issues
@@ -194,6 +204,7 @@ Our mission is to democratize enterprise-grade security analysis by providing de
 ### 5. Comprehensive Reporting
 
 #### Report Types
+
 - **PDF Reports**: Professional, formatted reports with charts and graphs
 - **JSON Exports**: Machine-readable data for automation and integration
 - **HTML Reports**: Interactive web-based reports
@@ -201,6 +212,7 @@ Our mission is to democratize enterprise-grade security analysis by providing de
 - **SARIF Format**: Static Analysis Results Interchange Format for CI/CD integration
 
 #### Report Contents
+
 - **Executive Summary**: High-level overview for management
 - **Detailed Findings**: Line-by-line vulnerability breakdown
 - **Severity Distribution**: Visual representation of issue severity
@@ -213,6 +225,7 @@ Our mission is to democratize enterprise-grade security analysis by providing de
 ### 6. Custom Rules Engine
 
 #### Rule Configuration
+
 - **Pattern Matching**: Define custom regex patterns for vulnerability detection
 - **Severity Assignment**: Set custom severity levels for organization-specific risks
 - **Language-Specific Rules**: Create rules tailored to specific languages
@@ -220,6 +233,7 @@ Our mission is to democratize enterprise-grade security analysis by providing de
 - **Rule Templates**: Pre-built templates for common security patterns
 
 #### Rule Categories
+
 - **Security Rules**: Custom security vulnerability patterns
 - **Compliance Rules**: Organization-specific compliance requirements
 - **Code Quality Rules**: Style and quality standards
@@ -229,6 +243,7 @@ Our mission is to democratize enterprise-grade security analysis by providing de
 ### 7. Real-Time Analytics Dashboard
 
 #### Dashboard Components
+
 - **Security Score**: Overall security posture metric (0-100)
 - **Quality Score**: Code quality assessment
 - **Maintainability Index**: Long-term maintainability rating
@@ -238,6 +253,7 @@ Our mission is to democratize enterprise-grade security analysis by providing de
 - **Framework Detection**: Identified frameworks and versions
 
 #### Interactive Charts
+
 - **Severity Distribution**: Pie charts showing issue severity breakdown
 - **Trend Analysis**: Line charts tracking security improvements
 - **File Complexity**: Bar charts showing most complex files
@@ -247,6 +263,7 @@ Our mission is to democratize enterprise-grade security analysis by providing de
 ### 8. Progressive Web App (PWA)
 
 #### PWA Capabilities
+
 - **Offline Analysis**: Full functionality without internet connection
 - **Install Prompts**: One-click installation on desktop and mobile
 - **Background Sync**: Automatic synchronization when connection restored
@@ -255,6 +272,7 @@ Our mission is to democratize enterprise-grade security analysis by providing de
 - **App-Like Experience**: Native app feel on web and mobile
 
 #### Offline Features
+
 - **Local Storage**: IndexedDB for persistent data storage
 - **Cache Strategy**: Intelligent caching of static assets and analysis results
 - **Sync Queue**: Queues operations for execution when online
@@ -263,6 +281,7 @@ Our mission is to democratize enterprise-grade security analysis by providing de
 ### 9. Performance Optimization
 
 #### Performance Features
+
 - **Code Splitting**: Dynamic imports for faster initial load
 - **Lazy Loading**: On-demand component loading
 - **Asset Optimization**: Minified and compressed assets
@@ -271,6 +290,7 @@ Our mission is to democratize enterprise-grade security analysis by providing de
 - **Bundle Analysis**: webpack-bundle-analyzer integration
 
 #### Performance Metrics
+
 - **First Contentful Paint (FCP)**: < 1.5s target
 - **Largest Contentful Paint (LCP)**: < 2.5s target
 - **Time to Interactive (TTI)**: < 3.8s target
@@ -280,6 +300,7 @@ Our mission is to democratize enterprise-grade security analysis by providing de
 ### 10. Security and Privacy
 
 #### Privacy Features
+
 - **Client-Side Processing**: All code analysis happens in the browser
 - **No Data Transmission**: Your code never leaves your device
 - **Secure Storage**: Encrypted local storage for sensitive data
@@ -287,6 +308,7 @@ Our mission is to democratize enterprise-grade security analysis by providing de
 - **GDPR Compliant**: Full compliance with privacy regulations
 
 #### Security Headers
+
 - **Content Security Policy (CSP)**: Strict CSP to prevent XSS
 - **X-Frame-Options**: Prevents clickjacking attacks
 - **X-Content-Type-Options**: Prevents MIME sniffing
@@ -345,12 +367,14 @@ Code Guardian Report follows a modern, modular architecture designed for scalabi
 ### Component Architecture
 
 #### 1. Presentation Layer
+
 - **Pages**: Next.js App Router pages for routing
 - **Components**: Reusable React components organized by domain
 - **Layouts**: Shared layout components for consistent UI
 - **UI Library**: Radix UI components with Tailwind CSS styling
 
 #### 2. Business Logic Layer
+
 - **Services**: Domain-specific business logic
   - `analysisIntegrationService`: Coordinates analysis workflows
   - `enhancedAnalysisEngine`: Core security analysis
@@ -360,6 +384,7 @@ Code Guardian Report follows a modern, modular architecture designed for scalabi
 - **Context**: React Context for global state
 
 #### 3. Data Layer
+
 - **Analysis Storage**: IndexedDB for analysis results
 - **Firebase Storage** (Optional): Cloud persistence
 - **GitHub Storage**: Repository-based storage
@@ -572,7 +597,6 @@ code-guardian-report/
 └── README.md                     # This file
 ```
 
-
 ---
 
 ## Technology Stack
@@ -580,11 +604,13 @@ code-guardian-report/
 ### Frontend Technologies
 
 #### Core Framework
+
 - **Next.js 16.1.5**: React framework with App Router, Server Components, and API routes
 - **React 19.2.4**: Latest React with improved performance and concurrent features
 - **TypeScript 5.9.3**: Type-safe development with advanced type features
 
 #### UI/UX Libraries
+
 - **Tailwind CSS 4.1.18**: Utility-first CSS framework for rapid UI development
 - **Radix UI**: Unstyled, accessible component primitives
   - Dialog, Popover, Select, Tabs, Toast, Tooltip, and more
@@ -594,6 +620,7 @@ code-guardian-report/
 - **Lenis 1.3.17**: Smooth scrolling library
 
 #### State Management & Data Flow
+
 - **React Context API**: Global state management
 - **Custom Hooks**: Reusable stateful logic
 - **Local Storage**: Client-side persistence
@@ -602,11 +629,13 @@ code-guardian-report/
 ### Backend Technologies
 
 #### Runtime & Server
+
 - **Node.js 22.x**: JavaScript runtime with latest features
 - **Next.js API Routes**: Serverless API endpoints
 - **Firebase Cloud Functions**: Serverless backend (optional)
 
 #### Authentication & Authorization
+
 - **Firebase Authentication**: Secure user authentication
 - **GitHub OAuth**: GitHub integration authentication
 - **JWT**: Token-based authentication
@@ -614,11 +643,13 @@ code-guardian-report/
 ### Database & Storage
 
 #### Client-Side Storage
+
 - **IndexedDB**: Primary storage for analysis results
 - **LocalStorage**: User preferences and settings
 - **SessionStorage**: Temporary session data
 
 #### Cloud Storage (Optional)
+
 - **Firebase Firestore**: NoSQL cloud database
 - **Firebase Storage**: File storage service
 - **GitHub API**: Repository data storage
@@ -626,6 +657,7 @@ code-guardian-report/
 ### Code Analysis Technologies
 
 #### Parsers & AST
+
 - **@babel/parser 7.28.6**: JavaScript/TypeScript parsing
 - **@babel/traverse 7.28.6**: AST traversal
 - **@babel/types 7.28.6**: AST manipulation
@@ -638,6 +670,7 @@ code-guardian-report/
 - **web-tree-sitter 0.26.3**: Multi-language parser
 
 #### Analysis Tools
+
 - **Custom Security Analyzer**: Proprietary vulnerability detection
 - **AST Analyzer**: Abstract syntax tree analysis
 - **Data Flow Analyzer**: Data flow tracking
@@ -646,6 +679,7 @@ code-guardian-report/
 ### Progressive Web App
 
 #### PWA Technologies
+
 - **Serwist 9.5.0**: Service worker library for Next.js
 - **@serwist/next 9.5.0**: Next.js integration
 - **Web App Manifest**: PWA configuration
@@ -656,12 +690,14 @@ code-guardian-report/
 ### Build & Development Tools
 
 #### Build Tools
+
 - **Next.js Compiler**: Fast Rust-based compiler
 - **Turbopack**: Ultra-fast bundler (optional)
 - **PostCSS 8.5.6**: CSS transformations
 - **Tailwind CSS Compiler**: JIT CSS generation
 
 #### Code Quality
+
 - **ESLint 9.39.2**: JavaScript/TypeScript linting
 - **@typescript-eslint**: TypeScript-specific rules
 - **Prettier 3.8.1**: Code formatting
@@ -669,6 +705,7 @@ code-guardian-report/
 - **lint-staged 16.2.7**: Pre-commit linting
 
 #### Testing
+
 - **Vitest 4.0.18**: Fast unit test framework
 - **Jest 30.2.0**: JavaScript testing framework
 - **@testing-library/react 16.3.2**: React component testing
@@ -678,12 +715,14 @@ code-guardian-report/
 ### DevOps & Deployment
 
 #### CI/CD
+
 - **GitHub Actions**: Automated workflows
 - **Vercel**: Deployment platform
 - **Docker**: Containerization
 - **Firebase Hosting**: Static site hosting
 
 #### Monitoring & Analytics
+
 - **@vercel/analytics 1.6.1**: Performance analytics
 - **@vercel/speed-insights 1.3.1**: Real-user monitoring
 - **web-vitals 5.1.0**: Core Web Vitals measurement
@@ -692,12 +731,14 @@ code-guardian-report/
 ### Security Technologies
 
 #### Security Libraries
+
 - **Custom Secret Detection**: Proprietary pattern matching
 - **Dependency Scanner**: Vulnerability detection
 - **OWASP Rule Engine**: OWASP Top 10 checks
 - **CWE Mapper**: Common Weakness Enumeration
 
 #### Security Headers
+
 - Content Security Policy (CSP)
 - HTTP Strict Transport Security (HSTS)
 - X-Frame-Options
@@ -709,12 +750,14 @@ code-guardian-report/
 ### AI & Machine Learning
 
 #### AI Providers
+
 - **OpenAI API**: GPT-4, GPT-3.5-turbo
 - **Anthropic API**: Claude 3 models
 - **Google AI**: Gemini models
 - **Custom Models**: Local model support
 
 #### AI Features
+
 - Natural language processing
 - Code understanding and explanation
 - Automated fix generation
@@ -723,12 +766,14 @@ code-guardian-report/
 ### File Processing
 
 #### File Handling
+
 - **JSZip 3.10.1**: ZIP file processing
 - **File API**: Browser file handling
 - **Drag & Drop API**: File upload UX
 - **Streams API**: Large file processing
 
 #### Export & Reporting
+
 - **jsPDF 4.0.0**: PDF generation
 - **html2canvas 1.4.1**: HTML to canvas conversion
 - **JSON**: Structured data export
@@ -737,20 +782,22 @@ code-guardian-report/
 ### Development Environment
 
 #### Package Management
+
 - **npm 9.0.0+**: Node package manager
 - **package-lock.json**: Dependency locking
 
 #### Version Control
+
 - **Git**: Source control
 - **GitHub**: Repository hosting
 - **Husky 9.1.7**: Git hooks
 
 #### Code Editors
+
 - VS Code (recommended)
 - WebStorm
 - Cursor
 - Any text editor with TypeScript support
-
 
 ---
 
@@ -761,6 +808,7 @@ code-guardian-report/
 Before you begin, ensure you have the following installed on your system:
 
 #### Required Software
+
 - **Node.js**: Version 22.x (LTS recommended)
   - Download from: https://nodejs.org/
   - Verify installation: `node --version`
@@ -771,6 +819,7 @@ Before you begin, ensure you have the following installed on your system:
   - Verify installation: `git --version`
 
 #### Optional Software
+
 - **Docker**: For containerized deployment
   - Download from: https://www.docker.com/
 - **Firebase CLI**: For Firebase deployment
@@ -779,6 +828,7 @@ Before you begin, ensure you have the following installed on your system:
   - Install: `npm install -g vercel`
 
 #### System Requirements
+
 - **Operating System**: Windows 10+, macOS 10.15+, or Linux
 - **RAM**: Minimum 4GB (8GB recommended)
 - **Disk Space**: Minimum 500MB free space
@@ -810,6 +860,7 @@ npm ci
 ```
 
 This will install all required dependencies including:
+
 - Next.js and React
 - TypeScript and type definitions
 - UI libraries (Tailwind CSS, Radix UI, Framer Motion)
@@ -910,6 +961,7 @@ npm run dev:turbo
 The application will be available at: http://localhost:3000
 
 #### Development Features
+
 - **Hot Module Replacement (HMR)**: Instant updates without page reload
 - **Fast Refresh**: Preserves component state during edits
 - **TypeScript Type Checking**: Real-time type error detection
@@ -974,6 +1026,7 @@ npm run build:prod
 ```
 
 This command will:
+
 1. Clean previous builds
 2. Run linting checks
 3. Perform type checking
@@ -984,6 +1037,7 @@ This command will:
 #### Build Output
 
 The production build creates:
+
 - `.next/`: Next.js build output
 - `.next/static/`: Static assets (JS, CSS, images)
 - `.next/server/`: Server-side code
@@ -997,6 +1051,7 @@ npm run build:analyze
 ```
 
 This opens an interactive bundle analyzer showing:
+
 - Bundle sizes by route
 - Package sizes
 - Duplicate dependencies
@@ -1011,7 +1066,6 @@ npm run start
 # Or with custom port
 PORT=3001 npm run start
 ```
-
 
 ---
 
@@ -1076,6 +1130,7 @@ The analysis pipeline follows these steps:
 #### Real-Time Feedback
 
 During analysis, you'll see:
+
 - Progress bar showing completion percentage
 - Current file being analyzed
 - Number of issues found (updated in real-time)
@@ -1086,6 +1141,7 @@ During analysis, you'll see:
 #### Setting Up GitHub Integration
 
 1. **Create OAuth App**:
+
    ```
    GitHub Settings → Developer settings → OAuth Apps → New OAuth App
    ```
@@ -1107,7 +1163,7 @@ During analysis, you'll see:
 
 ```typescript
 // Programmatic usage example
-import { GitHubRepositoryService } from '@/services/githubRepositoryService';
+import { GitHubRepositoryService } from "@/services/githubRepositoryService";
 
 const service = new GitHubRepositoryService(accessToken);
 
@@ -1116,15 +1172,16 @@ const repos = await service.listRepositories();
 
 // Analyze repository
 const result = await service.analyzeRepository({
-  owner: 'username',
-  repo: 'repository',
-  branch: 'main',
+  owner: "username",
+  repo: "repository",
+  branch: "main",
 });
 ```
 
 ##### Batch Analysis
 
 Analyze multiple repositories:
+
 1. Select multiple repositories from the list
 2. Click "Analyze Selected"
 3. View comparative results
@@ -1132,6 +1189,7 @@ Analyze multiple repositories:
 ##### Repository Comparison
 
 Compare security posture across repositories:
+
 1. Navigate to "Repository Comparison" tab
 2. Select repositories to compare
 3. View side-by-side metrics
@@ -1155,6 +1213,7 @@ Compare security posture across repositories:
 ##### PDF Contents
 
 The PDF report includes:
+
 - Cover page with project information
 - Executive summary with key metrics
 - Vulnerability breakdown by severity
@@ -1168,8 +1227,9 @@ The PDF report includes:
 ##### Customization
 
 Customize PDF reports:
+
 ```typescript
-import { PDFExportService } from '@/services/export/pdfExportService';
+import { PDFExportService } from "@/services/export/pdfExportService";
 
 const pdfService = new PDFExportService();
 
@@ -1178,9 +1238,9 @@ const options = {
   includeCodeSnippets: true,
   includeCharts: true,
   includeRecommendations: true,
-  template: 'detailed',
-  orientation: 'portrait',
-  pageSize: 'A4',
+  template: "detailed",
+  orientation: "portrait",
+  pageSize: "A4",
 };
 
 await pdfService.generateReport(analysisResults, options);
@@ -1189,6 +1249,7 @@ await pdfService.generateReport(analysisResults, options);
 #### JSON Exports
 
 Export analysis data in JSON format for:
+
 - API integration
 - Custom reporting tools
 - Data warehousing
@@ -1243,6 +1304,7 @@ Export analysis data in JSON format for:
 #### SARIF Export
 
 Export in SARIF format for CI/CD integration:
+
 - GitHub Code Scanning integration
 - GitLab Security Dashboard
 - Azure DevOps
@@ -1274,15 +1336,17 @@ Export in SARIF format for CI/CD integration:
 Transform technical security findings into plain English:
 
 **Before** (Technical):
+
 ```
 CWE-79: Improper Neutralization of Input During Web Page Generation
 ```
 
 **After** (Natural Language):
+
 ```
-Your application is vulnerable to Cross-Site Scripting (XSS) attacks. 
-This means an attacker could inject malicious JavaScript code that runs 
-in users' browsers, potentially stealing their data or performing 
+Your application is vulnerable to Cross-Site Scripting (XSS) attacks.
+This means an attacker could inject malicious JavaScript code that runs
+in users' browsers, potentially stealing their data or performing
 actions on their behalf.
 ```
 
@@ -1291,14 +1355,16 @@ actions on their behalf.
 Get automated remediation code:
 
 **Original Vulnerable Code**:
+
 ```javascript
 const query = `SELECT * FROM users WHERE id = ${userId}`;
 db.execute(query);
 ```
 
 **AI-Suggested Fix**:
+
 ```javascript
-const query = 'SELECT * FROM users WHERE id = ?';
+const query = "SELECT * FROM users WHERE id = ?";
 db.execute(query, [userId]);
 
 // Or using ORM (recommended):
@@ -1307,6 +1373,7 @@ const user = await User.findById(userId);
 
 **Explanation**:
 The AI provides:
+
 - Secure code replacement
 - Multiple fix options
 - Framework-specific solutions
@@ -1392,6 +1459,7 @@ Code Guardian supports comprehensive analysis for 15+ programming languages:
 **File Extensions**: `.js`, `.mjs`, `.cjs`, `.jsx`
 
 **Security Checks**:
+
 - XSS vulnerabilities
 - Prototype pollution
 - eval() usage
@@ -1404,6 +1472,7 @@ Code Guardian supports comprehensive analysis for 15+ programming languages:
 - Insecure dependencies
 
 **Example Patterns Detected**:
+
 ```javascript
 // XSS vulnerability
 element.innerHTML = userInput; // CRITICAL
@@ -1425,6 +1494,7 @@ Math.random() * 1000000; // MEDIUM (for security tokens)
 **File Extensions**: `.ts`, `.tsx`, `.d.ts`
 
 **Security Checks**:
+
 - Type safety violations
 - `any` type usage in security-critical code
 - Unsafe type assertions
@@ -1433,12 +1503,13 @@ Math.random() * 1000000; // MEDIUM (for security tokens)
 - Framework-specific issues
 
 **Example Patterns Detected**:
+
 ```typescript
 // Unsafe type assertion
 const data = response as UserData; // MEDIUM (without validation)
 
 // Any type in security context
-function authenticate(token: any) { } // HIGH
+function authenticate(token: any) {} // HIGH
 
 // Missing null checks
 user.password.toString(); // MEDIUM (potential null reference)
@@ -1451,6 +1522,7 @@ user.password.toString(); // MEDIUM (potential null reference)
 **File Extensions**: `.py`, `.pyw`, `.pyi`
 
 **Security Checks**:
+
 - SQL injection
 - Command injection
 - Path traversal
@@ -1462,6 +1534,7 @@ user.password.toString(); // MEDIUM (potential null reference)
 - Weak cryptography
 
 **Example Patterns Detected**:
+
 ```python
 # SQL injection
 query = f"SELECT * FROM users WHERE name = '{username}'"  # CRITICAL
@@ -1483,6 +1556,7 @@ hashlib.md5(password.encode())  # HIGH
 **File Extensions**: `.java`
 
 **Security Checks**:
+
 - SQL injection
 - XXE (XML External Entity)
 - Insecure deserialization
@@ -1494,6 +1568,7 @@ hashlib.md5(password.encode())  # HIGH
 - Trust boundary violations
 
 **Example Patterns Detected**:
+
 ```java
 // SQL injection
 String query = "SELECT * FROM users WHERE id = " + userId; // CRITICAL
@@ -1515,6 +1590,7 @@ new Random().nextInt(); // MEDIUM (for security purposes)
 **File Extensions**: `.cs`, `.csx`
 
 **Security Checks**:
+
 - SQL injection
 - XSS vulnerabilities
 - CSRF vulnerabilities
@@ -1525,6 +1601,7 @@ new Random().nextInt(); // MEDIUM (for security purposes)
 - Command injection
 
 **Example Patterns Detected**:
+
 ```csharp
 // SQL injection
 var query = $"SELECT * FROM Users WHERE Id = {userId}"; // CRITICAL
@@ -1546,6 +1623,7 @@ File.ReadAllText(userInput); // HIGH
 **File Extensions**: `.php`, `.phtml`
 
 **Security Checks**:
+
 - SQL injection
 - XSS vulnerabilities
 - Remote code execution
@@ -1557,6 +1635,7 @@ File.ReadAllText(userInput); // HIGH
 - Insecure file uploads
 
 **Example Patterns Detected**:
+
 ```php
 // SQL injection
 $query = "SELECT * FROM users WHERE id = " . $_GET['id']; // CRITICAL
@@ -1578,6 +1657,7 @@ echo $_GET['name']; // HIGH
 **File Extensions**: `.go`
 
 **Security Checks**:
+
 - SQL injection
 - Command injection
 - Path traversal
@@ -1588,6 +1668,7 @@ echo $_GET['name']; // HIGH
 - Buffer overflows
 
 **Example Patterns Detected**:
+
 ```go
 // SQL injection
 query := fmt.Sprintf("SELECT * FROM users WHERE id = %s", userId) // CRITICAL
@@ -1609,6 +1690,7 @@ tls.Config{InsecureSkipVerify: true} // HIGH
 **File Extensions**: `.rb`, `.rake`
 
 **Security Checks**:
+
 - SQL injection
 - XSS vulnerabilities
 - Command injection
@@ -1618,6 +1700,7 @@ tls.Config{InsecureSkipVerify: true} // HIGH
 - Path traversal
 
 **Example Patterns Detected**:
+
 ```ruby
 # SQL injection
 User.where("name = '#{params[:name]}'") # CRITICAL
@@ -1638,6 +1721,7 @@ Marshal.load(data) # HIGH
 **File Extensions**: `.rs`
 
 **Security Checks**:
+
 - Unsafe code blocks
 - Memory safety issues
 - Integer overflows
@@ -1646,6 +1730,7 @@ Marshal.load(data) # HIGH
 - Improper error handling
 
 **Example Patterns Detected**:
+
 ```rust
 // Unsafe code block
 unsafe { /* ... */ } // MEDIUM (requires review)
@@ -1663,6 +1748,7 @@ value.unwrap() // LOW (should use proper error handling)
 **File Extensions**: `.c`, `.cpp`, `.h`, `.hpp`
 
 **Security Checks**:
+
 - Buffer overflows
 - Memory leaks
 - Use-after-free
@@ -1673,6 +1759,7 @@ value.unwrap() // LOW (should use proper error handling)
 - NULL pointer dereference
 
 **Example Patterns Detected**:
+
 ```c
 // Buffer overflow
 strcpy(dest, src); // CRITICAL
@@ -1702,6 +1789,7 @@ Code Guardian uses a multi-layer detection system:
 **Detection Accuracy**: 95-100% confidence scores
 
 **Example Output**:
+
 ```json
 {
   "primaryLanguage": {
@@ -1736,6 +1824,7 @@ Code Guardian uses a multi-layer detection system:
 Automatically identifies frameworks and libraries:
 
 **Frontend Frameworks**:
+
 - React (and Next.js, Gatsby)
 - Vue.js (and Nuxt.js)
 - Angular
@@ -1743,6 +1832,7 @@ Automatically identifies frameworks and libraries:
 - Ember.js
 
 **Backend Frameworks**:
+
 - Express.js
 - NestJS
 - Fastify
@@ -1755,12 +1845,14 @@ Automatically identifies frameworks and libraries:
 - Ruby on Rails
 
 **Mobile Frameworks**:
+
 - React Native
 - Flutter
 - Ionic
 - Xamarin
 
 **Detection Method**:
+
 ```typescript
 {
   "frameworks": [
@@ -1776,7 +1868,6 @@ Automatically identifies frameworks and libraries:
 }
 ```
 
-
 ---
 
 ## Security Analysis
@@ -1790,6 +1881,7 @@ Code Guardian provides complete coverage for OWASP Top 10 vulnerabilities:
 ##### A01:2021 - Broken Access Control
 
 **Detection Capabilities**:
+
 - Missing authorization checks
 - Insecure direct object references (IDOR)
 - Path traversal vulnerabilities
@@ -1798,6 +1890,7 @@ Code Guardian provides complete coverage for OWASP Top 10 vulnerabilities:
 - Privilege escalation vulnerabilities
 
 **Example Detections**:
+
 ```javascript
 // Missing authorization check
 app.get('/admin/users', (req, res) => {
@@ -1817,6 +1910,7 @@ app.get('/user/:id/profile', (req, res) => {
 ##### A02:2021 - Cryptographic Failures
 
 **Detection Capabilities**:
+
 - Weak encryption algorithms (DES, RC4, MD5, SHA1)
 - Hardcoded cryptographic keys
 - Insecure random number generation
@@ -1825,6 +1919,7 @@ app.get('/user/:id/profile', (req, res) => {
 - Insecure TLS/SSL configuration
 
 **Example Detections**:
+
 ```python
 # Weak hashing algorithm
 import hashlib
@@ -1841,6 +1936,7 @@ encryption_key = "my-secret-key-12345"  # CRITICAL
 ##### A03:2021 - Injection
 
 **Detection Capabilities**:
+
 - SQL injection (all database types)
 - NoSQL injection
 - LDAP injection
@@ -1851,6 +1947,7 @@ encryption_key = "my-secret-key-12345"  # CRITICAL
 - Expression language injection
 
 **Example Detections**:
+
 ```java
 // SQL injection
 String query = "SELECT * FROM users WHERE username = '" + username + "'";  // CRITICAL
@@ -1868,6 +1965,7 @@ NamingEnumeration results = ctx.search("ou=users", filter, null);
 ##### A04:2021 - Insecure Design
 
 **Detection Capabilities**:
+
 - Missing rate limiting
 - Insufficient anti-automation
 - Insecure password reset mechanisms
@@ -1876,16 +1974,17 @@ NamingEnumeration results = ctx.search("ou=users", filter, null);
 - Trust boundary violations
 
 **Example Detections**:
+
 ```typescript
 // Missing rate limiting
-app.post('/api/login', async (req, res) => {
+app.post("/api/login", async (req, res) => {
   // No rate limiting! - HIGH
   const user = await authenticate(req.body);
   res.json({ token: generateToken(user) });
 });
 
 // Insecure password reset
-app.post('/reset-password', async (req, res) => {
+app.post("/reset-password", async (req, res) => {
   // No token validation! - CRITICAL
   await User.updatePassword(req.body.email, req.body.newPassword);
 });
@@ -1894,6 +1993,7 @@ app.post('/reset-password', async (req, res) => {
 ##### A05:2021 - Security Misconfiguration
 
 **Detection Capabilities**:
+
 - Debug mode enabled in production
 - Default credentials
 - Unnecessary features enabled
@@ -1903,28 +2003,32 @@ app.post('/reset-password', async (req, res) => {
 - Insecure cloud storage permissions
 
 **Example Detections**:
+
 ```javascript
 // Debug mode in production
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
   app.use(errorHandler({ dumpExceptions: true }));
 }
 
 // Missing security headers
-app.use(helmet({
-  // Commented out important headers - MEDIUM
-  // contentSecurityPolicy: true,
-  // hsts: true,
-}));
+app.use(
+  helmet({
+    // Commented out important headers - MEDIUM
+    // contentSecurityPolicy: true,
+    // hsts: true,
+  })
+);
 
 // Verbose error messages
 app.use((err, req, res, next) => {
-  res.json({ error: err.stack });  // MEDIUM - Exposes stack trace
+  res.json({ error: err.stack }); // MEDIUM - Exposes stack trace
 });
 ```
 
 ##### A06:2021 - Vulnerable and Outdated Components
 
 **Detection Capabilities**:
+
 - Known vulnerable dependencies
 - Outdated libraries
 - Unmaintained packages
@@ -1933,6 +2037,7 @@ app.use((err, req, res, next) => {
 - Transitive dependencies with vulnerabilities
 
 **Example Detections**:
+
 ```json
 {
   "package": "lodash",
@@ -1946,6 +2051,7 @@ app.use((err, req, res, next) => {
 ##### A07:2021 - Identification and Authentication Failures
 
 **Detection Capabilities**:
+
 - Weak password requirements
 - Missing multi-factor authentication
 - Insecure session management
@@ -1955,6 +2061,7 @@ app.use((err, req, res, next) => {
 - Missing credential validation
 
 **Example Detections**:
+
 ```python
 # Weak password validation
 if len(password) < 6:  # MEDIUM - Too weak
@@ -1970,6 +2077,7 @@ user.password = password  # CRITICAL - Plaintext storage
 ##### A08:2021 - Software and Data Integrity Failures
 
 **Detection Capabilities**:
+
 - Insecure deserialization
 - Missing integrity checks
 - Unsigned code execution
@@ -1978,6 +2086,7 @@ user.password = password  # CRITICAL - Plaintext storage
 - Missing software signing
 
 **Example Detections**:
+
 ```python
 # Insecure deserialization
 import pickle
@@ -1992,6 +2101,7 @@ document.head.appendChild(script);
 ##### A09:2021 - Security Logging and Monitoring Failures
 
 **Detection Capabilities**:
+
 - Missing security event logging
 - Insufficient log details
 - No alerting mechanisms
@@ -2000,21 +2110,23 @@ document.head.appendChild(script);
 - Log injection vulnerabilities
 
 **Example Detections**:
+
 ```javascript
 // Missing security logging
-app.post('/admin/delete-user', async (req, res) => {
+app.post("/admin/delete-user", async (req, res) => {
   await User.delete(req.params.id);
   // No audit log! - MEDIUM
   res.sendStatus(200);
 });
 
 // Log injection
-console.log(`User logged in: ${username}`);  // LOW - User input in logs
+console.log(`User logged in: ${username}`); // LOW - User input in logs
 ```
 
 ##### A10:2021 - Server-Side Request Forgery (SSRF)
 
 **Detection Capabilities**:
+
 - Unvalidated URL parameters
 - Internal network access
 - Cloud metadata service access
@@ -2022,16 +2134,17 @@ console.log(`User logged in: ${username}`);  // LOW - User input in logs
 - DNS rebinding attacks
 
 **Example Detections**:
+
 ```javascript
 // SSRF vulnerability
-app.get('/fetch', async (req, res) => {
-  const url = req.query.url;  // CRITICAL - No validation
+app.get("/fetch", async (req, res) => {
+  const url = req.query.url; // CRITICAL - No validation
   const response = await fetch(url);
   res.send(await response.text());
 });
 
 // Cloud metadata access
-fetch('http://169.254.169.254/latest/meta-data/')  // HIGH
+fetch("http://169.254.169.254/latest/meta-data/"); // HIGH
 ```
 
 ### Secret Scanning
@@ -2043,6 +2156,7 @@ Code Guardian detects 50+ types of secrets and credentials:
 ##### API Keys and Tokens
 
 **Patterns Detected**:
+
 - AWS Access Keys
 - Google API Keys
 - GitHub Tokens
@@ -2058,23 +2172,25 @@ Code Guardian detects 50+ types of secrets and credentials:
 - Anthropic API Keys
 
 **Example Detections**:
+
 ```javascript
 // AWS Access Key
-const AWS_ACCESS_KEY = "AKIAIOSFODNN7EXAMPLE";  // CRITICAL
+const AWS_ACCESS_KEY = "AKIAIOSFODNN7EXAMPLE"; // CRITICAL
 
 // GitHub Token
-const GITHUB_TOKEN = "ghp_1234567890abcdefghijklmnopqrstuv";  // CRITICAL
+const GITHUB_TOKEN = "ghp_1234567890abcdefghijklmnopqrstuv"; // CRITICAL
 
 // OpenAI API Key
-const OPENAI_KEY = "sk-proj-1234567890abcdefghij";  // CRITICAL
+const OPENAI_KEY = "sk-proj-1234567890abcdefghij"; // CRITICAL
 
 // Stripe Secret Key
-const STRIPE_SECRET = "sk_live_1234567890abcdefghij";  // CRITICAL
+const STRIPE_SECRET = "sk_live_1234567890abcdefghij"; // CRITICAL
 ```
 
 ##### Database Credentials
 
 **Patterns Detected**:
+
 - MySQL connection strings
 - PostgreSQL connection strings
 - MongoDB URIs
@@ -2083,6 +2199,7 @@ const STRIPE_SECRET = "sk_live_1234567890abcdefghij";  // CRITICAL
 - Oracle database strings
 
 **Example Detections**:
+
 ```python
 # Database connection string
 DATABASE_URL = "postgresql://user:password@localhost:5432/dbname"  # CRITICAL
@@ -2101,6 +2218,7 @@ db = mysql.connect(
 ##### Private Keys and Certificates
 
 **Patterns Detected**:
+
 - RSA private keys
 - SSH private keys
 - PGP private keys
@@ -2109,6 +2227,7 @@ db = mysql.connect(
 - Encryption keys
 
 **Example Detections**:
+
 ```
 -----BEGIN RSA PRIVATE KEY-----  # CRITICAL
 MIIEpAIBAAKCAQEA...
@@ -2122,6 +2241,7 @@ MIIEvQIBADANBgkqhkiG9w0BAQE...
 ##### Authentication Credentials
 
 **Patterns Detected**:
+
 - OAuth tokens
 - Session secrets
 - JWT secrets
@@ -2130,22 +2250,26 @@ MIIEvQIBADANBgkqhkiG9w0BAQE...
 - Bearer tokens
 
 **Example Detections**:
+
 ```javascript
 // OAuth token
-const OAUTH_TOKEN = "ya29.a0AfH6SMBx...";  // CRITICAL
+const OAUTH_TOKEN = "ya29.a0AfH6SMBx..."; // CRITICAL
 
 // JWT secret
-const JWT_SECRET = "my-super-secret-key-12345";  // CRITICAL
+const JWT_SECRET = "my-super-secret-key-12345"; // CRITICAL
 
 // Session secret
-app.use(session({
-  secret: "keyboard cat"  // HIGH - Weak secret
-}));
+app.use(
+  session({
+    secret: "keyboard cat", // HIGH - Weak secret
+  })
+);
 ```
 
 ##### Cloud Service Credentials
 
 **Patterns Detected**:
+
 - AWS credentials
 - Azure keys
 - Google Cloud keys
@@ -2154,6 +2278,7 @@ app.use(session({
 - Netlify tokens
 
 **Example Detections**:
+
 ```bash
 # .env file
 AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE  # CRITICAL
@@ -2166,7 +2291,7 @@ AZURE_STORAGE_CONNECTION_STRING=DefaultEndpoints...  # CRITICAL
 Customize secret detection:
 
 ```typescript
-import { SecretDetectionService } from '@/services/security/secretDetectionService';
+import { SecretDetectionService } from "@/services/security/secretDetectionService";
 
 const secretService = new SecretDetectionService({
   // Enable/disable specific patterns
@@ -2177,20 +2302,16 @@ const secretService = new SecretDetectionService({
     privateKeys: true,
     customPatterns: [
       {
-        name: 'Internal API Key',
+        name: "Internal API Key",
         pattern: /INTERNAL_KEY_[A-Za-z0-9]{32}/g,
-        severity: 'critical',
+        severity: "critical",
       },
     ],
   },
-  
+
   // Exclude patterns (false positives)
-  exclude: [
-    /EXAMPLE/,
-    /test@example\.com/,
-    /localhost/,
-  ],
-  
+  exclude: [/EXAMPLE/, /test@example\.com/, /localhost/],
+
   // Entropy analysis for unknown secrets
   entropyThreshold: 4.5,
 });
@@ -2201,6 +2322,7 @@ const secretService = new SecretDetectionService({
 #### Vulnerability Database
 
 Code Guardian checks dependencies against:
+
 - **NPM Advisory Database**
 - **GitHub Advisory Database**
 - **Snyk Vulnerability DB**
@@ -2210,6 +2332,7 @@ Code Guardian checks dependencies against:
 #### Dependency Scanning
 
 **Supported Package Managers**:
+
 - npm (package.json, package-lock.json)
 - Yarn (yarn.lock)
 - pnpm (pnpm-lock.yaml)
@@ -2219,10 +2342,11 @@ Code Guardian checks dependencies against:
 - Gradle (build.gradle)
 - Cargo (Cargo.toml, Cargo.lock)
 - Go Modules (go.mod, go.sum)
-- NuGet (packages.config, *.csproj)
+- NuGet (packages.config, \*.csproj)
 - Bundler (Gemfile, Gemfile.lock)
 
 **Example Report**:
+
 ```json
 {
   "dependencies": {
@@ -2271,8 +2395,9 @@ your-project
 ```
 
 **Detection Output**:
+
 ```
-⚠ Found vulnerabilities in transitive dependencies:
+WARNING Found vulnerabilities in transitive dependencies:
 
 lodash@4.17.11 (direct)
   ├── CVE-2019-10744 (HIGH)
@@ -2287,6 +2412,7 @@ qs@6.7.0 (via express > body-parser)
 #### Compliance Mapping
 
 Every detected vulnerability is mapped to:
+
 - **OWASP Top 10 2021**
 - **OWASP ASVS 4.0**
 - **OWASP Mobile Top 10**
@@ -2294,6 +2420,7 @@ Every detected vulnerability is mapped to:
 - **SANS Top 25**
 
 **Example Mapping**:
+
 ```json
 {
   "vulnerability": {
@@ -2315,13 +2442,13 @@ Every detected vulnerability is mapped to:
 Generate compliance-ready reports:
 
 ```typescript
-import { ComplianceReportGenerator } from '@/services/compliance';
+import { ComplianceReportGenerator } from "@/services/compliance";
 
 const report = await ComplianceReportGenerator.generate({
-  standard: 'OWASP-ASVS-4.0',
-  level: 'Level-2', // Level 1, 2, or 3
+  standard: "OWASP-ASVS-4.0",
+  level: "Level-2", // Level 1, 2, or 3
   includeRemediation: true,
-  format: 'pdf',
+  format: "pdf",
 });
 
 // Report includes:
@@ -2332,20 +2459,21 @@ const report = await ComplianceReportGenerator.generate({
 ```
 
 **Compliance Checklist Example**:
+
 ```
 OWASP ASVS 4.0 Compliance Report
 
 V1: Architecture, Design and Threat Modeling
-  ✓ V1.1 Secure SDLC
-  ✓ V1.2 Authentication Architecture
-  ⚠ V1.3 Session Management  (2 findings)
-  ✗ V1.4 Access Control      (5 findings)
+  PASSED V1.1 Secure SDLC
+  PASSED V1.2 Authentication Architecture
+  WARNING V1.3 Session Management  (2 findings)
+  FAILED V1.4 Access Control      (5 findings)
 
 V2: Authentication
-  ✗ V2.1 Password Security   (Critical: Weak hashing)
-  ✓ V2.2 General Authenticator
-  ⚠ V2.3 Authenticator Lifecycle
-  
+  FAILED V2.1 Password Security   (Critical: Weak hashing)
+  PASSED V2.2 General Authenticator
+  WARNING V2.3 Authenticator Lifecycle
+
 Overall Compliance: 65% (Level 1)
 Findings: 15 Critical, 23 High, 45 Medium
 ```
@@ -2361,21 +2489,21 @@ Findings: 15 Critical, 23 High, 45 Medium
 Programmatically analyze code:
 
 ```typescript
-import { EnhancedAnalysisEngine } from '@/services/enhancedAnalysisEngine';
+import { EnhancedAnalysisEngine } from "@/services/enhancedAnalysisEngine";
 
 const engine = new EnhancedAnalysisEngine();
 
 // Analyze files
 const result = await engine.analyzeFiles({
   files: [
-    { filename: 'app.js', content: sourceCode },
-    { filename: 'config.js', content: configCode },
+    { filename: "app.js", content: sourceCode },
+    { filename: "config.js", content: configCode },
   ],
   options: {
     includeMetrics: true,
     includeDependencies: true,
     includeSecrets: true,
-    severityThreshold: 'low',
+    severityThreshold: "low",
     customRules: [],
   },
 });
@@ -2408,18 +2536,18 @@ interface AnalysisResult {
 Parse code in multiple languages:
 
 ```typescript
-import { MultiLanguageParser } from '@/services/analysis/MultiLanguageParser';
+import { MultiLanguageParser } from "@/services/analysis/MultiLanguageParser";
 
 const parser = new MultiLanguageParser();
 
 // Parse JavaScript/TypeScript
-const jsAst = await parser.parse(code, 'javascript');
+const jsAst = await parser.parse(code, "javascript");
 
 // Parse Python
-const pyAst = await parser.parse(code, 'python');
+const pyAst = await parser.parse(code, "python");
 
 // Parse Java
-const javaAst = await parser.parse(code, 'java');
+const javaAst = await parser.parse(code, "java");
 
 // Auto-detect and parse
 const autoAst = await parser.parseAuto(code, filename);
@@ -2430,28 +2558,23 @@ const autoAst = await parser.parseAuto(code, filename);
 Run security analysis:
 
 ```typescript
-import { SecurityAnalyzer } from '@/services/analysis/SecurityAnalyzer';
+import { SecurityAnalyzer } from "@/services/analysis/SecurityAnalyzer";
 
 const analyzer = new SecurityAnalyzer();
 
 const vulnerabilities = await analyzer.analyze({
   ast: parsedAst,
   sourceCode: code,
-  language: 'javascript',
-  filename: 'app.js',
-  rules: [
-    'sql-injection',
-    'xss',
-    'command-injection',
-    'path-traversal',
-  ],
+  language: "javascript",
+  filename: "app.js",
+  rules: ["sql-injection", "xss", "command-injection", "path-traversal"],
 });
 
 // Vulnerability structure
 interface SecurityIssue {
   id: string;
   type: SecurityIssueType;
-  severity: 'critical' | 'high' | 'medium' | 'low' | 'info';
+  severity: "critical" | "high" | "medium" | "low" | "info";
   title: string;
   description: string;
   line: number;
@@ -2537,7 +2660,7 @@ const fixes = await fixService.generateFixes({
 #### Analysis Storage
 
 ```typescript
-import { AnalysisStorage } from '@/services/storage/analysisStorage';
+import { AnalysisStorage } from "@/services/storage/analysisStorage";
 
 const storage = new AnalysisStorage();
 
@@ -2551,8 +2674,8 @@ const analysis = await storage.getAnalysis(analysisId);
 const analyses = await storage.listAnalyses({
   limit: 10,
   offset: 0,
-  sortBy: 'timestamp',
-  order: 'desc',
+  sortBy: "timestamp",
+  order: "desc",
 });
 
 // Delete analysis
@@ -2565,15 +2688,15 @@ await storage.clearAll();
 #### Firebase Storage (Optional)
 
 ```typescript
-import { FirebaseAnalysisStorage } from '@/services/storage/firebaseAnalysisStorage';
+import { FirebaseAnalysisStorage } from "@/services/storage/firebaseAnalysisStorage";
 
 const firebaseStorage = new FirebaseAnalysisStorage();
 
 // Save to cloud
 await firebaseStorage.save(analysisResult, {
   userId: currentUser.uid,
-  projectId: 'my-project',
-  visibility: 'private',
+  projectId: "my-project",
+  visibility: "private",
 });
 
 // Retrieve from cloud
@@ -2581,8 +2704,8 @@ const cloudAnalysis = await firebaseStorage.get(analysisId);
 
 // Share analysis
 await firebaseStorage.share(analysisId, {
-  users: ['user@example.com'],
-  permissions: 'read',
+  users: ["user@example.com"],
+  permissions: "read",
 });
 ```
 
@@ -2591,35 +2714,35 @@ await firebaseStorage.share(analysisId, {
 #### PDF Export
 
 ```typescript
-import { PDFExportService } from '@/services/export/pdfExportService';
+import { PDFExportService } from "@/services/export/pdfExportService";
 
 const pdfService = new PDFExportService();
 
 // Generate PDF
 const pdfBlob = await pdfService.generateReport(analysisResult, {
-  template: 'detailed',
+  template: "detailed",
   includeCharts: true,
   includeCodeSnippets: true,
   includeRecommendations: true,
   branding: {
     logo: logoUrl,
-    companyName: 'Your Company',
-    footer: 'Confidential',
+    companyName: "Your Company",
+    footer: "Confidential",
   },
 });
 
 // Download PDF
 const url = URL.createObjectURL(pdfBlob);
-const a = document.createElement('a');
+const a = document.createElement("a");
 a.href = url;
-a.download = 'security-report.pdf';
+a.download = "security-report.pdf";
 a.click();
 ```
 
 #### JSON Export
 
 ```typescript
-import { DataExport } from '@/services/export/dataExport';
+import { DataExport } from "@/services/export/dataExport";
 
 const exporter = new DataExport();
 
@@ -2638,42 +2761,47 @@ const sarif = exporter.toSARIF(analysisResult);
 #### Repository Service
 
 ```typescript
-import { GitHubRepositoryService } from '@/services/githubRepositoryService';
+import { GitHubRepositoryService } from "@/services/githubRepositoryService";
 
 const github = new GitHubRepositoryService(accessToken);
 
 // List repositories
 const repos = await github.listRepositories({
-  visibility: 'all', // 'public', 'private', 'all'
-  sort: 'updated',
-  direction: 'desc',
+  visibility: "all", // 'public', 'private', 'all'
+  sort: "updated",
+  direction: "desc",
 });
 
 // Get repository details
-const repo = await github.getRepository('owner', 'repo');
+const repo = await github.getRepository("owner", "repo");
 
 // List branches
-const branches = await github.listBranches('owner', 'repo');
+const branches = await github.listBranches("owner", "repo");
 
 // Get file contents
-const file = await github.getFileContents('owner', 'repo', 'path/to/file.js', 'main');
+const file = await github.getFileContents(
+  "owner",
+  "repo",
+  "path/to/file.js",
+  "main"
+);
 
 // Download repository
-const zipBlob = await github.downloadRepository('owner', 'repo', 'main');
+const zipBlob = await github.downloadRepository("owner", "repo", "main");
 ```
 
 #### GitHub Analysis
 
 ```typescript
-import { GitHubAnalysisService } from '@/services/githubAnalysisService';
+import { GitHubAnalysisService } from "@/services/githubAnalysisService";
 
 const githubAnalysis = new GitHubAnalysisService();
 
 // Analyze repository
 const result = await githubAnalysis.analyzeRepository({
-  owner: 'username',
-  repo: 'repository',
-  branch: 'main',
+  owner: "username",
+  repo: "repository",
+  branch: "main",
   options: {
     includeTests: false,
     includeDocs: false,
@@ -2683,11 +2811,10 @@ const result = await githubAnalysis.analyzeRepository({
 
 // Compare repositories
 const comparison = await githubAnalysis.compareRepositories([
-  { owner: 'user1', repo: 'repo1' },
-  { owner: 'user2', repo: 'repo2' },
+  { owner: "user1", repo: "repo1" },
+  { owner: "user2", repo: "repo2" },
 ]);
 ```
-
 
 ---
 
@@ -2813,7 +2940,7 @@ docker run -p 3000:3000 \
 Create `docker-compose.yml`:
 
 ```yaml
-version: '3.8'
+version: "3.8"
 
 services:
   app:
@@ -2996,8 +3123,8 @@ Deploy serverless functions:
 
 ```typescript
 // functions/src/index.ts
-import * as functions from 'firebase-functions';
-import * as admin from 'firebase-admin';
+import * as functions from "firebase-functions";
+import * as admin from "firebase-admin";
 
 admin.initializeApp();
 
@@ -3005,16 +3132,16 @@ export const analyzeCode = functions.https.onCall(async (data, context) => {
   // Verify authentication
   if (!context.auth) {
     throw new functions.https.HttpsError(
-      'unauthenticated',
-      'User must be authenticated'
+      "unauthenticated",
+      "User must be authenticated"
     );
   }
 
   // Perform analysis
   const result = await performAnalysis(data.code);
-  
+
   // Save to Firestore
-  await admin.firestore().collection('analyses').add({
+  await admin.firestore().collection("analyses").add({
     userId: context.auth.uid,
     result,
     timestamp: admin.firestore.FieldValue.serverTimestamp(),
@@ -3042,29 +3169,31 @@ Create `ecosystem.config.js`:
 
 ```javascript
 module.exports = {
-  apps: [{
-    name: 'code-guardian',
-    script: 'npm',
-    args: 'start',
-    cwd: '/path/to/code-guardian-report',
-    instances: 'max',
-    exec_mode: 'cluster',
-    env: {
-      NODE_ENV: 'production',
-      PORT: 3000,
+  apps: [
+    {
+      name: "code-guardian",
+      script: "npm",
+      args: "start",
+      cwd: "/path/to/code-guardian-report",
+      instances: "max",
+      exec_mode: "cluster",
+      env: {
+        NODE_ENV: "production",
+        PORT: 3000,
+      },
+      env_production: {
+        NODE_ENV: "production",
+        PORT: 3000,
+      },
+      error_file: "./logs/error.log",
+      out_file: "./logs/out.log",
+      log_date_format: "YYYY-MM-DD HH:mm:ss Z",
+      merge_logs: true,
+      autorestart: true,
+      watch: false,
+      max_memory_restart: "1G",
     },
-    env_production: {
-      NODE_ENV: 'production',
-      PORT: 3000,
-    },
-    error_file: './logs/error.log',
-    out_file: './logs/out.log',
-    log_date_format: 'YYYY-MM-DD HH:mm:ss Z',
-    merge_logs: true,
-    autorestart: true,
-    watch: false,
-    max_memory_restart: '1G',
-  }],
+  ],
 };
 ```
 
@@ -3270,37 +3399,37 @@ spec:
         app: code-guardian
     spec:
       containers:
-      - name: code-guardian
-        image: your-registry/code-guardian:latest
-        ports:
-        - containerPort: 3000
-        env:
-        - name: NODE_ENV
-          value: "production"
-        - name: NEXT_PUBLIC_APP_URL
-          valueFrom:
-            configMapKeyRef:
-              name: code-guardian-config
-              key: app-url
-        resources:
-          requests:
-            memory: "512Mi"
-            cpu: "500m"
-          limits:
-            memory: "1Gi"
-            cpu: "1000m"
-        livenessProbe:
-          httpGet:
-            path: /api/health
-            port: 3000
-          initialDelaySeconds: 30
-          periodSeconds: 10
-        readinessProbe:
-          httpGet:
-            path: /api/health
-            port: 3000
-          initialDelaySeconds: 5
-          periodSeconds: 5
+        - name: code-guardian
+          image: your-registry/code-guardian:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: "production"
+            - name: NEXT_PUBLIC_APP_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: code-guardian-config
+                  key: app-url
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "500m"
+            limits:
+              memory: "1Gi"
+              cpu: "1000m"
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: 3000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 5
 ```
 
 ##### Service
@@ -3316,9 +3445,9 @@ spec:
   selector:
     app: code-guardian
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 3000
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
   type: LoadBalancer
 ```
 
@@ -3367,20 +3496,20 @@ metadata:
 spec:
   ingressClassName: nginx
   tls:
-  - hosts:
-    - your-domain.com
-    secretName: code-guardian-tls
+    - hosts:
+        - your-domain.com
+      secretName: code-guardian-tls
   rules:
-  - host: your-domain.com
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: code-guardian-service
-            port:
-              number: 80
+    - host: your-domain.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: code-guardian-service
+                port:
+                  number: 80
 ```
 
 #### Deploy to Kubernetes
@@ -3428,53 +3557,53 @@ npm test -- src/services/analysis/SecurityAnalyzer.test.ts
 
 ```typescript
 // src/services/analysis/SecurityAnalyzer.test.ts
-import { describe, it, expect, beforeEach } from 'vitest';
-import { SecurityAnalyzer } from './SecurityAnalyzer';
+import { describe, it, expect, beforeEach } from "vitest";
+import { SecurityAnalyzer } from "./SecurityAnalyzer";
 
-describe('SecurityAnalyzer', () => {
+describe("SecurityAnalyzer", () => {
   let analyzer: SecurityAnalyzer;
 
   beforeEach(() => {
     analyzer = new SecurityAnalyzer();
   });
 
-  describe('SQL Injection Detection', () => {
-    it('should detect SQL injection in string concatenation', async () => {
+  describe("SQL Injection Detection", () => {
+    it("should detect SQL injection in string concatenation", async () => {
       const code = `
         const query = "SELECT * FROM users WHERE id = " + userId;
         db.execute(query);
       `;
 
-      const issues = await analyzer.analyze(code, 'javascript');
-      
+      const issues = await analyzer.analyze(code, "javascript");
+
       expect(issues).toHaveLength(1);
-      expect(issues[0].type).toBe('sql-injection');
-      expect(issues[0].severity).toBe('critical');
+      expect(issues[0].type).toBe("sql-injection");
+      expect(issues[0].severity).toBe("critical");
     });
 
-    it('should not flag parameterized queries', async () => {
+    it("should not flag parameterized queries", async () => {
       const code = `
         const query = "SELECT * FROM users WHERE id = ?";
         db.execute(query, [userId]);
       `;
 
-      const issues = await analyzer.analyze(code, 'javascript');
-      
+      const issues = await analyzer.analyze(code, "javascript");
+
       expect(issues).toHaveLength(0);
     });
   });
 
-  describe('XSS Detection', () => {
-    it('should detect innerHTML assignment with user input', async () => {
+  describe("XSS Detection", () => {
+    it("should detect innerHTML assignment with user input", async () => {
       const code = `
         element.innerHTML = userInput;
       `;
 
-      const issues = await analyzer.analyze(code, 'javascript');
-      
+      const issues = await analyzer.analyze(code, "javascript");
+
       expect(issues).toHaveLength(1);
-      expect(issues[0].type).toBe('xss');
-      expect(issues[0].severity).toBe('critical');
+      expect(issues[0].type).toBe("xss");
+      expect(issues[0].severity).toBe("critical");
     });
   });
 });
@@ -3510,30 +3639,30 @@ Test implementation:
 
 ```typescript
 // scripts/e2e-zip-analysis.ts
-import { readFileSync } from 'fs';
-import { EnhancedAnalysisEngine } from '@/services/enhancedAnalysisEngine';
+import { readFileSync } from "fs";
+import { EnhancedAnalysisEngine } from "@/services/enhancedAnalysisEngine";
 
 async function runE2ETest() {
-  console.log('Starting E2E ZIP Analysis Test...');
+  console.log("Starting E2E ZIP Analysis Test...");
 
   // Load test ZIP file
-  const zipFile = readFileSync('./test-fixtures/sample-project.zip');
-  
+  const zipFile = readFileSync("./test-fixtures/sample-project.zip");
+
   // Initialize engine
   const engine = new EnhancedAnalysisEngine();
-  
+
   // Perform analysis
   const result = await engine.analyzeZipFile(zipFile);
-  
+
   // Assertions
-  console.assert(result.summary.totalFiles > 0, 'Should analyze files');
-  console.assert(result.issues.length > 0, 'Should find issues');
-  console.assert(result.languages.length > 0, 'Should detect languages');
-  
-  console.log('✓ E2E test passed');
+  console.assert(result.summary.totalFiles > 0, "Should analyze files");
+  console.assert(result.issues.length > 0, "Should find issues");
+  console.assert(result.languages.length > 0, "Should detect languages");
+
+  console.log("PASSED E2E test passed");
   console.log(`  Files analyzed: ${result.summary.totalFiles}`);
   console.log(`  Issues found: ${result.issues.length}`);
-  console.log(`  Languages: ${result.languages.map(l => l.name).join(', ')}`);
+  console.log(`  Languages: ${result.languages.map((l) => l.name).join(", ")}`);
 }
 
 runE2ETest().catch(console.error);
@@ -3550,13 +3679,13 @@ Test multiple language parsers:
 
 ```typescript
 // tests/multiLanguageAnalysis.test.ts
-import { describe, it, expect } from 'vitest';
-import { MultiLanguageSecurityAnalyzer } from '@/services/analysis/MultiLanguageSecurityAnalyzer';
+import { describe, it, expect } from "vitest";
+import { MultiLanguageSecurityAnalyzer } from "@/services/analysis/MultiLanguageSecurityAnalyzer";
 
-describe('Multi-Language Analysis', () => {
+describe("Multi-Language Analysis", () => {
   const analyzer = new MultiLanguageSecurityAnalyzer();
 
-  it('should analyze JavaScript code', async () => {
+  it("should analyze JavaScript code", async () => {
     const code = `
       function login(username, password) {
         const query = "SELECT * FROM users WHERE username = '" + username + "'";
@@ -3564,22 +3693,22 @@ describe('Multi-Language Analysis', () => {
       }
     `;
 
-    const issues = await analyzer.analyze(code, 'javascript');
-    expect(issues.some(i => i.type === 'sql-injection')).toBe(true);
+    const issues = await analyzer.analyze(code, "javascript");
+    expect(issues.some((i) => i.type === "sql-injection")).toBe(true);
   });
 
-  it('should analyze Python code', async () => {
+  it("should analyze Python code", async () => {
     const code = `
 def login(username, password):
     query = f"SELECT * FROM users WHERE username = '{username}'"
     return db.execute(query)
     `;
 
-    const issues = await analyzer.analyze(code, 'python');
-    expect(issues.some(i => i.type === 'sql-injection')).toBe(true);
+    const issues = await analyzer.analyze(code, "python");
+    expect(issues.some((i) => i.type === "sql-injection")).toBe(true);
   });
 
-  it('should analyze Java code', async () => {
+  it("should analyze Java code", async () => {
     const code = `
       public void login(String username, String password) {
         String query = "SELECT * FROM users WHERE username = '" + username + "'";
@@ -3587,8 +3716,8 @@ def login(username, password):
       }
     `;
 
-    const issues = await analyzer.analyze(code, 'java');
-    expect(issues.some(i => i.type === 'sql-injection')).toBe(true);
+    const issues = await analyzer.analyze(code, "java");
+    expect(issues.some((i) => i.type === "sql-injection")).toBe(true);
   });
 });
 ```
@@ -3601,28 +3730,28 @@ Test analysis performance with large codebases:
 
 ```typescript
 // tests/performance.test.ts
-import { describe, it, expect } from 'vitest';
-import { EnhancedAnalysisEngine } from '@/services/enhancedAnalysisEngine';
+import { describe, it, expect } from "vitest";
+import { EnhancedAnalysisEngine } from "@/services/enhancedAnalysisEngine";
 
-describe('Performance Tests', () => {
-  it('should analyze 1000 files in under 30 seconds', async () => {
+describe("Performance Tests", () => {
+  it("should analyze 1000 files in under 30 seconds", async () => {
     const engine = new EnhancedAnalysisEngine();
     const files = generateTestFiles(1000);
-    
+
     const startTime = Date.now();
     const result = await engine.analyzeFiles(files);
     const duration = Date.now() - startTime;
-    
+
     expect(duration).toBeLessThan(30000);
     expect(result.summary.totalFiles).toBe(1000);
   }, 35000);
 
-  it('should handle files up to 10MB', async () => {
+  it("should handle files up to 10MB", async () => {
     const engine = new EnhancedAnalysisEngine();
     const largeFile = generateLargeFile(10 * 1024 * 1024);
-    
+
     const result = await engine.analyzeFile(largeFile);
-    
+
     expect(result).toBeDefined();
   });
 });
@@ -3630,15 +3759,14 @@ describe('Performance Tests', () => {
 
 ### Test Coverage Goals
 
-| Module | Target Coverage |
-|--------|----------------|
-| Security Analysis | 90%+ |
-| Language Detection | 85%+ |
-| AI Services | 80%+ |
-| Storage Services | 85%+ |
-| Export Services | 80%+ |
-| Overall | 85%+ |
-
+| Module             | Target Coverage |
+| ------------------ | --------------- |
+| Security Analysis  | 90%+            |
+| Language Detection | 85%+            |
+| AI Services        | 80%+            |
+| Storage Services   | 85%+            |
+| Export Services    | 80%+            |
+| Overall            | 85%+            |
 
 ---
 
@@ -3663,8 +3791,8 @@ quality-gate:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '22.x'
-        cache: 'npm'
+        node-version: "22.x"
+        cache: "npm"
 
     - name: Install dependencies
       run: npm ci
@@ -3776,7 +3904,7 @@ deploy-production:
         vercel-token: ${{ secrets.VERCEL_TOKEN }}
         vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
         vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-        vercel-args: '--prod'
+        vercel-args: "--prod"
 ```
 
 ### Continuous Integration Best Practices
@@ -3881,6 +4009,7 @@ The project implements multiple optimization strategies:
 4. **Compression**: Gzip and Brotli compression
 
 **Bundle Analysis Results**:
+
 ```
 Page                                    Size      First Load JS
 ┌ ○ /                                   45.2 kB        156 kB
@@ -3902,8 +4031,8 @@ Page                                    Size      First Load JS
 // next.config.ts
 const config = {
   images: {
-    domains: ['avatars.githubusercontent.com'],
-    formats: ['image/avif', 'image/webp'],
+    domains: ["avatars.githubusercontent.com"],
+    formats: ["image/avif", "image/webp"],
     minimumCacheTTL: 31536000,
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
   },
@@ -3911,16 +4040,11 @@ const config = {
 ```
 
 Usage:
-```tsx
-import Image from 'next/image';
 
-<Image
-  src="/logo.svg"
-  alt="Logo"
-  width={200}
-  height={50}
-  priority
-/>
+```tsx
+import Image from "next/image";
+
+<Image src="/logo.svg" alt="Logo" width={200} height={50} priority />;
 ```
 
 ### Runtime Performance
@@ -3934,9 +4058,12 @@ export const SecurityDashboard = React.memo(({ data }) => {
 });
 
 // Use useCallback for event handlers
-const handleAnalysis = useCallback((file: File) => {
-  analyzeFile(file);
-}, [analyzeFile]);
+const handleAnalysis = useCallback(
+  (file: File) => {
+    analyzeFile(file);
+  },
+  [analyzeFile]
+);
 
 // Use useMemo for expensive calculations
 const securityScore = useMemo(() => {
@@ -3944,7 +4071,7 @@ const securityScore = useMemo(() => {
 }, [issues]);
 
 // Lazy load components
-const HeavyChart = lazy(() => import('@/components/HeavyChart'));
+const HeavyChart = lazy(() => import("@/components/HeavyChart"));
 ```
 
 #### Virtual Scrolling
@@ -3952,7 +4079,7 @@ const HeavyChart = lazy(() => import('@/components/HeavyChart'));
 For large lists:
 
 ```tsx
-import { useVirtualizer } from '@tanstack/react-virtual';
+import { useVirtualizer } from "@tanstack/react-virtual";
 
 export function IssueList({ issues }: { issues: SecurityIssue[] }) {
   const parentRef = useRef<HTMLDivElement>(null);
@@ -3964,16 +4091,16 @@ export function IssueList({ issues }: { issues: SecurityIssue[] }) {
   });
 
   return (
-    <div ref={parentRef} style={{ height: '600px', overflow: 'auto' }}>
+    <div ref={parentRef} style={{ height: "600px", overflow: "auto" }}>
       <div style={{ height: `${virtualizer.getTotalSize()}px` }}>
         {virtualizer.getVirtualItems().map((virtualItem) => (
           <div
             key={virtualItem.key}
             style={{
-              position: 'absolute',
+              position: "absolute",
               top: 0,
               left: 0,
-              width: '100%',
+              width: "100%",
               height: `${virtualItem.size}px`,
               transform: `translateY(${virtualItem.start}px)`,
             }}
@@ -3993,36 +4120,41 @@ Offload heavy computation:
 
 ```typescript
 // workers/analysis.worker.ts
-self.addEventListener('message', async (event) => {
+self.addEventListener("message", async (event) => {
   const { code, language } = event.data;
-  
+
   // Perform heavy analysis
   const result = await analyzeCode(code, language);
-  
+
   self.postMessage(result);
 });
 
 // Usage in component
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 function useAnalysisWorker() {
   const [worker, setWorker] = useState<Worker | null>(null);
 
   useEffect(() => {
-    const w = new Worker(new URL('./workers/analysis.worker.ts', import.meta.url));
+    const w = new Worker(
+      new URL("./workers/analysis.worker.ts", import.meta.url)
+    );
     setWorker(w);
-    
+
     return () => w.terminate();
   }, []);
 
-  const analyze = useCallback((code: string, language: string) => {
-    return new Promise((resolve) => {
-      if (!worker) return;
-      
-      worker.onmessage = (e) => resolve(e.data);
-      worker.postMessage({ code, language });
-    });
-  }, [worker]);
+  const analyze = useCallback(
+    (code: string, language: string) => {
+      return new Promise((resolve) => {
+        if (!worker) return;
+
+        worker.onmessage = (e) => resolve(e.data);
+        worker.postMessage({ code, language });
+      });
+    },
+    [worker]
+  );
 
   return { analyze };
 }
@@ -4034,7 +4166,7 @@ function useAnalysisWorker() {
 
 ```typescript
 // src/sw.ts
-import { Serwist } from 'serwist';
+import { Serwist } from "serwist";
 
 const serwist = new Serwist({
   precacheEntries: self.__SW_MANIFEST,
@@ -4043,9 +4175,9 @@ const serwist = new Serwist({
   runtimeCaching: [
     {
       urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
-      handler: 'CacheFirst',
+      handler: "CacheFirst",
       options: {
-        cacheName: 'google-fonts-cache',
+        cacheName: "google-fonts-cache",
         expiration: {
           maxEntries: 10,
           maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
@@ -4054,9 +4186,9 @@ const serwist = new Serwist({
     },
     {
       urlPattern: /^https:\/\/api\.github\.com\/.*/i,
-      handler: 'NetworkFirst',
+      handler: "NetworkFirst",
       options: {
-        cacheName: 'github-api-cache',
+        cacheName: "github-api-cache",
         expiration: {
           maxEntries: 50,
           maxAgeSeconds: 60 * 5, // 5 minutes
@@ -4065,9 +4197,9 @@ const serwist = new Serwist({
     },
     {
       urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp|avif)$/i,
-      handler: 'CacheFirst',
+      handler: "CacheFirst",
       options: {
-        cacheName: 'image-cache',
+        cacheName: "image-cache",
         expiration: {
           maxEntries: 100,
           maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
@@ -4084,79 +4216,79 @@ serwist.addEventListeners();
 
 ```typescript
 // Cache analysis results
-import { openDB } from 'idb';
+import { openDB } from "idb";
 
-const db = await openDB('code-guardian', 1, {
+const db = await openDB("code-guardian", 1, {
   upgrade(db) {
-    db.createObjectStore('analyses', {
-      keyPath: 'id',
+    db.createObjectStore("analyses", {
+      keyPath: "id",
       autoIncrement: true,
     });
   },
 });
 
 // Save analysis
-await db.put('analyses', analysisResult);
+await db.put("analyses", analysisResult);
 
 // Retrieve analysis
-const analysis = await db.get('analyses', id);
+const analysis = await db.get("analyses", id);
 
 // Query analyses
-const allAnalyses = await db.getAll('analyses');
+const allAnalyses = await db.getAll("analyses");
 ```
 
 ### Web Vitals Optimization
 
 #### Core Web Vitals Targets
 
-| Metric | Target | Current |
-|--------|--------|---------|
-| First Contentful Paint (FCP) | < 1.8s | 1.2s |
-| Largest Contentful Paint (LCP) | < 2.5s | 2.1s |
-| First Input Delay (FID) | < 100ms | 45ms |
-| Cumulative Layout Shift (CLS) | < 0.1 | 0.05 |
-| Time to Interactive (TTI) | < 3.8s | 3.2s |
-| Total Blocking Time (TBT) | < 200ms | 150ms |
+| Metric                         | Target  | Current |
+| ------------------------------ | ------- | ------- |
+| First Contentful Paint (FCP)   | < 1.8s  | 1.2s    |
+| Largest Contentful Paint (LCP) | < 2.5s  | 2.1s    |
+| First Input Delay (FID)        | < 100ms | 45ms    |
+| Cumulative Layout Shift (CLS)  | < 0.1   | 0.05    |
+| Time to Interactive (TTI)      | < 3.8s  | 3.2s    |
+| Total Blocking Time (TBT)      | < 200ms | 150ms   |
 
 #### Monitoring Web Vitals
 
 ```typescript
 // src/lib/web-vitals.ts
-import { onCLS, onFID, onLCP, onTTFB, onINP } from 'web-vitals';
+import { onCLS, onFID, onLCP, onTTFB, onINP } from "web-vitals";
 
 export function reportWebVitals() {
   onCLS((metric) => {
-    console.log('CLS:', metric);
-    sendToAnalytics('CLS', metric);
+    console.log("CLS:", metric);
+    sendToAnalytics("CLS", metric);
   });
 
   onFID((metric) => {
-    console.log('FID:', metric);
-    sendToAnalytics('FID', metric);
+    console.log("FID:", metric);
+    sendToAnalytics("FID", metric);
   });
 
   onLCP((metric) => {
-    console.log('LCP:', metric);
-    sendToAnalytics('LCP', metric);
+    console.log("LCP:", metric);
+    sendToAnalytics("LCP", metric);
   });
 
   onTTFB((metric) => {
-    console.log('TTFB:', metric);
-    sendToAnalytics('TTFB', metric);
+    console.log("TTFB:", metric);
+    sendToAnalytics("TTFB", metric);
   });
 
   onINP((metric) => {
-    console.log('INP:', metric);
-    sendToAnalytics('INP', metric);
+    console.log("INP:", metric);
+    sendToAnalytics("INP", metric);
   });
 }
 
 function sendToAnalytics(name: string, metric: any) {
   // Send to your analytics service
-  if (typeof window !== 'undefined' && window.gtag) {
-    window.gtag('event', name, {
+  if (typeof window !== "undefined" && window.gtag) {
+    window.gtag("event", name, {
       value: Math.round(metric.value),
-      event_category: 'Web Vitals',
+      event_category: "Web Vitals",
       event_label: metric.id,
       non_interaction: true,
     });
@@ -4173,10 +4305,12 @@ function sendToAnalytics(name: string, metric: any) {
 #### Installation
 
 Code Guardian can be installed as a Progressive Web App on:
+
 - **Desktop**: Windows, macOS, Linux, Chrome OS
 - **Mobile**: iOS (Safari), Android (Chrome)
 
 **Installation Process**:
+
 1. Visit the application in a supported browser
 2. Look for the "Install" button in the address bar
 3. Click "Install" and follow prompts
@@ -4185,46 +4319,50 @@ Code Guardian can be installed as a Progressive Web App on:
 #### Offline Capabilities
 
 The PWA works fully offline with:
+
 - **Complete code analysis**: All analysis runs client-side
 - **Report generation**: Create PDF and JSON reports offline
 - **History access**: View past analyses
 - **Settings management**: Configure preferences
 
 **Offline Strategy**:
+
 ```typescript
 // Service Worker strategy
 const offlineStrategy = {
-  pages: 'NetworkFirst',      // Try network, fallback to cache
-  assets: 'CacheFirst',        // Use cache first for static assets
-  api: 'NetworkOnly',          // API calls require network
-  analysis: 'CacheFirst',      // Cache analysis results
+  pages: "NetworkFirst", // Try network, fallback to cache
+  assets: "CacheFirst", // Use cache first for static assets
+  api: "NetworkOnly", // API calls require network
+  analysis: "CacheFirst", // Cache analysis results
 };
 ```
 
 #### Push Notifications
 
 Enable push notifications for:
+
 - Analysis completion
 - New vulnerability alerts
 - System updates
 - Report generation
 
 **Setup Push Notifications**:
+
 ```typescript
-import { PushNotificationService } from '@/services/pwa/pushNotificationService';
+import { PushNotificationService } from "@/services/pwa/pushNotificationService";
 
 const pushService = new PushNotificationService();
 
 // Request permission
 const permission = await pushService.requestPermission();
 
-if (permission === 'granted') {
+if (permission === "granted") {
   // Subscribe to push notifications
   const subscription = await pushService.subscribe();
-  
+
   // Send subscription to server
-  await fetch('/api/push/subscribe', {
-    method: 'POST',
+  await fetch("/api/push/subscribe", {
+    method: "POST",
     body: JSON.stringify(subscription),
   });
 }
@@ -4235,7 +4373,7 @@ if (permission === 'granted') {
 Queue operations when offline:
 
 ```typescript
-import { BackgroundSyncService } from '@/services/pwa/backgroundSyncService';
+import { BackgroundSyncService } from "@/services/pwa/backgroundSyncService";
 
 const syncService = new BackgroundSyncService();
 
@@ -4336,8 +4474,8 @@ const cspHeader = `
 
 const securityHeaders = [
   {
-    key: 'Content-Security-Policy',
-    value: cspHeader.replace(/\s{2,}/g, ' ').trim(),
+    key: "Content-Security-Policy",
+    value: cspHeader.replace(/\s{2,}/g, " ").trim(),
   },
 ];
 ```
@@ -4348,7 +4486,7 @@ Best practices for authentication:
 
 ```typescript
 // Secure password hashing
-import bcrypt from 'bcryptjs';
+import bcrypt from "bcryptjs";
 
 const hashPassword = async (password: string) => {
   const salt = await bcrypt.genSalt(12);
@@ -4356,22 +4494,22 @@ const hashPassword = async (password: string) => {
 };
 
 // Secure token generation
-import crypto from 'crypto';
+import crypto from "crypto";
 
 const generateSecureToken = () => {
-  return crypto.randomBytes(32).toString('hex');
+  return crypto.randomBytes(32).toString("hex");
 };
 
 // Rate limiting for auth endpoints
-import rateLimit from 'express-rate-limit';
+import rateLimit from "express-rate-limit";
 
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 5, // 5 requests per window
-  message: 'Too many authentication attempts, please try again later.',
+  message: "Too many authentication attempts, please try again later.",
 });
 
-app.use('/api/auth/login', authLimiter);
+app.use("/api/auth/login", authLimiter);
 ```
 
 #### Input Validation
@@ -4379,13 +4517,13 @@ app.use('/api/auth/login', authLimiter);
 Validate all user inputs:
 
 ```typescript
-import { z } from 'zod';
+import { z } from "zod";
 
 // Define schema
 const analysisSchema = z.object({
   files: z.array(z.instanceof(File)),
   options: z.object({
-    severity: z.enum(['low', 'medium', 'high', 'critical']),
+    severity: z.enum(["low", "medium", "high", "critical"]),
     includeTests: z.boolean().optional(),
     customRules: z.array(z.string()).optional(),
   }),
@@ -4397,7 +4535,7 @@ try {
   // Proceed with validated data
 } catch (error) {
   // Handle validation error
-  console.error('Invalid input:', error);
+  console.error("Invalid input:", error);
 }
 ```
 
@@ -4406,7 +4544,7 @@ try {
 Encrypt sensitive data:
 
 ```typescript
-import CryptoJS from 'crypto-js';
+import CryptoJS from "crypto-js";
 
 // Encrypt data before storage
 const encryptData = (data: any, key: string) => {
@@ -4421,9 +4559,12 @@ const decryptData = (ciphertext: string, key: string) => {
 
 // Usage
 const encrypted = encryptData(sensitiveData, encryptionKey);
-localStorage.setItem('secure_data', encrypted);
+localStorage.setItem("secure_data", encrypted);
 
-const decrypted = decryptData(localStorage.getItem('secure_data'), encryptionKey);
+const decrypted = decryptData(
+  localStorage.getItem("secure_data"),
+  encryptionKey
+);
 ```
 
 ### API Security
@@ -4434,14 +4575,14 @@ Protect API endpoints:
 
 ```typescript
 // middleware/auth.ts
-import { NextRequest, NextResponse } from 'next/server';
-import jwt from 'jsonwebtoken';
+import { NextRequest, NextResponse } from "next/server";
+import jwt from "jsonwebtoken";
 
 export async function authMiddleware(request: NextRequest) {
-  const token = request.headers.get('Authorization')?.split(' ')[1];
+  const token = request.headers.get("Authorization")?.split(" ")[1];
 
   if (!token) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   try {
@@ -4449,7 +4590,7 @@ export async function authMiddleware(request: NextRequest) {
     // Attach user to request
     return NextResponse.next();
   } catch (error) {
-    return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
+    return NextResponse.json({ error: "Invalid token" }, { status: 401 });
   }
 }
 ```
@@ -4460,7 +4601,7 @@ Implement rate limiting:
 
 ```typescript
 // lib/rate-limit.ts
-import { LRUCache } from 'lru-cache';
+import { LRUCache } from "lru-cache";
 
 type RateLimitOptions = {
   interval: number;
@@ -4497,12 +4638,12 @@ const limiter = rateLimit({
 });
 
 export async function POST(request: NextRequest) {
-  const identifier = request.ip ?? 'anonymous';
+  const identifier = request.ip ?? "anonymous";
 
   try {
     await limiter.check(10, identifier); // 10 requests per minute
   } catch {
-    return NextResponse.json({ error: 'Rate limit exceeded' }, { status: 429 });
+    return NextResponse.json({ error: "Rate limit exceeded" }, { status: 429 });
   }
 
   // Process request
@@ -4544,7 +4685,7 @@ export class SecurityMonitor {
     });
 
     // Alert on critical events
-    if (event.severity === 'critical') {
+    if (event.severity === "critical") {
       this.alertAdmins(event);
     }
 
@@ -4562,7 +4703,6 @@ export class SecurityMonitor {
 }
 ```
 
-
 ---
 
 ## Troubleshooting
@@ -4574,6 +4714,7 @@ export class SecurityMonitor {
 **Problem**: `npm install` fails with dependency errors
 
 **Solution**:
+
 ```bash
 # Clear npm cache
 npm cache clean --force
@@ -4588,6 +4729,7 @@ npm install
 **Problem**: Node.js version mismatch
 
 **Solution**:
+
 ```bash
 # Check current version
 node --version
@@ -4602,6 +4744,7 @@ nvm use 22
 **Problem**: TypeScript compilation errors
 
 **Solution**:
+
 ```bash
 # Run type checking to see detailed errors
 npm run type-check
@@ -4613,6 +4756,7 @@ npm run type-check
 **Problem**: Out of memory during build
 
 **Solution**:
+
 ```bash
 # Increase Node.js memory limit
 NODE_OPTIONS=--max-old-space-size=4096 npm run build
@@ -4623,6 +4767,7 @@ NODE_OPTIONS=--max-old-space-size=4096 npm run build
 **Problem**: Application crashes on large file analysis
 
 **Solution**:
+
 - Reduce file size (split into smaller chunks)
 - Exclude test files and documentation
 - Increase browser memory limits
@@ -4631,17 +4776,18 @@ NODE_OPTIONS=--max-old-space-size=4096 npm run build
 **Problem**: PWA not updating
 
 **Solution**:
+
 ```javascript
 // Force service worker update
-navigator.serviceWorker.getRegistrations().then(registrations => {
-  registrations.forEach(registration => {
+navigator.serviceWorker.getRegistrations().then((registrations) => {
+  registrations.forEach((registration) => {
     registration.update();
   });
 });
 
 // Clear cache
-caches.keys().then(names => {
-  names.forEach(name => caches.delete(name));
+caches.keys().then((names) => {
+  names.forEach((name) => caches.delete(name));
 });
 ```
 
@@ -4650,6 +4796,7 @@ caches.keys().then(names => {
 **Problem**: "403 Forbidden" error when accessing repositories
 
 **Solution**:
+
 - Check OAuth token permissions
 - Regenerate GitHub token
 - Verify repository access rights
@@ -4658,6 +4805,7 @@ caches.keys().then(names => {
 **Problem**: Repository analysis timeout
 
 **Solution**:
+
 - Analyze smaller branches
 - Exclude large binary files
 - Use incremental analysis
@@ -4668,41 +4816,44 @@ caches.keys().then(names => {
 #### Slow Analysis
 
 **Possible Causes**:
+
 - Large codebase (100k+ lines)
 - Many dependencies to scan
 - Complex AST parsing
 - Low system resources
 
 **Solutions**:
+
 ```typescript
 // Enable performance monitoring
 const analyzeWithProfiling = async (files: File[]) => {
-  performance.mark('analysis-start');
-  
+  performance.mark("analysis-start");
+
   const result = await analyze(files);
-  
-  performance.mark('analysis-end');
-  performance.measure('analysis', 'analysis-start', 'analysis-end');
-  
-  const measure = performance.getEntriesByName('analysis')[0];
+
+  performance.mark("analysis-end");
+  performance.measure("analysis", "analysis-start", "analysis-end");
+
+  const measure = performance.getEntriesByName("analysis")[0];
   console.log(`Analysis took ${measure.duration}ms`);
-  
+
   return result;
 };
 
 // Optimize analysis options
 const optimizedOptions = {
-  includeTests: false,        // Skip test files
-  includeDocs: false,         // Skip documentation
-  maxFileSize: 1024 * 1024,   // 1MB per file limit
-  parallelAnalysis: true,     // Enable parallel processing
-  cacheResults: true,         // Cache intermediate results
+  includeTests: false, // Skip test files
+  includeDocs: false, // Skip documentation
+  maxFileSize: 1024 * 1024, // 1MB per file limit
+  parallelAnalysis: true, // Enable parallel processing
+  cacheResults: true, // Cache intermediate results
 };
 ```
 
 #### High Memory Usage
 
 **Solutions**:
+
 - Close unused browser tabs
 - Clear analysis history
 - Restart browser
@@ -4714,23 +4865,26 @@ const optimizedOptions = {
 #### Supported Browsers
 
 | Browser | Minimum Version | Recommended |
-|---------|----------------|-------------|
-| Chrome | 90+ | Latest |
-| Firefox | 88+ | Latest |
-| Safari | 14+ | Latest |
-| Edge | 90+ | Latest |
+| ------- | --------------- | ----------- |
+| Chrome  | 90+             | Latest      |
+| Firefox | 88+             | Latest      |
+| Safari  | 14+             | Latest      |
+| Edge    | 90+             | Latest      |
 
 #### Browser-Specific Issues
 
 **Safari**:
+
 - Enable "Disable Cross-Origin Restrictions" for local development
 - IndexedDB storage limits are more restrictive
 
 **Firefox**:
+
 - Allow pop-ups for PDF downloads
 - IndexedDB may require explicit permission
 
 **Mobile Browsers**:
+
 - Large file analysis may be slow
 - Consider analyzing on desktop for best performance
 
@@ -4878,6 +5032,7 @@ We especially welcome contributions in these areas:
 ### Recognition
 
 Contributors are recognized in:
+
 - README contributors section
 - Release notes
 - Project website
@@ -4951,6 +5106,7 @@ This project uses open-source libraries with the following licenses:
 #### Professional Support
 
 For enterprise support and consulting:
+
 - Custom feature development
 - Integration assistance
 - Security auditing services
@@ -5007,6 +5163,7 @@ Built with amazing open-source projects:
 ### Inspiration
 
 Inspired by industry-leading security tools:
+
 - SonarQube
 - Snyk
 - GitHub Advanced Security
@@ -5130,29 +5287,30 @@ SMTP_PASSWORD=your_password
 
 ### Appendix B: Keyboard Shortcuts
 
-| Shortcut | Action |
-|----------|--------|
+| Shortcut       | Action               |
+| -------------- | -------------------- |
 | `Ctrl/Cmd + K` | Open command palette |
-| `Ctrl/Cmd + U` | Upload file |
-| `Ctrl/Cmd + H` | View history |
-| `Ctrl/Cmd + E` | Export report |
-| `Ctrl/Cmd + /` | Toggle help |
-| `Ctrl/Cmd + ,` | Open settings |
-| `Ctrl/Cmd + F` | Search issues |
-| `Esc` | Close modal |
+| `Ctrl/Cmd + U` | Upload file          |
+| `Ctrl/Cmd + H` | View history         |
+| `Ctrl/Cmd + E` | Export report        |
+| `Ctrl/Cmd + /` | Toggle help          |
+| `Ctrl/Cmd + ,` | Open settings        |
+| `Ctrl/Cmd + F` | Search issues        |
+| `Esc`          | Close modal          |
 
 ### Appendix C: API Rate Limits
 
-| Endpoint | Rate Limit | Window |
-|----------|------------|--------|
-| `/api/analyze` | 10 requests | 1 minute |
+| Endpoint        | Rate Limit  | Window   |
+| --------------- | ----------- | -------- |
+| `/api/analyze`  | 10 requests | 1 minute |
 | `/api/github/*` | 30 requests | 1 minute |
-| `/api/ai/*` | 20 requests | 1 minute |
+| `/api/ai/*`     | 20 requests | 1 minute |
 | `/api/export/*` | 15 requests | 1 minute |
 
 ### Appendix D: Supported File Types
 
 **Programming Languages**:
+
 - `.js`, `.mjs`, `.cjs`, `.jsx` - JavaScript
 - `.ts`, `.tsx`, `.d.ts` - TypeScript
 - `.py`, `.pyw`, `.pyi` - Python
@@ -5170,6 +5328,7 @@ SMTP_PASSWORD=your_password
 - `.scala` - Scala
 
 **Configuration Files**:
+
 - `.json`, `.jsonc` - JSON
 - `.yaml`, `.yml` - YAML
 - `.toml` - TOML
@@ -5178,6 +5337,7 @@ SMTP_PASSWORD=your_password
 - `.env` - Environment
 
 **Markup & Styling**:
+
 - `.html`, `.htm` - HTML
 - `.css`, `.scss`, `.sass` - CSS/SCSS
 - `.md`, `.markdown` - Markdown
@@ -5201,6 +5361,7 @@ Detailed security control mapping available in SECURITY.md.
 ### Version 11.0.0 (2025-01-31)
 
 #### Major Features
+
 - Complete rewrite with Next.js 16 App Router
 - Enhanced multi-language support (15+ languages)
 - AI-powered security insights and fix suggestions
@@ -5211,6 +5372,7 @@ Detailed security control mapping available in SECURITY.md.
 - Multiple export formats (PDF, JSON, SARIF)
 
 #### Improvements
+
 - 300% faster analysis engine
 - 50% reduction in bundle size
 - Improved accessibility (WCAG 2.1 AA compliant)
@@ -5218,6 +5380,7 @@ Detailed security control mapping available in SECURITY.md.
 - Better error handling and logging
 
 #### Bug Fixes
+
 - Fixed XSS detection false positives
 - Resolved memory leaks in large file analysis
 - Fixed GitHub OAuth token refresh
@@ -5270,7 +5433,6 @@ A: Yes, set `NEXT_PUBLIC_ENABLE_ANALYTICS=false` in your environment variables.
 
 ---
 
-**Made with ❤️ by the Code Guardian Team**
+**Made with love by the Code Guardian Team**
 
-**[⭐ Star us on GitHub](https://github.com/Xenonesis/code-guardian-report)** | **[📖 Documentation](https://github.com/Xenonesis/code-guardian-report/tree/main/md)** | **[🐛 Report Bug](https://github.com/Xenonesis/code-guardian-report/issues)** | **[💡 Request Feature](https://github.com/Xenonesis/code-guardian-report/issues/new?labels=enhancement)**
-
+**[Star us on GitHub](https://github.com/Xenonesis/code-guardian-report)** | **[Documentation](https://github.com/Xenonesis/code-guardian-report/tree/main/md)** | **[Report Bug](https://github.com/Xenonesis/code-guardian-report/issues)** | **[Request Feature](https://github.com/Xenonesis/code-guardian-report/issues/new?labels=enhancement)**
