@@ -115,7 +115,7 @@ export const GitHubAnalysisPage: React.FC = () => {
     loadDashboardStats();
   }, [user?.uid, selectedTab]);
 
-  // GitHub repositories integration for Google users
+  // GitHub repositories integration - now always enabled for authenticated users
   const {
     repositories,
     loading: reposLoading,
@@ -126,10 +126,32 @@ export const GitHubAnalysisPage: React.FC = () => {
     denyPermission,
     setManualUsername,
     githubUser,
+    refreshRepositories,
   } = useGitHubRepositories({
     email: userProfile?.email || null,
-    enabled: !isGitHubUser && !!user,
+    enabled: !!user && !isGitHubUser, // For non-GitHub OAuth users
   });
+
+  // Auto-fetch GitHub data for GitHub authenticated users
+  useEffect(() => {
+    const autoFetchGitHubData = async () => {
+      if (!isGitHubUser || !userProfile?.githubUsername) return;
+
+      // For GitHub users, automatically set their username to trigger repo fetch
+      const storedUsername = localStorage.getItem("github_username");
+      if (storedUsername !== userProfile.githubUsername) {
+        localStorage.setItem("github_username", userProfile.githubUsername);
+        localStorage.setItem("github_repo_permission", "granted");
+        await setManualUsername(userProfile.githubUsername);
+        logger.debug(
+          "Auto-fetched GitHub data for:",
+          userProfile.githubUsername
+        );
+      }
+    };
+
+    autoFetchGitHubData();
+  }, [isGitHubUser, userProfile?.githubUsername, setManualUsername]);
 
   // Derive header profile view
   const nonGithubConnected = !isGitHubUser;
@@ -688,8 +710,8 @@ export const GitHubAnalysisPage: React.FC = () => {
 
         {/* Main Content Area */}
         <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-          {/* GitHub Repositories Section for Google Users */}
-          {!isGitHubUser && permissionGranted && repositories.length > 0 && (
+          {/* GitHub Repositories Section - Always show for authenticated users with repos */}
+          {repositories.length > 0 && (
             <div className="mb-8">
               <Card className="border-slate-200 p-6 shadow-sm dark:border-slate-800">
                 <div className="mb-6 flex items-center justify-between">
@@ -702,17 +724,28 @@ export const GitHubAnalysisPage: React.FC = () => {
                         Your GitHub Repositories
                       </h2>
                       <p className="text-sm text-slate-500">
-                        Select a repository to analyze
+                        Select a repository to analyze ({repositories.length}{" "}
+                        repos)
                       </p>
                     </div>
                   </div>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setShowGitHubRepos(!showGitHubRepos)}
-                  >
-                    {showGitHubRepos ? "Hide List" : "Show List"}
-                  </Button>
+                  <div className="flex items-center gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => refreshRepositories?.()}
+                      disabled={reposLoading}
+                    >
+                      {reposLoading ? "Loading..." : "Refresh"}
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setShowGitHubRepos(!showGitHubRepos)}
+                    >
+                      {showGitHubRepos ? "Hide List" : "Show List"}
+                    </Button>
+                  </div>
                 </div>
 
                 {showGitHubRepos && (

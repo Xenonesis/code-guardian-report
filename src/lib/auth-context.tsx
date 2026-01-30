@@ -10,8 +10,6 @@ import React, {
 } from "react";
 import {
   User,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
   signOut,
   signInWithPopup,
   signInWithRedirect,
@@ -24,7 +22,7 @@ import {
   AuthCredential,
 } from "firebase/auth";
 import { doc } from "firebase/firestore";
-import { auth, googleProvider, githubProvider, db } from "./firebase";
+import { auth, githubProvider, db } from "./firebase";
 import { safeGetDoc, safeSetDoc } from "./firestore-utils";
 import {
   showAuthFallbackMessage,
@@ -54,16 +52,6 @@ interface AuthContextType {
   user: User | null;
   userProfile: UserProfile | null;
   loading: boolean;
-  signInWithEmailAndPassword: (
-    email: string,
-    password: string
-  ) => Promise<UserCredential>;
-  createUser: (
-    email: string,
-    password: string,
-    displayName: string
-  ) => Promise<UserCredential>;
-  signInWithGoogle: () => Promise<UserCredential>;
   signInWithGithub: () => Promise<UserCredential>;
   logout: () => Promise<void>;
   isGitHubUser: boolean;
@@ -121,7 +109,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     isOpen: false,
     email: "",
     existingProvider: "password",
-    attemptedProvider: "google.com",
+    attemptedProvider: "github.com",
     pendingCredential: null,
   });
   const [isLinkingAccounts, setIsLinkingAccounts] = useState(false);
@@ -383,41 +371,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     syncWithFirestore();
   };
 
-  // Sign in with email and password
-  const signInWithEmailAndPasswordHandler = async (
-    email: string,
-    password: string
-  ) => {
-    try {
-      const result = await signInWithEmailAndPassword(auth, email, password);
-      await createUserProfile(result.user);
-      return result;
-    } catch (error: any) {
-      handleAuthError(error, "Email/password sign-in");
-      throw error;
-    }
-  };
-
-  // Create user with email and password
-  const createUser = async (
-    email: string,
-    password: string,
-    displayName: string
-  ) => {
-    try {
-      const result = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      await createUserProfile(result.user, displayName);
-      return result;
-    } catch (error: any) {
-      handleAuthError(error, "Account creation");
-      throw error;
-    }
-  };
-
   // Handle account conflict error
   const handleAccountConflictError = async (
     error: AuthError,
@@ -429,14 +382,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         const signInMethods = await fetchSignInMethodsForEmail(auth, email);
 
         let existingProvider: Provider = "password";
-        if (signInMethods.includes("google.com")) {
-          existingProvider = "google.com";
-        } else if (signInMethods.includes("github.com")) {
+        if (signInMethods.includes("github.com")) {
           existingProvider = "github.com";
-        } else if (signInMethods.includes("facebook.com")) {
-          existingProvider = "facebook.com";
-        } else if (signInMethods.includes("twitter.com")) {
-          existingProvider = "twitter.com";
         } else if (signInMethods.includes("password")) {
           existingProvider = "password";
         }
@@ -469,12 +416,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       let userCredential: UserCredential;
 
       switch (existingProvider) {
-        case "google.com": {
-          const provider = googleProvider;
-          provider.setCustomParameters({ login_hint: email });
-          userCredential = await signInWithPopup(auth, provider);
-          break;
-        }
         case "github.com": {
           const provider = githubProvider;
           provider.setCustomParameters({ login: email });
@@ -509,37 +450,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       handleAuthError(error, "Sign in with existing provider");
     } finally {
       setIsLinkingAccounts(false);
-    }
-  };
-
-  // Sign in with Google (with redirect fallback for COOP issues)
-  const signInWithGoogle = async () => {
-    try {
-      const result = await signInWithPopup(auth, googleProvider);
-      await createUserProfile(result.user);
-      return result;
-    } catch (error: any) {
-      // Check for account conflict first
-      const handled = await handleAccountConflictError(error, "google.com");
-      if (handled) {
-        return new Promise(() => {}) as Promise<UserCredential>;
-      }
-
-      // Check if it's a COOP-related error or popup blocked
-      if (
-        error.code === "auth/popup-blocked" ||
-        error.code === "auth/popup-closed-by-user" ||
-        error.message?.includes("Cross-Origin-Opener-Policy")
-      ) {
-        showAuthFallbackMessage("google");
-        // Fall back to redirect-based authentication
-        await signInWithRedirect(auth, googleProvider);
-        // The redirect will handle the rest, so we return a promise that never resolves
-        // The actual result will be handled by getRedirectResult in the useEffect
-        return new Promise(() => {}) as Promise<UserCredential>;
-      }
-      handleAuthError(error, "Google sign-in");
-      throw error;
     }
   };
 
@@ -636,9 +546,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     user,
     userProfile,
     loading,
-    signInWithEmailAndPassword: signInWithEmailAndPasswordHandler,
-    createUser,
-    signInWithGoogle,
     signInWithGithub,
     logout,
     isGitHubUser: userProfile?.isGitHubUser || false,

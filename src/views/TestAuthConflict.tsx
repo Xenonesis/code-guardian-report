@@ -30,10 +30,7 @@ export const TestAuthConflict: React.FC = () => {
   }, []);
   const {
     user,
-    signInWithGoogle,
     signInWithGithub,
-    signInWithEmailAndPassword,
-    createUser,
     logout,
     accountConflict,
     setAccountConflict,
@@ -41,35 +38,11 @@ export const TestAuthConflict: React.FC = () => {
     isLinkingAccounts,
   } = useAuth();
 
-  const [testEmail, setTestEmail] = useState("test@example.com");
-  const [testPassword, setTestPassword] = useState("testpass123");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{
     type: "success" | "error" | "info";
     text: string;
   } | null>(null);
-
-  const handleGoogleSignIn = async () => {
-    setLoading(true);
-    setMessage(null);
-    try {
-      await signInWithGoogle();
-      setMessage({
-        type: "success",
-        text: "Successfully signed in with Google!",
-      });
-    } catch (error: unknown) {
-      const err = error as { code?: string; message?: string };
-      if (err.code !== "auth/account-exists-with-different-credential") {
-        setMessage({
-          type: "error",
-          text: err.message || "Failed to sign in with Google",
-        });
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleGitHubSignIn = async () => {
     setLoading(true);
@@ -86,47 +59,6 @@ export const TestAuthConflict: React.FC = () => {
         setMessage({
           type: "error",
           text: err.message || "Failed to sign in with GitHub",
-        });
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleEmailSignIn = async () => {
-    setLoading(true);
-    setMessage(null);
-    try {
-      await signInWithEmailAndPassword(testEmail, testPassword);
-      setMessage({
-        type: "success",
-        text: "Successfully signed in with Email/Password!",
-      });
-    } catch (error: unknown) {
-      const err = error as { code?: string; message?: string };
-      if (err.code !== "auth/account-exists-with-different-credential") {
-        setMessage({
-          type: "error",
-          text: err.message || "Failed to sign in",
-        });
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleCreateAccount = async () => {
-    setLoading(true);
-    setMessage(null);
-    try {
-      await createUser(testEmail, testPassword, "Test User");
-      setMessage({ type: "success", text: "Account created successfully!" });
-    } catch (error: unknown) {
-      const err = error as { code?: string; message?: string };
-      if (err.code !== "auth/account-exists-with-different-credential") {
-        setMessage({
-          type: "error",
-          text: err.message || "Failed to create account",
         });
       }
     } finally {
@@ -242,56 +174,18 @@ export const TestAuthConflict: React.FC = () => {
         )}
 
         {/* Test Controls */}
-        <div className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 sm:gap-6">
           {/* OAuth Providers */}
           <Card>
             <CardHeader>
               <CardTitle className="text-lg sm:text-xl">
-                OAuth Sign-In
+                GitHub Sign-In
               </CardTitle>
               <CardDescription className="text-sm">
-                Test Google and GitHub authentication
+                Test GitHub authentication
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3 sm:space-y-4">
-              <Button
-                onClick={handleGoogleSignIn}
-                disabled={loading}
-                className="h-10 w-full bg-blue-600 text-sm text-white hover:bg-blue-700 sm:h-11 sm:text-base"
-              >
-                {loading ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 flex-shrink-0 animate-spin" />
-                    <span className="truncate">Processing...</span>
-                  </>
-                ) : (
-                  <>
-                    <svg
-                      className="mr-2 h-4 w-4 flex-shrink-0 sm:h-5 sm:w-5"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        fill="currentColor"
-                        d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-                      />
-                      <path
-                        fill="currentColor"
-                        d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-                      />
-                      <path
-                        fill="currentColor"
-                        d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-                      />
-                      <path
-                        fill="currentColor"
-                        d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-                      />
-                    </svg>
-                    <span className="truncate">Sign In with Google</span>
-                  </>
-                )}
-              </Button>
-
               <Button
                 onClick={handleGitHubSignIn}
                 disabled={loading}
@@ -317,73 +211,6 @@ export const TestAuthConflict: React.FC = () => {
               </Button>
             </CardContent>
           </Card>
-
-          {/* Email/Password */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg sm:text-xl">
-                Email/Password Authentication
-              </CardTitle>
-              <CardDescription className="text-sm">
-                Test email/password sign-in and account creation
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-3 sm:space-y-4">
-              <div>
-                <label className="mb-1.5 block text-xs font-medium sm:mb-2 sm:text-sm">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  value={testEmail}
-                  onChange={(e) => setTestEmail(e.target.value)}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:border-transparent focus:ring-2 focus:ring-blue-500 sm:text-base dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100"
-                  placeholder="test@example.com"
-                />
-              </div>
-              <div>
-                <label className="mb-1.5 block text-xs font-medium sm:mb-2 sm:text-sm">
-                  Password
-                </label>
-                <input
-                  type="password"
-                  value={testPassword}
-                  onChange={(e) => setTestPassword(e.target.value)}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 focus:border-transparent focus:ring-2 focus:ring-blue-500 sm:text-base dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100"
-                  placeholder="password"
-                />
-              </div>
-              <Button
-                onClick={handleEmailSignIn}
-                disabled={loading}
-                variant="outline"
-                className="h-10 w-full text-sm sm:h-11 sm:text-base"
-              >
-                {loading ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 flex-shrink-0 animate-spin" />
-                    <span className="truncate">Processing...</span>
-                  </>
-                ) : (
-                  <span className="truncate">Sign In with Email/Password</span>
-                )}
-              </Button>
-              <Button
-                onClick={handleCreateAccount}
-                disabled={loading}
-                className="h-10 w-full text-sm sm:h-11 sm:text-base"
-              >
-                {loading ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 flex-shrink-0 animate-spin" />
-                    <span className="truncate">Processing...</span>
-                  </>
-                ) : (
-                  <span className="truncate">Create Account</span>
-                )}
-              </Button>
-            </CardContent>
-          </Card>
         </div>
 
         {/* Test Instructions */}
@@ -392,47 +219,20 @@ export const TestAuthConflict: React.FC = () => {
             <CardTitle className="text-lg sm:text-xl">
               <span className="inline-flex items-center gap-2">
                 <ClipboardList className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
-                How to Test Account Conflict
+                GitHub Authentication Test
               </span>
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3 sm:space-y-4">
             <div className="rounded-lg border border-blue-200 bg-blue-50 p-3 sm:p-4 dark:border-blue-900 dark:bg-blue-950/20">
               <h3 className="mb-2 text-sm font-semibold text-blue-900 sm:text-base dark:text-blue-100">
-                Test Scenario 1: Google → Email/Password
+                Test GitHub Sign-In
               </h3>
               <ol className="list-inside list-decimal space-y-1.5 pl-2 text-xs text-blue-800 sm:space-y-2 sm:text-sm dark:text-blue-200">
-                <li>Sign in with Google first</li>
-                <li>Sign out</li>
-                <li>
-                  Try to create an account with the same email using
-                  Email/Password
-                </li>
-                <li>The AccountConflictModal should appear!</li>
-              </ol>
-            </div>
-
-            <div className="rounded-lg border border-green-200 bg-green-50 p-3 sm:p-4 dark:border-green-900 dark:bg-green-950/20">
-              <h3 className="mb-2 text-sm font-semibold text-green-900 sm:text-base dark:text-green-100">
-                Test Scenario 2: Email/Password → Google
-              </h3>
-              <ol className="list-inside list-decimal space-y-1.5 pl-2 text-xs text-green-800 sm:space-y-2 sm:text-sm dark:text-green-200">
-                <li>Create an account with Email/Password</li>
-                <li>Sign out</li>
-                <li>Try to sign in with Google using the same email</li>
-                <li>The AccountConflictModal should appear!</li>
-              </ol>
-            </div>
-
-            <div className="rounded-lg border border-purple-200 bg-purple-50 p-3 sm:p-4 dark:border-purple-900 dark:bg-purple-950/20">
-              <h3 className="mb-2 text-sm font-semibold text-purple-900 sm:text-base dark:text-purple-100">
-                Test Scenario 3: GitHub → Google
-              </h3>
-              <ol className="list-inside list-decimal space-y-1.5 pl-2 text-xs text-purple-800 sm:space-y-2 sm:text-sm dark:text-purple-200">
-                <li>Sign in with GitHub first</li>
-                <li>Sign out</li>
-                <li>Try to sign in with Google using the same email</li>
-                <li>The AccountConflictModal should appear!</li>
+                <li>Click &quot;Sign In with GitHub&quot;</li>
+                <li>Authorize the application on GitHub</li>
+                <li>Verify you are signed in successfully</li>
+                <li>Test signing out and signing back in</li>
               </ol>
             </div>
           </CardContent>

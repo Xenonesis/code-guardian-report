@@ -44,7 +44,7 @@ const GitHubRepositoryPermissionModal: React.FC<
           {/* Description */}
           <div className="mb-6 space-y-4">
             <p className="text-center text-gray-300">
-              We detected that your Google account email{" "}
+              We detected that your account email{" "}
               <span className="font-semibold text-white">{email}</span> may be
               associated with a GitHub account.
             </p>

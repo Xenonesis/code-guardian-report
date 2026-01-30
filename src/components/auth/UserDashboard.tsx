@@ -54,7 +54,7 @@ const UserDashboard: React.FC = () => {
     setManualUsername,
   } = useGitHubRepositories({
     email: userProfile?.email || null,
-    enabled: !userProfile?.isGitHubUser, // Only for non-GitHub users (Google sign-in)
+    enabled: !userProfile?.isGitHubUser, // For email/password users linking GitHub
   });
 
   const fetchTasks = async () => {

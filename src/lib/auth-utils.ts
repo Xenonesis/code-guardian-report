@@ -2,9 +2,9 @@
 import { toast } from "sonner";
 
 // Helper function to show user-friendly messages for auth issues
-export const showAuthFallbackMessage = (provider: "google" | "github") => {
+export const showAuthFallbackMessage = (provider: "github") => {
   toast.info(
-    `${provider === "google" ? "Google" : "GitHub"} sign-in popup was blocked. Redirecting to ${provider === "google" ? "Google" : "GitHub"} for authentication...`,
+    `GitHub sign-in popup was blocked. Redirecting to GitHub for authentication...`,
     {
       duration: 4000,
       description: "This is normal and helps ensure secure authentication.",

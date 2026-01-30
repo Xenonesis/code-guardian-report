@@ -2,7 +2,7 @@
 
 import { initializeApp } from "firebase/app";
 import { enableNetwork, disableNetwork } from "firebase/firestore";
-import { getAuth, GoogleAuthProvider, GithubAuthProvider } from "firebase/auth";
+import { getAuth, GithubAuthProvider } from "firebase/auth";
 import { logger } from "@/utils/logger";
 
 // Firebase configuration using environment variables
@@ -58,23 +58,12 @@ export const auth = getAuth(app);
 // Configure auth persistence and settings
 auth.settings.appVerificationDisabledForTesting = false;
 
-// Auth Providers
-export const googleProvider = new GoogleAuthProvider();
+// Auth Providers - GitHub only
 export const githubProvider = new GithubAuthProvider();
 
-// Configure providers for better popup handling and COOP compatibility
-googleProvider.addScope("email");
-googleProvider.addScope("profile");
-googleProvider.setCustomParameters({
-  prompt: "select_account",
-  // Remove hosted domain restriction to avoid COOP issues
-  hd: "",
-  // Add parameters to help with COOP issues
-  access_type: "online",
-  include_granted_scopes: "true",
-});
-
+// Configure GitHub provider for better popup handling and COOP compatibility
 githubProvider.addScope("user:email");
+githubProvider.addScope("read:user");
 githubProvider.setCustomParameters({
   allow_signup: "true",
 });
