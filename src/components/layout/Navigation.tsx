@@ -137,7 +137,7 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
         "portal-navbar bg-white transition-all duration-500 ease-out dark:bg-slate-950",
         isScrolled
           ? "border-border/60 border-b shadow-lg shadow-black/5 dark:shadow-black/30"
-          : "border-b border-transparent"
+          : "border-border/40 border-b"
       )}
       style={{
         position: "fixed",
@@ -147,7 +147,6 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
         zIndex: 10000,
         width: "100%",
         paddingTop: "env(safe-area-inset-top)",
-        backgroundColor: "var(--background)",
       }}
     >
       <div className="xs:px-4 mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
@@ -371,7 +370,6 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
           style={{
             top: "calc(56px + env(safe-area-inset-top))",
             height: "calc(100vh - 56px - env(safe-area-inset-top))",
-            backgroundColor: "var(--background)",
           }}
         >
           <div className="xs:px-4 xs:py-6 h-full overflow-y-auto px-3 py-4">

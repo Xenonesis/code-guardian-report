@@ -5187,6 +5187,163 @@ Special thanks to all contributors who have helped make Code Guardian Report bet
 
 See the full list of contributors on [GitHub](https://github.com/Xenonesis/code-guardian-report/graphs/contributors).
 
+### Special Mentions
+
+We want to give special recognition to contributors who have made exceptional contributions to Code Guardian Report:
+
+#### Core Maintainers & Major Contributors
+
+These individuals have demonstrated outstanding dedication, innovation, and impact on the project:
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/Xenonesis">
+        <img src="https://github.com/Xenonesis.png" width="100px;" alt="Aditya Raj"/>
+        <br />
+        <sub><b>Aditya Raj</b></sub>
+      </a>
+      <br />
+      <sub>Project Lead & Creator</sub>
+      <br />
+      Code, Design, Documentation, Maintenance, Deployment, Performance, Security, Testing
+    </td>
+  </tr>
+</table>
+
+**Legend:**
+
+- Code
+- Design
+- Documentation
+- Maintenance
+- Deployment
+- Performance
+- Security
+- Testing
+- Bug Reports
+- Ideas
+- Translation
+- Community
+
+#### Outstanding Contributions
+
+**Security & Analysis Engine**
+
+- Contributors who have enhanced vulnerability detection algorithms
+- Developers who added new language support and parsers
+- Security researchers who reported critical vulnerabilities
+
+**AI & Machine Learning**
+
+- Contributors who improved AI-powered fix suggestions
+- Developers who integrated new AI models and providers
+- Engineers who optimized ML inference performance
+
+**User Experience & Design**
+
+- UI/UX designers who enhanced the interface
+- Accessibility champions who improved WCAG compliance
+- Contributors who created intuitive workflows
+
+**Documentation & Education**
+
+- Technical writers who authored comprehensive guides
+- Tutorial creators who helped onboard new users
+- Community members who answered questions and provided support
+
+**DevOps & Infrastructure**
+
+- Engineers who optimized CI/CD pipelines
+- Contributors who improved deployment processes
+- Developers who enhanced monitoring and observability
+
+**Testing & Quality Assurance**
+
+- QA engineers who expanded test coverage
+- Contributors who created automated testing frameworks
+- Developers who fixed critical bugs
+
+#### First-Time Contributors
+
+We celebrate and appreciate all first-time contributors! Your contributions, no matter how small, make a big difference:
+
+- Thank you for taking the time to contribute to open source
+- Your fresh perspectives bring valuable insights
+- Every contribution helps make Code Guardian better
+
+**Recent First-Time Contributors:**
+
+- Check our [Contributors Graph](https://github.com/Xenonesis/code-guardian-report/graphs/contributors) for the latest additions
+
+#### Student Contributors
+
+Special recognition for students and early-career developers who contribute while learning:
+
+- **GirlScript Summer of Code (GSSoC) 2025 Participants**
+- **Google Summer of Code Contributors**
+- **University Project Contributors**
+- **Bootcamp Graduates**
+
+Your enthusiasm and fresh ideas drive innovation in open source!
+
+#### Global Community
+
+We're proud to have contributors from around the world:
+
+- India
+- United States
+- United Kingdom
+- Germany
+- France
+- Canada
+- Australia
+- Japan
+- Brazil
+- Singapore
+- And many more countries!
+
+#### Contribution Milestones
+
+We recognize contributors who achieve significant milestones:
+
+- **100+ Commits** - Elite contributors who consistently improve the project
+- **50+ Commits** - Dedicated contributors with substantial impact
+- **25+ Commits** - Active contributors who regularly contribute
+- **10+ PRs Merged** - Contributors with multiple successful pull requests
+- **Major Documentation** - Contributors who write comprehensive guides
+- **Critical Bug Fixes** - Contributors who resolve security or critical issues
+- **Feature Champions** - Contributors who deliver major new features
+
+#### How to Get Recognized
+
+Want to be featured in special mentions? Here's how:
+
+1. **Consistent Contributions**: Regular, quality contributions over time
+2. **Major Features**: Implement significant new capabilities
+3. **Security Improvements**: Enhance security analysis or fix vulnerabilities
+4. **Documentation Excellence**: Write comprehensive, clear documentation
+5. **Community Support**: Help other contributors and users
+6. **Code Reviews**: Provide thoughtful, constructive code reviews
+7. **Testing & Quality**: Significantly improve test coverage or quality
+8. **Innovation**: Introduce novel approaches or technologies
+
+#### Thank You Message
+
+**To all contributors:**
+
+Your contributions—whether code, documentation, bug reports, or community support—are invaluable. Code Guardian Report wouldn't be what it is today without your dedication, creativity, and passion for open source.
+
+Every commit, every issue reported, every question answered, and every idea shared makes this project better. You are the heart of this community, and we are incredibly grateful for your time and effort.
+
+**Together, we're building something amazing!**
+
+---
+
+**Want to join our list of contributors?** Check out our [Contributing Guide](md/CONTRIBUTING.md) to get started!
+
+**Nominate a contributor for special recognition:** Create an issue with the label "contributor-recognition" and tell us about their outstanding contributions!
+
 ### Open Source Projects
 
 Built with amazing open-source projects:
