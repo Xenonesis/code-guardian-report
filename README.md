@@ -61,6 +61,20 @@
 
 **Code Guardian Report** is a next-generation, enterprise-grade security analysis platform that leverages artificial intelligence and advanced static code analysis to identify vulnerabilities, code quality issues, and security misconfigurations across multiple programming languages. Built with modern web technologies, it provides real-time, comprehensive security insights for development teams, security professionals, and DevSecOps engineers.
 
+![Code Guardian Home](public/home.png)
+
+### Platform Screenshots
+
+<div align="center">
+  <img src="public/analysis.png" alt="Analysis Dashboard" width="45%" />
+  <img src="public/about.png" alt="About Page" width="45%" />
+</div>
+
+<div align="center">
+  <img src="public/github-pro.png" alt="GitHub Integration" width="45%" />
+  <img src="public/ai-config.png" alt="AI Configuration" width="45%" />
+</div>
+
 ### Mission Statement
 
 Our mission is to democratize enterprise-grade security analysis by providing developers with powerful, accessible tools that integrate seamlessly into their workflows. We believe that security should be proactive, not reactive, and that every developer deserves access to professional-grade security analysis tools.
@@ -98,6 +112,8 @@ Our mission is to democratize enterprise-grade security analysis by providing de
 ## Key Features
 
 ### 1. Advanced Security Analysis
+
+![Security Analysis](public/icons/shield-check.svg)
 
 #### Vulnerability Detection
 
@@ -155,6 +171,8 @@ Our mission is to democratize enterprise-grade security analysis by providing de
 
 ### 3. AI-Powered Intelligence
 
+![AI Features](public/icons/brain.svg)
+
 #### Natural Language Descriptions
 
 - **Plain English Explanations**: Translates technical security issues into understandable language
@@ -184,6 +202,8 @@ Our mission is to democratize enterprise-grade security analysis by providing de
 - **Model Discovery**: Automatic detection and configuration of available models
 
 ### 4. GitHub Repository Analysis
+
+![GitHub Integration](public/github-pro.png)
 
 #### Repository Integration
 
@@ -241,6 +261,8 @@ Our mission is to democratize enterprise-grade security analysis by providing de
 - **Custom Checks**: Domain-specific validation rules
 
 ### 7. Real-Time Analytics Dashboard
+
+![Analytics Dashboard](public/icons/layout-dashboard.svg)
 
 #### Dashboard Components
 
@@ -1071,6 +1093,8 @@ PORT=3001 npm run start
 
 ## Usage Guide
 
+![Analysis Process](public/analysis.png)
+
 ### Code Analysis
 
 #### Upload Methods
@@ -1137,6 +1161,8 @@ During analysis, you'll see:
 - Estimated time remaining
 
 ### GitHub Integration
+
+![GitHub Features](public/github-pro.png)
 
 #### Setting Up GitHub Integration
 
@@ -1382,6 +1408,8 @@ The AI provides:
 
 #### Chatbot Interaction
 
+![AI Chatbot](public/icons/bot.svg)
+
 Interact with the AI assistant:
 
 **Example Conversations**:
@@ -1422,6 +1450,8 @@ Would you like me to show you a complete example?
 
 #### Configuring AI Features
 
+![AI Configuration](public/ai-config.png)
+
 Configure AI providers in your environment:
 
 ```env
@@ -1447,6 +1477,8 @@ NEXT_PUBLIC_ENABLE_AI_CHATBOT=true
 ---
 
 ## Multi-Language Support
+
+![Code Search](public/icons/search.svg)
 
 ### Supported Languages
 
@@ -1872,6 +1904,8 @@ Automatically identifies frameworks and libraries:
 
 ## Security Analysis
 
+![Security Shield](public/icons/shield-check.svg)
+
 ### Vulnerability Detection
 
 #### OWASP Top 10 Coverage
@@ -2148,6 +2182,8 @@ fetch("http://169.254.169.254/latest/meta-data/"); // HIGH
 ```
 
 ### Secret Scanning
+
+![Secret Detection](public/icons/fingerprint.svg)
 
 #### Detected Secret Types
 
@@ -4707,6 +4743,8 @@ export class SecurityMonitor {
 
 ## Troubleshooting
 
+![Bug Fixing](public/icons/bug.svg)
+
 ### Common Issues
 
 #### Installation Issues
@@ -4903,6 +4941,8 @@ If you encounter issues not covered here:
 ---
 
 ## Contributing
+
+![Community](public/cc.png)
 
 We welcome contributions from the community! Code Guardian Report is open source and thrives on community involvement.
 
