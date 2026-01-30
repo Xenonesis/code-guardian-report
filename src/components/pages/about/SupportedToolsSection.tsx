@@ -199,7 +199,7 @@ export const SupportedToolsSection: React.FC<SupportedToolsSectionProps> = ({
 
           <h3
             id="tools-title"
-            className="animate-fade-in mb-6 text-4xl font-bold text-slate-900 sm:text-5xl lg:text-6xl dark:text-white"
+            className="animate-fade-in text-foreground mb-6 text-4xl font-bold sm:text-5xl lg:text-6xl"
           >
             <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent dark:from-blue-400 dark:via-purple-400 dark:to-indigo-400">
               Industry-Leading
@@ -251,7 +251,7 @@ export const SupportedToolsSection: React.FC<SupportedToolsSectionProps> = ({
 
         {/* Enhanced Controls */}
         <div className="mb-8 px-4 sm:px-0">
-          <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 rounded-2xl border border-white/20 bg-white/60 p-6 shadow-xl backdrop-blur-md lg:flex-row dark:border-slate-700/50 dark:bg-slate-800/60">
+          <div className="border-border/50 bg-card/60 mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 rounded-2xl border p-6 shadow-xl backdrop-blur-md lg:flex-row">
             {/* Search Bar */}
             <div className="group relative max-w-md flex-1">
               <Search className="absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2 transform text-slate-400 transition-colors duration-200 group-focus-within:text-blue-500" />
@@ -260,7 +260,7 @@ export const SupportedToolsSection: React.FC<SupportedToolsSectionProps> = ({
                 placeholder="Search tools, features, or languages..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full rounded-xl border border-slate-200/50 bg-white/80 py-4 pr-4 pl-12 text-sm shadow-sm backdrop-blur-sm transition-all duration-300 placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-500 dark:border-slate-700/50 dark:bg-slate-900/80 dark:focus:bg-slate-900"
+                className="border-border/50 bg-card/80 placeholder:text-muted-foreground focus:bg-card w-full rounded-xl border py-4 pr-4 pl-12 text-sm shadow-sm backdrop-blur-sm transition-all duration-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
               />
               {searchTerm && (
                 <button
@@ -287,7 +287,7 @@ export const SupportedToolsSection: React.FC<SupportedToolsSectionProps> = ({
                   className={`cursor-pointer px-4 py-2 font-medium transition-all duration-300 hover:scale-105 ${
                     filter === option.value
                       ? "border-0 bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-lg hover:from-blue-600 hover:to-indigo-600 hover:shadow-xl"
-                      : "bg-white/80 backdrop-blur-sm hover:border-blue-400 hover:bg-blue-50 hover:text-blue-700 dark:bg-slate-800/80 dark:hover:border-blue-500 dark:hover:bg-blue-950/30 dark:hover:text-blue-300"
+                      : "bg-card/80 backdrop-blur-sm hover:border-blue-400 hover:bg-blue-50 hover:text-blue-700"
                   }`}
                   onClick={() => setFilter(option.value)}
                 >
@@ -327,7 +327,7 @@ export const SupportedToolsSection: React.FC<SupportedToolsSectionProps> = ({
 
         {/* Results Count */}
         <div className="mb-8 px-4 text-center sm:px-0">
-          <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-gradient-to-r from-slate-50 to-slate-100 px-4 py-2 shadow-sm dark:border-slate-600 dark:from-slate-800 dark:to-slate-700">
+          <div className="border-border from-muted/50 to-muted inline-flex items-center gap-2 rounded-full border bg-gradient-to-r px-4 py-2 shadow-sm">
             <div className="h-2 w-2 animate-pulse rounded-full bg-gradient-to-r from-green-500 to-emerald-500"></div>
             <p className="text-sm font-medium text-slate-700 dark:text-slate-300">
               Showing{" "}
@@ -378,7 +378,7 @@ export const SupportedToolsSection: React.FC<SupportedToolsSectionProps> = ({
                 <span className="text-sm font-bold text-white">0</span>
               </div>
             </div>
-            <h4 className="mb-3 text-2xl font-bold text-slate-900 dark:text-white">
+            <h4 className="text-foreground mb-3 text-2xl font-bold">
               No tools found
             </h4>
             <p className="mx-auto mb-8 max-w-md text-lg text-slate-500 dark:text-slate-400">
@@ -397,7 +397,7 @@ export const SupportedToolsSection: React.FC<SupportedToolsSectionProps> = ({
               </button>
               <button
                 onClick={() => setSearchTerm("")}
-                className="rounded-xl border border-slate-300 bg-white px-6 py-3 font-semibold text-slate-700 transition-all duration-300 hover:bg-slate-50 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
+                className="border-border bg-card text-foreground hover:bg-muted rounded-xl border px-6 py-3 font-semibold transition-all duration-300"
               >
                 Clear search only
               </button>

@@ -23,7 +23,7 @@ interface SeverityChartProps {
 
 export const SeverityChart: React.FC<SeverityChartProps> = ({ data }) => {
   return (
-    <Card className="border-0 bg-white/90 shadow-xl backdrop-blur-sm dark:bg-slate-800/90">
+    <Card className="bg-card/90 border-0 shadow-xl backdrop-blur-sm">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <AlertTriangle className="h-5 w-5 text-amber-600" />

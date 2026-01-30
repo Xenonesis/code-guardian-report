@@ -16,7 +16,7 @@ export const TabNavigation: React.FC<TabNavigationProps> = ({
 }) => {
   return (
     <TabsList
-      className="animate-fade-in relative mb-4 flex w-full snap-x snap-mandatory flex-nowrap gap-1 overflow-x-auto overflow-y-hidden scroll-smooth rounded-2xl border border-slate-200 bg-white/90 py-1.5 pr-4 pl-3 shadow-lg backdrop-blur-sm sm:mb-6 sm:justify-center sm:gap-2 sm:px-10 sm:shadow-xl dark:border-slate-700 dark:bg-slate-800/90"
+      className="animate-fade-in border-border bg-card/90 relative mb-4 flex w-full snap-x snap-mandatory flex-nowrap gap-1 overflow-x-auto overflow-y-hidden scroll-smooth rounded-2xl border py-1.5 pr-4 pl-3 shadow-lg backdrop-blur-sm sm:mb-6 sm:justify-center sm:gap-2 sm:px-10 sm:shadow-xl"
       style={{ scrollPaddingInline: "1.5rem" }}
       role="tablist"
       aria-label="Main navigation tabs"

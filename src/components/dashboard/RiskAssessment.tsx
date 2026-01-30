@@ -23,7 +23,7 @@ interface RiskAssessmentProps {
 export const RiskAssessment: React.FC<RiskAssessmentProps> = ({ metrics }) => {
   return (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-      <Card className="border-0 bg-white/90 shadow-xl backdrop-blur-sm dark:bg-slate-800/90">
+      <Card className="bg-card/90 border-0 shadow-xl backdrop-blur-sm">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Target className="h-5 w-5 text-red-600" />
@@ -37,9 +37,7 @@ export const RiskAssessment: React.FC<RiskAssessmentProps> = ({ metrics }) => {
               <div className="mb-2 text-4xl font-bold text-red-600">
                 {metrics.overallRisk}%
               </div>
-              <p className="text-slate-600 dark:text-slate-400">
-                Overall Risk Score
-              </p>
+              <p className="text-muted-foreground">Overall Risk Score</p>
             </div>
             <div className="space-y-3">
               <div className="flex items-center justify-between">
@@ -59,7 +57,7 @@ export const RiskAssessment: React.FC<RiskAssessmentProps> = ({ metrics }) => {
         </CardContent>
       </Card>
 
-      <Card className="border-0 bg-white/90 shadow-xl backdrop-blur-sm dark:bg-slate-800/90">
+      <Card className="bg-card/90 border-0 shadow-xl backdrop-blur-sm">
         <CardHeader>
           <CardTitle>Risk Mitigation</CardTitle>
           <CardDescription>Recommended actions to reduce risk</CardDescription>

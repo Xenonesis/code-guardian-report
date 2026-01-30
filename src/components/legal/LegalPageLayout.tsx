@@ -46,26 +46,26 @@ export const LegalPageLayout: React.FC<LegalPageLayoutProps> = ({
 
                 <div className="flex-1 space-y-3">
                   <div className="flex flex-col items-center gap-4 sm:flex-row">
-                    <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
+                    <div className="text-muted-foreground flex items-center gap-2">
                       <Calendar className="h-5 w-5 text-blue-500" />
                       <span className="font-medium">
                         Last Updated: {lastUpdated}
                       </span>
                     </div>
-                    <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
+                    <div className="text-muted-foreground flex items-center gap-2">
                       <Globe className="h-5 w-5 text-green-500" />
                       <span className="font-medium">Effective Globally</span>
                     </div>
                   </div>
 
                   <div className="flex flex-col items-center gap-4 sm:flex-row">
-                    <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
+                    <div className="text-muted-foreground flex items-center gap-2">
                       <Shield className="h-5 w-5 text-purple-500" />
                       <span className="font-medium">
                         Code Guardian {APP_VERSION_WITH_PREFIX}
                       </span>
                     </div>
-                    <div className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
+                    <div className="text-muted-foreground flex items-center gap-2">
                       <Mail className="h-5 w-5 text-orange-500" />
                       <span className="font-medium">
                         Contact: itisaddy7@gmail.com

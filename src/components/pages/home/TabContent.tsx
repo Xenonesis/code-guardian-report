@@ -173,7 +173,7 @@ export const TabContent: React.FC<TabContentProps> = ({
             )}
           </Suspense>
         ) : (
-          <Card className="border-0 bg-white/90 shadow-xl backdrop-blur-sm dark:bg-slate-800/90">
+          <Card className="bg-card/90 border-0 shadow-xl backdrop-blur-sm">
             <CardContent className="p-8 text-center sm:p-12">
               <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-blue-100 to-indigo-100 p-4 sm:mb-6 sm:h-24 sm:w-24 sm:p-6 dark:from-blue-900/30 dark:to-indigo-900/30">
                 <FileCode
@@ -181,7 +181,7 @@ export const TabContent: React.FC<TabContentProps> = ({
                   aria-hidden="true"
                 />
               </div>
-              <h3 className="mb-3 text-xl font-bold text-slate-900 sm:mb-4 sm:text-2xl dark:text-white">
+              <h3 className="text-foreground mb-3 text-xl font-bold sm:mb-4 sm:text-2xl">
                 No Analysis Results
               </h3>
               <p className="mx-auto max-w-md text-base text-slate-600 sm:text-lg dark:text-slate-300">

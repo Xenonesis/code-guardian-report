@@ -8,20 +8,13 @@
 @import "./styles/professional-enhancements.css";
 @import "./styles/github-theme.css";
 
-/* Base styling - Optimized for light mode */
+/* Base styling - Theme colors are controlled via CSS variables in styles/base.css */
 html {
   scroll-behavior: auto;
   -webkit-overflow-scrolling: touch;
-  background-color: #fff;
-  color: #1e293b;
 
   /* Prevent text size adjustment on orientation change */
   text-size-adjust: 100%;
-}
-
-html.dark {
-  background-color: #0f172a;
-  color: #f8fafc;
 }
 
 body {
@@ -37,8 +30,6 @@ body {
     "calt" 1;
   line-height: 1.6;
   font-size: clamp(14px, 0.875rem + 0.1vw, 16px);
-  background-color: #fff;
-  color: #1e293b;
   min-height: 100vh;
   min-height: 100dvh; /* Dynamic viewport height for mobile */
   overflow-x: hidden;
@@ -47,8 +38,7 @@ body {
 }
 
 .dark body {
-  background-color: #0f172a;
-  color: #f8fafc;
+  /* body colors are handled by styles/base.css */
 }
 
 #root {
@@ -176,47 +166,47 @@ a:active,
 /* Glass Morphism - Light Mode */
 .glass-card {
   backdrop-filter: blur(20px);
-  background-color: rgb(255 255 255 / 80%);
-  border: 1px solid rgb(255 255 255 / 30%);
+  background-color: hsl(var(--card) / 80%);
+  border: 1px solid hsl(var(--border) / 35%);
   box-shadow: 0 25px 50px -12px rgb(0 0 0 / 15%);
 }
 
 .dark .glass-card {
-  background-color: rgb(0 0 0 / 50%);
-  border-color: rgb(255 255 255 / 10%);
+  background-color: hsl(var(--card) / 60%);
+  border-color: hsl(var(--border) / 25%);
 }
 
 .glass-nav {
   backdrop-filter: blur(20px);
-  background-color: rgb(255 255 255 / 95%);
-  border-bottom: 1px solid rgb(226 232 240 / 50%);
+  background-color: hsl(var(--background) / 95%);
+  border-bottom: 1px solid hsl(var(--border) / 70%);
   box-shadow: 0 10px 25px -5px rgb(0 0 0 / 10%);
 }
 
 .dark .glass-nav {
-  background-color: rgb(15 23 42 / 95%);
-  border-color: rgb(51 65 85 / 50%);
+  background-color: hsl(var(--background) / 95%);
+  border-color: hsl(var(--border) / 70%);
 }
 
 /* Modern Cards - Light Mode */
 .modern-card {
-  background-color: rgb(255 255 255 / 95%);
+  background-color: hsl(var(--card) / 95%);
   backdrop-filter: blur(20px);
-  border: 1px solid rgb(255 255 255 / 20%);
+  border: 1px solid hsl(var(--border) / 50%);
   box-shadow: 0 25px 50px -12px rgb(0 0 0 / 15%);
   border-radius: 1.5rem;
   padding: 2rem;
   transition: all 0.5s ease;
   background-image: linear-gradient(
     135deg,
-    rgb(255 255 255 / 10%) 0%,
-    rgb(255 255 255 / 5%) 100%
+    hsl(var(--card) / 10%) 0%,
+    hsl(var(--card) / 5%) 100%
   );
 }
 
 .dark .modern-card {
-  background-color: rgb(30 41 59 / 95%);
-  border-color: rgb(255 255 255 / 10%);
+  background-color: hsl(var(--card) / 95%);
+  border-color: hsl(var(--border) / 30%);
 }
 
 .modern-card:hover {
@@ -226,17 +216,17 @@ a:active,
 
 /* Card Glass Modern - Light Mode */
 .card-glass-modern {
-  background-color: rgb(255 255 255 / 95%);
+  background-color: hsl(var(--card) / 95%);
   backdrop-filter: blur(20px);
-  border: 1px solid rgb(226 232 240 / 50%);
+  border: 1px solid hsl(var(--border) / 70%);
   box-shadow: 0 10px 40px -15px rgb(0 0 0 / 10%);
   border-radius: 1rem;
   transition: all 0.3s ease;
 }
 
 .dark .card-glass-modern {
-  background-color: rgb(30 41 59 / 90%);
-  border-color: rgb(51 65 85 / 50%);
+  background-color: hsl(var(--card) / 90%);
+  border-color: hsl(var(--border) / 50%);
 }
 
 .card-glass-modern:hover {
@@ -275,36 +265,36 @@ a:active,
 }
 
 .btn-secondary-modern {
-  background-color: rgb(241 245 249 / 90%);
-  color: #475569;
-  border: 1px solid rgb(226 232 240 / 50%);
+  background-color: hsl(var(--secondary) / 90%);
+  color: hsl(var(--secondary-foreground));
+  border: 1px solid hsl(var(--border) / 70%);
 }
 
 .dark .btn-secondary-modern {
-  background-color: rgb(51 65 85 / 90%);
-  color: #e2e8f0;
-  border-color: rgb(71 85 105 / 50%);
+  background-color: hsl(var(--secondary) / 90%);
+  color: hsl(var(--secondary-foreground));
+  border-color: hsl(var(--border) / 70%);
 }
 
 /* Modern Inputs - Light Mode */
 .input-modern {
-  background-color: rgb(241 245 249 / 90%);
+  background-color: hsl(var(--muted) / 90%);
   border: 2px solid transparent;
   border-radius: 0.75rem;
   padding: 0.75rem 1rem;
   transition: all 0.3s ease;
-  color: #1e293b;
+  color: hsl(var(--foreground));
 }
 
 .dark .input-modern {
-  background-color: rgb(30 41 59 / 90%);
-  color: #e2e8f0;
+  background-color: hsl(var(--muted) / 90%);
+  color: hsl(var(--foreground));
 }
 
 .input-modern:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 4px rgb(102 126 234 / 15%);
+  border-color: hsl(var(--ring));
+  box-shadow: 0 0 0 4px hsl(var(--ring) / 15%);
 }
 
 /* Badge Styles */
@@ -366,12 +356,12 @@ a:active,
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: hsl(var(--muted));
   border-radius: 4px;
 }
 
 .dark ::-webkit-scrollbar-track {
-  background: #1e293b;
+  background: hsl(var(--secondary));
 }
 
 ::-webkit-scrollbar-thumb {
@@ -404,7 +394,7 @@ a:active,
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgb(255 255 255 / 20%) 50%,
+    hsl(var(--foreground) / 8%) 50%,
     transparent 100%
   );
   background-size: 200% 100%;
@@ -461,11 +451,21 @@ a:active,
 
 /* Section backgrounds for light mode */
 .section-gradient {
-  background: linear-gradient(180deg, #f8fafc 0%, #fff 50%, #f8fafc 100%);
+  background: linear-gradient(
+    180deg,
+    hsl(var(--background)) 0%,
+    hsl(var(--card)) 50%,
+    hsl(var(--background)) 100%
+  );
 }
 
 .dark .section-gradient {
-  background: linear-gradient(180deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+  background: linear-gradient(
+    180deg,
+    hsl(var(--background)) 0%,
+    hsl(var(--secondary)) 50%,
+    hsl(var(--background)) 100%
+  );
 }
 
 /* Nav item styling for light mode */
@@ -492,8 +492,8 @@ a:active,
 
 /* Code blocks for light mode */
 .code-block {
-  background-color: #1e293b;
-  color: #e2e8f0;
+  background-color: hsl(var(--secondary));
+  color: hsl(var(--secondary-foreground));
   border-radius: 0.75rem;
   padding: 1rem;
   font-family: "JetBrains Mono", monospace;
@@ -513,8 +513,9 @@ a:active,
   left: 50%;
   transform: translateX(-50%);
   padding: 0.5rem 1rem;
-  background-color: #1e293b;
-  color: white;
+  background-color: hsl(var(--popover));
+  color: hsl(var(--popover-foreground));
+  border: 1px solid hsl(var(--border));
   font-size: 0.75rem;
   border-radius: 0.5rem;
   white-space: nowrap;

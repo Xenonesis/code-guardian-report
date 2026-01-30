@@ -37,7 +37,7 @@ export const AnalysisTabs: React.FC<AnalysisTabsProps> = ({
           />
         </div>
 
-        <div className="w-full rounded-xl border bg-white/80 p-4 shadow-sm backdrop-blur-sm sm:p-6 dark:bg-slate-800/80">
+        <div className="border-border bg-card/80 w-full rounded-xl border p-4 shadow-sm backdrop-blur-sm sm:p-6">
           <TabContent
             analysisResults={analysisResults}
             onFileSelect={onFileSelect}

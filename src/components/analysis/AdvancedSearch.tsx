@@ -322,7 +322,7 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
 
         {/* Filter Panel */}
         <Collapsible open={isFilterOpen} onOpenChange={setIsFilterOpen}>
-          <CollapsibleContent className="space-y-4 border-t border-slate-200 pt-4 dark:border-slate-700">
+          <CollapsibleContent className="border-border space-y-4 border-t pt-4">
             <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
               {/* Severity Filters */}
               <div>

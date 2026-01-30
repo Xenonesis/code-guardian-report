@@ -247,7 +247,7 @@ export const HowItWorksSection: React.FC = () => {
                 className={`flex items-center gap-3 rounded-full px-6 py-3 transition-all duration-300 ${
                   activeStep === step.id
                     ? `bg-gradient-to-r ${step.color} scale-105 text-white shadow-lg`
-                    : "bg-white/50 text-slate-600 hover:bg-white/80 dark:bg-slate-800/50 dark:text-slate-400 dark:hover:bg-slate-800/80"
+                    : "bg-muted/50 text-muted-foreground hover:bg-muted/80"
                 }`}
               >
                 <span className="font-semibold">{index + 1}</span>
@@ -267,7 +267,7 @@ export const HowItWorksSection: React.FC = () => {
                   : "max-h-0 overflow-hidden opacity-0"
               }`}
             >
-              <div className="rounded-2xl border border-slate-200/50 bg-white/80 p-8 shadow-xl backdrop-blur-sm dark:border-slate-700/50 dark:bg-slate-800/80">
+              <div className="border-border/50 bg-card/80 rounded-2xl border p-8 shadow-xl backdrop-blur-sm">
                 <div className="grid gap-8 md:grid-cols-2">
                   {/* Description & Details */}
                   <div>
@@ -341,7 +341,7 @@ export const HowItWorksSection: React.FC = () => {
             {advancedMetrics.map((category, index) => (
               <div
                 key={index}
-                className="rounded-xl border border-slate-200/50 bg-white/60 p-6 backdrop-blur-sm transition-all duration-300 hover:shadow-lg dark:border-slate-700/50 dark:bg-slate-800/60"
+                className="border-border/50 bg-card/60 rounded-xl border p-6 backdrop-blur-sm transition-all duration-300 hover:shadow-lg"
               >
                 <div className="mb-4 flex items-center gap-3">
                   <div className="rounded-lg bg-gradient-to-r from-blue-500 to-purple-500 p-2 text-white">
@@ -395,7 +395,7 @@ export const HowItWorksSection: React.FC = () => {
             ].map((tech, index) => (
               <div
                 key={index}
-                className="flex items-center gap-2 rounded-full border border-slate-200/50 bg-white/50 px-4 py-2 dark:border-slate-700/50 dark:bg-slate-800/50"
+                className="border-border/50 bg-muted/50 flex items-center gap-2 rounded-full border px-4 py-2"
               >
                 <div className="text-blue-500">{tech.icon}</div>
                 <span className="text-sm font-medium text-slate-700 dark:text-slate-300">

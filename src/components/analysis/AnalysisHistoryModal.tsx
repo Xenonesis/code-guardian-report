@@ -100,7 +100,7 @@ export const AnalysisHistoryModal: React.FC<AnalysisHistoryModalProps> = ({
           <div className="flex items-center gap-3">
             <Clock className="h-6 w-6 text-blue-600" />
             <div>
-              <h2 className="text-xl font-bold text-slate-900 dark:text-white">
+              <h2 className="text-foreground text-xl font-bold">
                 Analysis History
               </h2>
               <p className="text-sm text-slate-600 dark:text-slate-400">
@@ -154,7 +154,7 @@ export const AnalysisHistoryModal: React.FC<AnalysisHistoryModalProps> = ({
                         <div className="min-w-0 flex-1">
                           <div className="mb-2 flex items-center gap-2">
                             <FileText className="h-4 w-4 flex-shrink-0 text-slate-600 dark:text-slate-400" />
-                            <h3 className="truncate font-medium text-slate-900 dark:text-white">
+                            <h3 className="text-foreground truncate font-medium">
                               {analysis.fileName}
                             </h3>
                             {analysis.isCurrent && (
@@ -208,7 +208,7 @@ export const AnalysisHistoryModal: React.FC<AnalysisHistoryModalProps> = ({
                                 {getQualityIcon(
                                   analysis.results.summary.qualityScore
                                 )}
-                                <span className="font-medium text-slate-900 dark:text-white">
+                                <span className="text-foreground font-medium">
                                   {analysis.results.summary.qualityScore}%
                                 </span>
                               </div>

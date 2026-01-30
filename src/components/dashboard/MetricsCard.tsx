@@ -70,7 +70,7 @@ export const MetricsCard: React.FC<MetricsCardProps> = ({
         <div className="mb-4 flex items-start justify-between">
           <div className="min-w-0 flex-1">
             <div className="mb-2 flex items-center gap-2">
-              <p className="truncate text-sm font-medium text-slate-600 dark:text-slate-400">
+              <p className="text-muted-foreground truncate text-sm font-medium">
                 {title}
               </p>
               {trend && trendValue && (
@@ -96,13 +96,13 @@ export const MetricsCard: React.FC<MetricsCardProps> = ({
             <p
               className={cn(
                 "mb-1 text-3xl font-bold transition-all duration-300 group-hover:scale-105",
-                valueClassName || "text-slate-900 dark:text-white"
+                valueClassName || "text-foreground"
               )}
             >
               {value}
             </p>
             {subtitle && (
-              <p className="text-sm leading-tight text-slate-500 dark:text-slate-400">
+              <p className="text-muted-foreground text-sm leading-tight">
                 {subtitle}
               </p>
             )}
@@ -120,15 +120,15 @@ export const MetricsCard: React.FC<MetricsCardProps> = ({
         {showProgress && score !== undefined && (
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-medium text-slate-600 dark:text-slate-400">
+              <span className="text-muted-foreground text-xs font-medium">
                 Progress
               </span>
-              <span className="text-xs font-bold text-slate-900 dark:text-white">
+              <span className="text-foreground text-xs font-bold">
                 {score}%
               </span>
             </div>
             <div className="relative">
-              <div className="h-2 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700">
+              <div className="bg-muted h-2 overflow-hidden rounded-full">
                 <div
                   className={cn(
                     "h-full rounded-full transition-all duration-1000 ease-out",

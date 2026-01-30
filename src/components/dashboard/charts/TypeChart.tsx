@@ -30,7 +30,7 @@ interface TypeChartProps {
 
 export const TypeChart: React.FC<TypeChartProps> = ({ data }) => {
   return (
-    <Card className="border-0 bg-white/90 shadow-xl backdrop-blur-sm dark:bg-slate-800/90">
+    <Card className="bg-card/90 border-0 shadow-xl backdrop-blur-sm">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Shield className="h-5 w-5 text-blue-600" />

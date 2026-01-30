@@ -144,8 +144,8 @@ export const DetailedInfo: React.FC = () => {
             <BentoGrid items={capabilityItems} />
           </div>
 
-          <div className="rounded-lg bg-white p-8 shadow-sm dark:bg-slate-800">
-            <h3 className="mb-6 text-center text-xl font-semibold text-slate-900 dark:text-white">
+          <div className="bg-card rounded-lg p-8 shadow-sm">
+            <h3 className="text-foreground mb-6 text-center text-xl font-semibold">
               Platform Features
             </h3>
             <div className="grid gap-4 sm:grid-cols-2">

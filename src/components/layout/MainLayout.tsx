@@ -1,7 +1,5 @@
 "use client";
 
-import { Toaster } from "sonner";
-import { useTheme } from "next-themes";
 import { useEnhancedAnalysis } from "@/hooks/useEnhancedAnalysis";
 import { Navigation } from "@/components/layout/Navigation";
 import { Footer } from "@/components/layout/Footer";
@@ -40,7 +38,6 @@ const SkipLink = () => (
  * MainLayout - Persistent shell for all pages with navigation and footer
  */
 export function MainLayout({ children }: MainLayoutProps) {
-  const { theme, resolvedTheme } = useTheme();
   const { online, firebaseConnected, usingMockData } = useConnectionStatus();
   const { analysisResults } = useEnhancedAnalysis();
   // Using navigation context just to ensure it's initialized if needed,
@@ -62,15 +59,6 @@ export function MainLayout({ children }: MainLayoutProps) {
 
       {/* Skip Link for Accessibility */}
       <SkipLink />
-
-      {/* Toast Notifications */}
-      <Toaster
-        position="top-right"
-        expand={false}
-        richColors
-        closeButton
-        theme={resolvedTheme === "dark" ? "dark" : "light"}
-      />
 
       {/* Connection Status Banners */}
       <div role="status" aria-live="polite" aria-atomic="true">

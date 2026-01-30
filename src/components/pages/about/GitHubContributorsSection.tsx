@@ -110,7 +110,7 @@ const GitHubContributorsSection = () => {
         <div className="mx-auto max-w-6xl">
           {/* Section Header */}
           <div className="mb-12 text-center">
-            <h2 className="mb-4 text-3xl font-bold text-slate-900 sm:text-4xl dark:text-white">
+            <h2 className="text-foreground mb-4 text-3xl font-bold sm:text-4xl">
               Our GitHub Contributors
             </h2>
             <p className="mx-auto mb-6 max-w-3xl text-lg text-slate-600 dark:text-slate-400">
@@ -166,7 +166,7 @@ const GitHubContributorsSection = () => {
                   </div>
                   <Button
                     variant="secondary"
-                    className="w-full border-white/30 bg-white/20 text-white hover:bg-white/30"
+                    className="border-primary/30 bg-primary/20 text-primary-foreground hover:bg-primary/30 w-full"
                     onClick={() =>
                       window.open(
                         "https://github.com/Xenonesis/code-guardian-report",
@@ -197,7 +197,7 @@ const GitHubContributorsSection = () => {
                         <img
                           src={contributor.avatar_url}
                           alt={contributor.name || contributor.login}
-                          className="h-16 w-16 rounded-full border-2 border-slate-200 transition-transform group-hover:scale-105 dark:border-slate-700"
+                          className="border-border h-16 w-16 rounded-full border-2 transition-transform group-hover:scale-105"
                         />
                         <div
                           className={`absolute -right-1 -bottom-1 h-6 w-6 rounded-full ${getContributorBadgeColor(contributor.contributions, index)} flex items-center justify-center text-xs font-bold text-white`}
@@ -319,7 +319,7 @@ const GitHubContributorsSection = () => {
                   <Button
                     variant="secondary"
                     size="lg"
-                    className="bg-white text-green-600 hover:bg-green-50"
+                    className="bg-background text-green-600 hover:bg-green-50"
                     onClick={() =>
                       window.open(
                         "https://github.com/Xenonesis/code-guardian-report",
@@ -334,7 +334,7 @@ const GitHubContributorsSection = () => {
                   <Button
                     variant="secondary"
                     size="lg"
-                    className="border-white/30 bg-white/20 text-white hover:bg-white/30"
+                    className="border-primary/30 bg-primary/20 text-primary-foreground hover:bg-primary/30"
                     onClick={() =>
                       window.open(
                         "https://github.com/Xenonesis/code-guardian-report/issues",

@@ -248,7 +248,7 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
             results={results}
             variant="outline"
             size="sm"
-            className="border-slate-200 bg-white/90 backdrop-blur-sm hover:bg-white dark:border-slate-700 dark:bg-slate-800/90 dark:hover:bg-slate-800"
+            className="border-border bg-card/90 hover:bg-card backdrop-blur-sm"
           />
         </div>
       )}
@@ -340,7 +340,7 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
       {/* Main Tabs with Analytics */}
       <Tabs defaultValue="analytics" className="w-full">
         <TabsList
-          className="grid h-auto w-full grid-cols-2 overflow-hidden rounded-lg border bg-white/80 shadow-lg backdrop-blur-sm sm:grid-cols-3 lg:grid-cols-5 dark:bg-slate-800/80"
+          className="border-border bg-card/80 grid h-auto w-full grid-cols-2 overflow-hidden rounded-lg border shadow-lg backdrop-blur-sm sm:grid-cols-3 lg:grid-cols-5"
           role="tablist"
           aria-label="Analysis results tabs"
         >
@@ -407,7 +407,7 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
         <TabsContent value="all">
           <div className="space-y-6">
             {/* AI Summary Section */}
-            <Card className="border-0 bg-white/90 shadow-xl backdrop-blur-sm dark:bg-slate-800/90">
+            <Card className="bg-card/90 border-0 shadow-xl backdrop-blur-sm">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Brain className="h-5 w-5 text-purple-600" />
@@ -580,15 +580,15 @@ const DetailedIssuesTable: React.FC<DetailedIssuesTableProps> = ({
 }) => {
   if (issues.length === 0) {
     return (
-      <Card className="border-0 bg-white/90 shadow-xl backdrop-blur-sm dark:bg-slate-800/90">
+      <Card className="bg-card/90 border-0 shadow-xl backdrop-blur-sm">
         <CardContent className="py-12 text-center">
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-100 p-4 dark:bg-slate-800">
+          <div className="bg-muted mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full p-4">
             <AlertTriangle className="h-8 w-8 text-slate-400" />
           </div>
-          <h3 className="mb-2 text-lg font-medium text-slate-900 dark:text-white">
+          <h3 className="text-foreground mb-2 text-lg font-medium">
             No Issues Found
           </h3>
-          <p className="text-slate-600 dark:text-slate-400">
+          <p className="text-muted-foreground">
             No issues of this type were detected in your code analysis.
           </p>
         </CardContent>
@@ -597,7 +597,7 @@ const DetailedIssuesTable: React.FC<DetailedIssuesTableProps> = ({
   }
 
   return (
-    <Card className="border-0 bg-white/90 shadow-xl backdrop-blur-sm dark:bg-slate-800/90">
+    <Card className="bg-card/90 border-0 shadow-xl backdrop-blur-sm">
       {/* Mobile Card Layout */}
       <div className="block lg:hidden">
         <CardHeader className="p-4 sm:p-6">
@@ -612,12 +612,12 @@ const DetailedIssuesTable: React.FC<DetailedIssuesTableProps> = ({
           {issues.map((issue, index) => (
             <div
               key={index}
-              className="overflow-hidden rounded-lg border border-slate-200 sm:rounded-xl dark:border-slate-700"
+              className="border-border overflow-hidden rounded-lg border sm:rounded-xl"
             >
               <button
                 type="button"
                 onClick={() => toggleIssueExpansion(index)}
-                className="touch-target w-full p-3 text-left transition-colors hover:bg-slate-50 focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-inset sm:p-4 dark:hover:bg-slate-800"
+                className="touch-target hover:bg-muted/50 w-full p-3 text-left transition-colors focus:ring-2 focus:ring-blue-500 focus:outline-none focus:ring-inset sm:p-4"
                 aria-expanded={expandedIssues.has(index)}
                 aria-controls={`issue-details-${index}`}
               >
@@ -636,7 +636,7 @@ const DetailedIssuesTable: React.FC<DetailedIssuesTableProps> = ({
                         {issue.tool}
                       </Badge>
                     </div>
-                    <h4 className="mb-1 text-sm leading-tight font-medium text-slate-900 sm:text-base dark:text-white">
+                    <h4 className="text-foreground mb-1 text-sm leading-tight font-medium sm:text-base">
                       {issue.message}
                     </h4>
                     <p className="truncate text-xs text-slate-600 sm:text-sm dark:text-slate-400">
@@ -656,11 +656,11 @@ const DetailedIssuesTable: React.FC<DetailedIssuesTableProps> = ({
               {expandedIssues.has(index) && (
                 <div
                   id={`issue-details-${index}`}
-                  className="border-t border-slate-200 bg-slate-50 p-3 sm:p-4 dark:border-slate-700 dark:bg-slate-800/50"
+                  className="border-border bg-muted/40 border-t p-3 sm:p-4"
                 >
                   <div className="space-y-3 sm:space-y-4">
                     <div>
-                      <h5 className="mb-2 flex items-center gap-2 text-sm font-medium text-slate-900 dark:text-white">
+                      <h5 className="text-foreground mb-2 flex items-center gap-2 text-sm font-medium">
                         <AlertTriangle className="h-4 w-4 text-amber-500" />
                         Recommendation
                       </h5>
@@ -671,7 +671,7 @@ const DetailedIssuesTable: React.FC<DetailedIssuesTableProps> = ({
 
                     {issue.aiSummary && (
                       <div>
-                        <h5 className="mb-2 flex items-center gap-2 text-sm font-medium text-slate-900 dark:text-white">
+                        <h5 className="text-foreground mb-2 flex items-center gap-2 text-sm font-medium">
                           <Brain className="h-4 w-4 text-purple-500" />
                           AI Analysis
                         </h5>
@@ -683,7 +683,7 @@ const DetailedIssuesTable: React.FC<DetailedIssuesTableProps> = ({
 
                     {issue.codeSnippet && (
                       <div>
-                        <h5 className="mb-2 flex items-center gap-2 text-sm font-medium text-slate-900 dark:text-white">
+                        <h5 className="text-foreground mb-2 flex items-center gap-2 text-sm font-medium">
                           <Code className="h-4 w-4 text-blue-500" />
                           Code Context
                         </h5>
@@ -693,7 +693,7 @@ const DetailedIssuesTable: React.FC<DetailedIssuesTableProps> = ({
                       </div>
                     )}
 
-                    <div className="flex flex-col gap-2 border-t border-slate-200 pt-2 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between dark:border-slate-700">
+                    <div className="border-border text-muted-foreground flex flex-col gap-2 border-t pt-2 text-xs sm:flex-row sm:items-center sm:justify-between">
                       <span>Tool: {issue.tool}</span>
                       {issue.confidence && (
                         <span className={getConfidenceColor(issue.confidence)}>

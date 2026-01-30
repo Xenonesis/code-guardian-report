@@ -150,7 +150,7 @@ const MeetDeveloperSection = () => {
         <div className="mx-auto max-w-6xl">
           {/* Section Header */}
           <div className="mb-12 text-center">
-            <h2 className="mb-4 text-3xl font-bold text-slate-900 sm:text-4xl dark:text-white">
+            <h2 className="text-foreground mb-4 text-3xl font-bold sm:text-4xl">
               Meet the Development Team
             </h2>
             <p className="mx-auto mb-6 max-w-3xl text-lg text-slate-600 dark:text-slate-400">
@@ -175,7 +175,7 @@ const MeetDeveloperSection = () => {
                 <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
                   <Button
                     variant="secondary"
-                    className="border-white/30 bg-white/20 text-white hover:bg-white/30"
+                    className="border-primary/30 bg-primary/20 text-primary-foreground hover:bg-primary/30"
                     onClick={() =>
                       window.open("https://teamblitz.netlify.app/", "_blank")
                     }
@@ -184,7 +184,10 @@ const MeetDeveloperSection = () => {
                     Visit Team Website
                     <ExternalLink className="ml-2 h-4 w-4" />
                   </Button>
-                  <Badge variant="secondary" className="bg-white/20 text-white">
+                  <Badge
+                    variant="secondary"
+                    className="bg-primary/20 text-primary-foreground"
+                  >
                     Hackathon Winners
                   </Badge>
                 </div>
@@ -202,7 +205,7 @@ const MeetDeveloperSection = () => {
                       {highlight.icon}
                     </div>
                   </div>
-                  <h3 className="mb-2 font-semibold text-slate-900 dark:text-white">
+                  <h3 className="text-foreground mb-2 font-semibold">
                     {highlight.title}
                   </h3>
                   <p className="text-sm text-slate-600 dark:text-slate-400">
@@ -215,7 +218,7 @@ const MeetDeveloperSection = () => {
 
           {/* Team Members */}
           <div className="mb-12">
-            <h3 className="mb-8 text-center text-2xl font-bold text-slate-900 dark:text-white">
+            <h3 className="text-foreground mb-8 text-center text-2xl font-bold">
               Our Team Members
             </h3>
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -362,7 +365,7 @@ const MeetDeveloperSection = () => {
                   <div className="flex items-start gap-3">
                     <Star className="mt-0.5 h-5 w-5 text-blue-500" />
                     <div>
-                      <h5 className="font-medium text-slate-900 dark:text-white">
+                      <h5 className="text-foreground font-medium">
                         Enterprise Features
                       </h5>
                       <p className="text-sm text-slate-600 dark:text-slate-400">
@@ -389,7 +392,7 @@ const MeetDeveloperSection = () => {
                 <Button
                   variant="secondary"
                   size="lg"
-                  className="bg-white text-blue-600 hover:bg-blue-50"
+                  className="bg-background text-blue-600 hover:bg-blue-50"
                   onClick={() =>
                     window.open("https://teamblitz.netlify.app/", "_blank")
                   }

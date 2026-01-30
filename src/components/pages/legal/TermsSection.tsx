@@ -29,13 +29,13 @@ export const TermsSection: React.FC = () => {
               <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 sm:mb-6 sm:h-16 sm:w-16 dark:bg-blue-900/30">
                 <Scale className="h-6 w-6 text-blue-600 sm:h-8 sm:w-8 dark:text-blue-400" />
               </div>
-              <h1 className="mb-3 px-4 text-2xl font-bold text-slate-900 sm:mb-4 sm:text-3xl lg:text-4xl dark:text-white">
+              <h1 className="text-foreground mb-3 px-4 text-2xl font-bold sm:mb-4 sm:text-3xl lg:text-4xl">
                 Terms of Service
               </h1>
-              <p className="px-4 text-base text-slate-600 sm:text-lg lg:text-xl dark:text-slate-400">
+              <p className="text-muted-foreground px-4 text-base sm:text-lg lg:text-xl">
                 Please read these terms carefully before using Code Guardian.
               </p>
-              <p className="mt-2 text-xs text-slate-500 sm:text-sm dark:text-slate-500">
+              <p className="text-muted-foreground/70 mt-2 text-xs sm:text-sm">
                 Last updated: November 28, 2025
               </p>
             </div>

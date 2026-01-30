@@ -138,7 +138,7 @@ export const EnhancedFeatureShowcase: React.FC = () => {
                       >
                         {feature.icon}
                         {activeFeature === feature.id && (
-                          <div className="absolute inset-0 animate-pulse rounded-2xl bg-white/20"></div>
+                          <div className="bg-background/20 absolute inset-0 animate-pulse rounded-2xl"></div>
                         )}
                       </div>
 
@@ -147,7 +147,7 @@ export const EnhancedFeatureShowcase: React.FC = () => {
                           className={`mb-3 text-xl font-bold ${
                             activeFeature === feature.id
                               ? "gradient-text-animated"
-                              : "text-slate-900 dark:text-white"
+                              : "text-foreground"
                           } transition-all duration-500`}
                         >
                           {feature.title}
@@ -229,7 +229,7 @@ export const EnhancedFeatureShowcase: React.FC = () => {
 
                   {/* Enhanced Benefits Section */}
                   <div className="space-y-6">
-                    <h5 className="flex items-center gap-3 text-xl font-bold text-slate-900 dark:text-white">
+                    <h5 className="text-foreground flex items-center gap-3 text-xl font-bold">
                       <div className="rounded-lg bg-gradient-to-r from-green-500 to-emerald-500 p-2">
                         <CheckCircle className="h-5 w-5 text-white" />
                       </div>
@@ -246,7 +246,7 @@ export const EnhancedFeatureShowcase: React.FC = () => {
                             <div
                               className={`h-3 w-3 rounded-full bg-gradient-to-r ${activeFeatureData.gradient} transition-transform duration-300 group-hover:scale-125`}
                             ></div>
-                            <span className="font-medium text-slate-800 transition-colors duration-300 group-hover:text-slate-900 dark:text-slate-200 dark:group-hover:text-white">
+                            <span className="text-foreground/80 group-hover:text-foreground font-medium transition-colors duration-300">
                               {benefit}
                             </span>
                           </div>

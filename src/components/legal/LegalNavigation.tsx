@@ -41,12 +41,12 @@ export const LegalNavigation: React.FC<LegalNavigationProps> = ({
   if (!otherPage) return null;
 
   return (
-    <div className="mt-12 border-t border-slate-200 pt-8 dark:border-slate-700">
+    <div className="border-border mt-12 border-t pt-8">
       <div className="mb-6 text-center">
-        <h3 className="mb-2 text-lg font-semibold text-slate-900 dark:text-white">
+        <h3 className="text-foreground mb-2 text-lg font-semibold">
           Related Legal Documents
         </h3>
-        <p className="text-slate-600 dark:text-slate-400">
+        <p className="text-muted-foreground">
           Complete your understanding of our policies
         </p>
       </div>
@@ -63,15 +63,15 @@ export const LegalNavigation: React.FC<LegalNavigationProps> = ({
           </div>
 
           <div className="flex-1">
-            <h4 className="mb-1 text-lg font-semibold text-slate-900 transition-colors duration-300 group-hover:text-blue-600 dark:text-white dark:group-hover:text-blue-400">
+            <h4 className="text-foreground mb-1 text-lg font-semibold transition-colors duration-300 group-hover:text-blue-600">
               {otherPage.title}
             </h4>
-            <p className="text-slate-600 transition-colors duration-300 group-hover:text-slate-700 dark:text-slate-400 dark:group-hover:text-slate-300">
+            <p className="text-muted-foreground group-hover:text-foreground/80 transition-colors duration-300">
               {otherPage.description}
             </p>
           </div>
 
-          <ArrowRight className="h-5 w-5 text-slate-400 transition-all duration-300 group-hover:translate-x-1 group-hover:text-blue-500" />
+          <ArrowRight className="text-muted-foreground h-5 w-5 transition-all duration-300 group-hover:translate-x-1 group-hover:text-blue-500" />
         </div>
       </button>
     </div>

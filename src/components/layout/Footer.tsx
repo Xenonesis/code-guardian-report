@@ -93,7 +93,7 @@ export const Footer: React.FC<FooterProps> = ({ className = "" }) => {
 
   return (
     <footer
-      className={`relative overflow-hidden border-t border-slate-200/50 bg-gradient-to-br from-slate-100 via-blue-50 to-slate-100 dark:border-slate-700/30 dark:from-slate-950 dark:via-blue-950 dark:to-slate-950 ${className}`}
+      className={`border-border/60 from-background via-primary/5 to-background relative overflow-hidden border-t bg-gradient-to-br ${className}`}
       style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
     >
       {/* Enhanced Background Effects */}
@@ -131,7 +131,7 @@ export const Footer: React.FC<FooterProps> = ({ className = "" }) => {
               </div>
             </div>
 
-            <p className="mb-6 max-w-md text-sm leading-relaxed text-slate-700 sm:mb-7 sm:text-base lg:mb-8 dark:text-slate-300">
+            <p className="text-muted-foreground mb-6 max-w-md text-sm leading-relaxed sm:mb-7 sm:text-base lg:mb-8">
               Revolutionizing code security with advanced AI analysis, real-time
               threat detection, and comprehensive vulnerability assessment for
               modern development teams.
@@ -147,7 +147,7 @@ export const Footer: React.FC<FooterProps> = ({ className = "" }) => {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group rounded-lg border border-slate-300/50 bg-slate-200/50 p-2 text-slate-700 transition-all duration-300 hover:scale-110 hover:border-slate-400/50 hover:bg-slate-300/50 hover:text-slate-900 sm:rounded-xl sm:p-2.5 lg:p-3 dark:border-slate-700/50 dark:bg-slate-800/50 dark:text-slate-300 dark:hover:border-slate-600/50 dark:hover:bg-slate-700/50 dark:hover:text-white"
+                    className="group border-border/60 bg-muted/60 text-muted-foreground hover:bg-muted/80 hover:text-foreground rounded-lg border p-2 transition-all duration-300 hover:scale-110 sm:rounded-xl sm:p-2.5 lg:p-3"
                     aria-label={social.name}
                   >
                     <IconComponent className="h-4 w-4 transition-transform duration-300 group-hover:scale-110 sm:h-4.5 sm:w-4.5 lg:h-5 lg:w-5" />
@@ -159,7 +159,7 @@ export const Footer: React.FC<FooterProps> = ({ className = "" }) => {
 
           {/* Platform Links */}
           <div>
-            <h4 className="mb-4 flex items-center gap-1.5 text-xs font-semibold text-slate-900 sm:mb-5 sm:gap-2 sm:text-sm lg:mb-6 dark:text-white">
+            <h4 className="text-foreground mb-4 flex items-center gap-1.5 text-xs font-semibold sm:mb-5 sm:gap-2 sm:text-sm lg:mb-6">
               <div className="rounded-md bg-gradient-to-r from-blue-500 to-indigo-500 p-1 sm:rounded-lg sm:p-1.5">
                 <Brain className="h-2.5 w-2.5 text-white sm:h-3 sm:w-3" />
               </div>
@@ -170,7 +170,7 @@ export const Footer: React.FC<FooterProps> = ({ className = "" }) => {
                 <li key={link.id}>
                   <button
                     onClick={() => scrollToSection(link.id)}
-                    className="group flex items-center gap-2 text-sm text-slate-700 transition-all duration-300 hover:text-slate-900 sm:text-base dark:text-slate-300 dark:hover:text-white"
+                    className="group text-muted-foreground hover:text-foreground flex items-center gap-2 text-sm transition-all duration-300 sm:text-base"
                   >
                     <span className="transition-transform duration-300 group-hover:translate-x-1">
                       {link.label}
@@ -183,7 +183,7 @@ export const Footer: React.FC<FooterProps> = ({ className = "" }) => {
 
           {/* Resources Links */}
           <div>
-            <h4 className="mb-4 flex items-center gap-1.5 text-xs font-semibold text-slate-900 sm:mb-5 sm:gap-2 sm:text-sm lg:mb-6 dark:text-white">
+            <h4 className="text-foreground mb-4 flex items-center gap-1.5 text-xs font-semibold sm:mb-5 sm:gap-2 sm:text-sm lg:mb-6">
               <div className="rounded-md bg-gradient-to-r from-emerald-500 to-teal-500 p-1 sm:rounded-lg sm:p-1.5">
                 <FileText className="h-2.5 w-2.5 text-white sm:h-3 sm:w-3" />
               </div>
@@ -194,7 +194,7 @@ export const Footer: React.FC<FooterProps> = ({ className = "" }) => {
                 <li key={link.path}>
                   <a
                     href={link.path}
-                    className="group flex items-center gap-2 text-sm text-slate-700 transition-all duration-300 hover:text-slate-900 sm:text-base dark:text-slate-300 dark:hover:text-white"
+                    className="group text-muted-foreground hover:text-foreground flex items-center gap-2 text-sm transition-all duration-300 sm:text-base"
                   >
                     <span className="transition-transform duration-300 group-hover:translate-x-1">
                       {link.label}
@@ -210,7 +210,7 @@ export const Footer: React.FC<FooterProps> = ({ className = "" }) => {
 
           {/* Legal Links */}
           <div>
-            <h4 className="mb-4 flex items-center gap-1.5 text-xs font-semibold text-slate-900 sm:mb-5 sm:gap-2 sm:text-sm lg:mb-6 dark:text-white">
+            <h4 className="text-foreground mb-4 flex items-center gap-1.5 text-xs font-semibold sm:mb-5 sm:gap-2 sm:text-sm lg:mb-6">
               <div className="rounded-md bg-gradient-to-r from-purple-500 to-pink-500 p-1 sm:rounded-lg sm:p-1.5">
                 <Scale className="h-2.5 w-2.5 text-white sm:h-3 sm:w-3" />
               </div>
@@ -221,7 +221,7 @@ export const Footer: React.FC<FooterProps> = ({ className = "" }) => {
                 <li key={link.id}>
                   <button
                     onClick={() => scrollToSection(link.id)}
-                    className="group flex items-center gap-2 text-sm text-slate-700 transition-all duration-300 hover:text-slate-900 sm:text-base dark:text-slate-300 dark:hover:text-white"
+                    className="group text-muted-foreground hover:text-foreground flex items-center gap-2 text-sm transition-all duration-300 sm:text-base"
                   >
                     <span className="transition-transform duration-300 group-hover:translate-x-1">
                       {link.label}
@@ -234,11 +234,11 @@ export const Footer: React.FC<FooterProps> = ({ className = "" }) => {
         </div>
 
         {/* Enhanced Bottom Section */}
-        <div className="border-t border-slate-300/50 pt-6 sm:pt-7 lg:pt-8 dark:border-slate-700/50">
+        <div className="border-border/60 border-t pt-6 sm:pt-7 lg:pt-8">
           <div className="flex flex-col items-center justify-between gap-4 sm:gap-5 lg:flex-row lg:gap-6">
             {/* Copyright and Trust Badge */}
             <div className="flex flex-col items-center gap-3 text-xs sm:flex-row sm:gap-4 sm:text-sm lg:gap-6">
-              <div className="flex items-center gap-2 text-slate-700 sm:gap-2.5 lg:gap-3 dark:text-slate-300">
+              <div className="text-muted-foreground flex items-center gap-2 sm:gap-2.5 lg:gap-3">
                 <div className="flex items-center gap-1.5 sm:gap-2">
                   <Heart className="h-3.5 w-3.5 animate-pulse text-red-400 sm:h-4 sm:w-4" />
                   <span className="text-center sm:text-left">
@@ -264,9 +264,9 @@ export const Footer: React.FC<FooterProps> = ({ className = "" }) => {
                 <Mail className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                 <span className="text-xs font-medium sm:text-sm">Contact</span>
               </a>
-              <div className="flex items-center gap-1.5 rounded-lg border border-slate-300/50 bg-slate-200/50 px-2.5 py-1.5 backdrop-blur-sm sm:gap-2 sm:px-3 sm:py-2 dark:border-slate-700/50 dark:bg-slate-800/50">
-                <Code className="h-3.5 w-3.5 text-slate-600 sm:h-4 sm:w-4 dark:text-slate-400" />
-                <span className="text-xs text-slate-700 sm:text-sm dark:text-slate-300">
+              <div className="border-border/60 bg-muted/60 flex items-center gap-1.5 rounded-lg border px-2.5 py-1.5 backdrop-blur-sm sm:gap-2 sm:px-3 sm:py-2">
+                <Code className="text-muted-foreground h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                <span className="text-muted-foreground text-xs sm:text-sm">
                   {APP_VERSION_WITH_PREFIX}
                 </span>
               </div>
@@ -274,13 +274,13 @@ export const Footer: React.FC<FooterProps> = ({ className = "" }) => {
           </div>
 
           {/* Enhanced Compliance Badges */}
-          <div className="mt-6 border-t border-slate-300/50 pt-4 sm:mt-7 sm:pt-5 lg:mt-8 lg:pt-6 dark:border-slate-700/50">
-            <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-slate-600 sm:gap-6 sm:text-sm lg:gap-8 dark:text-slate-400">
+          <div className="border-border/60 mt-6 border-t pt-4 sm:mt-7 sm:pt-5 lg:mt-8 lg:pt-6">
+            <div className="text-muted-foreground flex flex-wrap items-center justify-center gap-4 text-xs sm:gap-6 sm:text-sm lg:gap-8">
               <div className="group flex items-center gap-1.5 sm:gap-2">
                 <div className="rounded-full bg-gradient-to-r from-blue-500/20 to-indigo-500/20 p-0.5 sm:p-1">
                   <Globe className="h-2.5 w-2.5 text-blue-600 transition-colors duration-300 group-hover:text-blue-700 sm:h-3 sm:w-3 dark:text-blue-300 dark:group-hover:text-blue-200" />
                 </div>
-                <span className="transition-colors duration-300 group-hover:text-slate-700 dark:group-hover:text-slate-300">
+                <span className="group-hover:text-foreground transition-colors duration-300">
                   Global Security Platform
                 </span>
               </div>
@@ -288,7 +288,7 @@ export const Footer: React.FC<FooterProps> = ({ className = "" }) => {
                 <div className="rounded-full bg-gradient-to-r from-green-500/20 to-emerald-500/20 p-0.5 sm:p-1">
                   <Shield className="h-2.5 w-2.5 text-green-600 transition-colors duration-300 group-hover:text-green-700 sm:h-3 sm:w-3 dark:text-green-300 dark:group-hover:text-green-200" />
                 </div>
-                <span className="transition-colors duration-300 group-hover:text-slate-700 dark:group-hover:text-slate-300">
+                <span className="group-hover:text-foreground transition-colors duration-300">
                   SOC 2 Type II Compliant
                 </span>
               </div>
@@ -296,7 +296,7 @@ export const Footer: React.FC<FooterProps> = ({ className = "" }) => {
                 <div className="rounded-full bg-gradient-to-r from-purple-500/20 to-pink-500/20 p-0.5 sm:p-1">
                   <Users className="h-2.5 w-2.5 text-purple-600 transition-colors duration-300 group-hover:text-purple-700 sm:h-3 sm:w-3 dark:text-purple-300 dark:group-hover:text-purple-200" />
                 </div>
-                <span className="transition-colors duration-300 group-hover:text-slate-700 dark:group-hover:text-slate-300">
+                <span className="group-hover:text-foreground transition-colors duration-300">
                   ISO 27001 Certified
                 </span>
               </div>

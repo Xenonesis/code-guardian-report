@@ -34,7 +34,8 @@
     --color-border-dark: #334155;
   }
 
-  [data-theme="dark"] {
+  /* next-themes uses a `.dark` class on <html> */
+  .dark {
     --color-surface: #0f172a;
     --color-border: #334155;
   }

@@ -82,7 +82,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
         {description && (
           <div className="mx-auto mb-8 max-w-5xl px-4 sm:mb-10 sm:px-0 lg:mb-14">
-            <p className="text-responsive-base rounded-2xl border border-white/30 bg-white/40 p-6 leading-relaxed text-slate-700 shadow-xl backdrop-blur-xl sm:p-8 dark:border-white/10 dark:bg-slate-800/40 dark:text-slate-300">
+            <p className="text-responsive-base border-border/60 bg-background/40 text-foreground/80 rounded-2xl border p-6 leading-relaxed shadow-xl backdrop-blur-xl sm:p-8">
               {description}
             </p>
           </div>
