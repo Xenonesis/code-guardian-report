@@ -18,10 +18,10 @@ export const FileUploadArea: React.FC<FileUploadAreaProps> = ({
 }) => {
   return (
     <div
-      className={`group relative overflow-hidden rounded-2xl border-3 border-dashed p-6 text-center transition-all duration-300 focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2 sm:p-8 lg:p-12 ${
+      className={`group relative overflow-hidden rounded-2xl border-2 border-dashed p-6 text-center transition-all duration-300 focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2 sm:p-8 lg:p-12 ${
         isDragOver
-          ? "scale-105 border-blue-500 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/50 dark:to-indigo-950/50"
-          : "border-slate-300 hover:border-blue-400 hover:bg-gradient-to-br hover:from-slate-50 hover:to-blue-50 dark:border-slate-600 dark:hover:border-blue-500 dark:hover:from-slate-800/50 dark:hover:to-blue-900/50"
+          ? "scale-[1.02] border-blue-500 bg-blue-50/50 dark:bg-blue-950/20"
+          : "border-slate-200 hover:border-blue-400 hover:bg-slate-50/50 dark:border-slate-700 dark:hover:border-blue-500/50 dark:hover:bg-slate-800/50"
       }`}
       onDragOver={onDragOver}
       onDragLeave={onDragLeave}

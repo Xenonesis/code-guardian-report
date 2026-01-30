@@ -73,24 +73,24 @@ export const UploadForm: React.FC<UploadFormProps> = ({
               }
               className="w-full"
             >
-              <TabsList className="bg-muted/50 mb-8 grid h-12 w-full grid-cols-2 rounded-lg p-1">
+              <TabsList className="bg-muted/30 border-border/50 mb-8 grid h-auto w-full grid-cols-2 rounded-xl border p-1.5">
                 <TabsTrigger
                   value="file"
-                  className="data-[state=active]:bg-background data-[state=active]:text-foreground h-10 gap-2 rounded-md font-medium transition-all data-[state=active]:shadow-sm"
+                  className="data-[state=active]:bg-background text-muted-foreground hover:text-foreground flex h-12 items-center justify-center gap-2.5 rounded-lg text-sm font-semibold transition-all duration-200 data-[state=active]:text-blue-600 data-[state=active]:shadow-md data-[state=active]:shadow-blue-500/5 dark:data-[state=active]:text-blue-400"
                 >
-                  <Upload className="h-4 w-4" />
+                  <Upload className="h-5 w-5" />
                   Upload ZIP
                 </TabsTrigger>
                 <TabsTrigger
                   value="github"
-                  className="data-[state=active]:bg-background data-[state=active]:text-foreground h-10 gap-2 rounded-md font-medium transition-all data-[state=active]:shadow-sm"
+                  className="data-[state=active]:bg-background text-muted-foreground hover:text-foreground flex h-12 items-center justify-center gap-2.5 rounded-lg text-sm font-semibold transition-all duration-200 data-[state=active]:text-purple-600 data-[state=active]:shadow-md data-[state=active]:shadow-purple-500/5 dark:data-[state=active]:text-purple-400"
                 >
-                  <Github className="h-4 w-4" />
+                  <Github className="h-5 w-5" />
                   GitHub Repo
                 </TabsTrigger>
               </TabsList>
 
-              <div className="mt-2 min-h-[280px]">
+              <div className="mt-6 min-h-[280px]">
                 <TabsContent
                   value="file"
                   className="animate-in fade-in slide-in-from-bottom-2 mt-0 h-full duration-300"
