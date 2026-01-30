@@ -3,7 +3,6 @@
 import { useEnhancedAnalysis } from "@/hooks/useEnhancedAnalysis";
 import { Navigation } from "@/components/layout/Navigation";
 import { Footer } from "@/components/layout/Footer";
-import { BreadcrumbContainer } from "@/components/BreadcrumbContainer";
 import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
 import {
   ConnectionStatusBanner,
@@ -88,11 +87,6 @@ export function MainLayout({ children }: MainLayoutProps) {
       >
         <Navigation />
       </header>
-
-      {/* Breadcrumb Container - Global but conditional logic inside component handles visibility */}
-      <nav aria-label="Breadcrumb">
-        <BreadcrumbContainer analysisResults={analysisResults} />
-      </nav>
 
       {/* Main Content */}
       <main
