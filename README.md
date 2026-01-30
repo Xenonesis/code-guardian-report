@@ -1,5503 +1,5276 @@
-<div align="center">
-
-<!-- Project Logo -->
-<a href="https://github.com/Xenonesis/code-guardian-report">
-  <img src="https://raw.githubusercontent.com/Xenonesis/code-guardian-report/main/public/logo.png" alt="Code Guardian Logo" width="120" height="120">
-</a>
-
-<h1 align="center">Code Guardian</h1>
-
-<!-- Typing Animation Effect -->
-<p align="center">
-  <a href="https://git.io/typing-svg">
-    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=22&duration=3000&pause=1000&color=6366F1&center=true&vCenter=true&multiline=true&repeat=true&width=800&height=100&lines=Production-Ready+Code+Security+Analysis;Multi-Model+AI+Integration+(OpenAI%2C+Claude%2C+Gemini);8%2B+Languages+•+100%2B+Vulnerabilities+•+OWASP+%26+CWE+Compliant;Real-Time+Insights+•+Enterprise+Scale+•+Zero+False+Positives" alt="Typing SVG">
-  </a>
-</p>
-
-<!-- Version and Status Badges with Animation -->
-<p align="center">
-  <img src="https://img.shields.io/badge/version-11.0.0-blue?style=for-the-badge&logo=semver&logoColor=white&labelColor=1e293b" alt="Version 11.0.0">
-  <img src="https://img.shields.io/badge/build-passing-brightgreen?style=for-the-badge&logo=github-actions&logoColor=white&labelColor=1e293b" alt="Build Passing">
-  <img src="https://img.shields.io/badge/production-ready-success?style=for-the-badge&logo=vercel&logoColor=white&labelColor=1e293b" alt="Production Ready">
-  <img src="https://img.shields.io/badge/license-MIT-purple?style=for-the-badge&logo=open-source-initiative&logoColor=white&labelColor=1e293b" alt="MIT License">
-</p>
-
-<!-- Animated Stats Counter -->
-<p align="center">
-  <img src="https://komarev.com/ghpvc/?username=code-guardian&label=Project+Views&color=blueviolet&style=for-the-badge" alt="Profile Views">
-  <img src="https://img.shields.io/github/stars/adityakumar-in/code-guardian-report?style=for-the-badge&logo=github&logoColor=white&labelColor=1e293b&color=yellow" alt="GitHub Stars">
-  <img src="https://img.shields.io/github/forks/adityakumar-in/code-guardian-report?style=for-the-badge&logo=github&logoColor=white&labelColor=1e293b&color=cyan" alt="GitHub Forks">
-</p>
-
-**Current Version: 11.0.0** | **Developed by** [Aditya Kumar Tiwari](https://github.com/adityakumar-in)
-
-<p align="center">
-  <em>Trusted by developers worldwide for production-grade security analysis</em>
-</p>
-
-<!-- Main Screenshot with Hover Effect -->
-<div align="center">
-  <a href="https://code-guardian-report.vercel.app" target="_blank">
-    <img src="./public/home.png" alt="Code Guardian - AI-Powered Security Analysis Platform" width="95%" style="border-radius: 20px; box-shadow: 0 25px 80px rgba(99, 102, 241, 0.3); border: 3px solid rgba(99, 102, 241, 0.2); transition: transform 0.3s ease;">
-  </a>
-</div>
-
-<br>
-
-<hr />
-
-## Technology Stack & Core Dependencies
-
-<!-- Tech Stack with Animated Icons -->
-<div align="center">
-
-### Frontend Technologies
-
-<p align="center">
-  <img src="https://skillicons.dev/icons?i=react,typescript,vite,tailwind,firebase,html,css,js&perline=8&theme=dark" alt="Frontend Technologies"/>
-</p>
-
-<table>
-<tr>
-<td align="center" width="16%">
-  <img src="https://img.shields.io/badge/React-19.2.4-61DAFB?style=for-the-badge&logo=react&logoColor=white&labelColor=1e293b" alt="React"/>
-  <br><sub><b>React 19</b></sub>
-</td>
-<td align="center" width="16%">
-  <img src="https://img.shields.io/badge/TypeScript-5.9.3-3178C6?style=for-the-badge&logo=typescript&logoColor=white&labelColor=1e293b" alt="TypeScript"/>
-  <br><sub><b>TypeScript 5.9</b></sub>
-</td>
-<td align="center" width="16%">
-  <img src="https://img.shields.io/badge/Next.js-16.1.5-000000?style=for-the-badge&logo=next.js&logoColor=white&labelColor=1e293b" alt="Next.js"/>
-  <br><sub><b>Next.js 16</b></sub>
-</td>
-<td align="center" width="16%">
-  <img src="https://img.shields.io/badge/Tailwind-4.1.18-06B6D4?style=for-the-badge&logo=tailwind-css&logoColor=white&labelColor=1e293b" alt="Tailwind"/>
-  <br><sub><b>Tailwind 4</b></sub>
-</td>
-<td align="center" width="16%">
-  <img src="https://img.shields.io/badge/Firebase-12.8.0-FFCA28?style=for-the-badge&logo=firebase&logoColor=white&labelColor=1e293b" alt="Firebase"/>
-  <br><sub><b>Firebase 12</b></sub>
-</td>
-<td align="center" width="16%">
-  <img src="https://img.shields.io/badge/Framer-12.29.2-0055FF?style=for-the-badge&logo=framer&logoColor=white&labelColor=1e293b" alt="Framer"/>
-  <br><sub><b>Framer Motion</b></sub>
-</td>
-</tr>
-</table>
-
-### AI & Analysis Technologies
-
-<p align="center">
-  <img src="https://skillicons.dev/icons?i=python,java,cpp,go,rust,php&perline=6&theme=dark" alt="Supported Languages"/>
-</p>
-
-<table>
-<tr>
-<td align="center" width="25%">
-  <img src="https://img.shields.io/badge/OpenAI-GPT--4-412991?style=for-the-badge&logo=openai&logoColor=white&labelColor=1e293b" alt="OpenAI"/>
-  <br><sub><b>OpenAI GPT-4</b></sub>
-</td>
-<td align="center" width="25%">
-  <img src="https://img.shields.io/badge/Anthropic-Claude%203-6B46C1?style=for-the-badge&logo=anthropic&logoColor=white&labelColor=1e293b" alt="Claude"/>
-  <br><sub><b>Claude 3</b></sub>
-</td>
-<td align="center" width="25%">
-  <img src="https://img.shields.io/badge/Google-Gemini-4285F4?style=for-the-badge&logo=google&logoColor=white&labelColor=1e293b" alt="Gemini"/>
-  <br><sub><b>Gemini Pro</b></sub>
-</td>
-<td align="center" width="25%">
-  <img src="https://img.shields.io/badge/JSZip-3.10.1-F7DF1E?style=for-the-badge&logo=7zip&logoColor=white&labelColor=1e293b" alt="JSZip"/>
-  <br><sub><b>ZIP Analysis</b></sub>
-</td>
-</tr>
-</table>
-
-### UI Components & Libraries
-
-<table>
-<tr>
-<td align="center" width="20%">
-  <img src="https://img.shields.io/badge/Radix_UI-Latest-161618?style=for-the-badge&logo=radix-ui&logoColor=white&labelColor=1e293b" alt="Radix UI"/>
-  <br><sub><b>Radix UI</b></sub>
-</td>
-<td align="center" width="20%">
-  <img src="https://img.shields.io/badge/Shadcn_UI-Latest-000000?style=for-the-badge&logo=shadcnui&logoColor=white&labelColor=1e293b" alt="Shadcn"/>
-  <br><sub><b>Shadcn/ui</b></sub>
-</td>
-<td align="center" width="20%">
-  <img src="https://img.shields.io/badge/Recharts-3.7.0-22b5bf?style=for-the-badge&logo=chartdotjs&logoColor=white&labelColor=1e293b" alt="Recharts"/>
-  <br><sub><b>Recharts</b></sub>
-</td>
-<td align="center" width="20%">
-  <img src="https://img.shields.io/badge/Lucide-0.563.0-F56565?style=for-the-badge&logo=lucide&logoColor=white&labelColor=1e293b" alt="Lucide"/>
-  <br><sub><b>Lucide Icons</b></sub>
-</td>
-<td align="center" width="20%">
-  <img src="https://img.shields.io/badge/Sonner-2.0.7-000000?style=for-the-badge&logo=react&logoColor=white&labelColor=1e293b" alt="Sonner"/>
-  <br><sub><b>Toast Notifications</b></sub>
-</td>
-</tr>
-</table>
-
-</div>
-
-<!-- Platform Features Grid -->
-<div align="center">
-
-## Platform Capabilities
-
-<table>
-<tr>
-<td align="center" width="33%">
-  <img src="https://img.shields.io/badge/Languages-8+-00C851?style=for-the-badge&labelColor=1e293b" alt="Languages"/>
-  <br><b>Multi-Language Support</b>
-  <br><sub>JS • TS • Python • Java • C++ • Go • Rust • PHP • C#</sub>
-</td>
-<td align="center" width="33%">
-  <img src="https://img.shields.io/badge/Vulnerabilities-100+-FF4444?style=for-the-badge&labelColor=1e293b" alt="Vulnerabilities"/>
-  <br><b>Security Detection</b>
-  <br><sub>OWASP Top 10 • CWE Mapping • Secret Detection</sub>
-</td>
-<td align="center" width="33%">
-  <img src="https://img.shields.io/badge/Code_Lines-57K+-33B5E5?style=for-the-badge&labelColor=1e293b" alt="Code Lines"/>
-  <br><b>Enterprise Scale</b>
-  <br><sub>257 Files • 153 Components • Full Type Safety</sub>
-</td>
-</tr>
-<tr>
-<td align="center" width="33%">
-  <img src="https://img.shields.io/badge/AI_Models-3+-9C27B0?style=for-the-badge&labelColor=1e293b" alt="AI Models"/>
-  <br><b>AI Integration</b>
-  <br><sub>OpenAI • Claude • Gemini • Auto-Fix Suggestions</sub>
-</td>
-<td align="center" width="33%">
-  <img src="https://img.shields.io/badge/PWA-Enabled-5A0FC8?style=for-the-badge&labelColor=1e293b" alt="PWA"/>
-  <br><b>Progressive Web App</b>
-  <br><sub>Offline Mode • Push Notifications • Install Prompt</sub>
-</td>
-<td align="center" width="33%">
-  <img src="https://img.shields.io/badge/Performance-95%2F100-FFB300?style=for-the-badge&labelColor=1e293b" alt="Performance"/>
-  <br><b>Optimized Performance</b>
-  <br><sub>20.93s Build • Code Splitting • 3MB Bundle</sub>
-</td>
-</tr>
-</table>
-
-</div>
-
-<hr />
-
-<!-- Quick Action Buttons with Glow Effect -->
-<div align="center">
-  <h2>Transform Your Development Workflow Today</h2>
-  <p><em>"Security is not a product, but a process" - Bruce Schneier</em></p>
-  
-  <br>
-  
-  <a href="https://code-guardian-report.vercel.app" target="_blank">
-    <img src="https://img.shields.io/badge/Launch_Live_Demo-4F46E5?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="Live Demo" height="50"/>
-  </a>
-  &nbsp;&nbsp;
-  <a href="#-quick-start-guide">
-    <img src="https://img.shields.io/badge/Quick_Start_Guide-10B981?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="Quick Start" height="50"/>
-  </a>
-  &nbsp;&nbsp;
-  <a href="#-screenshots--demo">
-    <img src="https://img.shields.io/badge/View_Screenshots-F59E0B?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="Screenshots" height="50"/>
-  </a>
-  &nbsp;&nbsp;
-  <a href="#-whats-new-in-v900">
-    <img src="https://img.shields.io/badge/Whats_New-FF6B6B?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="What's New" height="50"/>
-  </a>
-</div>
-
-</div>
-
-<hr />
-
----
-
-## Platform Statistics & Performance
-
-<div align="center">
-
-<!-- Animated Flow Diagram -->
-
-```mermaid
-%%{init: {'theme':'dark', 'themeVariables': { 'primaryColor':'#6366f1','primaryTextColor':'#fff','primaryBorderColor':'#4f46e5','lineColor':'#8b5cf6','secondaryColor':'#ec4899','tertiaryColor':'#10b981'}}}%%
-graph TB
-    Start([Code Upload]) -->|ZIP/GitHub/Direct| Analysis[Analysis Engine]
-
-    Analysis --> Pattern[Pattern Detection]
-    Analysis --> AST[AST Analysis]
-    Analysis --> DataFlow[Data Flow Analysis]
-    Analysis --> Secret[Secret Detection]
-
-    Pattern --> OWASP[OWASP/CWE Mapping]
-    AST --> OWASP
-    DataFlow --> OWASP
-    Secret --> OWASP
-
-    OWASP --> AI[AI Enhancement]
-    AI --> GPT[OpenAI GPT-4]
-    AI --> Claude[Anthropic Claude]
-    AI --> Gemini[Google Gemini]
-
-    GPT --> Results[Smart Results]
-    Claude --> Results
-    Gemini --> Results
-
-    Results --> Report[Reports & Insights]
-    Results --> Fixes[Auto-Fix Suggestions]
-    Results --> Export[Export Options]
-
-    Report --> Dashboard[Dashboard]
-    Fixes --> Preview[Preview & Apply]
-    Export --> PDF[PDF/JSON/SARIF]
-
-    style Start fill:#6366f1,stroke:#4f46e5,stroke-width:3px,color:#fff
-    style Analysis fill:#8b5cf6,stroke:#7c3aed,stroke-width:3px,color:#fff
-    style OWASP fill:#ec4899,stroke:#db2777,stroke-width:3px,color:#fff
-    style AI fill:#10b981,stroke:#059669,stroke-width:3px,color:#fff
-    style Results fill:#f59e0b,stroke:#d97706,stroke-width:3px,color:#fff
-    style Dashboard fill:#3b82f6,stroke:#2563eb,stroke-width:3px,color:#fff
-```
-
-### Real-Time Performance Metrics
-
-<table>
-<tr>
-<td align="center" width="20%">
-  <img src="https://img.shields.io/badge/Build_Time-20.93s-success?style=for-the-badge&labelColor=1e293b" alt="Build Time"/>
-  <br><b>Build Time</b>
-  <br><sub>Optimized</sub>
-</td>
-<td align="center" width="20%">
-  <img src="https://img.shields.io/badge/Coverage-85%25-success?style=for-the-badge&labelColor=1e293b" alt="Coverage"/>
-  <br><b>Code Coverage</b>
-  <br><sub>High Quality</sub>
-</td>
-<td align="center" width="20%">
-  <img src="https://img.shields.io/badge/Rules-100+-critical?style=for-the-badge&labelColor=1e293b" alt="Rules"/>
-  <br><b>Security Rules</b>
-  <br><sub>Production Ready</sub>
-</td>
-<td align="center" width="20%">
-  <img src="https://img.shields.io/badge/Languages-8+-blue?style=for-the-badge&labelColor=1e293b" alt="Languages"/>
-  <br><b>Languages</b>
-  <br><sub>Multi-language</sub>
-</td>
-<td align="center" width="20%">
-  <img src="https://img.shields.io/badge/Performance-95%2F100-yellow?style=for-the-badge&labelColor=1e293b" alt="Performance"/>
-  <br><b>Performance</b>
-  <br><sub>Fast</sub>
-</td>
-</tr>
-</table>
-
-### Detailed Statistics
-
-<table>
-<tr>
-<th>Category</th>
-<th>Metric</th>
-<th>Value</th>
-<th>Status</th>
-</tr>
-<tr>
-<td rowspan="3"><b>Detection</b></td>
-<td>Security Patterns</td>
-<td>17+ per language</td>
-<td>Comprehensive</td>
-</tr>
-<tr>
-<td>Secret Detection Types</td>
-<td>9 patterns</td>
-<td>Enterprise-grade</td>
-</tr>
-<tr>
-<td>Vulnerability Database</td>
-<td>100+ CVE mappings</td>
-<td>Updated</td>
-</tr>
-<tr>
-<td rowspan="3"><b>Code Quality</b></td>
-<td>TypeScript Files</td>
-<td>257 files</td>
-<td>Type-safe</td>
-</tr>
-<tr>
-<td>Lines of Code</td>
-<td>57,397 lines</td>
-<td>Well-structured</td>
-</tr>
-<tr>
-<td>React Components</td>
-<td>153 components</td>
-<td>Modular</td>
-</tr>
-<tr>
-<td rowspan="3"><b>Performance</b></td>
-<td>Bundle Size</td>
-<td>~3MB (gzipped)</td>
-<td>Code splitting</td>
-</tr>
-<tr>
-<td>Load Time</td>
-<td>&lt;2s (avg)</td>
-<td>Fast</td>
-</tr>
-<tr>
-<td>Lighthouse Score</td>
-<td>95/100</td>
-<td>Optimized</td>
-</tr>
-</table>
-
-<!-- Activity Graph -->
-<p align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=adityakumar-in&repo=code-guardian-report&theme=react-dark&hide_border=true&area=true&custom_title=Development%20Activity" alt="Activity Graph" width="95%">
-</p>
-
-</div>
-
-<hr />
-
----
-
-## What's New in v11.0.0
-
-<div align="center">
-  
-<!-- Animated Release Badge -->
-<img src="https://img.shields.io/badge/Major_Release-Production_Ready-00C851?style=for-the-badge&logoColor=white&labelColor=1e293b&logo=rocket" alt="Major Release"/>
-<img src="https://img.shields.io/badge/Release_Date-January_2026-blue?style=for-the-badge&labelColor=1e293b&logo=calendar" alt="Release Date"/>
-
-</div>
-
-<!-- Feature Grid with Icons -->
-<table>
-<tr>
-<td width="50%" valign="top">
-
-### Production Readiness Enhancements
-
-<img src="./public/icons/shield-check.svg" width="18" height="18" alt="Logging"/> **Production-Safe Logging**
-
-- Replaced 373 console statements with enterprise logger service
-- Structured logging with severity levels
-- Production-ready error handling
-
-<img src="./public/icons/bug.svg" width="18" height="18" alt="Debug"/> **Zero Debug Statements**
-
-- Complete production code quality verification
-- No development artifacts in production build
-- Clean, professional codebase
-
-<img src="./public/icons/activity.svg" width="18" height="18" alt="Build"/> **Build Optimization**
-
-- 20.93s build time with zero errors
-- Tree-shaking and code splitting
-- Optimized bundle size (~3MB)
-
-<img src="./public/icons/shield-check.svg" width="18" height="18" alt="Testing"/> **Comprehensive Testing**
-
-- All 100+ functionalities verified as working
-- Real implementation (no mocks)
-- End-to-end test coverage
-
-</td>
-<td width="50%" valign="top">
-
-### AI-Powered Features
-
-<img src="./public/icons/brain.svg" width="18" height="18" alt="Models"/> **Multi-Model Orchestration**
-
-- OpenAI GPT-4, Anthropic Claude, Google Gemini
-- Automatic provider failover
-- Load balancing across models
-
-<img src="./public/icons/search.svg" width="18" height="18" alt="Patch"/> **AI Patch Preview**
-
-- Unified diff visualization
-- Risk scoring for changes
-- One-click apply functionality
-
-<img src="./public/icons/brain.svg" width="18" height="18" alt="Context"/> **Context-Aware Analysis**
-
-- In-context learning for repo-aware suggestions
-- Embeddings cache for performance
-- Smart pattern recognition
-
-<img src="./public/icons/layout-dashboard.svg" width="18" height="18" alt="SARIF"/> **SARIF Integration**
-
-- Standard output format
-- CI/CD pipeline integration
-- GitHub Code Scanning support
-
-</td>
-</tr>
-</table>
-
-<!-- Additional Features Section -->
-<details>
-<summary><b>Click to see more new features in v11.0.0</b></summary>
-
-<br>
-
-### Enhanced Security Features
-
-- **Secret Detection**: 9 pattern types including API keys, tokens, certificates
-- **Dependency Scanning**: CVE database with 100+ vulnerability mappings
-- **Code Provenance**: Track code origins and licensing
-- **Zero-Day Protection**: Real-time vulnerability database updates
-
-### Advanced Analytics
-
-- **GitHub Repository Analytics**: Commit history, contributor insights
-- **Vulnerability Trends**: Time-series analysis of security issues
-- **Quality Metrics**: Code complexity, maintainability index
-- **Performance Monitoring**: Real-time dashboard with Vercel Analytics
-
-### Developer Experience
-
-- **PWA Support**: Install as desktop/mobile app
-- **Offline Mode**: Full functionality without internet
-- **Dark Mode**: System-aware theme switching
-- **Keyboard Shortcuts**: Power user productivity features
-
-### Multi-Language Support
-
-- **8+ Languages**: JavaScript, TypeScript, Python, Java, C++, Go, Rust, PHP, C#
-- **17+ Patterns per Language**: Language-specific security checks
-- **Framework Detection**: Automatic detection of 30+ frameworks
-- **Custom Rules Engine**: Define your own security patterns
-
-</details>
-
-<table>
-<tr>
-<td width="50%" align="center">
-  <img src="./public/icons/brain.svg" alt="AI Fix" width="48" height="48"/>
-  <h4>AI Fix Suggestions</h4>
- <p><strong>Intelligent code remediation powered by GPT-4 & Claude</strong></p>
-  <ul align="left">
-    <li>Context-aware security fixes</li>
-    <li>Automated vulnerability patching</li>
-    <li>Natural language explanations</li>
-    <li>Real-time code improvements</li>
-  </ul>
-</td>
-<td width="50%" align="center">
-  <img src="./public/icons/search.svg" alt="Secure Search" width="48" height="48"/>
-  <h4>Secure Code Search</h4>
-  <p><strong>Advanced pattern detection & vulnerability discovery</strong></p>
-  <ul align="left">
-    <li>Intelligent code pattern analysis</li>
-    <li>Security vulnerability scanning</li>
-    <li>Risk assessment algorithms</li>
-    <li>Interactive search interface</li>
- </ul>
-</td>
-</tr>
-<tr>
-<td width="50%" align="center">
-  <img src="./public/icons/fingerprint.svg" alt="Provenance" width="48" height="48"/>
-  <h4>Code Provenance Tracking</h4>
- <p><strong>Comprehensive code integrity & origin monitoring</strong></p>
-  <ul align="left">
-    <li>File integrity verification</li>
-    <li>Change history tracking</li>
-    <li>Digital signature validation</li>
-    <li>Compliance reporting</li>
-  </ul>
-</td>
-<td width="50%" align="center">
-  <img src="./public/icons/shield-check.svg" alt="Secret Detection" width="48" height="48"/>
-  <h4>Advanced Secret Detection</h4>
-  <p><strong>Enterprise-grade credential & secret scanning</strong></p>
-  <ul align="left">
-    <li>API key detection</li>
-    <li>Password & token scanning</li>
-    <li>Real-time alerts</li>
-    <li>Security metrics dashboard</li>
-  </ul>
-</td>
-</tr>
-</table>
-
-### Enhanced User Experience
-
-- Redesigned navigation with keyboard-first flows and progressive disclosure
-- New compact density mode (+ grid density persistence)
-- Global command palette (Ctrl/Cmd+K)
-- Improved error states with recovery actions
-
-<table>
-<tr>
-<td width="3%" align="center">
-  <img src="https://img.icons8.com/fluency/96/animation.png" alt="Animations" width="64"/>
-  <h4>Smooth Animations</h4>
-  <p>Framer Motion powered interactions with Lenis smooth scrolling</p>
-</td>
-<td width="33%" align="center">
-  <img src="./public/icons/layout-dashboard.svg" alt="Dashboard" width="48" height="48"/>
-  <h4>Modern Dashboard</h4>
-  <p>Real-time analytics with interactive charts and metrics</p>
-</td>
-<td width="33%" align="center">
-  <img src="./public/icons/bot.svg" alt="ChatBot" width="48" height="48"/>
-  <h4>Floating ChatBot</h4>
-  <p>AI-powered assistance with contextual help</p>
-</td>
-</tr>
-</table>
-
----
-
-## **Core Platform Capabilities**
-
-- CI/CD Integrations: GitHub Actions, GitLab CI, Jenkins, with status checks and artifact uploads
-- SCM Integrations: GitHub App flow, PAT fallback, rate-limit aware fetches
-- Policy Engine: Organization-level rules, branch protection validations, enforcement modes (warn/block)
-
-<div align="center">
-  <img src="https://img.shields.io/badge/Enterprise%20Grade-Production%20Ready%20Platform-4F46E5?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="Enterprise Grade"/>
-</div>
-
-<table>
-<tr>
-<td width="33%" align="center">
-  <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; border-radius: 15px; margin: 10px;">
-    <img src="./public/cc.png" alt="Security" width="64" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));"/>
-    <h4 style="color: white; margin: 15px 0 10px 0;">Enterprise Security</h4>
-    <p style="color: rgba(255,255,255,0.9); font-size: 14px; line-height: 1.5;">
-      <strong>OWASP Top 10 Compliance</strong><br/>
-      Advanced vulnerability detection with CVE database integration and real-time threat intelligence
-    </p>
-    <div style="margin-top: 10px;">
-      <span style="background: rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: white;">Deep Scanning</span>
-      <span style="background: rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: white; margin-left: 5px;">Real-time</span>
-    </div>
-  </div>
-</td>
-<td width="33%" align="center">
-  <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 20px; border-radius: 15px; margin: 10px;">
-    <img src="https://img.icons8.com/fluency/96/artificial-intelligence.png" alt="AI" width="64" style="filter: drop-shadow(0 4px 8px rgba(0,0,0.3));"/>
-    <h4 style="color: white; margin: 15px 0 10px 0;">AI-Powered Intelligence</h4>
-    <p style="color: rgba(255,255,0.9); font-size: 14px; line-height: 1.5;">
-      <strong>GPT-4, Claude & Gemini Integration</strong><br/>
-      Context-aware analysis with natural language explanations and automated fix suggestions
-    </p>
-    <div style="margin-top: 10px;">
-      <span style="background: rgba(255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: white;">Smart Analysis</span>
-      <span style="background: rgba(25,255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: white; margin-left: 5px;">Auto-Fix</span>
-    </div>
-  </div>
-</td>
-<td width="33%" align="center">
-  <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 20px; border-radius: 15px; margin: 10px;">
-    <img src="https://img.icons8.com/fluency/96/analytics.png" alt="Analytics" width="64" style="filter: drop-shadow(0 4px 8px rgba(0,0,0.3));"/>
-    <h4 style="color: white; margin: 15px 0 10px 0;">Advanced Analytics</h4>
-    <p style="color: rgba(255,255,255,0.9); font-size: 14px; line-height: 1.5;">
-      <strong>Interactive Dashboards & Metrics</strong><br/>
-      Real-time charts, trend analysis, and comprehensive reporting with export capabilities
-    </p>
-    <div style="margin-top: 10px;">
-      <span style="background: rgba(255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: white;">Live Charts</span>
-      <span style="background: rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: white; margin-left: 5px;">Metrics</span>
-    </div>
-  </div>
-</td>
-</tr>
-<tr>
-<td width="33%" align="center">
-  <div style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); padding: 20px; border-radius: 15px; margin: 10px;">
-    <img src="https://img.icons8.com/fluency/96/code.png" alt="Quality" width="64" style="filter: drop-shadow(0 4px 8px rgba(0,0,0.3));"/>
-    <h4 style="color: white; margin: 15px 0 10px 0;">Quality Excellence</h4>
-    <p style="color: rgba(255,255,255,0.9); font-size: 14px; line-height: 1.5;">
-      <strong>Comprehensive Quality Scoring</strong><br/>
-      Maintainability metrics, complexity analysis, and code health monitoring
-    </p>
-    <div style="margin-top: 10px;">
-      <span style="background: rgba(25,255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: white;">Quality Score</span>
-      <span style="background: rgba(25,255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: white; margin-left: 5px;">Continuous</span>
-    </div>
-  </div>
-</td>
-<td width="33%" align="center">
-  <div style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); padding: 20px; border-radius: 15px; margin: 10px;">
-    <img src="https://img.icons8.com/fluency/96/export.png" alt="Export" width="64" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));"/>
-    <h4 style="color: #333; margin: 15px 0 10px 0;">Multi-Format Export</h4>
-    <p style="color: #555; font-size: 14px; line-height: 1.5;">
-      <strong>Flexible Data Export Options</strong><br/>
-      JSON, CSV, PDF, HTML, XML formats with customizable templates and branding
-    </p>
-    <div style="margin-top: 10px;">
-      <span style="background: rgba(0,0,0,0.1); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: #333;">5 Formats</span>
-      <span style="background: rgba(0,0,0.1); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: #333; margin-left: 5px;">Custom</span>
-    </div>
-  </div>
-</td>
-<td width="33%" align="center">
-  <div style="background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%); padding: 20px; border-radius: 15px; margin: 10px;">
-    <img src="https://img.icons8.com/fluency/96/speed.png" alt="Performance" width="64" style="filter: drop-shadow(0 4px 8px rgba(0,0,0.3));"/>
-    <h4 style="color: #333; margin: 15px 0 10px 0;">Lightning Performance</h4>
-    <p style="color: #55; font-size: 14px; line-height: 1.5;">
-      <strong>Optimized for Speed & Scale</strong><br/>
-      Sub-second loading times with advanced caching and performance monitoring
-    </p>
-    <div style="margin-top: 10px;">
-      <span style="background: rgba(0,0,0,0.1); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: #333;">< 1s Load</span>
-      <span style="background: rgba(0,0,0,0.1); padding: 4px 8px; border-radius: 12px; font-size: 12px; color: #33; margin-left: 5px;">Monitoring</span>
-    </div>
-  </div>
-</td>
-</tr>
-</table>
-
-### Platform Capabilities & Performance
-
-<div align="center">
-
-```mermaid
-pie title Security Detection Categories
-    "Injection Attacks" : 30
-    "Authentication/Auth" : 20
-    "Sensitive Data Exposure" : 25
-    "Code Quality" : 15
-    "Configuration Issues" : 10
-```
-
-### Technical Specifications
-
-| Category        | Metric            | Value                                                               |
-| --------------- | ----------------- | ------------------------------------------------------------------- |
-| **Languages**   | Supported         | JavaScript, TypeScript, Python, Java, PHP, Ruby, Go, C#             |
-| **Detection**   | Security Patterns | 100+ (17+ per language)                                             |
-| **Detection**   | Secret Types      | AWS, GitHub, JWT, Slack, Stripe, Google API, Private Keys, DB Creds |
-| **Detection**   | Entropy Analysis  | High-entropy string detection with confidence scoring               |
-| **Analysis**    | Phases            | 4-phase (Pattern → AST → Data Flow → Dependencies)                  |
-| **Analysis**    | OWASP Coverage    | Top 10 + 90+ additional patterns                                    |
-| **Analysis**    | CWE Mapping       | Full CWE identification                                             |
-| **Analysis**    | CVSS Scoring      | Automatic risk scoring                                              |
-| **Build**       | Production Build  | 20.93s                                                              |
-| **Build**       | TypeScript Files  | 257 files                                                           |
-| **Build**       | Lines of Code     | 57,397                                                              |
-| **Build**       | Bundle Size       | ~3MB (code-split)                                                   |
-| **Storage**     | Local Storage     | IndexedDB support                                                   |
-| **Storage**     | Cloud Storage     | Firebase Firestore                                                  |
-| **AI**          | Providers         | OpenAI GPT-4, Claude, Google Gemini                                 |
-| **AI**          | Features          | Fix suggestions, descriptions, chat bot                             |
-| **Integration** | GitHub            | Direct repository analysis                                          |
-| **Integration** | Webhooks          | GitHub, GitLab, Bitbucket                                           |
-| **Export**      | Formats           | PDF, JSON, XML, CSV                                                 |
-| **PWA**         | Offline Support   | Yes                                                                 |
-| **PWA**         | Service Worker    | Active                                                              |
-
-</div>
-
----
-
-## Architecture Overview
-
-<div align="center">
-
-```mermaid
-graph TB
-    subgraph "Frontend Layer"
-        A[React UI] --> B[Upload Component]
-        A --> C[Results Dashboard]
-        A --> D[AI Chat Bot]
-    end
-
-    subgraph "Analysis Engine"
-        B --> E[Enhanced Analysis Engine]
-        E --> F[Phase 1: Pattern Detection]
-        E --> G[Phase 2: AST Analysis]
-        E --> H[Phase 3: Data Flow]
-        E --> I[Phase 4: Dependencies]
-    end
-
-    subgraph "Detection Services"
-        F --> J[Security Analyzer]
-        F --> K[Secret Detection]
-        G --> L[AST Analyzer]
-        H --> M[Data Flow Analyzer]
-        I --> N[Dependency Scanner]
-    end
-
-    subgraph "AI Integration"
-        J --> O[AI Service]
-        O --> P[OpenAI GPT-4]
-        O --> Q[Claude]
-        O --> R[Google Gemini]
-    end
-
-    subgraph "Storage & Persistence"
-        C --> S[Local Storage]
-        C --> T[Firebase Firestore]
-        S --> U[IndexedDB]
-    end
-
-    subgraph "External Integrations"
-        V[GitHub API] --> B
-        W[Webhooks] --> E
-        C --> X[Export Services]
-        X --> Y[PDF/JSON/XML]
-    end
-
-    style A fill:#61dafb
-    style E fill:#f0db4f
-    style O fill:#9C27B0
-    style T fill:#ffca28
-```
-
-### Analysis Workflow
-
-```mermaid
-sequenceDiagram
-    participant User
-    participant UI
-    participant Engine
-    participant Scanner
-    participant AI
-    participant Storage
-
-    User->>UI: Upload ZIP/GitHub URL
-    UI->>Engine: Start Analysis
-    Engine->>Scanner: Run Security Scan
-    Scanner->>Scanner: Phase 1: Patterns
-    Scanner->>Scanner: Phase 2: AST
-    Scanner->>Scanner: Phase 3: Data Flow
-    Scanner->>Scanner: Phase 4: Dependencies
-    Scanner->>AI: Request Enhancement
-    AI->>AI: Generate Descriptions
-    AI->>AI: Generate Fix Suggestions
-    AI-->>Scanner: AI Insights
-    Scanner-->>Engine: Results
-    Engine->>Storage: Save Results
-    Engine-->>UI: Display Results
-    UI-->>User: Interactive Dashboard
-```
-
-</div>
+# Code Guardian Report
+
+**Enterprise-Grade AI-Powered Security Analysis Platform**
+
+[![CI/CD Pipeline](https://github.com/Xenonesis/code-guardian-report/workflows/Code%20Guardian%20Enterprise%20CI%2FCD%20Pipeline/badge.svg)](https://github.com/Xenonesis/code-guardian-report/actions)
+[![Security Audit](https://github.com/Xenonesis/code-guardian-report/workflows/Security%20Audit/badge.svg)](https://github.com/Xenonesis/code-guardian-report/actions)
+[![CodeQL](https://github.com/Xenonesis/code-guardian-report/workflows/CodeQL/badge.svg)](https://github.com/Xenonesis/code-guardian-report/security/code-scanning)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Version](https://img.shields.io/badge/version-11.0.0-blue.svg)](https://github.com/Xenonesis/code-guardian-report/releases)
+[![Node.js](https://img.shields.io/badge/node-22.x-green.svg)](https://nodejs.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-16.1.5-black.svg)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-blue.svg)](https://www.typescriptlang.org/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/Xenonesis/code-guardian-report/pulls)
 
 ---
 
 ## Table of Contents
 
-- [Key Features](#-key-features)
-- [Architecture Overview](#-architecture-overview)
-- [Technology Stack](#-technology-stack)
-- [Quick Start Guide](#-quick-start-guide)
-  - [Prerequisites](#-prerequisites)
-  - [Installation](#-installation)
-  - [Available Scripts](#-available-scripts)
-  - [Environment Setup](#-environment-setup)
-- [Usage Guide](#-usage-guide)
-- [Supported Analysis Tools](#-supported-analysis-tools)
-- [Screenshots & Demo](#-screenshots--demo)
-- [Configuration](#-configuration)
-- [Deployment](#-deployment)
-- [Security & Privacy](#-security--privacy)
-- [Browser Support](#-browser-support)
-- [Troubleshooting](#-troubleshooting)
-- [Contributing](#-contributing)
-- [Performance Metrics](#-performance-metrics)
-- [Project Activity & Health](#-project-activity--health)
-- [Changelog](#-changelog)
-- [Roadmap](#-roadmap)
-- [License](#-license)
-- [Author](#-author)
-- [Acknowledgments](#-acknowledgments)
-- [Support](#-support)
-- [Show Your Support](#-show-your-support)
+- [Overview](#overview)
+- [Key Features](#key-features)
+- [Architecture](#architecture)
+- [Technology Stack](#technology-stack)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Configuration](#configuration)
+  - [Development](#development)
+  - [Production Build](#production-build)
+- [Usage Guide](#usage-guide)
+  - [Code Analysis](#code-analysis)
+  - [GitHub Integration](#github-integration)
+  - [Report Generation](#report-generation)
+  - [AI-Powered Features](#ai-powered-features)
+- [Multi-Language Support](#multi-language-support)
+- [Security Analysis](#security-analysis)
+  - [Vulnerability Detection](#vulnerability-detection)
+  - [Secret Scanning](#secret-scanning)
+  - [Dependency Analysis](#dependency-analysis)
+  - [OWASP Compliance](#owasp-compliance)
+- [API Reference](#api-reference)
+- [Deployment](#deployment)
+  - [Vercel Deployment](#vercel-deployment)
+  - [Docker Deployment](#docker-deployment)
+  - [Firebase Deployment](#firebase-deployment)
+  - [Self-Hosted Deployment](#self-hosted-deployment)
+- [Testing](#testing)
+- [CI/CD Pipeline](#cicd-pipeline)
+- [Performance Optimization](#performance-optimization)
+- [Progressive Web App](#progressive-web-app)
+- [Security Best Practices](#security-best-practices)
+- [Troubleshooting](#troubleshooting)
+- [Contributing](#contributing)
+- [License](#license)
+- [Support](#support)
+- [Acknowledgments](#acknowledgments)
+- [Appendices](#appendices)
 
 ---
 
-## Security Detection Capabilities
+## Overview
 
-<div align="center">
+**Code Guardian Report** is a next-generation, enterprise-grade security analysis platform that leverages artificial intelligence and advanced static code analysis to identify vulnerabilities, code quality issues, and security misconfigurations across multiple programming languages. Built with modern web technologies, it provides real-time, comprehensive security insights for development teams, security professionals, and DevSecOps engineers.
 
-### Vulnerability Detection Matrix
+### Mission Statement
 
-```mermaid
-mindmap
-  root((Code Guardian))
-    Injection Attacks
-      SQL Injection
-      XSS
-      Code Injection
-      Command Injection
-      Path Traversal
-    Authentication
-      Weak Auth
-      Session Issues
-      Password Problems
-    Sensitive Data
-      API Keys
-      Tokens
-      Credentials
-      Private Keys
-    Configuration
-      Weak Crypto
-      Insecure Random
-      CORS Issues
-    Code Quality
-      Type Safety
-      Dead Code
-      Complexity
-```
+Our mission is to democratize enterprise-grade security analysis by providing developers with powerful, accessible tools that integrate seamlessly into their workflows. We believe that security should be proactive, not reactive, and that every developer deserves access to professional-grade security analysis tools.
 
-### Secret Detection Patterns
+### Core Objectives
 
-| Secret Type    | Pattern Example                | Confidence |
-| -------------- | ------------------------------ | ---------- |
-| AWS Access Key | `AKIA[0-9A-Z]{16}`             | 95%        |
-| GitHub Token   | `ghp_[A-Za-z0-9]{36}`          | 95%        |
-| JWT Token      | `eyJ[A-Za-z0-9_-]*\.eyJ...`    | 90%        |
-| Slack Token    | `xox[bpars]-[0-9A-Za-z]{12}`   | 95%        |
-| Stripe Key     | `sk_test_xxxx...`              | 90%        |
-| Google API     | `AIza[0-9A-Za-z_-]{35}`        | 90%        |
-| Private Key    | `-----BEGIN.*PRIVATE KEY-----` | 95%        |
-| DB Connection  | `mongodb://`, `postgres://`    | 85%        |
-| High Entropy   | Shannon entropy > 4.5          | 70%        |
+1. **Security First**: Identify and remediate security vulnerabilities before they reach production
+2. **Developer Experience**: Provide intuitive, actionable insights without overwhelming developers
+3. **Multi-Language Support**: Support 15+ programming languages with language-specific security patterns
+4. **AI-Powered Intelligence**: Leverage AI to provide context-aware fix suggestions and security recommendations
+5. **Enterprise-Ready**: Built for scale with robust architecture, comprehensive testing, and production-grade deployment options
 
-### Language-Specific Detection
+### Use Cases
 
-```mermaid
-gantt
-    title Detection Coverage by Language
-    dateFormat X
-    axisFormat %s
+- **Development Teams**: Integrate security analysis into daily development workflows
+- **Security Teams**: Conduct comprehensive security audits and compliance checks
+- **DevSecOps Engineers**: Automate security scanning in CI/CD pipelines
+- **Code Reviewers**: Enhance code review processes with automated security checks
+- **Open Source Projects**: Ensure security best practices in public repositories
+- **Educational Institutions**: Teach secure coding practices with real-world examples
+- **Compliance Officers**: Generate compliance reports for regulatory requirements
 
-    section JavaScript
-    17 Patterns :0, 17
+### Platform Highlights
 
-    section TypeScript
-    17 Patterns :0, 17
-
-    section Python
-    15 Patterns :0, 15
-
-    section Java
-    14 Patterns :0, 14
-
-    section PHP
-    13 Patterns :0, 13
-
-    section Ruby
-    12 Patterns :0, 12
-
-    section Go
-    11 Patterns :0, 11
-
-    section C#
-    11 Patterns :0, 11
-```
-
-</div>
-
----
-
-## **Technology Showcase**
-
-<div align="center">
-  <img src="https://img.shields.io/badge/Powered%20By-Cutting%20Edge%20Technology-4F46E5?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="Technology Showcase"/>
-</div>
-
-<table>
-<tr>
-<td width="50%" align="center">
-  <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 25px; border-radius: 20px; margin: 15px;">
-    <h3 style="color: white; margin-bottom: 20px;">**Frontend Excellence**</h3>
-    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
-      <img src="https://img.shields.io/badge/React-19.2.4-61DAFB?style=flat-square&logo=react&logoColor=white" alt="React"/>
-<img src="https://img.shields.io/badge/TypeScript-5.9-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript"/>
-      <img src="https://img.shields.io/badge/Vite-7.0.5-646CFF?style=flat-square&logo=vite&logoColor=white" alt="Vite"/>
-      <img src="https://img.shields.io/badge/Tailwind-4.1.18-06B6D4?style=flat-square&logo=tailwind-css&logoColor=white" alt="Tailwind"/>
-      <img src="https://img.shields.io/badge/Framer_Motion-12.29.2-0055FF?style=flat-square&logo=framer&logoColor=white" alt="Framer Motion"/>
-      <img src="https://img.shields.io/badge/Radix_UI-Latest-8B5CF6?style=flat-square&logo=radix-ui&logoColor=white" alt="Radix UI"/>
-    </div>
-    <p style="color: rgba(255,255,255,0.9); margin-top: 15px; font-size: 14px;">Modern React ecosystem with TypeScript, smooth animations, and accessible components</p>
-  </div>
-</td>
-<td width="50%" align="center">
-  <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 25px; border-radius: 20px; margin: 15px;">
-    <h3 style="color: white; margin-bottom: 20px;">**AI & Backend**</h3>
-    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
-      <img src="https://img.shields.io/badge/OpenAI-GPT--4-412991?style=flat-square&logo=openai&logoColor=white" alt="OpenAI"/>
-      <img src="https://img.shields.io/badge/Anthropic-Claude-8B5A3C?style=flat-square&logo=anthropic&logoColor=white" alt="Claude"/>
-      <img src="https://img.shields.io/badge/Firebase-12.8.0-FFCA28?style=flat-square&logo=firebase&logoColor=white" alt="Firebase"/>
-      <img src="https://img.shields.io/badge/Vercel-Analytics-000000?style=flat-square&logo=vercel&logoColor=white" alt="Vercel"/>
-      <img src="https://img.shields.io/badge/PWA-Ready-FF6F00?style=flat-square&logo=pwa&logoColor=white" alt="PWA"/>
-      <img src="https://img.shields.io/badge/Web_Vitals-Optimized-00C851?style=flat-square&logo=lighthouse&logoColor=white" alt="Web Vitals"/>
-    </div>
-    <p style="color: rgba(255,255,255,0.9); margin-top: 15px; font-size: 14px;">AI-powered analysis with cloud infrastructure and performance monitoring</p>
-  </div>
-</td>
-</tr>
-</table>
-
-### Interactive Demo Features
-
-<div align="center">
-  <table>
-    <tr>
-      <td width="20%" align="center">
-        <div style="background: linear-gradient(45deg, #FF6B6B, #4ECDC4); padding: 15px; border-radius: 15px; margin: 10px;">
-          <img src="https://img.icons8.com/fluency/48/drag-and-drop.png" alt="Drag Drop" style="filter: drop-shadow(0 2px 4px rgba(0,0,0.3));"/>
-          <br/><strong style="color: white; font-size: 14px;">Drag & Drop</strong>
-          <br/><span style="color: rgba(25,255,255,0.9); font-size: 11px;">Easy file upload</span>
-        </div>
-      </td>
-      <td width="20%" align="center">
-        <div style="background: linear-gradient(45deg, #A8E6CF, #3D5A80); padding: 15px; border-radius: 15px; margin: 10px;">
-          <img src="https://img.icons8.com/fluency/48/real-time.png" alt="Real Time" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));"/>
-          <br/><strong style="color: white; font-size: 14px;">Real-time</strong>
-          <br/><span style="color: rgba(25,255,255,0.9); font-size: 11px;">Live analysis</span>
-        </div>
-      </td>
-      <td width="20%" align="center">
-        <div style="background: linear-gradient(45deg, #FFD93D, #6BCF7F); padding: 15px; border-radius: 15px; margin: 10px;">
-          <img src="https://img.icons8.com/fluency/48/interactive.png" alt="Interactive" style="filter: drop-shadow(0 2px 4px rgba(0,0,0.3));"/>
-          <br/><strong style="color: white; font-size: 14px;">Interactive</strong>
-          <br/><span style="color: rgba(25,255,255,0.9); font-size: 11px;">Dynamic charts</span>
-        </div>
-      </td>
-      <td width="20%" align="center">
-        <div style="background: linear-gradient(45deg, #B19CD9, #C9A96E); padding: 15px; border-radius: 15px; margin: 10px;">
-          <img src="https://img.icons8.com/fluency/48/responsive.png" alt="Responsive" style="filter: drop-shadow(0 2px 4px rgba(0,0,0.3));"/>
-          <br/><strong style="color: white; font-size: 14px;">Responsive</strong>
-          <br/><span style="color: rgba(25,255,0.9); font-size: 1px;">All devices</span>
-        </div>
-      </td>
-      <td width="20%" align="center">
-        <div style="background: linear-gradient(45deg, #1e293b, #334155); padding: 15px; border-radius: 15px; margin: 10px;">
-          <img src="https://img.icons8.com/fluency/48/theme.png" alt="Themes" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));"/>
-          <br/><strong style="color: white; font-size: 14px;">Dark Theme</strong>
-          <br/><span style="color: rgba(25,255,255,0.9); font-size: 11px;">Professional dark UI</span>
-        </div>
-      </td>
-    </tr>
-  </table>
-</div>
-
-### Awards & Recognition
-
-<div align="center">
-  <div style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); padding: 25px; border-radius: 20px; margin: 20px 0;">
-    <h3 style="color: white; margin-bottom: 20px;">**Platform Achievements**</h3>
-    
-    <table style="margin: 0 auto;">
-      <tr>
-        <td align="center" style="padding: 15px;">
-          <img src="https://img.icons8.com/fluency/64/trophy.png" alt="Trophy" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));"/>
-          <br/><strong style="color: white; font-size: 16px;">Best Security Tool</strong>
-          <br/><span style="color: rgba(255,255,255,0.9); font-size: 12px;">Developer Choice 2024</span>
-        </td>
-        <td align="center" style="padding: 15px;">
-          <img src="https://img.icons8.com/fluency/64/medal.png" alt="Medal" style="filter: drop-shadow(0 4px 8px rgba(0,0,0.3));"/>
-          <br/><strong style="color: white; font-size: 16px;">Innovation Award</strong>
-          <br/><span style="color: rgba(25,255,255,0.9); font-size: 12px;">AI Integration Excellence</span>
-        </td>
-        <td align="center" style="padding: 15px;">
-          <img src="https://img.icons8.com/fluency/64/star.png" alt="Star" style="filter: drop-shadow(0 4px 8px rgba(0,0,0.3));"/>
-          <br/><strong style="color: white; font-size: 16px;">5-Star Rating</strong>
-          <br/><span style="color: rgba(255,255,255,0.9); font-size: 12px;">User Satisfaction</span>
-        </td>
-        <td align="center" style="padding: 15px;">
-          <img src="https://img.icons8.com/fluency/64/certificate.png" alt="Certificate" style="filter: drop-shadow(0 4px 8px rgba(0,0,0.3));"/>
-          <br/><strong style="color: white; font-size: 16px;">Security Certified</strong>
-          <br/><span style="color: rgba(255,255,0.9); font-size: 12px;">Enterprise Grade</span>
-        </td>
-      </tr>
-    </table>
-  </div>
-</div>
-
-### Interactive Elements & Animations
-
-<div align="center">
-  <img src="https://img.shields.io/badge/Interactive%20Experience-Smooth%20Animations%20&%20Micro%20Interactions-9C27B0?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="Interactive Experience"/>
-</div>
-
-<table>
-<tr>
-<td width="50%" align="center">
-  <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 25px; border-radius: 20px; margin: 15px; position: relative; overflow: hidden;">
-    <div style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); animation: rotate 20s linear infinite;"></div>
-    <h3 style="color: white; margin-bottom: 20px; position: relative; z-index: 1;">**Framer Motion Animations**</h3>
-    <div style="position: relative; z-index: 1;">
-      <ul style="color: rgba(255,255,255,0.9); text-align: left; list-style: none; padding: 0;">
-        <li style="margin: 8px 0;"><strong>Smooth Page Transitions:</strong> Lenis scroll integration</li>
-        <li style="margin: 8px 0;"><strong>Component Animations:</strong> Enter/exit transitions</li>
-        <li style="margin: 8px 0;"><strong>Hover Effects:</strong> Interactive button states</li>
-        <li style="margin: 8px 0;"><strong>Mobile Optimized:</strong> Touch-friendly animations</li>
-        <li style="margin: 8px 0;"><strong>Performance First:</strong> 60fps smooth animations</li>
-      </ul>
-    </div>
-  </div>
-</td>
-<td width="50%" align="center">
-  <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 25px; border-radius: 20px; margin: 15px; position: relative; overflow: hidden;">
-    <div style="position: absolute; top: -50%; right: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); animation: rotate 15s linear infinite reverse;"></div>
-    <h3 style="color: white; margin-bottom: 20px; position: relative; z-index: 1;">**Interactive Components**</h3>
-    <div style="position: relative; z-index: 1;">
-      <ul style="color: rgba(255,255,0.9); text-align: left; list-style: none; padding: 0;">
-        <li style="margin: 8px 0;"><strong>Floating ChatBot:</strong> AI-powered assistance</li>
-        <li style="margin: 8px 0;"><strong>Live Charts:</strong> Real-time data visualization</li>
-        <li style="margin: 8px 0;"><strong>Dark Theme:</strong> Professional dark UI experience</li>
-        <li style="margin: 8px 0;"><strong>Responsive Design:</strong> Adaptive layouts</li>
-        <li style="margin: 8px 0;"><strong>Progress Indicators:</strong> Visual feedback</li>
-      </ul>
-    </div>
-  </div>
-</td>
-</tr>
-</table>
-
-### Visual Design System
-
-<div align="center">
-  <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 30px; border-radius: 20px; margin: 20px 0;">
-    <h3 style="color: white; margin-bottom: 25px;">**Design Language & Components**</h3>
-    
-    <table style="margin: 0 auto;">
-      <tr>
-        <td align="center" style="padding: 20px;">
-          <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 15px; backdrop-filter: blur(10px);">
-            <div style="width: 60px; height: 60px; background: linear-gradient(45deg, #FF6B, #4ECDC4); border-radius: 50%; margin: 0 auto 15px; box-shadow: 0 8px 32px rgba(0,0,0,0.3);"></div>
-            <strong style="color: white; font-size: 14px;">Gradient Palettes</strong>
-            <br/><span style="color: rgba(25,255,255,0.8); font-size: 12px;">Modern color schemes</span>
-          </div>
-        </td>
-        <td align="center" style="padding: 20px;">
-          <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 15px; backdrop-filter: blur(10px);">
-            <div style="width: 60px; height: 60px; background: rgba(255,255,255,0.3); border-radius: 15px; margin: 0 auto 15px; box-shadow: 0 8px 32px rgba(0,0,0,0.3); backdrop-filter: blur(20px);"></div>
-            <strong style="color: white; font-size: 14px;">Glass Morphism</strong>
-            <br/><span style="color: rgba(25,255,255,0.8); font-size: 12px;">Frosted glass effects</span>
-          </div>
-        </td>
-        <td align="center" style="padding: 20px;">
-          <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 15px; backdrop-filter: blur(10px);">
-            <div style="width: 60px; height: 60px; background: #333; border-radius: 50%; margin: 0 auto 15px; box-shadow: 0 8px 32px rgba(0,0,0,0.5), inset 0 2px 4px rgba(255,255,255,0.1);"></div>
-            <strong style="color: white; font-size: 14px;">Neumorphism</strong>
-            <br/><span style="color: rgba(25,255,255,0.8); font-size: 12px;">Soft UI elements</span>
-          </div>
-        </td>
-        <td align="center" style="padding: 20px;">
-          <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 15px; backdrop-filter: blur(10px);">
-            <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 20px; margin: 0 auto 15px; box-shadow: 0 8px 32px rgba(102, 126, 234, 0.4); transform: rotate(45deg);"></div>
-            <strong style="color: white; font-size: 14px;">Modern Cards</strong>
-            <br/><span style="color: rgba(25,255,255,0.8); font-size: 12px;">Elevated surfaces</span>
-          </div>
-        </td>
-      </tr>
-    </table>
-  </div>
-</div>
-
-### Performance Optimization Features
-
-<div style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); padding: 30px; border-radius: 20px; margin: 20px 0;">
-  <h3 style="color: white; margin-bottom: 25px; text-align: center;">**Lightning Fast Performance**</h3>
-  
-  <table style="margin: 0 auto; width: 100%;">
-    <tr>
-      <td width="25%" align="center" style="padding: 15px;">
-        <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 15px; backdrop-filter: blur(10px);">
-          <img src="https://img.icons8.com/fluency/48/rocket.png" alt="Speed" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));"/>
-          <br/><strong style="color: white; font-size: 16px; margin-top: 10px; display: block;">< 1s Load Time</strong>
-          <span style="color: rgba(25,255,255,0.9); font-size: 12px;">Optimized bundling</span>
-        </div>
-      </td>
-      <td width="25%" align="center" style="padding: 15px;">
-        <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 15px; backdrop-filter: blur(10px);">
-          <img src="https://img.icons8.com/fluency/48/code-splitting.png" alt="Splitting" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));"/>
-          <br/><strong style="color: white; font-size: 16px; margin-top: 10px; display: block;">Code Splitting</strong>
-          <span style="color: rgba(255,255,255,0.9); font-size: 12px;">Lazy loading</span>
-        </div>
-      </td>
-      <td width="25%" align="center" style="padding: 15px;">
-        <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 15px; backdrop-filter: blur(10px);">
-          <img src="https://img.icons8.com/fluency/48/cache.png" alt="Cache" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));"/>
-          <br/><strong style="color: white; font-size: 16px; margin-top: 10px; display: block;">Smart Caching</strong>
-          <span style="color: rgba(255,255,255,0.9); font-size: 12px;">Service workers</span>
-        </div>
-      </td>
-      <td width="25%" align="center" style="padding: 15px;">
-        <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 15px; backdrop-filter: blur(10px);">
-          <img src="https://img.icons8.com/fluency/48/optimization.png" alt="Optimization" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));"/>
-          <br/><strong style="color: white; font-size: 16px; margin-top: 10px; display: block;">Asset Optimization</strong>
-          <span style="color: rgba(255,255,0.9); font-size: 12px;">Image compression</span>
-        </div>
-      </td>
-    </tr>
-  </table>
-</div>
-
-### Interactive Demo Playground
-
-<div align="center">
-  <div style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); padding: 30px; border-radius: 20px; margin: 20px 0;">
-    <h3 style="color: #333; margin-bottom: 25px;">**Try These Interactive Features**</h3>
-    
-    <table style="margin: 0 auto;">
-      <tr>
-        <td align="center" style="padding: 15px;">
-          <div style="background: rgba(0,0,0,0.1); padding: 20px; border-radius: 15px; transition: transform 0.3s ease;">
-            <img src="https://img.icons8.com/fluency/48/drag-and-drop.png" alt="Drag Drop" style="filter: drop-shadow(0 2px 4px rgba(0,0,0.3));"/>
-            <br/><strong style="color: #333; font-size: 14px; margin-top: 10px; display: block;">Drag & Drop Upload</strong>
-            <span style="color: #666; font-size: 12px;">Try uploading files</span>
-            <br/><a href="https://code-guardian-report.vercel.app" target="_blank" style="text-decoration: none;">
-              <img src="https://img.shields.io/badge/Try%20Now-Live%20Demo-4F46E5?style=flat-square&logoColor=white" alt="Try Now" style="margin-top: 8px;"/>
-            </a>
-          </div>
-        </td>
-        <td align="center" style="padding: 15px;">
-          <div style="background: rgba(0,0,0,0.1); padding: 20px; border-radius: 15px; transition: transform 0.3s ease;">
-            <img src="https://img.icons8.com/fluency/48/artificial-intelligence.png" alt="AI Chat" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));"/>
-            <br/><strong style="color: #333; font-size: 14px; margin-top: 10px; display: block;">AI ChatBot</strong>
-            <span style="color: #666; font-size: 12px;">Ask questions</span>
-            <br/><a href="https://code-guardian-report.vercel.app" target="_blank" style="text-decoration: none;">
-              <img src="https://img.shields.io/badge/Chat%20Now-AI%20Assistant-10B981?style=flat-square&logoColor=white" alt="Chat Now" style="margin-top: 8px;"/>
-            </a>
-          </div>
-        </td>
-        <td align="center" style="padding: 15px;">
-          <div style="background: rgba(0,0,0.1); padding: 20px; border-radius: 15px; transition: transform 0.3s ease;">
-            <img src="https://img.icons8.com/fluency/48/dashboard.png" alt="Dashboard" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));"/>
-            <br/><strong style="color: #333; font-size: 14px; margin-top: 10px; display: block;">Live Dashboard</strong>
-            <span style="color: #666; font-size: 12px;">Real-time analytics</span>
-            <br/><a href="https://code-guardian-report.vercel.app" target="_blank" style="text-decoration: none;">
-              <img src="https://img.shields.io/badge/View%20Dashboard-Analytics-F59E0B?style=flat-square&logoColor=white" alt="View Dashboard" style="margin-top: 8px;"/>
-            </a>
-          </div>
-        </td>
-      </tr>
-    </table>
-  </div>
-</div>
+- **100% Client-Side Processing**: Your code never leaves your browser - complete privacy guaranteed
+- **Real-Time Analysis**: Instant feedback as you upload or analyze code
+- **Comprehensive Reports**: Detailed PDF and JSON exports with actionable insights
+- **GitHub Integration**: Analyze repositories directly from GitHub with OAuth authentication
+- **Offline Capable**: Full Progressive Web App support for offline analysis
+- **Zero Configuration**: Works out of the box with sensible defaults
+- **Extensible**: Custom rules engine for organization-specific security patterns
 
 ---
 
 ## Key Features
 
-<table>
-<tr>
-<td width="50%">
+### 1. Advanced Security Analysis
 
-### Advanced Code Analysis
+#### Vulnerability Detection
+- **OWASP Top 10 Coverage**: Complete detection suite for all OWASP Top 10 vulnerabilities
+- **CWE Mapping**: Maps vulnerabilities to Common Weakness Enumeration (CWE) identifiers
+- **Severity Classification**: Categorizes issues as Critical, High, Medium, Low, or Info
+- **Context-Aware Detection**: Analyzes code flow and data dependencies
+- **Framework-Specific Checks**: Tailored security patterns for popular frameworks
 
-- **Security Vulnerability Detection**
-  - OWASP Top 10 compliance checking
-  - Injection flaw identification
-  - Authentication & authorization issues
-  - Cryptographic vulnerability detection
-- **Secret Detection Engine**
-  - API key and token detection (AWS, GitHub, Stripe, etc.)
-  - JWT token identification and validation
-- **AI-Powered Fix Suggestions**
-  - Intelligent vulnerability remediation with multiple approaches
-  - Confidence scoring and effort estimation
-  - Automated code refactoring capabilities
-  - Framework-specific security optimizations
-- **Secure Code Search Engine**
-  - Comprehensive database of secure coding patterns
-  - Language-specific secure implementations
-  - Vulnerability alternatives and best practices
-  - Interactive code examples with explanations
-- **Code Provenance & Tampering Detection**
-- File integrity monitoring with SHA-256 checksums
-- Real-time change detection and alerts
-- Security-critical file identification
-- Comprehensive audit trail and reporting
-- Database credential exposure detection
-- ML-powered entropy analysis for unknown secrets
-- Pattern matching with 95%+ accuracy
-- **Intelligent Bug Detection**
-  - Logic error identification
-  - Null pointer exception prevention
-- Memory leak detection
-- Performance bottleneck analysis
-- **Code Quality Assessment**
-  - Code smell detection
-  - Complexity analysis (Cyclomatic, Cognitive)
-  - Maintainability scoring
-  - Technical debt calculation
+#### Supported Vulnerability Types
+- SQL Injection (SQLi)
+- Cross-Site Scripting (XSS)
+- Cross-Site Request Forgery (CSRF)
+- Server-Side Request Forgery (SSRF)
+- Remote Code Execution (RCE)
+- Path Traversal
+- Insecure Deserialization
+- XML External Entity (XXE)
+- Security Misconfigurations
+- Broken Authentication
+- Sensitive Data Exposure
+- Broken Access Control
+- Using Components with Known Vulnerabilities
+- Insufficient Logging & Monitoring
 
-### AI-Powered Intelligence
+### 2. Multi-Language Code Analysis
 
-- **Natural Language Processing**
-  - Human-readable issue explanations
-  - Context-aware recommendations
-  - Smart code suggestions
-- **Multi-Provider Support**
-  - OpenAI GPT-4/GPT-3.5 integration
-  - Anthropic Claude support
-  - Custom AI model compatibility
-- **Contextual Analysis**
-  - Codebase-specific insights
-  - Project pattern recognition
-  - Historical trend analysis
+#### Supported Programming Languages (15+)
+- **JavaScript/TypeScript**: Advanced AST-based analysis with ESLint integration
+- **Python**: Full support for Python 2.x and 3.x with framework detection
+- **Java**: Enterprise Java and Android application analysis
+- **C#/.NET**: .NET Framework and .NET Core support
+- **PHP**: Laravel, Symfony, and WordPress security checks
+- **Ruby**: Rails-specific security patterns
+- **Go**: Goroutine safety and concurrency analysis
+- **Rust**: Memory safety and ownership analysis
+- **C/C++**: Memory corruption and buffer overflow detection
+- **Kotlin**: Android security best practices
+- **Swift**: iOS security patterns
+- **Dart/Flutter**: Mobile application security
+- **Scala**: Functional programming security patterns
+- **HTML/CSS**: Front-end security analysis
+- **SQL**: Database query security
 
-</td>
-<td width="50%">
+#### Language Detection Features
+- **Automatic Detection**: Identifies languages from file extensions and content patterns
+- **Confidence Scoring**: Provides accuracy scores for language detection (up to 100%)
+- **Multi-Layer Analysis**: Uses extension matching, syntax patterns, keywords, and unique signatures
+- **Framework Detection**: Identifies frameworks like React, Vue, Angular, Django, Spring Boot, Laravel
+- **Build Tool Detection**: Recognizes Webpack, Vite, Maven, Gradle, Cargo, and more
+- **Package Manager Detection**: Identifies npm, Yarn, pip, Composer, Bundler, etc.
 
-### Rich Analytics Dashboard
+### 3. AI-Powered Intelligence
 
-- **Interactive Visualizations**
-  - Real-time charts with Recharts
-- Responsive design across devices
-- Customizable dashboard layouts
-- **Risk Assessment Matrix**
-  - Severity-based issue categorization
-  - Security posture scoring
-  - Compliance tracking
-- **Advanced Export Options**
-  - JSON, CSV, PDF, HTML, XML formats
-  - Custom report templates
-  - Automated report generation
+#### Natural Language Descriptions
+- **Plain English Explanations**: Translates technical security issues into understandable language
+- **Context-Aware**: Provides explanations based on the specific code context
+- **Multiple Detail Levels**: Offers brief, standard, and detailed explanation modes
 
-### Modern User Experience
+#### AI Fix Suggestions
+- **Automated Remediation**: Generates secure code replacements for vulnerabilities
+- **Framework-Specific Fixes**: Provides fixes tailored to detected frameworks
+- **Best Practice Recommendations**: Suggests industry-standard security patterns
+- **Code Diff Generation**: Shows before/after comparisons for proposed fixes
 
-- **Mobile-First Design**
-  - Responsive across all screen sizes
-- Touch-optimized interactions
-- Progressive Web App capabilities
-- **Professional Dark Theme**
-  - Optimized dark mode interface
-  - Accessibility-focused color schemes
-- **Accessibility Excellence**
-  - WCAG 2.1 AA compliance
-  - Screen reader optimization
-- Keyboard navigation support
-- High contrast mode
-- **Smooth Interactions**
-  - Hardware-accelerated animations
-  - Glass morphism effects
-- Micro-interactions for better UX
+#### Intelligent Chatbot
+- **Interactive Q&A**: Ask questions about detected vulnerabilities
+- **Code Explanation**: Request explanations for specific code patterns
+- **Security Guidance**: Get advice on security best practices
+- **Custom Queries**: Perform natural language searches across analysis results
 
-</td>
-</tr>
-</table>
+#### AI Model Support
+- **OpenAI Integration**: GPT-4, GPT-3.5-turbo support
+- **Anthropic Claude**: Claude 3 Opus, Sonnet, and Haiku
+- **Google Gemini**: Gemini Pro and Gemini Ultra
+- **Local Models**: Support for locally-hosted models via API
+- **Model Discovery**: Automatic detection and configuration of available models
 
-## API and Integration Guide
+### 4. GitHub Repository Analysis
 
-- REST Endpoints (beta):
-  - POST /api/analyze: Submit archive URL or Git URL for analysis
-- GET /api/report/:id: Retrieve normalized analysis result
-- POST /api/insights/fix: Generate AI fix suggestions
-- Authentication: Bearer token (JWT) or API Key header
-- Webhooks:
-  - analysis.completed, analysis.failed, secret.detected, provenance.alert
-- SARIF Export: Supported for GitHub code scanning ingestion
-- Rate limits: 60 req/min per token (burst 120)
+#### Repository Integration
+- **OAuth Authentication**: Secure GitHub login with token management
+- **Repository Listing**: Browse all accessible repositories
+- **Direct Analysis**: Analyze repositories without manual download
+- **Branch Selection**: Choose specific branches for analysis
+- **Private Repository Support**: Full support for private repositories with proper permissions
 
-## Self-Hosting
+#### Repository Features
+- **Commit History Analysis**: Track security issues across commits
+- **Pull Request Scanning**: Automated security checks for PRs
+- **Issue Tracking Integration**: Link vulnerabilities to GitHub issues
+- **Repository Comparison**: Compare security posture across repositories
+- **Trend Analysis**: Monitor security improvements over time
 
-- Requirements: Node 18+, pnpm/yarn/npm, optional Firebase project
-- Steps:
-  1. Copy .env.example to .env.local and configure keys
-  2. npm run build && npm run preview (static) or deploy via Vercel/Netlify
-  3. Configure public/sw.js caching and public/manifest.json for PWA
-- Optional Services:
-  - Firebase: auth, Firestore, storage (see FIREBASE_INTEGRATION.md)
-  - Push notifications: see push/ and VAPID_SETUP_GUIDE.md
+### 5. Comprehensive Reporting
 
-## Enterprise Features (Add-on)
+#### Report Types
+- **PDF Reports**: Professional, formatted reports with charts and graphs
+- **JSON Exports**: Machine-readable data for automation and integration
+- **HTML Reports**: Interactive web-based reports
+- **CSV Exports**: Spreadsheet-compatible data exports
+- **SARIF Format**: Static Analysis Results Interchange Format for CI/CD integration
 
-- SSO: SAML 2.0, OIDC (Okta, Azure AD, Google Workspace)
-- RBAC: Roles (Viewer, Analyst, Admin, OrgOwner), project scoping
-- Audit Logs: Immutable logs with export (JSON/CSV), retention policies
-- Data Residency: Region pinning, BYO storage bucket
-- Advanced DLP: Inline redaction for tokens and PII in exported reports
+#### Report Contents
+- **Executive Summary**: High-level overview for management
+- **Detailed Findings**: Line-by-line vulnerability breakdown
+- **Severity Distribution**: Visual representation of issue severity
+- **Trend Analysis**: Historical security posture tracking
+- **Compliance Mapping**: OWASP, CWE, and regulatory framework mapping
+- **Remediation Guidance**: Step-by-step fix instructions
+- **Code Snippets**: Vulnerable code with highlighted issues
+- **Metrics Dashboard**: Security scores, quality metrics, and KPIs
+
+### 6. Custom Rules Engine
+
+#### Rule Configuration
+- **Pattern Matching**: Define custom regex patterns for vulnerability detection
+- **Severity Assignment**: Set custom severity levels for organization-specific risks
+- **Language-Specific Rules**: Create rules tailored to specific languages
+- **Rule Import/Export**: Share rule sets across teams and projects
+- **Rule Templates**: Pre-built templates for common security patterns
+
+#### Rule Categories
+- **Security Rules**: Custom security vulnerability patterns
+- **Compliance Rules**: Organization-specific compliance requirements
+- **Code Quality Rules**: Style and quality standards
+- **Performance Rules**: Performance anti-patterns and bottlenecks
+- **Custom Checks**: Domain-specific validation rules
+
+### 7. Real-Time Analytics Dashboard
+
+#### Dashboard Components
+- **Security Score**: Overall security posture metric (0-100)
+- **Quality Score**: Code quality assessment
+- **Maintainability Index**: Long-term maintainability rating
+- **Complexity Metrics**: Cyclomatic complexity and code metrics
+- **Vulnerability Trends**: Time-series visualization of security issues
+- **Language Distribution**: Visual breakdown of codebase languages
+- **Framework Detection**: Identified frameworks and versions
+
+#### Interactive Charts
+- **Severity Distribution**: Pie charts showing issue severity breakdown
+- **Trend Analysis**: Line charts tracking security improvements
+- **File Complexity**: Bar charts showing most complex files
+- **Type Distribution**: Issue categorization visualization
+- **OWASP Mapping**: Visual representation of OWASP coverage
+
+### 8. Progressive Web App (PWA)
+
+#### PWA Capabilities
+- **Offline Analysis**: Full functionality without internet connection
+- **Install Prompts**: One-click installation on desktop and mobile
+- **Background Sync**: Automatic synchronization when connection restored
+- **Push Notifications**: Real-time alerts for analysis completion
+- **Service Worker**: Advanced caching and offline support
+- **App-Like Experience**: Native app feel on web and mobile
+
+#### Offline Features
+- **Local Storage**: IndexedDB for persistent data storage
+- **Cache Strategy**: Intelligent caching of static assets and analysis results
+- **Sync Queue**: Queues operations for execution when online
+- **Conflict Resolution**: Handles data conflicts gracefully
+
+### 9. Performance Optimization
+
+#### Performance Features
+- **Code Splitting**: Dynamic imports for faster initial load
+- **Lazy Loading**: On-demand component loading
+- **Asset Optimization**: Minified and compressed assets
+- **CDN Delivery**: Global content delivery for fast access
+- **Image Optimization**: Automatic image compression and format selection
+- **Bundle Analysis**: webpack-bundle-analyzer integration
+
+#### Performance Metrics
+- **First Contentful Paint (FCP)**: < 1.5s target
+- **Largest Contentful Paint (LCP)**: < 2.5s target
+- **Time to Interactive (TTI)**: < 3.8s target
+- **Total Blocking Time (TBT)**: < 300ms target
+- **Cumulative Layout Shift (CLS)**: < 0.1 target
+
+### 10. Security and Privacy
+
+#### Privacy Features
+- **Client-Side Processing**: All code analysis happens in the browser
+- **No Data Transmission**: Your code never leaves your device
+- **Secure Storage**: Encrypted local storage for sensitive data
+- **Anonymous Analytics**: Privacy-preserving usage analytics
+- **GDPR Compliant**: Full compliance with privacy regulations
+
+#### Security Headers
+- **Content Security Policy (CSP)**: Strict CSP to prevent XSS
+- **X-Frame-Options**: Prevents clickjacking attacks
+- **X-Content-Type-Options**: Prevents MIME sniffing
+- **Strict-Transport-Security (HSTS)**: Forces HTTPS connections
+- **Referrer-Policy**: Controls referrer information
+- **Permissions-Policy**: Restricts browser feature access
+
+---
+
+## Architecture
+
+### High-Level Architecture
+
+Code Guardian Report follows a modern, modular architecture designed for scalability, maintainability, and performance.
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                        Client Browser                            │
+│  ┌───────────────────────────────────────────────────────────┐  │
+│  │                   Next.js Application                      │  │
+│  │  ┌─────────────┐  ┌─────────────┐  ┌──────────────────┐  │  │
+│  │  │    Pages    │  │ Components  │  │    Services      │  │  │
+│  │  │  (Routes)   │  │   (UI/UX)   │  │   (Business)     │  │  │
+│  │  └─────────────┘  └─────────────┘  └──────────────────┘  │  │
+│  │         │                 │                  │             │  │
+│  │         └─────────────────┴──────────────────┘             │  │
+│  │                          │                                 │  │
+│  │  ┌───────────────────────▼─────────────────────────────┐  │  │
+│  │  │           Core Analysis Engine                       │  │  │
+│  │  │  ┌──────────┐ ┌──────────┐ ┌────────────────────┐  │  │  │
+│  │  │  │   AST    │ │ Security │ │   Multi-Language   │  │  │  │
+│  │  │  │ Analyzer │ │ Analyzer │ │      Parser        │  │  │  │
+│  │  │  └──────────┘ └──────────┘ └────────────────────┘  │  │  │
+│  │  └─────────────────────────────────────────────────────┘  │  │
+│  │                          │                                 │  │
+│  │  ┌───────────────────────▼─────────────────────────────┐  │  │
+│  │  │              Storage Layer                           │  │  │
+│  │  │   ┌──────────────┐        ┌──────────────────────┐  │  │  │
+│  │  │   │  IndexedDB   │        │   LocalStorage       │  │  │  │
+│  │  │   │  (Analysis)  │        │  (Preferences)       │  │  │  │
+│  │  │   └──────────────┘        └──────────────────────┘  │  │  │
+│  │  └─────────────────────────────────────────────────────┘  │  │
+│  └───────────────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────────┘
+                               │
+                               ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                      External Services                           │
+│  ┌──────────────┐  ┌──────────────┐  ┌───────────────────────┐ │
+│  │   GitHub     │  │   Firebase   │  │   AI Providers        │ │
+│  │     API      │  │  (Optional)  │  │  (OpenAI, Claude)     │ │
+│  └──────────────┘  └──────────────┘  └───────────────────────┘ │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### Component Architecture
+
+#### 1. Presentation Layer
+- **Pages**: Next.js App Router pages for routing
+- **Components**: Reusable React components organized by domain
+- **Layouts**: Shared layout components for consistent UI
+- **UI Library**: Radix UI components with Tailwind CSS styling
+
+#### 2. Business Logic Layer
+- **Services**: Domain-specific business logic
+  - `analysisIntegrationService`: Coordinates analysis workflows
+  - `enhancedAnalysisEngine`: Core security analysis
+  - `githubRepositoryService`: GitHub integration
+  - `aiService`: AI-powered features
+- **Hooks**: Custom React hooks for state management
+- **Context**: React Context for global state
+
+#### 3. Data Layer
+- **Analysis Storage**: IndexedDB for analysis results
+- **Firebase Storage** (Optional): Cloud persistence
+- **GitHub Storage**: Repository-based storage
+- **Offline Manager**: Handles offline data synchronization
+
+#### 4. Analysis Engine Architecture
+
+```
+┌──────────────────────────────────────────────────────────────────┐
+│                     Analysis Pipeline                             │
+├──────────────────────────────────────────────────────────────────┤
+│  1. File Upload/GitHub Fetch                                     │
+│     └─> Validation → Preprocessing → Language Detection          │
+├──────────────────────────────────────────────────────────────────┤
+│  2. Multi-Language Parsing                                       │
+│     ├─> JavaScript/TypeScript → Babel Parser → AST              │
+│     ├─> Python → Acorn Parser → AST                             │
+│     ├─> Java → Lezer Parser → AST                               │
+│     └─> Other Languages → Pattern Matching                      │
+├──────────────────────────────────────────────────────────────────┤
+│  3. Security Analysis                                            │
+│     ├─> Static Analysis Rules                                   │
+│     ├─> Data Flow Analysis                                      │
+│     ├─> Control Flow Analysis                                   │
+│     ├─> Taint Analysis                                          │
+│     └─> Pattern Matching                                        │
+├──────────────────────────────────────────────────────────────────┤
+│  4. Vulnerability Detection                                      │
+│     ├─> OWASP Checks                                            │
+│     ├─> CWE Mapping                                             │
+│     ├─> Framework-Specific Rules                               │
+│     └─> Custom Rules                                            │
+├──────────────────────────────────────────────────────────────────┤
+│  5. Secret Detection                                             │
+│     ├─> API Key Patterns                                        │
+│     ├─> Token Patterns                                          │
+│     ├─> Password Patterns                                       │
+│     └─> Certificate Patterns                                    │
+├──────────────────────────────────────────────────────────────────┤
+│  6. Dependency Analysis                                          │
+│     ├─> Package.json/requirements.txt Parsing                   │
+│     ├─> Version Checking                                        │
+│     └─> Known Vulnerability Database Lookup                     │
+├──────────────────────────────────────────────────────────────────┤
+│  7. Metrics Calculation                                          │
+│     ├─> Cyclomatic Complexity                                   │
+│     ├─> Code Smells                                             │
+│     ├─> Maintainability Index                                   │
+│     └─> Security Score                                          │
+├──────────────────────────────────────────────────────────────────┤
+│  8. AI Enhancement (Optional)                                    │
+│     ├─> Natural Language Descriptions                           │
+│     ├─> Fix Suggestions                                         │
+│     └─> Context Analysis                                        │
+├──────────────────────────────────────────────────────────────────┤
+│  9. Report Generation                                            │
+│     ├─> PDF Export                                              │
+│     ├─> JSON Export                                             │
+│     ├─> HTML Report                                             │
+│     └─> SARIF Export                                            │
+└──────────────────────────────────────────────────────────────────┘
+```
+
+### Directory Structure
+
+```
+code-guardian-report/
+├── app/                          # Next.js App Router
+│   ├── about/                    # About page
+│   ├── api/                      # API routes
+│   │   ├── analytics/            # Analytics endpoints
+│   │   ├── health/               # Health check
+│   │   ├── log-error/            # Error logging
+│   │   └── push/                 # Push notification endpoints
+│   ├── github-analysis/          # GitHub analysis page
+│   ├── help/                     # Help documentation
+│   ├── history/                  # Analysis history
+│   ├── privacy/                  # Privacy policy
+│   ├── pwa-settings/             # PWA settings
+│   ├── terms/                    # Terms of service
+│   ├── layout.tsx                # Root layout
+│   └── page.tsx                  # Home page
+├── src/
+│   ├── components/               # React components
+│   │   ├── ai/                   # AI-related components
+│   │   ├── analysis/             # Analysis components
+│   │   ├── auth/                 # Authentication components
+│   │   ├── common/               # Common/shared components
+│   │   ├── dashboard/            # Dashboard components
+│   │   ├── export/               # Export components
+│   │   ├── firebase/             # Firebase components
+│   │   ├── github/               # GitHub components
+│   │   ├── language/             # Language detection components
+│   │   ├── layout/               # Layout components
+│   │   ├── monitoring/           # Monitoring components
+│   │   ├── notifications/        # Notification components
+│   │   ├── pwa/                  # PWA components
+│   │   ├── results/              # Results display components
+│   │   ├── rules/                # Custom rules components
+│   │   ├── security/             # Security components
+│   │   ├── testing/              # Testing components
+│   │   ├── ui/                   # UI primitives (Radix UI)
+│   │   └── upload/               # File upload components
+│   ├── config/                   # Configuration files
+│   │   ├── constants.ts          # Application constants
+│   │   ├── pwa.ts                # PWA configuration
+│   │   └── security.ts           # Security configuration
+│   ├── hooks/                    # Custom React hooks
+│   │   ├── useAnalysis.ts        # Analysis hook
+│   │   ├── useFileUpload.ts      # File upload hook
+│   │   ├── useGitHubRepositories.ts
+│   │   ├── usePWA.ts             # PWA hook
+│   │   └── ...
+│   ├── lib/                      # Library code
+│   │   ├── auth-context.tsx      # Authentication context
+│   │   ├── firebase.ts           # Firebase configuration
+│   │   ├── firestore-utils.ts    # Firestore utilities
+│   │   └── utils.ts              # Utility functions
+│   ├── services/                 # Business logic services
+│   │   ├── ai/                   # AI services
+│   │   │   ├── aiService.ts      # Main AI service
+│   │   │   ├── aiFixSuggestionsService.ts
+│   │   │   ├── modelDiscoveryService.ts
+│   │   │   └── naturalLanguageDescriptionService.ts
+│   │   ├── analysis/             # Analysis services
+│   │   │   ├── ASTAnalyzer.ts    # AST analysis
+│   │   │   ├── DataFlowAnalyzer.ts
+│   │   │   ├── MetricsCalculator.ts
+│   │   │   ├── MultiLanguageParser.ts
+│   │   │   ├── MultiLanguageSecurityAnalyzer.ts
+│   │   │   └── SecurityAnalyzer.ts
+│   │   ├── api/                  # API services
+│   │   │   └── githubService.ts  # GitHub API
+│   │   ├── detection/            # Detection services
+│   │   │   ├── codeProvenanceService.ts
+│   │   │   ├── frameworkDetectionEngine.ts
+│   │   │   └── languageDetectionService.ts
+│   │   ├── export/               # Export services
+│   │   │   └── pdfExportService.ts
+│   │   ├── monitoring/           # Monitoring services
+│   │   │   └── WebhookManager.ts
+│   │   ├── notifications/        # Notification services
+│   │   │   └── NotificationManager.ts
+│   │   ├── pwa/                  # PWA services
+│   │   │   ├── backgroundSync.ts
+│   │   │   ├── pushNotifications.ts
+│   │   │   └── pwaAnalytics.ts
+│   │   ├── rules/                # Rules engine
+│   │   │   └── CustomRulesEngine.ts
+│   │   ├── security/             # Security services
+│   │   │   ├── dependencyVulnerabilityScanner.ts
+│   │   │   ├── modernCodeScanningService.ts
+│   │   │   ├── secretDetectionService.ts
+│   │   │   ├── securityAnalysisEngine.ts
+│   │   │   └── zipAnalysisService.ts
+│   │   └── storage/              # Storage services
+│   │       ├── analysisStorage.ts
+│   │       ├── firebaseAnalysisStorage.ts
+│   │       ├── GitHubAnalysisStorageService.ts
+│   │       └── offlineManager.ts
+│   ├── styles/                   # CSS styles
+│   ├── tests/                    # Test files
+│   ├── types/                    # TypeScript types
+│   │   ├── analysis.ts           # Analysis types
+│   │   ├── api.ts                # API types
+│   │   ├── auth.ts               # Authentication types
+│   │   └── common.ts             # Common types
+│   ├── utils/                    # Utility functions
+│   │   ├── errorHandler.ts       # Error handling
+│   │   ├── fileValidation.ts     # File validation
+│   │   ├── logger.ts             # Logging
+│   │   └── security.ts           # Security utilities
+│   └── views/                    # Page views
+├── public/                       # Static assets
+│   ├── icons/                    # Application icons
+│   ├── manifest.json             # PWA manifest
+│   ├── robots.txt                # SEO robots file
+│   └── sitemap.xml               # SEO sitemap
+├── functions/                    # Firebase Cloud Functions
+│   └── src/
+│       └── index.ts              # Functions entry point
+├── .github/                      # GitHub configuration
+│   └── workflows/                # GitHub Actions workflows
+│       ├── ci.yml                # CI/CD pipeline
+│       ├── codeql.yml            # CodeQL analysis
+│       ├── security-audit.yml    # Security audits
+│       └── ...
+├── scripts/                      # Utility scripts
+│   ├── e2e-zip-analysis.ts       # E2E tests
+│   ├── run-all-tests.ts          # Test runner
+│   └── update-contributors.js    # Contributors update
+├── md/                           # Markdown documentation
+│   ├── CONTRIBUTING.md           # Contribution guidelines
+│   ├── CODE_OF_CONDUCT.md        # Code of conduct
+│   └── changelogs.md             # Version changelogs
+├── .env.example                  # Environment variables template
+├── Dockerfile                    # Docker configuration
+├── docker-compose.yml            # Docker Compose configuration
+├── next.config.ts                # Next.js configuration
+├── tsconfig.json                 # TypeScript configuration
+├── tailwind.config.ts            # Tailwind CSS configuration
+├── package.json                  # Node.js dependencies
+├── vercel.json                   # Vercel deployment config
+├── firebase.json                 # Firebase configuration
+├── jest.config.js                # Jest test configuration
+├── vitest.config.ts              # Vitest configuration
+├── DEPLOYMENT.md                 # Deployment guide
+├── SECURITY.md                   # Security policy
+├── LICENSE                       # MIT License
+└── README.md                     # This file
+```
+
+
+---
 
 ## Technology Stack
 
-<div align="center">
+### Frontend Technologies
 
-### Core Technologies
+#### Core Framework
+- **Next.js 16.1.5**: React framework with App Router, Server Components, and API routes
+- **React 19.2.4**: Latest React with improved performance and concurrent features
+- **TypeScript 5.9.3**: Type-safe development with advanced type features
 
-| Category       | Technology   | Version | Purpose                                                    |
-| -------------- | ------------ | ------- | ---------------------------------------------------------- |
-| **Frontend**   | React        | 19.2.4  | Component-based UI library                                 |
-| **Language**   | TypeScript   | 5.9.3   | Type-safe development                                      |
-| **Build Tool** | Next.js      | 16.1.5  | Lightning-fast React framework with built-in optimizations |
-| **Styling**    | Tailwind CSS | 4.1.18  | Utility-first CSS framework                                |
+#### UI/UX Libraries
+- **Tailwind CSS 4.1.18**: Utility-first CSS framework for rapid UI development
+- **Radix UI**: Unstyled, accessible component primitives
+  - Dialog, Popover, Select, Tabs, Toast, Tooltip, and more
+- **Framer Motion 12.29.2**: Production-ready animation library
+- **Lucide React 0.563.0**: Beautiful, consistent icon set
+- **Recharts 3.7.0**: Composable charting library for data visualization
+- **Lenis 1.3.17**: Smooth scrolling library
 
-</div>
+#### State Management & Data Flow
+- **React Context API**: Global state management
+- **Custom Hooks**: Reusable stateful logic
+- **Local Storage**: Client-side persistence
+- **IndexedDB**: Large-scale client-side database
 
-### UI & Design System
+### Backend Technologies
 
-- **Radix UI**: 12+ accessible, unstyled component primitives (Dialog, Tabs, Toast, etc.)
-- **shadcn/ui**: Beautiful, customizable component library with dark theme
-- **Lucide React 0.462.0**: 1000+ modern, consistent icons
-- **Tailwind CSS 4.1.18**: Utility-first styling with custom design tokens
-- **Framer Motion 12.29.2**: Smooth animations and micro-interactions
+#### Runtime & Server
+- **Node.js 22.x**: JavaScript runtime with latest features
+- **Next.js API Routes**: Serverless API endpoints
+- **Firebase Cloud Functions**: Serverless backend (optional)
 
-### Data & State Management
+#### Authentication & Authorization
+- **Firebase Authentication**: Secure user authentication
+- **GitHub OAuth**: GitHub integration authentication
+- **JWT**: Token-based authentication
 
-- **Recharts 2.15.3**: Interactive data visualization and charts
-- **React Router DOM 6.26.2**: Client-side routing with lazy loading
-- **React State**: Built-in state management with hooks and context
-- **Vercel Analytics 1.5.0**: Real-time user analytics and insights
+### Database & Storage
 
-### Development Tools
+#### Client-Side Storage
+- **IndexedDB**: Primary storage for analysis results
+- **LocalStorage**: User preferences and settings
+- **SessionStorage**: Temporary session data
 
-- **TypeScript 5.9**: Advanced type checking and IntelliSense
-- **PostCSS 8.47**: CSS post-processing with autoprefixer
-- **Vite SWC Plugin 3.5.0**: Ultra-fast React refresh and builds
-- **Advanced Code Splitting**: Intelligent chunk optimization
-- **Path Aliases**: Clean imports with @ syntax
+#### Cloud Storage (Optional)
+- **Firebase Firestore**: NoSQL cloud database
+- **Firebase Storage**: File storage service
+- **GitHub API**: Repository data storage
 
-### Build & Optimization
+### Code Analysis Technologies
 
-- **Lightning Fast Builds**: Next.js 16 with SWC for sub-second rebuilds
-- **Smart Bundling**: Advanced manual chunk splitting for React, Radix UI, and vendor libraries
-- **Performance**: Optimized asset handling with intelligent file naming
-- **Hot Reload**: Instant feedback with HMR overlay during development
-- **Compression**: Terser optimization with tree shaking and dead code elimination
-- **PWA Ready**: Service worker with advanced caching strategies
+#### Parsers & AST
+- **@babel/parser 7.28.6**: JavaScript/TypeScript parsing
+- **@babel/traverse 7.28.6**: AST traversal
+- **@babel/types 7.28.6**: AST manipulation
+- **Acorn 8.15.0**: Fast JavaScript parser
+- **Esprima 4.0.1**: ECMAScript parser
+- **ESQuery 1.7.0**: CSS-like query language for AST
+- **@lezer/python 1.1.18**: Python language parser
+- **@lezer/java 1.1.3**: Java language parser
+- **@lezer/cpp 1.1.5**: C++ language parser
+- **web-tree-sitter 0.26.3**: Multi-language parser
 
-## Quick Start Guide
+#### Analysis Tools
+- **Custom Security Analyzer**: Proprietary vulnerability detection
+- **AST Analyzer**: Abstract syntax tree analysis
+- **Data Flow Analyzer**: Data flow tracking
+- **Metrics Calculator**: Code quality metrics
+
+### Progressive Web App
+
+#### PWA Technologies
+- **Serwist 9.5.0**: Service worker library for Next.js
+- **@serwist/next 9.5.0**: Next.js integration
+- **Web App Manifest**: PWA configuration
+- **Service Workers**: Offline functionality and caching
+- **Push API**: Browser push notifications
+- **Background Sync**: Offline operation queuing
+
+### Build & Development Tools
+
+#### Build Tools
+- **Next.js Compiler**: Fast Rust-based compiler
+- **Turbopack**: Ultra-fast bundler (optional)
+- **PostCSS 8.5.6**: CSS transformations
+- **Tailwind CSS Compiler**: JIT CSS generation
+
+#### Code Quality
+- **ESLint 9.39.2**: JavaScript/TypeScript linting
+- **@typescript-eslint**: TypeScript-specific rules
+- **Prettier 3.8.1**: Code formatting
+- **Stylelint 17.0.0**: CSS linting
+- **lint-staged 16.2.7**: Pre-commit linting
+
+#### Testing
+- **Vitest 4.0.18**: Fast unit test framework
+- **Jest 30.2.0**: JavaScript testing framework
+- **@testing-library/react 16.3.2**: React component testing
+- **@testing-library/jest-dom 6.9.1**: Custom Jest matchers
+- **happy-dom 20.3.9**: Lightweight DOM implementation
+
+### DevOps & Deployment
+
+#### CI/CD
+- **GitHub Actions**: Automated workflows
+- **Vercel**: Deployment platform
+- **Docker**: Containerization
+- **Firebase Hosting**: Static site hosting
+
+#### Monitoring & Analytics
+- **@vercel/analytics 1.6.1**: Performance analytics
+- **@vercel/speed-insights 1.3.1**: Real-user monitoring
+- **web-vitals 5.1.0**: Core Web Vitals measurement
+- **Custom Analytics**: Application-specific metrics
+
+### Security Technologies
+
+#### Security Libraries
+- **Custom Secret Detection**: Proprietary pattern matching
+- **Dependency Scanner**: Vulnerability detection
+- **OWASP Rule Engine**: OWASP Top 10 checks
+- **CWE Mapper**: Common Weakness Enumeration
+
+#### Security Headers
+- Content Security Policy (CSP)
+- HTTP Strict Transport Security (HSTS)
+- X-Frame-Options
+- X-Content-Type-Options
+- X-XSS-Protection
+- Referrer-Policy
+- Permissions-Policy
+
+### AI & Machine Learning
+
+#### AI Providers
+- **OpenAI API**: GPT-4, GPT-3.5-turbo
+- **Anthropic API**: Claude 3 models
+- **Google AI**: Gemini models
+- **Custom Models**: Local model support
+
+#### AI Features
+- Natural language processing
+- Code understanding and explanation
+- Automated fix generation
+- Context-aware recommendations
+
+### File Processing
+
+#### File Handling
+- **JSZip 3.10.1**: ZIP file processing
+- **File API**: Browser file handling
+- **Drag & Drop API**: File upload UX
+- **Streams API**: Large file processing
+
+#### Export & Reporting
+- **jsPDF 4.0.0**: PDF generation
+- **html2canvas 1.4.1**: HTML to canvas conversion
+- **JSON**: Structured data export
+- **SARIF**: Static analysis format
+
+### Development Environment
+
+#### Package Management
+- **npm 9.0.0+**: Node package manager
+- **package-lock.json**: Dependency locking
+
+#### Version Control
+- **Git**: Source control
+- **GitHub**: Repository hosting
+- **Husky 9.1.7**: Git hooks
+
+#### Code Editors
+- VS Code (recommended)
+- WebStorm
+- Cursor
+- Any text editor with TypeScript support
+
+
+---
+
+## Getting Started
 
 ### Prerequisites
 
-<table>
-<tr>
-<td width="50%">
+Before you begin, ensure you have the following installed on your system:
 
-**Required:**
+#### Required Software
+- **Node.js**: Version 22.x (LTS recommended)
+  - Download from: https://nodejs.org/
+  - Verify installation: `node --version`
+- **npm**: Version 9.0.0 or higher (comes with Node.js)
+  - Verify installation: `npm --version`
+- **Git**: Latest version
+  - Download from: https://git-scm.com/
+  - Verify installation: `git --version`
 
-- **Node.js** v22.0.0+ ([Download](https://nodejs.org/))
-- **Package Manager**: npm, yarn, or bun
-- **Modern Browser**: Chrome 90+, Firefox 88+, Safari 14+
+#### Optional Software
+- **Docker**: For containerized deployment
+  - Download from: https://www.docker.com/
+- **Firebase CLI**: For Firebase deployment
+  - Install: `npm install -g firebase-tools`
+- **Vercel CLI**: For Vercel deployment
+  - Install: `npm install -g vercel`
 
-</td>
-<td width="50%">
-
-**Recommended:**
-
-- **VS Code** with TypeScript extension
-- **Git** for version control
-- **Bun** for faster package management
-
-</td>
-</tr>
-</table>
+#### System Requirements
+- **Operating System**: Windows 10+, macOS 10.15+, or Linux
+- **RAM**: Minimum 4GB (8GB recommended)
+- **Disk Space**: Minimum 500MB free space
+- **Browser**: Chrome 90+, Firefox 88+, Safari 14+, or Edge 90+
 
 ### Installation
 
-<details>
-<summary><b>Option 1: One-Click Deploy (Recommended)</b></summary>
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Xenonesis/code-guardian-report)
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/Xenonesis/code-guardian-report)
-
-</details>
-
-<details>
-<summary><b>Option 2: Local Development</b></summary>
+#### 1. Clone the Repository
 
 ```bash
-# 1. Clone the repository
+# Clone via HTTPS
 git clone https://github.com/Xenonesis/code-guardian-report.git
+
+# Or clone via SSH
+git clone git@github.com:Xenonesis/code-guardian-report.git
+
+# Navigate to project directory
 cd code-guardian-report
-
-# 2. Install dependencies (choose one)
-npm install        # Using npm
-yarn install       # Using yarn
-bun install        # Using bun (fastest)
-
-# 3. Start development server
-npm run dev        # Using npm
-yarn dev           # Using yarn
-bun dev            # Using bun
-
-# 4. Open in browser
-# Navigate to http://localhost:3000
 ```
 
-</details>
+#### 2. Install Dependencies
 
-### Environment Setup
+```bash
+# Install all dependencies
+npm install
+
+# Or use clean install for reproducible builds
+npm ci
+```
+
+This will install all required dependencies including:
+- Next.js and React
+- TypeScript and type definitions
+- UI libraries (Tailwind CSS, Radix UI, Framer Motion)
+- Analysis libraries (Babel, parsers)
+- Development tools (ESLint, Prettier, testing frameworks)
+
+#### 3. Environment Configuration
 
 Create a `.env.local` file in the root directory:
 
+```bash
+# Copy the example environment file
+cp .env.example .env.local
+```
+
+Edit `.env.local` with your configuration:
+
 ```env
-# Firebase Configuration (Required for cloud features)
-NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key_here
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+# Application
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+NODE_ENV=development
+
+# GitHub OAuth (Optional - for GitHub integration)
+NEXT_PUBLIC_GITHUB_CLIENT_ID=your_github_client_id
+GITHUB_CLIENT_SECRET=your_github_client_secret
+NEXT_PUBLIC_GITHUB_REDIRECT_URI=http://localhost:3000/api/auth/github/callback
+
+# Firebase (Optional - for cloud features)
+NEXT_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project_id.firebaseapp.com
 NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
-NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_project_id.appspot.com
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
 NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
+NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=your_measurement_id
 
-# AI Integration (Server-side - Optional)
-OPENAI_API_KEY=sk-...
-ANTHROPIC_API_KEY=sk-ant-...
-GEMINI_API_KEY=AIza...
+# AI Configuration (Optional - for AI features)
+OPENAI_API_KEY=your_openai_api_key
+ANTHROPIC_API_KEY=your_anthropic_api_key
+GOOGLE_AI_API_KEY=your_google_ai_api_key
 
-# GitHub Integration (Optional - for private repos)
-GITHUB_CLIENT_ID=your_client_id
-GITHUB_CLIENT_SECRET=your_secret
+# Analytics (Optional)
+NEXT_PUBLIC_GA_MEASUREMENT_ID=your_ga_id
+NEXT_PUBLIC_VERCEL_ANALYTICS_ID=your_vercel_analytics_id
+
+# Feature Flags
+NEXT_PUBLIC_ENABLE_AI=true
+NEXT_PUBLIC_ENABLE_FIREBASE=false
+NEXT_PUBLIC_ENABLE_PWA=true
+NEXT_PUBLIC_ENABLE_ANALYTICS=true
 ```
 
-### Available Scripts
+#### 4. Configure Firebase (Optional)
 
-```mermaid
-graph LR
-    A[npm run dev] -->|Development| B[localhost:3000]
-    C[npm run build] -->|Production| D[.next/]
-    E[npm run start] -->|Start Server| F[localhost:3000]
+If you want to use Firebase features:
 
-    style A fill:#10B981
-    style C fill:#3B82F6
-    style E fill:#F59E0B
+1. Create a Firebase project at https://console.firebase.google.com/
+2. Enable Authentication with GitHub provider
+3. Enable Firestore Database
+4. Enable Storage
+5. Copy configuration to `.env.local`
+
+```bash
+# Initialize Firebase in your project
+firebase init
+
+# Select the following features:
+# - Firestore
+# - Functions
+# - Hosting
+# - Storage
 ```
 
-| Command      | Description                  | Usage                |
-| ------------ | ---------------------------- | -------------------- |
-| `dev`        | Start development server     | `npm run dev`        |
-| `build`      | Build for production         | `npm run build`      |
-| `start`      | Start production server      | `npm run start`      |
-| `lint`       | Run ESLint                   | `npm run lint`       |
-| `type-check` | Run TypeScript type checking | `npm run type-check` |
+#### 5. Configure GitHub OAuth (Optional)
 
-### Environment Setup
+To enable GitHub repository analysis:
 
-Create a `.env.local` file in the root directory:
+1. Go to GitHub Settings > Developer settings > OAuth Apps
+2. Click "New OAuth App"
+3. Fill in the application details:
+   - Application name: Code Guardian (or your preferred name)
+   - Homepage URL: http://localhost:3000
+   - Authorization callback URL: http://localhost:3000/api/auth/github/callback
+4. Copy Client ID and Client Secret to `.env.local`
 
-```env
-# AI Provider Configuration (Server-side - Optional)
-OPENAI_API_URL=https://api.openai.com/v1
-ANTHROPIC_API_URL=https://api.anthropic.com/v1
-GEMINI_API_URL=https://generativelanguage.googleapis.com
+### Development
 
-# API Keys (do not commit - server-side only)
-OPENAI_API_KEY=
-ANTHROPIC_API_KEY=
-GEMINI_API_KEY=
+#### Start Development Server
 
-# GitHub Integration (server-side)
-GITHUB_CLIENT_ID=
-GITHUB_CLIENT_SECRET=
+```bash
+# Start the development server
+npm run dev
 
-# Firebase (client-side - use NEXT_PUBLIC_ prefix)
-NEXT_PUBLIC_FIREBASE_API_KEY=
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=
-NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
-NEXT_PUBLIC_FIREBASE_APP_ID=
-
-# Application Settings
-NEXT_PUBLIC_APP_NAME="Code Guardian Enterprise"
-NEXT_PUBLIC_APP_VERSION="11.0.0"
+# Or use Turbopack for faster development (experimental)
+npm run dev:turbo
 ```
 
-Security note: create .env.local only; ensure .gitignore excludes it.
+The application will be available at: http://localhost:3000
+
+#### Development Features
+- **Hot Module Replacement (HMR)**: Instant updates without page reload
+- **Fast Refresh**: Preserves component state during edits
+- **TypeScript Type Checking**: Real-time type error detection
+- **ESLint Integration**: Code quality warnings in the terminal
+
+#### Available Scripts
+
+```bash
+# Development
+npm run dev              # Start development server
+npm run dev:turbo        # Start with Turbopack (faster)
+
+# Building
+npm run build            # Production build
+npm run build:prod       # Build with all checks
+npm run build:analyze    # Build with bundle analysis
+
+# Quality Checks
+npm run lint             # Run ESLint
+npm run lint:fix         # Fix ESLint issues
+npm run lint:css         # Run Stylelint
+npm run lint:css:fix     # Fix Stylelint issues
+npm run format           # Format code with Prettier
+npm run type-check       # TypeScript type checking
+npm run type-check:watch # Watch mode type checking
+
+# Testing
+npm run test             # Run tests
+npm run test:watch       # Watch mode
+npm run test:coverage    # Generate coverage report
+npm run test:ui          # Interactive test UI
+npm run test:e2e-zip     # E2E ZIP analysis test
+npm run test:multi-language  # Multi-language tests
+
+# CI/CD
+npm run ci:validate      # Run all validation checks
+npm run ci:build         # CI build with validation
+
+# Deployment
+npm run start            # Start production server
+npm run deploy:vercel    # Deploy to Vercel
+npm run deploy:preview   # Deploy preview to Vercel
+
+# Docker
+npm run docker:build     # Build Docker image
+npm run docker:run       # Run Docker container
+
+# Utilities
+npm run clean            # Clean build artifacts
+npm run clean:all        # Clean all generated files
+npm run health-check     # Check application health
+npm run update-contributors  # Update contributors list
+```
+
+### Production Build
+
+#### Build for Production
+
+```bash
+# Full production build with all checks
+npm run build:prod
+```
+
+This command will:
+1. Clean previous builds
+2. Run linting checks
+3. Perform type checking
+4. Run tests
+5. Build optimized production bundle
+6. Generate static assets
+
+#### Build Output
+
+The production build creates:
+- `.next/`: Next.js build output
+- `.next/static/`: Static assets (JS, CSS, images)
+- `.next/server/`: Server-side code
+- `public/`: Public static files
+
+#### Analyze Bundle Size
+
+```bash
+# Build and analyze bundle
+npm run build:analyze
+```
+
+This opens an interactive bundle analyzer showing:
+- Bundle sizes by route
+- Package sizes
+- Duplicate dependencies
+- Optimization opportunities
+
+#### Start Production Server
+
+```bash
+# Start production server
+npm run start
+
+# Or with custom port
+PORT=3001 npm run start
+```
+
+
+---
 
 ## Usage Guide
 
-### CI/CD Usage (GitHub Actions)
+### Code Analysis
 
-Add a workflow at .github/workflows/code-guardian.yml:
+#### Upload Methods
 
-```yaml
-name: Code Guardian
-on:
-  pull_request:
-    branches: [main]
-jobs:
-  analyze:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with: { node-version: 20 }
-      - run: npm ci
-      - run: npm run build
-      - name: Run analysis
-        run: node scripts/e2e-zip-analysis.ts --zip ./artifact.zip --out ./report.sarif
-      - uses: github/codeql-action/upload-sarif@v3
-        with: { sarif_file: report.sarif }
+##### Method 1: File Upload (ZIP)
+
+1. **Prepare Your Code**:
+   - Create a ZIP archive of your project
+   - Recommended structure: Include source code directories only
+   - Maximum file size: 100MB
+   - Maximum files: 1000
+
+2. **Upload Process**:
+   - Navigate to the home page
+   - Click on "Upload ZIP File" tab
+   - Drag and drop your ZIP file or click to browse
+   - Wait for automatic extraction and analysis
+
+3. **Supported Formats**:
+   - `.zip` archives
+   - Nested directories supported
+   - All text-based source files
+
+##### Method 2: GitHub Repository
+
+1. **Connect GitHub Account**:
+   - Click "GitHub Analysis" in navigation
+   - Click "Connect GitHub"
+   - Authorize Code Guardian Report
+   - Grant repository access permissions
+
+2. **Select Repository**:
+   - Browse your repositories
+   - Select the repository to analyze
+   - Choose branch (default: main)
+   - Click "Analyze Repository"
+
+3. **Repository Requirements**:
+   - Public or private repositories (with proper permissions)
+   - Any programming language
+   - Any size (analysis runs client-side)
+
+#### Analysis Process
+
+The analysis pipeline follows these steps:
+
+1. **File Extraction**: Unzip and validate files
+2. **Language Detection**: Identify programming languages
+3. **Framework Detection**: Detect frameworks and libraries
+4. **Parsing**: Generate Abstract Syntax Trees (AST)
+5. **Security Analysis**: Run vulnerability detection rules
+6. **Secret Scanning**: Search for exposed credentials
+7. **Dependency Analysis**: Check for vulnerable dependencies
+8. **Metrics Calculation**: Compute code quality metrics
+9. **Report Generation**: Create comprehensive reports
+
+#### Real-Time Feedback
+
+During analysis, you'll see:
+- Progress bar showing completion percentage
+- Current file being analyzed
+- Number of issues found (updated in real-time)
+- Estimated time remaining
+
+### GitHub Integration
+
+#### Setting Up GitHub Integration
+
+1. **Create OAuth App**:
+   ```
+   GitHub Settings → Developer settings → OAuth Apps → New OAuth App
+   ```
+
+2. **Configuration**:
+   - Application name: Your app name
+   - Homepage URL: https://your-domain.com
+   - Callback URL: https://your-domain.com/api/auth/github/callback
+
+3. **Add Credentials**:
+   ```env
+   NEXT_PUBLIC_GITHUB_CLIENT_ID=your_client_id
+   GITHUB_CLIENT_SECRET=your_client_secret
+   ```
+
+#### Using GitHub Features
+
+##### Repository Analysis
+
+```typescript
+// Programmatic usage example
+import { GitHubRepositoryService } from '@/services/githubRepositoryService';
+
+const service = new GitHubRepositoryService(accessToken);
+
+// List repositories
+const repos = await service.listRepositories();
+
+// Analyze repository
+const result = await service.analyzeRepository({
+  owner: 'username',
+  repo: 'repository',
+  branch: 'main',
+});
 ```
 
-### API Usage (Beta)
+##### Batch Analysis
 
-```bash
-# Submit analysis by Git URL
-curl -X POST https://your-host/api/analyze \
-  -H "Authorization: Bearer $TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{"gitUrl":"https://github.com/owner/repo","ref":"main"}'
+Analyze multiple repositories:
+1. Select multiple repositories from the list
+2. Click "Analyze Selected"
+3. View comparative results
 
-# Retrieve report
-curl -H "Authorization: Bearer $TOKEN" \
-  https://your-host/api/report/ANALYSIS_ID
+##### Repository Comparison
+
+Compare security posture across repositories:
+1. Navigate to "Repository Comparison" tab
+2. Select repositories to compare
+3. View side-by-side metrics
+4. Export comparison report
+
+### Report Generation
+
+#### PDF Reports
+
+##### Generate PDF Report
+
+1. Complete code analysis
+2. Click "Export" button
+3. Select "PDF Report"
+4. Choose report template:
+   - **Executive Summary**: High-level overview
+   - **Detailed Analysis**: Complete findings
+   - **Compliance Report**: Regulatory compliance focus
+   - **Technical Report**: Deep technical details
+
+##### PDF Contents
+
+The PDF report includes:
+- Cover page with project information
+- Executive summary with key metrics
+- Vulnerability breakdown by severity
+- Detailed findings with code snippets
+- Remediation recommendations
+- Trend analysis charts
+- OWASP mapping
+- CWE references
+- Compliance checklist
+
+##### Customization
+
+Customize PDF reports:
+```typescript
+import { PDFExportService } from '@/services/export/pdfExportService';
+
+const pdfService = new PDFExportService();
+
+const options = {
+  includeExecutiveSummary: true,
+  includeCodeSnippets: true,
+  includeCharts: true,
+  includeRecommendations: true,
+  template: 'detailed',
+  orientation: 'portrait',
+  pageSize: 'A4',
+};
+
+await pdfService.generateReport(analysisResults, options);
 ```
 
-### Getting Started in 3 Steps
-
-<div align="center">
-
-<table>
-<tr>
-<td width="33%" align="center">
-  <img src="https://img.icons8.com/fluency/96/upload-to-cloud.png" alt="Upload" width="64"/>
-  <h4>1. Upload Code</h4>
-  <p>Drag & drop ZIP files or analyze GitHub repos directly</p>
-  <code>ZIP Upload | GitHub URL</code>
-</td>
-<td width="33%" align="center">
-  <img src="https://img.icons8.com/fluency/96/artificial-intelligence.png" alt="Analyze" width="64"/>
-  <h4>2. AI Analysis</h4>
-  <p>Configure AI providers for enhanced insights</p>
-  <code>GPT-4 | Claude | Custom</code>
-</td>
-<td width="33%" align="center">
-  <img src="https://img.icons8.com/fluency/96/dashboard.png" alt="Results" width="64"/>
-  <h4>3. View Results</h4>
-  <p>Interactive dashboard with detailed reports</p>
-  <code>Export in 5+ formats</code>
-</td>
-</tr>
-</table>
-
-</div>
-
-### Key Features Overview
-
-<div align="center">
-
-| Feature                | Description                                             | Details                                                           |
-| ---------------------- | ------------------------------------------------------- | ----------------------------------------------------------------- |
-| **GitHub Analysis**    | Direct repository analysis from URL                     | Public repos, all branches, automatic ZIP packaging               |
-| **File Upload**        | Drag & drop ZIP file analysis                           | Intelligent parsing, progress tracking, validation                |
-| **Multi-Language**     | 8+ programming languages                                | JavaScript, TypeScript, Python, Java, PHP, Ruby, Go, C#           |
-| **Security Detection** | 100+ vulnerability patterns                             | SQL Injection, XSS, Code Injection, Command Injection, etc.       |
-| **Secret Scanning**    | 9 secret detection types                                | API keys, tokens, credentials, private keys, entropy analysis     |
-| **OWASP & CWE**        | Industry standard mapping                               | Top 10 + 90+ additional patterns with CWE IDs                     |
-| **AI Integration**     | Multi-model AI support                                  | OpenAI GPT-4, Claude, Google Gemini with failover                 |
-| **4-Phase Analysis**   | Comprehensive scanning                                  | Pattern → AST → Data Flow → Dependencies                          |
-| **Dual Storage**       | Local + Cloud persistence                               | IndexedDB for local, Firebase for cloud sync                      |
-| **Real-time Results**  | Interactive dashboard                                   | Sortable, filterable, exportable reports                          |
-| **Notifications**      | Smart alert system                                      | Priority-based, batched, browser notifications                    |
-| **Webhook Support**    | CI/CD integration                                       | GitHub, GitLab, Bitbucket webhooks                                |
-| **Export Options**     | Multiple formats                                        | PDF, JSON, XML, CSV with compression                              |
-| **PWA Ready**          | Progressive Web App                                     | Offline support, installable, service worker                      |
-| **Dark Mode**          | Theme switching                                         | Persistent user preference                                        |
-| **Authentication**     | Secure OAuth                                            | Google and GitHub sign-in with Firebase                           |
-| **Secret Detection**   | AI-powered secret and credential detection              | `API Keys`, `JWT Tokens`, `DB Credentials`, `Private Keys`        |
-| **AI Fix Suggestions** | Intelligent vulnerability remediation with code patches | `Multiple approaches`, `Confidence scoring`, `Risk assessment`    |
-| **Secure Code Search** | Comprehensive database of secure coding patterns        | `Secure examples`, `Vulnerability alternatives`, `Best practices` |
-| **Code Provenance**    | File integrity monitoring and tampering detection       | `SHA-256 checksums`, `Change tracking`, `Alert system`            |
-| **Quality Metrics**    | Comprehensive code quality assessment                   | `Complexity`, `Maintainability`, `Technical Debt`                 |
-| **AI Insights**        | Intelligent recommendations and fixes                   | `GPT-4`, `Claude-3`, `Gemini`, `Custom Models`                    |
-| **Export Options**     | Multiple export formats for reports                     | `JSON`, `CSV`, `PDF`, `HTML`, `XML`                               |
-
-</div>
-
-## Supported Analysis Tools
-
-<table>
-<thead>
-<tr>
-<th>Category</th>
-<th>Tool</th>
-<th>Description</th>
-<th>Languages</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>**Security Analysis**</td>
-<td>Bandit</td>
-<td>Security vulnerability scanner</td>
-<td>Python</td>
-</tr>
-<tr>
-<td></td>
-<td>Semgrep</td>
-<td>Static analysis for security</td>
-<td>Multi-language</td>
-</tr>
-<tr>
-<td></td>
-<td>Secret Scanner</td>
-<td>AI-powered secret and credential detection</td>
-<td>Multi-language</td>
-</tr>
-<tr>
-<td>**Code Quality**</td>
-<td>ESLint</td>
-<td>Identifies bugs and code quality issues</td>
-<td>JavaScript/TypeScript</td>
-</tr>
-<tr>
-<td></td>
-<td>Pylint</td>
-<td>Comprehensive code quality checker</td>
-<td>Python</td>
-</tr>
-<tr>
-<td></td>
-<td>Flake8</td>
-<td>Style guide enforcement and convention checking</td>
-<td>Python</td>
-</tr>
-</tbody>
-</table>
-
-### Advanced Tools & Integrations
-
-<div align="center">
-
-<table>
-<tr>
-<td width="25%" align="center">
-  <img src="https://img.icons8.com/fluency/64/settings.png" alt="Custom Rules"/>
-  <h5>Custom Rules</h5>
-  <p>Define specific vulnerability patterns</p>
-</td>
-<td width="25%" align="center">
-  <img src="https://img.icons8.com/fluency/64/traffic-light.png" alt="Configurable"/>
-  <h5>Configurable</h5>
-  <p>Adjust severity levels and rule sets</p>
-</td>
-<td width="25%" align="center">
-  <img src="https://img.icons8.com/fluency/64/continuous-integration.png" alt="CI/CD"/>
-  <h5>CI/CD Ready</h5>
- <p>GitHub Actions, Jenkins, GitLab CI</p>
-</td>
-<td width="25%" align="center">
-  <img src="https://img.icons8.com/fluency/64/api.png" alt="API"/>
-  <h5>API Access</h5>
-  <p>RESTful API for automation</p>
-</td>
-</tr>
-</table>
-
-</div>
-
-## Screenshots & Demo
-
-<div align="center">
-  <img src="https://img.shields.io/badge/Visual%20Experience-Interactive%20Screenshots%20&%20Live%20Demo-FF6B6B?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="Visual Experience"/>
-</div>
-
-### Live Demo & Interactive Features
-
-<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 20px; margin: 20px 0;">
-  <div align="center">
-    <h3 style="color: white; margin-bottom: 20px;">**Experience Code Guardian Live**</h3>
-    <p style="color: rgba(255,255,255,0.9); margin-bottom: 25px; font-size: 16px;">Try our platform with real-time analysis and interactive features</p>
-    
-    <table style="margin: 0 auto;">
-      <tr>
-        <td align="center" style="padding: 20px;">
-          <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 15px; backdrop-filter: blur(10px);">
-            <img src="https://img.icons8.com/fluency/64/monitor.png" alt="Desktop Demo" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));"/>
-            <br/><strong style="color: white; font-size: 16px;">Desktop Experience</strong>
-            <br/><span style="color: rgba(25,255,255,0.9); font-size: 12px;">Full-featured dashboard</span>
-            <br/><a href="https://code-guardian-report.vercel.app" target="_blank" style="text-decoration: none;">
-              <img src="https://img.shields.io/badge/Try%20Desktop-Live%20Demo-4F46E5?style=flat-square&logoColor=white" alt="Desktop Demo" style="margin-top: 10px;"/>
-            </a>
-          </div>
-        </td>
-        <td align="center" style="padding: 20px;">
-          <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 15px; backdrop-filter: blur(10px);">
-            <img src="https://img.icons8.com/fluency/64/smartphone.png" alt="Mobile Demo" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));"/>
-            <br/><strong style="color: white; font-size: 16px;">Mobile Experience</strong>
-            <br/><span style="color: rgba(25,255,255,0.9); font-size: 12px;">Responsive design</span>
-            <br/><a href="https://code-guardian-report.vercel.app" target="_blank" style="text-decoration: none;">
-              <img src="https://img.shields.io/badge/Try%20Mobile-Live%20Demo-10B981?style=flat-square&logoColor=white" alt="Mobile Demo" style="margin-top: 10px;"/>
-            </a>
-          </div>
-        </td>
-        <td align="center" style="padding: 20px;">
-          <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 15px; backdrop-filter: blur(10px);">
-            <img src="https://img.icons8.com/fluency/64/api.png" alt="API Demo" style="filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));"/>
-            <br/><strong style="color: white; font-size: 16px;">API Integration</strong>
-            <br/><span style="color: rgba(25,255,255,0.9); font-size: 12px;">Developer tools</span>
-            <br/><a href="#-api-documentation" style="text-decoration: none;">
-              <img src="https://img.shields.io/badge/API%20Docs-Documentation-F59E0B?style=flat-square&logoColor=white" alt="API Docs" style="margin-top: 10px;"/>
-            </a>
-          </div>
-        </td>
-      </tr>
-    </table>
-  </div>
-</div>
-
-### Feature Comparison Matrix
-
-<div align="center">
-  <table style="border-collapse: collapse; margin: 20px auto; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-    <thead>
-      <tr style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-        <th style="padding: 15px; color: white; font-size: 16px;">Feature</th>
-        <th style="padding: 15px; color: white; font-size: 16px;">Free Version</th>
-        <th style="padding: 15px; color: white; font-size: 16px;">Pro Version</th>
-        <th style="padding: 15px; color: white; font-size: 16px;">Enterprise</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr style="background: #f8f9fa;">
-        <td style="padding: 12px; font-weight: bold;">Basic Security Scan</td>
-        <td style="padding: 12px; text-align: center;">Yes</td>
-        <td style="padding: 12px; text-align: center;">Yes</td>
-        <td style="padding: 12px; text-align: center;">Yes</td>
-      </tr>
-      <tr style="background: white;">
-        <td style="padding: 12px; font-weight: bold;">AI Fix Suggestions</td>
-        <td style="padding: 12px; text-align: center;">No</td>
-        <td style="padding: 12px; text-align: center;">Yes</td>
-        <td style="padding: 12px; text-align: center;">Yes</td>
-      </tr>
-      <tr style="background: #f8f9fa;">
-        <td style="padding: 12px; font-weight: bold;">Code Provenance</td>
-        <td style="padding: 12px; text-align: center;">No</td>
-        <td style="padding: 12px; text-align: center;">Yes</td>
-        <td style="padding: 12px; text-align: center;">Yes</td>
-      </tr>
-      <tr style="background: white;">
-        <td style="padding: 12px; font-weight: bold;">Advanced Secret Detection</td>
-        <td style="padding: 12px; text-align: center;">No</td>
-        <td style="padding: 12px; text-align: center;">Yes</td>
-        <td style="padding: 12px; text-align: center;">Yes</td>
-      </tr>
-      <tr style="background: #f8f9fa;">
-        <td style="padding: 12px; font-weight: bold;">Analytics Dashboard</td>
-        <td style="padding: 12px; text-align: center;">Basic</td>
-        <td style="padding: 12px; text-align: center;">Advanced</td>
-        <td style="padding: 12px; text-align: center;">Enterprise</td>
-      </tr>
-      <tr style="background: white;">
-        <td style="padding: 12px; font-weight: bold;">API Access</td>
-        <td style="padding: 12px; text-align: center;">No</td>
-        <td style="padding: 12px; text-align: center;">Limited</td>
-        <td style="padding: 12px; text-align: center;">Unlimited</td>
-      </tr>
-      <tr style="background: #f8f9fa;">
-        <td style="padding: 12px; font-weight: bold;">Team Collaboration</td>
-        <td style="padding: 12px; text-align: center;">No</td>
-        <td style="padding: 12px; text-align: center;">5 Users</td>
-        <td style="padding: 12px; text-align: center;">Unlimited</td>
-      </tr>
-      <tr style="background: white;">
-        <td style="padding: 12px; font-weight: bold;">SLA & Support</td>
-        <td style="padding: 12px; text-align: center;">Community</td>
-        <td style="padding: 12px; text-align: center;">Email</td>
-        <td style="padding: 12px; text-align: center;">24/7 Priority</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-![Mermaid Diagram](./mermaid_diagram.png)
-_Interactive Mermaid diagram of system flow_
-
-<div align="center">
-
-### Desktop Experience
-
-<table>
-<tr>
-<td width="50%">
-  <h4>Dashboard Overview</h4>
-  <img src="./public/home.png" alt="Dashboard" style="border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.1);" width="100%"/>
-  <p><em>Clean, intuitive dashboard with real-time analytics</em></p>
-</td>
-<td width="50%">
-  <h4>Security Analysis</h4>
-  <img src="./public/cc.png" alt="Security Analysis" style="border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.1);" width="100%"/>
-  <p><em>Comprehensive security vulnerability detection</em></p>
-</td>
-</tr>
-<tr>
-<td width="50%">
-  <h4>Interactive Charts</h4>
-  <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop&auto=format&q=80" alt="Charts" style="border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.1);" width="100%"/>
-  <p><em>Beautiful data visualization with Recharts</em></p>
-</td>
-<td width="50%">
-  <h4>AI Insights</h4>
-  <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=400&fit=crop&auto=format&q=80" alt="AI Insights" style="border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.1);" width="100%"/>
-  <p><em>AI-powered recommendations and insights</em></p>
-</td>
-</tr>
-</table>
-
-### Mobile Experience
-
-<div align="center">
-  <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=300&h=600&fit=crop&auto=format&q=80" alt="Mobile View" style="border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.15);" width="300"/>
-  <p><em>Fully responsive design optimized for mobile devices</em></p>
-</div>
-
-### Professional Dark Theme
-
-<div align="center">
-  <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800&h=400&fit=crop&auto=format&q=80" alt="Dark Theme" style="border-radius: 8px;" width="80%"/>
-  <p><em>Sleek, professional dark interface designed for extended coding sessions</em></p>
-</div>
-
-</div>
-
-## Configuration
-
-### Customization Options
-
-- **Theme Configuration**: Modify `tailwind.config.ts` for custom colors and styles
-- **Component Customization**: Update `components.json` for shadcn/ui component paths
-- **Analysis Rules**: Configure analysis tool settings in the upload form
-
-## Deployment
-
-### Build for Production
-
-```bash
-npm run build
-```
-
-### Deploy to Popular Platforms
-
-#### Vercel (Recommended)
-
-```bash
-npm install -g vercel
-vercel --prod
-```
-
-#### Netlify
-
-```bash
-npm run build
-# Upload dist/ folder to Netlify
-```
-
-#### GitHub Pages
-
-```bash
-npm run build
-# Configure GitHub Actions for automatic deployment
-```
-
-### Performance Optimizations
-
-- **Code Splitting**: Automatic route-based splitting
-- **Lazy Loading**: Components loaded on demand
-- **Asset Optimization**: Images and icons optimized for web
-- **Caching Strategy**: Service worker integration for offline support
-
-## Security & Privacy
-
-### Compliance and Controls
-
-- OWASP ASVS Level 2 alignment for web features
-- SOC 2 readiness checklist (policy, logging, incident response)
-- SBOM generation (experimental) with license and vulnerability summary
-- Supply-chain hardening: lockfile integrity, subresource integrity for CDN assets
-
-### Data Protection
-
-- **Local Processing**: Code analysis performed client-side when possible
-- **Secure Transmission**: All API communications use HTTPS
-- **No Permanent Storage**: Files automatically deleted after processing
-- **Privacy-First**: No tracking or analytics without consent
-
-### API Key Security
-
-- **Encrypted Storage**: API keys stored securely in browser
-- **No Server Storage**: Keys never transmitted to our servers
-- **Easy Management**: Add, remove, and update keys safely
-- **Provider Isolation**: Each provider's keys stored separately
-
-## Browser Support
-
-### Fully Supported
-
-- Chrome 90+
-- Firefox 88+
-- Safari 14+
-- Edge 90+
-
-### Mobile Support
-
-- iOS Safari 14+
-- Chrome Mobile 90+
-- Samsung Internet 14+
-
-### Accessibility Features
-
-- **WCAG 2.1 AA Compliant**: Full accessibility standards compliance
-- **Screen Reader Support**: Optimized for NVDA, JAWS, and VoiceOver
-- **Keyboard Navigation**: Complete keyboard accessibility
-- **High Contrast**: Support for high contrast mode
-- **Reduced Motion**: Respects user motion preferences
-
-## Contributing
-
-We welcome contributions! Please follow these steps:
-
-1. **Fork the repository**
-2. **Create a feature branch**: `git checkout -b feature/amazing-feature`
-3. **Make your changes** and add tests
-4. **Run linting**: `npm run lint`
-5. **Commit changes**: `git commit -m 'Add amazing feature'`
-6. **Push to branch**: `git push origin feature/amazing-feature`
-7. **Open a Pull Request**
-
-### Development Guidelines
-
-- Follow TypeScript best practices
-- Maintain accessibility standards
-- Add tests for new features
-- Update documentation as needed
-- Follow conventional commit messages
-
-## Performance Metrics
-
-### Performance Metrics
-
-<div align="center">
-
-#### Lighthouse Scores
-
-<table>
-<tr>
-<td align="center">
-  <img src="https://img.shields.io/badge/Performance-95-00C851?style=for-the-badge&logo=lighthouse&logoColor=white" alt="Performance"/>
-  <br/><strong>95/100</strong>
-</td>
-<td align="center">
-  <img src="https://img.shields.io/badge/Accessibility-98-00C851?style=for-the-badge&logo=lighthouse&logoColor=white" alt="Accessibility"/>
-  <br/><strong>98/100</strong>
-</td>
-<td align="center">
-  <img src="https://img.shields.io/badge/Best%20Practices-96-00C851?style=for-the-badge&logo=lighthouse&logoColor=white" alt="Best Practices"/>
-  <br/><strong>96/100</strong>
-</td>
-<td align="center">
-  <img src="https://img.shields.io/badge/SEO-92-00C851?style=for-the-badge&logo=lighthouse&logoColor=white" alt="SEO"/>
-  <br/><strong>92/100</strong>
-</td>
-</tr>
-</table>
-
-#### Core Web Vitals
-
-<table>
-<tr>
-<td align="center">
-  <img src="https://img.icons8.com/fluency/48/speed.png" alt="LCP"/>
-  <br/><strong>LCP</strong>
-  <br/>< 2.5s
-</td>
-<td align="center">
-  <img src="https://img.icons8.com/fluency/48/click.png" alt="FID"/>
-  <br/><strong>FID</strong>
-  <br/>< 100ms
-</td>
-<td align="center">
-  <img src="https://img.icons8.com/fluency/48/layout.png" alt="CLS"/>
-  <br/><strong>CLS</strong>
-  <br/>< 0.1
-</td>
-<td align="center">
-  <img src="https://img.icons8.com/fluency/48/loading.png" alt="TTI"/>
-  <br/><strong>TTI</strong>
-  <br/>< 3.8s
-</td>
-</tr>
-</table>
-
-</div>
-
-## Changelog
-
-### Version 8.6.0 - Current Release
-
-- New API and CI/CD documentation; added SARIF export guidance
-- Expanded environment configuration with multi-provider keys
-- UX improvements: command palette, compact mode, better error states
-- Enterprise documentation: SSO, RBAC, audit logs, data residency
-- Self-hosting section with optional Firebase and push setup
-
-### Version 8.5.0
-
-- **Version Synchronization**: Updated all version references across the entire project for consistency
-- **Dependency Alignment**: Synchronized package.json, manifest, and service worker versions
-- **Build Optimization**: Enhanced Vite configuration with advanced chunk splitting strategies
-- **TypeScript Updates**: Upgraded to TypeScript 5.9 with improved type checking
-- **Documentation**: Updated README.md with current accurate project details and dependencies
-
-See [changelogs.md](./changelogs.md) for the full version history.
-
-## Roadmap
-
-<div align="center">
-
-### Development Timeline
-
-![UML Class Diagram](./UML%20class%20Diagram.png)
-_UML Class Diagram of the system_
-
-```mermaid
-gantt
-    title Code Guardian Development Roadmap
-    dateFormat  YYYY-MM-DD
-    section Q1 2025
-    Multi-language Support    :2025-01-01, 30d
-    Progressive Web App       :2025-01-15, 45d
-    Git Integration          :2025-02-01, 30d
-    section Q2 2025
-    Team Collaboration       :2025-04-01, 45d
-    Custom Rules Engine      :2025-04-15, 30d
-    Voice Commands           :2025-05-01, 30d
-    section Q3 2025
-    Machine Learning         :2025-07-01, 60d
-    Enterprise Features      :2025-08-01, 45d
-    Plugin System           :2025-09-01, 30d
-```
-
-</div>
-
-<details>
-<summary><b>Detailed Feature Breakdown</b></summary>
-
-### Next Release (v3.9.0) - Q1 2025
-
-<table>
-<tr>
-<td width="50%">
-
-**Internationalization**
-
-- [ ] Support for 15+ languages
-- [ ] RTL language support
-- [ ] Cultural date/time formatting
-- [ ] Localized error messages
-
-**Progressive Web App**
-
-- [ ] Offline functionality
-- [ ] App-like experience
-- [ ] Push notifications
-- [ ] Background sync
-
-</td>
-<td width="50%">
-
-**Git Integration**
-
-- [ ] GitHub direct integration
-- [ ] GitLab CI/CD support
-- [ ] Bitbucket pipelines
-- [ ] Automated PR analysis
-
-**Team Features**
-
-- [ ] Shared workspaces
-- [ ] Role-based permissions
-- [ ] Team analytics
-- [ ] Collaborative reports
-
-</td>
-</tr>
-</table>
-
-### Future Releases (v4.6.0+) - 2025 and Beyond
-
-- **AI Model Marketplace**: Integrate and deploy custom AI models
-- **Voice Commands**: Voice-controlled navigation and file upload
-- **Custom ML Models**: Project-specific analysis with machine learning
-- **Enterprise Suite**: SSO, audit logs, compliance reporting
-- **Plugin Ecosystem**: Extensible architecture for third-party integrations
-- **Predictive Analytics**: Trend forecasting and risk prediction
-- **Advanced Security**: Zero-trust architecture and enhanced encryption
-- **Internationalization**: Support for more languages and locales
-- **Mobile App**: Native mobile companion app
-
-</details>
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
-## Author
-
-**Aditya Kumar Tiwari**
-
-- BCA in Cybersecurity, Sushant University
-- Cybersecurity Enthusiast | Full-Stack Developer | Lifelong Learner
-- Email: [itisaddy7@gmail.com](mailto:itisaddy7@gmail.com)
-- GitHub: [@Xenonesis](https://github.com/Xenonesis)
-- LinkedIn: [Aditya Kumar Tiwari](https://linkedin.com/in/itisaddy)
-- Instagram: [@i\_\_aditya7](https://instagram.com/i__aditya7)
-- Portfolio: [iaddy.netlify.app](https://iaddy.netlify.app)
-
-### About the Developer
-
-Passionate about the intersection of cybersecurity and development, Aditya specializes in creating secure and scalable solutions. Currently pursuing BCA in Cybersecurity with expertise in Python, JavaScript, Linux, and Cloud Computing. Committed to building impactful digital experiences that prioritize security and innovation.
-
-## Acknowledgments
-
-- **React Team** - For the amazing React framework
-- **Vite Team** - For the excellent Vite build tool
-- **Tailwind Labs** - For the utility-first CSS framework
-- **Radix UI** - For accessible component primitives
-- **shadcn** - For the beautiful component library
-- **Open Source Community** - For the incredible tools and libraries
-
-## Support
-
-If you encounter any issues or have questions:
-
-1. **Check the Issues**: [GitHub Issues](https://github.com/Xenonesis/code-guardian-report/issues)
-2. **Create a New Issue**: Provide detailed information about your problem
-3. **Email Support**: [itisaddy7@gmail.com](mailto:itisaddy7@gmail.com)
-4. **Community Discussions**: Join our community discussions
-
----
-
-## Project Activity & Health
-
-<div align="center">
-  <img src="https://img.shields.io/github/commit-activity/m/Xenonesis/code-guardian-report?style=for-the-badge&labelColor=1a1a1a" alt="Commit activity (monthly)"/>
-  <img src="https://img.shields.io/github/last-commit/Xenonesis/code-guardian-report?style=for-the-badge&labelColor=1a1a1a" alt="Last commit"/>
-  <img src="https://img.shields.io/github/issues/Xenonesis/code-guardian-report?style=for-the-badge&labelColor=1a1a1a" alt="Open issues"/>
-  <img src="https://img.shields.io/github/issues-pr/Xenonesis/code-guardian-report?style=for-the-badge&labelColor=1a1a1a" alt="Open PRs"/>
-  <img src="https://img.shields.io/github/languages/top/Xenonesis/code-guardian-report?style=for-the-badge&labelColor=1a1a1a" alt="Top language"/>
-  <img src="https://img.shields.io/github/languages/code-size/Xenonesis/code-guardian-report?style=for-the-badge&labelColor=1a1a1a" alt="Code size"/>
-</div>
-
-<div align="center">
-  <img src="https://repobeats.axiom.co/api/embed/Xenonesis/code-guardian-report.svg" alt="Repobeats analytics graph" width="10%"/>
-</div>
-
-<!-- CONTRIBUTORS:START -->
-
-## Community & Contributors
-
-<div align="center">
-
-### Our Amazing Community
-
-<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 20px; margin: 20px 0;">
-  <h3 style="color: white; margin-bottom: 20px;">**Repository Statistics**</h3>
-  <p style="color: rgba(255,255,255,0.9); margin-bottom: 25px;">Thank you to our amazing community for making Code Guardian possible!</p>
-  
-  
-  
-  
-  
-  
-  
-
-
-  
-  
-  
-  
-  
-  <table style="margin: 0 auto;">
-    <tr>
-      <td align="center" style="padding: 15px;">
-        <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px;">
-          <h4 style="color: white; margin: 0; font-size: 24px;">Stars: 42</h4>
-          <p style="color: rgba(255,255,255,0.8); margin: 5px 0 0 0; font-size: 14px;">Stars</p>
-        </div>
-      </td>
-      <td align="center" style="padding: 15px;">
-        <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px;">
-          <h4 style="color: white; margin: 0; font-size: 24px;">Forks: 31</h4>
-          <p style="color: rgba(255,255,255,0.8); margin: 5px 0 0 0; font-size: 14px;">Forks</p>
-        </div>
-      </td>
-      <td align="center" style="padding: 15px;">
-        <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px;">
-          <h4 style="color: white; margin: 0; font-size: 24px;">Contributors: 16</h4>
-          <p style="color: rgba(255,255,255,0.8); margin: 5px 0 0 0; font-size: 14px;">Contributors</p>
-        </div>
-      </td>
-      <td align="center" style="padding: 15px;">
-        <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px;">
-          <h4 style="color: white; margin: 0; font-size: 24px;">Watchers: 1</h4>
-          <p style="color: rgba(255,255,255,0.8); margin: 5px 0 0 0; font-size: 14px;">Watchers</p>
-        </div>
-      </td>
-    </tr>
-  </table>
-</div>
-
-### Core Contributors
-
-<div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 30px; border-radius: 20px; margin: 20px 0;">
-  <h3 style="color: white; margin-bottom: 20px;">**Top Contributors**</h3>
-  <p style="color: rgba(255,255,255,0.9); margin-bottom: 25px; text-align: center;">Meet the amazing developers who have contributed to Code Guardian</p>
-  
-  <table style="margin: 0 auto;">
-    <tr>
-
-      <td align="center" style="padding: 20px;">
-        <img src="https://avatars.githubusercontent.com/u/115968670?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
-        <br/><strong style="color: white; font-size: 16px;">Xenonesis</strong>
-        <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@Xenonesis</span>
-        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">Contributor</span>
-        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
-        <div style="margin-top: 10px;">
-          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">271 commits</span>
-        </div>
-      </td>
-    
-
-      <td align="center" style="padding: 20px;">
-        <img src="https://avatars.githubusercontent.com/in/15368?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
-        <br/><strong style="color: white; font-size: 16px;">github-actions[bot]</strong>
-        <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@github-actions[bot]</span>
-        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">Contributor</span>
-        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
-        <div style="margin-top: 10px;">
-          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">30 commits</span>
-        </div>
-      </td>
-    
-
-      <td align="center" style="padding: 20px;">
-        <img src="https://avatars.githubusercontent.com/u/65916846?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
-        <br/><strong style="color: white; font-size: 16px;">actions-user</strong>
-        <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@actions-user</span>
-        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">Contributor</span>
-        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
-        <div style="margin-top: 10px;">
-          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">19 commits</span>
-        </div>
-      </td>
-    
-
-      <td align="center" style="padding: 20px;">
-        <img src="https://avatars.githubusercontent.com/u/186174121?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
-        <br/><strong style="color: white; font-size: 16px;">Muneerali199</strong>
-        <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@Muneerali199</span>
-        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">Contributor</span>
-        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
-        <div style="margin-top: 10px;">
-          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">5 commits</span>
-        </div>
-      </td>
-    
-    </tr>
-<tr>
-
-      <td align="center" style="padding: 20px;">
-        <img src="https://avatars.githubusercontent.com/u/164482191?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
-        <br/><strong style="color: white; font-size: 16px;">sudharshanpaul</strong>
-        <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@sudharshanpaul</span>
-        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">Contributor</span>
-        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
-        <div style="margin-top: 10px;">
-          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">4 commits</span>
-        </div>
-      </td>
-    
-
-      <td align="center" style="padding: 20px;">
-        <img src="https://avatars.githubusercontent.com/u/176881379?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
-        <br/><strong style="color: white; font-size: 16px;">Jils31</strong>
-        <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@Jils31</span>
-        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">Contributor</span>
-        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
-        <div style="margin-top: 10px;">
-          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">3 commits</span>
-        </div>
-      </td>
-    
-
-      <td align="center" style="padding: 20px;">
-        <img src="https://avatars.githubusercontent.com/u/118842369?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
-        <br/><strong style="color: white; font-size: 16px;">raghavendra-24</strong>
-        <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@raghavendra-24</span>
-        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">Contributor</span>
-        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
-        <div style="margin-top: 10px;">
-          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">3 commits</span>
-        </div>
-      </td>
-    
-
-      <td align="center" style="padding: 20px;">
-        <img src="https://avatars.githubusercontent.com/u/180313267?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
-        <br/><strong style="color: white; font-size: 16px;">Baranidharanv06</strong>
-        <br/><span style="color: rgba(255,255,255,0.9); font-size: 14px;">@Baranidharanv06</span>
-        <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">Contributor</span>
-        <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
-        <div style="margin-top: 10px;">
-          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">2 commits</span>
-        </div>
-      </td>
-    
-    </tr>
-
-  </table>
-</div>
-
-### All Contributors
-
-<div style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); padding: 25px; border-radius: 20px; margin: 20px 0;">
-  <h3 style="color: #333; margin-bottom: 20px;">**Thank You to All Contributors**</h3>
-  
-  <div style="text-align: center; margin-bottom: 20px;">
-    <p style="color: #666; font-size: 16px;">We appreciate every contribution, no matter how big or small!</p>
-  </div>
-  
-  <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 20px 0;">
-    <a href="https://github.com/Xenonesis" target="_blank" style="text-decoration: none;">
-      <img src="https://avatars.githubusercontent.com/u/115968670?v=4" width="50" height="50" style="border-radius: 50%; border: 2px solid #333; margin: 2px;" title="_7adi; (47 contributions)"/>
-    </a>
-    <a href="https://github.com/Muneerali199" target="_blank" style="text-decoration: none;">
-      <img src="https://avatars.githubusercontent.com/u/186174121?v=4" width="50" height="50" style="border-radius: 50%; border: 2px solid #333; margin: 2px;" title="Muneer Ali (4 contributions)"/>
-    </a>
-    <a href="https://github.com/sudharshanpaul" target="_blank" style="text-decoration: none;">
-      <img src="https://avatars.githubusercontent.com/u/164482191?v=4" width="50" height="50" style="border-radius: 50%; border: 2px solid #333; margin: 2px;" title="Sudharshan Paul (4 contributions)"/>
-    </a>
-    <a href="https://github.com/Jils31" target="_blank" style="text-decoration: none;">
-      <img src="https://avatars.githubusercontent.com/u/17681379?v=4" width="50" height="50" style="border-radius: 50%; border: 2px solid #333; margin: 2px;" title="Jils Patel (3 contributions)"/>
-    </a>
-    <a href="https://github.com/Baranidharanv06" target="_blank" style="text-decoration: none;">
-      <img src="https://avatars.githubusercontent.com/u/180313267?v=4" width="50" height="50" style="border-radius: 50%; border: 2px solid #333; margin: 2px;" title="Baranidharan (2 contributions)"/>
-    </a>
-    <a href="https://github.com/pathan-07" target="_blank" style="text-decoration: none;">
-      <img src="https://avatars.githubusercontent.com/u/132596404?v=4" width="50" height="50" style="border-radius: 50%; border: 2px solid #333; margin: 2px;" title="Pathan Mo. Faizan Khan (1 contributions)"/>
-    </a>
-    <a href="https://github.com/shubhranshu-sahu" target="_blank" style="text-decoration: none;">
-      <img src="https://avatars.githubusercontent.com/u/180231504?v=4" width="50" height="50" style="border-radius: 50%; border: 2px solid #333; margin: 2px;" title="Shubhranshu Sahu (2 contributions)"/>
-    </a>
-    <a href="https://github.com/bhuvnaaaaaa" target="_blank" style="text-decoration: none;">
-      <img src="https://avatars.githubusercontent.com/u/200819625?v=4" width="50" height="50" style="border-radius: 50%; border: 2px solid #33; margin: 2px;" title="Bhuvaneshwari Mallesh (1 contributions)"/>
-    </a>
-  </div>
-  
-  <div style="margin-top: 20px; text-align: center;">
-    <span style="color: #666; font-size: 14px;"><strong>Thank you to all 8 contributors who make Code Guardian possible!</strong></span>
-  </div>
-</div>
-
-<!-- CONTRIBUTORS:END -->
-
-## Show Your Support
-
-<div align="center">
-
-### Love Code Guardian? Here's how you can help:
-
-<table>
-<tr>
-<td width="25%" align="center">
-  <div style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); padding: 20px; border-radius: 15px; margin: 10px;">
-    <a href="https://github.com/Xenonesis/code-guardian-report/stargazers" style="text-decoration: none;">
-      <img src="./public/icons/activity.svg" alt="Star" width="48" height="48"/>
-      <br/><strong style="color: white; font-size: 16px;">Star</strong>
-      <br/><span style="color: rgba(25,255,255,0.9); font-size: 14px;">Give us a star on GitHub</span>
-    </a>
-  </div>
-</td>
-<td width="25%" align="center">
-  <div style="background: linear-gradient(135deg, #32CD32 0%, #228B22 100%); padding: 20px; border-radius: 15px; margin: 10px;">
-    <a href="https://github.com/Xenonesis/code-guardian-report/network/members" style="text-decoration: none;">
-      <img src="./public/icons/layout-dashboard.svg" alt="Fork" width="48" height="48"/>
-      <br/><strong style="color: white; font-size: 16px;">Fork</strong>
-      <br/><span style="color: rgba(25,255,255,0.9); font-size: 14px;">Fork and contribute</span>
-    </a>
-  </div>
-</td>
-<td width="25%" align="center">
-  <div style="background: linear-gradient(135deg, #FF6B6B 0%, #FF4757 100%); padding: 20px; border-radius: 15px; margin: 10px;">
-    <a href="https://github.com/Xenonesis/code-guardian-report/issues" style="text-decoration: none;">
-      <img src="./public/icons/bug.svg" alt="Issues" width="48" height="48"/>
-      <br/><strong style="color: white; font-size: 16px;">Report</strong>
-      <br/><span style="color: rgba(25,255,255,0.9); font-size: 14px;">Report bugs & issues</span>
-    </a>
-  </div>
-</td>
-<td width="25%" align="center">
-  <div style="background: linear-gradient(135deg, #1E90FF 0%, #0066CC 100%); padding: 20px; border-radius: 15px; margin: 10px;">
-    <a href="https://twitter.com/intent/tweet?text=Check%20out%20Code%20Guardian%20-%20AI-powered%20security%20analysis%20platform!%20https://github.com/Xenonesis/code-guardian-report" style="text-decoration: none;">
-      <img src="./public/icons/search.svg" alt="Share" width="48" height="48"/>
-      <br/><strong style="color: white; font-size: 16px;">Share</strong>
-      <br/><span style="color: rgba(25,255,255,0.9); font-size: 14px;">Spread the word</span>
-    </a>
-  </div>
-</td>
-</tr>
-</table>
-
-<br/>
-
-</div>
-
----
-
-**Made with care by Code Guardian Team | Copyright 2026 Code Guardian Report**
-
-<!-- Footer -->
-<div align="center">
-
-<hr />
-
-<br>
-
-<!-- Social Links with Animation -->
-<p align="center">
-  <a href="https://code-guardian-report.vercel.app" target="_blank">
-    <img src="https://img.shields.io/badge/Live_Demo-Visit_Now-4F46E5?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="Live Demo"/>
-  </a>
-  &nbsp;
-  <a href="https://github.com/adityakumar-in/code-guardian-report" target="_blank">
-    <img src="https://img.shields.io/badge/Star_on_GitHub-yellow?style=for-the-badge&logo=github&logoColor=white&labelColor=1a1a1a" alt="Star on GitHub"/>
-  </a>
-  &nbsp;
-  <a href="https://github.com/adityakumar-in/code-guardian-report/issues" target="_blank">
-    <img src="https://img.shields.io/badge/Report_Bug-red?style=for-the-badge&logo=github&logoColor=white&labelColor=1a1a1a" alt="Report Bug"/>
-  </a>
-  &nbsp;
-  <a href="https://github.com/adityakumar-in/code-guardian-report/fork" target="_blank">
-    <img src="https://img.shields.io/badge/Fork-cyan?style=for-the-badge&logo=github&logoColor=white&labelColor=1a1a1a" alt="Fork"/>
-  </a>
-</p>
-
-<br>
-
-<!-- Contributors Table -->
-<h3>Maintained By</h3>
-
-<table>
-<tr>
-<td align="center">
-  <a href="https://github.com/adityakumar-in">
-    <img src="https://github.com/adityakumar-in.png" width="100px;" alt="Aditya Kumar Tiwari"/>
-    <br />
-    <sub><b>Aditya Kumar Tiwari</b></sub>
-    <br />
-    <sub>Creator & Lead Developer</sub>
-  </a>
-</td>
-</tr>
-</table>
-
-<br>
-
-<!-- License and Copyright -->
-<p align="center">
-  <img src="https://img.shields.io/badge/License-MIT-success?style=for-the-badge&logo=opensourceinitiative&logoColor=white&labelColor=1e293b" alt="MIT License"/>
-  <img src="https://img.shields.io/badge/Made_with-Care-red?style=for-the-badge&labelColor=1e293b" alt="Made with Care"/>
-  <img src="https://img.shields.io/badge/TypeScript-100%25-blue?style=for-the-badge&logo=typescript&logoColor=white&labelColor=1e293b" alt="TypeScript"/>
-</p>
-
-<br>
-
-<!-- Final Quote -->
-<h3>Remember</h3>
-<p><em>"The only way to do great work is to love what you do." - Steve Jobs</em></p>
-
-<br>
-
-<!-- Closing Wave -->
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=150&section=footer">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=0,2,8&height=150&section=footer" alt="Footer Wave">
-</picture>
-
-<p align="center">
-  <strong>Made with care by Code Guardian Team | Copyright 2026 Code Guardian Report</strong>
-  <br>
-  <sub>Empowering developers to build secure software, one line of code at a time.</sub>
-</p>
-
-<!-- Back to Top -->
-<p align="center">
-  <a href="#-code-guardian">
-    <img src="https://img.shields.io/badge/Back_to_Top-4F46E5?style=for-the-badge&logoColor=white&labelColor=1a1a1a" alt="Back to Top"/>
-  </a>
-</p>
-
-</div>
-
----
-
-## Extended Documentation Hub
-
-This section consolidates the most requested enablement assets so that security teams, platform engineers, and AI practitioners can ship Code Guardian to production environments with confidence. Everything below is curated from internal runbooks, customer enablement calls, and product experiments performed inside this repository.
-
-### 1. Strategic Overview
-
-| Focus Area            | Why It Matters                                                    | Repository Tie-in                                                         | Owner Persona        |
-| --------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------- | -------------------- |
-| Secure AI Analysis    | Ensures AI-generated insights never bypass enterprise guardrails. | `src/components/ai`, `api/analytics`                                      | AI Platform Lead     |
-| Continuous Scanning   | Keeps every pull request and artifact aligned with OWASP + CWE.   | `scripts/run-all-tests.ts`, `tests/modernCodeScanning.test.ts`            | Security Engineering |
-| Enterprise Dashboards | Exposes actionable KPIs for execs without leaving the browser.    | `src/components/dashboard`, `src/components/SecurityMetricsDashboard.tsx` | Product Leadership   |
-| Deployment Automation | Reduces toil by automating repeatable rollouts across clouds.     | `scripts/setup-git-hooks.js`, `functions/src/index.ts`                    | DevOps               |
-
-#### Outcome Statements
-
-- **Time-to-detect shrinks from days to minutes** thanks to streaming analytics rendered by `EnhancedAnalyticsDashboard.tsx` and fed by AI scoring pipelines.
-- **Compliance evidence stays audit-ready** because every analysis artifact can be exported via JSON, CSV, PDF, XML, and SARIF formats directly from `src/components/export`.
-- **Developers stay unblocked**: toast alerts delivered by `src/hooks/use-toast.ts` are persistent, actionable, and localized with error codes that map back to this README.
-
-### 2. Persona Playbooks
-
-| Persona             | 30-Day Objective                                                                | Success Metrics                                                   | Suggested Features                                                  |
-| ------------------- | ------------------------------------------------------------------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------- |
-| AppSec Lead         | Baseline every service for OWASP Top 10 coverage.                               | 100% repos scanned weekly; zero critical regressions.             | `SecurityMetricsDashboard`, secret detection matrix, policy engine. |
-| SRE / Platform      | Harden pipelines and push security evidence into existing observability stacks. | < 5 min MTTR for false positives; automatic SARIF uploads.        | Webhook bridge, `scripts/run-all-tests.ts`, log forwarding hooks.   |
-| AI Engineer         | Validate LLM-generated patches safely.                                          | 95%+ patch approval rate; drift-free SBOMs.                       | AI patch preview, diff risk scoring, provenance tracker.            |
-| Engineering Manager | Communicate security posture to leadership.                                     | Single weekly executive report; tracked KPIs in Vercel Analytics. | Dashboard exports, KPI widgets, performance metrics table.          |
-
-### 3. Use Case Catalog
-
-1. **Secure ZIP Uploads for Vendor Code**
-
-- Drop archives into the UploadForm component and route them through JSZip + AST phases.
-- Combine AI explainers with manual approval gates for high-risk vendors.
-
-2. **GitHub PR Gatekeeping**
-
-- Pair `scripts/run-accuracy-test.ts` with SARIF exports to comment on pull requests.
-- Enforce minimum score thresholds via GitHub required checks.
-
-3. **Internal Red-Teaming Sandbox**
-
-- Utilize `tmp_rovodev_*` test harnesses to simulate malicious payloads.
-- Feed anomalies back into `api/analytics/pwa.ts` for trending.
-
-4. **PWA Security Operations Center**
-
-- Deploy the PWA on managed tablets for field engineers needing offline mode.
-- Sync queue data through Firebase functions hosted in `functions/src/index.ts`.
-
-5. **Enterprise Secret Sweeps**
-
-- Schedule `scripts/test-automation.js` nightly to hunt for secrets across languages.
-- Notify owners using the notifications hub inside `src/components/notifications`.
-
-Each scenario above maps to tracked OKRs stored in `md/changelogs.md`, ensuring roadmap alignment.
-
-### 4. Reference Implementation Journey
-
-| Phase      | Goal                                                              | Checklist                                                             |
-| ---------- | ----------------------------------------------------------------- | --------------------------------------------------------------------- |
-| Discovery  | Understand target repositories, data residency, and AI providers. | Inventory source control, confirm legal posture, map AI credits.      |
-| Prototype  | Stand up dev tenants and align sample workflows.                  | Configure `.env.local`, seed Firebase emulators, test webhooks.       |
-| Hardening  | Bake in observability, RBAC, and policy guardrails.               | Enable audit logging, wire SARIF uploads, configure backup rotations. |
-| Production | Roll out to org-wide engineering teams.                           | Tag release in git, publish changelog, schedule Brown Bag training.   |
-
-### 5. Architecture Deep Dive
-
-- **App Shell**: `app/layout.tsx` is the root layout that wires providers for theming, error boundaries, and analytics. Client providers are managed via `app/ClientProviders.tsx`.
-- **Component Federation**: Feature slices (analysis, export, security, etc.) live under `src/components/<domain>` and follow a common index barrel defined in `src/components/index.ts`.
-- **Config Surface**: `src/config/constants.ts`, `src/config/security.ts`, and `src/config/pwa.ts` expose typed configuration. Environment variables are validated at runtime using Next.js conventions.
-- **Hooks Library**: Responsive behavior, toasts, and AI helper utilities reside in `src/hooks`. Hooks are tree-shakable and fully typed.
-- **Serverless Tier**: `functions/src/index.ts` ships Firebase callable functions that orchestrate long-running jobs, push notification scheduling, and secret rotation triggers.
-- **Edge Analytics**: `api/analytics.ts` plus nested modules under `api/analytics` and `api/push` expose Vercel edge handlers for near-instant insights.
-
-### 6. Module Catalogue
-
-| Directory                                    | Description                                                            | Highlights                                                                  |
-| -------------------------------------------- | ---------------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| `api/analytics`                              | Vercel edge analytics entry points and helpers.                        | Real-time dashboard counters, health pings.                                 |
-| `api/push`                                   | Push notification orchestration for PWA reminders.                     | Subscribe/Unsubscribe endpoints, schedule queue.                            |
-| `src/components/analysis`                    | Visual + textual insights for vulnerability findings.                  | Timeline components, AI chat surfaces.                                      |
-| `src/components/security`                    | Rule badges, severity visualizers, posture cards.                      | Works in concert with `SecurityMetricsDashboard`.                           |
-| `scripts`                                    | Developer automation, CI glue, and regression harnesses.               | `run-all-tests.ts`, `update-contributors.js`, `ci-multi-language-check.js`. |
-| `tests` + `tests/modernCodeScanning.test.ts` | Vitest/Jest layer covering core scanning logic.                        | Ensures regressions trigger GitHub annotations.                             |
-| `functions`                                  | Firebase Functions package, version-pinned via its own `package.json`. | Schedules cleanups, handles Firestore writes.                               |
-| `public`                                     | Icons, manifests, and browser config for PWA experiences.              | `manifest.json`, `sw.js`, `browserconfig.xml`.                              |
-
-### 7. Deployment Blueprints
-
-#### Vercel
-
-1. Connect the repository, enable Turbopack preview if desired.
-2. Define environment variables in Vercel dashboard using the keys from `.env.local` template.
-3. Turn on protection for production branch and enable preview comments for every PR.
-
-#### Netlify
-
-1. Use the `npm run build` command with `dist` as the publish directory.
-2. Enable the Netlify forms + headers in `public/` if customizing security policies.
-3. Configure deploy notifications to hit Code Guardian's webhook endpoint for deep linkage.
-
-#### Docker Compose (Local Infra)
-
-1. Build the Vite bundle using `npm run build` and copy `/dist` into a lightweight Nginx container.
-2. Run Firebase emulators using `firebase emulators:start` so secrets never leave localhost.
-3. Leverage the provided `docker-compose.override.yml` template in this section's appendix for TLS fronting.
-
-#### Kubernetes / GitOps
-
-1. Package the static bundle into an OCI image and push to your registry.
-2. Apply the Deployment + HPA manifest from Appendix D; wire ConfigMaps for environment secrets.
-3. Use ArgoCD or Flux to sync the `main` branch and surface health via Prometheus ServiceMonitors.
-
-### 8. Configuration & Secrets Reference
-
-| Variable                  | Required | Purpose                                | Notes                                               |
-| ------------------------- | -------- | -------------------------------------- | --------------------------------------------------- |
-| `OPENAI_API_KEY`          | Optional | Enables OpenAI-backed AI explanations. | Store in platform secret manager; server-side only. |
-| `ANTHROPIC_API_KEY`       | Optional | Claude inference provider.             | Supports failover rotation; server-side only.       |
-| `GEMINI_API_KEY`          | Optional | Google Gemini provider.                | Required for hybrid analysis; server-side only.     |
-| `NEXT_PUBLIC_FIREBASE_*`  | Optional | Enables sync with Firestore + Auth.    | Use emulator values locally.                        |
-| `GITHUB_CLIENT_ID/SECRET` | Optional | GitHub OAuth integration.              | For GitHub repository analysis.                     |
-
-Secrets should be injected via your deployment platform. Never commit `.env.local`—the template in this repo is intentionally blank.
-
-### 9. Integration Touchpoints
-
-- **Webhooks**: Receive event callbacks (`analysis.completed`, `analysis.failed`, `secret.detected`) directly into your SIEM.
-- **CI Jobs**: `scripts/e2e-zip-analysis.ts` accepts CLI flags such as `--zip`, `--repo`, `--report` for automation.
-- **Browser Extensions**: The PWA manifest exposes categories for easier mobile install and kiosk deployments.
-- **Exports**: Raw JSON reports map 1:1 with `tests/modernCodeScanning.test.ts` fixtures, ensuring deterministic assertions.
-
-### 10. Observability & Reliability Playbook
-
-| Signal             | Source                            | Action                                                                  |
-| ------------------ | --------------------------------- | ----------------------------------------------------------------------- |
-| Frontend errors    | `public/sw.js` + Vercel Analytics | Investigate via Replay, pipe stack traces into Sentry or Azure Monitor. |
-| Function latency   | `functions/src/index.ts` logs     | Tune concurrency limits or cache layers.                                |
-| Secret leak alerts | Notification center               | Kick off `scripts/test-firebase-storage-fix.js` to rotate credentials.  |
-| Build regressions  | Vite build output                 | Use `npm run build -- --watch` locally; check chunk visualizer.         |
-
-### 11. QA & Testing Strategy
-
-- **Unit Tests**: Focused on parser utilities, AST helpers, and React hooks.
-- **Integration Tests**: `tmp_rovodev_*` suites replay production payloads end-to-end.
-- **E2E Harness**: `scripts/run-firebase-test.ts` stands up ephemeral Firebase apps.
-- **Performance Budgets**: Keep `npm run build` under 25s; fail pipeline if bundle > 3 MB gzipped.
-- **Approval Gates**: Pair human triage with AI suggestions; never auto-merge without secondary review when severity ≥ high.
-
-### 12. Accessibility & Inclusive Design
-
-- WCAG 2.1 AA coverage tracked per component; see `src/components/ui` for tokenized focus rings.
-- Keyboard-first navigation verified via automated tests plus manual QA in NVDA/VoiceOver.
-- Reduced-motion preferences honored with CSS `prefers-reduced-motion` mixins in `index.css` and `index-backup.css`.
-- Localization scaffolding prepared inside `src/components/language`; request translation packs via issues template.
-
-### 13. Adoption & Training
-
-| Artifact         | Audience              | Description                                             |
-| ---------------- | --------------------- | ------------------------------------------------------- |
-| Enablement deck  | Engineering directors | 15-slide overview with KPI map and ROI calculator.      |
-| Live demo script | Developer advocates   | 20-min flow referencing Upload → Analysis → Fix apply.  |
-| Runbook          | Support engineers     | Markdown runbook stored in `md/` for on-call scenarios. |
-
-Run internal table-top exercises quarterly to validate the incident workflows documented here.
-
-### 14. Security Operations Guide
-
-1. **Triage Flow**: Alerts land inside the notification hub; severity `critical` auto-pings Slack via webhook.
-2. **Containment**: Use export function to share minimal data with remediation owners (principle of least privilege).
-3. **Eradication**: Reference `scripts/test-pattern.js` to ensure the exploit signature is patched.
-4. **Recovery**: Run `npm run build && npm run preview` to smoke-test before redeploying.
-5. **Lessons Learned**: Update this README plus `md/changelogs.md` with new learnings.
-
-### 15. Troubleshooting Matrix (Condensed)
-
-| Symptom                          | Possible Cause                                     | Resolution                                                               |
-| -------------------------------- | -------------------------------------------------- | ------------------------------------------------------------------------ |
-| `npm run dev` shows blank screen | Missing env vars or ad blockers stripping GraphQL. | Check `.env.local`, disable privacy extensions for localhost.            |
-| AI providers returning 429       | Shared quota exhaustion.                           | Enable provider fallback or reduce concurrency via settings modal.       |
-| Firebase deploy fails            | Functions dependency mismatch.                     | Run `cd functions && npm install`, redeploy.                             |
-| Webhooks time out                | Corporate firewall blocking Vercel IP ranges.      | Add Vercel IPs to allow list or use self-hosted reverse proxy.           |
-| SARIF rejected by GitHub         | Schema version mismatch.                           | Ensure export uses SARIF 2.1.0 (default) or update workflow accordingly. |
-
-### 16. FAQ (Quick)
-
-**Q:** Do I need Firebase to use Code Guardian?
-
-**A:** No. All analytics can run in-browser with IndexedDB. Firebase is optional for sync + auth.
-
-**Q:** How do I plug into an on-prem AI model?
-
-**A:** Configure `OPENAI_API_URL` (or equivalent) environment variable to your proxy endpoint and ensure CORS plus VPC routing allowlist the origin.
-
-**Q:** Can I scope scans to sub-directories?
-
-**A:** Yes. Use the upload advanced settings or pass `--include "src/**"` when calling `scripts/e2e-zip-analysis.ts`.
-
-**Q:** Where are log files stored?
-
-**A:** Client logs stay in IndexedDB; serverless logs stream to your hosting provider (Vercel, Firebase, etc.).
-
-### 17. Glossary Snapshot
-
-- **Adaptive Severity Weighting**: Algorithm that boosts severity when AI + static rules agree on the same finding.
-- **Evidence Bundle**: The downloadable ZIP combining JSON, SARIF, and PDF exports for auditors.
-- **Insight Tile**: Dashboard widget showing a KPI, trendline, and drill-through action.
-- **PWA Offline Envelope**: Cached assets + data layers necessary for air-gapped reviews.
-- **Risk Story**: Narrative summary generated by AI models, accessible in the Analysis tab.
-
-### 18. Resource Links
-
-- [md/CODE_OF_CONDUCT.md](md/CODE_OF_CONDUCT.md)
-- [md/CONTRIBUTING.md](md/CONTRIBUTING.md)
-- [next.config.ts](next.config.ts)
-- [scripts/run-all-tests.ts](scripts/run-all-tests.ts)
-
-> **Tip:** Bookmark this extended hub so onboarding engineers can self-serve the majority of answers before opening a support ticket.
-
----
-
-## API Reference & Integration Contracts
-
-The public API surface is intentionally compact so that organizations can audit every payload that leaves their networks. All routes are implemented inside the Vercel api/ directory and share a common authentication middleware with support for PATs, signed JWTs, or HMAC headers. The contract described here mirrors the code paths you will find in api/analytics.ts, api/analytics/pwa.ts, and api/push/\*.
-
-### REST Endpoint Overview
-
-| Method | Path                   | Description                                                              | Auth                                            | Related Script                 |
-| ------ | ---------------------- | ------------------------------------------------------------------------ | ----------------------------------------------- | ------------------------------ |
-| POST   | `/api/analyze`         | Kick off an analysis run from a ZIP upload, repo URL, or inline snippet. | Bearer token or signed webhook secret.          | `scripts/e2e-zip-analysis.ts`  |
-| GET    | `/api/report/{id}`     | Retrieve normalized findings, metadata, and export links.                | Same as analysis token.                         | `scripts/run-all-tests.ts`     |
-| POST   | `/api/insights/fix`    | Generate AI-backed remediation advice for a specific finding ID.         | Requires AI provider key mapping.               | `src/components/ai`            |
-| POST   | `/api/webhooks/github` | Optional relay to enrich PRs with Code Guardian context.                 | GitHub `x-hub-signature` validation.            | `scripts/run-accuracy-test.ts` |
-| POST   | `/api/webhooks/custom` | Generic webhook for SIEM/SOAR ingestion.                                 | Shared secret header x-code-guardian-signature. | `api/push/subscribe.ts`        |
-
-### Request Lifecycle
-
-1. **Inbound validation** handled by the shared zod schema located in src/utils/validation (tree-shaken into the API bundle via Vite).
-2. **Analysis dispatch** chooses between local workers, Firebase Functions, or AI pipelines depending on payload size.
-3. **Artifact persistence** stores redacted summaries inside IndexedDB (browser) and optionally Firestore (cloud) using the keys defined in src/config/security.ts.
-4. **Notification fan-out** occurs through api/push/send.ts, ensuring mobile devices receive actionable prompts.
-
-### Sample `POST /api/analyze`
-
-```http
-POST /api/analyze HTTP/1.1
-Host: example.codeguardian.internal
-Authorization: Bearer cg-live-123
-Content-Type: application/json
-x-code-guardian-correlation: 8c87d4f4-7a4a-46d5-b8f7-1d1c55b60df0
-
-{
-  "source": {
-    "type": "github",
-    "url": "https://github.com/Xenonesis/code-guardian-report",
-    "ref": "improve/mobile-ux"
-  },
-  "filters": {
-    "include": ["src/**", "api/**"],
-    "exclude": ["public/**", "**/*.md"]
-  },
-  "aiProviders": ["openai", "anthropic"],
-  "export": {
-    "formats": ["json", "sarif", "pdf"],
-    "includeEvidenceBundle": true
-  }
-}
-```
-
-#### Sample Response
+#### JSON Exports
+
+Export analysis data in JSON format for:
+- API integration
+- Custom reporting tools
+- Data warehousing
+- CI/CD pipelines
 
 ```json
 {
-  "analysisId": "cg-anl-2025-001",
-  "status": "queued",
-  "etaSeconds": 42,
-  "links": {
-    "dashboard": "https://code-guardian-report.vercel.app/results/cg-anl-2025-001",
-    "webhook": "https://example.soc.local/webhooks/code-guardian"
-  },
-  "ai": {
-    "providers": [
-      { "name": "openai", "model": "gpt-4.1-mini" },
-      { "name": "anthropic", "model": "claude-3.5-sonnet" }
-    ]
-  }
-}
-```
-
-### Error Envelope
-
-```json
-{
-  "status": 422,
-  "error": "VALIDATION_FAILED",
-  "message": "filters.include[1] must target a subdirectory",
-  "correlationId": "8c87d4f4-7a4a-46d5-b8f7-1d1c55b60df0",
-  "docs": "https://code-guardian-report.vercel.app/docs/errors#VALIDATION_FAILED"
-}
-```
-
-### GraphQL Bridge (beta)
-
-A lightweight GraphQL schema exposes dashboard widgets for internal portals. The resolver layer mirrors src/components/dashboard so that KPIs stay consistent across experiences.
-
-```graphql
-query RecentFindings($limit: Int = 20!) {
-  findings(limit: $limit) {
-    id
-    severity
-    ruleId
-    filePath
-    aiSummary
-    recommendedFix
-  }
-  aggregate {
-    highSeverityCount
-    secretLeakCount
-    averageRemediationTimeHours
-  }
-}
-```
-
-## CLI & Automation Recipes
-
-Leverage the scripts under /scripts to orchestrate Code Guardian in any CI/CD provider:
-
-| Command                                                              | Description                                        | Best When                    |
-| -------------------------------------------------------------------- | -------------------------------------------------- | ---------------------------- |
-| `node scripts/e2e-zip-analysis.ts --zip build.zip --out report.json` | Analyze build outputs before deployment.           | Artifact scanning pipelines. |
-| `tsx scripts/run-all-tests.ts --providers openai,claude`             | Execute every regression pack plus AI explainers.  | Nightly regression suites.   |
-| `node scripts/run-multi-language-tests.js --languages js,py,go`      | Validate detection coverage per language.          | Multi-language monorepos.    |
-| `bun scripts/run-accuracy-test.ts --threshold 0.93`                  | Measure model performance against golden datasets. | AI model evaluation.         |
-| `node scripts/update-contributors.js`                                | Refresh README contributor grid.                   | Release preparation.         |
-
-**Automation tips**
-
-- Pass `--mask-secrets` to any script to avoid printing tokens in CI logs.
-- Use CI=1 environment flag to force non-interactive progress bars.
-- Cache the .guardian-cache directory between jobs to reuse AST + AI embeddings.
-
-## Multi-Cloud Deployment Guides
-
-### AWS Reference Stack
-
-1. Store static assets in S3 with CloudFront caching; use the provided public/ headers for strict security policies.
-2. Deploy Firebase Functions analogs to AWS Lambda via the CDK or Terraform sample below.
-3. Use EventBridge to forward Code Guardian webhooks into AWS Security Hub.
-4. Pin outbound AI requests through VPC endpoints to satisfy egress policies.
-
-### Azure Reference Stack
-
-1. Host the frontend on Azure Static Web Apps or Azure Front Door + Storage.
-2. Run background jobs on Azure Functions using the same TypeScript sources from functions/src/index.ts.
-3. Route diagnostics to Azure Monitor with workbooks mirroring the dashboard widgets documented earlier.
-4. Integrate Azure AD for SSO; map roles to the RBAC guidance in md/CONTRIBUTING.md.
-
-### Google Cloud Reference Stack
-
-1. Serve the SPA via Firebase Hosting or Cloud Run's static mode.
-2. Replace Firebase Functions with Cloud Functions (2nd gen) using the same build pipeline.
-3. Export BigQuery-friendly datasets using the JSON schema stored in Appendix C.
-4. Hook Chronicle or SIEM integrations through Pub/Sub push endpoints subscribed to Code Guardian webhooks.
-
-### On-Prem / Air-Gapped Deployment
-
-- Build the project with `npm run build -- --base=/guardian` to support non-root hosting.
-- Use Docker Compose or Kubernetes manifests in Appendices F and G to ship static assets behind Nginx.
-- Mirror AI providers through approved gateways; update VITE\_\*\_API_URL variables accordingly.
-- Publish SARIF artifacts to internal GitHub Enterprise servers for persistent evidence.
-
-## Observability & Telemetry
-
-| Layer        | Signal                                             | Tooling                                                               |
-| ------------ | -------------------------------------------------- | --------------------------------------------------------------------- |
-| Frontend     | Core Web Vitals, user interactions, toast latency. | Vercel Analytics, custom window.guardianMetrics hook.                 |
-| Functions    | Cold starts, queue depth, retries.                 | Firebase console, CloudWatch, or Azure Monitor depending on platform. |
-| Webhooks     | Delivery success, retry counts, auth failures.     | api/push/schedule.ts logs, SIEM dashboards.                           |
-| AI Providers | Cost, token usage, fallback frequency.             | api/analytics.ts instrumentation + vendor billing exports.            |
-
-Recommended action items:
-
-1. Emit OpenTelemetry spans using the wrapper in src/lib/telemetry (add-on) so traces link browser + server events.
-2. Push logs to the same index patterns documented in the Security Operations Guide for faster triage.
-3. Set SLOs for analysis.completed under 3 minutes for medium repositories; alert when breaches occur twice consecutively.
-
-## Validation Matrix
-
-| Validation Layer    | Tool / Script                                  | Cadence                   | Owner                 |
-| ------------------- | ---------------------------------------------- | ------------------------- | --------------------- |
-| Unit tests          | `npm run test` (Vitest)                        | Per commit                | Feature teams         |
-| Integration         | tmp_rovodev_integration_test.ts                | Nightly                   | Platform QA           |
-| Accessibility       | `npm run lint -- --max-warnings=0` + Axe scans | Weekly                    | Design systems        |
-| Performance         | `npm run build` + Lighthouse CI                | Release candidate         | DX guild              |
-| Security Regression | scripts/run-multi-language-tests.js            | Nightly + pre-release     | AppSec                |
-| AI Benchmarking     | scripts/run-accuracy-test.ts                   | Weekly or on model change | AI Steering Committee |
-
-## Policy as Code Highlights
-
-- **Role Mapping**: The policy engine associates Firebase auth claims (or custom headers) with GuardRails (viewer, contributor, admin). Customize the mapping in src/components/auth.
-- **Branch Enforcement**: Example GitHub Actions workflow (Appendix D) blocks merges if severity ≥ high.
-- **Data Classification**: Findings inherit tags such as confidential, restricted, public according to src/config/security.ts.
-- **Retention**: JSON exports auto-expire after 30 days unless archived via the CLI.
-
-## KPI Workbook
-
-| KPI                           | Calculation                                                | Widget                                                   |
-| ----------------------------- | ---------------------------------------------------------- | -------------------------------------------------------- |
-| Mean Time To Remediate (MTTR) | resolved_at - detected_at aggregated weekly.               | Trendline inside ResultsOverviewCard.                    |
-| Findings per KLOC             | totalFindings / (linesOfCode / 1000)                       | Sparkline inside EnhancedAnalyticsDashboard.             |
-| Secret Exposure Velocity      | Count of leaked secrets in last 7 days vs previous 7 days. | Dual-axis chart in src/components/analysis/SecretTrends. |
-| AI Assist Acceptance Rate     | Accepted AI patches / total AI suggestions.                | Stacked bar chart in AI panel.                           |
-
-Export KPIs to CSV or plug them into PowerBI/Tableau using Appendix C as the canonical schema.
-
-## Incident Runbooks
-
-1. **Critical Finding Escalation**
-   - Confirm alert details in the notification center.
-   - Page the on-call AppSec engineer; attach JSON export.
-   - Create tracking issue referencing analysisId and severity.
-2. **AI Provider Outage**
-   - Switch to the fallback provider list in settings.
-   - Reduce concurrency via feature toggle in src/components/ai/AiSettingsPanel.
-   - File an incident report capturing timestamps and impact.
-3. **Webhook Replay Storm**
-   - Inspect logs for repeated 500s.
-   - Temporarily disable the webhook from the dashboard.
-   - Patch the consumer and re-enable; Code Guardian auto-replays buffered events.
-
-## Training Plans
-
-| Session           | Audience           | Duration | Outcomes                                                             |
-| ----------------- | ------------------ | -------- | -------------------------------------------------------------------- |
-| Foundations       | New contributors   | 90 min   | Understand repo layout, run dev server, perform first scan.          |
-| Deep Dive         | Security champions | 2 hrs    | Build custom detection rules, interpret AI explainers, export SARIF. |
-| Operator Lab      | DevOps + SRE       | 2 hrs    | Deploy multi-cloud, integrate observability, automate rollbacks.     |
-| Executive Readout | Directors / VPs    | 30 min   | Review KPIs, roadmap, and investment asks.                           |
-
-Each training module references assets tracked in tmp_rovodev_QUICK_START.md and tmp_rovodev_FINAL_REPORT.md so lessons remain consistent.
-
-## Appendix A: Control Catalogue
-
-#### Control CG-SQL-JS
-
-- **Title:** Parameterized Query Enforcement (JavaScript)
-- **Threat Mitigated:** Attackers inject SQL via unsanitized string concatenation or template literals.
-- **Detection Signal:** AST visitors flag concatenated statements plus risky ORM calls surfaced in scripts/test-pattern.js.
-- **Recommended Fix:** Adopt parameterized statements and centralized repositories; align with database-specific escaping. Leverage Prisma, Knex conventions for JavaScript deployments.
-- **Automation Level:** Auto-fix templates shipped with AI patch preview plus lint rule hints.
-- **Validation Steps:** Re-run scripts/e2e-zip-analysis.ts targeting database/\*\* modules.
-
-#### Control CG-SQL-TS
-
-- **Title:** Parameterized Query Enforcement (TypeScript)
-- **Threat Mitigated:** Attackers inject SQL via unsanitized string concatenation or template literals.
-- **Detection Signal:** AST visitors flag concatenated statements plus risky ORM calls surfaced in scripts/test-pattern.js.
-- **Recommended Fix:** Adopt parameterized statements and centralized repositories; align with database-specific escaping. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
-- **Automation Level:** Auto-fix templates shipped with AI patch preview plus lint rule hints.
-- **Validation Steps:** Re-run scripts/e2e-zip-analysis.ts targeting database/\*\* modules.
-
-#### Control CG-SQL-PY
-
-- **Title:** Parameterized Query Enforcement (Python)
-- **Threat Mitigated:** Attackers inject SQL via unsanitized string concatenation or template literals.
-- **Detection Signal:** AST visitors flag concatenated statements plus risky ORM calls surfaced in scripts/test-pattern.js.
-- **Recommended Fix:** Adopt parameterized statements and centralized repositories; align with database-specific escaping. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
-- **Automation Level:** Auto-fix templates shipped with AI patch preview plus lint rule hints.
-- **Validation Steps:** Re-run scripts/e2e-zip-analysis.ts targeting database/\*\* modules.
-
-#### Control CG-SQL-JAVA
-
-- **Title:** Parameterized Query Enforcement (Java)
-- **Threat Mitigated:** Attackers inject SQL via unsanitized string concatenation or template literals.
-- **Detection Signal:** AST visitors flag concatenated statements plus risky ORM calls surfaced in scripts/test-pattern.js.
-- **Recommended Fix:** Adopt parameterized statements and centralized repositories; align with database-specific escaping. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
-- **Automation Level:** Auto-fix templates shipped with AI patch preview plus lint rule hints.
-- **Validation Steps:** Re-run scripts/e2e-zip-analysis.ts targeting database/\*\* modules.
-
-#### Control CG-SQL-GO
-
-- **Title:** Parameterized Query Enforcement (Go)
-- **Threat Mitigated:** Attackers inject SQL via unsanitized string concatenation or template literals.
-- **Detection Signal:** AST visitors flag concatenated statements plus risky ORM calls surfaced in scripts/test-pattern.js.
-- **Recommended Fix:** Adopt parameterized statements and centralized repositories; align with database-specific escaping. Leverage GORM, pgx conventions for Go deployments.
-- **Automation Level:** Auto-fix templates shipped with AI patch preview plus lint rule hints.
-- **Validation Steps:** Re-run scripts/e2e-zip-analysis.ts targeting database/\*\* modules.
-
-#### Control CG-SQL-RST
-
-- **Title:** Parameterized Query Enforcement (Rust)
-- **Threat Mitigated:** Attackers inject SQL via unsanitized string concatenation or template literals.
-- **Detection Signal:** AST visitors flag concatenated statements plus risky ORM calls surfaced in scripts/test-pattern.js.
-- **Recommended Fix:** Adopt parameterized statements and centralized repositories; align with database-specific escaping. Leverage SQLx, Diesel conventions for Rust deployments.
-- **Automation Level:** Auto-fix templates shipped with AI patch preview plus lint rule hints.
-- **Validation Steps:** Re-run scripts/e2e-zip-analysis.ts targeting database/\*\* modules.
-
-#### Control CG-SQL-PHP
-
-- **Title:** Parameterized Query Enforcement (PHP)
-- **Threat Mitigated:** Attackers inject SQL via unsanitized string concatenation or template literals.
-- **Detection Signal:** AST visitors flag concatenated statements plus risky ORM calls surfaced in scripts/test-pattern.js.
-- **Recommended Fix:** Adopt parameterized statements and centralized repositories; align with database-specific escaping. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
-- **Automation Level:** Auto-fix templates shipped with AI patch preview plus lint rule hints.
-- **Validation Steps:** Re-run scripts/e2e-zip-analysis.ts targeting database/\*\* modules.
-
-#### Control CG-SQL-CS
-
-- **Title:** Parameterized Query Enforcement (C#)
-- **Threat Mitigated:** Attackers inject SQL via unsanitized string concatenation or template literals.
-- **Detection Signal:** AST visitors flag concatenated statements plus risky ORM calls surfaced in scripts/test-pattern.js.
-- **Recommended Fix:** Adopt parameterized statements and centralized repositories; align with database-specific escaping. Leverage Entity Framework, Dapper conventions for C# deployments.
-- **Automation Level:** Auto-fix templates shipped with AI patch preview plus lint rule hints.
-- **Validation Steps:** Re-run scripts/e2e-zip-analysis.ts targeting database/\*\* modules.
-
-#### Control CG-CMD-JS
-
-- **Title:** Command Injection Guardrails (JavaScript)
-- **Threat Mitigated:** User-controlled arguments reach exec, spawn, or shell wrappers.
-- **Detection Signal:** Data-flow tracing links tainted inputs to process execution utilities in src/utils.
-- **Recommended Fix:** Whitelist commands, avoid shell interpretation, and enforce argument escaping. Leverage Prisma, Knex conventions for JavaScript deployments.
-- **Automation Level:** Risk scoring surfaces in SecurityMetricsDashboard with autofill mitigations.
-- **Validation Steps:** Execute tests/modernCodeScanning.test.ts case command-injection.
-
-#### Control CG-CMD-TS
-
-- **Title:** Command Injection Guardrails (TypeScript)
-- **Threat Mitigated:** User-controlled arguments reach exec, spawn, or shell wrappers.
-- **Detection Signal:** Data-flow tracing links tainted inputs to process execution utilities in src/utils.
-- **Recommended Fix:** Whitelist commands, avoid shell interpretation, and enforce argument escaping. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
-- **Automation Level:** Risk scoring surfaces in SecurityMetricsDashboard with autofill mitigations.
-- **Validation Steps:** Execute tests/modernCodeScanning.test.ts case command-injection.
-
-#### Control CG-CMD-PY
-
-- **Title:** Command Injection Guardrails (Python)
-- **Threat Mitigated:** User-controlled arguments reach exec, spawn, or shell wrappers.
-- **Detection Signal:** Data-flow tracing links tainted inputs to process execution utilities in src/utils.
-- **Recommended Fix:** Whitelist commands, avoid shell interpretation, and enforce argument escaping. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
-- **Automation Level:** Risk scoring surfaces in SecurityMetricsDashboard with autofill mitigations.
-- **Validation Steps:** Execute tests/modernCodeScanning.test.ts case command-injection.
-
-#### Control CG-CMD-JAVA
-
-- **Title:** Command Injection Guardrails (Java)
-- **Threat Mitigated:** User-controlled arguments reach exec, spawn, or shell wrappers.
-- **Detection Signal:** Data-flow tracing links tainted inputs to process execution utilities in src/utils.
-- **Recommended Fix:** Whitelist commands, avoid shell interpretation, and enforce argument escaping. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
-- **Automation Level:** Risk scoring surfaces in SecurityMetricsDashboard with autofill mitigations.
-- **Validation Steps:** Execute tests/modernCodeScanning.test.ts case command-injection.
-
-#### Control CG-CMD-GO
-
-- **Title:** Command Injection Guardrails (Go)
-- **Threat Mitigated:** User-controlled arguments reach exec, spawn, or shell wrappers.
-- **Detection Signal:** Data-flow tracing links tainted inputs to process execution utilities in src/utils.
-- **Recommended Fix:** Whitelist commands, avoid shell interpretation, and enforce argument escaping. Leverage GORM, pgx conventions for Go deployments.
-- **Automation Level:** Risk scoring surfaces in SecurityMetricsDashboard with autofill mitigations.
-- **Validation Steps:** Execute tests/modernCodeScanning.test.ts case command-injection.
-
-#### Control CG-CMD-RST
-
-- **Title:** Command Injection Guardrails (Rust)
-- **Threat Mitigated:** User-controlled arguments reach exec, spawn, or shell wrappers.
-- **Detection Signal:** Data-flow tracing links tainted inputs to process execution utilities in src/utils.
-- **Recommended Fix:** Whitelist commands, avoid shell interpretation, and enforce argument escaping. Leverage SQLx, Diesel conventions for Rust deployments.
-- **Automation Level:** Risk scoring surfaces in SecurityMetricsDashboard with autofill mitigations.
-- **Validation Steps:** Execute tests/modernCodeScanning.test.ts case command-injection.
-
-#### Control CG-CMD-PHP
-
-- **Title:** Command Injection Guardrails (PHP)
-- **Threat Mitigated:** User-controlled arguments reach exec, spawn, or shell wrappers.
-- **Detection Signal:** Data-flow tracing links tainted inputs to process execution utilities in src/utils.
-- **Recommended Fix:** Whitelist commands, avoid shell interpretation, and enforce argument escaping. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
-- **Automation Level:** Risk scoring surfaces in SecurityMetricsDashboard with autofill mitigations.
-- **Validation Steps:** Execute tests/modernCodeScanning.test.ts case command-injection.
-
-#### Control CG-CMD-CS
-
-- **Title:** Command Injection Guardrails (C#)
-- **Threat Mitigated:** User-controlled arguments reach exec, spawn, or shell wrappers.
-- **Detection Signal:** Data-flow tracing links tainted inputs to process execution utilities in src/utils.
-- **Recommended Fix:** Whitelist commands, avoid shell interpretation, and enforce argument escaping. Leverage Entity Framework, Dapper conventions for C# deployments.
-- **Automation Level:** Risk scoring surfaces in SecurityMetricsDashboard with autofill mitigations.
-- **Validation Steps:** Execute tests/modernCodeScanning.test.ts case command-injection.
-
-#### Control CG-SSRF-JS
-
-- **Title:** Server-Side Request Forgery Mitigation (JavaScript)
-- **Threat Mitigated:** Untrusted URLs are fetched from backend contexts leading to data exfiltration.
-- **Detection Signal:** Pattern engine inspects fetch, axios, and native HTTP clients for missing allowlists.
-- **Recommended Fix:** Enforce hostname/IP allowlists and signed requests, reject link-local addresses. Leverage Prisma, Knex conventions for JavaScript deployments.
-- **Automation Level:** Suggested fixes include sample proxy validators distributed with the AI assistant.
-- **Validation Steps:** Replay suspicious URLs via tmp_rovodev_runtime_test.ts.
-
-#### Control CG-SSRF-TS
-
-- **Title:** Server-Side Request Forgery Mitigation (TypeScript)
-- **Threat Mitigated:** Untrusted URLs are fetched from backend contexts leading to data exfiltration.
-- **Detection Signal:** Pattern engine inspects fetch, axios, and native HTTP clients for missing allowlists.
-- **Recommended Fix:** Enforce hostname/IP allowlists and signed requests, reject link-local addresses. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
-- **Automation Level:** Suggested fixes include sample proxy validators distributed with the AI assistant.
-- **Validation Steps:** Replay suspicious URLs via tmp_rovodev_runtime_test.ts.
-
-#### Control CG-SSRF-PY
-
-- **Title:** Server-Side Request Forgery Mitigation (Python)
-- **Threat Mitigated:** Untrusted URLs are fetched from backend contexts leading to data exfiltration.
-- **Detection Signal:** Pattern engine inspects fetch, axios, and native HTTP clients for missing allowlists.
-- **Recommended Fix:** Enforce hostname/IP allowlists and signed requests, reject link-local addresses. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
-- **Automation Level:** Suggested fixes include sample proxy validators distributed with the AI assistant.
-- **Validation Steps:** Replay suspicious URLs via tmp_rovodev_runtime_test.ts.
-
-#### Control CG-SSRF-JAVA
-
-- **Title:** Server-Side Request Forgery Mitigation (Java)
-- **Threat Mitigated:** Untrusted URLs are fetched from backend contexts leading to data exfiltration.
-- **Detection Signal:** Pattern engine inspects fetch, axios, and native HTTP clients for missing allowlists.
-- **Recommended Fix:** Enforce hostname/IP allowlists and signed requests, reject link-local addresses. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
-- **Automation Level:** Suggested fixes include sample proxy validators distributed with the AI assistant.
-- **Validation Steps:** Replay suspicious URLs via tmp_rovodev_runtime_test.ts.
-
-#### Control CG-SSRF-GO
-
-- **Title:** Server-Side Request Forgery Mitigation (Go)
-- **Threat Mitigated:** Untrusted URLs are fetched from backend contexts leading to data exfiltration.
-- **Detection Signal:** Pattern engine inspects fetch, axios, and native HTTP clients for missing allowlists.
-- **Recommended Fix:** Enforce hostname/IP allowlists and signed requests, reject link-local addresses. Leverage GORM, pgx conventions for Go deployments.
-- **Automation Level:** Suggested fixes include sample proxy validators distributed with the AI assistant.
-- **Validation Steps:** Replay suspicious URLs via tmp_rovodev_runtime_test.ts.
-
-#### Control CG-SSRF-RST
-
-- **Title:** Server-Side Request Forgery Mitigation (Rust)
-- **Threat Mitigated:** Untrusted URLs are fetched from backend contexts leading to data exfiltration.
-- **Detection Signal:** Pattern engine inspects fetch, axios, and native HTTP clients for missing allowlists.
-- **Recommended Fix:** Enforce hostname/IP allowlists and signed requests, reject link-local addresses. Leverage SQLx, Diesel conventions for Rust deployments.
-- **Automation Level:** Suggested fixes include sample proxy validators distributed with the AI assistant.
-- **Validation Steps:** Replay suspicious URLs via tmp_rovodev_runtime_test.ts.
-
-#### Control CG-SSRF-PHP
-
-- **Title:** Server-Side Request Forgery Mitigation (PHP)
-- **Threat Mitigated:** Untrusted URLs are fetched from backend contexts leading to data exfiltration.
-- **Detection Signal:** Pattern engine inspects fetch, axios, and native HTTP clients for missing allowlists.
-- **Recommended Fix:** Enforce hostname/IP allowlists and signed requests, reject link-local addresses. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
-- **Automation Level:** Suggested fixes include sample proxy validators distributed with the AI assistant.
-- **Validation Steps:** Replay suspicious URLs via tmp_rovodev_runtime_test.ts.
-
-#### Control CG-SSRF-CS
-
-- **Title:** Server-Side Request Forgery Mitigation (C#)
-- **Threat Mitigated:** Untrusted URLs are fetched from backend contexts leading to data exfiltration.
-- **Detection Signal:** Pattern engine inspects fetch, axios, and native HTTP clients for missing allowlists.
-- **Recommended Fix:** Enforce hostname/IP allowlists and signed requests, reject link-local addresses. Leverage Entity Framework, Dapper conventions for C# deployments.
-- **Automation Level:** Suggested fixes include sample proxy validators distributed with the AI assistant.
-- **Validation Steps:** Replay suspicious URLs via tmp_rovodev_runtime_test.ts.
-
-#### Control CG-XSS-JS
-
-- **Title:** Cross-Site Scripting Neutralization (JavaScript)
-- **Threat Mitigated:** Unescaped content is rendered into DOM nodes or templating outputs.
-- **Detection Signal:** React lint rules plus static HTML parsers detect dangerouslySetInnerHTML misuse.
-- **Recommended Fix:** Prefer component props, sanitize HTML, and rely on design-system safe renderers. Leverage Prisma, Knex conventions for JavaScript deployments.
-- **Automation Level:** UI components auto-escape when using the latest src/components/ui primitives.
-- **Validation Steps:** Run npm run build with the security bundle analyzer to confirm zero warnings.
-
-#### Control CG-XSS-TS
-
-- **Title:** Cross-Site Scripting Neutralization (TypeScript)
-- **Threat Mitigated:** Unescaped content is rendered into DOM nodes or templating outputs.
-- **Detection Signal:** React lint rules plus static HTML parsers detect dangerouslySetInnerHTML misuse.
-- **Recommended Fix:** Prefer component props, sanitize HTML, and rely on design-system safe renderers. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
-- **Automation Level:** UI components auto-escape when using the latest src/components/ui primitives.
-- **Validation Steps:** Run npm run build with the security bundle analyzer to confirm zero warnings.
-
-#### Control CG-XSS-PY
-
-- **Title:** Cross-Site Scripting Neutralization (Python)
-- **Threat Mitigated:** Unescaped content is rendered into DOM nodes or templating outputs.
-- **Detection Signal:** React lint rules plus static HTML parsers detect dangerouslySetInnerHTML misuse.
-- **Recommended Fix:** Prefer component props, sanitize HTML, and rely on design-system safe renderers. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
-- **Automation Level:** UI components auto-escape when using the latest src/components/ui primitives.
-- **Validation Steps:** Run npm run build with the security bundle analyzer to confirm zero warnings.
-
-#### Control CG-XSS-JAVA
-
-- **Title:** Cross-Site Scripting Neutralization (Java)
-- **Threat Mitigated:** Unescaped content is rendered into DOM nodes or templating outputs.
-- **Detection Signal:** React lint rules plus static HTML parsers detect dangerouslySetInnerHTML misuse.
-- **Recommended Fix:** Prefer component props, sanitize HTML, and rely on design-system safe renderers. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
-- **Automation Level:** UI components auto-escape when using the latest src/components/ui primitives.
-- **Validation Steps:** Run npm run build with the security bundle analyzer to confirm zero warnings.
-
-#### Control CG-XSS-GO
-
-- **Title:** Cross-Site Scripting Neutralization (Go)
-- **Threat Mitigated:** Unescaped content is rendered into DOM nodes or templating outputs.
-- **Detection Signal:** React lint rules plus static HTML parsers detect dangerouslySetInnerHTML misuse.
-- **Recommended Fix:** Prefer component props, sanitize HTML, and rely on design-system safe renderers. Leverage GORM, pgx conventions for Go deployments.
-- **Automation Level:** UI components auto-escape when using the latest src/components/ui primitives.
-- **Validation Steps:** Run npm run build with the security bundle analyzer to confirm zero warnings.
-
-#### Control CG-XSS-RST
-
-- **Title:** Cross-Site Scripting Neutralization (Rust)
-- **Threat Mitigated:** Unescaped content is rendered into DOM nodes or templating outputs.
-- **Detection Signal:** React lint rules plus static HTML parsers detect dangerouslySetInnerHTML misuse.
-- **Recommended Fix:** Prefer component props, sanitize HTML, and rely on design-system safe renderers. Leverage SQLx, Diesel conventions for Rust deployments.
-- **Automation Level:** UI components auto-escape when using the latest src/components/ui primitives.
-- **Validation Steps:** Run npm run build with the security bundle analyzer to confirm zero warnings.
-
-#### Control CG-XSS-PHP
-
-- **Title:** Cross-Site Scripting Neutralization (PHP)
-- **Threat Mitigated:** Unescaped content is rendered into DOM nodes or templating outputs.
-- **Detection Signal:** React lint rules plus static HTML parsers detect dangerouslySetInnerHTML misuse.
-- **Recommended Fix:** Prefer component props, sanitize HTML, and rely on design-system safe renderers. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
-- **Automation Level:** UI components auto-escape when using the latest src/components/ui primitives.
-- **Validation Steps:** Run npm run build with the security bundle analyzer to confirm zero warnings.
-
-#### Control CG-XSS-CS
-
-- **Title:** Cross-Site Scripting Neutralization (C#)
-- **Threat Mitigated:** Unescaped content is rendered into DOM nodes or templating outputs.
-- **Detection Signal:** React lint rules plus static HTML parsers detect dangerouslySetInnerHTML misuse.
-- **Recommended Fix:** Prefer component props, sanitize HTML, and rely on design-system safe renderers. Leverage Entity Framework, Dapper conventions for C# deployments.
-- **Automation Level:** UI components auto-escape when using the latest src/components/ui primitives.
-- **Validation Steps:** Run npm run build with the security bundle analyzer to confirm zero warnings.
-
-#### Control CG-PATH-JS
-
-- **Title:** Directory Traversal Prevention (JavaScript)
-- **Threat Mitigated:** Relative paths like ../../etc/passwd slip into file system accessors.
-- **Detection Signal:** Regex + AST heuristics inspect fs calls for unsanitized path joins.
-- **Recommended Fix:** Resolve paths against whitelisted roots and drop .. segments before use. Leverage Prisma, Knex conventions for JavaScript deployments.
-- **Automation Level:** Auto-fix suggestions wrap user input with sandbox helpers defined in src/utils/fs.
-- **Validation Steps:** Trigger scripts/test-pattern.js --rule traversal after patching.
-
-#### Control CG-PATH-TS
-
-- **Title:** Directory Traversal Prevention (TypeScript)
-- **Threat Mitigated:** Relative paths like ../../etc/passwd slip into file system accessors.
-- **Detection Signal:** Regex + AST heuristics inspect fs calls for unsanitized path joins.
-- **Recommended Fix:** Resolve paths against whitelisted roots and drop .. segments before use. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
-- **Automation Level:** Auto-fix suggestions wrap user input with sandbox helpers defined in src/utils/fs.
-- **Validation Steps:** Trigger scripts/test-pattern.js --rule traversal after patching.
-
-#### Control CG-PATH-PY
-
-- **Title:** Directory Traversal Prevention (Python)
-- **Threat Mitigated:** Relative paths like ../../etc/passwd slip into file system accessors.
-- **Detection Signal:** Regex + AST heuristics inspect fs calls for unsanitized path joins.
-- **Recommended Fix:** Resolve paths against whitelisted roots and drop .. segments before use. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
-- **Automation Level:** Auto-fix suggestions wrap user input with sandbox helpers defined in src/utils/fs.
-- **Validation Steps:** Trigger scripts/test-pattern.js --rule traversal after patching.
-
-#### Control CG-PATH-JAVA
-
-- **Title:** Directory Traversal Prevention (Java)
-- **Threat Mitigated:** Relative paths like ../../etc/passwd slip into file system accessors.
-- **Detection Signal:** Regex + AST heuristics inspect fs calls for unsanitized path joins.
-- **Recommended Fix:** Resolve paths against whitelisted roots and drop .. segments before use. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
-- **Automation Level:** Auto-fix suggestions wrap user input with sandbox helpers defined in src/utils/fs.
-- **Validation Steps:** Trigger scripts/test-pattern.js --rule traversal after patching.
-
-#### Control CG-PATH-GO
-
-- **Title:** Directory Traversal Prevention (Go)
-- **Threat Mitigated:** Relative paths like ../../etc/passwd slip into file system accessors.
-- **Detection Signal:** Regex + AST heuristics inspect fs calls for unsanitized path joins.
-- **Recommended Fix:** Resolve paths against whitelisted roots and drop .. segments before use. Leverage GORM, pgx conventions for Go deployments.
-- **Automation Level:** Auto-fix suggestions wrap user input with sandbox helpers defined in src/utils/fs.
-- **Validation Steps:** Trigger scripts/test-pattern.js --rule traversal after patching.
-
-#### Control CG-PATH-RST
-
-- **Title:** Directory Traversal Prevention (Rust)
-- **Threat Mitigated:** Relative paths like ../../etc/passwd slip into file system accessors.
-- **Detection Signal:** Regex + AST heuristics inspect fs calls for unsanitized path joins.
-- **Recommended Fix:** Resolve paths against whitelisted roots and drop .. segments before use. Leverage SQLx, Diesel conventions for Rust deployments.
-- **Automation Level:** Auto-fix suggestions wrap user input with sandbox helpers defined in src/utils/fs.
-- **Validation Steps:** Trigger scripts/test-pattern.js --rule traversal after patching.
-
-#### Control CG-PATH-PHP
-
-- **Title:** Directory Traversal Prevention (PHP)
-- **Threat Mitigated:** Relative paths like ../../etc/passwd slip into file system accessors.
-- **Detection Signal:** Regex + AST heuristics inspect fs calls for unsanitized path joins.
-- **Recommended Fix:** Resolve paths against whitelisted roots and drop .. segments before use. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
-- **Automation Level:** Auto-fix suggestions wrap user input with sandbox helpers defined in src/utils/fs.
-- **Validation Steps:** Trigger scripts/test-pattern.js --rule traversal after patching.
-
-#### Control CG-PATH-CS
-
-- **Title:** Directory Traversal Prevention (C#)
-- **Threat Mitigated:** Relative paths like ../../etc/passwd slip into file system accessors.
-- **Detection Signal:** Regex + AST heuristics inspect fs calls for unsanitized path joins.
-- **Recommended Fix:** Resolve paths against whitelisted roots and drop .. segments before use. Leverage Entity Framework, Dapper conventions for C# deployments.
-- **Automation Level:** Auto-fix suggestions wrap user input with sandbox helpers defined in src/utils/fs.
-- **Validation Steps:** Trigger scripts/test-pattern.js --rule traversal after patching.
-
-#### Control CG-AUTH-JS
-
-- **Title:** Broken Authentication Hardening (JavaScript)
-- **Threat Mitigated:** Weak session controls allow credential stuffing or privilege abuse.
-- **Detection Signal:** Rules inspect auth middleware for missing MFA toggles and insecure cookie flags.
-- **Recommended Fix:** Enable HTTPOnly + Secure cookies, enforce MFA, throttle login attempts. Leverage Prisma, Knex conventions for JavaScript deployments.
-- **Automation Level:** Policy templates stored in src/components/auth update UI toggles.
-- **Validation Steps:** Run scripts/test-automation.js --scenario auth to confirm controls.
-
-#### Control CG-AUTH-TS
-
-- **Title:** Broken Authentication Hardening (TypeScript)
-- **Threat Mitigated:** Weak session controls allow credential stuffing or privilege abuse.
-- **Detection Signal:** Rules inspect auth middleware for missing MFA toggles and insecure cookie flags.
-- **Recommended Fix:** Enable HTTPOnly + Secure cookies, enforce MFA, throttle login attempts. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
-- **Automation Level:** Policy templates stored in src/components/auth update UI toggles.
-- **Validation Steps:** Run scripts/test-automation.js --scenario auth to confirm controls.
-
-#### Control CG-AUTH-PY
-
-- **Title:** Broken Authentication Hardening (Python)
-- **Threat Mitigated:** Weak session controls allow credential stuffing or privilege abuse.
-- **Detection Signal:** Rules inspect auth middleware for missing MFA toggles and insecure cookie flags.
-- **Recommended Fix:** Enable HTTPOnly + Secure cookies, enforce MFA, throttle login attempts. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
-- **Automation Level:** Policy templates stored in src/components/auth update UI toggles.
-- **Validation Steps:** Run scripts/test-automation.js --scenario auth to confirm controls.
-
-#### Control CG-AUTH-JAVA
-
-- **Title:** Broken Authentication Hardening (Java)
-- **Threat Mitigated:** Weak session controls allow credential stuffing or privilege abuse.
-- **Detection Signal:** Rules inspect auth middleware for missing MFA toggles and insecure cookie flags.
-- **Recommended Fix:** Enable HTTPOnly + Secure cookies, enforce MFA, throttle login attempts. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
-- **Automation Level:** Policy templates stored in src/components/auth update UI toggles.
-- **Validation Steps:** Run scripts/test-automation.js --scenario auth to confirm controls.
-
-#### Control CG-AUTH-GO
-
-- **Title:** Broken Authentication Hardening (Go)
-- **Threat Mitigated:** Weak session controls allow credential stuffing or privilege abuse.
-- **Detection Signal:** Rules inspect auth middleware for missing MFA toggles and insecure cookie flags.
-- **Recommended Fix:** Enable HTTPOnly + Secure cookies, enforce MFA, throttle login attempts. Leverage GORM, pgx conventions for Go deployments.
-- **Automation Level:** Policy templates stored in src/components/auth update UI toggles.
-- **Validation Steps:** Run scripts/test-automation.js --scenario auth to confirm controls.
-
-#### Control CG-AUTH-RST
-
-- **Title:** Broken Authentication Hardening (Rust)
-- **Threat Mitigated:** Weak session controls allow credential stuffing or privilege abuse.
-- **Detection Signal:** Rules inspect auth middleware for missing MFA toggles and insecure cookie flags.
-- **Recommended Fix:** Enable HTTPOnly + Secure cookies, enforce MFA, throttle login attempts. Leverage SQLx, Diesel conventions for Rust deployments.
-- **Automation Level:** Policy templates stored in src/components/auth update UI toggles.
-- **Validation Steps:** Run scripts/test-automation.js --scenario auth to confirm controls.
-
-#### Control CG-AUTH-PHP
-
-- **Title:** Broken Authentication Hardening (PHP)
-- **Threat Mitigated:** Weak session controls allow credential stuffing or privilege abuse.
-- **Detection Signal:** Rules inspect auth middleware for missing MFA toggles and insecure cookie flags.
-- **Recommended Fix:** Enable HTTPOnly + Secure cookies, enforce MFA, throttle login attempts. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
-- **Automation Level:** Policy templates stored in src/components/auth update UI toggles.
-- **Validation Steps:** Run scripts/test-automation.js --scenario auth to confirm controls.
-
-#### Control CG-AUTH-CS
-
-- **Title:** Broken Authentication Hardening (C#)
-- **Threat Mitigated:** Weak session controls allow credential stuffing or privilege abuse.
-- **Detection Signal:** Rules inspect auth middleware for missing MFA toggles and insecure cookie flags.
-- **Recommended Fix:** Enable HTTPOnly + Secure cookies, enforce MFA, throttle login attempts. Leverage Entity Framework, Dapper conventions for C# deployments.
-- **Automation Level:** Policy templates stored in src/components/auth update UI toggles.
-- **Validation Steps:** Run scripts/test-automation.js --scenario auth to confirm controls.
-
-#### Control CG-TOKEN-JS
-
-- **Title:** Secret Exposure Controls (JavaScript)
-- **Threat Mitigated:** API keys, JWTs, or certificates leak through logs or source control.
-- **Detection Signal:** Entropy scanners, regex signatures, and ML classifiers cross-check with test-vulnerabilities.js.
-- **Recommended Fix:** Rotate keys, move to secret managers, scrub history. Leverage Prisma, Knex conventions for JavaScript deployments.
-- **Automation Level:** Auto-created tickets include rotation checklists plus CLI commands.
-- **Validation Steps:** Execute scripts/test-firebase-storage-fix.js to ensure rotation scripts run.
-
-#### Control CG-TOKEN-TS
-
-- **Title:** Secret Exposure Controls (TypeScript)
-- **Threat Mitigated:** API keys, JWTs, or certificates leak through logs or source control.
-- **Detection Signal:** Entropy scanners, regex signatures, and ML classifiers cross-check with test-vulnerabilities.js.
-- **Recommended Fix:** Rotate keys, move to secret managers, scrub history. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
-- **Automation Level:** Auto-created tickets include rotation checklists plus CLI commands.
-- **Validation Steps:** Execute scripts/test-firebase-storage-fix.js to ensure rotation scripts run.
-
-#### Control CG-TOKEN-PY
-
-- **Title:** Secret Exposure Controls (Python)
-- **Threat Mitigated:** API keys, JWTs, or certificates leak through logs or source control.
-- **Detection Signal:** Entropy scanners, regex signatures, and ML classifiers cross-check with test-vulnerabilities.js.
-- **Recommended Fix:** Rotate keys, move to secret managers, scrub history. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
-- **Automation Level:** Auto-created tickets include rotation checklists plus CLI commands.
-- **Validation Steps:** Execute scripts/test-firebase-storage-fix.js to ensure rotation scripts run.
-
-#### Control CG-TOKEN-JAVA
-
-- **Title:** Secret Exposure Controls (Java)
-- **Threat Mitigated:** API keys, JWTs, or certificates leak through logs or source control.
-- **Detection Signal:** Entropy scanners, regex signatures, and ML classifiers cross-check with test-vulnerabilities.js.
-- **Recommended Fix:** Rotate keys, move to secret managers, scrub history. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
-- **Automation Level:** Auto-created tickets include rotation checklists plus CLI commands.
-- **Validation Steps:** Execute scripts/test-firebase-storage-fix.js to ensure rotation scripts run.
-
-#### Control CG-TOKEN-GO
-
-- **Title:** Secret Exposure Controls (Go)
-- **Threat Mitigated:** API keys, JWTs, or certificates leak through logs or source control.
-- **Detection Signal:** Entropy scanners, regex signatures, and ML classifiers cross-check with test-vulnerabilities.js.
-- **Recommended Fix:** Rotate keys, move to secret managers, scrub history. Leverage GORM, pgx conventions for Go deployments.
-- **Automation Level:** Auto-created tickets include rotation checklists plus CLI commands.
-- **Validation Steps:** Execute scripts/test-firebase-storage-fix.js to ensure rotation scripts run.
-
-#### Control CG-TOKEN-RST
-
-- **Title:** Secret Exposure Controls (Rust)
-- **Threat Mitigated:** API keys, JWTs, or certificates leak through logs or source control.
-- **Detection Signal:** Entropy scanners, regex signatures, and ML classifiers cross-check with test-vulnerabilities.js.
-- **Recommended Fix:** Rotate keys, move to secret managers, scrub history. Leverage SQLx, Diesel conventions for Rust deployments.
-- **Automation Level:** Auto-created tickets include rotation checklists plus CLI commands.
-- **Validation Steps:** Execute scripts/test-firebase-storage-fix.js to ensure rotation scripts run.
-
-#### Control CG-TOKEN-PHP
-
-- **Title:** Secret Exposure Controls (PHP)
-- **Threat Mitigated:** API keys, JWTs, or certificates leak through logs or source control.
-- **Detection Signal:** Entropy scanners, regex signatures, and ML classifiers cross-check with test-vulnerabilities.js.
-- **Recommended Fix:** Rotate keys, move to secret managers, scrub history. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
-- **Automation Level:** Auto-created tickets include rotation checklists plus CLI commands.
-- **Validation Steps:** Execute scripts/test-firebase-storage-fix.js to ensure rotation scripts run.
-
-#### Control CG-TOKEN-CS
-
-- **Title:** Secret Exposure Controls (C#)
-- **Threat Mitigated:** API keys, JWTs, or certificates leak through logs or source control.
-- **Detection Signal:** Entropy scanners, regex signatures, and ML classifiers cross-check with test-vulnerabilities.js.
-- **Recommended Fix:** Rotate keys, move to secret managers, scrub history. Leverage Entity Framework, Dapper conventions for C# deployments.
-- **Automation Level:** Auto-created tickets include rotation checklists plus CLI commands.
-- **Validation Steps:** Execute scripts/test-firebase-storage-fix.js to ensure rotation scripts run.
-
-#### Control CG-CORS-JS
-
-- **Title:** Cross-Origin Resource Sharing Policy (JavaScript)
-- **Threat Mitigated:** Overly permissive CORS allows credentialed cross-site requests.
-- **Detection Signal:** Config linters read public/manifest.json and serverless headers for wildcard origins.
-- **Recommended Fix:** Constrain origins per environment and enforce preflight validation. Leverage Prisma, Knex conventions for JavaScript deployments.
-- **Automation Level:** Dashboard surfaces warnings when more than five origins are allowed.
-- **Validation Steps:** Use scripts/run-accuracy-test.ts --check cors for regression evidence.
-
-#### Control CG-CORS-TS
-
-- **Title:** Cross-Origin Resource Sharing Policy (TypeScript)
-- **Threat Mitigated:** Overly permissive CORS allows credentialed cross-site requests.
-- **Detection Signal:** Config linters read public/manifest.json and serverless headers for wildcard origins.
-- **Recommended Fix:** Constrain origins per environment and enforce preflight validation. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
-- **Automation Level:** Dashboard surfaces warnings when more than five origins are allowed.
-- **Validation Steps:** Use scripts/run-accuracy-test.ts --check cors for regression evidence.
-
-#### Control CG-CORS-PY
-
-- **Title:** Cross-Origin Resource Sharing Policy (Python)
-- **Threat Mitigated:** Overly permissive CORS allows credentialed cross-site requests.
-- **Detection Signal:** Config linters read public/manifest.json and serverless headers for wildcard origins.
-- **Recommended Fix:** Constrain origins per environment and enforce preflight validation. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
-- **Automation Level:** Dashboard surfaces warnings when more than five origins are allowed.
-- **Validation Steps:** Use scripts/run-accuracy-test.ts --check cors for regression evidence.
-
-#### Control CG-CORS-JAVA
-
-- **Title:** Cross-Origin Resource Sharing Policy (Java)
-- **Threat Mitigated:** Overly permissive CORS allows credentialed cross-site requests.
-- **Detection Signal:** Config linters read public/manifest.json and serverless headers for wildcard origins.
-- **Recommended Fix:** Constrain origins per environment and enforce preflight validation. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
-- **Automation Level:** Dashboard surfaces warnings when more than five origins are allowed.
-- **Validation Steps:** Use scripts/run-accuracy-test.ts --check cors for regression evidence.
-
-#### Control CG-CORS-GO
-
-- **Title:** Cross-Origin Resource Sharing Policy (Go)
-- **Threat Mitigated:** Overly permissive CORS allows credentialed cross-site requests.
-- **Detection Signal:** Config linters read public/manifest.json and serverless headers for wildcard origins.
-- **Recommended Fix:** Constrain origins per environment and enforce preflight validation. Leverage GORM, pgx conventions for Go deployments.
-- **Automation Level:** Dashboard surfaces warnings when more than five origins are allowed.
-- **Validation Steps:** Use scripts/run-accuracy-test.ts --check cors for regression evidence.
-
-#### Control CG-CORS-RST
-
-- **Title:** Cross-Origin Resource Sharing Policy (Rust)
-- **Threat Mitigated:** Overly permissive CORS allows credentialed cross-site requests.
-- **Detection Signal:** Config linters read public/manifest.json and serverless headers for wildcard origins.
-- **Recommended Fix:** Constrain origins per environment and enforce preflight validation. Leverage SQLx, Diesel conventions for Rust deployments.
-- **Automation Level:** Dashboard surfaces warnings when more than five origins are allowed.
-- **Validation Steps:** Use scripts/run-accuracy-test.ts --check cors for regression evidence.
-
-#### Control CG-CORS-PHP
-
-- **Title:** Cross-Origin Resource Sharing Policy (PHP)
-- **Threat Mitigated:** Overly permissive CORS allows credentialed cross-site requests.
-- **Detection Signal:** Config linters read public/manifest.json and serverless headers for wildcard origins.
-- **Recommended Fix:** Constrain origins per environment and enforce preflight validation. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
-- **Automation Level:** Dashboard surfaces warnings when more than five origins are allowed.
-- **Validation Steps:** Use scripts/run-accuracy-test.ts --check cors for regression evidence.
-
-#### Control CG-CORS-CS
-
-- **Title:** Cross-Origin Resource Sharing Policy (C#)
-- **Threat Mitigated:** Overly permissive CORS allows credentialed cross-site requests.
-- **Detection Signal:** Config linters read public/manifest.json and serverless headers for wildcard origins.
-- **Recommended Fix:** Constrain origins per environment and enforce preflight validation. Leverage Entity Framework, Dapper conventions for C# deployments.
-- **Automation Level:** Dashboard surfaces warnings when more than five origins are allowed.
-- **Validation Steps:** Use scripts/run-accuracy-test.ts --check cors for regression evidence.
-
-#### Control CG-TLS-JS
-
-- **Title:** Transport Security Posture (JavaScript)
-- **Threat Mitigated:** HTTP-only endpoints or legacy cipher suites expose data in transit.
-- **Detection Signal:** Deployment checks inspect vercel.json, public/robots.txt, and headers for TLS posture.
-- **Recommended Fix:** Force HTTPS redirects, enable HSTS, and adopt modern cipher suites. Leverage Prisma, Knex conventions for JavaScript deployments.
-- **Automation Level:** CI enforces TLS readiness before promoting builds.
-- **Validation Steps:** Scan via scripts/e2e-zip-analysis.ts --include security-headers.
-
-#### Control CG-TLS-TS
-
-- **Title:** Transport Security Posture (TypeScript)
-- **Threat Mitigated:** HTTP-only endpoints or legacy cipher suites expose data in transit.
-- **Detection Signal:** Deployment checks inspect vercel.json, public/robots.txt, and headers for TLS posture.
-- **Recommended Fix:** Force HTTPS redirects, enable HSTS, and adopt modern cipher suites. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
-- **Automation Level:** CI enforces TLS readiness before promoting builds.
-- **Validation Steps:** Scan via scripts/e2e-zip-analysis.ts --include security-headers.
-
-#### Control CG-TLS-PY
-
-- **Title:** Transport Security Posture (Python)
-- **Threat Mitigated:** HTTP-only endpoints or legacy cipher suites expose data in transit.
-- **Detection Signal:** Deployment checks inspect vercel.json, public/robots.txt, and headers for TLS posture.
-- **Recommended Fix:** Force HTTPS redirects, enable HSTS, and adopt modern cipher suites. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
-- **Automation Level:** CI enforces TLS readiness before promoting builds.
-- **Validation Steps:** Scan via scripts/e2e-zip-analysis.ts --include security-headers.
-
-#### Control CG-TLS-JAVA
-
-- **Title:** Transport Security Posture (Java)
-- **Threat Mitigated:** HTTP-only endpoints or legacy cipher suites expose data in transit.
-- **Detection Signal:** Deployment checks inspect vercel.json, public/robots.txt, and headers for TLS posture.
-- **Recommended Fix:** Force HTTPS redirects, enable HSTS, and adopt modern cipher suites. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
-- **Automation Level:** CI enforces TLS readiness before promoting builds.
-- **Validation Steps:** Scan via scripts/e2e-zip-analysis.ts --include security-headers.
-
-#### Control CG-TLS-GO
-
-- **Title:** Transport Security Posture (Go)
-- **Threat Mitigated:** HTTP-only endpoints or legacy cipher suites expose data in transit.
-- **Detection Signal:** Deployment checks inspect vercel.json, public/robots.txt, and headers for TLS posture.
-- **Recommended Fix:** Force HTTPS redirects, enable HSTS, and adopt modern cipher suites. Leverage GORM, pgx conventions for Go deployments.
-- **Automation Level:** CI enforces TLS readiness before promoting builds.
-- **Validation Steps:** Scan via scripts/e2e-zip-analysis.ts --include security-headers.
-
-#### Control CG-TLS-RST
-
-- **Title:** Transport Security Posture (Rust)
-- **Threat Mitigated:** HTTP-only endpoints or legacy cipher suites expose data in transit.
-- **Detection Signal:** Deployment checks inspect vercel.json, public/robots.txt, and headers for TLS posture.
-- **Recommended Fix:** Force HTTPS redirects, enable HSTS, and adopt modern cipher suites. Leverage SQLx, Diesel conventions for Rust deployments.
-- **Automation Level:** CI enforces TLS readiness before promoting builds.
-- **Validation Steps:** Scan via scripts/e2e-zip-analysis.ts --include security-headers.
-
-#### Control CG-TLS-PHP
-
-- **Title:** Transport Security Posture (PHP)
-- **Threat Mitigated:** HTTP-only endpoints or legacy cipher suites expose data in transit.
-- **Detection Signal:** Deployment checks inspect vercel.json, public/robots.txt, and headers for TLS posture.
-- **Recommended Fix:** Force HTTPS redirects, enable HSTS, and adopt modern cipher suites. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
-- **Automation Level:** CI enforces TLS readiness before promoting builds.
-- **Validation Steps:** Scan via scripts/e2e-zip-analysis.ts --include security-headers.
-
-#### Control CG-TLS-CS
-
-- **Title:** Transport Security Posture (C#)
-- **Threat Mitigated:** HTTP-only endpoints or legacy cipher suites expose data in transit.
-- **Detection Signal:** Deployment checks inspect vercel.json, public/robots.txt, and headers for TLS posture.
-- **Recommended Fix:** Force HTTPS redirects, enable HSTS, and adopt modern cipher suites. Leverage Entity Framework, Dapper conventions for C# deployments.
-- **Automation Level:** CI enforces TLS readiness before promoting builds.
-- **Validation Steps:** Scan via scripts/e2e-zip-analysis.ts --include security-headers.
-
-#### Control CG-S3-JS
-
-- **Title:** Bucket Access Lockdown (JavaScript)
-- **Threat Mitigated:** Misconfigured storage buckets leak artifacts or secrets.
-- **Detection Signal:** Infrastructure as code parsers look for public-read ACLs and missing encryption.
-- **Recommended Fix:** Apply least privilege IAM policies and default encryption. Leverage Prisma, Knex conventions for JavaScript deployments.
-- **Automation Level:** Terraform sample includes secure defaults that pass these checks.
-- **Validation Steps:** Run terraform validate plus scripts/test-automation.js --scenario storage.
-
-#### Control CG-S3-TS
-
-- **Title:** Bucket Access Lockdown (TypeScript)
-- **Threat Mitigated:** Misconfigured storage buckets leak artifacts or secrets.
-- **Detection Signal:** Infrastructure as code parsers look for public-read ACLs and missing encryption.
-- **Recommended Fix:** Apply least privilege IAM policies and default encryption. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
-- **Automation Level:** Terraform sample includes secure defaults that pass these checks.
-- **Validation Steps:** Run terraform validate plus scripts/test-automation.js --scenario storage.
-
-#### Control CG-S3-PY
-
-- **Title:** Bucket Access Lockdown (Python)
-- **Threat Mitigated:** Misconfigured storage buckets leak artifacts or secrets.
-- **Detection Signal:** Infrastructure as code parsers look for public-read ACLs and missing encryption.
-- **Recommended Fix:** Apply least privilege IAM policies and default encryption. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
-- **Automation Level:** Terraform sample includes secure defaults that pass these checks.
-- **Validation Steps:** Run terraform validate plus scripts/test-automation.js --scenario storage.
-
-#### Control CG-S3-JAVA
-
-- **Title:** Bucket Access Lockdown (Java)
-- **Threat Mitigated:** Misconfigured storage buckets leak artifacts or secrets.
-- **Detection Signal:** Infrastructure as code parsers look for public-read ACLs and missing encryption.
-- **Recommended Fix:** Apply least privilege IAM policies and default encryption. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
-- **Automation Level:** Terraform sample includes secure defaults that pass these checks.
-- **Validation Steps:** Run terraform validate plus scripts/test-automation.js --scenario storage.
-
-#### Control CG-S3-GO
-
-- **Title:** Bucket Access Lockdown (Go)
-- **Threat Mitigated:** Misconfigured storage buckets leak artifacts or secrets.
-- **Detection Signal:** Infrastructure as code parsers look for public-read ACLs and missing encryption.
-- **Recommended Fix:** Apply least privilege IAM policies and default encryption. Leverage GORM, pgx conventions for Go deployments.
-- **Automation Level:** Terraform sample includes secure defaults that pass these checks.
-- **Validation Steps:** Run terraform validate plus scripts/test-automation.js --scenario storage.
-
-#### Control CG-S3-RST
-
-- **Title:** Bucket Access Lockdown (Rust)
-- **Threat Mitigated:** Misconfigured storage buckets leak artifacts or secrets.
-- **Detection Signal:** Infrastructure as code parsers look for public-read ACLs and missing encryption.
-- **Recommended Fix:** Apply least privilege IAM policies and default encryption. Leverage SQLx, Diesel conventions for Rust deployments.
-- **Automation Level:** Terraform sample includes secure defaults that pass these checks.
-- **Validation Steps:** Run terraform validate plus scripts/test-automation.js --scenario storage.
-
-#### Control CG-S3-PHP
-
-- **Title:** Bucket Access Lockdown (PHP)
-- **Threat Mitigated:** Misconfigured storage buckets leak artifacts or secrets.
-- **Detection Signal:** Infrastructure as code parsers look for public-read ACLs and missing encryption.
-- **Recommended Fix:** Apply least privilege IAM policies and default encryption. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
-- **Automation Level:** Terraform sample includes secure defaults that pass these checks.
-- **Validation Steps:** Run terraform validate plus scripts/test-automation.js --scenario storage.
-
-#### Control CG-S3-CS
-
-- **Title:** Bucket Access Lockdown (C#)
-- **Threat Mitigated:** Misconfigured storage buckets leak artifacts or secrets.
-- **Detection Signal:** Infrastructure as code parsers look for public-read ACLs and missing encryption.
-- **Recommended Fix:** Apply least privilege IAM policies and default encryption. Leverage Entity Framework, Dapper conventions for C# deployments.
-- **Automation Level:** Terraform sample includes secure defaults that pass these checks.
-- **Validation Steps:** Run terraform validate plus scripts/test-automation.js --scenario storage.
-
-#### Control CG-JWT-JS
-
-- **Title:** JWT Integrity Protections (JavaScript)
-- **Threat Mitigated:** Unsigned tokens or weak algorithms compromise session trust.
-- **Detection Signal:** Static scans parse auth helpers for none or symmetric HS256 keys in public repos.
-- **Recommended Fix:** Enforce RSA-based signing, rotate keys, and validate aud, iss, exp claims. Leverage Prisma, Knex conventions for JavaScript deployments.
-- **Automation Level:** AI patch suggestions include sample jwks responses.
-- **Validation Steps:** Use scripts/run-multi-language-tests.js --rule jwt.
-
-#### Control CG-JWT-TS
-
-- **Title:** JWT Integrity Protections (TypeScript)
-- **Threat Mitigated:** Unsigned tokens or weak algorithms compromise session trust.
-- **Detection Signal:** Static scans parse auth helpers for none or symmetric HS256 keys in public repos.
-- **Recommended Fix:** Enforce RSA-based signing, rotate keys, and validate aud, iss, exp claims. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
-- **Automation Level:** AI patch suggestions include sample jwks responses.
-- **Validation Steps:** Use scripts/run-multi-language-tests.js --rule jwt.
-
-#### Control CG-JWT-PY
-
-- **Title:** JWT Integrity Protections (Python)
-- **Threat Mitigated:** Unsigned tokens or weak algorithms compromise session trust.
-- **Detection Signal:** Static scans parse auth helpers for none or symmetric HS256 keys in public repos.
-- **Recommended Fix:** Enforce RSA-based signing, rotate keys, and validate aud, iss, exp claims. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
-- **Automation Level:** AI patch suggestions include sample jwks responses.
-- **Validation Steps:** Use scripts/run-multi-language-tests.js --rule jwt.
-
-#### Control CG-JWT-JAVA
-
-- **Title:** JWT Integrity Protections (Java)
-- **Threat Mitigated:** Unsigned tokens or weak algorithms compromise session trust.
-- **Detection Signal:** Static scans parse auth helpers for none or symmetric HS256 keys in public repos.
-- **Recommended Fix:** Enforce RSA-based signing, rotate keys, and validate aud, iss, exp claims. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
-- **Automation Level:** AI patch suggestions include sample jwks responses.
-- **Validation Steps:** Use scripts/run-multi-language-tests.js --rule jwt.
-
-#### Control CG-JWT-GO
-
-- **Title:** JWT Integrity Protections (Go)
-- **Threat Mitigated:** Unsigned tokens or weak algorithms compromise session trust.
-- **Detection Signal:** Static scans parse auth helpers for none or symmetric HS256 keys in public repos.
-- **Recommended Fix:** Enforce RSA-based signing, rotate keys, and validate aud, iss, exp claims. Leverage GORM, pgx conventions for Go deployments.
-- **Automation Level:** AI patch suggestions include sample jwks responses.
-- **Validation Steps:** Use scripts/run-multi-language-tests.js --rule jwt.
-
-#### Control CG-JWT-RST
-
-- **Title:** JWT Integrity Protections (Rust)
-- **Threat Mitigated:** Unsigned tokens or weak algorithms compromise session trust.
-- **Detection Signal:** Static scans parse auth helpers for none or symmetric HS256 keys in public repos.
-- **Recommended Fix:** Enforce RSA-based signing, rotate keys, and validate aud, iss, exp claims. Leverage SQLx, Diesel conventions for Rust deployments.
-- **Automation Level:** AI patch suggestions include sample jwks responses.
-- **Validation Steps:** Use scripts/run-multi-language-tests.js --rule jwt.
-
-#### Control CG-JWT-PHP
-
-- **Title:** JWT Integrity Protections (PHP)
-- **Threat Mitigated:** Unsigned tokens or weak algorithms compromise session trust.
-- **Detection Signal:** Static scans parse auth helpers for none or symmetric HS256 keys in public repos.
-- **Recommended Fix:** Enforce RSA-based signing, rotate keys, and validate aud, iss, exp claims. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
-- **Automation Level:** AI patch suggestions include sample jwks responses.
-- **Validation Steps:** Use scripts/run-multi-language-tests.js --rule jwt.
-
-#### Control CG-JWT-CS
-
-- **Title:** JWT Integrity Protections (C#)
-- **Threat Mitigated:** Unsigned tokens or weak algorithms compromise session trust.
-- **Detection Signal:** Static scans parse auth helpers for none or symmetric HS256 keys in public repos.
-- **Recommended Fix:** Enforce RSA-based signing, rotate keys, and validate aud, iss, exp claims. Leverage Entity Framework, Dapper conventions for C# deployments.
-- **Automation Level:** AI patch suggestions include sample jwks responses.
-- **Validation Steps:** Use scripts/run-multi-language-tests.js --rule jwt.
-
-#### Control CG-SSO-JS
-
-- **Title:** SSO Configuration Health (JavaScript)
-- **Threat Mitigated:** Mismatched redirect URIs or disabled PKCE create account takeover vectors.
-- **Detection Signal:** Config analyzers parse .env and provider manifests for SSO toggles.
-- **Recommended Fix:** Enable PKCE, limit redirect hosts, enforce signed assertions. Leverage Prisma, Knex conventions for JavaScript deployments.
-- **Automation Level:** Setup wizard surfaces live validation as values are entered.
-- **Validation Steps:** Perform login smoke tests across providers documented in Appendix D.
-
-#### Control CG-SSO-TS
-
-- **Title:** SSO Configuration Health (TypeScript)
-- **Threat Mitigated:** Mismatched redirect URIs or disabled PKCE create account takeover vectors.
-- **Detection Signal:** Config analyzers parse .env and provider manifests for SSO toggles.
-- **Recommended Fix:** Enable PKCE, limit redirect hosts, enforce signed assertions. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
-- **Automation Level:** Setup wizard surfaces live validation as values are entered.
-- **Validation Steps:** Perform login smoke tests across providers documented in Appendix D.
-
-#### Control CG-SSO-PY
-
-- **Title:** SSO Configuration Health (Python)
-- **Threat Mitigated:** Mismatched redirect URIs or disabled PKCE create account takeover vectors.
-- **Detection Signal:** Config analyzers parse .env and provider manifests for SSO toggles.
-- **Recommended Fix:** Enable PKCE, limit redirect hosts, enforce signed assertions. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
-- **Automation Level:** Setup wizard surfaces live validation as values are entered.
-- **Validation Steps:** Perform login smoke tests across providers documented in Appendix D.
-
-#### Control CG-SSO-JAVA
-
-- **Title:** SSO Configuration Health (Java)
-- **Threat Mitigated:** Mismatched redirect URIs or disabled PKCE create account takeover vectors.
-- **Detection Signal:** Config analyzers parse .env and provider manifests for SSO toggles.
-- **Recommended Fix:** Enable PKCE, limit redirect hosts, enforce signed assertions. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
-- **Automation Level:** Setup wizard surfaces live validation as values are entered.
-- **Validation Steps:** Perform login smoke tests across providers documented in Appendix D.
-
-#### Control CG-SSO-GO
-
-- **Title:** SSO Configuration Health (Go)
-- **Threat Mitigated:** Mismatched redirect URIs or disabled PKCE create account takeover vectors.
-- **Detection Signal:** Config analyzers parse .env and provider manifests for SSO toggles.
-- **Recommended Fix:** Enable PKCE, limit redirect hosts, enforce signed assertions. Leverage GORM, pgx conventions for Go deployments.
-- **Automation Level:** Setup wizard surfaces live validation as values are entered.
-- **Validation Steps:** Perform login smoke tests across providers documented in Appendix D.
-
-#### Control CG-SSO-RST
-
-- **Title:** SSO Configuration Health (Rust)
-- **Threat Mitigated:** Mismatched redirect URIs or disabled PKCE create account takeover vectors.
-- **Detection Signal:** Config analyzers parse .env and provider manifests for SSO toggles.
-- **Recommended Fix:** Enable PKCE, limit redirect hosts, enforce signed assertions. Leverage SQLx, Diesel conventions for Rust deployments.
-- **Automation Level:** Setup wizard surfaces live validation as values are entered.
-- **Validation Steps:** Perform login smoke tests across providers documented in Appendix D.
-
-#### Control CG-SSO-PHP
-
-- **Title:** SSO Configuration Health (PHP)
-- **Threat Mitigated:** Mismatched redirect URIs or disabled PKCE create account takeover vectors.
-- **Detection Signal:** Config analyzers parse .env and provider manifests for SSO toggles.
-- **Recommended Fix:** Enable PKCE, limit redirect hosts, enforce signed assertions. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
-- **Automation Level:** Setup wizard surfaces live validation as values are entered.
-- **Validation Steps:** Perform login smoke tests across providers documented in Appendix D.
-
-#### Control CG-SSO-CS
-
-- **Title:** SSO Configuration Health (C#)
-- **Threat Mitigated:** Mismatched redirect URIs or disabled PKCE create account takeover vectors.
-- **Detection Signal:** Config analyzers parse .env and provider manifests for SSO toggles.
-- **Recommended Fix:** Enable PKCE, limit redirect hosts, enforce signed assertions. Leverage Entity Framework, Dapper conventions for C# deployments.
-- **Automation Level:** Setup wizard surfaces live validation as values are entered.
-- **Validation Steps:** Perform login smoke tests across providers documented in Appendix D.
-
-#### Control CG-RBAC-JS
-
-- **Title:** Role-Based Access Control Precision (JavaScript)
-- **Threat Mitigated:** Overbroad roles expose sensitive reports.
-- **Detection Signal:** Policy diffing ensures mapping in src/components/auth matches documented personas.
-- **Recommended Fix:** Scope roles per workspace and enforce read vs admin separation. Leverage Prisma, Knex conventions for JavaScript deployments.
-- **Automation Level:** Dashboard heatmaps highlight overly permissive grants.
-- **Validation Steps:** Use feature flag toggles inside src/components/features and retest.
-
-#### Control CG-RBAC-TS
-
-- **Title:** Role-Based Access Control Precision (TypeScript)
-- **Threat Mitigated:** Overbroad roles expose sensitive reports.
-- **Detection Signal:** Policy diffing ensures mapping in src/components/auth matches documented personas.
-- **Recommended Fix:** Scope roles per workspace and enforce read vs admin separation. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
-- **Automation Level:** Dashboard heatmaps highlight overly permissive grants.
-- **Validation Steps:** Use feature flag toggles inside src/components/features and retest.
-
-#### Control CG-RBAC-PY
-
-- **Title:** Role-Based Access Control Precision (Python)
-- **Threat Mitigated:** Overbroad roles expose sensitive reports.
-- **Detection Signal:** Policy diffing ensures mapping in src/components/auth matches documented personas.
-- **Recommended Fix:** Scope roles per workspace and enforce read vs admin separation. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
-- **Automation Level:** Dashboard heatmaps highlight overly permissive grants.
-- **Validation Steps:** Use feature flag toggles inside src/components/features and retest.
-
-#### Control CG-RBAC-JAVA
-
-- **Title:** Role-Based Access Control Precision (Java)
-- **Threat Mitigated:** Overbroad roles expose sensitive reports.
-- **Detection Signal:** Policy diffing ensures mapping in src/components/auth matches documented personas.
-- **Recommended Fix:** Scope roles per workspace and enforce read vs admin separation. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
-- **Automation Level:** Dashboard heatmaps highlight overly permissive grants.
-- **Validation Steps:** Use feature flag toggles inside src/components/features and retest.
-
-#### Control CG-RBAC-GO
-
-- **Title:** Role-Based Access Control Precision (Go)
-- **Threat Mitigated:** Overbroad roles expose sensitive reports.
-- **Detection Signal:** Policy diffing ensures mapping in src/components/auth matches documented personas.
-- **Recommended Fix:** Scope roles per workspace and enforce read vs admin separation. Leverage GORM, pgx conventions for Go deployments.
-- **Automation Level:** Dashboard heatmaps highlight overly permissive grants.
-- **Validation Steps:** Use feature flag toggles inside src/components/features and retest.
-
-#### Control CG-RBAC-RST
-
-- **Title:** Role-Based Access Control Precision (Rust)
-- **Threat Mitigated:** Overbroad roles expose sensitive reports.
-- **Detection Signal:** Policy diffing ensures mapping in src/components/auth matches documented personas.
-- **Recommended Fix:** Scope roles per workspace and enforce read vs admin separation. Leverage SQLx, Diesel conventions for Rust deployments.
-- **Automation Level:** Dashboard heatmaps highlight overly permissive grants.
-- **Validation Steps:** Use feature flag toggles inside src/components/features and retest.
-
-#### Control CG-RBAC-PHP
-
-- **Title:** Role-Based Access Control Precision (PHP)
-- **Threat Mitigated:** Overbroad roles expose sensitive reports.
-- **Detection Signal:** Policy diffing ensures mapping in src/components/auth matches documented personas.
-- **Recommended Fix:** Scope roles per workspace and enforce read vs admin separation. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
-- **Automation Level:** Dashboard heatmaps highlight overly permissive grants.
-- **Validation Steps:** Use feature flag toggles inside src/components/features and retest.
-
-#### Control CG-RBAC-CS
-
-- **Title:** Role-Based Access Control Precision (C#)
-- **Threat Mitigated:** Overbroad roles expose sensitive reports.
-- **Detection Signal:** Policy diffing ensures mapping in src/components/auth matches documented personas.
-- **Recommended Fix:** Scope roles per workspace and enforce read vs admin separation. Leverage Entity Framework, Dapper conventions for C# deployments.
-- **Automation Level:** Dashboard heatmaps highlight overly permissive grants.
-- **Validation Steps:** Use feature flag toggles inside src/components/features and retest.
-
-#### Control CG-SBOM-JS
-
-- **Title:** Software Bill of Materials Accuracy (JavaScript)
-- **Threat Mitigated:** Outdated dependency inventories hide vulnerable packages.
-- **Detection Signal:** Analyzer compares package-lock snapshots with latest advisories.
-- **Recommended Fix:** Regenerate SBOM per build, upgrade dependencies, document exceptions. Leverage Prisma, Knex conventions for JavaScript deployments.
-- **Automation Level:** CI uploads SPDX/SBOM attachments with each artifact.
-- **Validation Steps:** Use scripts/run-all-tests.ts --sbom true.
-
-#### Control CG-SBOM-TS
-
-- **Title:** Software Bill of Materials Accuracy (TypeScript)
-- **Threat Mitigated:** Outdated dependency inventories hide vulnerable packages.
-- **Detection Signal:** Analyzer compares package-lock snapshots with latest advisories.
-- **Recommended Fix:** Regenerate SBOM per build, upgrade dependencies, document exceptions. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
-- **Automation Level:** CI uploads SPDX/SBOM attachments with each artifact.
-- **Validation Steps:** Use scripts/run-all-tests.ts --sbom true.
-
-#### Control CG-SBOM-PY
-
-- **Title:** Software Bill of Materials Accuracy (Python)
-- **Threat Mitigated:** Outdated dependency inventories hide vulnerable packages.
-- **Detection Signal:** Analyzer compares package-lock snapshots with latest advisories.
-- **Recommended Fix:** Regenerate SBOM per build, upgrade dependencies, document exceptions. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
-- **Automation Level:** CI uploads SPDX/SBOM attachments with each artifact.
-- **Validation Steps:** Use scripts/run-all-tests.ts --sbom true.
-
-#### Control CG-SBOM-JAVA
-
-- **Title:** Software Bill of Materials Accuracy (Java)
-- **Threat Mitigated:** Outdated dependency inventories hide vulnerable packages.
-- **Detection Signal:** Analyzer compares package-lock snapshots with latest advisories.
-- **Recommended Fix:** Regenerate SBOM per build, upgrade dependencies, document exceptions. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
-- **Automation Level:** CI uploads SPDX/SBOM attachments with each artifact.
-- **Validation Steps:** Use scripts/run-all-tests.ts --sbom true.
-
-#### Control CG-SBOM-GO
-
-- **Title:** Software Bill of Materials Accuracy (Go)
-- **Threat Mitigated:** Outdated dependency inventories hide vulnerable packages.
-- **Detection Signal:** Analyzer compares package-lock snapshots with latest advisories.
-- **Recommended Fix:** Regenerate SBOM per build, upgrade dependencies, document exceptions. Leverage GORM, pgx conventions for Go deployments.
-- **Automation Level:** CI uploads SPDX/SBOM attachments with each artifact.
-- **Validation Steps:** Use scripts/run-all-tests.ts --sbom true.
-
-#### Control CG-SBOM-RST
-
-- **Title:** Software Bill of Materials Accuracy (Rust)
-- **Threat Mitigated:** Outdated dependency inventories hide vulnerable packages.
-- **Detection Signal:** Analyzer compares package-lock snapshots with latest advisories.
-- **Recommended Fix:** Regenerate SBOM per build, upgrade dependencies, document exceptions. Leverage SQLx, Diesel conventions for Rust deployments.
-- **Automation Level:** CI uploads SPDX/SBOM attachments with each artifact.
-- **Validation Steps:** Use scripts/run-all-tests.ts --sbom true.
-
-#### Control CG-SBOM-PHP
-
-- **Title:** Software Bill of Materials Accuracy (PHP)
-- **Threat Mitigated:** Outdated dependency inventories hide vulnerable packages.
-- **Detection Signal:** Analyzer compares package-lock snapshots with latest advisories.
-- **Recommended Fix:** Regenerate SBOM per build, upgrade dependencies, document exceptions. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
-- **Automation Level:** CI uploads SPDX/SBOM attachments with each artifact.
-- **Validation Steps:** Use scripts/run-all-tests.ts --sbom true.
-
-#### Control CG-SBOM-CS
-
-- **Title:** Software Bill of Materials Accuracy (C#)
-- **Threat Mitigated:** Outdated dependency inventories hide vulnerable packages.
-- **Detection Signal:** Analyzer compares package-lock snapshots with latest advisories.
-- **Recommended Fix:** Regenerate SBOM per build, upgrade dependencies, document exceptions. Leverage Entity Framework, Dapper conventions for C# deployments.
-- **Automation Level:** CI uploads SPDX/SBOM attachments with each artifact.
-- **Validation Steps:** Use scripts/run-all-tests.ts --sbom true.
-
-#### Control CG-LLM-JS
-
-- **Title:** LLM Prompt Injection Defenses (JavaScript)
-- **Threat Mitigated:** Malicious repositories try to hijack AI instructions inside prompt templates.
-- **Detection Signal:** Sanitizers review context windows and remove policy-violating content before inference.
-- **Recommended Fix:** Apply allowlisted instruction set, encode prompts, and sandbox AI output. Leverage Prisma, Knex conventions for JavaScript deployments.
-- **Automation Level:** src/components/ai enforces guardrails before sending to providers.
-- **Validation Steps:** Replay adversarial prompts via tmp_rovodev_comprehensive_test.ts.
-
-#### Control CG-LLM-TS
-
-- **Title:** LLM Prompt Injection Defenses (TypeScript)
-- **Threat Mitigated:** Malicious repositories try to hijack AI instructions inside prompt templates.
-- **Detection Signal:** Sanitizers review context windows and remove policy-violating content before inference.
-- **Recommended Fix:** Apply allowlisted instruction set, encode prompts, and sandbox AI output. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
-- **Automation Level:** src/components/ai enforces guardrails before sending to providers.
-- **Validation Steps:** Replay adversarial prompts via tmp_rovodev_comprehensive_test.ts.
-
-#### Control CG-LLM-PY
-
-- **Title:** LLM Prompt Injection Defenses (Python)
-- **Threat Mitigated:** Malicious repositories try to hijack AI instructions inside prompt templates.
-- **Detection Signal:** Sanitizers review context windows and remove policy-violating content before inference.
-- **Recommended Fix:** Apply allowlisted instruction set, encode prompts, and sandbox AI output. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
-- **Automation Level:** src/components/ai enforces guardrails before sending to providers.
-- **Validation Steps:** Replay adversarial prompts via tmp_rovodev_comprehensive_test.ts.
-
-#### Control CG-LLM-JAVA
-
-- **Title:** LLM Prompt Injection Defenses (Java)
-- **Threat Mitigated:** Malicious repositories try to hijack AI instructions inside prompt templates.
-- **Detection Signal:** Sanitizers review context windows and remove policy-violating content before inference.
-- **Recommended Fix:** Apply allowlisted instruction set, encode prompts, and sandbox AI output. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
-- **Automation Level:** src/components/ai enforces guardrails before sending to providers.
-- **Validation Steps:** Replay adversarial prompts via tmp_rovodev_comprehensive_test.ts.
-
-#### Control CG-LLM-GO
-
-- **Title:** LLM Prompt Injection Defenses (Go)
-- **Threat Mitigated:** Malicious repositories try to hijack AI instructions inside prompt templates.
-- **Detection Signal:** Sanitizers review context windows and remove policy-violating content before inference.
-- **Recommended Fix:** Apply allowlisted instruction set, encode prompts, and sandbox AI output. Leverage GORM, pgx conventions for Go deployments.
-- **Automation Level:** src/components/ai enforces guardrails before sending to providers.
-- **Validation Steps:** Replay adversarial prompts via tmp_rovodev_comprehensive_test.ts.
-
-#### Control CG-LLM-RST
-
-- **Title:** LLM Prompt Injection Defenses (Rust)
-- **Threat Mitigated:** Malicious repositories try to hijack AI instructions inside prompt templates.
-- **Detection Signal:** Sanitizers review context windows and remove policy-violating content before inference.
-- **Recommended Fix:** Apply allowlisted instruction set, encode prompts, and sandbox AI output. Leverage SQLx, Diesel conventions for Rust deployments.
-- **Automation Level:** src/components/ai enforces guardrails before sending to providers.
-- **Validation Steps:** Replay adversarial prompts via tmp_rovodev_comprehensive_test.ts.
-
-#### Control CG-LLM-PHP
-
-- **Title:** LLM Prompt Injection Defenses (PHP)
-- **Threat Mitigated:** Malicious repositories try to hijack AI instructions inside prompt templates.
-- **Detection Signal:** Sanitizers review context windows and remove policy-violating content before inference.
-- **Recommended Fix:** Apply allowlisted instruction set, encode prompts, and sandbox AI output. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
-- **Automation Level:** src/components/ai enforces guardrails before sending to providers.
-- **Validation Steps:** Replay adversarial prompts via tmp_rovodev_comprehensive_test.ts.
-
-#### Control CG-LLM-CS
-
-- **Title:** LLM Prompt Injection Defenses (C#)
-- **Threat Mitigated:** Malicious repositories try to hijack AI instructions inside prompt templates.
-- **Detection Signal:** Sanitizers review context windows and remove policy-violating content before inference.
-- **Recommended Fix:** Apply allowlisted instruction set, encode prompts, and sandbox AI output. Leverage Entity Framework, Dapper conventions for C# deployments.
-- **Automation Level:** src/components/ai enforces guardrails before sending to providers.
-- **Validation Steps:** Replay adversarial prompts via tmp_rovodev_comprehensive_test.ts.
-
-#### Control CG-CACHE-JS
-
-- **Title:** Sensitive Data Caching Controls (JavaScript)
-- **Threat Mitigated:** Secrets or tokens cached by browsers/CDNs linger beyond retention policies.
-- **Detection Signal:** Header analyzers ensure Cache-Control + Pragma directives accompany API responses.
-- **Recommended Fix:** Disable caching for sensitive routes; leverage service worker cache busting. Leverage Prisma, Knex conventions for JavaScript deployments.
-- **Automation Level:** public/sw.js contains rule templates that can be toggled per env.
-- **Validation Steps:** Inspect network tab during npm run dev plus automated tests.
-
-#### Control CG-CACHE-TS
-
-- **Title:** Sensitive Data Caching Controls (TypeScript)
-- **Threat Mitigated:** Secrets or tokens cached by browsers/CDNs linger beyond retention policies.
-- **Detection Signal:** Header analyzers ensure Cache-Control + Pragma directives accompany API responses.
-- **Recommended Fix:** Disable caching for sensitive routes; leverage service worker cache busting. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
-- **Automation Level:** public/sw.js contains rule templates that can be toggled per env.
-- **Validation Steps:** Inspect network tab during npm run dev plus automated tests.
-
-#### Control CG-CACHE-PY
-
-- **Title:** Sensitive Data Caching Controls (Python)
-- **Threat Mitigated:** Secrets or tokens cached by browsers/CDNs linger beyond retention policies.
-- **Detection Signal:** Header analyzers ensure Cache-Control + Pragma directives accompany API responses.
-- **Recommended Fix:** Disable caching for sensitive routes; leverage service worker cache busting. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
-- **Automation Level:** public/sw.js contains rule templates that can be toggled per env.
-- **Validation Steps:** Inspect network tab during npm run dev plus automated tests.
-
-#### Control CG-CACHE-JAVA
-
-- **Title:** Sensitive Data Caching Controls (Java)
-- **Threat Mitigated:** Secrets or tokens cached by browsers/CDNs linger beyond retention policies.
-- **Detection Signal:** Header analyzers ensure Cache-Control + Pragma directives accompany API responses.
-- **Recommended Fix:** Disable caching for sensitive routes; leverage service worker cache busting. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
-- **Automation Level:** public/sw.js contains rule templates that can be toggled per env.
-- **Validation Steps:** Inspect network tab during npm run dev plus automated tests.
-
-#### Control CG-CACHE-GO
-
-- **Title:** Sensitive Data Caching Controls (Go)
-- **Threat Mitigated:** Secrets or tokens cached by browsers/CDNs linger beyond retention policies.
-- **Detection Signal:** Header analyzers ensure Cache-Control + Pragma directives accompany API responses.
-- **Recommended Fix:** Disable caching for sensitive routes; leverage service worker cache busting. Leverage GORM, pgx conventions for Go deployments.
-- **Automation Level:** public/sw.js contains rule templates that can be toggled per env.
-- **Validation Steps:** Inspect network tab during npm run dev plus automated tests.
-
-#### Control CG-CACHE-RST
-
-- **Title:** Sensitive Data Caching Controls (Rust)
-- **Threat Mitigated:** Secrets or tokens cached by browsers/CDNs linger beyond retention policies.
-- **Detection Signal:** Header analyzers ensure Cache-Control + Pragma directives accompany API responses.
-- **Recommended Fix:** Disable caching for sensitive routes; leverage service worker cache busting. Leverage SQLx, Diesel conventions for Rust deployments.
-- **Automation Level:** public/sw.js contains rule templates that can be toggled per env.
-- **Validation Steps:** Inspect network tab during npm run dev plus automated tests.
-
-#### Control CG-CACHE-PHP
-
-- **Title:** Sensitive Data Caching Controls (PHP)
-- **Threat Mitigated:** Secrets or tokens cached by browsers/CDNs linger beyond retention policies.
-- **Detection Signal:** Header analyzers ensure Cache-Control + Pragma directives accompany API responses.
-- **Recommended Fix:** Disable caching for sensitive routes; leverage service worker cache busting. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
-- **Automation Level:** public/sw.js contains rule templates that can be toggled per env.
-- **Validation Steps:** Inspect network tab during npm run dev plus automated tests.
-
-#### Control CG-CACHE-CS
-
-- **Title:** Sensitive Data Caching Controls (C#)
-- **Threat Mitigated:** Secrets or tokens cached by browsers/CDNs linger beyond retention policies.
-- **Detection Signal:** Header analyzers ensure Cache-Control + Pragma directives accompany API responses.
-- **Recommended Fix:** Disable caching for sensitive routes; leverage service worker cache busting. Leverage Entity Framework, Dapper conventions for C# deployments.
-- **Automation Level:** public/sw.js contains rule templates that can be toggled per env.
-- **Validation Steps:** Inspect network tab during npm run dev plus automated tests.
-
-#### Control CG-GRAPH-JS
-
-- **Title:** GraphQL Introspection Lockdown (JavaScript)
-- **Threat Mitigated:** Production schemas expose internal types enabling targeted attacks.
-- **Detection Signal:** GraphQL AST parser spots introspection: true flags outside dev mode.
-- **Recommended Fix:** Disable introspection in prod, add allowlisted queries, monitor query cost. Leverage Prisma, Knex conventions for JavaScript deployments.
-- **Automation Level:** AI assistant offers persisted query templates.
-- **Validation Steps:** Invoke GraphQL bridge with introspection queries to verify rejection.
-
-#### Control CG-GRAPH-TS
-
-- **Title:** GraphQL Introspection Lockdown (TypeScript)
-- **Threat Mitigated:** Production schemas expose internal types enabling targeted attacks.
-- **Detection Signal:** GraphQL AST parser spots introspection: true flags outside dev mode.
-- **Recommended Fix:** Disable introspection in prod, add allowlisted queries, monitor query cost. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
-- **Automation Level:** AI assistant offers persisted query templates.
-- **Validation Steps:** Invoke GraphQL bridge with introspection queries to verify rejection.
-
-#### Control CG-GRAPH-PY
-
-- **Title:** GraphQL Introspection Lockdown (Python)
-- **Threat Mitigated:** Production schemas expose internal types enabling targeted attacks.
-- **Detection Signal:** GraphQL AST parser spots introspection: true flags outside dev mode.
-- **Recommended Fix:** Disable introspection in prod, add allowlisted queries, monitor query cost. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
-- **Automation Level:** AI assistant offers persisted query templates.
-- **Validation Steps:** Invoke GraphQL bridge with introspection queries to verify rejection.
-
-#### Control CG-GRAPH-JAVA
-
-- **Title:** GraphQL Introspection Lockdown (Java)
-- **Threat Mitigated:** Production schemas expose internal types enabling targeted attacks.
-- **Detection Signal:** GraphQL AST parser spots introspection: true flags outside dev mode.
-- **Recommended Fix:** Disable introspection in prod, add allowlisted queries, monitor query cost. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
-- **Automation Level:** AI assistant offers persisted query templates.
-- **Validation Steps:** Invoke GraphQL bridge with introspection queries to verify rejection.
-
-#### Control CG-GRAPH-GO
-
-- **Title:** GraphQL Introspection Lockdown (Go)
-- **Threat Mitigated:** Production schemas expose internal types enabling targeted attacks.
-- **Detection Signal:** GraphQL AST parser spots introspection: true flags outside dev mode.
-- **Recommended Fix:** Disable introspection in prod, add allowlisted queries, monitor query cost. Leverage GORM, pgx conventions for Go deployments.
-- **Automation Level:** AI assistant offers persisted query templates.
-- **Validation Steps:** Invoke GraphQL bridge with introspection queries to verify rejection.
-
-#### Control CG-GRAPH-RST
-
-- **Title:** GraphQL Introspection Lockdown (Rust)
-- **Threat Mitigated:** Production schemas expose internal types enabling targeted attacks.
-- **Detection Signal:** GraphQL AST parser spots introspection: true flags outside dev mode.
-- **Recommended Fix:** Disable introspection in prod, add allowlisted queries, monitor query cost. Leverage SQLx, Diesel conventions for Rust deployments.
-- **Automation Level:** AI assistant offers persisted query templates.
-- **Validation Steps:** Invoke GraphQL bridge with introspection queries to verify rejection.
-
-#### Control CG-GRAPH-PHP
-
-- **Title:** GraphQL Introspection Lockdown (PHP)
-- **Threat Mitigated:** Production schemas expose internal types enabling targeted attacks.
-- **Detection Signal:** GraphQL AST parser spots introspection: true flags outside dev mode.
-- **Recommended Fix:** Disable introspection in prod, add allowlisted queries, monitor query cost. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
-- **Automation Level:** AI assistant offers persisted query templates.
-- **Validation Steps:** Invoke GraphQL bridge with introspection queries to verify rejection.
-
-#### Control CG-GRAPH-CS
-
-- **Title:** GraphQL Introspection Lockdown (C#)
-- **Threat Mitigated:** Production schemas expose internal types enabling targeted attacks.
-- **Detection Signal:** GraphQL AST parser spots introspection: true flags outside dev mode.
-- **Recommended Fix:** Disable introspection in prod, add allowlisted queries, monitor query cost. Leverage Entity Framework, Dapper conventions for C# deployments.
-- **Automation Level:** AI assistant offers persisted query templates.
-- **Validation Steps:** Invoke GraphQL bridge with introspection queries to verify rejection.
-
-#### Control CG-RATE-JS
-
-- **Title:** Rate Limiting & Throttling (JavaScript)
-- **Threat Mitigated:** Aggressive clients exhaust compute or brute-force credentials.
-- **Detection Signal:** Policy files and serverless handlers inspected for missing limiter middleware.
-- **Recommended Fix:** Adopt token bucket or sliding window algorithms; return 429 with retry hints. Leverage Prisma, Knex conventions for JavaScript deployments.
-- **Automation Level:** Sample limiter middleware shipped in src/lib.
-- **Validation Steps:** Load-test using scripts/test-firebase-history.js.
-
-#### Control CG-RATE-TS
-
-- **Title:** Rate Limiting & Throttling (TypeScript)
-- **Threat Mitigated:** Aggressive clients exhaust compute or brute-force credentials.
-- **Detection Signal:** Policy files and serverless handlers inspected for missing limiter middleware.
-- **Recommended Fix:** Adopt token bucket or sliding window algorithms; return 429 with retry hints. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
-- **Automation Level:** Sample limiter middleware shipped in src/lib.
-- **Validation Steps:** Load-test using scripts/test-firebase-history.js.
-
-#### Control CG-RATE-PY
-
-- **Title:** Rate Limiting & Throttling (Python)
-- **Threat Mitigated:** Aggressive clients exhaust compute or brute-force credentials.
-- **Detection Signal:** Policy files and serverless handlers inspected for missing limiter middleware.
-- **Recommended Fix:** Adopt token bucket or sliding window algorithms; return 429 with retry hints. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
-- **Automation Level:** Sample limiter middleware shipped in src/lib.
-- **Validation Steps:** Load-test using scripts/test-firebase-history.js.
-
-#### Control CG-RATE-JAVA
-
-- **Title:** Rate Limiting & Throttling (Java)
-- **Threat Mitigated:** Aggressive clients exhaust compute or brute-force credentials.
-- **Detection Signal:** Policy files and serverless handlers inspected for missing limiter middleware.
-- **Recommended Fix:** Adopt token bucket or sliding window algorithms; return 429 with retry hints. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
-- **Automation Level:** Sample limiter middleware shipped in src/lib.
-- **Validation Steps:** Load-test using scripts/test-firebase-history.js.
-
-#### Control CG-RATE-GO
-
-- **Title:** Rate Limiting & Throttling (Go)
-- **Threat Mitigated:** Aggressive clients exhaust compute or brute-force credentials.
-- **Detection Signal:** Policy files and serverless handlers inspected for missing limiter middleware.
-- **Recommended Fix:** Adopt token bucket or sliding window algorithms; return 429 with retry hints. Leverage GORM, pgx conventions for Go deployments.
-- **Automation Level:** Sample limiter middleware shipped in src/lib.
-- **Validation Steps:** Load-test using scripts/test-firebase-history.js.
-
-#### Control CG-RATE-RST
-
-- **Title:** Rate Limiting & Throttling (Rust)
-- **Threat Mitigated:** Aggressive clients exhaust compute or brute-force credentials.
-- **Detection Signal:** Policy files and serverless handlers inspected for missing limiter middleware.
-- **Recommended Fix:** Adopt token bucket or sliding window algorithms; return 429 with retry hints. Leverage SQLx, Diesel conventions for Rust deployments.
-- **Automation Level:** Sample limiter middleware shipped in src/lib.
-- **Validation Steps:** Load-test using scripts/test-firebase-history.js.
-
-#### Control CG-RATE-PHP
-
-- **Title:** Rate Limiting & Throttling (PHP)
-- **Threat Mitigated:** Aggressive clients exhaust compute or brute-force credentials.
-- **Detection Signal:** Policy files and serverless handlers inspected for missing limiter middleware.
-- **Recommended Fix:** Adopt token bucket or sliding window algorithms; return 429 with retry hints. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
-- **Automation Level:** Sample limiter middleware shipped in src/lib.
-- **Validation Steps:** Load-test using scripts/test-firebase-history.js.
-
-#### Control CG-RATE-CS
-
-- **Title:** Rate Limiting & Throttling (C#)
-- **Threat Mitigated:** Aggressive clients exhaust compute or brute-force credentials.
-- **Detection Signal:** Policy files and serverless handlers inspected for missing limiter middleware.
-- **Recommended Fix:** Adopt token bucket or sliding window algorithms; return 429 with retry hints. Leverage Entity Framework, Dapper conventions for C# deployments.
-- **Automation Level:** Sample limiter middleware shipped in src/lib.
-- **Validation Steps:** Load-test using scripts/test-firebase-history.js.
-
-#### Control CG-LINT-JS
-
-- **Title:** Secure Lint Configuration (JavaScript)
-- **Threat Mitigated:** Disabled ESLint/TSLint rules hide insecure patterns.
-- **Detection Signal:** eslint.config.js audited for overrides, ensures security plugins stay enabled.
-- **Recommended Fix:** Re-enable critical rules or adopt custom rule packs. Leverage Prisma, Knex conventions for JavaScript deployments.
-- **Automation Level:** CI fails when eslint reports new warnings beyond baseline.
-- **Validation Steps:** Run npm run lint locally; share screenshot in PR.
-
-#### Control CG-LINT-TS
-
-- **Title:** Secure Lint Configuration (TypeScript)
-- **Threat Mitigated:** Disabled ESLint/TSLint rules hide insecure patterns.
-- **Detection Signal:** eslint.config.js audited for overrides, ensures security plugins stay enabled.
-- **Recommended Fix:** Re-enable critical rules or adopt custom rule packs. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
-- **Automation Level:** CI fails when eslint reports new warnings beyond baseline.
-- **Validation Steps:** Run npm run lint locally; share screenshot in PR.
-
-#### Control CG-LINT-PY
-
-- **Title:** Secure Lint Configuration (Python)
-- **Threat Mitigated:** Disabled ESLint/TSLint rules hide insecure patterns.
-- **Detection Signal:** eslint.config.js audited for overrides, ensures security plugins stay enabled.
-- **Recommended Fix:** Re-enable critical rules or adopt custom rule packs. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
-- **Automation Level:** CI fails when eslint reports new warnings beyond baseline.
-- **Validation Steps:** Run npm run lint locally; share screenshot in PR.
-
-#### Control CG-LINT-JAVA
-
-- **Title:** Secure Lint Configuration (Java)
-- **Threat Mitigated:** Disabled ESLint/TSLint rules hide insecure patterns.
-- **Detection Signal:** eslint.config.js audited for overrides, ensures security plugins stay enabled.
-- **Recommended Fix:** Re-enable critical rules or adopt custom rule packs. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
-- **Automation Level:** CI fails when eslint reports new warnings beyond baseline.
-- **Validation Steps:** Run npm run lint locally; share screenshot in PR.
-
-#### Control CG-LINT-GO
-
-- **Title:** Secure Lint Configuration (Go)
-- **Threat Mitigated:** Disabled ESLint/TSLint rules hide insecure patterns.
-- **Detection Signal:** eslint.config.js audited for overrides, ensures security plugins stay enabled.
-- **Recommended Fix:** Re-enable critical rules or adopt custom rule packs. Leverage GORM, pgx conventions for Go deployments.
-- **Automation Level:** CI fails when eslint reports new warnings beyond baseline.
-- **Validation Steps:** Run npm run lint locally; share screenshot in PR.
-
-#### Control CG-LINT-RST
-
-- **Title:** Secure Lint Configuration (Rust)
-- **Threat Mitigated:** Disabled ESLint/TSLint rules hide insecure patterns.
-- **Detection Signal:** eslint.config.js audited for overrides, ensures security plugins stay enabled.
-- **Recommended Fix:** Re-enable critical rules or adopt custom rule packs. Leverage SQLx, Diesel conventions for Rust deployments.
-- **Automation Level:** CI fails when eslint reports new warnings beyond baseline.
-- **Validation Steps:** Run npm run lint locally; share screenshot in PR.
-
-#### Control CG-LINT-PHP
-
-- **Title:** Secure Lint Configuration (PHP)
-- **Threat Mitigated:** Disabled ESLint/TSLint rules hide insecure patterns.
-- **Detection Signal:** eslint.config.js audited for overrides, ensures security plugins stay enabled.
-- **Recommended Fix:** Re-enable critical rules or adopt custom rule packs. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
-- **Automation Level:** CI fails when eslint reports new warnings beyond baseline.
-- **Validation Steps:** Run npm run lint locally; share screenshot in PR.
-
-#### Control CG-LINT-CS
-
-- **Title:** Secure Lint Configuration (C#)
-- **Threat Mitigated:** Disabled ESLint/TSLint rules hide insecure patterns.
-- **Detection Signal:** eslint.config.js audited for overrides, ensures security plugins stay enabled.
-- **Recommended Fix:** Re-enable critical rules or adopt custom rule packs. Leverage Entity Framework, Dapper conventions for C# deployments.
-- **Automation Level:** CI fails when eslint reports new warnings beyond baseline.
-- **Validation Steps:** Run npm run lint locally; share screenshot in PR.
-
-#### Control CG-LOG-JS
-
-- **Title:** Log Redaction & Privacy (JavaScript)
-- **Threat Mitigated:** PII or secrets land in console/server logs.
-- **Detection Signal:** Logger wrapper ensures structured levels and pattern-based scrubbing.
-- **Recommended Fix:** Adopt central logger, categorize fields, drop payload dumps. Leverage Prisma, Knex conventions for JavaScript deployments.
-- **Automation Level:** src/components/common surfaces log health metrics.
-- **Validation Steps:** Use scripts/test-firebase-storage-fix.js --logs to sample outputs.
-
-#### Control CG-LOG-TS
-
-- **Title:** Log Redaction & Privacy (TypeScript)
-- **Threat Mitigated:** PII or secrets land in console/server logs.
-- **Detection Signal:** Logger wrapper ensures structured levels and pattern-based scrubbing.
-- **Recommended Fix:** Adopt central logger, categorize fields, drop payload dumps. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
-- **Automation Level:** src/components/common surfaces log health metrics.
-- **Validation Steps:** Use scripts/test-firebase-storage-fix.js --logs to sample outputs.
-
-#### Control CG-LOG-PY
-
-- **Title:** Log Redaction & Privacy (Python)
-- **Threat Mitigated:** PII or secrets land in console/server logs.
-- **Detection Signal:** Logger wrapper ensures structured levels and pattern-based scrubbing.
-- **Recommended Fix:** Adopt central logger, categorize fields, drop payload dumps. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
-- **Automation Level:** src/components/common surfaces log health metrics.
-- **Validation Steps:** Use scripts/test-firebase-storage-fix.js --logs to sample outputs.
-
-#### Control CG-LOG-JAVA
-
-- **Title:** Log Redaction & Privacy (Java)
-- **Threat Mitigated:** PII or secrets land in console/server logs.
-- **Detection Signal:** Logger wrapper ensures structured levels and pattern-based scrubbing.
-- **Recommended Fix:** Adopt central logger, categorize fields, drop payload dumps. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
-- **Automation Level:** src/components/common surfaces log health metrics.
-- **Validation Steps:** Use scripts/test-firebase-storage-fix.js --logs to sample outputs.
-
-#### Control CG-LOG-GO
-
-- **Title:** Log Redaction & Privacy (Go)
-- **Threat Mitigated:** PII or secrets land in console/server logs.
-- **Detection Signal:** Logger wrapper ensures structured levels and pattern-based scrubbing.
-- **Recommended Fix:** Adopt central logger, categorize fields, drop payload dumps. Leverage GORM, pgx conventions for Go deployments.
-- **Automation Level:** src/components/common surfaces log health metrics.
-- **Validation Steps:** Use scripts/test-firebase-storage-fix.js --logs to sample outputs.
-
-#### Control CG-LOG-RST
-
-- **Title:** Log Redaction & Privacy (Rust)
-- **Threat Mitigated:** PII or secrets land in console/server logs.
-- **Detection Signal:** Logger wrapper ensures structured levels and pattern-based scrubbing.
-- **Recommended Fix:** Adopt central logger, categorize fields, drop payload dumps. Leverage SQLx, Diesel conventions for Rust deployments.
-- **Automation Level:** src/components/common surfaces log health metrics.
-- **Validation Steps:** Use scripts/test-firebase-storage-fix.js --logs to sample outputs.
-
-#### Control CG-LOG-PHP
-
-- **Title:** Log Redaction & Privacy (PHP)
-- **Threat Mitigated:** PII or secrets land in console/server logs.
-- **Detection Signal:** Logger wrapper ensures structured levels and pattern-based scrubbing.
-- **Recommended Fix:** Adopt central logger, categorize fields, drop payload dumps. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
-- **Automation Level:** src/components/common surfaces log health metrics.
-- **Validation Steps:** Use scripts/test-firebase-storage-fix.js --logs to sample outputs.
-
-#### Control CG-LOG-CS
-
-- **Title:** Log Redaction & Privacy (C#)
-- **Threat Mitigated:** PII or secrets land in console/server logs.
-- **Detection Signal:** Logger wrapper ensures structured levels and pattern-based scrubbing.
-- **Recommended Fix:** Adopt central logger, categorize fields, drop payload dumps. Leverage Entity Framework, Dapper conventions for C# deployments.
-- **Automation Level:** src/components/common surfaces log health metrics.
-- **Validation Steps:** Use scripts/test-firebase-storage-fix.js --logs to sample outputs.
-
-#### Control CG-PDF-JS
-
-- **Title:** Report Export Hardening (JavaScript)
-- **Threat Mitigated:** Malicious SVG/HTML injection inside PDF exports.
-- **Detection Signal:** Export service neutralizes embedded scripts before rendering.
-- **Recommended Fix:** Sanitize Markdown -> HTML conversions, block inline scripts. Leverage Prisma, Knex conventions for JavaScript deployments.
-- **Automation Level:** Export workers run in isolated iframe contexts.
-- **Validation Steps:** Review tmp_rovodev_svg_fix_summary.txt regression log.
-
-#### Control CG-PDF-TS
-
-- **Title:** Report Export Hardening (TypeScript)
-- **Threat Mitigated:** Malicious SVG/HTML injection inside PDF exports.
-- **Detection Signal:** Export service neutralizes embedded scripts before rendering.
-- **Recommended Fix:** Sanitize Markdown -> HTML conversions, block inline scripts. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
-- **Automation Level:** Export workers run in isolated iframe contexts.
-- **Validation Steps:** Review tmp_rovodev_svg_fix_summary.txt regression log.
-
-#### Control CG-PDF-PY
-
-- **Title:** Report Export Hardening (Python)
-- **Threat Mitigated:** Malicious SVG/HTML injection inside PDF exports.
-- **Detection Signal:** Export service neutralizes embedded scripts before rendering.
-- **Recommended Fix:** Sanitize Markdown -> HTML conversions, block inline scripts. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
-- **Automation Level:** Export workers run in isolated iframe contexts.
-- **Validation Steps:** Review tmp_rovodev_svg_fix_summary.txt regression log.
-
-#### Control CG-PDF-JAVA
-
-- **Title:** Report Export Hardening (Java)
-- **Threat Mitigated:** Malicious SVG/HTML injection inside PDF exports.
-- **Detection Signal:** Export service neutralizes embedded scripts before rendering.
-- **Recommended Fix:** Sanitize Markdown -> HTML conversions, block inline scripts. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
-- **Automation Level:** Export workers run in isolated iframe contexts.
-- **Validation Steps:** Review tmp_rovodev_svg_fix_summary.txt regression log.
-
-#### Control CG-PDF-GO
-
-- **Title:** Report Export Hardening (Go)
-- **Threat Mitigated:** Malicious SVG/HTML injection inside PDF exports.
-- **Detection Signal:** Export service neutralizes embedded scripts before rendering.
-- **Recommended Fix:** Sanitize Markdown -> HTML conversions, block inline scripts. Leverage GORM, pgx conventions for Go deployments.
-- **Automation Level:** Export workers run in isolated iframe contexts.
-- **Validation Steps:** Review tmp_rovodev_svg_fix_summary.txt regression log.
-
-#### Control CG-PDF-RST
-
-- **Title:** Report Export Hardening (Rust)
-- **Threat Mitigated:** Malicious SVG/HTML injection inside PDF exports.
-- **Detection Signal:** Export service neutralizes embedded scripts before rendering.
-- **Recommended Fix:** Sanitize Markdown -> HTML conversions, block inline scripts. Leverage SQLx, Diesel conventions for Rust deployments.
-- **Automation Level:** Export workers run in isolated iframe contexts.
-- **Validation Steps:** Review tmp_rovodev_svg_fix_summary.txt regression log.
-
-#### Control CG-PDF-PHP
-
-- **Title:** Report Export Hardening (PHP)
-- **Threat Mitigated:** Malicious SVG/HTML injection inside PDF exports.
-- **Detection Signal:** Export service neutralizes embedded scripts before rendering.
-- **Recommended Fix:** Sanitize Markdown -> HTML conversions, block inline scripts. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
-- **Automation Level:** Export workers run in isolated iframe contexts.
-- **Validation Steps:** Review tmp_rovodev_svg_fix_summary.txt regression log.
-
-#### Control CG-PDF-CS
-
-- **Title:** Report Export Hardening (C#)
-- **Threat Mitigated:** Malicious SVG/HTML injection inside PDF exports.
-- **Detection Signal:** Export service neutralizes embedded scripts before rendering.
-- **Recommended Fix:** Sanitize Markdown -> HTML conversions, block inline scripts. Leverage Entity Framework, Dapper conventions for C# deployments.
-- **Automation Level:** Export workers run in isolated iframe contexts.
-- **Validation Steps:** Review tmp_rovodev_svg_fix_summary.txt regression log.
-
-#### Control CG-AIEXP-JS
-
-- **Title:** AI Explanation Quality Gates (JavaScript)
-- **Threat Mitigated:** Hallucinated remediation advice causes regressions.
-- **Detection Signal:** BLEU/ROUGE comparison inside scripts/run-accuracy-test.ts flags low-quality output.
-- **Recommended Fix:** Retrain prompts, include repo context, require reviewer acks. Leverage Prisma, Knex conventions for JavaScript deployments.
-- **Automation Level:** Confidence scores overlayed in results view.
-- **Validation Steps:** Spot-check via tmp_rovodev_FINAL_REPORT.md template.
-
-#### Control CG-AIEXP-TS
-
-- **Title:** AI Explanation Quality Gates (TypeScript)
-- **Threat Mitigated:** Hallucinated remediation advice causes regressions.
-- **Detection Signal:** BLEU/ROUGE comparison inside scripts/run-accuracy-test.ts flags low-quality output.
-- **Recommended Fix:** Retrain prompts, include repo context, require reviewer acks. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
-- **Automation Level:** Confidence scores overlayed in results view.
-- **Validation Steps:** Spot-check via tmp_rovodev_FINAL_REPORT.md template.
-
-#### Control CG-AIEXP-PY
-
-- **Title:** AI Explanation Quality Gates (Python)
-- **Threat Mitigated:** Hallucinated remediation advice causes regressions.
-- **Detection Signal:** BLEU/ROUGE comparison inside scripts/run-accuracy-test.ts flags low-quality output.
-- **Recommended Fix:** Retrain prompts, include repo context, require reviewer acks. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
-- **Automation Level:** Confidence scores overlayed in results view.
-- **Validation Steps:** Spot-check via tmp_rovodev_FINAL_REPORT.md template.
-
-#### Control CG-AIEXP-JAVA
-
-- **Title:** AI Explanation Quality Gates (Java)
-- **Threat Mitigated:** Hallucinated remediation advice causes regressions.
-- **Detection Signal:** BLEU/ROUGE comparison inside scripts/run-accuracy-test.ts flags low-quality output.
-- **Recommended Fix:** Retrain prompts, include repo context, require reviewer acks. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
-- **Automation Level:** Confidence scores overlayed in results view.
-- **Validation Steps:** Spot-check via tmp_rovodev_FINAL_REPORT.md template.
-
-#### Control CG-AIEXP-GO
-
-- **Title:** AI Explanation Quality Gates (Go)
-- **Threat Mitigated:** Hallucinated remediation advice causes regressions.
-- **Detection Signal:** BLEU/ROUGE comparison inside scripts/run-accuracy-test.ts flags low-quality output.
-- **Recommended Fix:** Retrain prompts, include repo context, require reviewer acks. Leverage GORM, pgx conventions for Go deployments.
-- **Automation Level:** Confidence scores overlayed in results view.
-- **Validation Steps:** Spot-check via tmp_rovodev_FINAL_REPORT.md template.
-
-#### Control CG-AIEXP-RST
-
-- **Title:** AI Explanation Quality Gates (Rust)
-- **Threat Mitigated:** Hallucinated remediation advice causes regressions.
-- **Detection Signal:** BLEU/ROUGE comparison inside scripts/run-accuracy-test.ts flags low-quality output.
-- **Recommended Fix:** Retrain prompts, include repo context, require reviewer acks. Leverage SQLx, Diesel conventions for Rust deployments.
-- **Automation Level:** Confidence scores overlayed in results view.
-- **Validation Steps:** Spot-check via tmp_rovodev_FINAL_REPORT.md template.
-
-#### Control CG-AIEXP-PHP
-
-- **Title:** AI Explanation Quality Gates (PHP)
-- **Threat Mitigated:** Hallucinated remediation advice causes regressions.
-- **Detection Signal:** BLEU/ROUGE comparison inside scripts/run-accuracy-test.ts flags low-quality output.
-- **Recommended Fix:** Retrain prompts, include repo context, require reviewer acks. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
-- **Automation Level:** Confidence scores overlayed in results view.
-- **Validation Steps:** Spot-check via tmp_rovodev_FINAL_REPORT.md template.
-
-#### Control CG-AIEXP-CS
-
-- **Title:** AI Explanation Quality Gates (C#)
-- **Threat Mitigated:** Hallucinated remediation advice causes regressions.
-- **Detection Signal:** BLEU/ROUGE comparison inside scripts/run-accuracy-test.ts flags low-quality output.
-- **Recommended Fix:** Retrain prompts, include repo context, require reviewer acks. Leverage Entity Framework, Dapper conventions for C# deployments.
-- **Automation Level:** Confidence scores overlayed in results view.
-- **Validation Steps:** Spot-check via tmp_rovodev_FINAL_REPORT.md template.
-
-#### Control CG-MOBILE-JS
-
-- **Title:** Mobile Responsiveness & Security (JavaScript)
-- **Threat Mitigated:** Hidden buttons or truncated notifications cause missed alerts.
-- **Detection Signal:** Vite test harness checks viewport-specific CSS under src/index.css.
-- **Recommended Fix:** Adopt responsive grids, accessible touch targets, secure gestures. Leverage Prisma, Knex conventions for JavaScript deployments.
-- **Automation Level:** Storybook-style screenshots validated in CI.
-- **Validation Steps:** Use tmp_rovodev_functional_test.html with device emulators.
-
-#### Control CG-MOBILE-TS
-
-- **Title:** Mobile Responsiveness & Security (TypeScript)
-- **Threat Mitigated:** Hidden buttons or truncated notifications cause missed alerts.
-- **Detection Signal:** Vite test harness checks viewport-specific CSS under src/index.css.
-- **Recommended Fix:** Adopt responsive grids, accessible touch targets, secure gestures. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
-- **Automation Level:** Storybook-style screenshots validated in CI.
-- **Validation Steps:** Use tmp_rovodev_functional_test.html with device emulators.
-
-#### Control CG-MOBILE-PY
-
-- **Title:** Mobile Responsiveness & Security (Python)
-- **Threat Mitigated:** Hidden buttons or truncated notifications cause missed alerts.
-- **Detection Signal:** Vite test harness checks viewport-specific CSS under src/index.css.
-- **Recommended Fix:** Adopt responsive grids, accessible touch targets, secure gestures. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
-- **Automation Level:** Storybook-style screenshots validated in CI.
-- **Validation Steps:** Use tmp_rovodev_functional_test.html with device emulators.
-
-#### Control CG-MOBILE-JAVA
-
-- **Title:** Mobile Responsiveness & Security (Java)
-- **Threat Mitigated:** Hidden buttons or truncated notifications cause missed alerts.
-- **Detection Signal:** Vite test harness checks viewport-specific CSS under src/index.css.
-- **Recommended Fix:** Adopt responsive grids, accessible touch targets, secure gestures. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
-- **Automation Level:** Storybook-style screenshots validated in CI.
-- **Validation Steps:** Use tmp_rovodev_functional_test.html with device emulators.
-
-#### Control CG-MOBILE-GO
-
-- **Title:** Mobile Responsiveness & Security (Go)
-- **Threat Mitigated:** Hidden buttons or truncated notifications cause missed alerts.
-- **Detection Signal:** Vite test harness checks viewport-specific CSS under src/index.css.
-- **Recommended Fix:** Adopt responsive grids, accessible touch targets, secure gestures. Leverage GORM, pgx conventions for Go deployments.
-- **Automation Level:** Storybook-style screenshots validated in CI.
-- **Validation Steps:** Use tmp_rovodev_functional_test.html with device emulators.
-
-#### Control CG-MOBILE-RST
-
-- **Title:** Mobile Responsiveness & Security (Rust)
-- **Threat Mitigated:** Hidden buttons or truncated notifications cause missed alerts.
-- **Detection Signal:** Vite test harness checks viewport-specific CSS under src/index.css.
-- **Recommended Fix:** Adopt responsive grids, accessible touch targets, secure gestures. Leverage SQLx, Diesel conventions for Rust deployments.
-- **Automation Level:** Storybook-style screenshots validated in CI.
-- **Validation Steps:** Use tmp_rovodev_functional_test.html with device emulators.
-
-#### Control CG-MOBILE-PHP
-
-- **Title:** Mobile Responsiveness & Security (PHP)
-- **Threat Mitigated:** Hidden buttons or truncated notifications cause missed alerts.
-- **Detection Signal:** Vite test harness checks viewport-specific CSS under src/index.css.
-- **Recommended Fix:** Adopt responsive grids, accessible touch targets, secure gestures. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
-- **Automation Level:** Storybook-style screenshots validated in CI.
-- **Validation Steps:** Use tmp_rovodev_functional_test.html with device emulators.
-
-#### Control CG-MOBILE-CS
-
-- **Title:** Mobile Responsiveness & Security (C#)
-- **Threat Mitigated:** Hidden buttons or truncated notifications cause missed alerts.
-- **Detection Signal:** Vite test harness checks viewport-specific CSS under src/index.css.
-- **Recommended Fix:** Adopt responsive grids, accessible touch targets, secure gestures. Leverage Entity Framework, Dapper conventions for C# deployments.
-- **Automation Level:** Storybook-style screenshots validated in CI.
-- **Validation Steps:** Use tmp_rovodev_functional_test.html with device emulators.
-
-#### Control CG-PWA-JS
-
-- **Title:** PWA Offline Safety (JavaScript)
-- **Threat Mitigated:** Cached stale data or unencrypted storage leads to leaks.
-- **Detection Signal:** Service worker audits ensure caches purge sensitive assets per build.
-- **Recommended Fix:** Version caches, encrypt IndexedDB snapshots, require biometric unlock on installable apps. Leverage Prisma, Knex conventions for JavaScript deployments.
-- **Automation Level:** public/sw.js exposes lifecycle hooks to expire sensitive responses.
-- **Validation Steps:** Log offline sessions and verify re-auth prompts occur.
-
-#### Control CG-PWA-TS
-
-- **Title:** PWA Offline Safety (TypeScript)
-- **Threat Mitigated:** Cached stale data or unencrypted storage leads to leaks.
-- **Detection Signal:** Service worker audits ensure caches purge sensitive assets per build.
-- **Recommended Fix:** Version caches, encrypt IndexedDB snapshots, require biometric unlock on installable apps. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
-- **Automation Level:** public/sw.js exposes lifecycle hooks to expire sensitive responses.
-- **Validation Steps:** Log offline sessions and verify re-auth prompts occur.
-
-#### Control CG-PWA-PY
-
-- **Title:** PWA Offline Safety (Python)
-- **Threat Mitigated:** Cached stale data or unencrypted storage leads to leaks.
-- **Detection Signal:** Service worker audits ensure caches purge sensitive assets per build.
-- **Recommended Fix:** Version caches, encrypt IndexedDB snapshots, require biometric unlock on installable apps. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
-- **Automation Level:** public/sw.js exposes lifecycle hooks to expire sensitive responses.
-- **Validation Steps:** Log offline sessions and verify re-auth prompts occur.
-
-#### Control CG-PWA-JAVA
-
-- **Title:** PWA Offline Safety (Java)
-- **Threat Mitigated:** Cached stale data or unencrypted storage leads to leaks.
-- **Detection Signal:** Service worker audits ensure caches purge sensitive assets per build.
-- **Recommended Fix:** Version caches, encrypt IndexedDB snapshots, require biometric unlock on installable apps. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
-- **Automation Level:** public/sw.js exposes lifecycle hooks to expire sensitive responses.
-- **Validation Steps:** Log offline sessions and verify re-auth prompts occur.
-
-#### Control CG-PWA-GO
-
-- **Title:** PWA Offline Safety (Go)
-- **Threat Mitigated:** Cached stale data or unencrypted storage leads to leaks.
-- **Detection Signal:** Service worker audits ensure caches purge sensitive assets per build.
-- **Recommended Fix:** Version caches, encrypt IndexedDB snapshots, require biometric unlock on installable apps. Leverage GORM, pgx conventions for Go deployments.
-- **Automation Level:** public/sw.js exposes lifecycle hooks to expire sensitive responses.
-- **Validation Steps:** Log offline sessions and verify re-auth prompts occur.
-
-#### Control CG-PWA-RST
-
-- **Title:** PWA Offline Safety (Rust)
-- **Threat Mitigated:** Cached stale data or unencrypted storage leads to leaks.
-- **Detection Signal:** Service worker audits ensure caches purge sensitive assets per build.
-- **Recommended Fix:** Version caches, encrypt IndexedDB snapshots, require biometric unlock on installable apps. Leverage SQLx, Diesel conventions for Rust deployments.
-- **Automation Level:** public/sw.js exposes lifecycle hooks to expire sensitive responses.
-- **Validation Steps:** Log offline sessions and verify re-auth prompts occur.
-
-#### Control CG-PWA-PHP
-
-- **Title:** PWA Offline Safety (PHP)
-- **Threat Mitigated:** Cached stale data or unencrypted storage leads to leaks.
-- **Detection Signal:** Service worker audits ensure caches purge sensitive assets per build.
-- **Recommended Fix:** Version caches, encrypt IndexedDB snapshots, require biometric unlock on installable apps. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
-- **Automation Level:** public/sw.js exposes lifecycle hooks to expire sensitive responses.
-- **Validation Steps:** Log offline sessions and verify re-auth prompts occur.
-
-#### Control CG-PWA-CS
-
-- **Title:** PWA Offline Safety (C#)
-- **Threat Mitigated:** Cached stale data or unencrypted storage leads to leaks.
-- **Detection Signal:** Service worker audits ensure caches purge sensitive assets per build.
-- **Recommended Fix:** Version caches, encrypt IndexedDB snapshots, require biometric unlock on installable apps. Leverage Entity Framework, Dapper conventions for C# deployments.
-- **Automation Level:** public/sw.js exposes lifecycle hooks to expire sensitive responses.
-- **Validation Steps:** Log offline sessions and verify re-auth prompts occur.
-
-#### Control CG-PDFX-JS
-
-- **Title:** Export Accessibility QC (JavaScript)
-- **Threat Mitigated:** Screen readers cannot parse exported audit packages.
-- **Detection Signal:** HTML-to-PDF pipeline verifies semantic tags + headings.
-- **Recommended Fix:** Inject ARIA labels, add table summaries, follow WCAG techniques. Leverage Prisma, Knex conventions for JavaScript deployments.
-- **Automation Level:** Accessibility tests run before shipping templates.
-- **Validation Steps:** Use tests/modernCodeScanning.test.ts a11y snapshot comparisons.
-
-#### Control CG-PDFX-TS
-
-- **Title:** Export Accessibility QC (TypeScript)
-- **Threat Mitigated:** Screen readers cannot parse exported audit packages.
-- **Detection Signal:** HTML-to-PDF pipeline verifies semantic tags + headings.
-- **Recommended Fix:** Inject ARIA labels, add table summaries, follow WCAG techniques. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
-- **Automation Level:** Accessibility tests run before shipping templates.
-- **Validation Steps:** Use tests/modernCodeScanning.test.ts a11y snapshot comparisons.
-
-#### Control CG-PDFX-PY
-
-- **Title:** Export Accessibility QC (Python)
-- **Threat Mitigated:** Screen readers cannot parse exported audit packages.
-- **Detection Signal:** HTML-to-PDF pipeline verifies semantic tags + headings.
-- **Recommended Fix:** Inject ARIA labels, add table summaries, follow WCAG techniques. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
-- **Automation Level:** Accessibility tests run before shipping templates.
-- **Validation Steps:** Use tests/modernCodeScanning.test.ts a11y snapshot comparisons.
-
-#### Control CG-PDFX-JAVA
-
-- **Title:** Export Accessibility QC (Java)
-- **Threat Mitigated:** Screen readers cannot parse exported audit packages.
-- **Detection Signal:** HTML-to-PDF pipeline verifies semantic tags + headings.
-- **Recommended Fix:** Inject ARIA labels, add table summaries, follow WCAG techniques. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
-- **Automation Level:** Accessibility tests run before shipping templates.
-- **Validation Steps:** Use tests/modernCodeScanning.test.ts a11y snapshot comparisons.
-
-#### Control CG-PDFX-GO
-
-- **Title:** Export Accessibility QC (Go)
-- **Threat Mitigated:** Screen readers cannot parse exported audit packages.
-- **Detection Signal:** HTML-to-PDF pipeline verifies semantic tags + headings.
-- **Recommended Fix:** Inject ARIA labels, add table summaries, follow WCAG techniques. Leverage GORM, pgx conventions for Go deployments.
-- **Automation Level:** Accessibility tests run before shipping templates.
-- **Validation Steps:** Use tests/modernCodeScanning.test.ts a11y snapshot comparisons.
-
-#### Control CG-PDFX-RST
-
-- **Title:** Export Accessibility QC (Rust)
-- **Threat Mitigated:** Screen readers cannot parse exported audit packages.
-- **Detection Signal:** HTML-to-PDF pipeline verifies semantic tags + headings.
-- **Recommended Fix:** Inject ARIA labels, add table summaries, follow WCAG techniques. Leverage SQLx, Diesel conventions for Rust deployments.
-- **Automation Level:** Accessibility tests run before shipping templates.
-- **Validation Steps:** Use tests/modernCodeScanning.test.ts a11y snapshot comparisons.
-
-#### Control CG-PDFX-PHP
-
-- **Title:** Export Accessibility QC (PHP)
-- **Threat Mitigated:** Screen readers cannot parse exported audit packages.
-- **Detection Signal:** HTML-to-PDF pipeline verifies semantic tags + headings.
-- **Recommended Fix:** Inject ARIA labels, add table summaries, follow WCAG techniques. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
-- **Automation Level:** Accessibility tests run before shipping templates.
-- **Validation Steps:** Use tests/modernCodeScanning.test.ts a11y snapshot comparisons.
-
-#### Control CG-PDFX-CS
-
-- **Title:** Export Accessibility QC (C#)
-- **Threat Mitigated:** Screen readers cannot parse exported audit packages.
-- **Detection Signal:** HTML-to-PDF pipeline verifies semantic tags + headings.
-- **Recommended Fix:** Inject ARIA labels, add table summaries, follow WCAG techniques. Leverage Entity Framework, Dapper conventions for C# deployments.
-- **Automation Level:** Accessibility tests run before shipping templates.
-- **Validation Steps:** Use tests/modernCodeScanning.test.ts a11y snapshot comparisons.
-
-#### Control CG-SBX-JS
-
-- **Title:** Sandbox Escape Prevention (JavaScript)
-- **Threat Mitigated:** Untrusted code tries to escape analysis sandboxes.
-- **Detection Signal:** Execution harness monitors syscalls and network attempts.
-- **Recommended Fix:** Limit syscalls, drop filesystem permissions, disable outbound network. Leverage Prisma, Knex conventions for JavaScript deployments.
-- **Automation Level:** Runtime guardrails configured in tmp_rovodev_runtime_test.ts.
-- **Validation Steps:** Stress test with fuzzers referenced in test-pattern.js.
-
-#### Control CG-SBX-TS
-
-- **Title:** Sandbox Escape Prevention (TypeScript)
-- **Threat Mitigated:** Untrusted code tries to escape analysis sandboxes.
-- **Detection Signal:** Execution harness monitors syscalls and network attempts.
-- **Recommended Fix:** Limit syscalls, drop filesystem permissions, disable outbound network. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
-- **Automation Level:** Runtime guardrails configured in tmp_rovodev_runtime_test.ts.
-- **Validation Steps:** Stress test with fuzzers referenced in test-pattern.js.
-
-#### Control CG-SBX-PY
-
-- **Title:** Sandbox Escape Prevention (Python)
-- **Threat Mitigated:** Untrusted code tries to escape analysis sandboxes.
-- **Detection Signal:** Execution harness monitors syscalls and network attempts.
-- **Recommended Fix:** Limit syscalls, drop filesystem permissions, disable outbound network. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
-- **Automation Level:** Runtime guardrails configured in tmp_rovodev_runtime_test.ts.
-- **Validation Steps:** Stress test with fuzzers referenced in test-pattern.js.
-
-#### Control CG-SBX-JAVA
-
-- **Title:** Sandbox Escape Prevention (Java)
-- **Threat Mitigated:** Untrusted code tries to escape analysis sandboxes.
-- **Detection Signal:** Execution harness monitors syscalls and network attempts.
-- **Recommended Fix:** Limit syscalls, drop filesystem permissions, disable outbound network. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
-- **Automation Level:** Runtime guardrails configured in tmp_rovodev_runtime_test.ts.
-- **Validation Steps:** Stress test with fuzzers referenced in test-pattern.js.
-
-#### Control CG-SBX-GO
-
-- **Title:** Sandbox Escape Prevention (Go)
-- **Threat Mitigated:** Untrusted code tries to escape analysis sandboxes.
-- **Detection Signal:** Execution harness monitors syscalls and network attempts.
-- **Recommended Fix:** Limit syscalls, drop filesystem permissions, disable outbound network. Leverage GORM, pgx conventions for Go deployments.
-- **Automation Level:** Runtime guardrails configured in tmp_rovodev_runtime_test.ts.
-- **Validation Steps:** Stress test with fuzzers referenced in test-pattern.js.
-
-#### Control CG-SBX-RST
-
-- **Title:** Sandbox Escape Prevention (Rust)
-- **Threat Mitigated:** Untrusted code tries to escape analysis sandboxes.
-- **Detection Signal:** Execution harness monitors syscalls and network attempts.
-- **Recommended Fix:** Limit syscalls, drop filesystem permissions, disable outbound network. Leverage SQLx, Diesel conventions for Rust deployments.
-- **Automation Level:** Runtime guardrails configured in tmp_rovodev_runtime_test.ts.
-- **Validation Steps:** Stress test with fuzzers referenced in test-pattern.js.
-
-#### Control CG-SBX-PHP
-
-- **Title:** Sandbox Escape Prevention (PHP)
-- **Threat Mitigated:** Untrusted code tries to escape analysis sandboxes.
-- **Detection Signal:** Execution harness monitors syscalls and network attempts.
-- **Recommended Fix:** Limit syscalls, drop filesystem permissions, disable outbound network. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
-- **Automation Level:** Runtime guardrails configured in tmp_rovodev_runtime_test.ts.
-- **Validation Steps:** Stress test with fuzzers referenced in test-pattern.js.
-
-#### Control CG-SBX-CS
-
-- **Title:** Sandbox Escape Prevention (C#)
-- **Threat Mitigated:** Untrusted code tries to escape analysis sandboxes.
-- **Detection Signal:** Execution harness monitors syscalls and network attempts.
-- **Recommended Fix:** Limit syscalls, drop filesystem permissions, disable outbound network. Leverage Entity Framework, Dapper conventions for C# deployments.
-- **Automation Level:** Runtime guardrails configured in tmp_rovodev_runtime_test.ts.
-- **Validation Steps:** Stress test with fuzzers referenced in test-pattern.js.
-
-#### Control CG-CICD-JS
-
-- **Title:** Pipeline Credential Hygiene (JavaScript)
-- **Threat Mitigated:** Long-lived CI tokens leak via logs or artifacts.
-- **Detection Signal:** Workflow scanners read .github/workflows and scripts for plaintext secrets.
-- **Recommended Fix:** Adopt OIDC, use short-lived tokens, store secrets in platform vaults. Leverage Prisma, Knex conventions for JavaScript deployments.
-- **Automation Level:** Templates in Appendix D show recommended setup.
-- **Validation Steps:** Dry-run workflows with redacted tokens before merging.
-
-#### Control CG-CICD-TS
-
-- **Title:** Pipeline Credential Hygiene (TypeScript)
-- **Threat Mitigated:** Long-lived CI tokens leak via logs or artifacts.
-- **Detection Signal:** Workflow scanners read .github/workflows and scripts for plaintext secrets.
-- **Recommended Fix:** Adopt OIDC, use short-lived tokens, store secrets in platform vaults. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
-- **Automation Level:** Templates in Appendix D show recommended setup.
-- **Validation Steps:** Dry-run workflows with redacted tokens before merging.
-
-#### Control CG-CICD-PY
-
-- **Title:** Pipeline Credential Hygiene (Python)
-- **Threat Mitigated:** Long-lived CI tokens leak via logs or artifacts.
-- **Detection Signal:** Workflow scanners read .github/workflows and scripts for plaintext secrets.
-- **Recommended Fix:** Adopt OIDC, use short-lived tokens, store secrets in platform vaults. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
-- **Automation Level:** Templates in Appendix D show recommended setup.
-- **Validation Steps:** Dry-run workflows with redacted tokens before merging.
-
-#### Control CG-CICD-JAVA
-
-- **Title:** Pipeline Credential Hygiene (Java)
-- **Threat Mitigated:** Long-lived CI tokens leak via logs or artifacts.
-- **Detection Signal:** Workflow scanners read .github/workflows and scripts for plaintext secrets.
-- **Recommended Fix:** Adopt OIDC, use short-lived tokens, store secrets in platform vaults. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
-- **Automation Level:** Templates in Appendix D show recommended setup.
-- **Validation Steps:** Dry-run workflows with redacted tokens before merging.
-
-#### Control CG-CICD-GO
-
-- **Title:** Pipeline Credential Hygiene (Go)
-- **Threat Mitigated:** Long-lived CI tokens leak via logs or artifacts.
-- **Detection Signal:** Workflow scanners read .github/workflows and scripts for plaintext secrets.
-- **Recommended Fix:** Adopt OIDC, use short-lived tokens, store secrets in platform vaults. Leverage GORM, pgx conventions for Go deployments.
-- **Automation Level:** Templates in Appendix D show recommended setup.
-- **Validation Steps:** Dry-run workflows with redacted tokens before merging.
-
-#### Control CG-CICD-RST
-
-- **Title:** Pipeline Credential Hygiene (Rust)
-- **Threat Mitigated:** Long-lived CI tokens leak via logs or artifacts.
-- **Detection Signal:** Workflow scanners read .github/workflows and scripts for plaintext secrets.
-- **Recommended Fix:** Adopt OIDC, use short-lived tokens, store secrets in platform vaults. Leverage SQLx, Diesel conventions for Rust deployments.
-- **Automation Level:** Templates in Appendix D show recommended setup.
-- **Validation Steps:** Dry-run workflows with redacted tokens before merging.
-
-#### Control CG-CICD-PHP
-
-- **Title:** Pipeline Credential Hygiene (PHP)
-- **Threat Mitigated:** Long-lived CI tokens leak via logs or artifacts.
-- **Detection Signal:** Workflow scanners read .github/workflows and scripts for plaintext secrets.
-- **Recommended Fix:** Adopt OIDC, use short-lived tokens, store secrets in platform vaults. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
-- **Automation Level:** Templates in Appendix D show recommended setup.
-- **Validation Steps:** Dry-run workflows with redacted tokens before merging.
-
-#### Control CG-CICD-CS
-
-- **Title:** Pipeline Credential Hygiene (C#)
-- **Threat Mitigated:** Long-lived CI tokens leak via logs or artifacts.
-- **Detection Signal:** Workflow scanners read .github/workflows and scripts for plaintext secrets.
-- **Recommended Fix:** Adopt OIDC, use short-lived tokens, store secrets in platform vaults. Leverage Entity Framework, Dapper conventions for C# deployments.
-- **Automation Level:** Templates in Appendix D show recommended setup.
-- **Validation Steps:** Dry-run workflows with redacted tokens before merging.
-
-#### Control CG-MLSEC-JS
-
-- **Title:** Model Input/Output Sanitization (JavaScript)
-- **Threat Mitigated:** Binary files or large payloads crash AI pipelines.
-- **Detection Signal:** Queue processors enforce max size, MIME filters, and compression thresholds.
-- **Recommended Fix:** Split large archives, limit file types, add fallback heuristics. Leverage Prisma, Knex conventions for JavaScript deployments.
-- **Automation Level:** Scheduler in api/push/schedule.ts batches safe workloads.
-- **Validation Steps:** Replay heavy datasets using tmp_rovodev_comprehensive_test.ts.
-
-#### Control CG-MLSEC-TS
-
-- **Title:** Model Input/Output Sanitization (TypeScript)
-- **Threat Mitigated:** Binary files or large payloads crash AI pipelines.
-- **Detection Signal:** Queue processors enforce max size, MIME filters, and compression thresholds.
-- **Recommended Fix:** Split large archives, limit file types, add fallback heuristics. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
-- **Automation Level:** Scheduler in api/push/schedule.ts batches safe workloads.
-- **Validation Steps:** Replay heavy datasets using tmp_rovodev_comprehensive_test.ts.
-
-#### Control CG-MLSEC-PY
-
-- **Title:** Model Input/Output Sanitization (Python)
-- **Threat Mitigated:** Binary files or large payloads crash AI pipelines.
-- **Detection Signal:** Queue processors enforce max size, MIME filters, and compression thresholds.
-- **Recommended Fix:** Split large archives, limit file types, add fallback heuristics. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
-- **Automation Level:** Scheduler in api/push/schedule.ts batches safe workloads.
-- **Validation Steps:** Replay heavy datasets using tmp_rovodev_comprehensive_test.ts.
-
-#### Control CG-MLSEC-JAVA
-
-- **Title:** Model Input/Output Sanitization (Java)
-- **Threat Mitigated:** Binary files or large payloads crash AI pipelines.
-- **Detection Signal:** Queue processors enforce max size, MIME filters, and compression thresholds.
-- **Recommended Fix:** Split large archives, limit file types, add fallback heuristics. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
-- **Automation Level:** Scheduler in api/push/schedule.ts batches safe workloads.
-- **Validation Steps:** Replay heavy datasets using tmp_rovodev_comprehensive_test.ts.
-
-#### Control CG-MLSEC-GO
-
-- **Title:** Model Input/Output Sanitization (Go)
-- **Threat Mitigated:** Binary files or large payloads crash AI pipelines.
-- **Detection Signal:** Queue processors enforce max size, MIME filters, and compression thresholds.
-- **Recommended Fix:** Split large archives, limit file types, add fallback heuristics. Leverage GORM, pgx conventions for Go deployments.
-- **Automation Level:** Scheduler in api/push/schedule.ts batches safe workloads.
-- **Validation Steps:** Replay heavy datasets using tmp_rovodev_comprehensive_test.ts.
-
-#### Control CG-MLSEC-RST
-
-- **Title:** Model Input/Output Sanitization (Rust)
-- **Threat Mitigated:** Binary files or large payloads crash AI pipelines.
-- **Detection Signal:** Queue processors enforce max size, MIME filters, and compression thresholds.
-- **Recommended Fix:** Split large archives, limit file types, add fallback heuristics. Leverage SQLx, Diesel conventions for Rust deployments.
-- **Automation Level:** Scheduler in api/push/schedule.ts batches safe workloads.
-- **Validation Steps:** Replay heavy datasets using tmp_rovodev_comprehensive_test.ts.
-
-#### Control CG-MLSEC-PHP
-
-- **Title:** Model Input/Output Sanitization (PHP)
-- **Threat Mitigated:** Binary files or large payloads crash AI pipelines.
-- **Detection Signal:** Queue processors enforce max size, MIME filters, and compression thresholds.
-- **Recommended Fix:** Split large archives, limit file types, add fallback heuristics. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
-- **Automation Level:** Scheduler in api/push/schedule.ts batches safe workloads.
-- **Validation Steps:** Replay heavy datasets using tmp_rovodev_comprehensive_test.ts.
-
-#### Control CG-MLSEC-CS
-
-- **Title:** Model Input/Output Sanitization (C#)
-- **Threat Mitigated:** Binary files or large payloads crash AI pipelines.
-- **Detection Signal:** Queue processors enforce max size, MIME filters, and compression thresholds.
-- **Recommended Fix:** Split large archives, limit file types, add fallback heuristics. Leverage Entity Framework, Dapper conventions for C# deployments.
-- **Automation Level:** Scheduler in api/push/schedule.ts batches safe workloads.
-- **Validation Steps:** Replay heavy datasets using tmp_rovodev_comprehensive_test.ts.
-
-#### Control CG-IAST-JS
-
-- **Title:** Interactive AST Guardrails (JavaScript)
-- **Threat Mitigated:** Malformed ASTs or edge syntax break parsers.
-- **Detection Signal:** Parser workers watch for recursion depth, fallback to tolerant.parsers.
-- **Recommended Fix:** Upgrade parser libs, chunk files, sanitize tokens before visiting. Leverage Prisma, Knex conventions for JavaScript deployments.
-- **Automation Level:** scripts/test-pattern.js --mode ast ensures coverage.
-- **Validation Steps:** Monitor telemetry counters for parser fallbacks.
-
-#### Control CG-IAST-TS
-
-- **Title:** Interactive AST Guardrails (TypeScript)
-- **Threat Mitigated:** Malformed ASTs or edge syntax break parsers.
-- **Detection Signal:** Parser workers watch for recursion depth, fallback to tolerant.parsers.
-- **Recommended Fix:** Upgrade parser libs, chunk files, sanitize tokens before visiting. Leverage TypeORM, Drizzle conventions for TypeScript deployments.
-- **Automation Level:** scripts/test-pattern.js --mode ast ensures coverage.
-- **Validation Steps:** Monitor telemetry counters for parser fallbacks.
-
-#### Control CG-IAST-PY
-
-- **Title:** Interactive AST Guardrails (Python)
-- **Threat Mitigated:** Malformed ASTs or edge syntax break parsers.
-- **Detection Signal:** Parser workers watch for recursion depth, fallback to tolerant.parsers.
-- **Recommended Fix:** Upgrade parser libs, chunk files, sanitize tokens before visiting. Leverage SQLAlchemy, Django ORM conventions for Python deployments.
-- **Automation Level:** scripts/test-pattern.js --mode ast ensures coverage.
-- **Validation Steps:** Monitor telemetry counters for parser fallbacks.
-
-#### Control CG-IAST-JAVA
-
-- **Title:** Interactive AST Guardrails (Java)
-- **Threat Mitigated:** Malformed ASTs or edge syntax break parsers.
-- **Detection Signal:** Parser workers watch for recursion depth, fallback to tolerant.parsers.
-- **Recommended Fix:** Upgrade parser libs, chunk files, sanitize tokens before visiting. Leverage Spring Data JPA, Hibernate conventions for Java deployments.
-- **Automation Level:** scripts/test-pattern.js --mode ast ensures coverage.
-- **Validation Steps:** Monitor telemetry counters for parser fallbacks.
-
-#### Control CG-IAST-GO
-
-- **Title:** Interactive AST Guardrails (Go)
-- **Threat Mitigated:** Malformed ASTs or edge syntax break parsers.
-- **Detection Signal:** Parser workers watch for recursion depth, fallback to tolerant.parsers.
-- **Recommended Fix:** Upgrade parser libs, chunk files, sanitize tokens before visiting. Leverage GORM, pgx conventions for Go deployments.
-- **Automation Level:** scripts/test-pattern.js --mode ast ensures coverage.
-- **Validation Steps:** Monitor telemetry counters for parser fallbacks.
-
-#### Control CG-IAST-RST
-
-- **Title:** Interactive AST Guardrails (Rust)
-- **Threat Mitigated:** Malformed ASTs or edge syntax break parsers.
-- **Detection Signal:** Parser workers watch for recursion depth, fallback to tolerant.parsers.
-- **Recommended Fix:** Upgrade parser libs, chunk files, sanitize tokens before visiting. Leverage SQLx, Diesel conventions for Rust deployments.
-- **Automation Level:** scripts/test-pattern.js --mode ast ensures coverage.
-- **Validation Steps:** Monitor telemetry counters for parser fallbacks.
-
-#### Control CG-IAST-PHP
-
-- **Title:** Interactive AST Guardrails (PHP)
-- **Threat Mitigated:** Malformed ASTs or edge syntax break parsers.
-- **Detection Signal:** Parser workers watch for recursion depth, fallback to tolerant.parsers.
-- **Recommended Fix:** Upgrade parser libs, chunk files, sanitize tokens before visiting. Leverage Laravel Eloquent, Doctrine conventions for PHP deployments.
-- **Automation Level:** scripts/test-pattern.js --mode ast ensures coverage.
-- **Validation Steps:** Monitor telemetry counters for parser fallbacks.
-
-#### Control CG-IAST-CS
-
-- **Title:** Interactive AST Guardrails (C#)
-- **Threat Mitigated:** Malformed ASTs or edge syntax break parsers.
-- **Detection Signal:** Parser workers watch for recursion depth, fallback to tolerant.parsers.
-- **Recommended Fix:** Upgrade parser libs, chunk files, sanitize tokens before visiting. Leverage Entity Framework, Dapper conventions for C# deployments.
-- **Automation Level:** scripts/test-pattern.js --mode ast ensures coverage.
-- **Validation Steps:** Monitor telemetry counters for parser fallbacks.
-
-## Appendix B: OpenAPI 3.1 Snapshot
-
-```yaml
-openapi: 3.1.0
-info:
-  title: Code Guardian API
-  version: 1.0.0
-  description: >-
-    Official specification for orchestrating analyses, retrieving findings, and ingesting webhook events.
-servers:
-  - url: https://code-guardian-report.vercel.app
-  - url: https://staging.codeguardian.internal
-  - url: https://localhost:5173
-paths:
-  /api/analyze:
-    post:
-      summary: Start a new analysis
-      operationId: startAnalysis
-      security:
-        - bearerAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/AnalysisRequest"
-      responses:
-        "202":
-          description: Accepted
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/AnalysisQueued"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "429":
-          $ref: "#/components/responses/RateLimited"
-        "500":
-          $ref: "#/components/responses/ServerError"
-  /api/report/{analysisId}:
-    get:
-      summary: Fetch report by analysisId
-      operationId: getReport
-      parameters:
-        - in: path
-          name: analysisId
-          required: true
-          schema:
-            type: string
-      responses:
-        "200":
-          description: Report payload
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ReportResponse"
-        "404":
-          description: Not found
-  /api/insights/fix:
-    post:
-      summary: Generate remediation guidance
-      operationId: generateFix
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/FixRequest"
-      responses:
-        "200":
-          description: Fix suggestions
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/FixResponse"
-  /api/webhooks/github:
-    post:
-      summary: GitHub webhook bridge
-      operationId: githubWebhook
-      security:
-        - webhookSignature: []
-      responses:
-        "200":
-          description: Acknowledge receipt
-  /api/webhooks/custom:
-    post:
-      summary: Custom webhook
-      operationId: customWebhook
-      responses:
-        "200":
-          description: Accepted
-components:
-  securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
-    webhookSignature:
-      type: apiKey
-      in: header
-      name: x-code-guardian-signature
-  responses:
-    BadRequest:
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/ErrorResponse"
-    Unauthorized:
-      description: Missing or invalid token
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/ErrorResponse"
-    RateLimited:
-      description: Too many requests
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/ErrorResponse"
-    ServerError:
-      description: Unexpected server error
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/ErrorResponse"
-  schemas:
-    AnalysisRequest:
-      type: object
-      properties:
-        source:
-          $ref: "#/components/schemas/Source"
-        filters:
-          $ref: "#/components/schemas/Filters"
-        aiProviders:
-          type: array
-          items:
-            type: string
-        export:
-          $ref: "#/components/schemas/ExportOptions"
-      required: [source]
-    Source:
-      type: object
-      properties:
-        type:
-          type: string
-          enum: [github, zip, snippet]
-        url:
-          type: string
-        ref:
-          type: string
-        archive:
-          type: string
-          description: Base64 encoded zip when using snippet mode.
-    Filters:
-      type: object
-      properties:
-        include:
-          type: array
-          items:
-            type: string
-        exclude:
-          type: array
-          items:
-            type: string
-    ExportOptions:
-      type: object
-      properties:
-        formats:
-          type: array
-          items:
-            type: string
-        includeEvidenceBundle:
-          type: boolean
-    AnalysisQueued:
-      type: object
-      properties:
-        analysisId:
-          type: string
-        status:
-          type: string
-        etaSeconds:
-          type: integer
-        links:
-          type: object
-          additionalProperties:
-            type: string
-    ReportResponse:
-      type: object
-      properties:
-        analysisId:
-          type: string
-        status:
-          type: string
-        findings:
-          type: array
-          items:
-            $ref: "#/components/schemas/Finding"
-        secrets:
-          type: array
-          items:
-            $ref: "#/components/schemas/SecretFinding"
-        exports:
-          type: array
-          items:
-            type: string
-    Finding:
-      type: object
-      properties:
-        id:
-          type: string
-        ruleId:
-          type: string
-        severity:
-          type: string
-        filePath:
-          type: string
-        startLine:
-          type: integer
-        endLine:
-          type: integer
-        aiSummary:
-          type: string
-        recommendation:
-          type: string
-    SecretFinding:
-      type: object
-      properties:
-        id:
-          type: string
-        secretType:
-          type: string
-        filePath:
-          type: string
-        entropy:
-          type: number
-        action:
-          type: string
-    FixRequest:
-      type: object
-      properties:
-        analysisId:
-          type: string
-        findingId:
-          type: string
-        preferredProvider:
-          type: string
-        codeContext:
-          type: string
-    FixResponse:
-      type: object
-      properties:
-        findingId:
-          type: string
-        suggestions:
-          type: array
-          items:
-            $ref: "#/components/schemas/FixSuggestion"
-    FixSuggestion:
-      type: object
-      properties:
-        provider:
-          type: string
-        title:
-          type: string
-        patch:
-          type: string
-        confidence:
-          type: number
-    ErrorResponse:
-      type: object
-      properties:
-        status:
-          type: integer
-        error:
-          type: string
-        message:
-          type: string
-        correlationId:
-          type: string
-```
-
-## Appendix C: Sample Analysis Artifact (JSON)
-
-```json
-{
-  "analysisId": "cg-anl-2025-042",
-  "status": "completed",
-  "startedAt": "2025-01-15T10:05:12.100Z",
-  "completedAt": "2025-01-15T10:06:42.880Z",
-  "targets": {
-    "repository": "github.com/Xenonesis/code-guardian-report",
-    "commit": "b7ab2e4",
-    "branch": "improve/mobile-ux"
+  "id": "analysis-uuid",
+  "timestamp": "2025-01-31T00:00:00.000Z",
+  "metadata": {
+    "projectName": "My Project",
+    "version": "1.0.0",
+    "analysisType": "full"
   },
   "summary": {
-    "totalFindings": 12,
-    "high": 2,
-    "medium": 5,
-    "low": 5,
-    "secrets": 1,
-    "aiSuggestions": 9,
-    "evidenceBundle": true
+    "totalFiles": 250,
+    "totalLines": 50000,
+    "totalIssues": 45,
+    "criticalIssues": 5,
+    "highIssues": 12,
+    "mediumIssues": 20,
+    "lowIssues": 8,
+    "securityScore": 78,
+    "qualityScore": 85
   },
-  "findings": [
+  "languages": [
     {
-      "id": "CG-SQL-001",
-      "rule": "SQL Injection",
-      "severity": "high",
-      "filePath": "src/services/reporting.ts",
-      "startLine": 118,
-      "endLine": 141,
-      "snippet": "const rows = await db.raw(`SELECT * FROM reports WHERE id = ${id}`);",
-      "aiSummary": "User input id is concatenated into a SQL statement allowing injection.",
-      "recommendation": "Use parameterized queries with placeholders and strict type coercion.",
-      "tickets": ["SEC-5421"],
-      "tags": ["OWASP-A03", "CWE-89"],
-      "links": {
-        "dashboard": "https://code-guardian-report.vercel.app/results/cg-anl-2025-042/findings/CG-SQL-001",
-        "sarif": "https://storage.example.com/cg-anl-2025-042/CG-SQL-001.sarif"
-      }
-    },
-    {
-      "id": "CG-SECRET-009",
-      "rule": "Hardcoded Secret",
-      "severity": "medium",
-      "filePath": "src/config/constants.ts",
-      "startLine": 12,
-      "endLine": 19,
-      "snippet": "const FIREBASE_KEY = 'AIzaSyExample123';",
-      "aiSummary": "An API key is committed directly in source control.",
-      "recommendation": "Move keys to environment variables or secret managers.",
-      "tags": ["SECRET", "Compliance"],
-      "links": {
-        "dashboard": "https://code-guardian-report.vercel.app/results/cg-anl-2025-042/findings/CG-SECRET-009"
-      }
+      "name": "TypeScript",
+      "percentage": 65,
+      "files": 150,
+      "lines": 32500
     }
   ],
-  "secrets": [
+  "issues": [
     {
-      "id": "secret-aws-001",
-      "secretType": "AWS Access Key",
-      "filePath": "src/utils/deploy.ts",
-      "entropy": 4.9,
-      "evidence": "AKIAIOSFODNN7EXAMPLE",
-      "action": "rotate",
-      "owner": "platform@company.com"
-    }
-  ],
-  "exports": {
-    "json": "https://storage.example.com/cg-anl-2025-042/report.json",
-    "pdf": "https://storage.example.com/cg-anl-2025-042/report.pdf",
-    "sarif": "https://storage.example.com/cg-anl-2025-042/report.sarif"
-  },
-  "history": [
-    {
-      "timestamp": "2025-01-15T10:05:12.150Z",
-      "state": "queued",
-      "context": "analysis-request-received"
-    },
-    {
-      "timestamp": "2025-01-15T10:05:40.011Z",
-      "state": "analyzing",
-      "context": "phase=data-flow"
-    },
-    {
-      "timestamp": "2025-01-15T10:06:33.400Z",
-      "state": "ai-enhancing",
-      "context": "provider=openai"
-    },
-    {
-      "timestamp": "2025-01-15T10:06:42.880Z",
-      "state": "completed",
-      "context": "exports-ready"
+      "id": "issue-1",
+      "type": "vulnerability",
+      "severity": "critical",
+      "title": "SQL Injection vulnerability",
+      "description": "...",
+      "file": "src/api/users.ts",
+      "line": 45,
+      "column": 12,
+      "cwe": "CWE-89",
+      "owasp": "A03:2021-Injection",
+      "recommendation": "..."
     }
   ]
 }
 ```
 
-## Appendix D: GitHub Actions Workflow (Hardened)
+#### SARIF Export
+
+Export in SARIF format for CI/CD integration:
+- GitHub Code Scanning integration
+- GitLab Security Dashboard
+- Azure DevOps
+- Jenkins plugins
+
+```json
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "Code Guardian Report",
+          "version": "11.0.0",
+          "informationUri": "https://github.com/Xenonesis/code-guardian-report"
+        }
+      },
+      "results": []
+    }
+  ]
+}
+```
+
+### AI-Powered Features
+
+#### Natural Language Descriptions
+
+Transform technical security findings into plain English:
+
+**Before** (Technical):
+```
+CWE-79: Improper Neutralization of Input During Web Page Generation
+```
+
+**After** (Natural Language):
+```
+Your application is vulnerable to Cross-Site Scripting (XSS) attacks. 
+This means an attacker could inject malicious JavaScript code that runs 
+in users' browsers, potentially stealing their data or performing 
+actions on their behalf.
+```
+
+#### AI Fix Suggestions
+
+Get automated remediation code:
+
+**Original Vulnerable Code**:
+```javascript
+const query = `SELECT * FROM users WHERE id = ${userId}`;
+db.execute(query);
+```
+
+**AI-Suggested Fix**:
+```javascript
+const query = 'SELECT * FROM users WHERE id = ?';
+db.execute(query, [userId]);
+
+// Or using ORM (recommended):
+const user = await User.findById(userId);
+```
+
+**Explanation**:
+The AI provides:
+- Secure code replacement
+- Multiple fix options
+- Framework-specific solutions
+- Best practice recommendations
+- Security considerations
+
+#### Chatbot Interaction
+
+Interact with the AI assistant:
+
+**Example Conversations**:
+
+```
+User: Why is this XSS vulnerability marked as critical?
+
+AI: This XSS vulnerability is marked as critical because:
+1. It occurs in user-facing functionality
+2. User input is directly rendered without sanitization
+3. It could lead to session hijacking
+4. Admin users are affected, increasing impact
+5. It's exploitable without authentication
+
+Recommended priority: Immediate fix required.
+```
+
+```
+User: How do I fix the CSRF vulnerability in my Express app?
+
+AI: To fix CSRF in Express.js:
+
+1. Install csurf middleware:
+   npm install csurf
+
+2. Add to your app:
+   const csrf = require('csurf');
+   app.use(csrf({ cookie: true }));
+
+3. Add CSRF token to forms:
+   <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+4. Include token in AJAX requests:
+   headers: { 'CSRF-Token': token }
+
+Would you like me to show you a complete example?
+```
+
+#### Configuring AI Features
+
+Configure AI providers in your environment:
+
+```env
+# OpenAI Configuration
+OPENAI_API_KEY=sk-...
+OPENAI_MODEL=gpt-4
+OPENAI_MAX_TOKENS=2000
+
+# Anthropic Configuration
+ANTHROPIC_API_KEY=sk-ant-...
+ANTHROPIC_MODEL=claude-3-opus-20240229
+
+# Google AI Configuration
+GOOGLE_AI_API_KEY=...
+GOOGLE_AI_MODEL=gemini-pro
+
+# AI Feature Toggles
+NEXT_PUBLIC_ENABLE_AI_DESCRIPTIONS=true
+NEXT_PUBLIC_ENABLE_AI_FIXES=true
+NEXT_PUBLIC_ENABLE_AI_CHATBOT=true
+```
+
+---
+
+## Multi-Language Support
+
+### Supported Languages
+
+Code Guardian supports comprehensive analysis for 15+ programming languages:
+
+#### 1. JavaScript/ECMAScript
+
+**Supported Versions**: ES5, ES6+, ES2015-ES2024  
+**Frameworks Detected**: React, Vue, Angular, Svelte, Node.js, Express, Next.js  
+**File Extensions**: `.js`, `.mjs`, `.cjs`, `.jsx`
+
+**Security Checks**:
+- XSS vulnerabilities
+- Prototype pollution
+- eval() usage
+- Insecure randomness
+- Hardcoded credentials
+- SQL injection (in database queries)
+- Command injection
+- Path traversal
+- SSRF vulnerabilities
+- Insecure dependencies
+
+**Example Patterns Detected**:
+```javascript
+// XSS vulnerability
+element.innerHTML = userInput; // CRITICAL
+
+// Prototype pollution
+Object.assign({}, JSON.parse(userInput)); // HIGH
+
+// Command injection
+exec(`ls ${userInput}`); // CRITICAL
+
+// Insecure randomness
+Math.random() * 1000000; // MEDIUM (for security tokens)
+```
+
+#### 2. TypeScript
+
+**Supported Versions**: 3.x, 4.x, 5.x  
+**Frameworks Detected**: Angular, NestJS, Next.js, React  
+**File Extensions**: `.ts`, `.tsx`, `.d.ts`
+
+**Security Checks**:
+- Type safety violations
+- `any` type usage in security-critical code
+- Unsafe type assertions
+- Missing input validation
+- All JavaScript vulnerabilities
+- Framework-specific issues
+
+**Example Patterns Detected**:
+```typescript
+// Unsafe type assertion
+const data = response as UserData; // MEDIUM (without validation)
+
+// Any type in security context
+function authenticate(token: any) { } // HIGH
+
+// Missing null checks
+user.password.toString(); // MEDIUM (potential null reference)
+```
+
+#### 3. Python
+
+**Supported Versions**: Python 2.7, 3.x  
+**Frameworks Detected**: Django, Flask, FastAPI, Pyramid  
+**File Extensions**: `.py`, `.pyw`, `.pyi`
+
+**Security Checks**:
+- SQL injection
+- Command injection
+- Path traversal
+- Insecure deserialization (pickle)
+- eval/exec usage
+- XML vulnerabilities
+- SSRF
+- Hardcoded secrets
+- Weak cryptography
+
+**Example Patterns Detected**:
+```python
+# SQL injection
+query = f"SELECT * FROM users WHERE name = '{username}'"  # CRITICAL
+
+# Command injection
+os.system(f"ls {user_input}")  # CRITICAL
+
+# Insecure deserialization
+pickle.loads(data)  # HIGH
+
+# Weak cryptography
+hashlib.md5(password.encode())  # HIGH
+```
+
+#### 4. Java
+
+**Supported Versions**: Java 8, 11, 17, 21  
+**Frameworks Detected**: Spring Boot, Spring Framework, Hibernate, Struts  
+**File Extensions**: `.java`
+
+**Security Checks**:
+- SQL injection
+- XXE (XML External Entity)
+- Insecure deserialization
+- Path traversal
+- LDAP injection
+- Command injection
+- Weak cryptography
+- Hardcoded credentials
+- Trust boundary violations
+
+**Example Patterns Detected**:
+```java
+// SQL injection
+String query = "SELECT * FROM users WHERE id = " + userId; // CRITICAL
+
+// XXE vulnerability
+DocumentBuilder builder = factory.newDocumentBuilder(); // HIGH (without secure settings)
+
+// Insecure deserialization
+ObjectInputStream ois = new ObjectInputStream(input); // HIGH
+
+// Weak random
+new Random().nextInt(); // MEDIUM (for security purposes)
+```
+
+#### 5. C# / .NET
+
+**Supported Versions**: .NET Framework, .NET Core, .NET 5+  
+**Frameworks Detected**: ASP.NET, ASP.NET Core, Entity Framework  
+**File Extensions**: `.cs`, `.csx`
+
+**Security Checks**:
+- SQL injection
+- XSS vulnerabilities
+- CSRF vulnerabilities
+- Path traversal
+- XXE
+- Insecure deserialization
+- Weak cryptography
+- Command injection
+
+**Example Patterns Detected**:
+```csharp
+// SQL injection
+var query = $"SELECT * FROM Users WHERE Id = {userId}"; // CRITICAL
+
+// XSS vulnerability
+@Html.Raw(userInput) // HIGH
+
+// Weak cryptography
+var hash = MD5.Create().ComputeHash(data); // HIGH
+
+// Path traversal
+File.ReadAllText(userInput); // HIGH
+```
+
+#### 6. PHP
+
+**Supported Versions**: PHP 7.x, 8.x  
+**Frameworks Detected**: Laravel, Symfony, CodeIgniter, WordPress  
+**File Extensions**: `.php`, `.phtml`
+
+**Security Checks**:
+- SQL injection
+- XSS vulnerabilities
+- Remote code execution
+- File inclusion vulnerabilities
+- Command injection
+- Path traversal
+- Session fixation
+- CSRF vulnerabilities
+- Insecure file uploads
+
+**Example Patterns Detected**:
+```php
+// SQL injection
+$query = "SELECT * FROM users WHERE id = " . $_GET['id']; // CRITICAL
+
+// Remote code execution
+eval($_POST['code']); // CRITICAL
+
+// File inclusion
+include($_GET['page'] . '.php'); // CRITICAL
+
+// XSS vulnerability
+echo $_GET['name']; // HIGH
+```
+
+#### 7. Go (Golang)
+
+**Supported Versions**: Go 1.16+  
+**Frameworks Detected**: Gin, Echo, Fiber, Gorilla  
+**File Extensions**: `.go`
+
+**Security Checks**:
+- SQL injection
+- Command injection
+- Path traversal
+- SSRF
+- Insecure TLS configuration
+- Race conditions
+- Goroutine leaks
+- Buffer overflows
+
+**Example Patterns Detected**:
+```go
+// SQL injection
+query := fmt.Sprintf("SELECT * FROM users WHERE id = %s", userId) // CRITICAL
+
+// Command injection
+exec.Command("sh", "-c", userInput).Run() // CRITICAL
+
+// Insecure TLS
+tls.Config{InsecureSkipVerify: true} // HIGH
+
+// Race condition
+// Unsynchronized access to shared variable // MEDIUM
+```
+
+#### 8. Ruby
+
+**Supported Versions**: Ruby 2.x, 3.x  
+**Frameworks Detected**: Ruby on Rails, Sinatra  
+**File Extensions**: `.rb`, `.rake`
+
+**Security Checks**:
+- SQL injection
+- XSS vulnerabilities
+- Command injection
+- Mass assignment
+- CSRF vulnerabilities
+- Insecure deserialization
+- Path traversal
+
+**Example Patterns Detected**:
+```ruby
+# SQL injection
+User.where("name = '#{params[:name]}'") # CRITICAL
+
+# Command injection
+system("ls #{user_input}") # CRITICAL
+
+# Mass assignment vulnerability
+User.create(params[:user]) # HIGH (without strong params)
+
+# Insecure deserialization
+Marshal.load(data) # HIGH
+```
+
+#### 9. Rust
+
+**Supported Versions**: Rust 1.60+  
+**File Extensions**: `.rs`
+
+**Security Checks**:
+- Unsafe code blocks
+- Memory safety issues
+- Integer overflows
+- Panic in production code
+- Insecure dependencies
+- Improper error handling
+
+**Example Patterns Detected**:
+```rust
+// Unsafe code block
+unsafe { /* ... */ } // MEDIUM (requires review)
+
+// Potential integer overflow
+let result = a + b; // MEDIUM (in security context)
+
+// Panic in production
+value.unwrap() // LOW (should use proper error handling)
+```
+
+#### 10. C/C++
+
+**Supported Versions**: C11, C++11/14/17/20  
+**File Extensions**: `.c`, `.cpp`, `.h`, `.hpp`
+
+**Security Checks**:
+- Buffer overflows
+- Memory leaks
+- Use-after-free
+- Integer overflows
+- Format string vulnerabilities
+- SQL injection
+- Command injection
+- NULL pointer dereference
+
+**Example Patterns Detected**:
+```c
+// Buffer overflow
+strcpy(dest, src); // CRITICAL
+
+// Format string vulnerability
+printf(user_input); // CRITICAL
+
+// Memory leak
+malloc(size); // MEDIUM (without free())
+
+// SQL injection
+sprintf(query, "SELECT * FROM users WHERE id = %s", userId); // CRITICAL
+```
+
+### Language Detection
+
+#### Automatic Detection
+
+Code Guardian uses a multi-layer detection system:
+
+1. **File Extension Matching**: Primary identification
+2. **Content Analysis**: Syntax pattern recognition
+3. **Keyword Frequency**: Language-specific keyword counting
+4. **Unique Signatures**: Language-specific patterns
+5. **Priority Scoring**: Disambiguation for similar languages
+
+**Detection Accuracy**: 95-100% confidence scores
+
+**Example Output**:
+```json
+{
+  "primaryLanguage": {
+    "name": "TypeScript",
+    "confidence": 98,
+    "extensions": [".ts", ".tsx"],
+    "category": "programming",
+    "ecosystem": "web"
+  },
+  "allLanguages": [
+    {
+      "name": "TypeScript",
+      "confidence": 98,
+      "percentage": 75.5
+    },
+    {
+      "name": "JavaScript",
+      "confidence": 85,
+      "percentage": 15.3
+    },
+    {
+      "name": "JSON",
+      "confidence": 100,
+      "percentage": 9.2
+    }
+  ]
+}
+```
+
+#### Framework Detection
+
+Automatically identifies frameworks and libraries:
+
+**Frontend Frameworks**:
+- React (and Next.js, Gatsby)
+- Vue.js (and Nuxt.js)
+- Angular
+- Svelte (and SvelteKit)
+- Ember.js
+
+**Backend Frameworks**:
+- Express.js
+- NestJS
+- Fastify
+- Django
+- Flask
+- FastAPI
+- Spring Boot
+- ASP.NET Core
+- Laravel
+- Ruby on Rails
+
+**Mobile Frameworks**:
+- React Native
+- Flutter
+- Ionic
+- Xamarin
+
+**Detection Method**:
+```typescript
+{
+  "frameworks": [
+    {
+      "name": "Next.js",
+      "language": "TypeScript",
+      "confidence": 95,
+      "category": "fullstack",
+      "ecosystem": "web",
+      "version": "16.1.5"
+    }
+  ]
+}
+```
+
+
+---
+
+## Security Analysis
+
+### Vulnerability Detection
+
+#### OWASP Top 10 Coverage
+
+Code Guardian provides complete coverage for OWASP Top 10 vulnerabilities:
+
+##### A01:2021 - Broken Access Control
+
+**Detection Capabilities**:
+- Missing authorization checks
+- Insecure direct object references (IDOR)
+- Path traversal vulnerabilities
+- Forced browsing attempts
+- Missing function-level access control
+- Privilege escalation vulnerabilities
+
+**Example Detections**:
+```javascript
+// Missing authorization check
+app.get('/admin/users', (req, res) => {
+  // No admin check! - CRITICAL
+  const users = await User.findAll();
+  res.json(users);
+});
+
+// Insecure direct object reference
+app.get('/user/:id/profile', (req, res) => {
+  // No ownership verification! - HIGH
+  const profile = await Profile.findById(req.params.id);
+  res.json(profile);
+});
+```
+
+##### A02:2021 - Cryptographic Failures
+
+**Detection Capabilities**:
+- Weak encryption algorithms (DES, RC4, MD5, SHA1)
+- Hardcoded cryptographic keys
+- Insecure random number generation
+- Missing encryption for sensitive data
+- Weak password hashing
+- Insecure TLS/SSL configuration
+
+**Example Detections**:
+```python
+# Weak hashing algorithm
+import hashlib
+password_hash = hashlib.md5(password.encode()).hexdigest()  # HIGH
+
+# Insecure random for security
+import random
+token = random.randint(1000, 9999)  # HIGH
+
+# Hardcoded encryption key
+encryption_key = "my-secret-key-12345"  # CRITICAL
+```
+
+##### A03:2021 - Injection
+
+**Detection Capabilities**:
+- SQL injection (all database types)
+- NoSQL injection
+- LDAP injection
+- OS command injection
+- XML injection
+- XPath injection
+- Template injection
+- Expression language injection
+
+**Example Detections**:
+```java
+// SQL injection
+String query = "SELECT * FROM users WHERE username = '" + username + "'";  // CRITICAL
+Statement stmt = connection.createStatement();
+ResultSet rs = stmt.executeQuery(query);
+
+// Command injection
+Runtime.getRuntime().exec("ping " + userInput);  // CRITICAL
+
+// LDAP injection
+String filter = "(uid=" + username + ")";  // HIGH
+NamingEnumeration results = ctx.search("ou=users", filter, null);
+```
+
+##### A04:2021 - Insecure Design
+
+**Detection Capabilities**:
+- Missing rate limiting
+- Insufficient anti-automation
+- Insecure password reset mechanisms
+- Missing security controls
+- Insecure workflows
+- Trust boundary violations
+
+**Example Detections**:
+```typescript
+// Missing rate limiting
+app.post('/api/login', async (req, res) => {
+  // No rate limiting! - HIGH
+  const user = await authenticate(req.body);
+  res.json({ token: generateToken(user) });
+});
+
+// Insecure password reset
+app.post('/reset-password', async (req, res) => {
+  // No token validation! - CRITICAL
+  await User.updatePassword(req.body.email, req.body.newPassword);
+});
+```
+
+##### A05:2021 - Security Misconfiguration
+
+**Detection Capabilities**:
+- Debug mode enabled in production
+- Default credentials
+- Unnecessary features enabled
+- Missing security headers
+- Verbose error messages
+- Outdated software versions
+- Insecure cloud storage permissions
+
+**Example Detections**:
+```javascript
+// Debug mode in production
+if (process.env.NODE_ENV !== 'production') {
+  app.use(errorHandler({ dumpExceptions: true }));
+}
+
+// Missing security headers
+app.use(helmet({
+  // Commented out important headers - MEDIUM
+  // contentSecurityPolicy: true,
+  // hsts: true,
+}));
+
+// Verbose error messages
+app.use((err, req, res, next) => {
+  res.json({ error: err.stack });  // MEDIUM - Exposes stack trace
+});
+```
+
+##### A06:2021 - Vulnerable and Outdated Components
+
+**Detection Capabilities**:
+- Known vulnerable dependencies
+- Outdated libraries
+- Unmaintained packages
+- Deprecated APIs
+- Missing security patches
+- Transitive dependencies with vulnerabilities
+
+**Example Detections**:
+```json
+{
+  "package": "lodash",
+  "version": "4.17.11",
+  "vulnerability": "CVE-2019-10744",
+  "severity": "HIGH",
+  "recommendation": "Upgrade to 4.17.21 or higher"
+}
+```
+
+##### A07:2021 - Identification and Authentication Failures
+
+**Detection Capabilities**:
+- Weak password requirements
+- Missing multi-factor authentication
+- Insecure session management
+- Weak JWT implementations
+- Missing account lockout
+- Predictable session IDs
+- Missing credential validation
+
+**Example Detections**:
+```python
+# Weak password validation
+if len(password) < 6:  # MEDIUM - Too weak
+    return False
+
+# Insecure session management
+session_id = str(time.time())  # HIGH - Predictable
+
+# Missing password hashing
+user.password = password  # CRITICAL - Plaintext storage
+```
+
+##### A08:2021 - Software and Data Integrity Failures
+
+**Detection Capabilities**:
+- Insecure deserialization
+- Missing integrity checks
+- Unsigned code execution
+- Insecure CI/CD pipelines
+- Auto-update without verification
+- Missing software signing
+
+**Example Detections**:
+```python
+# Insecure deserialization
+import pickle
+data = pickle.loads(user_input)  # CRITICAL
+
+# Missing integrity check
+const script = document.createElement('script');
+script.src = 'https://cdn.example.com/lib.js';  // MEDIUM - No SRI
+document.head.appendChild(script);
+```
+
+##### A09:2021 - Security Logging and Monitoring Failures
+
+**Detection Capabilities**:
+- Missing security event logging
+- Insufficient log details
+- No alerting mechanisms
+- Missing audit trails
+- Inadequate monitoring
+- Log injection vulnerabilities
+
+**Example Detections**:
+```javascript
+// Missing security logging
+app.post('/admin/delete-user', async (req, res) => {
+  await User.delete(req.params.id);
+  // No audit log! - MEDIUM
+  res.sendStatus(200);
+});
+
+// Log injection
+console.log(`User logged in: ${username}`);  // LOW - User input in logs
+```
+
+##### A10:2021 - Server-Side Request Forgery (SSRF)
+
+**Detection Capabilities**:
+- Unvalidated URL parameters
+- Internal network access
+- Cloud metadata service access
+- Port scanning attempts
+- DNS rebinding attacks
+
+**Example Detections**:
+```javascript
+// SSRF vulnerability
+app.get('/fetch', async (req, res) => {
+  const url = req.query.url;  // CRITICAL - No validation
+  const response = await fetch(url);
+  res.send(await response.text());
+});
+
+// Cloud metadata access
+fetch('http://169.254.169.254/latest/meta-data/')  // HIGH
+```
+
+### Secret Scanning
+
+#### Detected Secret Types
+
+Code Guardian detects 50+ types of secrets and credentials:
+
+##### API Keys and Tokens
+
+**Patterns Detected**:
+- AWS Access Keys
+- Google API Keys
+- GitHub Tokens
+- Stripe API Keys
+- SendGrid API Keys
+- Twilio API Keys
+- Firebase Keys
+- Azure Connection Strings
+- Heroku API Keys
+- Slack Tokens
+- Discord Tokens
+- OpenAI API Keys
+- Anthropic API Keys
+
+**Example Detections**:
+```javascript
+// AWS Access Key
+const AWS_ACCESS_KEY = "AKIAIOSFODNN7EXAMPLE";  // CRITICAL
+
+// GitHub Token
+const GITHUB_TOKEN = "ghp_1234567890abcdefghijklmnopqrstuv";  // CRITICAL
+
+// OpenAI API Key
+const OPENAI_KEY = "sk-proj-1234567890abcdefghij";  // CRITICAL
+
+// Stripe Secret Key
+const STRIPE_SECRET = "sk_live_1234567890abcdefghij";  // CRITICAL
+```
+
+##### Database Credentials
+
+**Patterns Detected**:
+- MySQL connection strings
+- PostgreSQL connection strings
+- MongoDB URIs
+- Redis URLs
+- SQL Server connection strings
+- Oracle database strings
+
+**Example Detections**:
+```python
+# Database connection string
+DATABASE_URL = "postgresql://user:password@localhost:5432/dbname"  # CRITICAL
+
+# MongoDB URI with credentials
+MONGO_URI = "mongodb://admin:password123@cluster0.mongodb.net/mydb"  # CRITICAL
+
+# MySQL connection
+db = mysql.connect(
+    host="localhost",
+    user="root",
+    password="admin123"  # CRITICAL
+)
+```
+
+##### Private Keys and Certificates
+
+**Patterns Detected**:
+- RSA private keys
+- SSH private keys
+- PGP private keys
+- SSL/TLS certificates
+- JWT secrets
+- Encryption keys
+
+**Example Detections**:
+```
+-----BEGIN RSA PRIVATE KEY-----  # CRITICAL
+MIIEpAIBAAKCAQEA...
+-----END RSA PRIVATE KEY-----
+
+-----BEGIN PRIVATE KEY-----  # CRITICAL
+MIIEvQIBADANBgkqhkiG9w0BAQE...
+-----END PRIVATE KEY-----
+```
+
+##### Authentication Credentials
+
+**Patterns Detected**:
+- OAuth tokens
+- Session secrets
+- JWT secrets
+- HMAC secrets
+- Basic auth credentials
+- Bearer tokens
+
+**Example Detections**:
+```javascript
+// OAuth token
+const OAUTH_TOKEN = "ya29.a0AfH6SMBx...";  // CRITICAL
+
+// JWT secret
+const JWT_SECRET = "my-super-secret-key-12345";  // CRITICAL
+
+// Session secret
+app.use(session({
+  secret: "keyboard cat"  // HIGH - Weak secret
+}));
+```
+
+##### Cloud Service Credentials
+
+**Patterns Detected**:
+- AWS credentials
+- Azure keys
+- Google Cloud keys
+- Digital Ocean tokens
+- Cloudflare API keys
+- Netlify tokens
+
+**Example Detections**:
+```bash
+# .env file
+AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE  # CRITICAL
+AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY  # CRITICAL
+AZURE_STORAGE_CONNECTION_STRING=DefaultEndpoints...  # CRITICAL
+```
+
+#### Secret Detection Configuration
+
+Customize secret detection:
+
+```typescript
+import { SecretDetectionService } from '@/services/security/secretDetectionService';
+
+const secretService = new SecretDetectionService({
+  // Enable/disable specific patterns
+  patterns: {
+    awsKeys: true,
+    githubTokens: true,
+    databaseUrls: true,
+    privateKeys: true,
+    customPatterns: [
+      {
+        name: 'Internal API Key',
+        pattern: /INTERNAL_KEY_[A-Za-z0-9]{32}/g,
+        severity: 'critical',
+      },
+    ],
+  },
+  
+  // Exclude patterns (false positives)
+  exclude: [
+    /EXAMPLE/,
+    /test@example\.com/,
+    /localhost/,
+  ],
+  
+  // Entropy analysis for unknown secrets
+  entropyThreshold: 4.5,
+});
+```
+
+### Dependency Analysis
+
+#### Vulnerability Database
+
+Code Guardian checks dependencies against:
+- **NPM Advisory Database**
+- **GitHub Advisory Database**
+- **Snyk Vulnerability DB**
+- **CVE Database**
+- **NVD (National Vulnerability Database)**
+
+#### Dependency Scanning
+
+**Supported Package Managers**:
+- npm (package.json, package-lock.json)
+- Yarn (yarn.lock)
+- pnpm (pnpm-lock.yaml)
+- pip (requirements.txt, Pipfile)
+- Composer (composer.json, composer.lock)
+- Maven (pom.xml)
+- Gradle (build.gradle)
+- Cargo (Cargo.toml, Cargo.lock)
+- Go Modules (go.mod, go.sum)
+- NuGet (packages.config, *.csproj)
+- Bundler (Gemfile, Gemfile.lock)
+
+**Example Report**:
+```json
+{
+  "dependencies": {
+    "total": 250,
+    "direct": 45,
+    "transitive": 205,
+    "vulnerabilities": {
+      "critical": 2,
+      "high": 5,
+      "medium": 12,
+      "low": 8
+    }
+  },
+  "vulnerablePackages": [
+    {
+      "name": "lodash",
+      "version": "4.17.11",
+      "vulnerabilities": [
+        {
+          "id": "CVE-2019-10744",
+          "severity": "high",
+          "title": "Prototype Pollution",
+          "description": "Versions of lodash before 4.17.12 are vulnerable to Prototype Pollution...",
+          "cvss": 7.4,
+          "cwe": "CWE-1321",
+          "patchedVersions": ">=4.17.12",
+          "recommendation": "Upgrade to version 4.17.21 or higher"
+        }
+      ]
+    }
+  ]
+}
+```
+
+#### Transitive Dependencies
+
+Analyze nested dependencies:
+
+```
+your-project
+├── express@4.17.1
+│   ├── body-parser@1.19.0
+│   │   └── qs@6.7.0 (vulnerable!)
+│   └── cookie@0.4.0
+└── lodash@4.17.11 (vulnerable!)
+```
+
+**Detection Output**:
+```
+⚠ Found vulnerabilities in transitive dependencies:
+
+lodash@4.17.11 (direct)
+  ├── CVE-2019-10744 (HIGH)
+  └── CVE-2020-8203 (HIGH)
+
+qs@6.7.0 (via express > body-parser)
+  └── CVE-2022-24999 (MEDIUM)
+```
+
+### OWASP Compliance
+
+#### Compliance Mapping
+
+Every detected vulnerability is mapped to:
+- **OWASP Top 10 2021**
+- **OWASP ASVS 4.0**
+- **OWASP Mobile Top 10**
+- **CWE (Common Weakness Enumeration)**
+- **SANS Top 25**
+
+**Example Mapping**:
+```json
+{
+  "vulnerability": {
+    "id": "vuln-001",
+    "type": "SQL Injection",
+    "owasp": {
+      "top10": "A03:2021 - Injection",
+      "asvs": "V5.3.4",
+      "mobile": "M7 - Poor Code Quality"
+    },
+    "cwe": "CWE-89",
+    "sans": "CWE-89: SQL Injection"
+  }
+}
+```
+
+#### Compliance Reports
+
+Generate compliance-ready reports:
+
+```typescript
+import { ComplianceReportGenerator } from '@/services/compliance';
+
+const report = await ComplianceReportGenerator.generate({
+  standard: 'OWASP-ASVS-4.0',
+  level: 'Level-2', // Level 1, 2, or 3
+  includeRemediation: true,
+  format: 'pdf',
+});
+
+// Report includes:
+// - Compliance status per requirement
+// - Failed controls with evidence
+// - Remediation recommendations
+// - Executive summary
+```
+
+**Compliance Checklist Example**:
+```
+OWASP ASVS 4.0 Compliance Report
+
+V1: Architecture, Design and Threat Modeling
+  ✓ V1.1 Secure SDLC
+  ✓ V1.2 Authentication Architecture
+  ⚠ V1.3 Session Management  (2 findings)
+  ✗ V1.4 Access Control      (5 findings)
+
+V2: Authentication
+  ✗ V2.1 Password Security   (Critical: Weak hashing)
+  ✓ V2.2 General Authenticator
+  ⚠ V2.3 Authenticator Lifecycle
+  
+Overall Compliance: 65% (Level 1)
+Findings: 15 Critical, 23 High, 45 Medium
+```
+
+---
+
+## API Reference
+
+### Analysis API
+
+#### Analyze Code
+
+Programmatically analyze code:
+
+```typescript
+import { EnhancedAnalysisEngine } from '@/services/enhancedAnalysisEngine';
+
+const engine = new EnhancedAnalysisEngine();
+
+// Analyze files
+const result = await engine.analyzeFiles({
+  files: [
+    { filename: 'app.js', content: sourceCode },
+    { filename: 'config.js', content: configCode },
+  ],
+  options: {
+    includeMetrics: true,
+    includeDependencies: true,
+    includeSecrets: true,
+    severityThreshold: 'low',
+    customRules: [],
+  },
+});
+
+// Result structure
+interface AnalysisResult {
+  id: string;
+  timestamp: Date;
+  summary: {
+    totalFiles: number;
+    totalLines: number;
+    totalIssues: number;
+    criticalIssues: number;
+    highIssues: number;
+    mediumIssues: number;
+    lowIssues: number;
+    securityScore: number;
+    qualityScore: number;
+  };
+  issues: SecurityIssue[];
+  metrics: CodeMetrics;
+  languages: LanguageDetection[];
+  frameworks: FrameworkInfo[];
+  dependencies: DependencyAnalysis;
+}
+```
+
+#### Multi-Language Parser
+
+Parse code in multiple languages:
+
+```typescript
+import { MultiLanguageParser } from '@/services/analysis/MultiLanguageParser';
+
+const parser = new MultiLanguageParser();
+
+// Parse JavaScript/TypeScript
+const jsAst = await parser.parse(code, 'javascript');
+
+// Parse Python
+const pyAst = await parser.parse(code, 'python');
+
+// Parse Java
+const javaAst = await parser.parse(code, 'java');
+
+// Auto-detect and parse
+const autoAst = await parser.parseAuto(code, filename);
+```
+
+#### Security Analyzer
+
+Run security analysis:
+
+```typescript
+import { SecurityAnalyzer } from '@/services/analysis/SecurityAnalyzer';
+
+const analyzer = new SecurityAnalyzer();
+
+const vulnerabilities = await analyzer.analyze({
+  ast: parsedAst,
+  sourceCode: code,
+  language: 'javascript',
+  filename: 'app.js',
+  rules: [
+    'sql-injection',
+    'xss',
+    'command-injection',
+    'path-traversal',
+  ],
+});
+
+// Vulnerability structure
+interface SecurityIssue {
+  id: string;
+  type: SecurityIssueType;
+  severity: 'critical' | 'high' | 'medium' | 'low' | 'info';
+  title: string;
+  description: string;
+  line: number;
+  column: number;
+  file: string;
+  code: string;
+  recommendation: string;
+  cwe: string;
+  owasp: string;
+  references: string[];
+}
+```
+
+### AI Services API
+
+#### Natural Language Descriptions
+
+```typescript
+import { NaturalLanguageDescriptionService } from '@/services/ai/naturalLanguageDescriptionService';
+
+const nlService = new NaturalLanguageDescriptionService({
+  provider: 'openai',
+  model: 'gpt-4',
+  apiKey: process.env.OPENAI_API_KEY,
+});
+
+// Generate description
+const description = await nlService.generateDescription({
+  issue: securityIssue,
+  context: {
+    language: 'javascript',
+    framework: 'express',
+    surroundingCode: contextCode,
+  },
+  style: 'detailed', // 'brief', 'standard', 'detailed'
+});
+
+// Output
+{
+  "plainEnglish": "Your application is vulnerable to SQL injection...",
+  "technicalDetails": "The vulnerability exists because user input...",
+  "impact": "An attacker could...",
+  "exploitScenario": "Example attack: ...",
+  "businessImpact": "This could result in..."
+}
+```
+
+#### AI Fix Suggestions
+
+```typescript
+import { AIFixSuggestionsService } from '@/services/ai/aiFixSuggestionsService';
+
+const fixService = new AIFixSuggestionsService();
+
+const fixes = await fixService.generateFixes({
+  vulnerability: securityIssue,
+  sourceCode: originalCode,
+  language: 'python',
+  framework: 'flask',
+});
+
+// Output
+{
+  "fixes": [
+    {
+      "approach": "Parameterized Query",
+      "code": "cursor.execute('SELECT * FROM users WHERE id = ?', [user_id])",
+      "explanation": "Use parameterized queries to prevent SQL injection",
+      "confidence": 95
+    },
+    {
+      "approach": "ORM",
+      "code": "user = User.query.filter_by(id=user_id).first()",
+      "explanation": "Use Flask-SQLAlchemy ORM for safer database queries",
+      "confidence": 90
+    }
+  ]
+}
+```
+
+### Storage API
+
+#### Analysis Storage
+
+```typescript
+import { AnalysisStorage } from '@/services/storage/analysisStorage';
+
+const storage = new AnalysisStorage();
+
+// Save analysis
+await storage.saveAnalysis(analysisResult);
+
+// Retrieve analysis
+const analysis = await storage.getAnalysis(analysisId);
+
+// List all analyses
+const analyses = await storage.listAnalyses({
+  limit: 10,
+  offset: 0,
+  sortBy: 'timestamp',
+  order: 'desc',
+});
+
+// Delete analysis
+await storage.deleteAnalysis(analysisId);
+
+// Clear all analyses
+await storage.clearAll();
+```
+
+#### Firebase Storage (Optional)
+
+```typescript
+import { FirebaseAnalysisStorage } from '@/services/storage/firebaseAnalysisStorage';
+
+const firebaseStorage = new FirebaseAnalysisStorage();
+
+// Save to cloud
+await firebaseStorage.save(analysisResult, {
+  userId: currentUser.uid,
+  projectId: 'my-project',
+  visibility: 'private',
+});
+
+// Retrieve from cloud
+const cloudAnalysis = await firebaseStorage.get(analysisId);
+
+// Share analysis
+await firebaseStorage.share(analysisId, {
+  users: ['user@example.com'],
+  permissions: 'read',
+});
+```
+
+### Export API
+
+#### PDF Export
+
+```typescript
+import { PDFExportService } from '@/services/export/pdfExportService';
+
+const pdfService = new PDFExportService();
+
+// Generate PDF
+const pdfBlob = await pdfService.generateReport(analysisResult, {
+  template: 'detailed',
+  includeCharts: true,
+  includeCodeSnippets: true,
+  includeRecommendations: true,
+  branding: {
+    logo: logoUrl,
+    companyName: 'Your Company',
+    footer: 'Confidential',
+  },
+});
+
+// Download PDF
+const url = URL.createObjectURL(pdfBlob);
+const a = document.createElement('a');
+a.href = url;
+a.download = 'security-report.pdf';
+a.click();
+```
+
+#### JSON Export
+
+```typescript
+import { DataExport } from '@/services/export/dataExport';
+
+const exporter = new DataExport();
+
+// Export as JSON
+const json = exporter.toJSON(analysisResult);
+
+// Export as CSV
+const csv = exporter.toCSV(analysisResult.issues);
+
+// Export as SARIF
+const sarif = exporter.toSARIF(analysisResult);
+```
+
+### GitHub API
+
+#### Repository Service
+
+```typescript
+import { GitHubRepositoryService } from '@/services/githubRepositoryService';
+
+const github = new GitHubRepositoryService(accessToken);
+
+// List repositories
+const repos = await github.listRepositories({
+  visibility: 'all', // 'public', 'private', 'all'
+  sort: 'updated',
+  direction: 'desc',
+});
+
+// Get repository details
+const repo = await github.getRepository('owner', 'repo');
+
+// List branches
+const branches = await github.listBranches('owner', 'repo');
+
+// Get file contents
+const file = await github.getFileContents('owner', 'repo', 'path/to/file.js', 'main');
+
+// Download repository
+const zipBlob = await github.downloadRepository('owner', 'repo', 'main');
+```
+
+#### GitHub Analysis
+
+```typescript
+import { GitHubAnalysisService } from '@/services/githubAnalysisService';
+
+const githubAnalysis = new GitHubAnalysisService();
+
+// Analyze repository
+const result = await githubAnalysis.analyzeRepository({
+  owner: 'username',
+  repo: 'repository',
+  branch: 'main',
+  options: {
+    includeTests: false,
+    includeDocs: false,
+    customRules: [],
+  },
+});
+
+// Compare repositories
+const comparison = await githubAnalysis.compareRepositories([
+  { owner: 'user1', repo: 'repo1' },
+  { owner: 'user2', repo: 'repo2' },
+]);
+```
+
+
+---
+
+## Deployment
+
+### Vercel Deployment
+
+#### Quick Deploy
+
+Deploy to Vercel with one click:
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Xenonesis/code-guardian-report)
+
+#### Manual Deployment
+
+##### 1. Install Vercel CLI
+
+```bash
+npm install -g vercel
+```
+
+##### 2. Login to Vercel
+
+```bash
+vercel login
+```
+
+##### 3. Deploy
+
+```bash
+# Deploy to preview
+vercel
+
+# Deploy to production
+vercel --prod
+```
+
+#### Environment Variables
+
+Configure environment variables in Vercel dashboard:
+
+1. Go to Project Settings
+2. Navigate to Environment Variables
+3. Add the following variables:
+
+```
+NEXT_PUBLIC_APP_URL=https://your-domain.vercel.app
+NEXT_PUBLIC_GITHUB_CLIENT_ID=your_github_client_id
+GITHUB_CLIENT_SECRET=your_github_client_secret
+OPENAI_API_KEY=your_openai_api_key
+NEXT_PUBLIC_ENABLE_AI=true
+NEXT_PUBLIC_ENABLE_PWA=true
+```
+
+#### Custom Domain
+
+1. Go to Project Settings > Domains
+2. Add your custom domain
+3. Configure DNS records:
+   - Type: A, Name: @, Value: 76.76.21.21
+   - Type: CNAME, Name: www, Value: cname.vercel-dns.com
+
+#### Vercel Configuration
+
+The `vercel.json` file includes:
+
+```json
+{
+  "framework": "nextjs",
+  "buildCommand": "npm run build",
+  "installCommand": "npm ci",
+  "regions": ["iad1"],
+  "functions": {
+    "app/api/**/*.ts": {
+      "maxDuration": 30,
+      "memory": 1024
+    }
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=31536000; includeSubDomains; preload"
+        }
+      ]
+    }
+  ]
+}
+```
+
+### Docker Deployment
+
+#### Build Docker Image
+
+##### Using Docker CLI
+
+```bash
+# Build the image
+docker build -t code-guardian:latest .
+
+# Run the container
+docker run -p 3000:3000 code-guardian:latest
+
+# Run with environment variables
+docker run -p 3000:3000 \
+  -e NEXT_PUBLIC_APP_URL=http://localhost:3000 \
+  -e NEXT_PUBLIC_ENABLE_AI=true \
+  code-guardian:latest
+```
+
+##### Using Docker Compose
+
+Create `docker-compose.yml`:
 
 ```yaml
-name: code-guardian
-on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
-  schedule:
-    - cron: "0 3 * * *"
+version: '3.8'
 
-permissions:
-  contents: read
-  security-events: write
-  pull-requests: write
-
-concurrency:
-  group: code-guardian-${{ github.ref }}
-  cancel-in-progress: true
-
-jobs:
-  install:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v3
-        with:
-          version: 9
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-  analyze:
-    needs: install
-    runs-on: ubuntu-latest
-    env:
-      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-      NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.FIREBASE_KEY }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - uses: pnpm/action-setup@v3
-        with:
-          version: 9
-      - name: Restore cache
-        uses: actions/cache@v4
-        with:
-          path: .guardian-cache
-          key: guardian-${{ runner.os }}-${{ github.sha }}
-      - name: Install deps
-        run: pnpm install --frozen-lockfile
-      - name: Run unit tests
-        run: pnpm test -- --runInBand
-      - name: Run Code Guardian analysis
-        run: node scripts/e2e-zip-analysis.ts --zip $(git ls-files -z | tr '
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_APP_URL=http://localhost:3000
+      - NEXT_PUBLIC_ENABLE_AI=true
+      - NEXT_PUBLIC_ENABLE_PWA=true
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 ```
+
+Run with Docker Compose:
+
+```bash
+# Start services
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop services
+docker-compose down
+```
+
+#### Multi-Stage Dockerfile
+
+The project includes an optimized multi-stage Dockerfile:
+
+```dockerfile
+# Stage 1: Dependencies
+FROM node:22-alpine AS deps
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --only=production
+
+# Stage 2: Builder
+FROM node:22-alpine AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+ENV NEXT_TELEMETRY_DISABLED=1
+RUN npm run build
+
+# Stage 3: Runner
+FROM node:22-alpine AS runner
+WORKDIR /app
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
+
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+
+RUN chown -R nextjs:nodejs /app
+USER nextjs
+
+EXPOSE 3000
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+  CMD node -e "require('http').get('http://localhost:3000/api/health', (r) => { process.exit(r.statusCode === 200 ? 0 : 1); })"
+
+CMD ["node", "server.js"]
+```
+
+#### Docker Best Practices
+
+1. **Use Alpine images** for smaller size
+2. **Multi-stage builds** to reduce final image size
+3. **Non-root user** for security
+4. **Health checks** for container orchestration
+5. **Layer caching** for faster builds
+
+### Firebase Deployment
+
+#### Prerequisites
+
+```bash
+# Install Firebase CLI
+npm install -g firebase-tools
+
+# Login to Firebase
+firebase login
+```
+
+#### Initialize Firebase
+
+```bash
+# Initialize Firebase in project
+firebase init
+
+# Select:
+# - Hosting
+# - Functions (optional)
+# - Firestore (optional)
+# - Storage (optional)
+```
+
+#### Configuration
+
+Edit `firebase.json`:
+
+```json
+{
+  "hosting": {
+    "public": "out",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ],
+    "headers": [
+      {
+        "source": "**",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=3600, must-revalidate"
+          },
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          },
+          {
+            "key": "X-Frame-Options",
+            "value": "DENY"
+          }
+        ]
+      }
+    ]
+  },
+  "functions": {
+    "source": "functions",
+    "runtime": "nodejs18"
+  },
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "storage": {
+    "rules": "storage.rules"
+  }
+}
+```
+
+#### Build and Deploy
+
+```bash
+# Build for static export
+npm run build
+
+# Deploy to Firebase
+firebase deploy
+
+# Deploy specific services
+firebase deploy --only hosting
+firebase deploy --only functions
+firebase deploy --only firestore
+```
+
+#### Firebase Functions
+
+Deploy serverless functions:
+
+```typescript
+// functions/src/index.ts
+import * as functions from 'firebase-functions';
+import * as admin from 'firebase-admin';
+
+admin.initializeApp();
+
+export const analyzeCode = functions.https.onCall(async (data, context) => {
+  // Verify authentication
+  if (!context.auth) {
+    throw new functions.https.HttpsError(
+      'unauthenticated',
+      'User must be authenticated'
+    );
+  }
+
+  // Perform analysis
+  const result = await performAnalysis(data.code);
+  
+  // Save to Firestore
+  await admin.firestore().collection('analyses').add({
+    userId: context.auth.uid,
+    result,
+    timestamp: admin.firestore.FieldValue.serverTimestamp(),
+  });
+
+  return result;
+});
+```
+
+### Self-Hosted Deployment
+
+#### Using PM2
+
+PM2 is a production process manager for Node.js applications.
+
+##### Install PM2
+
+```bash
+npm install -g pm2
+```
+
+##### Create PM2 Ecosystem File
+
+Create `ecosystem.config.js`:
+
+```javascript
+module.exports = {
+  apps: [{
+    name: 'code-guardian',
+    script: 'npm',
+    args: 'start',
+    cwd: '/path/to/code-guardian-report',
+    instances: 'max',
+    exec_mode: 'cluster',
+    env: {
+      NODE_ENV: 'production',
+      PORT: 3000,
+    },
+    env_production: {
+      NODE_ENV: 'production',
+      PORT: 3000,
+    },
+    error_file: './logs/error.log',
+    out_file: './logs/out.log',
+    log_date_format: 'YYYY-MM-DD HH:mm:ss Z',
+    merge_logs: true,
+    autorestart: true,
+    watch: false,
+    max_memory_restart: '1G',
+  }],
+};
+```
+
+##### Start Application
+
+```bash
+# Start application
+pm2 start ecosystem.config.js --env production
+
+# Save PM2 configuration
+pm2 save
+
+# Setup PM2 startup script
+pm2 startup
+```
+
+##### PM2 Commands
+
+```bash
+# Monitor applications
+pm2 monit
+
+# View logs
+pm2 logs code-guardian
+
+# Restart application
+pm2 restart code-guardian
+
+# Stop application
+pm2 stop code-guardian
+
+# Delete application
+pm2 delete code-guardian
+```
+
+#### Using Nginx as Reverse Proxy
+
+##### Install Nginx
+
+```bash
+# Ubuntu/Debian
+sudo apt update
+sudo apt install nginx
+
+# CentOS/RHEL
+sudo yum install nginx
+```
+
+##### Configure Nginx
+
+Create `/etc/nginx/sites-available/code-guardian`:
+
+```nginx
+server {
+    listen 80;
+    server_name your-domain.com www.your-domain.com;
+
+    # Redirect HTTP to HTTPS
+    return 301 https://$server_name$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    server_name your-domain.com www.your-domain.com;
+
+    # SSL Configuration
+    ssl_certificate /etc/letsencrypt/live/your-domain.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/your-domain.com/privkey.pem;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers on;
+
+    # Security Headers
+    add_header X-Frame-Options "DENY" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline';" always;
+
+    # Gzip Compression
+    gzip on;
+    gzip_vary on;
+    gzip_min_length 1024;
+    gzip_types text/plain text/css text/xml text/javascript application/javascript application/xml+rss application/json;
+
+    # Proxy to Node.js
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
+    }
+
+    # Static files caching
+    location /_next/static {
+        proxy_pass http://localhost:3000;
+        proxy_cache_valid 200 365d;
+        add_header Cache-Control "public, immutable";
+    }
+
+    # Access and error logs
+    access_log /var/log/nginx/code-guardian-access.log;
+    error_log /var/log/nginx/code-guardian-error.log;
+}
+```
+
+##### Enable Site
+
+```bash
+# Create symbolic link
+sudo ln -s /etc/nginx/sites-available/code-guardian /etc/nginx/sites-enabled/
+
+# Test configuration
+sudo nginx -t
+
+# Reload Nginx
+sudo systemctl reload nginx
+```
+
+#### SSL Certificate with Let's Encrypt
+
+```bash
+# Install Certbot
+sudo apt install certbot python3-certbot-nginx
+
+# Obtain certificate
+sudo certbot --nginx -d your-domain.com -d www.your-domain.com
+
+# Auto-renewal (already configured)
+sudo certbot renew --dry-run
+```
+
+#### Systemd Service
+
+Create `/etc/systemd/system/code-guardian.service`:
+
+```ini
+[Unit]
+Description=Code Guardian Report
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+WorkingDirectory=/var/www/code-guardian-report
+ExecStart=/usr/bin/npm start
+Restart=on-failure
+RestartSec=10
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=code-guardian
+Environment=NODE_ENV=production
+Environment=PORT=3000
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Enable and start service:
+
+```bash
+# Reload systemd
+sudo systemctl daemon-reload
+
+# Enable service
+sudo systemctl enable code-guardian
+
+# Start service
+sudo systemctl start code-guardian
+
+# Check status
+sudo systemctl status code-guardian
+```
+
+### Kubernetes Deployment
+
+#### Kubernetes Manifests
+
+##### Deployment
+
+Create `k8s/deployment.yaml`:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: code-guardian
+  labels:
+    app: code-guardian
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: code-guardian
+  template:
+    metadata:
+      labels:
+        app: code-guardian
+    spec:
+      containers:
+      - name: code-guardian
+        image: your-registry/code-guardian:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: NEXT_PUBLIC_APP_URL
+          valueFrom:
+            configMapKeyRef:
+              name: code-guardian-config
+              key: app-url
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /api/health
+            port: 3000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /api/health
+            port: 3000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+```
+
+##### Service
+
+Create `k8s/service.yaml`:
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: code-guardian-service
+spec:
+  selector:
+    app: code-guardian
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 3000
+  type: LoadBalancer
+```
+
+##### ConfigMap
+
+Create `k8s/configmap.yaml`:
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: code-guardian-config
+data:
+  app-url: "https://your-domain.com"
+  enable-ai: "true"
+  enable-pwa: "true"
+```
+
+##### Secrets
+
+Create `k8s/secrets.yaml`:
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: code-guardian-secrets
+type: Opaque
+stringData:
+  github-client-secret: "your-github-secret"
+  openai-api-key: "your-openai-key"
+```
+
+##### Ingress
+
+Create `k8s/ingress.yaml`:
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: code-guardian-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - your-domain.com
+    secretName: code-guardian-tls
+  rules:
+  - host: your-domain.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: code-guardian-service
+            port:
+              number: 80
+```
+
+#### Deploy to Kubernetes
+
+```bash
+# Apply all manifests
+kubectl apply -f k8s/
+
+# Check deployment status
+kubectl get deployments
+kubectl get pods
+kubectl get services
+kubectl get ingress
+
+# View logs
+kubectl logs -f deployment/code-guardian
+
+# Scale deployment
+kubectl scale deployment code-guardian --replicas=5
+```
+
+---
+
+## Testing
+
+### Unit Testing
+
+#### Running Tests
+
+```bash
+# Run all tests
+npm test
+
+# Run tests in watch mode
+npm run test:watch
+
+# Run tests with coverage
+npm run test:coverage
+
+# Run specific test file
+npm test -- src/services/analysis/SecurityAnalyzer.test.ts
+```
+
+#### Test Structure
+
+```typescript
+// src/services/analysis/SecurityAnalyzer.test.ts
+import { describe, it, expect, beforeEach } from 'vitest';
+import { SecurityAnalyzer } from './SecurityAnalyzer';
+
+describe('SecurityAnalyzer', () => {
+  let analyzer: SecurityAnalyzer;
+
+  beforeEach(() => {
+    analyzer = new SecurityAnalyzer();
+  });
+
+  describe('SQL Injection Detection', () => {
+    it('should detect SQL injection in string concatenation', async () => {
+      const code = `
+        const query = "SELECT * FROM users WHERE id = " + userId;
+        db.execute(query);
+      `;
+
+      const issues = await analyzer.analyze(code, 'javascript');
+      
+      expect(issues).toHaveLength(1);
+      expect(issues[0].type).toBe('sql-injection');
+      expect(issues[0].severity).toBe('critical');
+    });
+
+    it('should not flag parameterized queries', async () => {
+      const code = `
+        const query = "SELECT * FROM users WHERE id = ?";
+        db.execute(query, [userId]);
+      `;
+
+      const issues = await analyzer.analyze(code, 'javascript');
+      
+      expect(issues).toHaveLength(0);
+    });
+  });
+
+  describe('XSS Detection', () => {
+    it('should detect innerHTML assignment with user input', async () => {
+      const code = `
+        element.innerHTML = userInput;
+      `;
+
+      const issues = await analyzer.analyze(code, 'javascript');
+      
+      expect(issues).toHaveLength(1);
+      expect(issues[0].type).toBe('xss');
+      expect(issues[0].severity).toBe('critical');
+    });
+  });
+});
+```
+
+#### Coverage Report
+
+After running tests with coverage:
+
+```
+---------------------------|---------|----------|---------|---------|-------------------
+File                       | % Stmts | % Branch | % Funcs | % Lines | Uncovered Lines
+---------------------------|---------|----------|---------|---------|-------------------
+All files                  |   85.42 |    78.33 |   88.89 |   85.42 |
+ services/analysis         |   92.15 |    85.71 |   95.23 |   92.15 |
+  SecurityAnalyzer.ts      |   94.73 |    88.88 |   100   |   94.73 | 45-48,89-92
+  ASTAnalyzer.ts           |   89.47 |    82.35 |   90.47 |   89.47 | 123-125,234-240
+ services/ai               |   78.94 |    70.58 |   82.35 |   78.94 |
+  aiService.ts             |   76.47 |    68.75 |   80    |   76.47 | 156-178,289-301
+---------------------------|---------|----------|---------|---------|-------------------
+```
+
+### Integration Testing
+
+#### E2E ZIP Analysis Test
+
+```bash
+# Run E2E ZIP analysis test
+npm run test:e2e-zip
+```
+
+Test implementation:
+
+```typescript
+// scripts/e2e-zip-analysis.ts
+import { readFileSync } from 'fs';
+import { EnhancedAnalysisEngine } from '@/services/enhancedAnalysisEngine';
+
+async function runE2ETest() {
+  console.log('Starting E2E ZIP Analysis Test...');
+
+  // Load test ZIP file
+  const zipFile = readFileSync('./test-fixtures/sample-project.zip');
+  
+  // Initialize engine
+  const engine = new EnhancedAnalysisEngine();
+  
+  // Perform analysis
+  const result = await engine.analyzeZipFile(zipFile);
+  
+  // Assertions
+  console.assert(result.summary.totalFiles > 0, 'Should analyze files');
+  console.assert(result.issues.length > 0, 'Should find issues');
+  console.assert(result.languages.length > 0, 'Should detect languages');
+  
+  console.log('✓ E2E test passed');
+  console.log(`  Files analyzed: ${result.summary.totalFiles}`);
+  console.log(`  Issues found: ${result.issues.length}`);
+  console.log(`  Languages: ${result.languages.map(l => l.name).join(', ')}`);
+}
+
+runE2ETest().catch(console.error);
+```
+
+#### Multi-Language Testing
+
+```bash
+# Run multi-language tests
+npm run test:multi-language
+```
+
+Test multiple language parsers:
+
+```typescript
+// tests/multiLanguageAnalysis.test.ts
+import { describe, it, expect } from 'vitest';
+import { MultiLanguageSecurityAnalyzer } from '@/services/analysis/MultiLanguageSecurityAnalyzer';
+
+describe('Multi-Language Analysis', () => {
+  const analyzer = new MultiLanguageSecurityAnalyzer();
+
+  it('should analyze JavaScript code', async () => {
+    const code = `
+      function login(username, password) {
+        const query = "SELECT * FROM users WHERE username = '" + username + "'";
+        return db.execute(query);
+      }
+    `;
+
+    const issues = await analyzer.analyze(code, 'javascript');
+    expect(issues.some(i => i.type === 'sql-injection')).toBe(true);
+  });
+
+  it('should analyze Python code', async () => {
+    const code = `
+def login(username, password):
+    query = f"SELECT * FROM users WHERE username = '{username}'"
+    return db.execute(query)
+    `;
+
+    const issues = await analyzer.analyze(code, 'python');
+    expect(issues.some(i => i.type === 'sql-injection')).toBe(true);
+  });
+
+  it('should analyze Java code', async () => {
+    const code = `
+      public void login(String username, String password) {
+        String query = "SELECT * FROM users WHERE username = '" + username + "'";
+        stmt.executeQuery(query);
+      }
+    `;
+
+    const issues = await analyzer.analyze(code, 'java');
+    expect(issues.some(i => i.type === 'sql-injection')).toBe(true);
+  });
+});
+```
+
+### Performance Testing
+
+#### Load Testing
+
+Test analysis performance with large codebases:
+
+```typescript
+// tests/performance.test.ts
+import { describe, it, expect } from 'vitest';
+import { EnhancedAnalysisEngine } from '@/services/enhancedAnalysisEngine';
+
+describe('Performance Tests', () => {
+  it('should analyze 1000 files in under 30 seconds', async () => {
+    const engine = new EnhancedAnalysisEngine();
+    const files = generateTestFiles(1000);
+    
+    const startTime = Date.now();
+    const result = await engine.analyzeFiles(files);
+    const duration = Date.now() - startTime;
+    
+    expect(duration).toBeLessThan(30000);
+    expect(result.summary.totalFiles).toBe(1000);
+  }, 35000);
+
+  it('should handle files up to 10MB', async () => {
+    const engine = new EnhancedAnalysisEngine();
+    const largeFile = generateLargeFile(10 * 1024 * 1024);
+    
+    const result = await engine.analyzeFile(largeFile);
+    
+    expect(result).toBeDefined();
+  });
+});
+```
+
+### Test Coverage Goals
+
+| Module | Target Coverage |
+|--------|----------------|
+| Security Analysis | 90%+ |
+| Language Detection | 85%+ |
+| AI Services | 80%+ |
+| Storage Services | 85%+ |
+| Export Services | 80%+ |
+| Overall | 85%+ |
+
+
+---
+
+## CI/CD Pipeline
+
+### GitHub Actions Workflow
+
+The project includes a comprehensive CI/CD pipeline with multiple jobs:
+
+#### Quality Gate
+
+Runs on every push and pull request:
+
+```yaml
+quality-gate:
+  name: Quality Gate
+  runs-on: ubuntu-latest
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22.x'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Type checking
+      run: npm run type-check
+
+    - name: Linting
+      run: npm run lint
+
+    - name: Run tests
+      run: npm run test:coverage
+
+    - name: Upload coverage
+      uses: codecov/codecov-action@v3
+```
+
+#### Security Audit
+
+Automated security scanning:
+
+```yaml
+security-audit:
+  name: Security & Compliance Audit
+  runs-on: ubuntu-latest
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Run npm audit
+      run: npm audit --audit-level=moderate
+
+    - name: Run Snyk security scan
+      uses: snyk/actions/node@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+    - name: Dependency review
+      uses: actions/dependency-review-action@v3
+```
+
+#### CodeQL Analysis
+
+Advanced code scanning:
+
+```yaml
+codeql:
+  name: CodeQL Analysis
+  runs-on: ubuntu-latest
+  permissions:
+    security-events: write
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v2
+      with:
+        languages: javascript, typescript
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v2
+```
+
+#### Performance Audit
+
+Lighthouse CI integration:
+
+```yaml
+performance-audit:
+  name: Performance & Accessibility Audit
+  runs-on: ubuntu-latest
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Build application
+      run: |
+        npm ci
+        npm run build
+
+    - name: Run Lighthouse CI
+      uses: treosh/lighthouse-ci-action@v10
+      with:
+        urls: |
+          http://localhost:3000
+          http://localhost:3000/about
+          http://localhost:3000/github-analysis
+        uploadArtifacts: true
+```
+
+#### Deployment Pipeline
+
+Automated deployment on successful builds:
+
+```yaml
+deploy-production:
+  name: Deploy to Production
+  needs: [quality-gate, security-audit]
+  if: github.ref == 'refs/heads/main'
+  runs-on: ubuntu-latest
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Deploy to Vercel
+      uses: amondnet/vercel-action@v25
+      with:
+        vercel-token: ${{ secrets.VERCEL_TOKEN }}
+        vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+        vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+        vercel-args: '--prod'
+```
+
+### Continuous Integration Best Practices
+
+#### Branch Protection Rules
+
+Configure in GitHub repository settings:
+
+- **Require pull request reviews**: Minimum 1 approval
+- **Require status checks**: All CI jobs must pass
+- **Require branches to be up to date**: Prevent merge conflicts
+- **Include administrators**: Apply rules to all users
+- **Restrict who can push**: Only maintainers
+
+#### Pre-commit Hooks
+
+Using Husky for Git hooks:
+
+```bash
+# .husky/pre-commit
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# Check for emoji in code
+node scripts/no-emoji-check.cjs
+
+# Run lint-staged
+npx lint-staged
+
+# Type checking
+npm run type-check
+```
+
+#### Commit Message Conventions
+
+Follow Conventional Commits:
+
+```
+feat: add AI-powered fix suggestions
+fix: resolve XSS detection false positives
+docs: update deployment guide
+style: format code with prettier
+refactor: simplify analysis pipeline
+test: add integration tests for GitHub API
+chore: update dependencies
+perf: optimize AST traversal
+ci: add CodeQL workflow
+```
+
+### Release Automation
+
+#### Semantic Versioning
+
+The project follows semantic versioning (SemVer):
+
+- **MAJOR** (11.x.x): Breaking changes
+- **MINOR** (x.1.x): New features, backwards compatible
+- **PATCH** (x.x.1): Bug fixes, backwards compatible
+
+#### Automated Releases
+
+Create releases using GitHub Actions:
+
+```yaml
+create-release:
+  name: Create Release
+  if: startsWith(github.ref, 'refs/tags/v')
+  runs-on: ubuntu-latest
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Build changelog
+      id: changelog
+      uses: mikepenz/release-changelog-builder-action@v3
+
+    - name: Create Release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        body: ${{ steps.changelog.outputs.changelog }}
+        draft: false
+        prerelease: false
+```
+
+---
+
+## Performance Optimization
+
+### Build Optimization
+
+#### Bundle Size Reduction
+
+The project implements multiple optimization strategies:
+
+1. **Code Splitting**: Dynamic imports for route-based splitting
+2. **Tree Shaking**: Remove unused code
+3. **Minification**: Terser for JavaScript, cssnano for CSS
+4. **Compression**: Gzip and Brotli compression
+
+**Bundle Analysis Results**:
+```
+Page                                    Size      First Load JS
+┌ ○ /                                   45.2 kB        156 kB
+├ ○ /about                              12.3 kB        123 kB
+├ ○ /github-analysis                    78.5 kB        189 kB
+├ ○ /history                            23.4 kB        134 kB
+└ ○ /api/health                         0 B            0 B
+
++ First Load JS shared by all           110 kB
+  ├ chunks/framework-[hash].js          45.2 kB
+  ├ chunks/main-[hash].js               32.1 kB
+  ├ chunks/pages/_app-[hash].js         28.4 kB
+  └ chunks/webpack-[hash].js            4.3 kB
+```
+
+#### Image Optimization
+
+```typescript
+// next.config.ts
+const config = {
+  images: {
+    domains: ['avatars.githubusercontent.com'],
+    formats: ['image/avif', 'image/webp'],
+    minimumCacheTTL: 31536000,
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+  },
+};
+```
+
+Usage:
+```tsx
+import Image from 'next/image';
+
+<Image
+  src="/logo.svg"
+  alt="Logo"
+  width={200}
+  height={50}
+  priority
+/>
+```
+
+### Runtime Performance
+
+#### React Performance Optimization
+
+```tsx
+// Use React.memo for expensive components
+export const SecurityDashboard = React.memo(({ data }) => {
+  return <div>{/* Complex rendering */}</div>;
+});
+
+// Use useCallback for event handlers
+const handleAnalysis = useCallback((file: File) => {
+  analyzeFile(file);
+}, [analyzeFile]);
+
+// Use useMemo for expensive calculations
+const securityScore = useMemo(() => {
+  return calculateSecurityScore(issues);
+}, [issues]);
+
+// Lazy load components
+const HeavyChart = lazy(() => import('@/components/HeavyChart'));
+```
+
+#### Virtual Scrolling
+
+For large lists:
+
+```tsx
+import { useVirtualizer } from '@tanstack/react-virtual';
+
+export function IssueList({ issues }: { issues: SecurityIssue[] }) {
+  const parentRef = useRef<HTMLDivElement>(null);
+
+  const virtualizer = useVirtualizer({
+    count: issues.length,
+    getScrollElement: () => parentRef.current,
+    estimateSize: () => 100,
+  });
+
+  return (
+    <div ref={parentRef} style={{ height: '600px', overflow: 'auto' }}>
+      <div style={{ height: `${virtualizer.getTotalSize()}px` }}>
+        {virtualizer.getVirtualItems().map((virtualItem) => (
+          <div
+            key={virtualItem.key}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: `${virtualItem.size}px`,
+              transform: `translateY(${virtualItem.start}px)`,
+            }}
+          >
+            <IssueCard issue={issues[virtualItem.index]} />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+```
+
+#### Web Workers
+
+Offload heavy computation:
+
+```typescript
+// workers/analysis.worker.ts
+self.addEventListener('message', async (event) => {
+  const { code, language } = event.data;
+  
+  // Perform heavy analysis
+  const result = await analyzeCode(code, language);
+  
+  self.postMessage(result);
+});
+
+// Usage in component
+import { useEffect, useState } from 'react';
+
+function useAnalysisWorker() {
+  const [worker, setWorker] = useState<Worker | null>(null);
+
+  useEffect(() => {
+    const w = new Worker(new URL('./workers/analysis.worker.ts', import.meta.url));
+    setWorker(w);
+    
+    return () => w.terminate();
+  }, []);
+
+  const analyze = useCallback((code: string, language: string) => {
+    return new Promise((resolve) => {
+      if (!worker) return;
+      
+      worker.onmessage = (e) => resolve(e.data);
+      worker.postMessage({ code, language });
+    });
+  }, [worker]);
+
+  return { analyze };
+}
+```
+
+### Caching Strategies
+
+#### Service Worker Caching
+
+```typescript
+// src/sw.ts
+import { Serwist } from 'serwist';
+
+const serwist = new Serwist({
+  precacheEntries: self.__SW_MANIFEST,
+  skipWaiting: true,
+  clientsClaim: true,
+  runtimeCaching: [
+    {
+      urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
+      handler: 'CacheFirst',
+      options: {
+        cacheName: 'google-fonts-cache',
+        expiration: {
+          maxEntries: 10,
+          maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
+        },
+      },
+    },
+    {
+      urlPattern: /^https:\/\/api\.github\.com\/.*/i,
+      handler: 'NetworkFirst',
+      options: {
+        cacheName: 'github-api-cache',
+        expiration: {
+          maxEntries: 50,
+          maxAgeSeconds: 60 * 5, // 5 minutes
+        },
+      },
+    },
+    {
+      urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp|avif)$/i,
+      handler: 'CacheFirst',
+      options: {
+        cacheName: 'image-cache',
+        expiration: {
+          maxEntries: 100,
+          maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
+        },
+      },
+    },
+  ],
+});
+
+serwist.addEventListeners();
+```
+
+#### IndexedDB Caching
+
+```typescript
+// Cache analysis results
+import { openDB } from 'idb';
+
+const db = await openDB('code-guardian', 1, {
+  upgrade(db) {
+    db.createObjectStore('analyses', {
+      keyPath: 'id',
+      autoIncrement: true,
+    });
+  },
+});
+
+// Save analysis
+await db.put('analyses', analysisResult);
+
+// Retrieve analysis
+const analysis = await db.get('analyses', id);
+
+// Query analyses
+const allAnalyses = await db.getAll('analyses');
+```
+
+### Web Vitals Optimization
+
+#### Core Web Vitals Targets
+
+| Metric | Target | Current |
+|--------|--------|---------|
+| First Contentful Paint (FCP) | < 1.8s | 1.2s |
+| Largest Contentful Paint (LCP) | < 2.5s | 2.1s |
+| First Input Delay (FID) | < 100ms | 45ms |
+| Cumulative Layout Shift (CLS) | < 0.1 | 0.05 |
+| Time to Interactive (TTI) | < 3.8s | 3.2s |
+| Total Blocking Time (TBT) | < 200ms | 150ms |
+
+#### Monitoring Web Vitals
+
+```typescript
+// src/lib/web-vitals.ts
+import { onCLS, onFID, onLCP, onTTFB, onINP } from 'web-vitals';
+
+export function reportWebVitals() {
+  onCLS((metric) => {
+    console.log('CLS:', metric);
+    sendToAnalytics('CLS', metric);
+  });
+
+  onFID((metric) => {
+    console.log('FID:', metric);
+    sendToAnalytics('FID', metric);
+  });
+
+  onLCP((metric) => {
+    console.log('LCP:', metric);
+    sendToAnalytics('LCP', metric);
+  });
+
+  onTTFB((metric) => {
+    console.log('TTFB:', metric);
+    sendToAnalytics('TTFB', metric);
+  });
+
+  onINP((metric) => {
+    console.log('INP:', metric);
+    sendToAnalytics('INP', metric);
+  });
+}
+
+function sendToAnalytics(name: string, metric: any) {
+  // Send to your analytics service
+  if (typeof window !== 'undefined' && window.gtag) {
+    window.gtag('event', name, {
+      value: Math.round(metric.value),
+      event_category: 'Web Vitals',
+      event_label: metric.id,
+      non_interaction: true,
+    });
+  }
+}
+```
+
+---
+
+## Progressive Web App
+
+### PWA Features
+
+#### Installation
+
+Code Guardian can be installed as a Progressive Web App on:
+- **Desktop**: Windows, macOS, Linux, Chrome OS
+- **Mobile**: iOS (Safari), Android (Chrome)
+
+**Installation Process**:
+1. Visit the application in a supported browser
+2. Look for the "Install" button in the address bar
+3. Click "Install" and follow prompts
+4. App appears on home screen/desktop
+
+#### Offline Capabilities
+
+The PWA works fully offline with:
+- **Complete code analysis**: All analysis runs client-side
+- **Report generation**: Create PDF and JSON reports offline
+- **History access**: View past analyses
+- **Settings management**: Configure preferences
+
+**Offline Strategy**:
+```typescript
+// Service Worker strategy
+const offlineStrategy = {
+  pages: 'NetworkFirst',      // Try network, fallback to cache
+  assets: 'CacheFirst',        // Use cache first for static assets
+  api: 'NetworkOnly',          // API calls require network
+  analysis: 'CacheFirst',      // Cache analysis results
+};
+```
+
+#### Push Notifications
+
+Enable push notifications for:
+- Analysis completion
+- New vulnerability alerts
+- System updates
+- Report generation
+
+**Setup Push Notifications**:
+```typescript
+import { PushNotificationService } from '@/services/pwa/pushNotificationService';
+
+const pushService = new PushNotificationService();
+
+// Request permission
+const permission = await pushService.requestPermission();
+
+if (permission === 'granted') {
+  // Subscribe to push notifications
+  const subscription = await pushService.subscribe();
+  
+  // Send subscription to server
+  await fetch('/api/push/subscribe', {
+    method: 'POST',
+    body: JSON.stringify(subscription),
+  });
+}
+```
+
+#### Background Sync
+
+Queue operations when offline:
+
+```typescript
+import { BackgroundSyncService } from '@/services/pwa/backgroundSyncService';
+
+const syncService = new BackgroundSyncService();
+
+// Queue analysis when offline
+await syncService.queueAnalysis({
+  files: selectedFiles,
+  options: analysisOptions,
+});
+
+// Automatically syncs when connection restored
+```
+
+### PWA Manifest
+
+The `manifest.json` configures the PWA:
+
+```json
+{
+  "name": "Code Guardian Report",
+  "short_name": "Code Guardian",
+  "description": "AI-Powered Security Analysis Platform",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0070f3",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon-192x192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon-512x512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/desktop-1.png",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/screenshots/mobile-1.png",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ],
+  "categories": ["development", "productivity", "utilities"],
+  "shortcuts": [
+    {
+      "name": "Analyze Code",
+      "short_name": "Analyze",
+      "description": "Start code analysis",
+      "url": "/?action=analyze",
+      "icons": [{ "src": "/icons/analyze.svg", "sizes": "96x96" }]
+    },
+    {
+      "name": "View History",
+      "short_name": "History",
+      "description": "View analysis history",
+      "url": "/history",
+      "icons": [{ "src": "/icons/history.svg", "sizes": "96x96" }]
+    }
+  ]
+}
+```
+
+---
+
+## Security Best Practices
+
+### Application Security
+
+#### Content Security Policy
+
+Strict CSP implementation:
+
+```typescript
+// next.config.ts
+const cspHeader = `
+  default-src 'self';
+  script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.googletagmanager.com;
+  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+  img-src 'self' data: blob: https:;
+  font-src 'self' data: https://fonts.gstatic.com;
+  connect-src 'self' https://*.google.com https://*.firebaseio.com;
+  frame-ancestors 'none';
+  base-uri 'self';
+  form-action 'self';
+`;
+
+const securityHeaders = [
+  {
+    key: 'Content-Security-Policy',
+    value: cspHeader.replace(/\s{2,}/g, ' ').trim(),
+  },
+];
+```
+
+#### Authentication Security
+
+Best practices for authentication:
+
+```typescript
+// Secure password hashing
+import bcrypt from 'bcryptjs';
+
+const hashPassword = async (password: string) => {
+  const salt = await bcrypt.genSalt(12);
+  return bcrypt.hash(password, salt);
+};
+
+// Secure token generation
+import crypto from 'crypto';
+
+const generateSecureToken = () => {
+  return crypto.randomBytes(32).toString('hex');
+};
+
+// Rate limiting for auth endpoints
+import rateLimit from 'express-rate-limit';
+
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5, // 5 requests per window
+  message: 'Too many authentication attempts, please try again later.',
+});
+
+app.use('/api/auth/login', authLimiter);
+```
+
+#### Input Validation
+
+Validate all user inputs:
+
+```typescript
+import { z } from 'zod';
+
+// Define schema
+const analysisSchema = z.object({
+  files: z.array(z.instanceof(File)),
+  options: z.object({
+    severity: z.enum(['low', 'medium', 'high', 'critical']),
+    includeTests: z.boolean().optional(),
+    customRules: z.array(z.string()).optional(),
+  }),
+});
+
+// Validate input
+try {
+  const validatedData = analysisSchema.parse(userInput);
+  // Proceed with validated data
+} catch (error) {
+  // Handle validation error
+  console.error('Invalid input:', error);
+}
+```
+
+#### Secure Data Storage
+
+Encrypt sensitive data:
+
+```typescript
+import CryptoJS from 'crypto-js';
+
+// Encrypt data before storage
+const encryptData = (data: any, key: string) => {
+  return CryptoJS.AES.encrypt(JSON.stringify(data), key).toString();
+};
+
+// Decrypt data after retrieval
+const decryptData = (ciphertext: string, key: string) => {
+  const bytes = CryptoJS.AES.decrypt(ciphertext, key);
+  return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+};
+
+// Usage
+const encrypted = encryptData(sensitiveData, encryptionKey);
+localStorage.setItem('secure_data', encrypted);
+
+const decrypted = decryptData(localStorage.getItem('secure_data'), encryptionKey);
+```
+
+### API Security
+
+#### API Authentication
+
+Protect API endpoints:
+
+```typescript
+// middleware/auth.ts
+import { NextRequest, NextResponse } from 'next/server';
+import jwt from 'jsonwebtoken';
+
+export async function authMiddleware(request: NextRequest) {
+  const token = request.headers.get('Authorization')?.split(' ')[1];
+
+  if (!token) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!);
+    // Attach user to request
+    return NextResponse.next();
+  } catch (error) {
+    return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
+  }
+}
+```
+
+#### Rate Limiting
+
+Implement rate limiting:
+
+```typescript
+// lib/rate-limit.ts
+import { LRUCache } from 'lru-cache';
+
+type RateLimitOptions = {
+  interval: number;
+  uniqueTokenPerInterval: number;
+};
+
+export function rateLimit(options: RateLimitOptions) {
+  const tokenCache = new LRUCache({
+    max: options.uniqueTokenPerInterval,
+    ttl: options.interval,
+  });
+
+  return {
+    check: (limit: number, token: string) =>
+      new Promise<void>((resolve, reject) => {
+        const tokenCount = (tokenCache.get(token) as number[]) || [0];
+        if (tokenCount[0] === 0) {
+          tokenCache.set(token, tokenCount);
+        }
+        tokenCount[0] += 1;
+
+        const currentUsage = tokenCount[0];
+        const isRateLimited = currentUsage >= limit;
+
+        return isRateLimited ? reject() : resolve();
+      }),
+  };
+}
+
+// Usage
+const limiter = rateLimit({
+  interval: 60 * 1000, // 1 minute
+  uniqueTokenPerInterval: 500,
+});
+
+export async function POST(request: NextRequest) {
+  const identifier = request.ip ?? 'anonymous';
+
+  try {
+    await limiter.check(10, identifier); // 10 requests per minute
+  } catch {
+    return NextResponse.json({ error: 'Rate limit exceeded' }, { status: 429 });
+  }
+
+  // Process request
+}
+```
+
+### Security Auditing
+
+#### Security Scan Schedule
+
+Regular security audits:
+
+- **Daily**: Dependency vulnerability scan
+- **Weekly**: Full codebase security analysis
+- **Monthly**: Penetration testing
+- **Quarterly**: Security architecture review
+
+#### Security Monitoring
+
+Monitor for security incidents:
+
+```typescript
+// lib/security-monitor.ts
+export class SecurityMonitor {
+  private static instance: SecurityMonitor;
+  private events: SecurityEvent[] = [];
+
+  static getInstance() {
+    if (!SecurityMonitor.instance) {
+      SecurityMonitor.instance = new SecurityMonitor();
+    }
+    return SecurityMonitor.instance;
+  }
+
+  logSecurityEvent(event: SecurityEvent) {
+    this.events.push({
+      ...event,
+      timestamp: new Date(),
+    });
+
+    // Alert on critical events
+    if (event.severity === 'critical') {
+      this.alertAdmins(event);
+    }
+
+    // Store in database
+    this.persistEvent(event);
+  }
+
+  private async alertAdmins(event: SecurityEvent) {
+    // Send alerts via email, Slack, etc.
+  }
+
+  private async persistEvent(event: SecurityEvent) {
+    // Save to database for auditing
+  }
+}
+```
+
+
+---
+
+## Troubleshooting
+
+### Common Issues
+
+#### Installation Issues
+
+**Problem**: `npm install` fails with dependency errors
+
+**Solution**:
+```bash
+# Clear npm cache
+npm cache clean --force
+
+# Delete node_modules and package-lock.json
+rm -rf node_modules package-lock.json
+
+# Reinstall dependencies
+npm install
+```
+
+**Problem**: Node.js version mismatch
+
+**Solution**:
+```bash
+# Check current version
+node --version
+
+# Install Node.js 22.x using nvm
+nvm install 22
+nvm use 22
+```
+
+#### Build Issues
+
+**Problem**: TypeScript compilation errors
+
+**Solution**:
+```bash
+# Run type checking to see detailed errors
+npm run type-check
+
+# If using VS Code, restart TypeScript server
+# Command Palette (Ctrl+Shift+P) > TypeScript: Restart TS Server
+```
+
+**Problem**: Out of memory during build
+
+**Solution**:
+```bash
+# Increase Node.js memory limit
+NODE_OPTIONS=--max-old-space-size=4096 npm run build
+```
+
+#### Runtime Issues
+
+**Problem**: Application crashes on large file analysis
+
+**Solution**:
+- Reduce file size (split into smaller chunks)
+- Exclude test files and documentation
+- Increase browser memory limits
+- Use chunked analysis mode
+
+**Problem**: PWA not updating
+
+**Solution**:
+```javascript
+// Force service worker update
+navigator.serviceWorker.getRegistrations().then(registrations => {
+  registrations.forEach(registration => {
+    registration.update();
+  });
+});
+
+// Clear cache
+caches.keys().then(names => {
+  names.forEach(name => caches.delete(name));
+});
+```
+
+#### GitHub Integration Issues
+
+**Problem**: "403 Forbidden" error when accessing repositories
+
+**Solution**:
+- Check OAuth token permissions
+- Regenerate GitHub token
+- Verify repository access rights
+- Check rate limits: https://api.github.com/rate_limit
+
+**Problem**: Repository analysis timeout
+
+**Solution**:
+- Analyze smaller branches
+- Exclude large binary files
+- Use incremental analysis
+- Check network connectivity
+
+### Performance Issues
+
+#### Slow Analysis
+
+**Possible Causes**:
+- Large codebase (100k+ lines)
+- Many dependencies to scan
+- Complex AST parsing
+- Low system resources
+
+**Solutions**:
+```typescript
+// Enable performance monitoring
+const analyzeWithProfiling = async (files: File[]) => {
+  performance.mark('analysis-start');
+  
+  const result = await analyze(files);
+  
+  performance.mark('analysis-end');
+  performance.measure('analysis', 'analysis-start', 'analysis-end');
+  
+  const measure = performance.getEntriesByName('analysis')[0];
+  console.log(`Analysis took ${measure.duration}ms`);
+  
+  return result;
+};
+
+// Optimize analysis options
+const optimizedOptions = {
+  includeTests: false,        // Skip test files
+  includeDocs: false,         // Skip documentation
+  maxFileSize: 1024 * 1024,   // 1MB per file limit
+  parallelAnalysis: true,     // Enable parallel processing
+  cacheResults: true,         // Cache intermediate results
+};
+```
+
+#### High Memory Usage
+
+**Solutions**:
+- Close unused browser tabs
+- Clear analysis history
+- Restart browser
+- Use incremental analysis mode
+- Increase system RAM
+
+### Browser Compatibility
+
+#### Supported Browsers
+
+| Browser | Minimum Version | Recommended |
+|---------|----------------|-------------|
+| Chrome | 90+ | Latest |
+| Firefox | 88+ | Latest |
+| Safari | 14+ | Latest |
+| Edge | 90+ | Latest |
+
+#### Browser-Specific Issues
+
+**Safari**:
+- Enable "Disable Cross-Origin Restrictions" for local development
+- IndexedDB storage limits are more restrictive
+
+**Firefox**:
+- Allow pop-ups for PDF downloads
+- IndexedDB may require explicit permission
+
+**Mobile Browsers**:
+- Large file analysis may be slow
+- Consider analyzing on desktop for best performance
+
+### Getting Help
+
+If you encounter issues not covered here:
+
+1. **Check Existing Issues**: Search [GitHub Issues](https://github.com/Xenonesis/code-guardian-report/issues)
+2. **Documentation**: Review full documentation in `/md` directory
+3. **Create New Issue**: Provide:
+   - Environment details (OS, browser, Node.js version)
+   - Steps to reproduce
+   - Error messages and logs
+   - Screenshots if applicable
+
+---
+
+## Contributing
+
+We welcome contributions from the community! Code Guardian Report is open source and thrives on community involvement.
+
+### How to Contribute
+
+#### 1. Fork and Clone
+
+```bash
+# Fork the repository on GitHub
+# Then clone your fork
+git clone https://github.com/YOUR_USERNAME/code-guardian-report.git
+cd code-guardian-report
+```
+
+#### 2. Create a Branch
+
+```bash
+# Create a feature branch
+git checkout -b feature/your-feature-name
+
+# Or a bug fix branch
+git checkout -b fix/bug-description
+```
+
+#### 3. Make Changes
+
+- Follow the existing code style
+- Write clear, commented code
+- Add tests for new features
+- Update documentation as needed
+
+#### 4. Test Your Changes
+
+```bash
+# Run linting
+npm run lint
+
+# Run type checking
+npm run type-check
+
+# Run tests
+npm run test
+
+# Run E2E tests
+npm run test:e2e-zip
+```
+
+#### 5. Commit Changes
+
+Follow conventional commit format:
+
+```bash
+git add .
+git commit -m "feat: add AI-powered vulnerability description"
+git commit -m "fix: resolve XSS detection false positive"
+git commit -m "docs: update API documentation"
+```
+
+#### 6. Push and Create Pull Request
+
+```bash
+# Push to your fork
+git push origin feature/your-feature-name
+
+# Create Pull Request on GitHub
+```
+
+### Contribution Guidelines
+
+#### Code Style
+
+- **TypeScript**: Use strict type checking
+- **React**: Use functional components with hooks
+- **Formatting**: Prettier configuration is enforced
+- **Naming**: Use descriptive, camelCase names
+
+#### Testing Requirements
+
+- Unit tests for new functions
+- Integration tests for new features
+- E2E tests for critical user flows
+- Maintain >85% code coverage
+
+#### Documentation
+
+- Update README.md for user-facing changes
+- Add JSDoc comments for public APIs
+- Update CHANGELOG.md
+- Create examples for new features
+
+### Development Workflow
+
+#### Setting Up Development Environment
+
+```bash
+# Install dependencies
+npm install
+
+# Setup git hooks
+npm run setup-git-hooks
+
+# Start development server
+npm run dev
+```
+
+#### Code Review Process
+
+1. **Automated Checks**: All CI checks must pass
+2. **Manual Review**: At least one maintainer approval required
+3. **Testing**: Reviewer tests the changes locally
+4. **Documentation**: Verify documentation is updated
+5. **Merge**: Squash and merge to main branch
+
+### Areas for Contribution
+
+We especially welcome contributions in these areas:
+
+- **New Language Support**: Add parsers for additional languages
+- **Security Rules**: Contribute new vulnerability detection patterns
+- **AI Features**: Enhance AI-powered capabilities
+- **UI/UX**: Improve user interface and experience
+- **Documentation**: Write tutorials and guides
+- **Testing**: Add test coverage
+- **Performance**: Optimize analysis speed
+- **Accessibility**: Improve WCAG compliance
+
+### Recognition
+
+Contributors are recognized in:
+- README contributors section
+- Release notes
+- Project website
+- Annual contributor highlights
+
+---
+
+## License
+
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+### MIT License Summary
+
+```
+MIT License
+
+Copyright (c) 2025 Code Guardian Report Contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+### Third-Party Licenses
+
+This project uses open-source libraries with the following licenses:
+
+- **Next.js**: MIT License
+- **React**: MIT License
+- **TypeScript**: Apache License 2.0
+- **Tailwind CSS**: MIT License
+- **Radix UI**: MIT License
+- **Framer Motion**: MIT License
+- **Babel**: MIT License
+- See [package.json](package.json) for complete list
+
+---
+
+## Support
+
+### Getting Help
+
+#### Documentation
+
+- **README**: This file (comprehensive guide)
+- **DEPLOYMENT.md**: Detailed deployment instructions
+- **SECURITY.md**: Security policies and reporting
+- **CONTRIBUTING.md**: Contribution guidelines
+- **CODE_OF_CONDUCT.md**: Community standards
+
+#### Community Support
+
+- **GitHub Discussions**: Ask questions and share ideas
+- **GitHub Issues**: Report bugs and request features
+- **Pull Requests**: Contribute code improvements
+
+#### Professional Support
+
+For enterprise support and consulting:
+- Custom feature development
+- Integration assistance
+- Security auditing services
+- Training and workshops
+- Priority bug fixes
+
+Contact: [Create an issue](https://github.com/Xenonesis/code-guardian-report/issues/new) with label "enterprise-support"
+
+### Reporting Security Vulnerabilities
+
+If you discover a security vulnerability, please follow responsible disclosure:
+
+1. **DO NOT** open a public issue
+2. Email security details privately (see SECURITY.md)
+3. Wait for confirmation and guidance
+4. Coordinate disclosure timeline
+
+We take security seriously and will respond within 48 hours.
+
+---
+
+## Acknowledgments
+
+### Core Team
+
+- **Aditya Raj** - Project Lead & Core Developer
+  - BCA in Cybersecurity, Sushant University
+  - Cybersecurity Enthusiast | Full-Stack Developer
+  - GitHub: [@Xenonesis](https://github.com/Xenonesis)
+
+### Contributors
+
+Special thanks to all contributors who have helped make Code Guardian Report better:
+
+<!-- ALL-CONTRIBUTORS-LIST:START -->
+<!-- This section is automatically updated by all-contributors bot -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+See the full list of contributors on [GitHub](https://github.com/Xenonesis/code-guardian-report/graphs/contributors).
+
+### Open Source Projects
+
+Built with amazing open-source projects:
+
+- **Next.js** - React framework by Vercel
+- **React** - UI library by Meta
+- **TypeScript** - Typed JavaScript by Microsoft
+- **Tailwind CSS** - Utility-first CSS framework
+- **Radix UI** - Accessible component primitives
+- **Babel** - JavaScript compiler
+- **Framer Motion** - Animation library
+- **Recharts** - Charting library
+
+### Inspiration
+
+Inspired by industry-leading security tools:
+- SonarQube
+- Snyk
+- GitHub Advanced Security
+- Semgrep
+- CodeQL
+
+### Special Thanks
+
+- **GirlScript Summer of Code 2025** - Supporting open source contributions
+- **GitHub** - Platform and tools
+- **Vercel** - Hosting and deployment
+- **Community** - Feedback and contributions
+
+---
+
+## Roadmap
+
+### Version 11.x (Current)
+
+- [x] Multi-language analysis (15+ languages)
+- [x] AI-powered fix suggestions
+- [x] GitHub integration
+- [x] PWA support
+- [x] Real-time analysis
+- [x] Custom rules engine
+- [x] Advanced reporting (PDF, JSON, SARIF)
+
+### Version 12.0 (Q2 2025)
+
+- [ ] **Machine Learning Models**: Train custom ML models for vulnerability detection
+- [ ] **IDE Extensions**: VS Code, IntelliJ plugins
+- [ ] **CI/CD Native**: GitHub Actions, GitLab CI, Jenkins plugins
+- [ ] **Team Collaboration**: Multi-user workspace, shared analyses
+- [ ] **Advanced Metrics**: DORA metrics, security debt tracking
+- [ ] **API v2**: RESTful API for third-party integrations
+
+### Version 13.0 (Q4 2025)
+
+- [ ] **Enterprise Features**: SSO, RBAC, audit logs
+- [ ] **Compliance Modules**: SOC 2, ISO 27001, PCI DSS
+- [ ] **Container Scanning**: Docker image vulnerability scanning
+- [ ] **Supply Chain Security**: SBOM generation, dependency graphs
+- [ ] **Real-time Collaboration**: Live analysis sessions
+- [ ] **Mobile Apps**: Native iOS and Android applications
+
+### Long-term Vision
+
+- **Self-healing Code**: Automatic vulnerability patching
+- **Predictive Security**: ML-based threat prediction
+- **Blockchain Integration**: Immutable security audit trails
+- **Quantum-safe Cryptography**: Post-quantum security analysis
+- **Global Security Network**: Crowdsourced vulnerability intelligence
+
+### Feature Requests
+
+Have an idea? We'd love to hear it!
+
+1. Check [existing feature requests](https://github.com/Xenonesis/code-guardian-report/issues?q=is%3Aissue+label%3Aenhancement)
+2. Create a [new feature request](https://github.com/Xenonesis/code-guardian-report/issues/new?labels=enhancement)
+3. Join discussions and vote on features
+
+---
+
+## Appendices
+
+### Appendix A: Environment Variables Reference
+
+Complete list of environment variables:
+
+```bash
+# Application
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+NODE_ENV=development|production
+PORT=3000
+
+# GitHub OAuth
+NEXT_PUBLIC_GITHUB_CLIENT_ID=your_client_id
+GITHUB_CLIENT_SECRET=your_client_secret
+NEXT_PUBLIC_GITHUB_REDIRECT_URI=http://localhost:3000/api/auth/github/callback
+
+# Firebase (Optional)
+NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
+NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=your_measurement_id
+
+# AI Configuration
+OPENAI_API_KEY=sk-...
+OPENAI_MODEL=gpt-4
+OPENAI_MAX_TOKENS=2000
+ANTHROPIC_API_KEY=sk-ant-...
+ANTHROPIC_MODEL=claude-3-opus-20240229
+GOOGLE_AI_API_KEY=...
+GOOGLE_AI_MODEL=gemini-pro
+
+# Analytics
+NEXT_PUBLIC_GA_MEASUREMENT_ID=G-...
+NEXT_PUBLIC_VERCEL_ANALYTICS_ID=...
+
+# Feature Flags
+NEXT_PUBLIC_ENABLE_AI=true|false
+NEXT_PUBLIC_ENABLE_FIREBASE=true|false
+NEXT_PUBLIC_ENABLE_PWA=true|false
+NEXT_PUBLIC_ENABLE_ANALYTICS=true|false
+
+# Security
+JWT_SECRET=your_jwt_secret
+ENCRYPTION_KEY=your_encryption_key
+RATE_LIMIT_MAX=100
+RATE_LIMIT_WINDOW_MS=900000
+
+# Email (Optional)
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your_email@gmail.com
+SMTP_PASSWORD=your_password
+```
+
+### Appendix B: Keyboard Shortcuts
+
+| Shortcut | Action |
+|----------|--------|
+| `Ctrl/Cmd + K` | Open command palette |
+| `Ctrl/Cmd + U` | Upload file |
+| `Ctrl/Cmd + H` | View history |
+| `Ctrl/Cmd + E` | Export report |
+| `Ctrl/Cmd + /` | Toggle help |
+| `Ctrl/Cmd + ,` | Open settings |
+| `Ctrl/Cmd + F` | Search issues |
+| `Esc` | Close modal |
+
+### Appendix C: API Rate Limits
+
+| Endpoint | Rate Limit | Window |
+|----------|------------|--------|
+| `/api/analyze` | 10 requests | 1 minute |
+| `/api/github/*` | 30 requests | 1 minute |
+| `/api/ai/*` | 20 requests | 1 minute |
+| `/api/export/*` | 15 requests | 1 minute |
+
+### Appendix D: Supported File Types
+
+**Programming Languages**:
+- `.js`, `.mjs`, `.cjs`, `.jsx` - JavaScript
+- `.ts`, `.tsx`, `.d.ts` - TypeScript
+- `.py`, `.pyw`, `.pyi` - Python
+- `.java` - Java
+- `.cs`, `.csx` - C#
+- `.php`, `.phtml` - PHP
+- `.rb`, `.rake` - Ruby
+- `.go` - Go
+- `.rs` - Rust
+- `.cpp`, `.cxx`, `.cc`, `.hpp` - C++
+- `.c`, `.h` - C
+- `.kt`, `.kts` - Kotlin
+- `.swift` - Swift
+- `.dart` - Dart
+- `.scala` - Scala
+
+**Configuration Files**:
+- `.json`, `.jsonc` - JSON
+- `.yaml`, `.yml` - YAML
+- `.toml` - TOML
+- `.xml` - XML
+- `.ini` - INI
+- `.env` - Environment
+
+**Markup & Styling**:
+- `.html`, `.htm` - HTML
+- `.css`, `.scss`, `.sass` - CSS/SCSS
+- `.md`, `.markdown` - Markdown
+
+### Appendix E: Security Controls Reference
+
+Complete list of implemented security controls:
+
+**CWE Coverage**: 250+ Common Weakness Enumerations
+**OWASP Top 10**: Complete coverage
+**SANS Top 25**: 100% coverage
+**PCI DSS**: Relevant controls implemented
+**NIST 800-53**: Partial coverage
+
+Detailed security control mapping available in SECURITY.md.
+
+---
+
+## Changelog
+
+### Version 11.0.0 (2025-01-31)
+
+#### Major Features
+- Complete rewrite with Next.js 16 App Router
+- Enhanced multi-language support (15+ languages)
+- AI-powered security insights and fix suggestions
+- Progressive Web App capabilities
+- GitHub repository integration
+- Advanced analytics dashboard
+- Custom rules engine
+- Multiple export formats (PDF, JSON, SARIF)
+
+#### Improvements
+- 300% faster analysis engine
+- 50% reduction in bundle size
+- Improved accessibility (WCAG 2.1 AA compliant)
+- Enhanced mobile experience
+- Better error handling and logging
+
+#### Bug Fixes
+- Fixed XSS detection false positives
+- Resolved memory leaks in large file analysis
+- Fixed GitHub OAuth token refresh
+- Corrected PDF export formatting issues
+
+See [CHANGELOG.md](md/changelogs.md) for complete version history.
+
+---
+
+## FAQ
+
+### General Questions
+
+**Q: Is Code Guardian Report free?**
+A: Yes, Code Guardian Report is open source and free to use under the MIT License.
+
+**Q: Does my code leave my browser?**
+A: No, all analysis is performed client-side in your browser. Your code never leaves your device unless you explicitly use cloud features like Firebase storage.
+
+**Q: Can I use this for commercial projects?**
+A: Yes, the MIT License allows commercial use.
+
+**Q: What's the difference between this and SonarQube?**
+A: Code Guardian focuses on client-side analysis with AI-powered insights, while SonarQube requires server installation. Both are excellent tools for different use cases.
+
+### Technical Questions
+
+**Q: Which programming languages are supported?**
+A: JavaScript, TypeScript, Python, Java, C#, PHP, Ruby, Go, Rust, C/C++, Kotlin, Swift, Dart, Scala, and more.
+
+**Q: Can I add custom security rules?**
+A: Yes, use the Custom Rules Editor to define organization-specific patterns.
+
+**Q: How accurate is the vulnerability detection?**
+A: Detection accuracy varies by vulnerability type, averaging 85-95% with low false positive rates.
+
+**Q: Can I integrate this into my CI/CD pipeline?**
+A: Yes, export results in SARIF format for GitHub Actions, GitLab CI, and other CI/CD tools.
+
+### Privacy Questions
+
+**Q: What data is collected?**
+A: Only anonymous usage analytics (if enabled). Your code is never transmitted or stored on our servers.
+
+**Q: Is this GDPR compliant?**
+A: Yes, the platform is designed with privacy-first principles and GDPR compliance.
+
+**Q: Can I disable analytics?**
+A: Yes, set `NEXT_PUBLIC_ENABLE_ANALYTICS=false` in your environment variables.
+
+---
+
+**Made with ❤️ by the Code Guardian Team**
+
+**[⭐ Star us on GitHub](https://github.com/Xenonesis/code-guardian-report)** | **[📖 Documentation](https://github.com/Xenonesis/code-guardian-report/tree/main/md)** | **[🐛 Report Bug](https://github.com/Xenonesis/code-guardian-report/issues)** | **[💡 Request Feature](https://github.com/Xenonesis/code-guardian-report/issues/new?labels=enhancement)**
+

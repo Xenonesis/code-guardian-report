@@ -1,5 +1,0 @@
-
-> code-guardian-report@10.0.0 lint
-> next lint
-
-Invalid project directory provided, no such directory: C:\Users\addy\Downloads\code-guardian-report\lint
