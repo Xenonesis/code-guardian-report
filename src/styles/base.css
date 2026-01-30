@@ -5,9 +5,44 @@
 /* Import responsive utilities */
 @import "./responsive-utilities.css";
 
+/* stylelint-disable-next-line at-rule-no-unknown */
+@variant dark (&:where(.dark, .dark *));
+
 @layer base {
   :root {
-    /* Dark mode colors - Now the default and only theme */
+    /* Light mode colors */
+    --background: 48 100% 93%; /* #FFFADC */
+    --foreground: 222 47% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    --primary: 263 70% 50%;
+    --primary-foreground: 210 20% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222 47% 11%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222 47% 11%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 263 70% 50%;
+    --radius: 0.75rem;
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 222 47% 11%;
+    --sidebar-primary: 263 70% 50%;
+    --sidebar-primary-foreground: 210 20% 98%;
+    --sidebar-accent: 210 40% 96%;
+    --sidebar-accent-foreground: 222 47% 11%;
+    --sidebar-border: 214 32% 91%;
+    --sidebar-ring: 263 70% 50%;
+  }
+
+  .dark {
+    /* Dark mode colors */
     --background: 224 71% 4%;
     --foreground: 210 20% 98%;
     --card: 224 71% 4%;
@@ -27,7 +62,6 @@
     --border: 215 28% 17%;
     --input: 215 28% 17%;
     --ring: 263 70% 50%;
-    --radius: 0.75rem;
     --sidebar-background: 224 71% 4%;
     --sidebar-foreground: 210 20% 98%;
     --sidebar-primary: 263 70% 50%;
