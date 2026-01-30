@@ -121,7 +121,7 @@ export const EnhancedFeatureShowcase: React.FC = () => {
                   className={`enhanced-card-hover glow-on-hover cursor-pointer transition-all duration-700 ${
                     activeFeature === feature.id
                       ? "glass-card-ultra border-2 border-blue-400/50 shadow-2xl shadow-blue-500/30 dark:border-blue-500/50"
-                      : "glass-card-ultra hover:border-white/40 dark:hover:border-white/20"
+                      : "glass-card-ultra hover:border-slate-300/50 dark:hover:border-white/20"
                   }`}
                   onClick={() => setActiveFeature(feature.id)}
                   style={{ animationDelay: `${index * 0.1}s` }}
