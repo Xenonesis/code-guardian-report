@@ -272,7 +272,7 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
                 {showUserDropdown && (
                   <div className="animate-in fade-in slide-in-from-top-2 border-border bg-popover absolute right-0 z-50 mt-2 w-56 rounded-xl border py-2 shadow-xl duration-200">
                     <div className="border-b border-slate-100 px-4 py-3 dark:border-slate-800">
-                      <p className="truncate text-sm font-semibold text-slate-900 dark:text-white">
+                      <p className="text-foreground truncate text-sm font-semibold">
                         {userProfile?.displayName ||
                           userProfile?.githubUsername ||
                           "User"}
@@ -466,7 +466,7 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
                         user?.email)?.[0]?.toUpperCase() || "U"}
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="xs:text-base truncate text-sm font-semibold text-slate-900 dark:text-white">
+                      <p className="xs:text-base text-foreground truncate text-sm font-semibold">
                         {userProfile?.displayName ||
                           userProfile?.githubUsername ||
                           "User"}

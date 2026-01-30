@@ -58,10 +58,7 @@ export const SecurityAnalyticsSection: React.FC<
       <div className="space-y-6">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
           {Array.from({ length: 4 }).map((_, i) => (
-            <Card
-              key={i}
-              className="border-slate-200 p-6 dark:border-slate-800"
-            >
+            <Card key={i} className="border-border p-6">
               <div className="mb-4 flex items-start justify-between">
                 <div className="h-10 w-10 animate-pulse rounded-lg bg-slate-100 dark:bg-slate-800"></div>
                 <div className="h-4 w-4 animate-pulse rounded bg-slate-100 dark:bg-slate-800"></div>
@@ -72,7 +69,7 @@ export const SecurityAnalyticsSection: React.FC<
           ))}
         </div>
         {detailed && (
-          <Card className="border-slate-200 p-6 dark:border-slate-800">
+          <Card className="border-border p-6">
             <div className="mb-6 h-6 w-48 animate-pulse rounded bg-slate-100 dark:bg-slate-800"></div>
             <div className="space-y-4">
               {Array.from({ length: 5 }).map((_, i) => (
@@ -92,7 +89,7 @@ export const SecurityAnalyticsSection: React.FC<
   return (
     <div className="space-y-8">
       <div>
-        <h2 className="mb-2 flex items-center gap-2 text-2xl font-bold text-slate-900 dark:text-white">
+        <h2 className="text-foreground mb-2 flex items-center gap-2 text-2xl font-bold">
           <Shield className="h-6 w-6 text-blue-600 dark:text-blue-400" />
           Security Analytics
         </h2>
@@ -103,7 +100,7 @@ export const SecurityAnalyticsSection: React.FC<
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
-        <Card className="group border-slate-200 p-6 transition-all duration-300 hover:shadow-lg dark:border-slate-800">
+        <Card className="group border-border p-6 transition-all duration-300 hover:shadow-lg dark:border-slate-800">
           <div className="mb-4 flex items-center justify-between">
             <div className="rounded-xl bg-blue-50 p-3 transition-transform duration-300 group-hover:scale-110 dark:bg-blue-900/20">
               <Activity className="h-6 w-6 text-blue-600 dark:text-blue-400" />
@@ -120,7 +117,7 @@ export const SecurityAnalyticsSection: React.FC<
               </div>
             )}
           </div>
-          <div className="mb-1 text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
+          <div className="text-foreground mb-1 text-3xl font-bold tracking-tight">
             {stats.averageScore.toFixed(1)}
           </div>
           <div className="text-sm font-medium text-slate-500 dark:text-slate-400">
@@ -128,13 +125,13 @@ export const SecurityAnalyticsSection: React.FC<
           </div>
         </Card>
 
-        <Card className="group border-slate-200 p-6 transition-all duration-300 hover:shadow-lg dark:border-slate-800">
+        <Card className="group border-border p-6 transition-all duration-300 hover:shadow-lg dark:border-slate-800">
           <div className="mb-4 flex items-center justify-between">
             <div className="rounded-xl bg-yellow-50 p-3 transition-transform duration-300 group-hover:scale-110 dark:bg-yellow-900/20">
               <AlertTriangle className="h-6 w-6 text-yellow-600 dark:text-yellow-400" />
             </div>
           </div>
-          <div className="mb-1 text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
+          <div className="text-foreground mb-1 text-3xl font-bold tracking-tight">
             {stats.totalIssues.toLocaleString()}
           </div>
           <div className="text-sm font-medium text-slate-500 dark:text-slate-400">
@@ -142,13 +139,13 @@ export const SecurityAnalyticsSection: React.FC<
           </div>
         </Card>
 
-        <Card className="group border-slate-200 p-6 transition-all duration-300 hover:shadow-lg dark:border-slate-800">
+        <Card className="group border-border p-6 transition-all duration-300 hover:shadow-lg dark:border-slate-800">
           <div className="mb-4 flex items-center justify-between">
             <div className="rounded-xl bg-red-50 p-3 transition-transform duration-300 group-hover:scale-110 dark:bg-red-900/20">
               <Shield className="h-6 w-6 text-red-600 dark:text-red-400" />
             </div>
           </div>
-          <div className="mb-1 text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
+          <div className="text-foreground mb-1 text-3xl font-bold tracking-tight">
             {stats.criticalIssues.toLocaleString()}
           </div>
           <div className="text-sm font-medium text-slate-500 dark:text-slate-400">
@@ -156,13 +153,13 @@ export const SecurityAnalyticsSection: React.FC<
           </div>
         </Card>
 
-        <Card className="group border-slate-200 p-6 transition-all duration-300 hover:shadow-lg dark:border-slate-800">
+        <Card className="group border-border p-6 transition-all duration-300 hover:shadow-lg dark:border-slate-800">
           <div className="mb-4 flex items-center justify-between">
             <div className="rounded-xl bg-green-50 p-3 transition-transform duration-300 group-hover:scale-110 dark:bg-green-900/20">
               <CheckCircle className="h-6 w-6 text-green-600 dark:text-green-400" />
             </div>
           </div>
-          <div className="mb-1 text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
+          <div className="text-foreground mb-1 text-3xl font-bold tracking-tight">
             {trends.length.toLocaleString()}
           </div>
           <div className="text-sm font-medium text-slate-500 dark:text-slate-400">
@@ -173,10 +170,10 @@ export const SecurityAnalyticsSection: React.FC<
 
       {/* Trend Chart */}
       {detailed && trends.length > 0 && (
-        <Card className="border-slate-200 p-8 dark:border-slate-800">
+        <Card className="border-border p-8">
           <div className="mb-8 flex items-center justify-between">
             <div>
-              <h3 className="mb-1 text-lg font-bold text-slate-900 dark:text-white">
+              <h3 className="text-foreground mb-1 text-lg font-bold">
                 Security Score Trend
               </h3>
               <p className="text-sm text-slate-500">
@@ -227,10 +224,10 @@ export const SecurityAnalyticsSection: React.FC<
                       )}
                       style={{ width: `${(trend.score / 10) * 100}%` }}
                     >
-                      <div className="absolute inset-0 bg-white/20 transition-colors group-hover:bg-transparent" />
+                      <div className="bg-background/20 absolute inset-0 transition-colors group-hover:bg-transparent" />
                     </div>
                   </div>
-                  <div className="w-12 text-right font-bold text-slate-900 dark:text-white">
+                  <div className="text-foreground w-12 text-right font-bold">
                     {trend.score.toFixed(1)}
                   </div>
                 </div>

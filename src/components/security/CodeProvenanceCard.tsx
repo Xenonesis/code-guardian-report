@@ -201,7 +201,7 @@ export const CodeProvenanceCard: React.FC<CodeProvenanceCardProps> = ({
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="overview" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 gap-1 rounded-xl border bg-white/80 p-1 shadow-lg backdrop-blur-sm sm:grid-cols-4 sm:gap-0 dark:bg-slate-800/80">
+          <TabsList className="border-border bg-card/80 grid w-full grid-cols-2 gap-1 rounded-xl border p-1 shadow-lg backdrop-blur-sm sm:grid-cols-4 sm:gap-0">
             <TabsTrigger
               value="overview"
               className="flex items-center justify-center rounded-lg px-2 py-2 text-xs font-medium transition-all duration-300 data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-indigo-500 data-[state=active]:text-white sm:text-sm"

@@ -107,7 +107,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   return createPortal(
     <>
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-        <div className="mx-4 w-full max-w-md rounded-xl border border-gray-200 bg-white p-8 text-gray-900 shadow-2xl dark:border-[#2A3B5F] dark:bg-gradient-to-b dark:from-[#121829] dark:to-[#1E293B] dark:text-white">
+        <div className="border-border bg-card text-foreground mx-4 w-full max-w-md rounded-xl border p-8 shadow-2xl">
           <div className="mb-6 flex items-center justify-between">
             <h2 className="text-2xl font-bold">
               {isLogin ? "Sign In" : "Sign Up"}
@@ -140,7 +140,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   id="displayName"
                   value={displayName}
                   onChange={(e) => setDisplayName(e.target.value)}
-                  className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base text-gray-900 focus:ring-2 focus:ring-[#9333ea] focus:outline-none dark:border-[#334155] dark:bg-[#0F172A] dark:text-white"
+                  className="border-input bg-background text-foreground w-full rounded-md border px-3 py-2 text-base focus:ring-2 focus:ring-[#9333ea] focus:outline-none"
                   autoComplete="name"
                   required={!isLogin}
                 />
@@ -199,7 +199,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 <div className="w-full border-t border-gray-300 dark:border-gray-600" />
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="bg-white px-2 text-gray-500 dark:bg-[#1E293B] dark:text-gray-400">
+                <span className="bg-background text-muted-foreground px-2">
                   Or
                 </span>
               </div>

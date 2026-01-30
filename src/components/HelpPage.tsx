@@ -141,7 +141,7 @@ export const HelpPage: React.FC<HelpPageProps> = ({ className = "" }) => {
               <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/30">
                 <HelpCircle className="h-8 w-8 text-blue-600 dark:text-blue-400" />
               </div>
-              <h1 className="mb-4 text-4xl font-bold text-slate-900 dark:text-white">
+              <h1 className="text-foreground mb-4 text-4xl font-bold">
                 Help & Documentation
               </h1>
               <p className="mx-auto max-w-3xl text-xl text-slate-600 dark:text-slate-400">
@@ -161,7 +161,7 @@ export const HelpPage: React.FC<HelpPageProps> = ({ className = "" }) => {
                     <div className="rounded-lg bg-blue-100 p-2 dark:bg-blue-900/30">
                       {section.icon}
                     </div>
-                    <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
+                    <h3 className="text-foreground text-lg font-semibold">
                       {section.title}
                     </h3>
                   </div>
@@ -188,7 +188,7 @@ export const HelpPage: React.FC<HelpPageProps> = ({ className = "" }) => {
 
             {/* Support Options */}
             <div className="rounded-xl border border-slate-200/50 bg-white/80 p-8 backdrop-blur-sm dark:border-slate-700/50 dark:bg-slate-800/80">
-              <h2 className="mb-6 text-center text-2xl font-bold text-slate-900 dark:text-white">
+              <h2 className="text-foreground mb-6 text-center text-2xl font-bold">
                 Need More Help?
               </h2>
               <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
@@ -221,7 +221,7 @@ export const HelpPage: React.FC<HelpPageProps> = ({ className = "" }) => {
 
             {/* Quick Tips */}
             <div className="mt-12 rounded-xl border border-blue-200 bg-gradient-to-r from-blue-50 to-indigo-50 p-6 dark:border-blue-800 dark:from-blue-900/20 dark:to-indigo-900/20">
-              <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold text-slate-900 dark:text-white">
+              <h3 className="text-foreground mb-4 flex items-center gap-2 text-lg font-semibold">
                 <Lightbulb className="h-5 w-5 text-amber-500" />
                 Quick Tips
               </h3>

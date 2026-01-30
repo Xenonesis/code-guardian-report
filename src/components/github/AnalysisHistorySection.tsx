@@ -165,7 +165,7 @@ export const AnalysisHistorySection: React.FC<AnalysisHistorySectionProps> = ({
       {/* Header & Controls */}
       <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
         <div>
-          <h2 className="mb-2 text-2xl font-bold text-slate-900 dark:text-white">
+          <h2 className="text-foreground mb-2 text-2xl font-bold">
             Analysis History
           </h2>
           <p className="text-slate-600 dark:text-slate-400">
@@ -224,7 +224,7 @@ export const AnalysisHistorySection: React.FC<AnalysisHistorySectionProps> = ({
                 {/* Timeline Dot */}
                 <div className="absolute top-6 left-2.5 z-10 h-3 w-3 rounded-full border-2 border-blue-500 bg-white md:left-[2.1rem] dark:bg-slate-900"></div>
 
-                <Card className="group border-slate-200 p-6 transition-all duration-300 hover:shadow-lg dark:border-slate-800">
+                <Card className="group border-border p-6 transition-all duration-300 hover:shadow-lg dark:border-slate-800">
                   <div className="flex flex-col justify-between gap-6 md:flex-row md:items-center">
                     <div className="flex-1">
                       <div className="mb-3 flex items-center gap-3">
@@ -261,7 +261,7 @@ export const AnalysisHistorySection: React.FC<AnalysisHistorySectionProps> = ({
 
                       <div className="flex items-center gap-3 text-sm">
                         <div className="text-slate-600 dark:text-slate-400">
-                          <span className="font-bold text-slate-900 dark:text-white">
+                          <span className="text-foreground font-bold">
                             {analysis.issuesFound}
                           </span>{" "}
                           issues
@@ -294,7 +294,7 @@ export const AnalysisHistorySection: React.FC<AnalysisHistorySectionProps> = ({
 
       {/* List View */}
       {viewMode === "list" && (
-        <Card className="overflow-hidden border-slate-200 dark:border-slate-800">
+        <Card className="border-border overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="border-b border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-800/50">
@@ -328,7 +328,7 @@ export const AnalysisHistorySection: React.FC<AnalysisHistorySectionProps> = ({
                           <GitBranch className="h-4 w-4 text-slate-500" />
                         </div>
                         <div>
-                          <div className="text-sm font-medium text-slate-900 dark:text-white">
+                          <div className="text-foreground text-sm font-medium">
                             {analysis.repositoryName}
                           </div>
                           <div className="text-xs text-slate-500">
@@ -345,7 +345,7 @@ export const AnalysisHistorySection: React.FC<AnalysisHistorySectionProps> = ({
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm">
-                        <span className="font-semibold text-slate-900 dark:text-white">
+                        <span className="text-foreground font-semibold">
                           {analysis.issuesFound}
                         </span>
                         {analysis.criticalIssues > 0 && (
@@ -379,7 +379,7 @@ export const AnalysisHistorySection: React.FC<AnalysisHistorySectionProps> = ({
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800">
             <Clock className="h-8 w-8 text-slate-400" />
           </div>
-          <h3 className="mb-2 text-xl font-semibold text-slate-900 dark:text-white">
+          <h3 className="text-foreground mb-2 text-xl font-semibold">
             {searchQuery ? "No results found" : "No analysis history yet"}
           </h3>
           <p className="mx-auto max-w-md text-slate-500 dark:text-slate-400">
@@ -400,7 +400,7 @@ export const AnalysisHistorySection: React.FC<AnalysisHistorySectionProps> = ({
                   <GitBranch className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                 </div>
                 <div>
-                  <h2 className="text-lg font-bold text-slate-900 dark:text-white">
+                  <h2 className="text-foreground text-lg font-bold">
                     {selectedAnalysis.repositoryName}
                   </h2>
                   <p className="text-xs text-slate-500">Analysis Report</p>
@@ -485,7 +485,7 @@ export const AnalysisHistorySection: React.FC<AnalysisHistorySectionProps> = ({
                     <stat.icon
                       className={cn("mx-auto mb-2 h-6 w-6", stat.color)}
                     />
-                    <div className="mb-1 text-xl font-bold text-slate-900 dark:text-white">
+                    <div className="text-foreground mb-1 text-xl font-bold">
                       {stat.value}
                     </div>
                     <div className="text-xs font-medium text-slate-600 uppercase dark:text-slate-400">
@@ -497,7 +497,7 @@ export const AnalysisHistorySection: React.FC<AnalysisHistorySectionProps> = ({
 
               {/* Analysis Details */}
               <div className="space-y-4">
-                <h3 className="flex items-center gap-2 font-semibold text-slate-900 dark:text-white">
+                <h3 className="text-foreground flex items-center gap-2 font-semibold">
                   <Shield className="h-5 w-5 text-blue-600" />
                   Analysis Details
                 </h3>
@@ -506,7 +506,7 @@ export const AnalysisHistorySection: React.FC<AnalysisHistorySectionProps> = ({
                     <span className="text-slate-600 dark:text-slate-400">
                       Analyzed At
                     </span>
-                    <span className="font-medium text-slate-900 dark:text-white">
+                    <span className="text-foreground font-medium">
                       {new Date(selectedAnalysis.analyzedAt).toLocaleString()}
                     </span>
                   </div>

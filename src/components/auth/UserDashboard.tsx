@@ -332,7 +332,7 @@ const UserDashboard: React.FC = () => {
 
   if (!user || !userProfile) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-white text-gray-900 dark:bg-black dark:text-white">
+      <div className="bg-background text-foreground flex min-h-screen items-center justify-center">
         <div className="text-center">
           <h2 className="mb-4 text-2xl font-bold">Access Denied</h2>
           <p>Please sign in to view your dashboard.</p>
@@ -361,7 +361,7 @@ const UserDashboard: React.FC = () => {
         onClose={() => setShowUsernameInput(false)}
       />
 
-      <header className="border-b border-gray-200 bg-white shadow dark:border-gray-700 dark:bg-[#1e1e2f]">
+      <header className="border-border bg-card border-b shadow">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between py-4">
             <div>
@@ -441,7 +441,7 @@ const UserDashboard: React.FC = () => {
               </div>
             </div>
 
-            <div className="rounded-lg border border-gray-200 bg-white p-6 shadow dark:border-transparent dark:bg-[#252538]">
+            <div className="border-border bg-card rounded-lg border p-6 shadow">
               <h2 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
                 Task Statistics
               </h2>
@@ -533,7 +533,7 @@ const UserDashboard: React.FC = () => {
                       className={`rounded-lg border p-4 ${
                         task.completed
                           ? "border-green-200 bg-green-50 dark:border-green-600 dark:bg-green-900/30"
-                          : "border-gray-200 bg-white dark:border-gray-600 dark:bg-[#2a2a3d]"
+                          : "border-border bg-card"
                       }`}
                     >
                       <div className="flex items-start justify-between">

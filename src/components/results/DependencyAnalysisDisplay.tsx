@@ -98,7 +98,7 @@ export const DependencyAnalysisDisplay: React.FC<
 
                   <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
                     <div className="rounded-lg border border-slate-200 bg-white/70 p-3 dark:border-slate-800 dark:bg-slate-900/30">
-                      <p className="mb-1 text-xs font-semibold text-slate-900 dark:text-slate-100">
+                      <p className="text-foreground mb-1 text-xs font-semibold">
                         JavaScript/TypeScript
                       </p>
                       <p className="text-xs text-slate-600 dark:text-slate-400">
@@ -106,7 +106,7 @@ export const DependencyAnalysisDisplay: React.FC<
                       </p>
                     </div>
                     <div className="rounded-lg border border-slate-200 bg-white/70 p-3 dark:border-slate-800 dark:bg-slate-900/30">
-                      <p className="mb-1 text-xs font-semibold text-slate-900 dark:text-slate-100">
+                      <p className="text-foreground mb-1 text-xs font-semibold">
                         Python
                       </p>
                       <p className="text-xs text-slate-600 dark:text-slate-400">
@@ -114,7 +114,7 @@ export const DependencyAnalysisDisplay: React.FC<
                       </p>
                     </div>
                     <div className="rounded-lg border border-slate-200 bg-white/70 p-3 dark:border-slate-800 dark:bg-slate-900/30">
-                      <p className="mb-1 text-xs font-semibold text-slate-900 dark:text-slate-100">
+                      <p className="text-foreground mb-1 text-xs font-semibold">
                         Java (Maven/Gradle)
                       </p>
                       <p className="text-xs text-slate-600 dark:text-slate-400">
@@ -122,7 +122,7 @@ export const DependencyAnalysisDisplay: React.FC<
                       </p>
                     </div>
                     <div className="rounded-lg border border-slate-200 bg-white/70 p-3 dark:border-slate-800 dark:bg-slate-900/30">
-                      <p className="mb-1 text-xs font-semibold text-slate-900 dark:text-slate-100">
+                      <p className="text-foreground mb-1 text-xs font-semibold">
                         PHP
                       </p>
                       <p className="text-xs text-slate-600 dark:text-slate-400">
@@ -130,7 +130,7 @@ export const DependencyAnalysisDisplay: React.FC<
                       </p>
                     </div>
                     <div className="rounded-lg border border-slate-200 bg-white/70 p-3 dark:border-slate-800 dark:bg-slate-900/30">
-                      <p className="mb-1 text-xs font-semibold text-slate-900 dark:text-slate-100">
+                      <p className="text-foreground mb-1 text-xs font-semibold">
                         Rust
                       </p>
                       <p className="text-xs text-slate-600 dark:text-slate-400">
@@ -138,7 +138,7 @@ export const DependencyAnalysisDisplay: React.FC<
                       </p>
                     </div>
                     <div className="rounded-lg border border-slate-200 bg-white/70 p-3 dark:border-slate-800 dark:bg-slate-900/30">
-                      <p className="mb-1 text-xs font-semibold text-slate-900 dark:text-slate-100">
+                      <p className="text-foreground mb-1 text-xs font-semibold">
                         Ruby
                       </p>
                       <p className="text-xs text-slate-600 dark:text-slate-400">

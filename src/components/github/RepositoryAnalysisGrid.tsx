@@ -345,7 +345,7 @@ export const RepositoryAnalysisGrid: React.FC<RepositoryAnalysisGridProps> = ({
         <Card className="relative border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
           <div className="flex flex-col items-center gap-6 md:flex-row">
             <div className="w-full flex-1">
-              <h3 className="mb-2 flex items-center gap-2 text-lg font-semibold text-slate-900 dark:text-white">
+              <h3 className="text-foreground mb-2 flex items-center gap-2 text-lg font-semibold">
                 <Plus className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                 Analyze New Repository
               </h3>
@@ -395,7 +395,7 @@ export const RepositoryAnalysisGrid: React.FC<RepositoryAnalysisGridProps> = ({
 
             <div className="flex gap-8 px-4">
               <div className="text-center">
-                <div className="text-2xl font-bold text-slate-900 dark:text-white">
+                <div className="text-foreground text-2xl font-bold">
                   {repositories.length}
                 </div>
                 <div className="text-xs font-medium tracking-wider text-slate-500 uppercase">
@@ -403,7 +403,7 @@ export const RepositoryAnalysisGrid: React.FC<RepositoryAnalysisGridProps> = ({
                 </div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-slate-900 dark:text-white">
+                <div className="text-foreground text-2xl font-bold">
                   {repositories.reduce((acc, r) => acc + r.issuesFound, 0)}
                 </div>
                 <div className="text-xs font-medium tracking-wider text-slate-500 uppercase">
@@ -453,7 +453,7 @@ export const RepositoryAnalysisGrid: React.FC<RepositoryAnalysisGridProps> = ({
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800">
             <GitBranch className="h-8 w-8 text-slate-400" />
           </div>
-          <h3 className="mb-2 text-xl font-semibold text-slate-900 dark:text-white">
+          <h3 className="text-foreground mb-2 text-xl font-semibold">
             No repositories found
           </h3>
           <p className="mx-auto max-w-md text-slate-500 dark:text-slate-400">
@@ -494,14 +494,14 @@ export const RepositoryAnalysisGrid: React.FC<RepositoryAnalysisGridProps> = ({
                 <div className="mb-6 grid grid-cols-2 gap-4">
                   <div className="rounded-lg bg-slate-50 p-3 dark:bg-slate-800/50">
                     <div className="mb-1 text-xs text-slate-500">Issues</div>
-                    <div className="flex items-center gap-2 font-semibold text-slate-900 dark:text-white">
+                    <div className="text-foreground flex items-center gap-2 font-semibold">
                       <AlertTriangle className="h-4 w-4 text-orange-500" />
                       {repo.issuesFound}
                     </div>
                   </div>
                   <div className="rounded-lg bg-slate-50 p-3 dark:bg-slate-800/50">
                     <div className="mb-1 text-xs text-slate-500">Score</div>
-                    <div className="flex items-center gap-2 font-semibold text-slate-900 dark:text-white">
+                    <div className="text-foreground flex items-center gap-2 font-semibold">
                       <Shield className="h-4 w-4 text-emerald-500" />
                       {repo.securityScore}/10
                     </div>

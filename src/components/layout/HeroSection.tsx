@@ -65,7 +65,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             className={`text-responsive-2xl mb-6 px-4 leading-tight font-bold tracking-tight sm:mb-8 sm:px-0 lg:mb-10 ${
               variant === "gradient" || variant === "ultra"
                 ? "gradient-text-animated text-ultra-gradient"
-                : "text-slate-900 dark:text-white"
+                : "text-foreground"
             }`}
           >
             {title}

@@ -396,7 +396,7 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h2 className="mb-2 text-2xl font-bold text-slate-900 dark:text-white">
+        <h2 className="text-foreground mb-2 text-2xl font-bold">
           Code Quality Analytics
         </h2>
         <p className="text-slate-600 dark:text-slate-400">
@@ -418,7 +418,7 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({
               {aggregateMetrics.complexity.rating}
             </Badge>
           </div>
-          <div className="mb-1 text-3xl font-bold text-slate-900 dark:text-white">
+          <div className="text-foreground mb-1 text-3xl font-bold">
             {aggregateMetrics.complexity.average.toFixed(1)}
           </div>
           <div className="text-sm text-slate-600 dark:text-slate-400">
@@ -440,7 +440,7 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({
               {aggregateMetrics.maintainability.rating}
             </Badge>
           </div>
-          <div className="mb-1 text-3xl font-bold text-slate-900 dark:text-white">
+          <div className="text-foreground mb-1 text-3xl font-bold">
             {aggregateMetrics.maintainability.index}
           </div>
           <div className="text-sm text-slate-600 dark:text-slate-400">
@@ -460,7 +460,7 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({
               {aggregateMetrics.testCoverage.rating}
             </Badge>
           </div>
-          <div className="mb-1 text-3xl font-bold text-slate-900 dark:text-white">
+          <div className="text-foreground mb-1 text-3xl font-bold">
             {aggregateMetrics.testCoverage.percentage}%
           </div>
           <div className="text-sm text-slate-600 dark:text-slate-400">
@@ -480,7 +480,7 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({
               {aggregateMetrics.documentation.rating}
             </Badge>
           </div>
-          <div className="mb-1 text-3xl font-bold text-slate-900 dark:text-white">
+          <div className="text-foreground mb-1 text-3xl font-bold">
             {aggregateMetrics.documentation.coverage}%
           </div>
           <div className="text-sm text-slate-600 dark:text-slate-400">
@@ -493,7 +493,7 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* Maintainability Factors */}
         <Card className="p-6">
-          <h3 className="mb-4 text-lg font-semibold text-slate-900 dark:text-white">
+          <h3 className="text-foreground mb-4 text-lg font-semibold">
             Maintainability Factors
           </h3>
           <div className="space-y-4">
@@ -501,7 +501,7 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({
               <span className="text-slate-600 dark:text-slate-400">
                 Code Smells
               </span>
-              <span className="font-semibold text-slate-900 dark:text-white">
+              <span className="text-foreground font-semibold">
                 {aggregateMetrics.maintainability.factors.codeSmells}
               </span>
             </div>
@@ -509,7 +509,7 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({
               <span className="text-slate-600 dark:text-slate-400">
                 Technical Debt
               </span>
-              <span className="font-semibold text-slate-900 dark:text-white">
+              <span className="text-foreground font-semibold">
                 {aggregateMetrics.maintainability.factors.technicalDebt}
               </span>
             </div>
@@ -517,7 +517,7 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({
               <span className="text-slate-600 dark:text-slate-400">
                 Code Duplication
               </span>
-              <span className="font-semibold text-slate-900 dark:text-white">
+              <span className="text-foreground font-semibold">
                 {aggregateMetrics.maintainability.factors.duplicateCode}%
               </span>
             </div>
@@ -526,7 +526,7 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({
 
         {/* Test Coverage Details */}
         <Card className="p-6">
-          <h3 className="mb-4 text-lg font-semibold text-slate-900 dark:text-white">
+          <h3 className="text-foreground mb-4 text-lg font-semibold">
             Test Coverage Details
           </h3>
           <div className="space-y-4">
@@ -534,7 +534,7 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({
               <span className="text-slate-600 dark:text-slate-400">
                 Total Lines
               </span>
-              <span className="font-semibold text-slate-900 dark:text-white">
+              <span className="text-foreground font-semibold">
                 {aggregateMetrics.testCoverage.linesTotal.toLocaleString()}
               </span>
             </div>
@@ -542,7 +542,7 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({
               <span className="text-slate-600 dark:text-slate-400">
                 Lines Covered
               </span>
-              <span className="font-semibold text-slate-900 dark:text-white">
+              <span className="text-foreground font-semibold">
                 {aggregateMetrics.testCoverage.linesCovered.toLocaleString()}
               </span>
             </div>
@@ -550,7 +550,7 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({
               <span className="text-slate-600 dark:text-slate-400">
                 Coverage Ratio
               </span>
-              <span className="font-semibold text-slate-900 dark:text-white">
+              <span className="text-foreground font-semibold">
                 {aggregateMetrics.testCoverage.percentage}%
               </span>
             </div>
@@ -560,19 +560,19 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({
 
       {/* Per-Repository Breakdown */}
       <Card className="p-6">
-        <h3 className="mb-4 text-lg font-semibold text-slate-900 dark:text-white">
+        <h3 className="text-foreground mb-4 text-lg font-semibold">
           Repository Breakdown
         </h3>
         <div className="space-y-4">
           {qualityData.map((repo, idx) => (
             <div
               key={idx}
-              className="border-b border-slate-200 pb-4 last:border-0 last:pb-0 dark:border-slate-700"
+              className="border-border border-b pb-4 last:border-0 last:pb-0"
             >
               <div className="mb-3 flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <GitBranch className="h-4 w-4 text-slate-600 dark:text-slate-400" />
-                  <span className="font-semibold text-slate-900 dark:text-white">
+                  <span className="text-foreground font-semibold">
                     {repo.repositoryName}
                   </span>
                 </div>

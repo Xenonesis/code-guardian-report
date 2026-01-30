@@ -281,7 +281,7 @@ const MeetDeveloperSection = () => {
             <CardContent className="space-y-6">
               {/* USP */}
               <div>
-                <h4 className="mb-3 flex items-center gap-2 font-semibold text-slate-900 dark:text-white">
+                <h4 className="text-foreground mb-3 flex items-center gap-2 font-semibold">
                   <Rocket className="h-4 w-4 text-indigo-600" />
                   Unique Selling Proposition (USP)
                 </h4>
@@ -318,7 +318,7 @@ const MeetDeveloperSection = () => {
 
               {/* Technologies */}
               <div>
-                <h4 className="mb-3 flex items-center gap-2 font-semibold text-slate-900 dark:text-white">
+                <h4 className="text-foreground mb-3 flex items-center gap-2 font-semibold">
                   <Wrench className="h-4 w-4 text-slate-600" />
                   Technologies Used
                 </h4>
@@ -333,7 +333,7 @@ const MeetDeveloperSection = () => {
 
               {/* Impact */}
               <div>
-                <h4 className="mb-3 flex items-center gap-2 font-semibold text-slate-900 dark:text-white">
+                <h4 className="text-foreground mb-3 flex items-center gap-2 font-semibold">
                   <Lightbulb className="h-4 w-4 text-amber-500" />
                   Why It Matters
                 </h4>
@@ -341,7 +341,7 @@ const MeetDeveloperSection = () => {
                   <div className="flex items-start gap-3">
                     <Shield className="mt-0.5 h-5 w-5 text-red-500" />
                     <div>
-                      <h5 className="font-medium text-slate-900 dark:text-white">
+                      <h5 className="text-foreground font-medium">
                         Persistent Security
                       </h5>
                       <p className="text-sm text-slate-600 dark:text-slate-400">
@@ -353,7 +353,7 @@ const MeetDeveloperSection = () => {
                   <div className="flex items-start gap-3">
                     <Zap className="mt-0.5 h-5 w-5 text-yellow-500" />
                     <div>
-                      <h5 className="font-medium text-slate-900 dark:text-white">
+                      <h5 className="text-foreground font-medium">
                         Enhanced Productivity
                       </h5>
                       <p className="text-sm text-slate-600 dark:text-slate-400">

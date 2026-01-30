@@ -180,7 +180,7 @@ export const AnalysisHistoryModal: React.FC<AnalysisHistoryModalProps> = ({
                               <span className="text-slate-500 dark:text-slate-400">
                                 Analyzed:
                               </span>
-                              <div className="font-medium text-slate-900 dark:text-white">
+                              <div className="text-foreground font-medium">
                                 {formatDate(analysis.timestamp)}
                               </div>
                             </div>
@@ -188,7 +188,7 @@ export const AnalysisHistoryModal: React.FC<AnalysisHistoryModalProps> = ({
                               <span className="text-slate-500 dark:text-slate-400">
                                 File Size:
                               </span>
-                              <div className="font-medium text-slate-900 dark:text-white">
+                              <div className="text-foreground font-medium">
                                 {formatBytes(analysis.fileSize)}
                               </div>
                             </div>
@@ -196,7 +196,7 @@ export const AnalysisHistoryModal: React.FC<AnalysisHistoryModalProps> = ({
                               <span className="text-slate-500 dark:text-slate-400">
                                 Issues Found:
                               </span>
-                              <div className="font-medium text-slate-900 dark:text-white">
+                              <div className="text-foreground font-medium">
                                 {totalIssues}
                               </div>
                             </div>

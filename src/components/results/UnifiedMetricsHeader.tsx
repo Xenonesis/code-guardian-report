@@ -74,20 +74,20 @@ export const UnifiedMetricsHeader: React.FC<UnifiedMetricsHeaderProps> = ({
               <span className="text-xs font-semibold tracking-wide text-slate-500 uppercase dark:text-slate-400">
                 Executive Summary
               </span>
-              <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
+              <h3 className="text-foreground text-lg font-semibold">
                 Security Analysis Overview
               </h3>
             </div>
           </div>
           <div className="hidden flex-col items-end text-sm text-slate-500 md:flex dark:text-slate-400">
             <span>
-              <span className="font-semibold text-slate-900 dark:text-slate-100">
+              <span className="text-foreground font-semibold">
                 {results.totalFiles}
               </span>{" "}
               files
             </span>
             <span>
-              <span className="font-semibold text-slate-900 dark:text-slate-100">
+              <span className="text-foreground font-semibold">
                 {results.summary.linesAnalyzed.toLocaleString()}
               </span>{" "}
               lines analyzed

@@ -185,7 +185,7 @@ export const ModernSecurityDashboard: React.FC<
                 <span className="text-slate-600 dark:text-slate-400">
                   Vulnerabilities
                 </span>
-                <span className="font-semibold text-slate-900 dark:text-slate-100">
+                <span className="text-foreground font-semibold">
                   {metrics.vulnerabilities}
                 </span>
               </div>
@@ -193,7 +193,7 @@ export const ModernSecurityDashboard: React.FC<
                 <span className="text-slate-600 dark:text-slate-400">
                   Security Hotspots
                 </span>
-                <span className="font-semibold text-slate-900 dark:text-slate-100">
+                <span className="text-foreground font-semibold">
                   {metrics.securityHotspots}
                 </span>
               </div>
@@ -220,7 +220,7 @@ export const ModernSecurityDashboard: React.FC<
             <div className="space-y-2">
               <div className="flex justify-between text-sm">
                 <span className="text-slate-600 dark:text-slate-400">Bugs</span>
-                <span className="font-semibold text-slate-900 dark:text-slate-100">
+                <span className="text-foreground font-semibold">
                   {metrics.bugs}
                 </span>
               </div>
@@ -228,7 +228,7 @@ export const ModernSecurityDashboard: React.FC<
                 <span className="text-slate-600 dark:text-slate-400">
                   Total Issues
                 </span>
-                <span className="font-semibold text-slate-900 dark:text-slate-100">
+                <span className="text-foreground font-semibold">
                   {totalIssues}
                 </span>
               </div>
@@ -257,7 +257,7 @@ export const ModernSecurityDashboard: React.FC<
                 <span className="text-slate-600 dark:text-slate-400">
                   Code Smells
                 </span>
-                <span className="font-semibold text-slate-900 dark:text-slate-100">
+                <span className="text-foreground font-semibold">
                   {metrics.codeSmells}
                 </span>
               </div>
@@ -265,7 +265,7 @@ export const ModernSecurityDashboard: React.FC<
                 <span className="text-slate-600 dark:text-slate-400">
                   Maintainability
                 </span>
-                <span className="font-semibold text-slate-900 dark:text-slate-100">
+                <span className="text-foreground font-semibold">
                   {metrics.maintainabilityIndex.toFixed(1)}%
                 </span>
               </div>
@@ -303,7 +303,7 @@ export const ModernSecurityDashboard: React.FC<
               <span className="text-slate-600 dark:text-slate-400">
                 Debt Ratio
               </span>
-              <span className="font-semibold text-slate-900 dark:text-slate-100">
+              <span className="text-foreground font-semibold">
                 {metrics.technicalDebtRatio.toFixed(1)}%
               </span>
             </div>
@@ -311,7 +311,7 @@ export const ModernSecurityDashboard: React.FC<
               <span className="text-slate-600 dark:text-slate-400">
                 Remediation Effort
               </span>
-              <span className="font-semibold text-slate-900 dark:text-slate-100">
+              <span className="text-foreground font-semibold">
                 {technicalDebt} min
               </span>
             </div>
@@ -331,7 +331,7 @@ export const ModernSecurityDashboard: React.FC<
               <span className="text-slate-600 dark:text-slate-400">
                 Lines of Code
               </span>
-              <span className="font-semibold text-slate-900 dark:text-slate-100">
+              <span className="text-foreground font-semibold">
                 {metrics.linesOfCode.toLocaleString()}
               </span>
             </div>
@@ -339,7 +339,7 @@ export const ModernSecurityDashboard: React.FC<
               <span className="text-slate-600 dark:text-slate-400">
                 Comment Lines
               </span>
-              <span className="font-semibold text-slate-900 dark:text-slate-100">
+              <span className="text-foreground font-semibold">
                 {metrics.commentLines}
               </span>
             </div>
@@ -347,7 +347,7 @@ export const ModernSecurityDashboard: React.FC<
               <span className="text-slate-600 dark:text-slate-400">
                 Duplicated Lines
               </span>
-              <span className="font-semibold text-slate-900 dark:text-slate-100">
+              <span className="text-foreground font-semibold">
                 {duplicatedLinesPercent}%
               </span>
             </div>

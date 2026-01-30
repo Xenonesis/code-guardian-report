@@ -516,7 +516,7 @@ export const AIKeyManager: React.FC = () => {
                 <Sparkles className="h-5 w-5 text-white" />
               </div>
               <div>
-                <CardTitle className="text-xl font-bold text-slate-900 dark:text-white">
+                <CardTitle className="text-foreground text-xl font-bold">
                   Supported AI Providers
                 </CardTitle>
                 <CardDescription className="text-slate-600 dark:text-slate-300">
@@ -565,7 +565,7 @@ export const AIKeyManager: React.FC = () => {
                         {provider.icon}
                       </div>
                       <div className="min-w-0 flex-1">
-                        <h4 className="truncate text-base font-semibold text-slate-900 dark:text-white">
+                        <h4 className="text-foreground truncate text-base font-semibold">
                           {provider.name}
                         </h4>
                         <p className="line-clamp-2 text-sm text-slate-600 dark:text-slate-400">
@@ -608,7 +608,7 @@ export const AIKeyManager: React.FC = () => {
                 <Key className="h-5 w-5 text-white" />
               </div>
               <div>
-                <CardTitle className="text-xl font-bold text-slate-900 dark:text-white">
+                <CardTitle className="text-foreground text-xl font-bold">
                   Your API Keys
                 </CardTitle>
                 <CardDescription className="text-slate-600 dark:text-slate-300">
@@ -636,7 +636,7 @@ export const AIKeyManager: React.FC = () => {
               <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900">
                 <Key className="h-8 w-8 text-slate-400" />
               </div>
-              <h3 className="mb-2 text-lg font-semibold text-slate-900 dark:text-white">
+              <h3 className="text-foreground mb-2 text-lg font-semibold">
                 No API Keys Configured
               </h3>
               <p className="mx-auto mb-6 max-w-md text-slate-600 dark:text-slate-300">
@@ -673,7 +673,7 @@ export const AIKeyManager: React.FC = () => {
                         </div>
                         <div className="min-w-0 flex-1">
                           <div className="mb-2 flex items-center gap-2">
-                            <h4 className="truncate text-base font-semibold text-slate-900 dark:text-white">
+                            <h4 className="text-foreground truncate text-base font-semibold">
                               {key.name}
                             </h4>
                             <div className="flex items-center gap-1 rounded-full bg-green-100 px-2 py-0.5 dark:bg-green-900/30">
@@ -783,7 +783,7 @@ export const AIKeyManager: React.FC = () => {
                       <Plus className="h-5 w-5 text-white" />
                     </div>
                     <div>
-                      <CardTitle className="text-lg font-bold text-slate-900 dark:text-white">
+                      <CardTitle className="text-foreground text-lg font-bold">
                         Add New API Key
                       </CardTitle>
                       <CardDescription className="text-slate-600 dark:text-slate-300">
@@ -1314,7 +1314,7 @@ export const AIKeyManager: React.FC = () => {
               <Zap className="h-5 w-5 text-white" />
             </div>
             <div>
-              <CardTitle className="text-xl font-bold text-slate-900 dark:text-white">
+              <CardTitle className="text-foreground text-xl font-bold">
                 Available AI Features
               </CardTitle>
               <CardDescription className="text-slate-600 dark:text-slate-300">
@@ -1346,7 +1346,7 @@ export const AIKeyManager: React.FC = () => {
                   </div>
                   <div className="flex-1">
                     <div className="mb-1 flex items-center gap-2">
-                      <h4 className="font-semibold text-slate-900 dark:text-white">
+                      <h4 className="text-foreground font-semibold">
                         AI Fix Suggestions
                       </h4>
                       {apiKeys.length > 0 ? (
@@ -1388,7 +1388,7 @@ export const AIKeyManager: React.FC = () => {
                   </div>
                   <div className="flex-1">
                     <div className="mb-1 flex items-center gap-2">
-                      <h4 className="font-semibold text-slate-900 dark:text-white">
+                      <h4 className="text-foreground font-semibold">
                         Secure Code Search
                       </h4>
                       <CheckCircle className="h-4 w-4 text-green-500" />
@@ -1418,7 +1418,7 @@ export const AIKeyManager: React.FC = () => {
                   </div>
                   <div className="flex-1">
                     <div className="mb-1 flex items-center gap-2">
-                      <h4 className="font-semibold text-slate-900 dark:text-white">
+                      <h4 className="text-foreground font-semibold">
                         Code Provenance
                       </h4>
                       <CheckCircle className="h-4 w-4 text-green-500" />
@@ -1487,7 +1487,7 @@ export const AIKeyManager: React.FC = () => {
               <Shield className="h-6 w-6 text-slate-600 dark:text-slate-300" />
             </div>
             <div>
-              <h4 className="mb-2 font-semibold text-slate-900 dark:text-white">
+              <h4 className="text-foreground mb-2 font-semibold">
                 Privacy & Security Guarantee
               </h4>
               <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">

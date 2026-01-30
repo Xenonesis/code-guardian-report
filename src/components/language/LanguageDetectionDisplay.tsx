@@ -159,7 +159,7 @@ export const LanguageDetectionDisplay: React.FC<
               <div className="rounded-xl bg-yellow-500 p-2 text-white">
                 <Zap className="h-6 w-6" />
               </div>
-              <span className="text-xl font-bold text-slate-900 dark:text-white">
+              <span className="text-foreground text-xl font-bold">
                 Language Detection Results
               </span>
             </CardTitle>

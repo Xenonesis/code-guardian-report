@@ -42,7 +42,7 @@ const GitHubRepositoryList: React.FC<GitHubRepositoryListProps> = ({
 
   if (loading) {
     return (
-      <div className="rounded-lg border border-slate-200 bg-white/5 p-6 shadow-sm backdrop-blur-sm dark:border-slate-700">
+      <div className="border-border bg-muted/5 rounded-lg border p-6 shadow-sm backdrop-blur-sm">
         <div className="flex items-center justify-center py-8">
           <div className="h-8 w-8 animate-spin rounded-full border-b-2 border-purple-500"></div>
           <span className="ml-3 text-slate-600 dark:text-slate-400">
@@ -55,7 +55,7 @@ const GitHubRepositoryList: React.FC<GitHubRepositoryListProps> = ({
 
   if (repositories.length === 0) {
     return (
-      <div className="rounded-lg border border-slate-200 bg-white/5 p-6 shadow-sm backdrop-blur-sm dark:border-slate-700">
+      <div className="border-border bg-muted/5 rounded-lg border p-6 shadow-sm backdrop-blur-sm">
         <div className="py-8 text-center">
           <Github className="mx-auto mb-4 h-12 w-12 text-slate-400" />
           <p className="text-slate-500 dark:text-slate-400">
@@ -71,7 +71,7 @@ const GitHubRepositoryList: React.FC<GitHubRepositoryListProps> = ({
       {repositories.map((repo) => (
         <div
           key={repo.id}
-          className="group rounded-lg border border-slate-200 bg-white/50 p-4 shadow-sm backdrop-blur-sm transition-all hover:border-purple-500/50 hover:shadow-lg hover:shadow-purple-500/10 sm:p-5 dark:border-slate-700 dark:bg-slate-800/50"
+          className="group border-border bg-card/50 rounded-lg border p-4 shadow-sm backdrop-blur-sm transition-all hover:border-purple-500/50 hover:shadow-lg hover:shadow-purple-500/10 sm:p-5"
         >
           {/* Mobile: Stack layout, Desktop: Side by side */}
           <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
@@ -79,7 +79,7 @@ const GitHubRepositoryList: React.FC<GitHubRepositoryListProps> = ({
               {/* Repository name and visibility */}
               <div className="mb-2 flex flex-wrap items-center gap-2">
                 <Github className="h-5 w-5 flex-shrink-0 text-slate-600 transition-colors group-hover:text-purple-500 dark:text-slate-400" />
-                <h3 className="truncate text-base font-semibold text-slate-900 transition-colors hover:text-purple-600 sm:text-lg dark:text-white dark:hover:text-purple-400">
+                <h3 className="text-foreground truncate text-base font-semibold transition-colors hover:text-purple-600 sm:text-lg">
                   <a
                     href={repo.html_url}
                     target="_blank"
@@ -135,7 +135,7 @@ const GitHubRepositoryList: React.FC<GitHubRepositoryListProps> = ({
                 disabled={analyzingRepo === repo.full_name}
                 className={`flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium transition-all sm:py-2 lg:w-auto ${
                   analyzingRepo === repo.full_name
-                    ? "cursor-not-allowed bg-slate-100 text-slate-400 dark:bg-slate-700"
+                    ? "bg-muted text-muted-foreground cursor-not-allowed"
                     : "bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:from-purple-700 hover:to-blue-700 hover:shadow-lg hover:shadow-purple-500/25 active:scale-95"
                 }`}
               >

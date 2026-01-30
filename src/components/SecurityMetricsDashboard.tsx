@@ -137,7 +137,7 @@ export const SecurityMetricsDashboard: React.FC<
                 <div className="rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 p-2 shadow-lg">
                   <Bug className="h-5 w-5 text-white" />
                 </div>
-                <span className="font-bold text-slate-900 dark:text-white">
+                <span className="text-foreground font-bold">
                   Advanced Quality Metrics
                 </span>
               </CardTitle>

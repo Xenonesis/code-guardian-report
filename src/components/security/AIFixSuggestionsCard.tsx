@@ -296,7 +296,7 @@ export const AIFixSuggestionsCard: React.FC<AIFixSuggestionsCardProps> = ({
                           </div>
                         </div>
                       </div>
-                      <h3 className="mb-1 font-semibold text-slate-900 dark:text-white">
+                      <h3 className="text-foreground mb-1 font-semibold">
                         {suggestion.title}
                       </h3>
                       <p className="text-sm text-slate-600 dark:text-slate-400">

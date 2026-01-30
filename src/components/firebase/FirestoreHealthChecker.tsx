@@ -78,7 +78,7 @@ export const FirestoreHealthChecker: React.FC = () => {
 
   return (
     <div className="fixed right-4 bottom-4 z-50">
-      <div className="min-w-[200px] rounded-lg border border-gray-200 bg-white p-3 shadow-lg dark:border-gray-700 dark:bg-gray-800">
+      <div className="border-border bg-card min-w-[200px] rounded-lg border p-3 shadow-lg">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <span className="flex h-4 w-4 items-center justify-center">

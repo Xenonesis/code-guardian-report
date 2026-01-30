@@ -166,7 +166,7 @@ export const RepositoryComparisonTool: React.FC<
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="mb-2 text-2xl font-bold text-slate-900 dark:text-white">
+          <h2 className="text-foreground mb-2 text-2xl font-bold">
             Repository Comparison
           </h2>
           <p className="text-slate-600 dark:text-slate-400">
@@ -188,9 +188,7 @@ export const RepositoryComparisonTool: React.FC<
       {showSelector && (
         <Card className="p-4">
           <div className="mb-3 flex items-center justify-between">
-            <h3 className="font-semibold text-slate-900 dark:text-white">
-              Select Repository
-            </h3>
+            <h3 className="text-foreground font-semibold">Select Repository</h3>
             <Button
               variant="ghost"
               size="sm"
@@ -211,7 +209,7 @@ export const RepositoryComparisonTool: React.FC<
                 >
                   <GitBranch className="h-4 w-4 text-slate-600 dark:text-slate-400" />
                   <div className="min-w-0 flex-1">
-                    <div className="truncate font-medium text-slate-900 dark:text-white">
+                    <div className="text-foreground truncate font-medium">
                       {repo.name}
                     </div>
                     <div className="text-sm text-slate-600 dark:text-slate-400">
@@ -258,7 +256,7 @@ export const RepositoryComparisonTool: React.FC<
                 </button>
 
                 <div className="pr-6">
-                  <h4 className="mb-1 truncate font-semibold text-slate-900 dark:text-white">
+                  <h4 className="text-foreground mb-1 truncate font-semibold">
                     {repo.name}
                   </h4>
                   <p className="truncate text-xs text-slate-600 dark:text-slate-400">
@@ -311,7 +309,7 @@ export const RepositoryComparisonTool: React.FC<
                               ? getScoreColor(value as number)
                               : metric.label.includes("Issues")
                                 ? getIssueColor(value as number)
-                                : "text-slate-900 dark:text-white"
+                                : "text-foreground"
                           }`}
                         >
                           {formattedValue}
@@ -329,7 +327,7 @@ export const RepositoryComparisonTool: React.FC<
 
           {/* Radar Chart Visualization */}
           <Card className="p-6">
-            <h3 className="mb-4 text-lg font-semibold text-slate-900 dark:text-white">
+            <h3 className="text-foreground mb-4 text-lg font-semibold">
               Security Score Comparison
             </h3>
 

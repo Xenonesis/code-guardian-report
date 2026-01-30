@@ -451,7 +451,7 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <CardTitle className="flex items-center gap-3">
               <Brain className="h-5 w-5 flex-shrink-0 text-gray-400" />
-              <span className="font-bold text-slate-900 dark:text-white">
+              <span className="text-foreground font-bold">
                 AI Security Insights
               </span>
             </CardTitle>
@@ -486,7 +486,7 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <CardTitle className="flex items-center gap-3">
               <Brain className="h-5 w-5 flex-shrink-0 text-purple-600" />
-              <span className="font-bold text-slate-900 dark:text-white">
+              <span className="text-foreground font-bold">
                 AI Security Insights
               </span>
             </CardTitle>
@@ -524,7 +524,7 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                 <CardTitle className="flex items-center gap-3">
                   <Brain className="h-5 w-5 flex-shrink-0 text-purple-600" />
-                  <span className="font-bold text-slate-900 dark:text-white">
+                  <span className="text-foreground font-bold">
                     AI Security Insights
                   </span>
                 </CardTitle>

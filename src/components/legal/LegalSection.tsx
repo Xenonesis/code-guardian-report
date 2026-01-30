@@ -48,7 +48,7 @@ export const LegalSubsection: React.FC<LegalSubsectionProps> = ({
 }) => {
   return (
     <div className={`mb-6 ${className}`}>
-      <h3 className="mb-3 flex items-center gap-2 text-xl font-semibold text-slate-900 dark:text-white">
+      <h3 className="text-foreground mb-3 flex items-center gap-2 text-xl font-semibold">
         <div className="h-2 w-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-500"></div>
         {title}
       </h3>

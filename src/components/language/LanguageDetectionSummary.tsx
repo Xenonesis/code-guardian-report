@@ -161,7 +161,7 @@ export const LanguageDetectionSummary: React.FC<
               <div className="rounded-lg bg-yellow-100 p-1.5 dark:bg-yellow-900/30">
                 <Zap className="h-4 w-4 text-yellow-600 dark:text-yellow-400" />
               </div>
-              <span className="font-semibold text-slate-900 dark:text-white">
+              <span className="text-foreground font-semibold">
                 Language Detection
               </span>
             </div>

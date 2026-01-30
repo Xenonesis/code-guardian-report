@@ -118,7 +118,7 @@ const EnhancedCardTitle = React.forwardRef<
         sizes[size],
         gradient
           ? "bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent dark:from-white dark:to-slate-200"
-          : "text-slate-900 dark:text-white",
+          : "text-foreground",
         className
       )}
       {...props}

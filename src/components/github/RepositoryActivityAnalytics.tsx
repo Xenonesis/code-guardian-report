@@ -70,7 +70,7 @@ export const RepositoryActivityAnalytics: React.FC<
   return (
     <div className="space-y-8">
       <div>
-        <h2 className="mb-2 flex items-center gap-2 text-2xl font-bold text-slate-900 dark:text-white">
+        <h2 className="text-foreground mb-2 flex items-center gap-2 text-2xl font-bold">
           <Activity className="h-6 w-6 text-purple-600 dark:text-purple-400" />
           Repository Activity
         </h2>
@@ -81,11 +81,11 @@ export const RepositoryActivityAnalytics: React.FC<
 
       {/* Activity Stats */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
-        <Card className="group border-slate-200 p-6 transition-all duration-300 hover:shadow-lg dark:border-slate-800">
+        <Card className="group border-border p-6 transition-all duration-300 hover:shadow-lg dark:border-slate-800">
           <div className="mb-4 w-fit rounded-xl bg-purple-50 p-3 transition-transform duration-300 group-hover:scale-110 dark:bg-purple-900/20">
             <BarChart2 className="h-6 w-6 text-purple-600 dark:text-purple-400" />
           </div>
-          <div className="mb-1 text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
+          <div className="text-foreground mb-1 text-3xl font-bold tracking-tight">
             {activityStats.totalAnalyses.toLocaleString()}
           </div>
           <div className="text-sm font-medium text-slate-500 dark:text-slate-400">
@@ -93,11 +93,11 @@ export const RepositoryActivityAnalytics: React.FC<
           </div>
         </Card>
 
-        <Card className="group border-slate-200 p-6 transition-all duration-300 hover:shadow-lg dark:border-slate-800">
+        <Card className="group border-border p-6 transition-all duration-300 hover:shadow-lg dark:border-slate-800">
           <div className="mb-4 w-fit rounded-xl bg-blue-50 p-3 transition-transform duration-300 group-hover:scale-110 dark:bg-blue-900/20">
             <Zap className="h-6 w-6 text-blue-600 dark:text-blue-400" />
           </div>
-          <div className="mb-1 text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
+          <div className="text-foreground mb-1 text-3xl font-bold tracking-tight">
             {activityStats.averageDuration}s
           </div>
           <div className="text-sm font-medium text-slate-500 dark:text-slate-400">
@@ -105,12 +105,12 @@ export const RepositoryActivityAnalytics: React.FC<
           </div>
         </Card>
 
-        <Card className="group border-slate-200 p-6 transition-all duration-300 hover:shadow-lg dark:border-slate-800">
+        <Card className="group border-border p-6 transition-all duration-300 hover:shadow-lg dark:border-slate-800">
           <div className="mb-4 w-fit rounded-xl bg-green-50 p-3 transition-transform duration-300 group-hover:scale-110 dark:bg-green-900/20">
             <GitBranch className="h-6 w-6 text-green-600 dark:text-green-400" />
           </div>
           <div
-            className="mb-1 truncate text-xl font-bold text-slate-900 dark:text-white"
+            className="text-foreground mb-1 truncate text-xl font-bold"
             title={activityStats.mostAnalyzedRepo}
           >
             {activityStats.mostAnalyzedRepo || "N/A"}
@@ -120,11 +120,11 @@ export const RepositoryActivityAnalytics: React.FC<
           </div>
         </Card>
 
-        <Card className="group border-slate-200 p-6 transition-all duration-300 hover:shadow-lg dark:border-slate-800">
+        <Card className="group border-border p-6 transition-all duration-300 hover:shadow-lg dark:border-slate-800">
           <div className="mb-4 w-fit rounded-xl bg-orange-50 p-3 transition-transform duration-300 group-hover:scale-110 dark:bg-orange-900/20">
             <Code className="h-6 w-6 text-orange-600 dark:text-orange-400" />
           </div>
-          <div className="mb-1 truncate text-xl font-bold text-slate-900 dark:text-white">
+          <div className="text-foreground mb-1 truncate text-xl font-bold">
             {activityStats.mostCommonLanguage || "N/A"}
           </div>
           <div className="text-sm font-medium text-slate-500 dark:text-slate-400">
@@ -135,8 +135,8 @@ export const RepositoryActivityAnalytics: React.FC<
 
       {/* Language Distribution */}
       {detailed && languageDistribution.length > 0 && (
-        <Card className="border-slate-200 p-8 dark:border-slate-800">
-          <h3 className="mb-6 flex items-center gap-2 text-lg font-bold text-slate-900 dark:text-white">
+        <Card className="border-border p-8 dark:border-slate-800">
+          <h3 className="text-foreground mb-6 flex items-center gap-2 text-lg font-bold">
             <Code className="h-5 w-5 text-slate-500" />
             Language Distribution
           </h3>

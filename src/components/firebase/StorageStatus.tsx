@@ -107,7 +107,7 @@ export const StorageStatus: React.FC<StorageStatusProps> = ({
   };
 
   return (
-    <Card className="w-full border-0 bg-white/95 shadow-lg backdrop-blur-sm dark:bg-slate-800/95">
+    <Card className="bg-card/95 w-full border-0 shadow-lg backdrop-blur-sm">
       <CardHeader className="pb-4">
         <CardTitle className="flex items-center gap-2 text-lg">
           <Database className="h-5 w-5 text-blue-600" />
@@ -192,7 +192,7 @@ export const StorageStatus: React.FC<StorageStatusProps> = ({
 
           <div className="grid grid-cols-2 gap-4 pt-2">
             <div className="rounded-lg bg-slate-50 p-3 text-center dark:bg-slate-700/50">
-              <div className="text-2xl font-bold text-slate-900 dark:text-white">
+              <div className="text-foreground text-2xl font-bold">
                 {storageStats.historyCount}
               </div>
               <div className="text-sm text-slate-600 dark:text-slate-400">
@@ -201,7 +201,7 @@ export const StorageStatus: React.FC<StorageStatusProps> = ({
             </div>
             {storageStats.compressionRatio && (
               <div className="rounded-lg bg-slate-50 p-3 text-center dark:bg-slate-700/50">
-                <div className="text-2xl font-bold text-slate-900 dark:text-white">
+                <div className="text-foreground text-2xl font-bold">
                   {(storageStats.compressionRatio * 100).toFixed(0)}%
                 </div>
                 <div className="text-sm text-slate-600 dark:text-slate-400">

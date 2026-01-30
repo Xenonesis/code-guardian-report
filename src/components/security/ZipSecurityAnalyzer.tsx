@@ -270,7 +270,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
       {/* Analysis Results */}
       {results.zipAnalysis && (
         <Tabs defaultValue="overview" className="w-full">
-          <TabsList className="sticky top-0 z-10 grid w-full grid-cols-6 rounded-md bg-white/80 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-white/60">
+          <TabsList className="bg-card/80 supports-[backdrop-filter]:bg-card/60 sticky top-0 z-10 grid w-full grid-cols-6 rounded-md shadow-sm backdrop-blur">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="threats" className="flex items-center gap-2">
               Threats

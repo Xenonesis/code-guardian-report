@@ -132,7 +132,7 @@ export const AccountConflictModal: React.FC<AccountConflictModalProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="animate-in fade-in zoom-in-95 overflow-hidden border-white/20 bg-white/90 p-0 shadow-2xl backdrop-blur-xl duration-300 sm:max-w-[480px] dark:border-slate-800 dark:bg-slate-950/90">
+      <DialogContent className="animate-in fade-in zoom-in-95 border-border/50 bg-card/90 overflow-hidden p-0 shadow-2xl backdrop-blur-xl duration-300 sm:max-w-[480px]">
         {/* Decorative Background Elements */}
         <div className="pointer-events-none absolute top-0 left-0 h-32 w-full bg-gradient-to-b from-blue-500/10 to-transparent" />
         <div className="pointer-events-none absolute -top-24 -right-24 h-48 w-48 rounded-full bg-blue-500/20 blur-3xl" />
@@ -142,7 +142,7 @@ export const AccountConflictModal: React.FC<AccountConflictModalProps> = ({
         <div className="relative px-6 pt-8 pb-2 text-center">
           <div className="group relative mx-auto mb-6 h-20 w-20 cursor-default">
             <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-blue-500 to-purple-500 opacity-40 blur-lg transition-opacity duration-500 group-hover:opacity-60" />
-            <div className="relative transform rounded-2xl bg-white p-5 shadow-xl ring-1 ring-black/5 transition-transform duration-500 group-hover:scale-105 dark:bg-slate-900 dark:ring-white/10">
+            <div className="bg-card ring-border relative transform rounded-2xl p-5 shadow-xl ring-1 transition-transform duration-500 group-hover:scale-105">
               <ShieldCheck className="h-full w-full text-blue-500 dark:text-blue-400" />
             </div>
             <div className="absolute -right-2 -bottom-2 rounded-full border-2 border-white bg-red-500 p-1.5 text-white shadow-sm dark:border-slate-900">
@@ -156,20 +156,18 @@ export const AccountConflictModal: React.FC<AccountConflictModalProps> = ({
 
           <DialogDescription className="mx-auto max-w-xs text-base leading-relaxed text-slate-600 dark:text-slate-400">
             You already have an account linked to{" "}
-            <span className="font-semibold text-slate-900 dark:text-white">
-              {email}
-            </span>
+            <span className="text-foreground font-semibold">{email}</span>
           </DialogDescription>
         </div>
 
         {/* Main Content */}
         <div className="px-6 py-6">
           {/* Conflict Visualization Card */}
-          <div className="relative rounded-2xl border border-slate-200/60 bg-slate-50/80 p-6 backdrop-blur-sm dark:border-slate-800/60 dark:bg-slate-900/50">
+          <div className="border-border/60 bg-muted/80 relative rounded-2xl border p-6 backdrop-blur-sm">
             <div className="flex items-center justify-between gap-4">
               {/* Attempted Provider (Faded) */}
               <div className="group flex flex-col items-center gap-3">
-                <div className="relative flex h-14 w-14 items-center justify-center rounded-xl border border-slate-200 bg-white p-3.5 opacity-50 grayscale transition-all duration-300 group-hover:opacity-75 group-hover:grayscale-0 dark:border-slate-700 dark:bg-slate-800">
+                <div className="border-border bg-card relative flex h-14 w-14 items-center justify-center rounded-xl border p-3.5 opacity-50 grayscale transition-all duration-300 group-hover:opacity-75 group-hover:grayscale-0">
                   {attemptedProviderInfo.icon}
                   <div className="absolute -top-1.5 -right-1.5 rounded-full bg-slate-200 p-0.5 text-slate-500 ring-2 ring-white dark:bg-slate-700 dark:ring-slate-900">
                     <X className="h-3 w-3" />
@@ -201,7 +199,7 @@ export const AccountConflictModal: React.FC<AccountConflictModalProps> = ({
                   <div className="absolute -inset-3 rounded-full bg-blue-500/20 opacity-0 blur-md transition-opacity duration-500 group-hover:opacity-100" />
                   <div
                     className={cn(
-                      "relative flex h-16 w-16 transform items-center justify-center rounded-xl border-2 bg-white p-4 shadow-lg transition-all duration-300 group-hover:-translate-y-1 group-hover:scale-105 dark:bg-slate-800",
+                      "bg-card relative flex h-16 w-16 transform items-center justify-center rounded-xl border-2 p-4 shadow-lg transition-all duration-300 group-hover:-translate-y-1 group-hover:scale-105",
                       existingProviderInfo.borderColor
                     )}
                   >
@@ -238,7 +236,7 @@ export const AccountConflictModal: React.FC<AccountConflictModalProps> = ({
               "border-0 bg-gradient-to-r from-blue-600 to-violet-600 text-white hover:from-blue-700 hover:to-violet-700"
             )}
           >
-            <div className="absolute inset-0 translate-y-full bg-white/20 transition-transform duration-300 hover:translate-y-0" />
+            <div className="bg-background/20 absolute inset-0 translate-y-full transition-transform duration-300 hover:translate-y-0" />
             <div className="relative flex items-center justify-center gap-2">
               {isLinking ? (
                 <>
@@ -258,7 +256,7 @@ export const AccountConflictModal: React.FC<AccountConflictModalProps> = ({
             variant="ghost"
             onClick={onTryDifferentMethod}
             disabled={isLinking}
-            className="h-10 w-full rounded-xl text-sm font-normal text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
+            className="text-muted-foreground hover:bg-muted hover:text-foreground h-10 w-full rounded-xl text-sm font-normal"
           >
             I want to use a different email address
           </Button>
@@ -275,11 +273,9 @@ export const AccountConflictModal: React.FC<AccountConflictModalProps> = ({
         </div>
 
         {showTechnicalDetails && (
-          <div className="absolute inset-0 z-50 flex flex-col bg-white/95 p-6 dark:bg-slate-950/95">
+          <div className="bg-background/95 absolute inset-0 z-50 flex flex-col p-6">
             <div className="mb-4 flex items-center justify-between">
-              <h3 className="font-bold text-slate-900 dark:text-white">
-                Technical Details
-              </h3>
+              <h3 className="text-foreground font-bold">Technical Details</h3>
               <Button
                 variant="ghost"
                 size="sm"
