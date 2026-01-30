@@ -9,12 +9,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { PageLayout } from "@/components/layout/PageLayout";
-import { useDarkMode } from "@/hooks/useDarkMode";
-
 import { logger } from "@/utils/logger";
-const NotFound = () => {
-  const { theme, setTheme } = useDarkMode();
 
+const NotFound = () => {
   useEffect(() => {
     logger.error(
       "404 Error: User attempted to access non-existent route:",
@@ -23,7 +20,7 @@ const NotFound = () => {
   }, []);
 
   return (
-    <PageLayout theme={theme} onThemeChange={setTheme} showNavigation={false}>
+    <PageLayout showNavigation={false}>
       <div className="flex min-h-[80vh] items-center justify-center">
         <Card className="animate-fade-in w-full max-w-2xl border-0 bg-white/95 shadow-2xl backdrop-blur-sm dark:bg-slate-800/95">
           <CardHeader className="pb-6 text-center">

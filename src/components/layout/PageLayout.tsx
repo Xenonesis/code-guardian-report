@@ -1,7 +1,6 @@
 import React from "react";
 import { Navigation } from "@/components/layout/Navigation";
 import { FeatureGrid } from "@/components/features/FeatureGrid";
-import type { Theme } from "@/hooks/useDarkMode";
 
 interface Feature {
   icon: React.ReactNode;
@@ -13,8 +12,6 @@ interface Feature {
 
 interface PageLayoutProps {
   children: React.ReactNode;
-  theme?: Theme;
-  onThemeChange?: (theme: Theme) => void;
   showNavigation?: boolean;
   className?: string;
   features?: Feature[];
@@ -23,8 +20,6 @@ interface PageLayoutProps {
 
 export const PageLayout: React.FC<PageLayoutProps> = ({
   children,
-  theme = "system",
-  onThemeChange,
   showNavigation = true,
   className = "",
   features,
@@ -40,9 +35,7 @@ export const PageLayout: React.FC<PageLayoutProps> = ({
         <div className="animate-float-delayed absolute right-1/4 bottom-0 h-48 w-48 rounded-full bg-gradient-to-r from-emerald-400/5 via-teal-400/5 to-cyan-400/5 blur-3xl sm:h-80 sm:w-80 sm:from-emerald-400/10 sm:via-teal-400/10 sm:to-cyan-400/10"></div>
         <div className="animate-pulse-slow absolute top-1/2 left-0 hidden h-64 w-64 rounded-full bg-gradient-to-r from-orange-400/10 to-red-400/10 blur-3xl sm:block"></div>
       </div>
-      {showNavigation && onThemeChange && (
-        <Navigation theme={theme} onThemeChange={onThemeChange} />
-      )}
+      {showNavigation && <Navigation />}
 
       <main className="relative z-10">
         {noContainer ? (

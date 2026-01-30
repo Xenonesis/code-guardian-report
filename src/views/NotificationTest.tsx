@@ -17,7 +17,6 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import { PageLayout } from "@/components/layout/PageLayout";
-import { useDarkMode } from "@/hooks/useDarkMode";
 import {
   Activity,
   Bell,
@@ -37,7 +36,6 @@ const NotificationTest: React.FC = () => {
   const [testResults, setTestResults] = useState<string[]>([]);
   const [isRunning, setIsRunning] = useState(false);
   const { notifications, unreadCount, notify } = useNotifications();
-  const { theme, setTheme } = useDarkMode();
 
   const logTest = (message: string) => {
     const timestamp = new Date().toLocaleTimeString();
@@ -312,7 +310,7 @@ const NotificationTest: React.FC = () => {
   }, []);
 
   return (
-    <PageLayout theme={theme} onThemeChange={setTheme}>
+    <PageLayout>
       <div className="container mx-auto max-w-6xl space-y-6 p-6">
         <Card>
           <CardHeader>

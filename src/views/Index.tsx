@@ -5,7 +5,6 @@ import { HomeHero } from "@/components/pages/home/HomeHero";
 import { AnalysisTabs } from "@/components/pages/home/AnalysisTabs";
 import { StorageBanner } from "@/components/pages/home/StorageBanner";
 import { useAnalysisHandlers } from "@/components/pages/home/AnalysisHandlers";
-import { useDarkMode } from "@/hooks/useDarkMode";
 import { useEnhancedAnalysis } from "@/hooks/useEnhancedAnalysis";
 
 // Lazy load heavy components for better performance
@@ -20,7 +19,6 @@ const Index = () => {
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [showStorageStatus, setShowStorageStatus] = useState(false);
   const [showHistoryModal, setShowHistoryModal] = useState(false);
-  const { theme, setTheme } = useDarkMode();
 
   const {
     analysisResults,
@@ -66,7 +64,7 @@ const Index = () => {
   };
 
   return (
-    <PageLayout theme={theme} onThemeChange={setTheme}>
+    <PageLayout>
       <HomeHero onStartAnalysis={handleStartAnalysis} />
 
       <StorageBanner

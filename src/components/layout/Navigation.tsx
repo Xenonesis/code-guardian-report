@@ -25,17 +25,12 @@ import { useNavigation } from "@/lib/navigation-context";
 import { AuthModal } from "@/components/auth/AuthModal";
 import NotificationCenter from "@/components/notifications/NotificationCenter";
 import { PWAQuickActions } from "@/components/pwa/PWAQuickActions";
-import type { Theme } from "@/hooks/useDarkMode";
 
 interface NavigationProps {
-  theme: Theme;
-  onThemeChange: (theme: Theme) => void;
+  className?: string;
 }
 
-export const Navigation: React.FC<NavigationProps> = ({
-  theme,
-  onThemeChange,
-}) => {
+export const Navigation: React.FC<NavigationProps> = ({ className }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -340,11 +335,7 @@ export const Navigation: React.FC<NavigationProps> = ({
             <PWAQuickActions className="xs:h-9 xs:w-9 hidden h-8 w-8 rounded-full bg-slate-100/80 transition-all duration-200 hover:bg-slate-200/80 sm:flex sm:h-10 sm:w-10 dark:bg-slate-800/50 dark:hover:bg-slate-700/50" />
 
             {/* Theme Toggle */}
-            <ThemeToggle
-              theme={theme}
-              onThemeChange={onThemeChange}
-              className="xs:h-9 xs:w-9 h-8 w-8 rounded-full bg-slate-100/80 transition-all duration-200 hover:bg-slate-200/80 sm:h-10 sm:w-10 dark:bg-slate-800/50 dark:hover:bg-slate-700/50"
-            />
+            <ThemeToggle className="xs:h-9 xs:w-9 h-8 w-8 rounded-full bg-slate-100/80 transition-all duration-200 hover:bg-slate-200/80 sm:h-10 sm:w-10 dark:bg-slate-800/50 dark:hover:bg-slate-700/50" />
 
             {/* Mobile Menu Toggle - Enhanced */}
             <Button

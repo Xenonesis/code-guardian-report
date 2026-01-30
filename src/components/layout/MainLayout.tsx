@@ -1,7 +1,7 @@
 "use client";
 
 import { Toaster } from "sonner";
-import { useDarkMode } from "@/hooks/useDarkMode";
+import { useTheme } from "next-themes";
 import { useEnhancedAnalysis } from "@/hooks/useEnhancedAnalysis";
 import { Navigation } from "@/components/layout/Navigation";
 import { Footer } from "@/components/layout/Footer";
@@ -40,7 +40,7 @@ const SkipLink = () => (
  * MainLayout - Persistent shell for all pages with navigation and footer
  */
 export function MainLayout({ children }: MainLayoutProps) {
-  const { theme, isDarkMode, setTheme } = useDarkMode();
+  const { theme, resolvedTheme } = useTheme();
   const { online, firebaseConnected, usingMockData } = useConnectionStatus();
   const { analysisResults } = useEnhancedAnalysis();
   // Using navigation context just to ensure it's initialized if needed,
@@ -69,7 +69,7 @@ export function MainLayout({ children }: MainLayoutProps) {
         expand={false}
         richColors
         closeButton
-        theme={isDarkMode ? "dark" : "light"}
+        theme={resolvedTheme === "dark" ? "dark" : "light"}
       />
 
       {/* Connection Status Banners */}
@@ -98,7 +98,7 @@ export function MainLayout({ children }: MainLayoutProps) {
         role="banner"
         className="bg-background/95 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-40 w-full border-b backdrop-blur"
       >
-        <Navigation theme={theme} onThemeChange={setTheme} />
+        <Navigation />
       </header>
 
       {/* Breadcrumb Container - Global but conditional logic inside component handles visibility */}

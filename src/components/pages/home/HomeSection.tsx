@@ -9,7 +9,6 @@ import { useAnalysisHandlers } from "@/components/pages/home/AnalysisHandlers";
 import { useEnhancedAnalysis } from "@/hooks/useEnhancedAnalysis";
 import { AnalysisResults } from "@/hooks/useAnalysis";
 import { useNavigation } from "@/lib/navigation-context";
-import type { Theme } from "@/hooks/useDarkMode";
 
 const retryImport = <T,>(
   importFn: () => Promise<T>,
@@ -42,13 +41,7 @@ const AnalysisHistoryModal = lazy(
   () => import("@/components/analysis/AnalysisHistoryModal")
 );
 
-interface HomeSectionProps {
-  theme?: Theme;
-}
-
-export const HomeSection: React.FC<HomeSectionProps> = ({
-  theme = "system",
-}) => {
+export const HomeSection: React.FC = () => {
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [showStorageStatus, setShowStorageStatus] = useState(false);
   const [showHistoryModal, setShowHistoryModal] = useState(false);
@@ -132,7 +125,7 @@ export const HomeSection: React.FC<HomeSectionProps> = ({
 
   return (
     <section id="home" className="min-h-screen">
-      <PageLayout theme={theme} showNavigation={false}>
+      <PageLayout showNavigation={false}>
         <HomeHero onStartAnalysis={handleStartAnalysis} />
 
         <StorageBanner

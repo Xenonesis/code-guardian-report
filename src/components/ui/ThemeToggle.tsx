@@ -2,27 +2,23 @@ import React from "react";
 import { Sun, Moon, Monitor } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import type { Theme } from "@/hooks/useDarkMode";
+import { useTheme } from "next-themes";
 
 interface ThemeToggleProps {
-  theme: Theme;
-  onThemeChange: (theme: Theme) => void;
   className?: string;
 }
 
 /**
  * Theme toggle component - cycles through light, dark, and system modes
  */
-export const ThemeToggle: React.FC<ThemeToggleProps> = ({
-  theme,
-  onThemeChange,
-  className,
-}) => {
+export const ThemeToggle: React.FC<ThemeToggleProps> = ({ className }) => {
+  const { theme, setTheme } = useTheme();
+
   const handleToggle = () => {
-    const themes: Theme[] = ["light", "dark", "system"];
-    const currentIndex = themes.indexOf(theme);
+    const themes = ["light", "dark", "system"];
+    const currentIndex = themes.indexOf(theme || "system");
     const nextIndex = (currentIndex + 1) % themes.length;
-    onThemeChange(themes[nextIndex]);
+    setTheme(themes[nextIndex]);
   };
 
   const Icon = theme === "light" ? Sun : theme === "dark" ? Moon : Monitor;

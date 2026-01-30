@@ -15,22 +15,14 @@ import EnhancedFeatureShowcase from "@/components/pages/about/EnhancedFeatureSho
 import { CustomRulesSection } from "@/components/pages/about/CustomRulesSection";
 import MonitoringInfoSection from "@/components/pages/about/MonitoringInfoSection";
 import MultiLanguageSupportDisplay from "@/components/language/MultiLanguageSupportDisplay";
-import { useDarkMode } from "@/hooks/useDarkMode";
 
 const About = () => {
-  const { theme, setTheme } = useDarkMode();
-
   return (
     <div className="relative min-h-screen overflow-hidden">
       <AnimatedBackground />
 
       {/* Navigation - spans full width above everything */}
-      <AboutPageLayout
-        theme={theme}
-        onThemeChange={setTheme}
-        showNavigation={true}
-        noContainer={true}
-      >
+      <AboutPageLayout showNavigation={true} noContainer={true}>
         {/* Main Content */}
         <div className="pt-16">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">

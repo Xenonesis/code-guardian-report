@@ -8,15 +8,14 @@
 @import "./styles/professional-enhancements.css";
 @import "./styles/github-theme.css";
 
-/* Base styling */
+/* Base styling - Optimized for light mode */
 html {
   scroll-behavior: auto;
   -webkit-overflow-scrolling: touch;
   background-color: #fff;
-  color: #0f172a;
+  color: #1e293b;
 
   /* Prevent text size adjustment on orientation change */
-  text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
 
@@ -39,7 +38,7 @@ body {
   line-height: 1.6;
   font-size: clamp(14px, 0.875rem + 0.1vw, 16px);
   background-color: #fff;
-  color: #0f172a;
+  color: #1e293b;
   min-height: 100vh;
   min-height: 100dvh; /* Dynamic viewport height for mobile */
   overflow-x: hidden;

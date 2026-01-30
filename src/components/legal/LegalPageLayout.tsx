@@ -1,7 +1,6 @@
 import React from "react";
 import { PageLayout } from "@/components/layout/PageLayout";
 import { HeroSection } from "@/components/layout/HeroSection";
-import { useDarkMode } from "@/hooks/useDarkMode";
 import { Shield, Scale, Calendar, Mail, Globe } from "lucide-react";
 import { APP_VERSION_WITH_PREFIX } from "@/utils/version";
 
@@ -20,10 +19,8 @@ export const LegalPageLayout: React.FC<LegalPageLayoutProps> = ({
   children,
   icon = <Scale className="h-8 w-8" />,
 }) => {
-  const { theme, setTheme } = useDarkMode();
-
   return (
-    <PageLayout theme={theme} onThemeChange={setTheme}>
+    <PageLayout>
       {/* Enhanced Background */}
       <div className="pointer-events-none fixed inset-0 overflow-hidden">
         <div className="float-animation absolute top-1/4 left-1/4 h-64 w-64 rounded-full bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-indigo-500/10 blur-3xl"></div>
