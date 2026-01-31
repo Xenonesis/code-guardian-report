@@ -69,82 +69,247 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({
     setLoading(true);
     try {
       const storageService = new GitHubAnalysisStorageService();
-      const repos = await storageService.getUserRepositories(userId);
 
-      // Calculate real quality metrics based on security analysis data
-      const qualityAnalysis: RepositoryQuality[] = repos.map((repo) => {
-        // Calculate complexity based on security score and issues
-        const complexityScore = calculateComplexity(
-          repo.securityScore,
-          repo.issuesFound
+      // Try to get detailed analysis results first
+      const detailedResults =
+        await storageService.getDetailedAnalysisResults(userId);
+
+      if (
+        detailedResults.length > 0 &&
+        detailedResults.some((r) => r.issues.length > 0 || r.metrics)
+      ) {
+        // Use real metrics from detailed analysis
+        const qualityAnalysis: RepositoryQuality[] = detailedResults.map(
+          (result) => {
+            const metrics = result.metrics || {};
+            const issues = result.issues || [];
+
+            // Calculate complexity from actual metrics or issues
+            const complexityValue =
+              metrics.codeComplexity ?? calculateComplexityFromIssues(issues);
+
+            // Get maintainability from actual metrics
+            const maintainabilityValue =
+              metrics.maintainabilityIndex ??
+              calculateMaintainabilityFromIssues(issues);
+
+            // Get test coverage from actual metrics
+            const testCoverageValue = metrics.testCoverage ?? 0;
+            const hasRealTestCoverage = metrics.testCoverage !== undefined;
+
+            // Count code smells from issues
+            const codeSmells = issues.filter(
+              (i) =>
+                i.type === "code-quality" ||
+                i.category?.toLowerCase().includes("smell") ||
+                i.category?.toLowerCase().includes("quality")
+            ).length;
+
+            // Calculate technical debt based on actual issues
+            const technicalDebtMinutes =
+              calculateTechnicalDebtFromIssues(issues);
+
+            // Calculate duplication percentage from metrics
+            const duplicationPercent =
+              metrics.duplicatedLines && metrics.totalLines
+                ? (metrics.duplicatedLines / metrics.totalLines) * 100
+                : 0;
+
+            return {
+              repositoryName: result.repositoryName,
+              metrics: {
+                complexity: {
+                  average: Math.round(complexityValue * 10) / 10,
+                  rating: getRatingForComplexity(complexityValue),
+                  trend: "stable" as const,
+                },
+                maintainability: {
+                  index: Math.round(maintainabilityValue),
+                  rating: getRatingForMaintainability(maintainabilityValue),
+                  factors: {
+                    codeSmells: codeSmells || Math.max(0, issues.length),
+                    technicalDebt: formatTechnicalDebt(technicalDebtMinutes),
+                    duplicateCode: Math.round(duplicationPercent),
+                  },
+                },
+                testCoverage: {
+                  percentage: Math.round(testCoverageValue),
+                  linesTotal: metrics.totalLines || 0,
+                  linesCovered: Math.round(
+                    (metrics.totalLines || 0) * (testCoverageValue / 100)
+                  ),
+                  rating: getRatingForTestCoverage(
+                    testCoverageValue,
+                    hasRealTestCoverage
+                  ),
+                },
+                documentation: {
+                  coverage: 0, // Would require separate documentation analysis
+                  rating: "fair" as const,
+                },
+                codeChurn: {
+                  recent: calculateChurn(result.analyzedAt).value,
+                  trend: calculateChurn(result.analyzedAt).trend,
+                },
+              },
+              lastUpdated: result.analyzedAt,
+            };
+          }
         );
 
-        // Calculate maintainability based on critical issues and overall score
-        const maintainabilityIndex = calculateMaintainability(
-          repo.securityScore,
-          repo.criticalIssues
-        );
+        setQualityData(qualityAnalysis);
 
-        // Estimate test coverage based on security score
-        const testCoverage = estimateTestCoverage(
-          repo.securityScore,
-          repo.issuesFound
-        );
+        // Calculate aggregate metrics from real data
+        if (qualityAnalysis.length > 0) {
+          const aggregate = calculateAggregateMetrics(qualityAnalysis);
+          setAggregateMetrics(aggregate);
+        }
+      } else {
+        // Fallback to repository-level data
+        const repos = await storageService.getUserRepositories(userId);
 
-        // Calculate documentation coverage
-        const docCoverage = estimateDocumentation(repo.securityScore);
+        // Calculate quality metrics based on security analysis data (fallback)
+        const qualityAnalysis: RepositoryQuality[] = repos.map((repo) => {
+          const complexityScore = calculateComplexity(
+            repo.securityScore,
+            repo.issuesFound
+          );
+          const maintainabilityIndex = calculateMaintainability(
+            repo.securityScore,
+            repo.criticalIssues
+          );
+          const testCoverage = estimateTestCoverage(
+            repo.securityScore,
+            repo.issuesFound
+          );
+          const docCoverage = estimateDocumentation(repo.securityScore);
+          const churn = calculateChurn(repo.lastAnalyzed);
 
-        // Calculate code churn (activity level)
-        const churn = calculateChurn(repo.lastAnalyzed);
-
-        return {
-          repositoryName: repo.name,
-          metrics: {
-            complexity: {
-              average: complexityScore.average,
-              rating: complexityScore.rating,
-              trend: complexityScore.trend,
-            },
-            maintainability: {
-              index: maintainabilityIndex.value,
-              rating: maintainabilityIndex.rating,
-              factors: {
-                codeSmells: Math.max(0, repo.issuesFound - repo.criticalIssues),
-                technicalDebt: formatTechnicalDebt(repo.issuesFound),
-                duplicateCode: estimateDuplication(repo.issuesFound),
+          return {
+            repositoryName: repo.name,
+            metrics: {
+              complexity: {
+                average: complexityScore.average,
+                rating: complexityScore.rating,
+                trend: complexityScore.trend,
+              },
+              maintainability: {
+                index: maintainabilityIndex.value,
+                rating: maintainabilityIndex.rating,
+                factors: {
+                  codeSmells: Math.max(
+                    0,
+                    repo.issuesFound - repo.criticalIssues
+                  ),
+                  technicalDebt: formatTechnicalDebtFromIssueCount(
+                    repo.issuesFound
+                  ),
+                  duplicateCode: estimateDuplication(repo.issuesFound),
+                },
+              },
+              testCoverage: {
+                percentage: testCoverage.percentage,
+                linesTotal: testCoverage.total,
+                linesCovered: testCoverage.covered,
+                rating: testCoverage.rating,
+              },
+              documentation: {
+                coverage: docCoverage.percentage,
+                rating: docCoverage.rating,
+              },
+              codeChurn: {
+                recent: churn.value,
+                trend: churn.trend,
               },
             },
-            testCoverage: {
-              percentage: testCoverage.percentage,
-              linesTotal: testCoverage.total,
-              linesCovered: testCoverage.covered,
-              rating: testCoverage.rating,
-            },
-            documentation: {
-              coverage: docCoverage.percentage,
-              rating: docCoverage.rating,
-            },
-            codeChurn: {
-              recent: churn.value,
-              trend: churn.trend,
-            },
-          },
-          lastUpdated: repo.lastAnalyzed,
-        };
-      });
+            lastUpdated: repo.lastAnalyzed,
+          };
+        });
 
-      setQualityData(qualityAnalysis);
+        setQualityData(qualityAnalysis);
 
-      // Calculate aggregate metrics
-      if (qualityAnalysis.length > 0) {
-        const aggregate = calculateAggregateMetrics(qualityAnalysis);
-        setAggregateMetrics(aggregate);
+        if (qualityAnalysis.length > 0) {
+          const aggregate = calculateAggregateMetrics(qualityAnalysis);
+          setAggregateMetrics(aggregate);
+        }
       }
     } catch (error) {
       logger.error("Error loading code quality data:", error);
     } finally {
       setLoading(false);
     }
+  };
+
+  // Helper functions for real metrics calculation
+  const calculateComplexityFromIssues = (issues: any[]): number => {
+    if (issues.length === 0) return 3; // Good default
+    const critical = issues.filter((i) => i.severity === "Critical").length;
+    const high = issues.filter((i) => i.severity === "High").length;
+    // More critical/high issues = higher complexity
+    return Math.min(10, 2 + critical * 1.5 + high * 0.5 + issues.length * 0.1);
+  };
+
+  const calculateMaintainabilityFromIssues = (issues: any[]): number => {
+    if (issues.length === 0) return 85; // Good default
+    const critical = issues.filter((i) => i.severity === "Critical").length;
+    const high = issues.filter((i) => i.severity === "High").length;
+    // Start at 100, subtract for issues
+    return Math.max(0, 100 - critical * 15 - high * 8 - issues.length * 2);
+  };
+
+  const calculateTechnicalDebtFromIssues = (issues: any[]): number => {
+    let debt = 0;
+    for (const issue of issues) {
+      if (issue.severity === "Critical") debt += 120;
+      else if (issue.severity === "High") debt += 60;
+      else if (issue.severity === "Medium") debt += 30;
+      else debt += 15;
+    }
+    return debt;
+  };
+
+  const getRatingForComplexity = (
+    value: number
+  ): "excellent" | "good" | "moderate" | "poor" => {
+    if (value <= 3) return "excellent";
+    if (value <= 5) return "good";
+    if (value <= 7) return "moderate";
+    return "poor";
+  };
+
+  const getRatingForMaintainability = (
+    value: number
+  ): "high" | "medium" | "low" => {
+    if (value >= 75) return "high";
+    if (value >= 50) return "medium";
+    return "low";
+  };
+
+  const getRatingForTestCoverage = (
+    value: number,
+    hasRealData: boolean
+  ): "excellent" | "good" | "fair" | "poor" => {
+    if (!hasRealData && value === 0) return "fair"; // Unknown
+    if (value >= 80) return "excellent";
+    if (value >= 60) return "good";
+    if (value >= 40) return "fair";
+    return "poor";
+  };
+
+  const formatTechnicalDebt = (minutes: number): string => {
+    if (minutes < 60) return `${minutes}m`;
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 8);
+    if (days === 0) return `${hours}h ${minutes % 60}m`;
+    return `${days}d ${hours % 8}h`;
+  };
+
+  const formatTechnicalDebtFromIssueCount = (issues: number): string => {
+    const hoursPerIssue = 2;
+    const totalHours = issues * hoursPerIssue;
+    const days = Math.floor(totalHours / 8);
+    if (days === 0) return `${totalHours}h`;
+    return `${days}d ${totalHours % 8}h`;
   };
 
   // Real calculation functions based on actual data
@@ -194,13 +359,13 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({
   };
 
   const estimateTestCoverage = (securityScore: number, issues: number) => {
-    // Estimate test coverage based on security score
+    // Estimate test coverage based on security score (fallback when no real data)
     const basePercentage = securityScore * 8; // 0-80%
     const bonus = Math.max(0, 20 - issues * 2); // Up to 20% bonus
     const percentage = Math.min(100, Math.round(basePercentage + bonus));
 
-    // Estimate lines (realistic numbers)
-    const estimatedLines = 1000 + Math.floor(Math.random() * 4000);
+    // Estimate lines based on a reasonable baseline
+    const estimatedLines = 2500; // Reasonable average
     const covered = Math.floor(estimatedLines * (percentage / 100));
 
     return {
@@ -219,10 +384,8 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({
 
   const estimateDocumentation = (securityScore: number) => {
     // Better security typically correlates with better documentation
-    const percentage = Math.min(
-      100,
-      Math.round(securityScore * 9 + Math.random() * 10)
-    );
+    // Use deterministic calculation based on security score
+    const percentage = Math.min(100, Math.round(securityScore * 10));
 
     return {
       percentage,
@@ -236,18 +399,12 @@ export const CodeQualityAnalytics: React.FC<CodeQualityAnalyticsProps> = ({
     };
   };
 
-  const formatTechnicalDebt = (issues: number): string => {
-    const hoursPerIssue = 2;
-    const totalHours = issues * hoursPerIssue;
-    const days = Math.floor(totalHours / 8);
-
-    if (days === 0) return `${totalHours}h`;
-    return `${days}d ${totalHours % 8}h`;
-  };
+  // Keep old formatTechnicalDebt for backward compatibility in fallback path
+  // The new formatTechnicalDebt handles minutes, this one handles issue counts
 
   const estimateDuplication = (issues: number): number => {
-    // Estimate code duplication percentage based on issues
-    return Math.min(30, Math.round(issues * 0.5 + Math.random() * 5));
+    // Estimate code duplication percentage based on issues (deterministic)
+    return Math.min(30, Math.round(issues * 0.8));
   };
 
   const calculateChurn = (lastAnalyzed: Date) => {

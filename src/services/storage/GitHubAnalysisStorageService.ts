@@ -9,6 +9,7 @@ import {
   limit,
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import { SecurityIssue, AnalysisResults } from "@/hooks/useAnalysis";
 
 import { logger } from "@/utils/logger";
 interface Repository {
@@ -429,6 +430,325 @@ export class GitHubAnalysisStorageService {
       logger.error("Error storing repository analysis:", error);
       throw error;
     }
+  }
+
+  /**
+   * Get detailed analysis results with security issues for a repository
+   * This fetches from the main analysisResults collection which contains full issue details
+   */
+  async getDetailedAnalysisResults(
+    userId: string,
+    repositoryName?: string
+  ): Promise<
+    Array<{
+      repositoryName: string;
+      language: string;
+      issues: SecurityIssue[];
+      analyzedAt: Date;
+      metrics?: {
+        totalLines?: number;
+        totalFiles?: number;
+        codeComplexity?: number;
+        maintainabilityIndex?: number;
+        testCoverage?: number;
+        duplicatedLines?: number;
+      };
+    }>
+  > {
+    try {
+      // First, get repositories to map names
+      const repos = await this.getUserRepositories(userId);
+
+      // Get detailed analysis from the main analysisResults collection
+      const analysisResultsRef = collection(db, "analysisResults");
+      let q = query(
+        analysisResultsRef,
+        where("userId", "==", userId),
+        orderBy("createdAt", "desc"),
+        limit(100)
+      );
+
+      const querySnapshot = await getDocs(q);
+      const detailedResults: Array<{
+        repositoryName: string;
+        language: string;
+        issues: SecurityIssue[];
+        analyzedAt: Date;
+        metrics?: {
+          totalLines?: number;
+          totalFiles?: number;
+          codeComplexity?: number;
+          maintainabilityIndex?: number;
+          testCoverage?: number;
+          duplicatedLines?: number;
+        };
+      }> = [];
+
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        const results = data.results as AnalysisResults | undefined;
+
+        if (!results) return;
+
+        // Try to match with repository or use filename
+        const fileName = data.fileName || "Unknown";
+        let repoName = fileName;
+        let language = "Unknown";
+
+        // Try to find matching repository
+        const matchingRepo = repos.find(
+          (r) =>
+            fileName.toLowerCase().includes(r.name.toLowerCase()) ||
+            r.name
+              .toLowerCase()
+              .includes(fileName.replace(/\.zip$/i, "").toLowerCase())
+        );
+
+        if (matchingRepo) {
+          repoName = matchingRepo.name;
+          language = matchingRepo.language;
+        } else if (results.languageDetection?.primaryLanguage?.name) {
+          language = results.languageDetection.primaryLanguage.name;
+        }
+
+        // Filter by repository name if specified
+        if (
+          repositoryName &&
+          !repoName.toLowerCase().includes(repositoryName.toLowerCase())
+        ) {
+          return;
+        }
+
+        detailedResults.push({
+          repositoryName: repoName,
+          language,
+          issues: results.issues || [],
+          analyzedAt: data.createdAt?.toDate() || new Date(),
+          metrics: {
+            totalLines:
+              results.summary?.linesAnalyzed ||
+              results.metrics?.vulnerabilityDensity
+                ? Math.round(
+                    results.issues?.length /
+                      (results.metrics?.vulnerabilityDensity || 0.001)
+                  )
+                : 0,
+            totalFiles: results.totalFiles || 0,
+            codeComplexity: results.metrics?.maintainabilityIndex
+              ? Math.round(100 - results.metrics.maintainabilityIndex) / 10
+              : 0,
+            maintainabilityIndex: results.metrics?.maintainabilityIndex || 0,
+            testCoverage: results.metrics?.testCoverage,
+            duplicatedLines: results.metrics?.duplicatedLines || 0,
+          },
+        });
+      });
+
+      // If we got detailed results, return them
+      if (detailedResults.length > 0) {
+        return detailedResults;
+      }
+
+      // Fallback: Create basic results from repository data (without detailed issues)
+      return repos.map((repo) => ({
+        repositoryName: repo.name,
+        language: repo.language,
+        issues: [], // No detailed issues available
+        analyzedAt: repo.lastAnalyzed,
+        metrics: undefined,
+      }));
+    } catch (error) {
+      logger.error("Error fetching detailed analysis results:", error);
+
+      // Return empty array in production
+      if (process.env.NODE_ENV === "production") {
+        return [];
+      }
+
+      // Return mock data in development
+      return this.getMockDetailedResults();
+    }
+  }
+
+  /**
+   * Get aggregated security issues across all repositories
+   */
+  async getAggregatedSecurityIssues(userId: string): Promise<{
+    totalIssues: number;
+    criticalIssues: number;
+    highIssues: number;
+    mediumIssues: number;
+    lowIssues: number;
+    issuesByType: Record<string, number>;
+    issuesByCategory: Record<string, number>;
+  }> {
+    try {
+      const detailedResults = await this.getDetailedAnalysisResults(userId);
+
+      const aggregation = {
+        totalIssues: 0,
+        criticalIssues: 0,
+        highIssues: 0,
+        mediumIssues: 0,
+        lowIssues: 0,
+        issuesByType: {} as Record<string, number>,
+        issuesByCategory: {} as Record<string, number>,
+      };
+
+      for (const result of detailedResults) {
+        for (const issue of result.issues) {
+          aggregation.totalIssues++;
+
+          // Count by severity
+          const severity = (issue.severity || "Low").toLowerCase();
+          if (severity === "critical") aggregation.criticalIssues++;
+          else if (severity === "high") aggregation.highIssues++;
+          else if (severity === "medium") aggregation.mediumIssues++;
+          else aggregation.lowIssues++;
+
+          // Count by type
+          const type = issue.type || "unknown";
+          aggregation.issuesByType[type] =
+            (aggregation.issuesByType[type] || 0) + 1;
+
+          // Count by category
+          const category = issue.category || "unknown";
+          aggregation.issuesByCategory[category] =
+            (aggregation.issuesByCategory[category] || 0) + 1;
+        }
+      }
+
+      return aggregation;
+    } catch (error) {
+      logger.error("Error aggregating security issues:", error);
+      return {
+        totalIssues: 0,
+        criticalIssues: 0,
+        highIssues: 0,
+        mediumIssues: 0,
+        lowIssues: 0,
+        issuesByType: {},
+        issuesByCategory: {},
+      };
+    }
+  }
+
+  // Mock data for development with detailed issues
+  private getMockDetailedResults(): Array<{
+    repositoryName: string;
+    language: string;
+    issues: SecurityIssue[];
+    analyzedAt: Date;
+    metrics?: {
+      totalLines?: number;
+      totalFiles?: number;
+      codeComplexity?: number;
+      maintainabilityIndex?: number;
+      testCoverage?: number;
+      duplicatedLines?: number;
+    };
+  }> {
+    return [
+      {
+        repositoryName: "code-guardian",
+        language: "TypeScript",
+        issues: [
+          {
+            id: "mock-issue-1",
+            line: 45,
+            tool: "security-scanner",
+            type: "sql-injection",
+            category: "Injection",
+            message: "Potential SQL injection vulnerability detected",
+            severity: "High",
+            confidence: 85,
+            recommendation:
+              "Use parameterized queries instead of string concatenation",
+            remediation: {
+              description:
+                "Replace string concatenation with prepared statements",
+              effort: "Medium",
+              priority: 2,
+            },
+            filename: "src/database/queries.ts",
+            riskRating: "High",
+            impact: "Database compromise",
+            likelihood: "Medium",
+            cweId: "CWE-89",
+            owaspCategory: "A03:2021 – Injection",
+          },
+          {
+            id: "mock-issue-2",
+            line: 120,
+            tool: "security-scanner",
+            type: "xss",
+            category: "Cross-Site Scripting",
+            message: "Unescaped user input in template",
+            severity: "Medium",
+            confidence: 90,
+            recommendation: "Sanitize user input before rendering",
+            remediation: {
+              description:
+                "Use HTML escaping or a templating library with auto-escaping",
+              effort: "Low",
+              priority: 3,
+            },
+            filename: "src/components/UserProfile.tsx",
+            riskRating: "Medium",
+            impact: "Session hijacking",
+            likelihood: "Medium",
+            cweId: "CWE-79",
+            owaspCategory: "A03:2021 – Injection",
+          },
+        ],
+        analyzedAt: new Date(Date.now() - 86400000),
+        metrics: {
+          totalLines: 5000,
+          totalFiles: 45,
+          codeComplexity: 12,
+          maintainabilityIndex: 75,
+          testCoverage: 68,
+          duplicatedLines: 150,
+        },
+      },
+      {
+        repositoryName: "api-gateway",
+        language: "JavaScript",
+        issues: [
+          {
+            id: "mock-issue-3",
+            line: 78,
+            tool: "security-scanner",
+            type: "hardcoded-credentials",
+            category: "Sensitive Data Exposure",
+            message: "Hardcoded API key detected",
+            severity: "Critical",
+            confidence: 95,
+            recommendation: "Move secrets to environment variables",
+            remediation: {
+              description: "Use environment variables or a secrets manager",
+              effort: "Low",
+              priority: 1,
+            },
+            filename: "src/config/api.js",
+            riskRating: "Critical",
+            impact: "Credential theft",
+            likelihood: "High",
+            cweId: "CWE-798",
+            owaspCategory: "A02:2021 – Cryptographic Failures",
+          },
+        ],
+        analyzedAt: new Date(Date.now() - 172800000),
+        metrics: {
+          totalLines: 3200,
+          totalFiles: 28,
+          codeComplexity: 18,
+          maintainabilityIndex: 62,
+          testCoverage: 45,
+          duplicatedLines: 280,
+        },
+      },
+    ];
   }
 
   // Mock data methods for offline/fallback scenarios
