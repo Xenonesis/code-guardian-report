@@ -195,11 +195,14 @@ export class FirebaseAnalysisStorageService {
         sanitizedData
       );
 
-      logger.debug("Analysis stored successfully with ID:", docRef.id, {
-        wasTruncated,
-        originalIssueCount,
-        storedIssueCount: finalResults.issues?.length,
-      });
+      logger.debug("Analysis stored successfully with ID:", docRef.id);
+
+      if (wasTruncated) {
+        logger.warn("Analysis results were truncated due to size limits", {
+          originalIssueCount,
+          storedIssueCount: finalResults.issues?.length,
+        });
+      }
 
       // Update sync status
       await updateDoc(docRef, { syncStatus: "synced" });
@@ -975,21 +978,27 @@ export class FirebaseAnalysisStorageService {
         currentSize = this.getDataSize(truncatedResults);
       }
 
-      // Step 4: Final fallback - keep only essential issue info
+      // Step 4: Final fallback - keep only essential issue info, removing codeSnippet and truncating remediation heavily
       if (currentSize > FirebaseAnalysisStorageService.SAFE_DOC_SIZE) {
         truncatedResults.issues = truncatedResults.issues
           .slice(0, 100)
           .map((issue) => ({
-            id: issue.id,
-            title:
-              typeof issue.title === "string"
-                ? issue.title.substring(0, 200)
-                : issue.title,
-            severity: issue.severity,
-            category: issue.category,
-            file: issue.file,
-            line: issue.line,
-            // Remove codeSnippet and remediation entirely
+            ...issue,
+            codeSnippet: undefined,
+            remediation: issue.remediation
+              ? {
+                  description:
+                    typeof issue.remediation.description === "string"
+                      ? issue.remediation.description.substring(0, 100)
+                      : "",
+                  effort: issue.remediation.effort || "Low",
+                  priority: issue.remediation.priority || 1,
+                }
+              : {
+                  description: "Fix this security issue",
+                  effort: "Low" as const,
+                  priority: 1,
+                },
           }));
       }
 
