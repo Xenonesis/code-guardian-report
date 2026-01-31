@@ -33,6 +33,24 @@ import {
 } from "./auth-utils";
 
 import { logger } from "@/utils/logger";
+
+const removeUndefined = <T extends Record<string, any>>(obj: T): T => {
+  return Object.fromEntries(
+    Object.entries(obj)
+      .filter(([, value]) => value !== undefined)
+      .map(([key, value]) => {
+        if (
+          value &&
+          typeof value === "object" &&
+          !(value instanceof Date) &&
+          !Array.isArray(value)
+        ) {
+          return [key, removeUndefined(value as Record<string, any>)];
+        }
+        return [key, value];
+      })
+  ) as T;
+};
 type Provider =
   | "google.com"
   | "github.com"
@@ -132,27 +150,22 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     return false;
   };
 
-  // Extract GitHub username from user - Firebase stores it in providerData uid field
+  // Extract GitHub user ID from Firebase user
+  const extractGitHubUserId = (user: User): string | null => {
+    const githubProvider = user.providerData?.find(
+      (p) => p.providerId === "github.com"
+    );
+    if (!githubProvider) return null;
+    // Firebase stores the GitHub user ID in the uid field of the provider
+    return githubProvider.uid || null;
+  };
+
+  // Extract GitHub username from user - try noreply email first
   const extractGitHubUsername = (user: User): string | null => {
     const githubProvider = user.providerData?.find(
       (p) => p.providerId === "github.com"
     );
     if (!githubProvider) return null;
-
-    // The GitHub provider stores the username in different places
-    // First try to extract from the uid (most reliable)
-    // Firebase GitHub uid is the GitHub user ID number, not username
-    // But photoURL contains username: https://avatars.githubusercontent.com/u/{id}?v=4
-    // And displayName might have the actual name, not username
-
-    // Check if displayName looks like a username (no spaces, valid chars)
-    const displayName = githubProvider.displayName || user.displayName;
-    if (
-      displayName &&
-      /^[a-zA-Z0-9](?:[a-zA-Z0-9]|-(?=[a-zA-Z0-9])){0,38}$/.test(displayName)
-    ) {
-      return displayName;
-    }
 
     // Try to get from email if it's a GitHub noreply email
     // Format: username@users.noreply.github.com or 123456789+username@users.noreply.github.com
@@ -164,7 +177,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       if (match) return match[1];
     }
 
-    return displayName || null;
+    // Return null - we'll fetch the username using the GitHub API with user ID
+    return null;
   };
 
   // Extract GitHub metadata from user credential
@@ -175,10 +189,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     if (!githubProvider) return null;
 
     const username = extractGitHubUsername(user);
+    const githubUserId = githubProvider.uid;
+    const avatarUrl =
+      githubProvider.photoURL ||
+      user.photoURL ||
+      (githubUserId
+        ? `https://avatars.githubusercontent.com/u/${githubUserId}`
+        : null);
 
     return {
       login: username || null,
-      avatarUrl: githubProvider.photoURL || user.photoURL || null,
+      avatarUrl,
       htmlUrl: username ? `https://github.com/${username}` : null,
       publicRepos: 0,
       followers: 0,
@@ -186,7 +207,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     };
   };
 
-  // Fetch additional GitHub user data from API
+  // Fetch additional GitHub user data from API using username
   const fetchGitHubUserData = async (username: string) => {
     try {
       const { githubRepositoryService } =
@@ -200,6 +221,19 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
+  // Fetch GitHub user data by user ID
+  const fetchGitHubUserDataById = async (userId: string) => {
+    try {
+      const { githubRepositoryService } =
+        await import("@/services/githubRepositoryService");
+      const userData = await githubRepositoryService.getGitHubUserById(userId);
+      return userData;
+    } catch (error) {
+      logger.error("Error fetching GitHub user data by ID:", error);
+      return null;
+    }
+  };
+
   // Create user profile in Firestore with better error handling
   const createUserProfile = async (
     user: User,
@@ -209,6 +243,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const isGitHub = isFromGitHub || isGitHubUser(user);
     let githubMetadata = isGitHub ? extractGitHubMetadata(user) : undefined;
     const githubUsername = isGitHub ? extractGitHubUsername(user) : undefined;
+    const githubUserId = isGitHub ? extractGitHubUserId(user) : undefined;
 
     // Create profile with real data from Firebase Auth
     const fallbackProfile: UserProfile = {
@@ -219,19 +254,26 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       lastLogin: new Date(),
       isGitHubUser: isGitHub,
       githubUsername: githubUsername || undefined,
-      githubMetadata: githubMetadata,
+      githubMetadata: githubMetadata || undefined,
       repositoriesAnalyzed: 0,
     };
+
+    const sanitizedFallbackProfile = removeUndefined(fallbackProfile);
 
     // Set fallback profile first to avoid blocking UI
     setUserProfile(fallbackProfile);
 
     // If GitHub user, fetch additional data from GitHub API in background
-    if (isGitHub && githubUsername) {
-      fetchGitHubUserData(githubUsername)
+    if (isGitHub && (githubUsername || githubUserId)) {
+      // Use username if available, otherwise fetch by user ID
+      const fetchPromise = githubUsername
+        ? fetchGitHubUserData(githubUsername)
+        : fetchGitHubUserDataById(githubUserId!);
+
+      fetchPromise
         .then((userData) => {
           if (userData) {
-            const enhancedMetadata = {
+            const enhancedMetadata = removeUndefined({
               login: userData.login,
               avatarUrl: userData.avatar_url,
               htmlUrl: userData.html_url,
@@ -241,7 +283,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
               publicRepos: userData.public_repos,
               followers: userData.followers,
               following: userData.following,
-            };
+            });
 
             setUserProfile((prev) =>
               prev
@@ -299,7 +341,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           try {
             localStorage.setItem(
               `userProfile_${user.uid}`,
-              JSON.stringify(fallbackProfile)
+              JSON.stringify(sanitizedFallbackProfile)
             );
           } catch (e) {
             // Silent fallback
@@ -308,7 +350,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         }
 
         if (!exists) {
-          const { success } = await safeSetDoc(userDoc, fallbackProfile);
+          const { success } = await safeSetDoc(
+            userDoc,
+            sanitizedFallbackProfile
+          );
           if (success) {
             // Clear localStorage backup since Firestore is working
             try {
@@ -320,7 +365,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             try {
               localStorage.setItem(
                 `userProfile_${user.uid}`,
-                JSON.stringify(fallbackProfile)
+                JSON.stringify(sanitizedFallbackProfile)
               );
             } catch (e) {
               // Silent fallback
@@ -328,10 +373,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           }
         } else if (existingProfile) {
           // Update last login
-          const updatedProfile = {
+          const updatedProfile = removeUndefined({
             ...existingProfile,
             lastLogin: new Date(),
-          };
+          });
 
           const { success } = await safeSetDoc(userDoc, updatedProfile, {
             merge: true,

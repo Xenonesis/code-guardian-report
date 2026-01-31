@@ -44,6 +44,22 @@ export const Navigation: React.FC<NavigationProps> = ({
   const { user, userProfile, logout } = useAuth();
   const { currentSection, navigateTo } = useNavigation();
 
+  const getGithubAvatarUrl = () => {
+    const githubProvider = user?.providerData?.find(
+      (p) => p.providerId === "github.com"
+    );
+    const githubUserId = githubProvider?.uid;
+
+    return (
+      userProfile?.githubMetadata?.avatarUrl ||
+      githubProvider?.photoURL ||
+      user?.photoURL ||
+      (githubUserId
+        ? `https://avatars.githubusercontent.com/u/${githubUserId}`
+        : null)
+    );
+  };
+
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -251,11 +267,13 @@ export const Navigation: React.FC<NavigationProps> = ({
                   onClick={() => setShowUserDropdown(!showUserDropdown)}
                   className="group flex items-center gap-2 rounded-full bg-slate-100/80 px-3 py-2 transition-all duration-200 hover:bg-slate-200/80 dark:bg-slate-800/50 dark:hover:bg-slate-700/50"
                 >
-                  <div className="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 text-xs font-bold text-white shadow-inner">
-                    {(userProfile?.displayName ||
-                      userProfile?.githubUsername ||
-                      user?.email)?.[0]?.toUpperCase() || "U"}
-                  </div>
+                  {getGithubAvatarUrl() ? (
+                    <img
+                      src={getGithubAvatarUrl() as string}
+                      alt="Profile"
+                      className="h-7 w-7 rounded-full object-cover shadow-inner"
+                    />
+                  ) : null}
                   <span className="hidden max-w-[100px] truncate text-sm font-medium text-slate-700 lg:block dark:text-slate-300">
                     {userProfile?.displayName ||
                       userProfile?.githubUsername ||
@@ -462,11 +480,13 @@ export const Navigation: React.FC<NavigationProps> = ({
                 <div className="xs:space-y-3 space-y-2">
                   {/* User Profile Card */}
                   <div className="xs:gap-4 xs:px-4 xs:py-4 xs:rounded-2xl flex items-center gap-3 rounded-xl bg-gradient-to-r from-slate-100 to-slate-50 px-3 py-3 dark:from-slate-800/50 dark:to-slate-900/50">
-                    <div className="xs:w-12 xs:h-12 xs:text-lg flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 text-base font-bold text-white shadow-lg">
-                      {(userProfile?.displayName ||
-                        userProfile?.githubUsername ||
-                        user?.email)?.[0]?.toUpperCase() || "U"}
-                    </div>
+                    {getGithubAvatarUrl() ? (
+                      <img
+                        src={getGithubAvatarUrl() as string}
+                        alt="Profile"
+                        className="xs:w-12 xs:h-12 h-10 w-10 flex-shrink-0 rounded-full object-cover shadow-lg"
+                      />
+                    ) : null}
                     <div className="min-w-0 flex-1">
                       <p className="xs:text-base text-foreground truncate text-sm font-semibold">
                         {userProfile?.displayName ||

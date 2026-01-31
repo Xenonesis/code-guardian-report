@@ -40,6 +40,22 @@ const UserDashboard: React.FC = () => {
   const [showUsernameInput, setShowUsernameInput] = useState(false);
   const [showGitHubRepos, setShowGitHubRepos] = useState(false);
 
+  const getGithubAvatarUrl = () => {
+    const githubProvider = user?.providerData?.find(
+      (p) => p.providerId === "github.com"
+    );
+    const githubUserId = githubProvider?.uid;
+
+    return (
+      githubProvider?.photoURL ||
+      user?.photoURL ||
+      userProfile?.githubMetadata?.avatarUrl ||
+      (githubUserId
+        ? `https://avatars.githubusercontent.com/u/${githubUserId}`
+        : null)
+    );
+  };
+
   // GitHub repositories integration
   const {
     repositories,
@@ -364,13 +380,15 @@ const UserDashboard: React.FC = () => {
       <header className="border-border bg-card border-b shadow">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between py-4">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-                Dashboard
-              </h1>
-              <p className="text-gray-500 dark:text-gray-400">
-                Welcome back, {userProfile.displayName}!
-              </p>
+            <div className="flex items-center gap-4">
+              {/* GitHub Profile Avatar Only */}
+              {getGithubAvatarUrl() ? (
+                <img
+                  src={getGithubAvatarUrl() as string}
+                  alt="Profile"
+                  className="h-12 w-12 rounded-full border-2 border-purple-500 shadow-md"
+                />
+              ) : null}
             </div>
             <button
               onClick={handleLogout}
@@ -418,27 +436,16 @@ const UserDashboard: React.FC = () => {
           {/* Profile and Stats */}
           <div className="space-y-6 lg:col-span-1">
             <div className="rounded-lg border border-gray-200 bg-white p-6 shadow dark:border-transparent dark:bg-[#252538]">
-              <h2 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
-                Profile Information
-              </h2>
-              <div className="space-y-3">
-                <div>
-                  <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                    Display Name
-                  </p>
-                  <p className="text-gray-900 dark:text-white">
-                    {userProfile.displayName}
-                  </p>
+              {/* Profile Avatar Only */}
+              {getGithubAvatarUrl() ? (
+                <div className="flex justify-center">
+                  <img
+                    src={getGithubAvatarUrl() as string}
+                    alt="Profile"
+                    className="h-20 w-20 rounded-full border-4 border-purple-500 shadow-lg"
+                  />
                 </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                    Email
-                  </p>
-                  <p className="text-gray-900 dark:text-white">
-                    {userProfile.email}
-                  </p>
-                </div>
-              </div>
+              ) : null}
             </div>
 
             <div className="border-border bg-card rounded-lg border p-6 shadow">

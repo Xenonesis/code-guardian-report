@@ -174,6 +174,30 @@ class GitHubRepositoryService {
   }
 
   /**
+   * Get GitHub user information by user ID
+   */
+  async getGitHubUserById(userId: string): Promise<GitHubUserInfo | null> {
+    try {
+      const response = await fetch(
+        `${this.baseUrl}/user/${encodeURIComponent(userId)}`
+      );
+
+      if (!response.ok) {
+        if (response.status === 404) {
+          logger.warn(`GitHub user not found by ID: ${userId}`);
+          return null;
+        }
+        throw new Error(`Failed to fetch user by ID: ${response.statusText}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      logger.error("Error fetching GitHub user by ID:", error);
+      return null;
+    }
+  }
+
+  /**
    * Get file tree from repository
    */
   async getRepositoryTree(
