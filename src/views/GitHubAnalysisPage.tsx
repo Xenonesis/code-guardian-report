@@ -119,6 +119,7 @@ export const GitHubAnalysisPage: React.FC = () => {
   const {
     repositories,
     loading: reposLoading,
+    error: reposError,
     hasGitHubAccount,
     permissionGranted,
     permissionDenied,
@@ -131,6 +132,16 @@ export const GitHubAnalysisPage: React.FC = () => {
     email: userProfile?.email || null,
     enabled: !!user && !isGitHubUser, // For non-GitHub OAuth users
   });
+
+  // Show error toast when repository fetch fails
+  useEffect(() => {
+    if (reposError) {
+      toast.error(reposError, {
+        duration: 6000,
+        description: "Please try again or check your internet connection",
+      });
+    }
+  }, [reposError]);
 
   // Auto-fetch GitHub data for GitHub authenticated users
   useEffect(() => {

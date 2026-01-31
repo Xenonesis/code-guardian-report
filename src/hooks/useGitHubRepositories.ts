@@ -144,10 +144,35 @@ export const useGitHubRepositories = ({
       );
 
       if (!response.ok) {
-        throw new Error(`Failed to fetch repositories: ${response.statusText}`);
+        // Handle specific HTTP error codes
+        if (response.status === 404) {
+          throw new Error(`GitHub user "${username}" not found`);
+        } else if (response.status === 403) {
+          const rateLimitReset = response.headers.get("X-RateLimit-Reset");
+          const resetTime = rateLimitReset
+            ? new Date(parseInt(rateLimitReset) * 1000).toLocaleTimeString()
+            : "later";
+          throw new Error(
+            `GitHub API rate limit exceeded. Try again at ${resetTime}`
+          );
+        } else if (response.status >= 500) {
+          throw new Error(
+            `GitHub API server error (${response.status}). Please try again later`
+          );
+        } else {
+          throw new Error(
+            `Failed to fetch repositories: ${response.status} ${response.statusText || "Unknown error"}`
+          );
+        }
       }
 
       const repos = await response.json();
+
+      // Validate response is an array
+      if (!Array.isArray(repos)) {
+        throw new Error("Invalid response from GitHub API");
+      }
+
       setRepositories(repos);
 
       // Store permission in localStorage
@@ -157,9 +182,18 @@ export const useGitHubRepositories = ({
       logger.debug(`Fetched ${repos.length} repositories for ${username}`);
     } catch (err: unknown) {
       logger.error("Error fetching repositories:", err);
-      setError(
-        err instanceof Error ? err.message : "Failed to fetch repositories"
-      );
+
+      // Provide more specific error messages
+      let errorMessage = "Failed to fetch repositories";
+
+      if (err instanceof TypeError && err.message.includes("fetch")) {
+        errorMessage =
+          "Network error: Unable to connect to GitHub. Check your internet connection";
+      } else if (err instanceof Error) {
+        errorMessage = err.message;
+      }
+
+      setError(errorMessage);
       setRepositories([]);
     } finally {
       setLoading(false);
