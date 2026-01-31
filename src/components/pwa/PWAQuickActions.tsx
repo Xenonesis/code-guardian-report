@@ -114,7 +114,10 @@ export function PWAQuickActions({
         </Button>
       </PopoverTrigger>
 
-      <PopoverContent className="w-72 p-3" align="end">
+      <PopoverContent
+        className="w-72 border-slate-200 bg-white p-3 shadow-xl dark:border-slate-800 dark:bg-slate-950"
+        align="end"
+      >
         <div className="space-y-3">
           {/* Header */}
           <div className="flex items-center justify-between">

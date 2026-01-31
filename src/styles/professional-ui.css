@@ -1,0 +1,65 @@
+/* Professional UI/UX Enhancements - Refined */
+
+/* Enhanced Card Shadows and Depth - Tamed */
+.shadow-3xl {
+  box-shadow:
+    0 4px 6px -1px rgb(0 0 0 / 10%),
+    0 2px 4px -2px rgb(0 0 0 / 10%);
+}
+
+.dark .shadow-3xl {
+  box-shadow:
+    0 0 0 1px rgb(255 255 255 / 10%),
+    0 4px 6px -1px rgb(0 0 0 / 50%);
+}
+
+/* Professional Typography Enhancements */
+.text-enterprise-title {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.text-enterprise-body {
+  letter-spacing: normal;
+  line-height: 1.6;
+}
+
+/* Enhanced Gradient Backgrounds - Subtle */
+.bg-professional-gradient {
+  background: white;
+}
+
+.dark .bg-professional-gradient {
+  background: hsl(var(--background));
+}
+
+/* Professional Button States */
+.btn-professional {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-professional::before {
+  content: none;
+}
+
+/* Enhanced Focus States for Accessibility */
+.focus-professional:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+  border-radius: var(--radius);
+}
+
+/* Professional Card Hover Effects */
+.card-professional-hover {
+  transition: all 0.2s ease-in-out;
+}
+
+.card-professional-hover:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 10px 15px -3px rgb(0 0 0 / 10%),
+    0 4px 6px -4px rgb(0 0 0 / 10%);
+}

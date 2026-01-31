@@ -30,7 +30,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { AnimatedBackground } from "@/components/pages/about/AnimatedBackground";
 import {
   History,
   Filter,
@@ -419,30 +418,24 @@ export const HistoryPage = ({
   }
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-white dark:bg-slate-950">
-      <AnimatedBackground />
-
-      {/* Decorative orbs */}
-      <div className="pointer-events-none absolute top-20 left-10 h-72 w-72 rounded-full bg-violet-500/20 blur-[128px]" />
-      <div className="pointer-events-none absolute right-20 bottom-40 h-96 w-96 rounded-full bg-cyan-500/15 blur-[128px]" />
-      <div className="pointer-events-none absolute top-1/2 left-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-fuchsia-500/10 blur-[200px]" />
+    <div className="relative min-h-screen overflow-hidden bg-slate-50 dark:bg-slate-950">
+      {/* Background patterns removed for professional UI */}
 
       <div className="relative z-10 container mx-auto space-y-8 py-12">
-        {/* Premium Header */}
-        <div className="relative">
-          <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-violet-600/20 via-fuchsia-600/20 to-cyan-600/20 blur-xl" />
-          <div className="relative rounded-3xl border border-white/10 bg-white/[0.03] p-8 shadow-2xl backdrop-blur-2xl">
+        {/* Professional Header */}
+        <div className="mb-8">
+          <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
             <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
               <div className="space-y-3">
                 <div className="flex items-center gap-4">
-                  <div className="rounded-2xl bg-gradient-to-br from-violet-500 to-fuchsia-500 p-3 shadow-lg shadow-violet-500/30">
-                    <History className="h-7 w-7 text-white" />
+                  <div className="rounded-md bg-blue-600 p-3 text-white shadow-sm">
+                    <History className="h-6 w-6" />
                   </div>
                   <div>
-                    <h1 className="bg-gradient-to-r from-white via-violet-200 to-fuchsia-200 bg-clip-text text-4xl font-bold tracking-tight text-transparent">
+                    <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
                       Analysis History
                     </h1>
-                    <p className="mt-1 text-lg text-slate-400">
+                    <p className="mt-1 text-base text-slate-500 dark:text-slate-400">
                       Your personal security analysis results & statistics
                     </p>
                   </div>
@@ -454,14 +447,14 @@ export const HistoryPage = ({
                   <Button
                     variant="outline"
                     onClick={onNavigateBack}
-                    className="rounded-xl border-white/10 bg-white/5 px-5 text-white transition-all duration-300 hover:border-white/20 hover:bg-white/10"
+                    className="border-slate-200 text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
                   >
                     Back to Home
                   </Button>
                 )}
                 <Button
                   onClick={exportAnalysisHistory}
-                  className="rounded-xl border-0 bg-gradient-to-r from-violet-600 to-fuchsia-600 px-5 text-white shadow-lg shadow-violet-500/25 transition-all duration-300 hover:from-violet-500 hover:to-fuchsia-500 hover:shadow-violet-500/40"
+                  className="bg-blue-600 text-white shadow-sm hover:bg-blue-700"
                 >
                   <Download className="mr-2 h-4 w-4" />
                   Export History
@@ -500,383 +493,335 @@ export const HistoryPage = ({
                 label: "Avg Score",
                 value: userStats.averageSecurityScore || "--",
                 icon: Shield,
-                gradient: "from-violet-500 to-purple-500",
-                glow: "violet",
               },
             ].map((stat, index) => (
-              <div key={index} className="group relative">
-                <div
-                  className={`absolute inset-0 bg-gradient-to-r ${stat.gradient} rounded-2xl opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-20`}
-                />
-                <div className="relative h-full rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-xl transition-all duration-300 hover:border-white/20 hover:bg-white/[0.06]">
-                  <div className="mb-3 flex items-center gap-3">
-                    <div
-                      className={`rounded-xl bg-gradient-to-br p-2 ${stat.gradient} shadow-lg`}
-                    >
-                      <stat.icon className="h-4 w-4 text-white" />
-                    </div>
-                    <span className="text-sm font-medium text-slate-400">
-                      {stat.label}
-                    </span>
+              <div
+                key={index}
+                className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="rounded-md bg-slate-100 p-2.5 text-slate-600 dark:bg-slate-800 dark:text-slate-400">
+                    <stat.icon className="h-5 w-5" />
                   </div>
-                  <p className="text-3xl font-bold text-white">{stat.value}</p>
+                  <div>
+                    <p className="text-sm font-medium text-slate-500 dark:text-slate-400">
+                      {stat.label}
+                    </p>
+                    <p className="text-2xl font-bold text-slate-900 dark:text-white">
+                      {stat.value}
+                    </p>
+                  </div>
                 </div>
               </div>
             ))}
           </div>
         )}
 
-        {/* Premium Filters Section */}
-        <div className="relative">
-          <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-500/10 to-blue-500/10 blur-lg" />
-          <div className="relative rounded-2xl border border-white/10 bg-white/[0.03] p-6 shadow-xl backdrop-blur-xl">
-            <div className="mb-5 flex items-center justify-between gap-3">
-              <div className="flex items-center gap-3">
-                <Filter className="h-5 w-5 text-cyan-400" />
-                <span className="font-semibold text-white">
-                  Filters & Search
-                </span>
-              </div>
-              {(searchTerm ||
-                selectedTimeRange !== "all" ||
-                selectedSeverity !== "all") && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => {
-                    setSearchTerm("");
-                    setSelectedTimeRange("all");
-                    setSelectedSeverity("all");
-                  }}
-                  className="h-8 rounded-lg text-slate-400 hover:bg-white/5 hover:text-white"
-                >
-                  <X className="mr-2 h-3 w-3" />
-                  Clear Filters
-                </Button>
-              )}
+        {/* Filters Section */}
+        <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+          <div className="mb-5 flex items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <Filter className="h-5 w-5 text-slate-500" />
+              <span className="font-semibold text-slate-900 dark:text-white">
+                Filters & Search
+              </span>
             </div>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-12">
-              <div className="relative lg:col-span-4">
-                <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-slate-500" />
-                <Input
-                  placeholder="Search by filename, tags, or issue..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="h-10 w-full rounded-xl border-white/10 bg-white/5 pl-9 text-white placeholder:text-slate-500 focus:border-cyan-500/50 focus:ring-cyan-500/20"
-                />
-              </div>
+            {(searchTerm ||
+              selectedTimeRange !== "all" ||
+              selectedSeverity !== "all") && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  setSearchTerm("");
+                  setSelectedTimeRange("all");
+                  setSelectedSeverity("all");
+                }}
+                className="h-8 rounded-lg text-slate-400 hover:bg-white/5 hover:text-white"
+              >
+                <X className="mr-2 h-3 w-3" />
+                Clear Filters
+              </Button>
+            )}
+          </div>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-12">
+            <div className="relative lg:col-span-4">
+              <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-slate-500" />
+              <Input
+                placeholder="Search by filename, tags, or issue..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="h-10 w-full pl-9"
+              />
+            </div>
 
-              <div className="lg:col-span-3">
-                <Select
-                  value={selectedTimeRange}
-                  onValueChange={(value) =>
-                    setSelectedTimeRange(
-                      value as "all" | "week" | "month" | "year"
-                    )
-                  }
-                >
-                  <SelectTrigger className="h-10 border-white/10 bg-white/5 text-white focus:ring-cyan-500/20">
-                    <SelectValue placeholder="Time Range" />
-                  </SelectTrigger>
-                  <SelectContent className="border-white/10 bg-slate-900 text-white">
-                    <SelectItem value="all">All Time</SelectItem>
-                    <SelectItem value="week">Past Week</SelectItem>
-                    <SelectItem value="month">Past Month</SelectItem>
-                    <SelectItem value="year">Past Year</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+            <div className="lg:col-span-3">
+              <Select
+                value={selectedTimeRange}
+                onValueChange={(value) =>
+                  setSelectedTimeRange(
+                    value as "all" | "week" | "month" | "year"
+                  )
+                }
+              >
+                <SelectTrigger className="h-10">
+                  <SelectValue placeholder="Time Range" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Time</SelectItem>
+                  <SelectItem value="week">Past Week</SelectItem>
+                  <SelectItem value="month">Past Month</SelectItem>
+                  <SelectItem value="year">Past Year</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
-              <div className="lg:col-span-3">
-                <Select
-                  value={selectedSeverity}
-                  onValueChange={(value) =>
-                    setSelectedSeverity(
-                      value as "all" | "critical" | "high" | "medium" | "low"
-                    )
-                  }
-                >
-                  <SelectTrigger className="h-10 border-white/10 bg-white/5 text-white focus:ring-cyan-500/20">
-                    <SelectValue placeholder="Severity" />
-                  </SelectTrigger>
-                  <SelectContent className="border-white/10 bg-slate-900 text-white">
-                    <SelectItem value="all">All Severities</SelectItem>
-                    <SelectItem value="critical">Critical</SelectItem>
-                    <SelectItem value="high">High</SelectItem>
-                    <SelectItem value="medium">Medium</SelectItem>
-                    <SelectItem value="low">Low</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+            <div className="lg:col-span-3">
+              <Select
+                value={selectedSeverity}
+                onValueChange={(value) =>
+                  setSelectedSeverity(
+                    value as "all" | "critical" | "high" | "medium" | "low"
+                  )
+                }
+              >
+                <SelectTrigger className="h-10">
+                  <SelectValue placeholder="Severity" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Severities</SelectItem>
+                  <SelectItem value="critical">Critical</SelectItem>
+                  <SelectItem value="high">High</SelectItem>
+                  <SelectItem value="medium">Medium</SelectItem>
+                  <SelectItem value="low">Low</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
-              <div className="lg:col-span-2">
-                <Button
-                  onClick={loadAnalysisHistory}
-                  className="h-10 w-full rounded-xl border-0 bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-lg shadow-cyan-500/25 transition-all duration-300 hover:from-cyan-500 hover:to-blue-500 hover:shadow-cyan-500/40"
-                >
-                  <Filter className="mr-2 h-4 w-4" />
-                  Refresh
-                </Button>
-              </div>
+            <div className="lg:col-span-2">
+              <Button
+                onClick={loadAnalysisHistory}
+                className="h-10 w-full bg-blue-600 text-white hover:bg-blue-700"
+              >
+                <Filter className="mr-2 h-4 w-4" />
+                Refresh
+              </Button>
             </div>
           </div>
         </div>
 
         {/* Analysis History Section */}
-        <div className="relative">
-          <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-fuchsia-500/5 via-transparent to-violet-500/5" />
-          <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.02] backdrop-blur-xl">
-            {/* Section Header */}
-            <div className="border-b border-white/5 bg-white/[0.02] px-8 py-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h2 className="flex items-center gap-3 text-2xl font-bold text-white">
-                    <span className="h-8 w-2 rounded-full bg-gradient-to-b from-fuchsia-500 to-violet-500" />
-                    Your Analysis Results
-                    <span className="ml-2 rounded-full bg-white/10 px-3 py-1 text-sm font-medium text-violet-300">
-                      {filteredHistory.length}
-                    </span>
-                  </h2>
-                  {filteredHistory.length !== analysisHistory.length && (
-                    <p className="mt-1 text-sm text-slate-500">
-                      Showing {filteredHistory.length} of{" "}
-                      {analysisHistory.length} analyses
-                    </p>
-                  )}
-                </div>
+        <div className="rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
+          {/* Section Header */}
+          <div className="border-b border-slate-200 px-6 py-4 dark:border-slate-800">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="flex items-center gap-3 text-xl font-bold text-slate-900 dark:text-white">
+                  <div className="h-6 w-1.5 rounded-full bg-blue-600" />
+                  Your Analysis Results
+                  <span className="ml-2 rounded-full bg-slate-100 px-2.5 py-0.5 text-sm font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-400">
+                    {filteredHistory.length}
+                  </span>
+                </h2>
+                {filteredHistory.length !== analysisHistory.length && (
+                  <p className="mt-1 text-sm text-slate-500">
+                    Showing {filteredHistory.length} of {analysisHistory.length}{" "}
+                    analyses
+                  </p>
+                )}
               </div>
             </div>
+          </div>
 
-            {/* Content */}
-            <div className="p-6">
-              {isLoading ? (
-                <div className="flex flex-col items-center justify-center py-16">
-                  <div className="relative">
-                    <div className="h-16 w-16 animate-spin rounded-full border-4 border-white/10 border-t-violet-500" />
-                    <div
-                      className="absolute inset-0 h-16 w-16 animate-spin rounded-full border-4 border-transparent border-r-fuchsia-500"
-                      style={{
-                        animationDirection: "reverse",
-                        animationDuration: "1.5s",
-                      }}
-                    />
-                  </div>
-                  <span className="mt-4 text-slate-400">
-                    Loading your analysis history...
-                  </span>
+          {/* Content */}
+          <div className="p-6">
+            {isLoading ? (
+              <div className="flex flex-col items-center justify-center py-16">
+                <div className="relative">
+                  <div className="h-16 w-16 animate-spin rounded-full border-4 border-white/10 border-t-violet-500" />
+                  <div
+                    className="absolute inset-0 h-16 w-16 animate-spin rounded-full border-4 border-transparent border-r-fuchsia-500"
+                    style={{
+                      animationDirection: "reverse",
+                      animationDuration: "1.5s",
+                    }}
+                  />
                 </div>
-              ) : filteredHistory.length === 0 ? (
-                <div className="py-16 text-center">
-                  <div className="relative inline-block">
-                    <div className="absolute inset-0 rounded-full bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20 blur-2xl" />
-                    <div className="relative rounded-full border border-white/10 bg-white/5 p-6">
-                      <History className="h-16 w-16 text-slate-600" />
-                    </div>
+                <span className="mt-4 text-slate-400">
+                  Loading your analysis history...
+                </span>
+              </div>
+            ) : filteredHistory.length === 0 ? (
+              <div className="py-16 text-center">
+                <div className="relative inline-block">
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20 blur-2xl" />
+                  <div className="relative rounded-full border border-white/10 bg-white/5 p-6">
+                    <History className="h-16 w-16 text-slate-600" />
                   </div>
-                  <h3 className="mt-6 mb-2 text-xl font-semibold text-white">
-                    {analysisHistory.length === 0
-                      ? "No Analysis History Yet"
-                      : "No Results Found"}
-                  </h3>
-                  <p className="mx-auto max-w-md text-slate-500">
-                    {analysisHistory.length === 0
-                      ? "Start analyzing your code to see results here. Your analysis history will appear once you upload and scan some code."
-                      : "Try adjusting your search filters to find what you're looking for."}
-                  </p>
                 </div>
-              ) : (
-                <div className="space-y-4">
-                  {filteredHistory.map((analysis, index) => (
-                    <div
-                      key={analysis.id}
-                      className="group relative cursor-pointer"
-                      style={{ animationDelay: `${index * 50}ms` }}
-                      onClick={(e) => handleViewAnalysis(analysis, e)}
-                    >
-                      {/* Hover glow effect */}
-                      <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-violet-500/0 via-fuchsia-500/0 to-cyan-500/0 opacity-0 blur-xl transition-all duration-500 group-hover:from-violet-500/10 group-hover:via-fuchsia-500/5 group-hover:to-cyan-500/10 group-hover:opacity-100" />
-
-                      <div className="relative rounded-2xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-sm transition-all duration-300 group-hover:translate-x-1 group-hover:shadow-2xl group-hover:shadow-violet-500/10 group-active:scale-[0.99] hover:border-white/20 hover:bg-white/[0.05]">
-                        {/* Severity indicator bar */}
-                        <div
-                          className={`absolute top-0 bottom-0 left-0 w-1 rounded-l-2xl ${
-                            analysis.results.issues?.some(
-                              (i) => i.severity.toLowerCase() === "critical"
-                            )
-                              ? "bg-gradient-to-b from-red-500 to-rose-600"
-                              : analysis.results.issues?.some(
-                                    (i) => i.severity.toLowerCase() === "high"
-                                  )
-                                ? "bg-gradient-to-b from-orange-500 to-amber-600"
-                                : analysis.results.issues?.some(
-                                      (i) =>
-                                        i.severity.toLowerCase() === "medium"
-                                    )
-                                  ? "bg-gradient-to-b from-yellow-500 to-amber-500"
-                                  : "bg-gradient-to-b from-emerald-500 to-teal-600"
-                          }`}
-                        />
-
-                        <div className="flex flex-col gap-5 pl-4 lg:flex-row lg:items-center lg:justify-between">
-                          <div className="flex-1 space-y-4">
-                            {/* File name and badges */}
-                            <div className="flex flex-wrap items-center gap-3">
-                              <h3 className="text-lg font-bold text-white transition-colors duration-300 group-hover:text-violet-200">
-                                {analysis.fileName}
-                              </h3>
-                              <span
-                                className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                                  analysis.syncStatus === "synced"
-                                    ? "border border-emerald-500/30 bg-emerald-500/20 text-emerald-400"
-                                    : "border border-amber-500/30 bg-amber-500/20 text-amber-400"
-                                }`}
-                              >
-                                {analysis.syncStatus}
-                              </span>
-                              {analysis.tags && analysis.tags.length > 0 && (
-                                <div className="flex flex-wrap gap-1.5">
-                                  {analysis.tags.map((tag, idx) => (
-                                    <span
-                                      key={idx}
-                                      className="rounded-md border border-white/10 bg-white/5 px-2 py-0.5 text-xs text-slate-400"
-                                    >
-                                      {tag}
-                                    </span>
-                                  ))}
-                                </div>
-                              )}
-                            </div>
-
-                            {/* Stats grid */}
-                            <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-                              {[
-                                {
-                                  icon: Calendar,
-                                  value: formatDate(analysis.createdAt),
-                                  label: "",
-                                },
-                                {
-                                  icon: FileText,
-                                  value: `${analysis.results.totalFiles} files`,
-                                  label: "",
-                                },
-                                {
-                                  icon: Bug,
-                                  value: `${analysis.results.issues?.length || 0} issues`,
-                                  label: "",
-                                },
-                                {
-                                  icon: Shield,
-                                  value: `Score: ${analysis.results.summary?.securityScore || "--"}`,
-                                  label: "",
-                                },
-                              ].map((item, idx) => (
-                                <div
+                <h3 className="mt-6 mb-2 text-xl font-semibold text-white">
+                  {analysisHistory.length === 0
+                    ? "No Analysis History Yet"
+                    : "No Results Found"}
+                </h3>
+                <p className="mx-auto max-w-md text-slate-500">
+                  {analysisHistory.length === 0
+                    ? "Start analyzing your code to see results here. Your analysis history will appear once you upload and scan some code."
+                    : "Try adjusting your search filters to find what you're looking for."}
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {filteredHistory.map((analysis) => (
+                  <div
+                    key={analysis.id}
+                    className="group cursor-pointer border-b border-slate-200 p-6 last:border-0 hover:bg-slate-50 dark:border-slate-800 dark:hover:bg-slate-800/50"
+                    onClick={(e) => handleViewAnalysis(analysis, e)}
+                  >
+                    <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+                      <div className="flex-1 space-y-4">
+                        {/* File name and badges */}
+                        <div className="flex flex-wrap items-center gap-3">
+                          <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                            {analysis.fileName}
+                          </h3>
+                          <span
+                            className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${
+                              analysis.syncStatus === "synced"
+                                ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400"
+                                : "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400"
+                            }`}
+                          >
+                            {analysis.syncStatus}
+                          </span>
+                          {analysis.tags && analysis.tags.length > 0 && (
+                            <div className="flex flex-wrap gap-1.5">
+                              {analysis.tags.map((tag, idx) => (
+                                <span
                                   key={idx}
-                                  className="flex items-center gap-2 text-sm text-slate-400 transition-colors duration-300 group-hover:text-slate-300"
+                                  className="rounded-md bg-slate-100 px-2 py-0.5 text-xs text-slate-600 dark:bg-slate-800 dark:text-slate-400"
                                 >
-                                  <item.icon className="h-4 w-4 text-slate-500" />
-                                  <span>{item.value}</span>
-                                </div>
+                                  {tag}
+                                </span>
                               ))}
                             </div>
-
-                            {/* Severity badges */}
-                            {analysis.results.issues &&
-                              analysis.results.issues.length > 0 && (
-                                <div className="flex flex-wrap gap-2">
-                                  {["critical", "high", "medium", "low"].map(
-                                    (severity) => {
-                                      const count =
-                                        analysis.results.issues?.filter(
-                                          (issue) =>
-                                            issue.severity.toLowerCase() ===
-                                            severity
-                                        ).length || 0;
-
-                                      if (count === 0) return null;
-
-                                      const severityStyles: Record<
-                                        string,
-                                        string
-                                      > = {
-                                        critical:
-                                          "bg-red-500/20 text-red-400 border-red-500/30 shadow-red-500/20",
-                                        high: "bg-orange-500/20 text-orange-400 border-orange-500/30 shadow-orange-500/20",
-                                        medium:
-                                          "bg-yellow-500/20 text-yellow-400 border-yellow-500/30 shadow-yellow-500/20",
-                                        low: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30 shadow-emerald-500/20",
-                                      };
-
-                                      return (
-                                        <span
-                                          key={severity}
-                                          className={`rounded-lg border px-2.5 py-1 text-xs font-semibold tracking-wide uppercase shadow-lg ${severityStyles[severity]}`}
-                                        >
-                                          {severity}: {count}
-                                        </span>
-                                      );
-                                    }
-                                  )}
-                                </div>
-                              )}
-                          </div>
-
-                          {/* Action buttons */}
-                          <div className="flex items-center gap-2 lg:flex-col lg:gap-2">
-                            <Button
-                              onClick={(e) => handleViewAnalysis(analysis, e)}
-                              className="flex-1 rounded-xl border-0 bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white shadow-lg shadow-violet-500/20 transition-all duration-300 hover:scale-105 hover:from-violet-500 hover:to-fuchsia-500 hover:shadow-violet-500/40 lg:flex-none"
-                              size="sm"
-                            >
-                              <Eye className="mr-1.5 h-4 w-4" />
-                              View
-                            </Button>
-                            <Button
-                              onClick={(e) => confirmDelete(analysis.id, e)}
-                              className="rounded-xl border border-white/10 bg-white/5 text-slate-400 transition-all duration-300 hover:scale-105 hover:border-red-500/30 hover:bg-red-500/20 hover:text-red-400"
-                              variant="outline"
-                              size="sm"
-                            >
-                              <Trash2 className="h-4 w-4" />
-                            </Button>
-                          </div>
+                          )}
                         </div>
+
+                        {/* Stats grid */}
+                        <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+                          {[
+                            {
+                              icon: Calendar,
+                              value: formatDate(analysis.createdAt),
+                            },
+                            {
+                              icon: FileText,
+                              value: `${analysis.results.totalFiles} files`,
+                            },
+                            {
+                              icon: Bug,
+                              value: `${analysis.results.issues?.length || 0} issues`,
+                            },
+                            {
+                              icon: Shield,
+                              value: `Score: ${analysis.results.summary?.securityScore || "--"}`,
+                            },
+                          ].map((item, idx) => (
+                            <div
+                              key={idx}
+                              className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400"
+                            >
+                              <item.icon className="h-4 w-4 text-slate-400" />
+                              <span>{item.value}</span>
+                            </div>
+                          ))}
+                        </div>
+
+                        {/* Severity badges */}
+                        {analysis.results.issues &&
+                          analysis.results.issues.length > 0 && (
+                            <div className="flex flex-wrap gap-2">
+                              {["critical", "high", "medium", "low"].map(
+                                (severity) => {
+                                  const count =
+                                    analysis.results.issues?.filter(
+                                      (issue) =>
+                                        issue.severity.toLowerCase() ===
+                                        severity
+                                    ).length || 0;
+
+                                  if (count === 0) return null;
+
+                                  const severityStyles: Record<string, string> =
+                                    {
+                                      critical:
+                                        "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400",
+                                      high: "bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-400",
+                                      medium:
+                                        "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400",
+                                      low: "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400",
+                                    };
+
+                                  return (
+                                    <span
+                                      key={severity}
+                                      className={`rounded-md px-2.5 py-1 text-xs font-medium uppercase ${severityStyles[severity]}`}
+                                    >
+                                      {severity}: {count}
+                                    </span>
+                                  );
+                                }
+                              )}
+                            </div>
+                          )}
+                      </div>
+
+                      {/* Action buttons */}
+                      <div className="flex items-center gap-2 lg:flex-col lg:gap-2">
+                        <Button
+                          onClick={(e) => handleViewAnalysis(analysis, e)}
+                          className="w-full bg-blue-600 text-white hover:bg-blue-700"
+                          size="sm"
+                        >
+                          <Eye className="mr-1.5 h-4 w-4" />
+                          View
+                        </Button>
+                        <Button
+                          onClick={(e) => confirmDelete(analysis.id, e)}
+                          variant="outline"
+                          className="w-full border-slate-200 text-slate-700 hover:bg-red-50 hover:text-red-600 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-red-900/20 dark:hover:text-red-400"
+                          size="sm"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
                       </div>
                     </div>
-                  ))}
-                </div>
-              )}
-            </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 
         {/* Delete Confirmation Dialog */}
         <Dialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
-          <DialogContent className="border-white/10 bg-slate-900 text-white sm:max-w-md">
+          <DialogContent className="sm:max-w-md">
             <DialogHeader>
-              <DialogTitle className="flex items-center gap-2 text-red-400">
+              <DialogTitle className="flex items-center gap-2 text-red-600 dark:text-red-400">
                 <AlertTriangle className="h-5 w-5" />
                 Confirm Deletion
               </DialogTitle>
-              <DialogDescription className="text-slate-400">
+              <DialogDescription>
                 Are you sure you want to delete this analysis? This action
                 cannot be undone.
               </DialogDescription>
             </DialogHeader>
             <DialogFooter className="gap-2 sm:gap-0">
-              <Button
-                variant="ghost"
-                onClick={() => setIsDeleteOpen(false)}
-                className="hover:bg-white/10 hover:text-white"
-              >
+              <Button variant="ghost" onClick={() => setIsDeleteOpen(false)}>
                 Cancel
               </Button>
-              <Button
-                variant="destructive"
-                onClick={executeDelete}
-                className="bg-red-600 hover:bg-red-700"
-              >
+              <Button variant="destructive" onClick={executeDelete}>
                 Delete Analysis
               </Button>
             </DialogFooter>
