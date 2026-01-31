@@ -3,6 +3,7 @@
  * Verifies that the service produces REAL analysis results, not mock/hardcoded data
  */
 
+import { describe, it, expect } from "vitest";
 import { modernCodeScanningService } from "../src/services/security/modernCodeScanningService";
 
 // Test samples with known vulnerabilities
@@ -78,81 +79,6 @@ const VULNERABLE_CODE_SAMPLES = {
     }
   `,
 };
-
-// ====== Simple Test Framework ======
-let passedTests = 0;
-let failedTests = 0;
-
-function describe(suiteName: string, fn: () => void) {
-  console.log(`\nSuite: ${suiteName}`);
-  try {
-    fn();
-  } catch (error) {
-    console.log(
-      `  ERROR: ${error instanceof Error ? error.message : String(error)}`
-    );
-    if (error instanceof Error && error.stack) {
-      console.log(error.stack);
-    }
-    failedTests++;
-  }
-}
-
-function it(testName: string, fn: () => void) {
-  try {
-    fn();
-    console.log(`  PASS ${testName}`);
-    passedTests++;
-  } catch (error) {
-    console.log(`  FAIL ${testName}`);
-    console.log(
-      `     Error: ${error instanceof Error ? error.message : String(error)}`
-    );
-    failedTests++;
-  }
-}
-
-function expect(actual: unknown) {
-  return {
-    toBe(expected: unknown) {
-      if (actual !== expected) {
-        throw new Error(`Expected ${actual} to be ${expected}`);
-      }
-    },
-    toBeDefined() {
-      if (actual === undefined) {
-        throw new Error("Expected value to be defined");
-      }
-    },
-    toBeGreaterThan(expected: number) {
-      if (typeof actual !== "number" || actual <= expected) {
-        throw new Error(`Expected ${actual} to be greater than ${expected}`);
-      }
-    },
-    toBeGreaterThanOrEqual(expected: number) {
-      if (typeof actual !== "number" || actual < expected) {
-        throw new Error(
-          `Expected ${actual} to be greater than or equal to ${expected}`
-        );
-      }
-    },
-    toBeLessThanOrEqual(expected: number) {
-      if (typeof actual !== "number" || actual > expected) {
-        throw new Error(
-          `Expected ${actual} to be less than or equal to ${expected}`
-        );
-      }
-    },
-    toContain(expected: string) {
-      if (typeof actual !== "string" || !actual.includes(expected)) {
-        throw new Error(`Expected "${actual}" to contain "${expected}"`);
-      }
-    },
-  };
-}
-
-// ====== Run Tests ======
-console.log("Running Modern Code Scanning Tests...\n");
 
 describe("Modern Code Scanning Service - Real Results Verification", () => {
   describe("SQL Injection Detection", () => {
@@ -479,18 +405,5 @@ function test() {
   });
 });
 
-// Print summary
-console.log(`\n\n${"=".repeat(60)}`);
-console.log(`Passed: ${passedTests}`);
-console.log(`Failed: ${failedTests}`);
-console.log(`Total: ${passedTests + failedTests}`);
-console.log("=".repeat(60));
-
-if (failedTests > 0) {
-  process.exit(1);
-}
-
-// Export for use in other test runners
-if (typeof module !== "undefined" && module.exports) {
-  module.exports = { VULNERABLE_CODE_SAMPLES };
-}
+// Export test samples for use in other tests
+export { VULNERABLE_CODE_SAMPLES };

@@ -28,8 +28,8 @@
     "useUnknownInCatchVariables": true,
     "alwaysStrict": true,
     /* Additional Checks */
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "exactOptionalPropertyTypes": false,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,

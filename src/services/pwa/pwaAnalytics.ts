@@ -88,7 +88,7 @@ class PWAAnalyticsService {
         const data = JSON.parse(stored);
         this.metrics = { ...this.metrics, ...data.metrics };
         this.engagement = { ...this.engagement, ...data.engagement };
-      } catch (error) {
+      } catch {
         // Failed to load stored metrics - continue with defaults
       }
     }
@@ -186,7 +186,7 @@ class PWAAnalyticsService {
 
       if ("onCLS" in webVitals) {
         // Web Vitals v3+
-        const { onCLS, onINP, onFCP, onLCP, onTTFB } = webVitals;
+        const { onCLS, onINP, onFCP, onLCP, onTTFB: _onTTFB } = webVitals;
 
         onCLS((metric) => {
           this.performance.cumulativeLayoutShift = metric.value;
@@ -205,7 +205,13 @@ class PWAAnalyticsService {
         });
       } else if ("getCLS" in webVitals) {
         // Web Vitals v2
-        const { getCLS, getFID, getFCP, getLCP, getTTFB } = webVitals as any;
+        const {
+          getCLS,
+          getFID,
+          getFCP,
+          getLCP,
+          getTTFB: _getTTFB,
+        } = webVitals as any;
 
         getCLS((metric: any) => {
           this.performance.cumulativeLayoutShift = metric.value;
@@ -223,7 +229,7 @@ class PWAAnalyticsService {
           this.performance.largestContentfulPaint = metric.value;
         });
       }
-    } catch (error) {
+    } catch {
       // Web Vitals not available - continue without them
     }
   }
@@ -387,7 +393,7 @@ class PWAAnalyticsService {
           session: this.getSessionId(),
         }),
       });
-    } catch (error) {
+    } catch {
       // Silently fail in production to avoid disrupting user experience
     }
   }

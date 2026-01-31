@@ -1185,7 +1185,7 @@ export class LanguageDetectionService {
   }
 
   private detectNodeFrameworks(
-    filenames: string[],
+    _filenames: string[],
     content: string,
     frameworks: FrameworkInfo[]
   ): void {
@@ -1280,7 +1280,7 @@ export class LanguageDetectionService {
   }
 
   private detectJavaFrameworks(
-    filenames: string[],
+    _filenames: string[],
     content: string,
     frameworks: FrameworkInfo[]
   ): void {

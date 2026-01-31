@@ -13,15 +13,8 @@ import {
   DetectionResult,
   FrameworkInfo,
 } from "../detection/languageDetectionService";
-import {
-  FrameworkDetectionEngine,
-  DependencyInfo,
-} from "../detection/frameworkDetectionEngine";
 import { naturalLanguageDescriptionService } from "../ai/naturalLanguageDescriptionService";
-import {
-  modernCodeScanningService,
-  CodeQualityMetrics,
-} from "../security/modernCodeScanningService";
+import { modernCodeScanningService } from "../security/modernCodeScanningService";
 import { logger } from "@/utils/logger";
 
 type SupportedLanguage =
@@ -62,13 +55,11 @@ export interface SecurityRule {
 export class SecurityAnalyzer {
   private secretDetectionService: SecretDetectionService;
   private languageDetectionService: LanguageDetectionService;
-  private frameworkDetectionEngine: FrameworkDetectionEngine;
   private analysisContext?: EnhancedAnalysisContext;
 
   constructor() {
     this.secretDetectionService = new SecretDetectionService();
     this.languageDetectionService = new LanguageDetectionService();
-    this.frameworkDetectionEngine = new FrameworkDetectionEngine();
   }
 
   /**
@@ -1254,26 +1245,6 @@ export class SecurityAnalyzer {
       return `${rule.frameworks[0]} Security Scanner`;
     }
     return "Framework Security Scanner";
-  }
-
-  /**
-   * Calculate CVSS score for framework-specific rules
-   */
-  private calculateFrameworkRuleCVSS(
-    severity: SecurityRule["severity"]
-  ): number {
-    switch (severity) {
-      case "Critical":
-        return 9.0;
-      case "High":
-        return 7.5;
-      case "Medium":
-        return 5.0;
-      case "Low":
-        return 2.5;
-      default:
-        return 5.0;
-    }
   }
 
   /**

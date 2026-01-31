@@ -141,7 +141,7 @@ export class DataFlowAnalyzer {
   /**
    * Parse code into AST
    */
-  private parseCode(code: string, filename: string): t.File | null {
+  private parseCode(code: string, _filename: string): t.File | null {
     try {
       return parse(code, {
         sourceType: "module",

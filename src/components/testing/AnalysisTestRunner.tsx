@@ -3,7 +3,7 @@
  * UI for running and displaying analysis accuracy tests
  */
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { runAnalysisAccuracyTests } from "@/tests/analysisAccuracyTest";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";

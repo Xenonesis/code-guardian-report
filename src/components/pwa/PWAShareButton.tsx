@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "../ui/button";
-import { Share2, Copy, Check } from "lucide-react";
+import { Share2, Check } from "lucide-react";
 import { usePWA } from "../../hooks/usePWA";
 import { toast } from "sonner";
 
@@ -41,7 +41,7 @@ export function PWAShareButton({
         setCopied(true);
         toast.success("Link copied to clipboard!");
         setTimeout(() => setCopied(false), 2000);
-      } catch (error) {
+      } catch {
         toast.error("Failed to share or copy link");
       }
     } else {

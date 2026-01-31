@@ -224,13 +224,6 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
     return "text-red-600 dark:text-red-400";
   };
 
-  const _severityCounts = {
-    Critical: issues.filter((i) => i.severity === "Critical").length,
-    High: issues.filter((i) => i.severity === "High").length,
-    Medium: issues.filter((i) => i.severity === "Medium").length,
-    Low: issues.filter((i) => i.severity === "Low").length,
-  };
-
   const securityIssues = issues.filter(
     (i) => i.type.toLowerCase() === "security"
   );

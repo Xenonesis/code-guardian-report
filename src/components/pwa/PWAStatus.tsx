@@ -1,7 +1,6 @@
 // PWA Status Component
 // Production-ready component for PWA feature integration
 
-import React from "react";
 import { usePWA } from "../../hooks/usePWA";
 
 export function PWAStatus() {

@@ -176,7 +176,7 @@ export class AIService {
           if (errorData.error?.message) {
             errorMessage = errorData.error.message;
           }
-        } catch (e) {
+        } catch {
           errorMessage = errorText || response.statusText;
         }
 
@@ -264,7 +264,7 @@ export class AIService {
           if (errorData.error?.message) {
             errorMessage = errorData.error.message;
           }
-        } catch (e) {
+        } catch {
           errorMessage = errorText || response.statusText;
         }
 
@@ -333,7 +333,7 @@ export class AIService {
           if (errorData.error?.message) {
             errorMessage = errorData.error.message;
           }
-        } catch (e) {
+        } catch {
           errorMessage = errorText || response.statusText;
         }
 

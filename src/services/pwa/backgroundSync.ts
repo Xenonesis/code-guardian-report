@@ -140,7 +140,7 @@ class BackgroundSyncService {
     for (const task of pendingUploads) {
       try {
         await this.uploadFile(task);
-      } catch (error) {
+      } catch {
         await this.updateTaskStatus(task.id, "failed");
       }
     }

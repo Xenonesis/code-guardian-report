@@ -232,7 +232,6 @@ export function ModernNavbar({
           )}
         >
           {items.map((item) => {
-            const Icon = item.icon;
             const isActive = activeTab === item.name;
             const isHovered = hoveredTab === item.name;
 

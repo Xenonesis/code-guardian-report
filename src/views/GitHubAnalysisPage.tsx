@@ -271,7 +271,10 @@ export const GitHubAnalysisPage: React.FC = () => {
     }
   };
 
-  const handleAnalyzeRepository = async (repoUrl: string, repoName: string) => {
+  const handleAnalyzeRepository = async (
+    repoUrl: string,
+    _repoName: string
+  ) => {
     try {
       const { githubRepositoryService } =
         await import("@/services/githubRepositoryService");

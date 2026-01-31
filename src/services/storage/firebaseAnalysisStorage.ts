@@ -19,7 +19,6 @@ import {
   getDoc,
   query,
   where,
-  limit,
   serverTimestamp,
   onSnapshot,
   Timestamp,
@@ -666,36 +665,6 @@ export class FirebaseAnalysisStorageService {
   }
 
   // Private helper methods
-
-  private async getAnalysisByHash(
-    fileHash: string,
-    file: File
-  ): Promise<FirebaseAnalysisData | null> {
-    if (!this.userId) return null;
-
-    try {
-      const q = query(
-        collection(db, FirebaseAnalysisStorageService.COLLECTION_NAME),
-        where("userId", "==", this.userId),
-        where("fileHash", "==", fileHash),
-        where("fileName", "==", file.name),
-        limit(1)
-      );
-
-      const querySnapshot = await getDocs(q);
-
-      if (!querySnapshot.empty) {
-        const doc = querySnapshot.docs[0];
-        const data = doc.data() as Omit<FirebaseAnalysisData, "id">;
-        return { ...data, id: doc.id };
-      }
-
-      return null;
-    } catch (error) {
-      logger.error("Error getting analysis by hash:", error);
-      return null;
-    }
-  }
 
   private async updateUserStats(
     fileSize: number,

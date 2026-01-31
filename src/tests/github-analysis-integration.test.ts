@@ -3,7 +3,7 @@
  * Tests the full workflow from authentication to dashboard display
  */
 
-import { describe, it, expect, beforeEach, vi } from "vitest";
+import { describe, it, expect, beforeEach } from "vitest";
 import { GitHubAnalysisStorageService } from "@/services/storage/GitHubAnalysisStorageService";
 
 describe("GitHub Analysis Dashboard Integration", () => {

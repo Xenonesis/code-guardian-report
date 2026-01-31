@@ -2,7 +2,7 @@
 import { toast } from "sonner";
 
 // Helper function to show user-friendly messages for auth issues
-export const showAuthFallbackMessage = (provider: "github") => {
+export const showAuthFallbackMessage = (_provider: "github") => {
   toast.info(
     `GitHub sign-in popup was blocked. Redirecting to GitHub for authentication...`,
     {
@@ -33,7 +33,7 @@ export const showRedirectLoadingMessage = () => {
 };
 
 // Helper function to handle auth errors gracefully
-export const handleAuthError = (error: any, context: string) => {
+export const handleAuthError = (error: any, _context: string) => {
   // User-friendly error messages
   const errorMessages: Record<string, string> = {
     "auth/popup-blocked":

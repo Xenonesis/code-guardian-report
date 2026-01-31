@@ -1,16 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
-  Eye,
-  EyeOff,
   Copy,
-  Shield,
-  AlertTriangle,
-  Key,
-  Database,
-  Cloud,
-  Github,
-  Lock,
   ExternalLink,
   ChevronDown,
   ChevronRight,
@@ -49,7 +40,7 @@ export const SecretDetectionCard: React.FC<SecretDetectionCardProps> = ({
     }
   };
 
-  const getConfidenceBadge = (confidence: number) => {
+  const getConfidenceBadge = (_confidence: number) => {
     return "bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2 py-1 rounded text-xs font-medium";
   };
 

@@ -126,7 +126,7 @@ export class MultiLanguageParser {
   private parseJavaScriptTypeScript(
     code: string,
     language: SupportedLanguage,
-    filename: string
+    _filename: string
   ): ParsedAST {
     try {
       const ast = babelParse(code, {
@@ -163,7 +163,7 @@ export class MultiLanguageParser {
         errors: [],
         success: true,
       };
-    } catch (error) {
+    } catch {
       // Fallback to Acorn for plain JavaScript
       try {
         const ast = acornParse(code, {
@@ -202,7 +202,7 @@ export class MultiLanguageParser {
    * Parse Python code using regex-based pattern matching
    * Note: Full AST parsing would require tree-sitter or similar
    */
-  private parsePython(code: string, filename: string): ParsedAST {
+  private parsePython(code: string, _filename: string): ParsedAST {
     try {
       const ast = this.createPythonAST(code);
       return {
@@ -294,7 +294,7 @@ export class MultiLanguageParser {
   /**
    * Parse Java code using pattern matching
    */
-  private parseJava(code: string, filename: string): ParsedAST {
+  private parseJava(code: string, _filename: string): ParsedAST {
     try {
       const ast = this.createJavaAST(code);
       return {
@@ -395,7 +395,7 @@ export class MultiLanguageParser {
   private parseCpp(
     code: string,
     language: SupportedLanguage,
-    filename: string
+    _filename: string
   ): ParsedAST {
     try {
       const ast = this.createCppAST(code);
@@ -497,7 +497,7 @@ export class MultiLanguageParser {
   /**
    * Parse Go code
    */
-  private parseGo(code: string, filename: string): ParsedAST {
+  private parseGo(code: string, _filename: string): ParsedAST {
     try {
       const ast = this.createGoAST(code);
       return {
@@ -591,7 +591,7 @@ export class MultiLanguageParser {
   /**
    * Parse Rust code
    */
-  private parseRust(code: string, filename: string): ParsedAST {
+  private parseRust(code: string, _filename: string): ParsedAST {
     try {
       const ast = this.createRustAST(code);
       return {
@@ -705,7 +705,7 @@ export class MultiLanguageParser {
   /**
    * Parse PHP code
    */
-  private parsePHP(code: string, filename: string): ParsedAST {
+  private parsePHP(code: string, _filename: string): ParsedAST {
     try {
       const ast = this.createPHPAST(code);
       return {
@@ -801,7 +801,7 @@ export class MultiLanguageParser {
   /**
    * Parse C# code
    */
-  private parseCSharp(code: string, filename: string): ParsedAST {
+  private parseCSharp(code: string, _filename: string): ParsedAST {
     try {
       const ast = this.createCSharpAST(code);
       return {
@@ -905,7 +905,7 @@ export class MultiLanguageParser {
   /**
    * Parse Ruby code
    */
-  private parseRuby(code: string, filename: string): ParsedAST {
+  private parseRuby(code: string, _filename: string): ParsedAST {
     try {
       const ast = this.createRubyAST(code);
       return {
@@ -1001,7 +1001,7 @@ export class MultiLanguageParser {
   /**
    * Parse Swift code
    */
-  private parseSwift(code: string, filename: string): ParsedAST {
+  private parseSwift(code: string, _filename: string): ParsedAST {
     try {
       const ast = this.createSwiftAST(code);
       return {
@@ -1109,7 +1109,7 @@ export class MultiLanguageParser {
   /**
    * Parse Kotlin code
    */
-  private parseKotlin(code: string, filename: string): ParsedAST {
+  private parseKotlin(code: string, _filename: string): ParsedAST {
     try {
       const ast = this.createKotlinAST(code);
       return {

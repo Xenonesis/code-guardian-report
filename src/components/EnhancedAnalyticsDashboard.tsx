@@ -26,17 +26,6 @@ import { PerformanceMetrics } from "@/components/dashboard/PerformanceMetrics";
 import { useAnalyticsData } from "@/hooks/useAnalyticsData";
 import { SecurityIssue } from "@/hooks/useAnalysis";
 
-// Legacy Issue type for backward compatibility
-interface _Issue {
-  severity: "Critical" | "High" | "Medium" | "Low";
-  type: "Security" | "Bug" | "Code Smell" | "Vulnerability";
-  file: string;
-  line: number;
-  description: string;
-  tool?: string;
-  timestamp?: string;
-}
-
 interface EnhancedAnalyticsDashboardProps {
   issues: SecurityIssue[];
   totalFiles?: number;

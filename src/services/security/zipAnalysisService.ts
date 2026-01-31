@@ -149,7 +149,6 @@ export interface ZipAnalysisResult {
 export class ZipAnalysisService {
   private readonly MAX_FILE_SIZE = 100 * 1024 * 1024; // 100MB
   private readonly MAX_FILES = 10000;
-  private readonly MAX_DEPTH = 20;
 
   private malwarePatterns: RegExp[] = [
     /eval\s*\(\s*atob\s*\(/gi,
@@ -901,17 +900,6 @@ export class ZipAnalysisService {
     mi -= issues * 2; // Penalty for issues
 
     return Math.max(0, Math.min(100, Math.floor(mi)));
-  }
-
-  /**
-   * Generate a simple hash for string content
-   */
-  private simpleHash(str: string): string {
-    let hash = 0;
-    for (let i = 0; i < str.length; i++) {
-      hash = (hash << 5) - hash + str.charCodeAt(i);
-    }
-    return (hash >>> 0).toString(16);
   }
 }
 

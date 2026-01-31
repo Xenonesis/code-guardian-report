@@ -115,18 +115,6 @@ const CustomRulesEditor: React.FC = () => {
     }
   };
 
-  const handleUpdateRule = async (
-    ruleId: string,
-    updates: Partial<CustomRule>
-  ) => {
-    try {
-      await CustomRulesEngine.updateRule(ruleId, updates);
-      await loadRules();
-    } catch (error) {
-      logger.error("Failed to update rule:", error);
-    }
-  };
-
   const handleDeleteRule = async (ruleId: string) => {
     if (!confirm("Are you sure you want to delete this rule?")) return;
 

@@ -70,7 +70,7 @@ class ConnectionManager {
     this.listeners.forEach((listener) => {
       try {
         listener(isOnline);
-      } catch (error) {
+      } catch {
         // Silent error handling
       }
     });
@@ -107,7 +107,7 @@ class ConnectionManager {
         this.state.retryCount = 0;
         this.state.backoffDelay = 5000;
       }
-    } catch (error) {
+    } catch {
       if (this.state.isOnline) {
         this.updateConnectionState(false);
       }
@@ -185,7 +185,7 @@ class ConnectionManager {
           clearWebChannelFailures();
 
           return true;
-        } catch (resetError) {
+        } catch {
           this.isRecovering = false;
 
           // Increase backoff delay exponentially

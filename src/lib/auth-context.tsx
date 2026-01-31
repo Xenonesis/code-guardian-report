@@ -343,7 +343,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
               `userProfile_${user.uid}`,
               JSON.stringify(sanitizedFallbackProfile)
             );
-          } catch (e) {
+          } catch {
             // Silent fallback
           }
           return; // Keep fallback profile
@@ -358,7 +358,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             // Clear localStorage backup since Firestore is working
             try {
               localStorage.removeItem(`userProfile_${user.uid}`);
-            } catch (e) {
+            } catch {
               // Silent fallback
             }
           } else {
@@ -367,7 +367,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                 `userProfile_${user.uid}`,
                 JSON.stringify(sanitizedFallbackProfile)
               );
-            } catch (e) {
+            } catch {
               // Silent fallback
             }
           }
@@ -386,14 +386,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             // Clear localStorage backup since Firestore is working
             try {
               localStorage.removeItem(`userProfile_${user.uid}`);
-            } catch (e) {
+            } catch {
               // Silent fallback
             }
           } else {
             setUserProfile(existingProfile);
           }
         }
-      } catch (error) {
+      } catch {
         // Try to load from localStorage as fallback
         try {
           const storedProfile = localStorage.getItem(`userProfile_${user.uid}`);
@@ -404,7 +404,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
               lastLogin: new Date(), // Update last login time
             });
           }
-        } catch (e) {
+        } catch {
           // Silent fallback
         }
 

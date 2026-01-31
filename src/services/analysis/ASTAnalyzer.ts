@@ -85,7 +85,7 @@ export class ASTAnalyzer {
   /**
    * Parse JavaScript/TypeScript code into AST
    */
-  public parseJavaScript(code: string, filename: string): ASTNode | null {
+  public parseJavaScript(code: string, _filename: string): ASTNode | null {
     try {
       const ast = parse(code, {
         sourceType: "module",

@@ -16,7 +16,6 @@ export class PDFExportService {
   private pageWidth: number = 210;
   private pageHeight: number = 297;
   private margin: number = 20;
-  private lineHeight: number = 7;
 
   constructor() {
     this.doc = new jsPDF();

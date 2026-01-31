@@ -45,7 +45,7 @@ function ghApi(pathname) {
           if (res.statusCode && res.statusCode >= 200 && res.statusCode < 300) {
             try {
               resolve(JSON.parse(data));
-            } catch (_) {
+            } catch {
               resolve({});
             }
           } else {
@@ -98,7 +98,7 @@ async function fetchRepoStats() {
   };
 }
 
-function replaceBetween(content, startMarker, endMarker, newBlock) {
+function _replaceBetween(content, startMarker, endMarker, newBlock) {
   const startIdx = content.indexOf(startMarker);
   const endIdx = content.indexOf(endMarker, startIdx + startMarker.length);
   if (startIdx === -1 || endIdx === -1) return content; // not found

@@ -1,5 +1,4 @@
 // src/lib/firestore-error-handler.ts
-import { FirestoreError } from "firebase/firestore";
 
 export interface FirestoreErrorInfo {
   code: string;

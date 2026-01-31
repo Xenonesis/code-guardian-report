@@ -38,7 +38,7 @@ const SkipLink = () => (
  */
 export function MainLayout({ children }: MainLayoutProps) {
   const { online, firebaseConnected, usingMockData } = useConnectionStatus();
-  const { analysisResults } = useEnhancedAnalysis();
+  useEnhancedAnalysis();
   // Using navigation context just to ensure it's initialized if needed,
   // but mostly relying on useNavigation inside components.
 

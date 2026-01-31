@@ -15,12 +15,6 @@ interface ResultsTabsProps {
 export const ResultsTabs: React.FC<ResultsTabsProps> = ({ results }) => {
   const hasLanguageDetection = !!results.languageDetection;
 
-  // Calculate grid columns based on available features (Dependencies tab is always shown)
-  const _getGridCols = () => {
-    if (hasLanguageDetection) return "sm:grid-cols-5";
-    return "sm:grid-cols-4";
-  };
-
   return (
     <div className="w-full space-y-6">
       {/* Unified Metrics Header - Shows across all tabs */}

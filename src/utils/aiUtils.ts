@@ -28,7 +28,7 @@ export function hasConfiguredApiKeys(): boolean {
       parsedKeys.length > 0 &&
       parsedKeys.some((key) => key.key && key.key.trim().length > 0)
     );
-  } catch (error) {
+  } catch {
     return false;
   }
 }
@@ -48,7 +48,7 @@ export function getConfiguredProviders(): AIProvider[] {
       name: key.name,
       apiKey: key.key,
     }));
-  } catch (error) {
+  } catch {
     return [];
   }
 }
@@ -72,7 +72,7 @@ export function isProviderConfigured(providerId: string): boolean {
     return storedKeys.some(
       (key) => key.provider === providerId && key.key.trim().length > 0
     );
-  } catch (error) {
+  } catch {
     return false;
   }
 }

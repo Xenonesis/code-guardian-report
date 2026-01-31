@@ -233,7 +233,7 @@ class NotificationManagerClass {
       audio.play().catch(() => {
         // Ignore errors (e.g., user hasn't interacted with page yet)
       });
-    } catch (error) {
+    } catch {
       // Ignore sound errors
     }
   }

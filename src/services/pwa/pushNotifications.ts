@@ -43,7 +43,7 @@ class PushNotificationService {
       }
 
       return await this.requestPermission();
-    } catch (error) {
+    } catch {
       return false;
     }
   }
@@ -72,7 +72,7 @@ class PushNotificationService {
       await this.sendSubscriptionToServer(subscription);
 
       return true;
-    } catch (error) {
+    } catch {
       return false;
     }
   }
@@ -85,7 +85,7 @@ class PushNotificationService {
       await this.removeSubscriptionFromServer();
       this.subscription = null;
       return true;
-    } catch (error) {
+    } catch {
       return false;
     }
   }

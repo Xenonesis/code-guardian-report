@@ -14,7 +14,6 @@ import { useFileUpload } from "@/hooks/useFileUpload";
 import { FileUploadArea } from "@/components/upload/FileUploadArea";
 import { FileStatus } from "@/components/upload/FileStatus";
 import { GitHubRepoInput } from "@/components/upload/GitHubRepoInput";
-import { cn } from "@/lib/utils";
 
 interface UploadFormProps {
   onFileSelect: (file: File) => void;

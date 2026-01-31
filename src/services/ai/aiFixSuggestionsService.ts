@@ -223,7 +223,7 @@ Format your response as a JSON array with this structure:
       return suggestions.map((suggestion, index) =>
         this.validateAndEnhanceSuggestion(suggestion, request, index)
       );
-    } catch (error) {
+    } catch {
       // Fallback to basic suggestion
       return [this.createFallbackSuggestion(request)];
     }
@@ -502,7 +502,7 @@ Format your response as a JSON array with this structure:
   private applyInsertChange(
     lines: string[],
     change: CodeChange,
-    result: AutoRefactorResult
+    _result: AutoRefactorResult
   ): void {
     const insertIdx = change.startLine - 1;
     const newLines = change.suggestedCode.split("\n");
@@ -515,7 +515,7 @@ Format your response as a JSON array with this structure:
   private applyDeleteChange(
     lines: string[],
     change: CodeChange,
-    result: AutoRefactorResult
+    _result: AutoRefactorResult
   ): void {
     const startIdx = change.startLine - 1;
     const endIdx = change.endLine - 1;
@@ -556,7 +556,7 @@ Format your response as a JSON array with this structure:
         try {
           const suggestions = await this.generateFixSuggestions(request);
           return { issueId: request.issue.id, suggestions };
-        } catch (error) {
+        } catch {
           return { issueId: request.issue.id, suggestions: [] };
         }
       });

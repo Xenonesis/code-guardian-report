@@ -204,7 +204,7 @@ export class AnalysisStorageService {
       }
 
       return data;
-    } catch (error) {
+    } catch {
       toast({
         title: "Data Corrupted",
         description: "Unable to read stored analysis data. Starting fresh.",
@@ -256,7 +256,7 @@ export class AnalysisStorageService {
         ...history,
         currentAnalysis: this.getCurrentAnalysis(),
       };
-    } catch (error) {
+    } catch {
       toast({
         title: "Storage Error",
         description: "Unable to retrieve analysis history.",
@@ -298,7 +298,7 @@ export class AnalysisStorageService {
       } else {
         throw new Error("Invalid analysis data format");
       }
-    } catch (error) {
+    } catch {
       throw new Error("Failed to import analysis results");
     }
   }
@@ -386,7 +386,7 @@ export class AnalysisStorageService {
           try {
             const data: StoredAnalysisData = JSON.parse(newValue);
             this.notifyListeners(data);
-          } catch (error) {
+          } catch {
             // Silent error handling
           }
         } else {
@@ -752,16 +752,6 @@ export class AnalysisStorageService {
     };
   }
 
-  private formatBytes(bytes: number): string {
-    if (bytes === 0) return "0 Bytes";
-    const k = 1024;
-    const sizes = ["Bytes", "KB", "MB", "GB"];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return (
-      Number.parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i]
-    );
-  }
-
   private isVersionCompatible(version: string): boolean {
     const [major] = version.split(".").map(Number);
     const [currentMajor] =
@@ -816,7 +806,7 @@ export class AnalysisStorageService {
     for (const callback of this.listeners) {
       try {
         callback(data);
-      } catch (error) {
+      } catch {
         // Silent error handling
       }
     }

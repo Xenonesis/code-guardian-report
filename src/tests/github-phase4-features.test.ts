@@ -227,7 +227,7 @@ describe("GitHub Analysis Dashboard - Phase 4 Features", () => {
         { issues: 100, expected: 30 }, // capped at 30%
       ];
 
-      testCases.forEach(({ issues, expected }) => {
+      testCases.forEach(({ issues, expected: _expected }) => {
         const duplication = Math.min(
           30,
           Math.round(issues * 0.5 + Math.random() * 5)
@@ -328,7 +328,7 @@ describe("GitHub Analysis Dashboard - Phase 4 Features", () => {
       const avgIssues =
         repos.reduce((sum, r) => sum + r.issuesFound, 0) / repos.length;
 
-      vulnerabilityTypes.forEach((type) => {
+      vulnerabilityTypes.forEach((_type) => {
         const occurrences = Math.floor(Math.random() * avgIssues * 0.3) + 1;
         const trend = (Math.random() - 0.3) * 50;
 

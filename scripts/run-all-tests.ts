@@ -32,7 +32,7 @@ for (const test of tests) {
     execSync(test.command, { stdio: "inherit" });
     console.log(`${test.name} Passed`);
     passed++;
-  } catch (error) {
+  } catch {
     console.log(`${test.name} Failed`);
     failed++;
   }

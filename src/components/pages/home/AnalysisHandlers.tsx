@@ -1,7 +1,6 @@
 import { useToast } from "@/hooks/use-toast";
 import { AnalysisResults } from "@/hooks/useAnalysis";
 import { type StoredAnalysisData } from "../../../services/storage/analysisStorage";
-import { type FirebaseAnalysisData } from "../../../services/storage/firebaseAnalysisStorage";
 
 interface AnalysisHandlersProps {
   hasStoredData: boolean;
@@ -79,7 +78,7 @@ export const useAnalysisHandlers = ({
         variant: "default",
         duration: 2000,
       });
-    } catch (error) {
+    } catch {
       toast({
         title: "Export Failed",
         description: "Failed to export analysis data. Please try again.",
@@ -98,7 +97,7 @@ export const useAnalysisHandlers = ({
         variant: "default",
         duration: 2000,
       });
-    } catch (error) {
+    } catch {
       toast({
         title: "Import Failed",
         description:
@@ -118,7 +117,7 @@ export const useAnalysisHandlers = ({
         variant: "default",
         duration: 2000,
       });
-    } catch (error) {
+    } catch {
       toast({
         title: "Optimization Failed",
         description: "Failed to optimize storage. Please try again.",

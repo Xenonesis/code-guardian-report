@@ -10,7 +10,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const EMOJI_REGEX = /\p{Extended_Pictographic}/u;
+const _EMOJI_REGEX = /\p{Extended_Pictographic}/u;
 
 // Some symbols can match Extended_Pictographic in certain runtimes.
 // We explicitly allow these in documentation.
@@ -41,7 +41,7 @@ function isTextFile(filePath) {
 function readFileSafe(filePath) {
   try {
     return fs.readFileSync(filePath, "utf8");
-  } catch (e) {
+  } catch {
     return null;
   }
 }

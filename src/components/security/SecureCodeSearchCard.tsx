@@ -37,7 +37,6 @@ import {
   SecureCodeSearchService,
   SearchResult,
   SearchFilters,
-  CodeSnippet,
 } from "@/services/security/secureCodeSearchService";
 import { toast } from "sonner";
 
@@ -69,13 +68,11 @@ export const SecureCodeSearchCard: React.FC<SecureCodeSearchCardProps> = ({
   const [categories, setCategories] = useState<string[]>([]);
   const [languages, setLanguages] = useState<string[]>([]);
   const [frameworks, setFrameworks] = useState<string[]>([]);
-  const [tags, setTags] = useState<string[]>([]);
 
   const initializeData = useCallback(async () => {
     setCategories(searchService.getCategories() || []);
     setLanguages(searchService.getLanguages() || []);
     setFrameworks(searchService.getFrameworks() || []);
-    setTags(searchService.getTags() || []);
   }, [searchService]);
 
   const performSearch = useCallback(
@@ -120,7 +117,7 @@ export const SecureCodeSearchCard: React.FC<SecureCodeSearchCardProps> = ({
       setCopiedCode(title);
       toast.success(`Code snippet "${title}" copied to clipboard`);
       setTimeout(() => setCopiedCode(null), 2000);
-    } catch (err) {
+    } catch {
       toast.error("Failed to copy to clipboard");
     }
   };
@@ -309,7 +306,7 @@ export const SecureCodeSearchCard: React.FC<SecureCodeSearchCardProps> = ({
             </div>
 
             <div className="space-y-4">
-              {searchResults?.map((result, index) => (
+              {searchResults?.map((result, _index) => (
                 <Card
                   key={result.snippet.id}
                   className="border-l-4 border-l-blue-500"

@@ -714,7 +714,7 @@ export class ModernCodeScanningService {
    */
   private detectIssues(
     content: string,
-    filename: string,
+    _filename: string,
     language: string
   ): DetectedIssue[] {
     const issues: DetectedIssue[] = [];

@@ -562,7 +562,7 @@ export class FrameworkDetectionEngine {
       }
 
       return dependencies;
-    } catch (error) {
+    } catch {
       return [];
     }
   }

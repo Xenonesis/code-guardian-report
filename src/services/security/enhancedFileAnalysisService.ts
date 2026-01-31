@@ -407,7 +407,7 @@ export class EnhancedFileAnalysisService {
       /\?\s*:/g,
     ];
 
-    lines.forEach((line, index) => {
+    lines.forEach((line, _index) => {
       decisionPatterns.forEach((pattern) => {
         const matches = line.match(pattern);
         if (matches) {
@@ -480,10 +480,8 @@ export class EnhancedFileAnalysisService {
     const authenticationMechanisms: string[] = [];
     const authorizationChecks: APISecurityAnalysis["authorizationChecks"] = [];
 
-    const lines = content.split("\n");
-
     // Detect API endpoints
-    this.apiPatterns.forEach(({ pattern, framework }) => {
+    this.apiPatterns.forEach(({ pattern, framework: _framework }) => {
       let match;
       while ((match = pattern.exec(content)) !== null) {
         const lineNumber = content.substring(0, match.index).split("\n").length;

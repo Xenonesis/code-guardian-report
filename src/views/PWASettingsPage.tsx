@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { PWADashboard } from "../components/pwa/PWADashboard";
 import { PageLayout } from "../components/layout/PageLayout";
 import { Home, Settings, Smartphone, ChevronRight } from "lucide-react";

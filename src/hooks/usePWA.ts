@@ -261,9 +261,7 @@ export function useOfflineStorage() {
 export function useFileUpload() {
   const [uploadQueue, setUploadQueue] = useState<any[]>([]);
   const [isUploading, setIsUploading] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState<Record<string, number>>(
-    {}
-  );
+  const [uploadProgress] = useState<Record<string, number>>({});
 
   const uploadFile = useCallback(async (file: File) => {
     setIsUploading(true);

@@ -5,10 +5,6 @@ import { NextRequest, NextResponse } from "next/server";
  * Handles security headers, rate limiting headers, and request validation
  */
 
-// Rate limiting configuration
-const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
-const MAX_REQUESTS_PER_WINDOW = 100;
-
 // Security headers for all responses
 const securityHeaders = {
   // Prevent MIME type sniffing

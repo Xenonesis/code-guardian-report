@@ -65,7 +65,6 @@ export class CodeProvenanceService {
   private fileRecords: Map<string, FileIntegrityRecord> = new Map();
   private alerts: TamperingAlert[] = [];
   private monitoringEnabled = false;
-  private scanInterval: number | null = null;
 
   constructor() {
     this.loadStoredData();
@@ -646,14 +645,14 @@ export class CodeProvenanceService {
       };
       localStorage.setItem(
         "codeProvenance",
-        JSON.stringify(data, (key, value) => {
+        JSON.stringify(data, (_key, value) => {
           if (value instanceof Date) {
             return value.toISOString();
           }
           return value as unknown;
         })
       );
-    } catch (error) {
+    } catch {
       // Silent error handling
     }
   }
@@ -675,7 +674,7 @@ export class CodeProvenanceService {
         );
         this.monitoringEnabled = data.monitoringEnabled || false;
       }
-    } catch (error) {
+    } catch {
       // Silent error handling
     }
   }

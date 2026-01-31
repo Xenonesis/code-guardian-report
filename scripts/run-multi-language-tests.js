@@ -3,8 +3,6 @@
  * Runs comprehensive tests for all supported languages
  */
 
-import { execSync } from "child_process";
-import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -92,7 +90,7 @@ Object.keys(testCases).forEach((lang) => {
     // In a real implementation, this would call the analyzer
     console.log(`  ${lang} detected correctly from ${testCase.file}`);
     passedTests++;
-  } catch (error) {
+  } catch {
     console.log(`  Failed to detect ${lang}`);
     failedTests++;
   }
@@ -110,7 +108,7 @@ Object.entries(testCases).forEach(([lang, testCase]) => {
       // In a real implementation, this would analyze the code
       console.log(`  Detected: ${issue}`);
       passedTests++;
-    } catch (error) {
+    } catch {
       console.log(`  Failed to detect: ${issue}`);
       failedTests++;
     }

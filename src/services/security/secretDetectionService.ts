@@ -491,7 +491,7 @@ export class SecretDetectionService {
   /**
    * Entropy-based classifier for detecting high-entropy strings
    */
-  private entropyClassifier(text: string, context: string): number {
+  private entropyClassifier(text: string, _context: string): number {
     const entropy = this.calculateEntropy(text);
     const length = text.length;
 
@@ -513,7 +513,7 @@ export class SecretDetectionService {
   /**
    * Base64 pattern classifier
    */
-  private base64Classifier(text: string, context: string): number {
+  private base64Classifier(text: string, _context: string): number {
     // Check if string looks like base64
     const base64Pattern = /^[A-Za-z0-9+/]*={0,2}$/;
     const isBase64Like = base64Pattern.test(text);
@@ -537,7 +537,7 @@ export class SecretDetectionService {
   /**
    * Hexadecimal pattern classifier
    */
-  private hexClassifier(text: string, context: string): number {
+  private hexClassifier(text: string, _context: string): number {
     const hexPattern = /^[a-fA-F0-9]+$/;
     const isHex = hexPattern.test(text);
 
@@ -561,7 +561,7 @@ export class SecretDetectionService {
   /**
    * Context-based classifier using surrounding code
    */
-  private contextClassifier(text: string, context: string): number {
+  private contextClassifier(_text: string, context: string): number {
     const lowerContext = context.toLowerCase();
     let score = 0;
 

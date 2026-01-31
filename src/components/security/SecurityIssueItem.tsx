@@ -61,7 +61,7 @@ export const SecurityIssueItem: React.FC<SecurityIssueItemProps> = ({
       setCopiedCode(type);
       toast.success(`${type} copied to clipboard`);
       setTimeout(() => setCopiedCode(null), 2000);
-    } catch (error) {
+    } catch {
       toast.error("Failed to copy to clipboard");
     }
   };

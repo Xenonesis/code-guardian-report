@@ -113,7 +113,7 @@ class PushNotificationService {
       const registration = await navigator.serviceWorker.ready;
       const subscription = await registration.pushManager.getSubscription();
       return subscription !== null;
-    } catch (error) {
+    } catch {
       return false;
     }
   }

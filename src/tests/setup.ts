@@ -66,9 +66,12 @@ Object.defineProperty(window, "matchMedia", {
   })),
 });
 
-// Suppress console errors in tests
-vi.spyOn(console, "error").mockImplementation(() => {});
-vi.spyOn(console, "warn").mockImplementation(() => {});
+// Suppress console errors in tests (set DEBUG_TESTS=true to see output)
+const suppressConsole = process.env.DEBUG_TESTS !== "true";
+if (suppressConsole) {
+  vi.spyOn(console, "error").mockImplementation(() => {});
+  vi.spyOn(console, "warn").mockImplementation(() => {});
+}
 
 // Mock Firebase Firestore
 vi.mock("firebase/firestore", () => ({

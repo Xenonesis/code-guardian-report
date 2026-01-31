@@ -69,7 +69,7 @@ export function PWAManager() {
       await clearAppCache();
       await refreshCacheSize();
       toast.success("Cache cleared successfully");
-    } catch (error) {
+    } catch {
       toast.error("Failed to clear cache");
     } finally {
       setIsClearing(false);

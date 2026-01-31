@@ -446,7 +446,7 @@ class EnhancedBackgroundSyncService {
     };
   }
 
-  private detectConflicts(local: any, server: any): string[] {
+  private detectConflicts(_local: any, _server: any): string[] {
     const conflicts: string[] = [];
     // Add conflict detection logic
     return conflicts;

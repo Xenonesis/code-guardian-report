@@ -122,7 +122,6 @@ export interface RuleTemplate {
 
 class CustomRulesEngineClass {
   private rulesCollection = "customRules";
-  private ruleMatchesCollection = "ruleMatches";
 
   /**
    * Predefined rule templates
@@ -729,7 +728,7 @@ class CustomRulesEngineClass {
     if (rule.regex?.pattern) {
       try {
         new RegExp(rule.regex.pattern, rule.regex.flags);
-      } catch (e) {
+      } catch {
         errors.push("Invalid regex pattern syntax");
       }
     }
@@ -771,7 +770,13 @@ class CustomRulesEngineClass {
       for (const rule of rules) {
         try {
           // Remove ID to create new rule
-          const { id, createdAt, updatedAt, matchCount, ...ruleData } = rule;
+          const {
+            id: _id,
+            createdAt: _createdAt,
+            updatedAt: _updatedAt,
+            matchCount: _matchCount,
+            ...ruleData
+          } = rule;
 
           await this.createRule({
             ...ruleData,
@@ -786,7 +791,7 @@ class CustomRulesEngineClass {
           );
         }
       }
-    } catch (error) {
+    } catch {
       result.errors.push("Invalid JSON format");
     }
 

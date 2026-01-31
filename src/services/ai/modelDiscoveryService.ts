@@ -40,7 +40,7 @@ export async function fetchOpenAIModels(
         if (errorData.error?.message) {
           errorMessage = errorData.error.message;
         }
-      } catch (e) {
+      } catch {
         errorMessage = errorText || response.statusText;
       }
       return { success: false, models: [], error: errorMessage };
@@ -133,7 +133,7 @@ export async function fetchGeminiModels(
         if (errorData.error?.message) {
           errorMessage = errorData.error.message;
         }
-      } catch (e) {
+      } catch {
         errorMessage = errorText || response.statusText;
       }
       return { success: false, models: [], error: errorMessage };
@@ -267,7 +267,7 @@ export async function fetchClaudeModels(
       if (errorData.error?.message) {
         errorMessage = errorData.error.message;
       }
-    } catch (e) {
+    } catch {
       errorMessage = errorText || response.statusText;
     }
     return { success: false, models: [], error: errorMessage };
@@ -301,7 +301,7 @@ export async function fetchGroqModels(
         if (errorData.error?.message) {
           errorMessage = errorData.error.message;
         }
-      } catch (e) {
+      } catch {
         errorMessage = errorText || response.statusText;
       }
       return { success: false, models: [], error: errorMessage };

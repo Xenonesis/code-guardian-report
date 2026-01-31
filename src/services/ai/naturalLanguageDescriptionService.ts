@@ -25,7 +25,7 @@ export class NaturalLanguageDescriptionService {
 
       // Fill in the template with issue-specific details
       return this.populateTemplate(template, issue);
-    } catch (error) {
+    } catch {
       // Fallback to original message if generation fails
       return this.createFallbackDescription(issue);
     }

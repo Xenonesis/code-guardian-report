@@ -1,4 +1,3 @@
-import React from "react";
 import { AboutPageLayout } from "@/components/layout/AboutPageLayout";
 import { HeroSection } from "@/components/layout/HeroSection";
 import { AnimatedBackground } from "@/components/pages/about/AnimatedBackground";
