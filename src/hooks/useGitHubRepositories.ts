@@ -38,6 +38,18 @@ export const useGitHubRepositories = ({
   const [githubUsername, setGithubUsername] = useState<string | null>(null);
   const [githubUser, setGithubUser] = useState<GitHubUserProfile | null>(null);
 
+  // Validate GitHub username format (alphanumeric and hyphens only, 1-39 chars)
+  const isValidGitHubUsername = (username: string): boolean => {
+    // GitHub username rules:
+    // - Can only contain alphanumeric characters and hyphens
+    // - Cannot start or end with a hyphen
+    // - Cannot have consecutive hyphens
+    // - Must be 1-39 characters long
+    const githubUsernameRegex =
+      /^[a-zA-Z0-9](?:[a-zA-Z0-9]|-(?=[a-zA-Z0-9])){0,38}$/;
+    return githubUsernameRegex.test(username);
+  };
+
   // Check if email is associated with GitHub
   const checkGitHubAssociation = async (
     email: string
@@ -49,6 +61,14 @@ export const useGitHubRepositories = ({
 
       // Extract username from email if it's a common pattern
       const username = email.split("@")[0];
+
+      // Validate the extracted username before making API call
+      if (!isValidGitHubUsername(username)) {
+        logger.debug(
+          `Extracted username "${username}" is not a valid GitHub username format`
+        );
+        return null;
+      }
 
       // Try to fetch user profile (404 is expected and normal)
       const response = await fetch(`https://api.github.com/users/${username}`);
@@ -126,6 +146,14 @@ export const useGitHubRepositories = ({
 
   // Manually set GitHub username
   const setManualUsername = async (username: string) => {
+    // Validate username before making API calls
+    if (!username || !isValidGitHubUsername(username)) {
+      const errorMsg = `Invalid GitHub username format: "${username}". Usernames can only contain letters, numbers, and hyphens.`;
+      logger.warn(errorMsg);
+      setError(errorMsg);
+      return;
+    }
+
     setGithubUsername(username);
     await Promise.all([
       fetchRepositories(username),
@@ -211,6 +239,16 @@ export const useGitHubRepositories = ({
       const storedUsername = localStorage.getItem("github_username");
 
       if (previousPermission === "granted" && storedUsername) {
+        // Validate stored username before using it
+        if (!isValidGitHubUsername(storedUsername)) {
+          logger.warn(
+            `Invalid stored GitHub username: "${storedUsername}". Clearing stored data.`
+          );
+          localStorage.removeItem("github_username");
+          localStorage.removeItem("github_repo_permission");
+          return;
+        }
+
         setGithubUsername(storedUsername);
         await Promise.all([
           fetchRepositories(storedUsername),

@@ -76,6 +76,8 @@
     "functions",
     "scripts",
     "tests",
+    "src/tests",
+    "**/tests/**",
     "**/*.test.ts",
     "**/*.test.tsx",
     "**/*.spec.ts",
