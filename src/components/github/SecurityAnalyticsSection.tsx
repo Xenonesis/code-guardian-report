@@ -85,7 +85,34 @@ export const SecurityAnalyticsSection: React.FC<
       </div>
     );
   }
-
+  // Empty state when no analyses have been performed
+  if (trends.length === 0) {
+    return (
+      <div className="space-y-8">
+        <div>
+          <h2 className="text-foreground mb-2 flex items-center gap-2 text-2xl font-bold">
+            <Shield className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+            Security Analytics
+          </h2>
+          <p className="text-slate-600 dark:text-slate-400">
+            Comprehensive overview of your security posture and trends
+          </p>
+        </div>
+        <Card className="border-2 border-dashed border-slate-200 bg-slate-50/50 p-12 text-center dark:border-slate-800 dark:bg-slate-900/50">
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/30">
+            <Shield className="h-8 w-8 text-blue-600 dark:text-blue-400" />
+          </div>
+          <h3 className="text-foreground mb-2 text-xl font-semibold">
+            No Security Data Yet
+          </h3>
+          <p className="mx-auto max-w-md text-slate-500 dark:text-slate-400">
+            Analyze your first repository to see security analytics. Go to the
+            Repositories tab and analyze a GitHub repository to get started.
+          </p>
+        </Card>
+      </div>
+    );
+  }
   return (
     <div className="space-y-8">
       <div>

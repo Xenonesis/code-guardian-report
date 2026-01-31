@@ -77,6 +77,15 @@ export const GitHubAnalysisPage: React.FC = () => {
   const [analysisResults, setAnalysisResults] =
     useState<AnalysisResults | null>(null);
   const [analyzedRepoName, setAnalyzedRepoName] = useState<string>("");
+
+  // Wrapper to persist tab selection to localStorage
+  const handleTabChange = (tab: typeof selectedTab) => {
+    setSelectedTab(tab);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("github_selected_tab", tab);
+    }
+  };
+
   const [dashboardStats, setDashboardStats] = useState({
     repoCount: 0,
     avgScore: 0,
@@ -114,7 +123,7 @@ export const GitHubAnalysisPage: React.FC = () => {
     loadDashboardStats();
   }, [user?.uid, selectedTab]);
 
-  // GitHub repositories integration - now always enabled for authenticated users
+  // GitHub repositories integration - always enabled for authenticated users
   const {
     repositories,
     loading: reposLoading,
@@ -129,7 +138,7 @@ export const GitHubAnalysisPage: React.FC = () => {
     refreshRepositories,
   } = useGitHubRepositories({
     email: userProfile?.email || null,
-    enabled: !!user && !isGitHubUser, // For non-GitHub OAuth users
+    enabled: !!user, // Enable for all authenticated users
   });
 
   // Show error toast when repository fetch fails
@@ -145,13 +154,24 @@ export const GitHubAnalysisPage: React.FC = () => {
   // Auto-fetch GitHub data for GitHub authenticated users
   useEffect(() => {
     const autoFetchGitHubData = async () => {
-      if (!isGitHubUser || !userProfile?.githubUsername) return;
+      if (!isGitHubUser) return;
+
+      // Try to get username from profile or metadata
+      const username =
+        userProfile?.githubUsername ||
+        userProfile?.githubMetadata?.login ||
+        null;
+
+      if (!username) {
+        // No username available yet, wait for profile to load
+        return;
+      }
 
       // Validate username format before proceeding
-      if (!isValidGitHubUsername(userProfile.githubUsername)) {
+      if (!isValidGitHubUsername(username)) {
         // Clear invalid stored username if present
         const storedUsername = localStorage.getItem("github_username");
-        if (storedUsername === userProfile.githubUsername) {
+        if (storedUsername === username) {
           localStorage.removeItem("github_username");
           localStorage.removeItem("github_repo_permission");
         }
@@ -160,21 +180,29 @@ export const GitHubAnalysisPage: React.FC = () => {
 
       // For GitHub users, automatically set their username to trigger repo fetch
       const storedUsername = localStorage.getItem("github_username");
-      if (storedUsername !== userProfile.githubUsername) {
-        localStorage.setItem("github_username", userProfile.githubUsername);
+      if (storedUsername !== username) {
+        localStorage.setItem("github_username", username);
         localStorage.setItem("github_repo_permission", "granted");
-        const success = await setManualUsername(userProfile.githubUsername);
+        const success = await setManualUsername(username);
         if (success) {
-          logger.debug(
-            "Auto-fetched GitHub data for:",
-            userProfile.githubUsername
-          );
+          logger.debug("Auto-fetched GitHub data for:", username);
         }
+      } else if (repositories.length === 0 && !reposLoading) {
+        // Username is already stored but repos not loaded, refresh
+        refreshRepositories?.();
       }
     };
 
     autoFetchGitHubData();
-  }, [isGitHubUser, userProfile?.githubUsername, setManualUsername]);
+  }, [
+    isGitHubUser,
+    userProfile?.githubUsername,
+    userProfile?.githubMetadata?.login,
+    setManualUsername,
+    repositories.length,
+    reposLoading,
+    refreshRepositories,
+  ]);
 
   // Derive header profile view
   const nonGithubConnected = !isGitHubUser;
@@ -574,7 +602,7 @@ export const GitHubAnalysisPage: React.FC = () => {
 
             <GitHubNavigationTabs
               selectedTab={selectedTab}
-              setSelectedTab={setSelectedTab}
+              setSelectedTab={handleTabChange}
               analysisResults={analysisResults}
             />
           </div>
@@ -582,7 +610,7 @@ export const GitHubAnalysisPage: React.FC = () => {
 
         {/* Main Content Area */}
         <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-          {/* GitHub Repositories Section - Always show for authenticated users with repos */}
+          {/* GitHub Repositories Section - Show for authenticated users with repos */}
           {repositories.length > 0 && (
             <div className="mb-8">
               <Card className="border-slate-200 p-6 shadow-sm dark:border-slate-800">
@@ -619,7 +647,6 @@ export const GitHubAnalysisPage: React.FC = () => {
                     </Button>
                   </div>
                 </div>
-
                 {showGitHubRepos && (
                   <div className="animate-in fade-in slide-in-from-top-4 duration-300">
                     <GitHubRepositoryList
@@ -629,6 +656,49 @@ export const GitHubAnalysisPage: React.FC = () => {
                     />
                   </div>
                 )}
+              </Card>
+            </div>
+          )}
+
+          {/* Prompt to connect GitHub when no repos loaded */}
+          {repositories.length === 0 &&
+            !reposLoading &&
+            !isGitHubUser &&
+            !permissionGranted && (
+              <div className="mb-8">
+                <Card className="border-2 border-dashed border-purple-200 bg-purple-50/50 p-8 text-center dark:border-purple-800/50 dark:bg-purple-900/10">
+                  <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-purple-100 dark:bg-purple-900/30">
+                    <Github className="h-8 w-8 text-purple-600 dark:text-purple-400" />
+                  </div>
+                  <h3 className="mb-2 text-xl font-semibold text-slate-900 dark:text-white">
+                    Connect Your GitHub Account
+                  </h3>
+                  <p className="mx-auto mb-6 max-w-md text-slate-600 dark:text-slate-400">
+                    Link your GitHub username to automatically load your
+                    repositories for security analysis. Your public repos will
+                    be available for scanning.
+                  </p>
+                  <Button
+                    onClick={openConnectGitHubPrompt}
+                    className="bg-purple-600 text-white hover:bg-purple-700"
+                  >
+                    <Github className="mr-2 h-4 w-4" />
+                    Connect GitHub
+                  </Button>
+                </Card>
+              </div>
+            )}
+
+          {/* Loading state for repos */}
+          {reposLoading && repositories.length === 0 && (
+            <div className="mb-8">
+              <Card className="border-slate-200 p-8 text-center dark:border-slate-800">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center">
+                  <div className="h-10 w-10 animate-spin rounded-full border-4 border-slate-200 border-t-purple-600 dark:border-slate-700 dark:border-t-purple-400" />
+                </div>
+                <p className="text-slate-600 dark:text-slate-400">
+                  Loading your repositories...
+                </p>
               </Card>
             </div>
           )}

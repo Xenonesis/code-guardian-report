@@ -36,8 +36,15 @@ export const useGitHubRepositories = ({
   const [repositories, setRepositories] = useState<GitHubRepository[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [githubUsername, setGithubUsername] = useState<string | null>(null);
+  const [githubUsername, setGithubUsername] = useState<string | null>(() => {
+    // Initialize from localStorage to prevent SSR issues
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("github_username");
+    }
+    return null;
+  });
   const [githubUser, setGithubUser] = useState<GitHubUserProfile | null>(null);
+  const [initialized, setInitialized] = useState(false);
 
   // Note: isValidGitHubUsername is imported from @/utils/githubValidation
 
@@ -223,7 +230,11 @@ export const useGitHubRepositories = ({
 
   useEffect(() => {
     const initializeGitHubData = async () => {
-      if (!enabled || !email) {
+      // Prevent double initialization
+      if (initialized) return;
+
+      if (!enabled) {
+        setInitialized(true);
         return;
       }
 
@@ -239,6 +250,7 @@ export const useGitHubRepositories = ({
           );
           localStorage.removeItem("github_username");
           localStorage.removeItem("github_repo_permission");
+          setInitialized(true);
           return;
         }
 
@@ -247,19 +259,25 @@ export const useGitHubRepositories = ({
           fetchRepositories(storedUsername),
           fetchUserProfile(storedUsername),
         ]);
+        setInitialized(true);
         return;
       }
 
-      // Check if email is associated with GitHub
-      const username = await checkGitHubAssociation(email);
-      if (username) {
-        setGithubUsername(username);
-        await fetchUserProfile(username);
+      // Only check email association if we have an email and no stored username
+      if (email && !storedUsername) {
+        // Check if email is associated with GitHub
+        const username = await checkGitHubAssociation(email);
+        if (username) {
+          setGithubUsername(username);
+          await fetchUserProfile(username);
+        }
       }
+
+      setInitialized(true);
     };
 
     initializeGitHubData();
-  }, [email, enabled]);
+  }, [email, enabled, initialized]);
 
   const grantPermission = async () => {
     if (githubUsername) {
@@ -282,6 +300,13 @@ export const useGitHubRepositories = ({
     setGithubUsername(null);
   };
 
+  // Memoized permission states to avoid SSR issues
+  const getPermissionState = () => {
+    if (typeof window === "undefined") return { granted: false, denied: false };
+    const perm = localStorage.getItem("github_repo_permission");
+    return { granted: perm === "granted", denied: perm === "denied" };
+  };
+
   return {
     repositories,
     loading,
@@ -289,11 +314,8 @@ export const useGitHubRepositories = ({
     githubUsername,
     githubUser,
     hasGitHubAccount: !!githubUsername,
-    permissionGranted:
-      repositories.length > 0 ||
-      localStorage.getItem("github_repo_permission") === "granted",
-    permissionDenied:
-      localStorage.getItem("github_repo_permission") === "denied",
+    permissionGranted: repositories.length > 0 || getPermissionState().granted,
+    permissionDenied: getPermissionState().denied,
     grantPermission,
     denyPermission,
     revokePermission,

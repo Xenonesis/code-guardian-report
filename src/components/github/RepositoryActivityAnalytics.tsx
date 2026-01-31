@@ -66,7 +66,34 @@ export const RepositoryActivityAnalytics: React.FC<
       </div>
     );
   }
-
+  // Empty state when no analyses have been performed
+  if (activityStats.totalAnalyses === 0) {
+    return (
+      <div className="space-y-8">
+        <div>
+          <h2 className="text-foreground mb-2 flex items-center gap-2 text-2xl font-bold">
+            <Activity className="h-6 w-6 text-purple-600 dark:text-purple-400" />
+            Repository Activity
+          </h2>
+          <p className="text-slate-600 dark:text-slate-400">
+            Insights into your repository analysis patterns and language usage
+          </p>
+        </div>
+        <Card className="border-2 border-dashed border-slate-200 bg-slate-50/50 p-12 text-center dark:border-slate-800 dark:bg-slate-900/50">
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-purple-100 dark:bg-purple-900/30">
+            <Activity className="h-8 w-8 text-purple-600 dark:text-purple-400" />
+          </div>
+          <h3 className="text-foreground mb-2 text-xl font-semibold">
+            No Activity Data Yet
+          </h3>
+          <p className="mx-auto max-w-md text-slate-500 dark:text-slate-400">
+            Start analyzing repositories to see your activity patterns and
+            language distribution.
+          </p>
+        </Card>
+      </div>
+    );
+  }
   return (
     <div className="space-y-8">
       <div>

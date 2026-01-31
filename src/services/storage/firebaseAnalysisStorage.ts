@@ -66,6 +66,10 @@ export class FirebaseAnalysisStorageService {
   private static readonly USER_STATS_COLLECTION = "userStats";
   private static readonly MAX_HISTORY_SIZE = 50;
   private static readonly COMPRESSION_THRESHOLD = 100 * 1024; // 100KB
+  private static readonly FIRESTORE_MAX_DOC_SIZE = 1048576; // 1MB Firestore limit
+  private static readonly SAFE_DOC_SIZE = 900 * 1024; // 900KB safe limit with margin
+  private static readonly MAX_ISSUES_PER_DOCUMENT = 500; // Maximum issues to store
+  private static readonly MAX_CODE_SNIPPET_LENGTH = 500; // Maximum chars per code snippet
 
   private userId: string | null = null;
   private listeners: Set<(data: FirebaseAnalysisData[]) => void> = new Set();
@@ -126,13 +130,20 @@ export class FirebaseAnalysisStorageService {
 
       // Check if analysis with same hash already exists
 
-      // Compress results if they're large
+      // Truncate results to fit within Firestore's 1MB limit
+      const {
+        results: truncatedResults,
+        wasTruncated,
+        originalIssueCount,
+      } = this.truncateResultsForStorage(results);
+
+      // Compress results if they're still large after truncation
       const shouldCompress =
-        this.getDataSize(results) >
+        this.getDataSize(truncatedResults) >
         FirebaseAnalysisStorageService.COMPRESSION_THRESHOLD;
       const finalResults = shouldCompress
-        ? this.compressResults(results)
-        : results;
+        ? this.compressResults(truncatedResults)
+        : truncatedResults;
 
       const analysisData: Omit<FirebaseAnalysisData, "id"> = {
         userId: this.userId,
@@ -147,6 +158,12 @@ export class FirebaseAnalysisStorageService {
           engineVersion: "3.0.0",
           sessionId,
           deviceInfo: this.getDeviceInfo(),
+          // Track if results were truncated
+          ...(wasTruncated && {
+            truncated: true,
+            originalIssueCount,
+            storedIssueCount: finalResults.issues?.length || 0,
+          }),
         },
         tags: tags || [],
         isPublic,
@@ -159,13 +176,30 @@ export class FirebaseAnalysisStorageService {
       // Sanitize data before storing
       const sanitizedData = this.sanitizeObject(analysisData);
 
+      // Final size check before storing
+      const finalSize = this.getDataSize(sanitizedData);
+      if (finalSize > FirebaseAnalysisStorageService.FIRESTORE_MAX_DOC_SIZE) {
+        logger.error("Document still too large after truncation", {
+          size: finalSize,
+          limit: FirebaseAnalysisStorageService.FIRESTORE_MAX_DOC_SIZE,
+        });
+        throw new Error(
+          `Analysis results too large to store (${Math.round(finalSize / 1024)}KB). ` +
+            `Please analyze a smaller repository or contact support.`
+        );
+      }
+
       // Store in Firestore
       const docRef = await addDoc(
         collection(db, FirebaseAnalysisStorageService.COLLECTION_NAME),
         sanitizedData
       );
 
-      logger.debug("Analysis stored successfully with ID:", docRef.id);
+      logger.debug("Analysis stored successfully with ID:", docRef.id, {
+        wasTruncated,
+        originalIssueCount,
+        storedIssueCount: finalResults.issues?.length,
+      });
 
       // Update sync status
       await updateDoc(docRef, { syncStatus: "synced" });
@@ -493,12 +527,16 @@ export class FirebaseAnalysisStorageService {
         throw new Error("Not authorized to update this analysis");
       }
 
+      // Truncate results to fit within Firestore's 1MB limit
+      const { results: truncatedResults, wasTruncated } =
+        this.truncateResultsForStorage(results);
+
       const shouldCompress =
-        this.getDataSize(results) >
+        this.getDataSize(truncatedResults) >
         FirebaseAnalysisStorageService.COMPRESSION_THRESHOLD;
       const finalResults = shouldCompress
-        ? this.compressResults(results)
-        : results;
+        ? this.compressResults(truncatedResults)
+        : truncatedResults;
 
       const updateData: Partial<FirebaseAnalysisData> = {
         results: finalResults,
@@ -511,7 +549,21 @@ export class FirebaseAnalysisStorageService {
         updateData.tags = tags;
       }
 
+      // Final size check before updating
+      const finalSize = this.getDataSize(updateData);
+      if (finalSize > FirebaseAnalysisStorageService.FIRESTORE_MAX_DOC_SIZE) {
+        throw new Error(
+          `Updated analysis results too large to store (${Math.round(finalSize / 1024)}KB).`
+        );
+      }
+
       await updateDoc(docRef, this.sanitizeObject(updateData));
+
+      if (wasTruncated) {
+        logger.warn("Analysis results were truncated during update", {
+          analysisId,
+        });
+      }
 
       return analysisId;
     } catch (error) {
@@ -804,6 +856,153 @@ export class FirebaseAnalysisStorageService {
     }
 
     return obj;
+  }
+
+  /**
+   * Truncate results to fit within Firestore's 1MB document size limit
+   * This method progressively reduces data size by:
+   * 1. Limiting the number of issues
+   * 2. Truncating code snippets
+   * 3. Removing non-essential fields if still too large
+   */
+  private truncateResultsForStorage(results: AnalysisResults): {
+    results: AnalysisResults;
+    wasTruncated: boolean;
+    originalIssueCount: number;
+  } {
+    const originalIssueCount = results.issues?.length || 0;
+    let wasTruncated = false;
+
+    // Clone the results to avoid mutating the original
+    let truncatedResults: AnalysisResults = JSON.parse(JSON.stringify(results));
+
+    // Helper to truncate remediation object
+    const truncateRemediation = (
+      remediation: any,
+      maxDescLen: number = 1000,
+      maxCodeLen: number = 500
+    ) => {
+      if (!remediation) return undefined;
+      if (typeof remediation === "string") {
+        return remediation.substring(0, maxDescLen);
+      }
+      if (typeof remediation === "object") {
+        return {
+          ...remediation,
+          description:
+            typeof remediation.description === "string"
+              ? remediation.description.substring(0, maxDescLen)
+              : remediation.description,
+          codeExample:
+            typeof remediation.codeExample === "string"
+              ? remediation.codeExample.substring(0, maxCodeLen)
+              : remediation.codeExample,
+          fixExample:
+            typeof remediation.fixExample === "string"
+              ? remediation.fixExample.substring(0, maxCodeLen)
+              : remediation.fixExample,
+        };
+      }
+      return remediation;
+    };
+
+    // Step 1: Truncate code snippets and remediation
+    if (truncatedResults.issues) {
+      truncatedResults.issues = truncatedResults.issues.map((issue) => ({
+        ...issue,
+        codeSnippet:
+          typeof issue.codeSnippet === "string"
+            ? issue.codeSnippet.substring(
+                0,
+                FirebaseAnalysisStorageService.MAX_CODE_SNIPPET_LENGTH
+              )
+            : undefined,
+        remediation: truncateRemediation(issue.remediation),
+      }));
+    }
+
+    // Step 2: Check size and limit issues if needed
+    let currentSize = this.getDataSize(truncatedResults);
+
+    if (
+      currentSize > FirebaseAnalysisStorageService.SAFE_DOC_SIZE &&
+      truncatedResults.issues
+    ) {
+      wasTruncated = true;
+
+      // Sort by severity to keep most important issues
+      const severityOrder: Record<string, number> = {
+        critical: 0,
+        high: 1,
+        medium: 2,
+        low: 3,
+        info: 4,
+      };
+      truncatedResults.issues.sort(
+        (a, b) =>
+          (severityOrder[a.severity] ?? 5) - (severityOrder[b.severity] ?? 5)
+      );
+
+      // Progressively reduce number of issues until we're under the limit
+      let maxIssues = Math.min(
+        truncatedResults.issues.length,
+        FirebaseAnalysisStorageService.MAX_ISSUES_PER_DOCUMENT
+      );
+
+      while (
+        currentSize > FirebaseAnalysisStorageService.SAFE_DOC_SIZE &&
+        maxIssues > 50
+      ) {
+        maxIssues = Math.floor(maxIssues * 0.8); // Reduce by 20% each iteration
+        truncatedResults.issues = truncatedResults.issues.slice(0, maxIssues);
+        currentSize = this.getDataSize(truncatedResults);
+      }
+
+      // Step 3: If still too large, aggressively truncate code snippets and remove remediation examples
+      if (currentSize > FirebaseAnalysisStorageService.SAFE_DOC_SIZE) {
+        truncatedResults.issues = truncatedResults.issues.map((issue) => ({
+          ...issue,
+          codeSnippet:
+            typeof issue.codeSnippet === "string"
+              ? issue.codeSnippet.substring(0, 100) +
+                (issue.codeSnippet.length > 100 ? "..." : "")
+              : undefined,
+          // Keep only essential remediation info
+          remediation: issue.remediation
+            ? truncateRemediation(issue.remediation, 200, 100)
+            : undefined,
+        }));
+        currentSize = this.getDataSize(truncatedResults);
+      }
+
+      // Step 4: Final fallback - keep only essential issue info
+      if (currentSize > FirebaseAnalysisStorageService.SAFE_DOC_SIZE) {
+        truncatedResults.issues = truncatedResults.issues
+          .slice(0, 100)
+          .map((issue) => ({
+            id: issue.id,
+            title:
+              typeof issue.title === "string"
+                ? issue.title.substring(0, 200)
+                : issue.title,
+            severity: issue.severity,
+            category: issue.category,
+            file: issue.file,
+            line: issue.line,
+            // Remove codeSnippet and remediation entirely
+          }));
+      }
+
+      logger.warn(
+        `Analysis results truncated: ${originalIssueCount} issues reduced to ${truncatedResults.issues.length}`,
+        {
+          originalSize: this.getDataSize(results),
+          finalSize: this.getDataSize(truncatedResults),
+        }
+      );
+    }
+
+    return { results: truncatedResults, wasTruncated, originalIssueCount };
   }
 }
 
