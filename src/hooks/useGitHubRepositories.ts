@@ -1,6 +1,7 @@
 // hooks/useGitHubRepositories.ts
 import { useState, useEffect } from "react";
 import { logger } from "@/utils/logger";
+import { isValidGitHubUsername } from "@/utils/githubValidation";
 
 interface GitHubUserProfile {
   login: string;
@@ -38,17 +39,7 @@ export const useGitHubRepositories = ({
   const [githubUsername, setGithubUsername] = useState<string | null>(null);
   const [githubUser, setGithubUser] = useState<GitHubUserProfile | null>(null);
 
-  // Validate GitHub username format (alphanumeric and hyphens only, 1-39 chars)
-  const isValidGitHubUsername = (username: string): boolean => {
-    // GitHub username rules:
-    // - Can only contain alphanumeric characters and hyphens
-    // - Cannot start or end with a hyphen
-    // - Cannot have consecutive hyphens
-    // - Must be 1-39 characters long
-    const githubUsernameRegex =
-      /^[a-zA-Z0-9](?:[a-zA-Z0-9]|-(?=[a-zA-Z0-9])){0,38}$/;
-    return githubUsernameRegex.test(username);
-  };
+  // Note: isValidGitHubUsername is imported from @/utils/githubValidation
 
   // Check if email is associated with GitHub
   const checkGitHubAssociation = async (
@@ -145,13 +136,14 @@ export const useGitHubRepositories = ({
   };
 
   // Manually set GitHub username
-  const setManualUsername = async (username: string) => {
+  // Returns true if successful, false if validation failed
+  const setManualUsername = async (username: string): Promise<boolean> => {
     // Validate username before making API calls
     if (!username || !isValidGitHubUsername(username)) {
       const errorMsg = `Invalid GitHub username format: "${username}". Usernames can only contain letters, numbers, and hyphens.`;
       logger.warn(errorMsg);
       setError(errorMsg);
-      return;
+      return false;
     }
 
     setGithubUsername(username);
@@ -159,6 +151,7 @@ export const useGitHubRepositories = ({
       fetchRepositories(username),
       fetchUserProfile(username),
     ]);
+    return true;
   };
 
   // Fetch user repositories from GitHub

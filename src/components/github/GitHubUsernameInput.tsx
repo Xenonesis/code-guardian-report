@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import { Github, Check, X, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { logger } from "@/utils/logger";
+import {
+  isValidGitHubUsername,
+  getGitHubUsernameError,
+} from "@/utils/githubValidation";
 
 interface GitHubUsernameInputProps {
   isOpen: boolean;
@@ -25,8 +29,16 @@ const GitHubUsernameInput: React.FC<GitHubUsernameInputProps> = ({
   if (!isOpen) return null;
 
   const handleVerify = async () => {
-    if (!username.trim()) {
+    const trimmedUsername = username.trim();
+
+    if (!trimmedUsername) {
       setError("Please enter a username");
+      return;
+    }
+
+    // Validate username format before making API call
+    if (!isValidGitHubUsername(trimmedUsername)) {
+      setError(getGitHubUsernameError(trimmedUsername));
       return;
     }
 
@@ -35,13 +47,13 @@ const GitHubUsernameInput: React.FC<GitHubUsernameInputProps> = ({
 
     try {
       const response = await fetch(
-        `https://api.github.com/users/${username.trim()}`
+        `https://api.github.com/users/${trimmedUsername}`
       );
 
       if (response.ok) {
         const userData = await response.json();
         logger.debug("GitHub account verified:", userData.login);
-        onSuccess(username.trim());
+        onSuccess(trimmedUsername);
       } else if (response.status === 404) {
         setError("GitHub user not found. Please check the username.");
       } else {

@@ -33,6 +33,7 @@ import {
 } from "./auth-utils";
 
 import { logger } from "@/utils/logger";
+import { isValidGitHubUsername } from "@/utils/githubValidation";
 
 const removeUndefined = <T extends Record<string, any>>(obj: T): T => {
   return Object.fromEntries(
@@ -174,7 +175,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       const match = email.match(
         /^(?:\d+\+)?([^@]+)@users\.noreply\.github\.com$/
       );
-      if (match) return match[1];
+      if (match) {
+        const extractedUsername = match[1];
+        // Validate the extracted username format
+        if (!isValidGitHubUsername(extractedUsername)) {
+          logger.warn(
+            `Extracted invalid GitHub username format: "${extractedUsername}". Skipping.`
+          );
+          return null;
+        }
+        return extractedUsername;
+      }
     }
 
     // Return null - we'll fetch the username using the GitHub API with user ID

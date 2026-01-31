@@ -29,6 +29,7 @@ import GitHubRepositoryPermissionModal from "@/components/github/GitHubRepositor
 import GitHubRepositoryList from "@/components/github/GitHubRepositoryList";
 import { toast } from "sonner";
 import { logger } from "@/utils/logger";
+import { isValidGitHubUsername } from "@/utils/githubValidation";
 import { AnalysisResults } from "@/hooks/useAnalysis";
 import { cn } from "@/lib/utils";
 import { GitHubProfileHeader } from "@/components/github/GitHubProfileHeader";
@@ -146,16 +147,29 @@ export const GitHubAnalysisPage: React.FC = () => {
     const autoFetchGitHubData = async () => {
       if (!isGitHubUser || !userProfile?.githubUsername) return;
 
+      // Validate username format before proceeding
+      if (!isValidGitHubUsername(userProfile.githubUsername)) {
+        // Clear invalid stored username if present
+        const storedUsername = localStorage.getItem("github_username");
+        if (storedUsername === userProfile.githubUsername) {
+          localStorage.removeItem("github_username");
+          localStorage.removeItem("github_repo_permission");
+        }
+        return;
+      }
+
       // For GitHub users, automatically set their username to trigger repo fetch
       const storedUsername = localStorage.getItem("github_username");
       if (storedUsername !== userProfile.githubUsername) {
         localStorage.setItem("github_username", userProfile.githubUsername);
         localStorage.setItem("github_repo_permission", "granted");
-        await setManualUsername(userProfile.githubUsername);
-        logger.debug(
-          "Auto-fetched GitHub data for:",
-          userProfile.githubUsername
-        );
+        const success = await setManualUsername(userProfile.githubUsername);
+        if (success) {
+          logger.debug(
+            "Auto-fetched GitHub data for:",
+            userProfile.githubUsername
+          );
+        }
       }
     };
 
@@ -547,7 +561,7 @@ export const GitHubAnalysisPage: React.FC = () => {
           <div className="absolute inset-0 bg-slate-50/50 dark:bg-slate-900/50" />
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
 
-          <div className="relative z-10 mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+          <div className="relative z-10 mx-auto max-w-7xl px-4 pt-24 pb-12 sm:px-6 lg:px-8">
             <GitHubProfileHeader
               githubAvatarUrl={githubAvatarUrl}
               githubDisplayName={githubDisplayName}
