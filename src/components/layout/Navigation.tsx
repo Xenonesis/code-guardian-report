@@ -290,7 +290,7 @@ export const Navigation: React.FC<NavigationProps> = ({
 
                 {/* User Dropdown */}
                 {showUserDropdown && (
-                  <div className="animate-in fade-in slide-in-from-top-2 border-border bg-popover absolute right-0 z-50 mt-2 w-56 rounded-xl border py-2 shadow-xl duration-200">
+                  <div className="animate-in fade-in slide-in-from-top-2 border-border absolute right-0 z-50 mt-2 w-56 rounded-xl border bg-white/95 py-2 shadow-xl backdrop-blur duration-200 supports-[backdrop-filter]:bg-white/80 dark:bg-slate-900/95 dark:supports-[backdrop-filter]:bg-slate-900/80">
                     <div className="border-b border-slate-100 px-4 py-3 dark:border-slate-800">
                       <p className="text-foreground truncate text-sm font-semibold">
                         {userProfile?.displayName ||
