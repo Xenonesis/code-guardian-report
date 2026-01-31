@@ -1,12 +1,20 @@
-// @ts-nocheck - Suppress Babel type version mismatch errors
+// Babel traverse types require special handling due to CJS/ESM interop
 import { parse } from "@babel/parser";
-import traverse from "@babel/traverse";
+import traverseModule from "@babel/traverse";
 import type { NodePath } from "@babel/traverse";
 import * as t from "@babel/types";
 import { parse as acornParse } from "acorn";
 import { SecurityIssue } from "@/hooks/useAnalysis";
 
 import { logger } from "@/utils/logger";
+
+// Handle Babel traverse CJS/ESM interop
+const traverse = (
+  typeof traverseModule === "function"
+    ? traverseModule
+    : (traverseModule as { default: typeof traverseModule }).default
+) as typeof traverseModule;
+
 export interface ASTNode {
   type: string;
   loc?: {
@@ -129,12 +137,8 @@ export class ASTAnalyzer {
 
     try {
       // Use Babel traverse for detailed analysis
-       
-      const traverseFunction =
-        typeof traverse === "function" ? traverse : (traverse as any).default;
-      traverseFunction(ast as any, {
+      traverse(ast as t.Node, {
         // Detect dangerous function calls
-        // @ts-expect-error - Babel type version mismatch
         CallExpression: (path: NodePath<t.CallExpression>) => {
           try {
             const node = path.node;
@@ -193,7 +197,6 @@ export class ASTAnalyzer {
         },
 
         // Detect dangerous member expressions (e.g., dangerouslySetInnerHTML)
-        // @ts-expect-error - Babel type version mismatch
         JSXAttribute: (path: NodePath<t.JSXAttribute>) => {
           try {
             const node = path.node;

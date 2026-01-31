@@ -29,9 +29,29 @@ service cloud.firestore {
       allow create: if request.auth != null && request.auth.uid == request.resource.data.userId;
     }
     
-    // Allow authenticated users to access shared resources
+    // Push notification subscriptions - users can only manage their own
+    match /pushSubscriptions/{subscriptionId} {
+      allow read, write: if request.auth != null && request.auth.uid == resource.data.userId;
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.userId;
+    }
+    
+    // Analytics data - users can only read their own, write requires validation
+    match /analytics/{analyticsId} {
+      allow read: if request.auth != null && request.auth.uid == resource.data.userId;
+      allow create: if request.auth != null 
+        && request.auth.uid == request.resource.data.userId
+        && request.resource.data.keys().hasAll(['userId', 'event', 'timestamp']);
+    }
+    
+    // Shared/public resources (read-only for authenticated users)
+    match /publicResources/{resourceId} {
+      allow read: if request.auth != null;
+      allow write: if false; // Admin-only via Firebase Admin SDK
+    }
+    
+    // Deny all other access by default (security best practice)
     match /{document=**} {
-      allow read, write: if request.auth != null;
+      allow read, write: if false;
     }
  }
 }

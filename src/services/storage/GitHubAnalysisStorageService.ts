@@ -99,11 +99,13 @@ export class GitHubAnalysisStorageService {
 
       if (typeof window !== "undefined") {
         setTimeout(() => {
-          const toastNotifications = (window as any).toastNotifications;
+          const toastNotifications = window.toastNotifications;
           if (toastNotifications) {
-            toastNotifications.offline();
-          } else if ((window as any).showToast) {
-            (window as any).showToast(
+            toastNotifications.warning(
+              "Unable to fetch repositories. Please check your connection."
+            );
+          } else if (window.showToast) {
+            window.showToast(
               "warning",
               "Offline Mode",
               "Unable to fetch repositories. Please check your connection."
@@ -118,9 +120,9 @@ export class GitHubAnalysisStorageService {
       }
 
       // Only return mock data in development (with warning)
-      if (typeof window !== "undefined" && (window as any).toastNotifications) {
+      if (typeof window !== "undefined" && window.toastNotifications) {
         setTimeout(() => {
-          (window as any).toastNotifications.mockDataWarning();
+          window.toastNotifications?.mockDataWarning();
         }, 0);
       }
       return this.getMockRepositories();
@@ -170,11 +172,13 @@ export class GitHubAnalysisStorageService {
 
       if (typeof window !== "undefined") {
         setTimeout(() => {
-          const serviceToasts = (window as any).toastNotifications?.services;
-          if (serviceToasts) {
-            serviceToasts.analysisHistory.loadError();
-          } else if ((window as any).showToast) {
-            (window as any).showToast(
+          const toastNotifications = window.toastNotifications;
+          if (toastNotifications?.services) {
+            toastNotifications.services.analysisFailed(
+              "Unable to fetch analysis history"
+            );
+          } else if (window.showToast) {
+            window.showToast(
               "warning",
               "Offline Mode",
               "Unable to fetch analysis history. Please check your connection."
@@ -189,9 +193,9 @@ export class GitHubAnalysisStorageService {
       }
 
       // Only return mock data in development (with warning)
-      if (typeof window !== "undefined" && (window as any).toastNotifications) {
+      if (typeof window !== "undefined" && window.toastNotifications) {
         setTimeout(() => {
-          (window as any).toastNotifications.mockDataWarning();
+          window.toastNotifications?.mockDataWarning();
         }, 0);
       }
       return this.getMockAnalysisHistory();

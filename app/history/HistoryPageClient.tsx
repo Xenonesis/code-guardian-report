@@ -1,6 +1,5 @@
 "use client";
 
-import { PageShell } from "@/components/PageShell";
 import { HistoryPage as HistoryPageContent } from "@/views/HistoryPage";
 import { useNavigation } from "@/lib/navigation-context";
 import { useEnhancedAnalysis } from "@/hooks/useEnhancedAnalysis";
@@ -36,11 +35,9 @@ export default function HistoryPageClient() {
   };
 
   return (
-    <PageShell>
-      <HistoryPageContent
-        onAnalysisSelect={handleAnalysisSelect}
-        onNavigateBack={handleNavigateBack}
-      />
-    </PageShell>
+    <HistoryPageContent
+      onAnalysisSelect={handleAnalysisSelect}
+      onNavigateBack={handleNavigateBack}
+    />
   );
 }

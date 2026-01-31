@@ -1,11 +1,19 @@
-// @ts-nocheck - Suppress Babel type version mismatch errors
+// Babel traverse types require special handling due to CJS/ESM interop
 import { SecurityIssue } from "@/hooks/useAnalysis";
 import { parse } from "@babel/parser";
-import traverse from "@babel/traverse";
+import traverseModule from "@babel/traverse";
 import type { NodePath } from "@babel/traverse";
 import * as t from "@babel/types";
 
 import { logger } from "@/utils/logger";
+
+// Handle Babel traverse CJS/ESM interop
+const traverse = (
+  typeof traverseModule === "function"
+    ? traverseModule
+    : (traverseModule as { default: typeof traverseModule }).default
+) as typeof traverseModule;
+
 export interface TaintFlow {
   source: {
     line: number;
@@ -156,10 +164,7 @@ export class DataFlowAnalyzer {
    * Track data flow through the code
    */
   private trackDataFlow(ast: t.File, fileName: string, content: string): void {
-     
-    const traverseFunction =
-      typeof traverse === "function" ? traverse : (traverse as any).default;
-    traverseFunction(ast as any, {
+    traverse(ast, {
       // Track variable declarations and assignments
       VariableDeclarator: (path: NodePath<t.VariableDeclarator>) => {
         const node = path.node;
@@ -365,9 +370,7 @@ export class DataFlowAnalyzer {
     const taintedVars: string[] = [];
 
     try {
-      const traverseFunction =
-        typeof traverse === "function" ? traverse : (traverse as any).default;
-      traverseFunction(
+      traverse(
         t.file(t.program([t.expressionStatement(node as t.Expression)])),
         {
           Identifier: (path: NodePath<t.Identifier>) => {
@@ -376,11 +379,9 @@ export class DataFlowAnalyzer {
               taintedVars.push(varName);
             }
           },
-        },
-        undefined,
-        {}
+        }
       );
-    } catch (error) {
+    } catch {
       // Fallback: simple regex-based variable extraction
       const nodeStr = String(node);
       for (const [varName] of this.taintedVariables) {

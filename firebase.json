@@ -4,8 +4,10 @@
     "indexes": "firestore.indexes.json"
   },
   "hosting": {
-    "public": "out",
+    "public": ".next/static",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "cleanUrls": true,
+    "trailingSlash": false,
     "headers": [
       {
         "source": "**/*.@(js|css|png|jpg|jpeg|gif|svg|webp|woff|woff2)",

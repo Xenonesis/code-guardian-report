@@ -99,12 +99,19 @@ export const processWebhook = onRequest(async (req, res) => {
       .get();
 
     // Apply rules
-    const rulesToExecute: any[] = [];
+    interface MonitoringRule {
+      id: string;
+      name: string;
+      condition: string;
+      action: string;
+      enabled: boolean;
+    }
+    const rulesToExecute: MonitoringRule[] = [];
 
     rulesSnapshot.forEach((doc) => {
       const rule = doc.data();
       if (evaluateRule(rule, event)) {
-        rulesToExecute.push({ id: doc.id, ...rule });
+        rulesToExecute.push({ id: doc.id, ...rule } as MonitoringRule);
       }
     });
 
@@ -250,7 +257,7 @@ async function validateSignature(
     const hmac = crypto.createHmac("sha256", secret);
     const digest = "sha256=" + hmac.update(payload).digest("hex");
     return crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(digest));
-  } catch (error) {
+  } catch {
     return false;
   }
 }

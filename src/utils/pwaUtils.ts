@@ -14,7 +14,7 @@ export const isPWAInstalled = (): boolean => {
   return (
     window.matchMedia("(display-mode: standalone)").matches ||
     window.matchMedia("(display-mode: fullscreen)").matches ||
-    (window.navigator as any).standalone === true
+    window.navigator.standalone === true
   );
 };
 

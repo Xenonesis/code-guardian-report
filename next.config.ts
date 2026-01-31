@@ -17,10 +17,9 @@ const nextConfig: NextConfig = {
   // Enable standalone output for Docker deployments
   output: isProd ? "standalone" : undefined,
 
-  // Production: Ignore TypeScript errors during build (run type-check separately)
-  // Note: Run `npm run type-check` before deploying to catch type errors
+  // TypeScript strict mode - catch errors at build time
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false,
   },
 
   // Powered by header (security through obscurity)

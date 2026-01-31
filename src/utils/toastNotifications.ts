@@ -197,8 +197,8 @@ export const toastNotifications = {
  */
 export function setupGlobalToast() {
   if (typeof window !== "undefined") {
-    (window as any).showToast = showToast;
-    (window as any).toastNotifications = toastNotifications;
+    window.showToast = showToast;
+    window.toastNotifications = toastNotifications;
   }
 }
 
