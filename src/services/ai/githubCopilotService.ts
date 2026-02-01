@@ -65,7 +65,6 @@ export interface CopilotCompletionResponse {
 export class GitHubCopilotService {
   private static instance: GitHubCopilotService;
   private readonly STORAGE_KEY = "github_copilot_auth";
-  private readonly API_BASE_URL = "https://api.githubcopilot.com";
   private authConfig: GitHubCopilotAuthConfig | null = null;
 
   private constructor() {
@@ -295,9 +294,7 @@ export class GitHubCopilotService {
   /**
    * Make a completion request to GitHub Copilot
    */
-  public async createCompletion(
-    request: CopilotCompletionRequest
-  ): Promise<{
+  public async createCompletion(request: CopilotCompletionRequest): Promise<{
     success: boolean;
     data?: CopilotCompletionResponse;
     error?: string;

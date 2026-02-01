@@ -74,7 +74,7 @@ export class AIService {
       const storedKeys = await secureStorage.getAPIKeys();
 
       // Convert stored format to expected format
-      const providers = storedKeys.map((key) => ({
+      const providers: AIProvider[] = storedKeys.map((key) => ({
         id: key.provider,
         name: key.name,
         apiKey: key.key,

@@ -3,7 +3,7 @@
 
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { copilotAnalytics } from "@/services/ai/copilotAnalytics";
 import type { CopilotAnalyticsData } from "@/services/ai/copilotAnalytics";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";

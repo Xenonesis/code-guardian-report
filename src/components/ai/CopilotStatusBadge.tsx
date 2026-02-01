@@ -3,7 +3,6 @@
 
 "use client";
 
-import React from "react";
 import { useGitHubCopilot } from "@/hooks/useGitHubCopilot";
 import { Badge } from "@/components/ui/badge";
 import { Sparkles, AlertCircle } from "lucide-react";

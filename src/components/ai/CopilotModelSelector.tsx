@@ -3,7 +3,6 @@
 
 "use client";
 
-import React from "react";
 import { useGitHubCopilot } from "@/hooks/useGitHubCopilot";
 import { Button } from "@/components/ui/button";
 import {

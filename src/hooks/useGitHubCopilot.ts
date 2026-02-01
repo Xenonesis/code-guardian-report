@@ -218,7 +218,7 @@ export function useGitHubCopilot() {
           throw new Error(result.error || "Failed to generate completion");
         }
 
-        return result.data;
+        return result.data || "";
       } catch (err) {
         logger.error("Error generating completion:", err);
         throw err;

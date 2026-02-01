@@ -3,7 +3,7 @@
 
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { useGitHubCopilot } from "@/hooks/useGitHubCopilot";
 import { useAuth } from "@/lib/auth-context";
 import { Card } from "@/components/ui/card";
@@ -179,9 +179,11 @@ export function GitHubCopilotManager() {
           </Alert>
         )}
 
-        {error && (
+        {authState.hasCopilotAccess === false && (
           <Alert className="mt-4 border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-900/20">
-            <p className="text-sm text-red-800 dark:text-red-200">{error}</p>
+            <p className="text-sm text-red-800 dark:text-red-200">
+              GitHub Copilot access not available
+            </p>
           </Alert>
         )}
       </Card>
