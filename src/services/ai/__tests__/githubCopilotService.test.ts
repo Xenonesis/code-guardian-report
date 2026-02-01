@@ -311,15 +311,10 @@ describe("GitHubCopilotService", () => {
   describe("Connection Testing", () => {
     it("should test connection successfully", async () => {
       // Setup authenticated state
-      mockFetch
-        .mockResolvedValueOnce({
-          ok: true,
-          json: async () => ({ login: "testuser" }),
-        })
-        .mockResolvedValueOnce({
-          ok: true,
-          json: async () => ({ assignee: { login: "testuser" } }),
-        });
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ login: "testuser" }),
+      });
 
       await service.authenticateWithGitHub("ghp_test_token");
       mockFetch.mockClear();
