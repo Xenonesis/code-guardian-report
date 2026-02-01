@@ -311,35 +311,39 @@ describe("GitHubCopilotService", () => {
   describe("Connection Testing", () => {
     it("should test connection successfully", async () => {
       // Setup authenticated state
-      mockFetch.mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ login: "testuser" }),
+      mockFetch.mockImplementation((url) => {
+        if (url === "https://api.github.com/user") {
+          return Promise.resolve({
+            ok: true,
+            json: async () => ({ login: "testuser", id: 12345 }),
+          } as Response);
+        }
+        if (url === "/api/copilot/completions") {
+          return Promise.resolve({
+            ok: true,
+            json: async () => ({
+              id: "test-id",
+              model: "gpt-3.5-turbo",
+              choices: [
+                {
+                  index: 0,
+                  message: { role: "assistant", content: "Hello!" },
+                  finishReason: "stop",
+                },
+              ],
+              usage: {
+                promptTokens: 10,
+                completionTokens: 5,
+                totalTokens: 15,
+              },
+              created: Date.now(),
+            }),
+          } as Response);
+        }
+        return Promise.reject(new Error(`Unexpected URL: ${url}`));
       });
 
       await service.authenticateWithGitHub("ghp_test_token");
-      mockFetch.mockClear();
-
-      // Mock completion response (API proxy endpoint)
-      mockFetch.mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          id: "test-id",
-          model: "gpt-3.5-turbo",
-          choices: [
-            {
-              index: 0,
-              message: { role: "assistant", content: "Hello!" },
-              finishReason: "stop",
-            },
-          ],
-          usage: {
-            promptTokens: 10,
-            completionTokens: 5,
-            totalTokens: 15,
-          },
-          created: Date.now(),
-        }),
-      });
 
       const result = await service.testConnection();
 
