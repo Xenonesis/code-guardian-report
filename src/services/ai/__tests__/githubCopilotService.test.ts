@@ -54,20 +54,15 @@ describe("GitHubCopilotService", () => {
 
   describe("Authentication", () => {
     it("should successfully authenticate with valid GitHub token", async () => {
-      mockFetch
-        .mockResolvedValueOnce({
-          ok: true,
-          json: async () => ({ login: "testuser", id: 12345 }),
-        })
-        .mockResolvedValueOnce({
-          ok: true,
-          json: async () => ({ assignee: { login: "testuser" } }),
-        });
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ login: "testuser", id: 12345 }),
+      });
 
       const result = await service.authenticateWithGitHub("ghp_test_token");
 
       expect(result.success).toBe(true);
-      expect(mockFetch).toHaveBeenCalledTimes(2);
+      expect(mockFetch).toHaveBeenCalledTimes(1);
       expect(service.isAuthenticated()).toBe(true);
     });
 
@@ -86,15 +81,10 @@ describe("GitHubCopilotService", () => {
     });
 
     it("should detect Copilot access", async () => {
-      mockFetch
-        .mockResolvedValueOnce({
-          ok: true,
-          json: async () => ({ login: "testuser", id: 12345 }),
-        })
-        .mockResolvedValueOnce({
-          ok: true,
-          json: async () => ({ assignee: { login: "testuser" } }),
-        });
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ login: "testuser", id: 12345 }),
+      });
 
       const result = await service.authenticateWithGitHub("ghp_test_token");
 
@@ -359,15 +349,10 @@ describe("GitHubCopilotService", () => {
 
   describe("Token Storage", () => {
     it("should persist auth config to localStorage", async () => {
-      mockFetch
-        .mockResolvedValueOnce({
-          ok: true,
-          json: async () => ({ login: "testuser", id: 12345 }),
-        })
-        .mockResolvedValueOnce({
-          ok: true,
-          json: async () => ({ assignee: { login: "testuser" } }),
-        });
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({ login: "testuser", id: 12345 }),
+      });
 
       await service.authenticateWithGitHub("ghp_test_token");
 
