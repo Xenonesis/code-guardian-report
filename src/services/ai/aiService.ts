@@ -33,6 +33,7 @@ export class AIService {
     maxRequests: 10, // 10 requests per minute per provider
     windowMs: 60000, // 1 minute window
   };
+  private githubCopilotService: any = null;
 
   /**
    * Check and enforce rate limiting
@@ -73,15 +74,75 @@ export class AIService {
       const storedKeys = await secureStorage.getAPIKeys();
 
       // Convert stored format to expected format
-      return storedKeys.map((key) => ({
+      const providers = storedKeys.map((key) => ({
         id: key.provider,
         name: key.name,
         apiKey: key.key,
         model: key.model || this.getDefaultModel(key.provider),
       }));
+
+      // Add GitHub Copilot if authenticated
+      const copilotProvider = await this.getGitHubCopilotProvider();
+      if (copilotProvider) {
+        providers.unshift(copilotProvider); // Add at beginning for priority
+      }
+
+      return providers;
     } catch (error) {
       logger.error("Error retrieving stored API keys:", error);
       return [];
+    }
+  }
+
+  /**
+   * Get GitHub Copilot as a provider if authenticated
+   */
+  private async getGitHubCopilotProvider(): Promise<AIProvider | null> {
+    try {
+      // Lazy load to avoid circular dependencies
+      if (!this.githubCopilotService) {
+        const { githubCopilotService } = await import("./githubCopilotService");
+        this.githubCopilotService = githubCopilotService;
+      }
+
+      // Check if user has GitHub OAuth token (signed in with GitHub)
+      const githubToken = localStorage.getItem("github_oauth_token");
+
+      // Auto-authenticate if user has GitHub token but Copilot is not authenticated
+      if (githubToken && !this.githubCopilotService.isAuthenticated()) {
+        logger.debug(
+          "Auto-authenticating GitHub Copilot with user's GitHub token"
+        );
+        try {
+          await this.githubCopilotService.authenticateWithGitHub(githubToken);
+        } catch (error) {
+          logger.warn("Auto-authentication with GitHub Copilot failed:", error);
+          return null;
+        }
+      }
+
+      if (!this.githubCopilotService.isAuthenticated()) {
+        return null;
+      }
+
+      // Get selected model from localStorage or use default
+      const selectedModelId =
+        localStorage.getItem("copilot_selected_model") || "gpt-4o";
+
+      logger.debug(
+        "GitHub Copilot is available as AI provider with model:",
+        selectedModelId
+      );
+
+      return {
+        id: "github-copilot",
+        name: "GitHub Copilot (Your Subscription)",
+        apiKey: "copilot-authenticated", // Placeholder, actual auth handled by service
+        model: selectedModelId,
+      };
+    } catch (error) {
+      logger.debug("GitHub Copilot not available:", error);
+      return null;
     }
   }
 
@@ -389,6 +450,8 @@ export class AIService {
         );
 
         switch (provider.id) {
+          case "github-copilot":
+            return await this.callGitHubCopilot(messages, provider.model);
           case "openai":
             return await this.callOpenAI(
               provider.apiKey,
@@ -424,6 +487,55 @@ export class AIService {
     const detailedError =
       errors.length > 0 ? errors.join("; ") : "No errors captured";
     throw new Error(`All AI providers failed. Errors: ${detailedError}`);
+  }
+
+  /**
+   * Call GitHub Copilot API
+   */
+  private async callGitHubCopilot(
+    messages: ChatMessage[],
+    model?: string
+  ): Promise<string> {
+    logger.debug("Calling GitHub Copilot API...");
+
+    try {
+      // Lazy load to avoid circular dependencies
+      if (!this.githubCopilotService) {
+        const { githubCopilotService } = await import("./githubCopilotService");
+        this.githubCopilotService = githubCopilotService;
+      }
+
+      if (!this.githubCopilotService.isAuthenticated()) {
+        throw new Error("GitHub Copilot not authenticated");
+      }
+
+      const modelToUse = model || "gpt-4o";
+      logger.debug("Using GitHub Copilot model:", modelToUse);
+
+      const result = await this.githubCopilotService.createCompletion({
+        model: modelToUse,
+        messages: messages.map((m) => ({
+          role: m.role as "system" | "user" | "assistant",
+          content: m.content,
+        })),
+        temperature: 0.7,
+        maxTokens: 2048,
+      });
+
+      if (!result.success || !result.data) {
+        throw new Error(result.error || "GitHub Copilot API call failed");
+      }
+
+      const content = result.data.choices[0]?.message?.content;
+      if (!content) {
+        throw new Error("No content in GitHub Copilot response");
+      }
+
+      return content;
+    } catch (error) {
+      logger.error("GitHub Copilot API call failed:", error);
+      throw error;
+    }
   }
 
   async generateSummary(issues: SecurityIssue[]): Promise<string> {

@@ -48,6 +48,7 @@ import {
   validateAPIKey,
   AIModel,
 } from "@/services/ai/modelDiscoveryService";
+import { GitHubCopilotManager } from "./GitHubCopilotManager";
 
 // Real AI Provider Icons
 const OpenAIIcon = () => (
@@ -506,6 +507,11 @@ export const AIKeyManager: React.FC = () => {
           </div>
         </CardHeader>
       </Card>
+
+      {/* GitHub Copilot Integration Section */}
+      <div>
+        <GitHubCopilotManager />
+      </div>
 
       {/* Supported AI Providers */}
       <Card variant="modern">

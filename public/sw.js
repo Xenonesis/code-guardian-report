@@ -39,6 +39,11 @@ self.addEventListener('fetch', (event) => {
     return;
   }
   
+  // Skip API routes - let them go directly to the server
+  if (event.request.url.includes('/api/')) {
+    return;
+  }
+  
   // In development, just fetch from network without caching
   if (isDev) {
     event.respondWith(

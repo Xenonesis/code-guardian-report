@@ -20,6 +20,7 @@ import {
   linkWithCredential,
   AuthError,
   AuthCredential,
+  GithubAuthProvider,
 } from "firebase/auth";
 import { doc } from "firebase/firestore";
 import { auth, githubProvider, db } from "./firebase";
@@ -514,6 +515,24 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       const result = await signInWithPopup(auth, githubProvider);
       await createUserProfile(result.user, undefined, true);
+
+      // Store GitHub OAuth token for Copilot integration
+      // Extract the OAuth access token from the credential using proper Firebase method
+      const credential = GithubAuthProvider.credentialFromResult(result);
+      if (credential?.accessToken) {
+        try {
+          localStorage.setItem("github_oauth_token", credential.accessToken);
+          logger.debug(
+            "GitHub OAuth token stored for Copilot integration:",
+            credential.accessToken.substring(0, 10) + "..."
+          );
+        } catch (storageError) {
+          logger.warn("Failed to store GitHub OAuth token:", storageError);
+        }
+      } else {
+        logger.warn("GitHub OAuth token not found in credential");
+      }
+
       return result;
     } catch (error: any) {
       // Check for account conflict first
@@ -544,6 +563,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const logout = async () => {
     await signOut(auth);
     setUserProfile(null);
+
+    // Clear GitHub OAuth token and Copilot data
+    try {
+      localStorage.removeItem("github_oauth_token");
+      localStorage.removeItem("github_copilot_auth");
+      localStorage.removeItem("copilot_selected_model");
+      logger.debug("Cleared GitHub Copilot authentication data");
+    } catch (error) {
+      logger.warn("Error clearing Copilot data:", error);
+    }
   };
 
   useEffect(() => {
@@ -556,6 +585,27 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         const result = await getRedirectResult(auth);
         if (result?.user) {
           await createUserProfile(result.user);
+
+          // Store GitHub OAuth token for Copilot integration
+          // Extract the OAuth access token using proper Firebase method
+          const credential = GithubAuthProvider.credentialFromResult(result);
+          if (credential?.accessToken) {
+            try {
+              localStorage.setItem(
+                "github_oauth_token",
+                credential.accessToken
+              );
+              logger.debug(
+                "GitHub OAuth token stored for Copilot integration (redirect flow):",
+                credential.accessToken.substring(0, 10) + "..."
+              );
+            } catch (storageError) {
+              logger.warn("Failed to store GitHub OAuth token:", storageError);
+            }
+          } else {
+            logger.warn("GitHub OAuth token not found in redirect credential");
+          }
+
           // Clean up the URL after successful redirect
           cleanupRedirectUrl();
         }

@@ -64,6 +64,8 @@ export const githubProvider = new GithubAuthProvider();
 // Configure GitHub provider for better popup handling and COOP compatibility
 githubProvider.addScope("user:email");
 githubProvider.addScope("read:user");
+githubProvider.addScope("repo"); // Access to repositories
+githubProvider.addScope("user"); // Access to user profile
 githubProvider.setCustomParameters({
   allow_signup: "true",
 });

@@ -36,6 +36,7 @@ import { AIService } from "../../services/ai/aiService";
 import { AnalysisResults } from "@/hooks/useAnalysis";
 import { formatAIError, getAIFeatureStatus } from "@/utils/aiUtils";
 import { toast } from "sonner";
+import { CopilotEnabledBanner } from "./CopilotEnabledBanner";
 
 interface AISecurityInsightsProps {
   results: AnalysisResults;
@@ -446,77 +447,84 @@ export const AISecurityInsights: React.FC<AISecurityInsightsProps> = ({
 
   if (!aiFeatureStatus.isSupported) {
     return (
-      <Card className={className}>
-        <CardHeader className="space-y-3">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <CardTitle className="flex items-center gap-3">
-              <Brain className="h-5 w-5 flex-shrink-0 text-gray-400" />
-              <span className="text-foreground font-bold">
-                AI Security Insights
-              </span>
-            </CardTitle>
-            <Badge
-              variant="outline"
-              className="w-fit border-gray-400 bg-gray-50 px-3 py-1 text-sm font-semibold text-gray-600 dark:border-gray-600 dark:bg-gray-950/30 dark:text-gray-400"
-            >
-              Not Supported
-            </Badge>
-          </div>
-          <CardDescription className="leading-relaxed text-slate-600 dark:text-slate-400">
-            AI features are not supported in this environment
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Alert className="border-gray-200 bg-gray-50/50 dark:border-gray-800 dark:bg-gray-950/20">
-            <XCircle className="h-4 w-4 text-gray-600" />
-            <AlertDescription className="leading-relaxed text-slate-700 dark:text-slate-300">
-              AI security insights require a modern browser with localStorage
-              and fetch API support.
-            </AlertDescription>
-          </Alert>
-        </CardContent>
-      </Card>
+      <div className={`space-y-4 ${className}`}>
+        <CopilotEnabledBanner />
+        <Card>
+          <CardHeader className="space-y-3">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <CardTitle className="flex items-center gap-3">
+                <Brain className="h-5 w-5 flex-shrink-0 text-gray-400" />
+                <span className="text-foreground font-bold">
+                  AI Security Insights
+                </span>
+              </CardTitle>
+              <Badge
+                variant="outline"
+                className="w-fit border-gray-400 bg-gray-50 px-3 py-1 text-sm font-semibold text-gray-600 dark:border-gray-600 dark:bg-gray-950/30 dark:text-gray-400"
+              >
+                Not Supported
+              </Badge>
+            </div>
+            <CardDescription className="leading-relaxed text-slate-600 dark:text-slate-400">
+              AI features are not supported in this environment
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Alert className="border-gray-200 bg-gray-50/50 dark:border-gray-800 dark:bg-gray-950/20">
+              <XCircle className="h-4 w-4 text-gray-600" />
+              <AlertDescription className="leading-relaxed text-slate-700 dark:text-slate-300">
+                AI security insights require a modern browser with localStorage
+                and fetch API support.
+              </AlertDescription>
+            </Alert>
+          </CardContent>
+        </Card>
+      </div>
     );
   }
 
   if (!aiFeatureStatus.hasApiKeys) {
     return (
-      <Card className={className}>
-        <CardHeader className="space-y-3">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <CardTitle className="flex items-center gap-3">
-              <Brain className="h-5 w-5 flex-shrink-0 text-purple-600" />
-              <span className="text-foreground font-bold">
-                AI Security Insights
-              </span>
-            </CardTitle>
-            <Badge
-              variant="outline"
-              className="w-fit border-orange-400 bg-orange-50 px-3 py-1 text-sm font-semibold text-orange-700 dark:border-orange-600 dark:bg-orange-950/30 dark:text-orange-300"
-            >
-              API Keys Required
-            </Badge>
-          </div>
-          <CardDescription className="leading-relaxed text-slate-600 dark:text-slate-400">
-            {aiFeatureStatus.message}
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Alert className="border-orange-200 bg-orange-50/50 dark:border-orange-800 dark:bg-orange-950/20">
-            <Info className="h-4 w-4 text-orange-600" />
-            <AlertDescription className="leading-relaxed text-slate-700 dark:text-slate-300">
-              Please configure your AI API keys in the AI Configuration tab to
-              enable intelligent security analysis, OWASP explanations, and
-              personalized remediation strategies.
-            </AlertDescription>
-          </Alert>
-        </CardContent>
-      </Card>
+      <div className={`space-y-4 ${className}`}>
+        <CopilotEnabledBanner />
+        <Card>
+          <CardHeader className="space-y-3">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <CardTitle className="flex items-center gap-3">
+                <Brain className="h-5 w-5 flex-shrink-0 text-purple-600" />
+                <span className="text-foreground font-bold">
+                  AI Security Insights
+                </span>
+              </CardTitle>
+              <Badge
+                variant="outline"
+                className="w-fit border-orange-400 bg-orange-50 px-3 py-1 text-sm font-semibold text-orange-700 dark:border-orange-600 dark:bg-orange-950/30 dark:text-orange-300"
+              >
+                API Keys Required
+              </Badge>
+            </div>
+            <CardDescription className="leading-relaxed text-slate-600 dark:text-slate-400">
+              {aiFeatureStatus.message}
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Alert className="border-orange-200 bg-orange-50/50 dark:border-orange-800 dark:bg-orange-950/20">
+              <Info className="h-4 w-4 text-orange-600" />
+              <AlertDescription className="leading-relaxed text-slate-700 dark:text-slate-300">
+                Please configure your AI API keys in the AI Configuration tab to
+                enable intelligent security analysis, OWASP explanations, and
+                personalized remediation strategies.
+              </AlertDescription>
+            </Alert>
+          </CardContent>
+        </Card>
+      </div>
     );
   }
 
   return (
     <div className={`space-y-6 ${className}`}>
+      <CopilotEnabledBanner />
       <Card>
         <CardHeader className="space-y-4">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
