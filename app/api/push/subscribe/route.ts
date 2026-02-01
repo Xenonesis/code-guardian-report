@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
+import {
+  getFirebaseAdmin,
+  isFirebaseAdminConfigured,
+} from "@/lib/firebaseAdmin";
 
 interface PushSubscriptionPayload {
-  userId: string;
+  userId?: string;
   subscription: {
     endpoint: string;
     expirationTime?: number | null;
@@ -15,8 +19,10 @@ interface PushSubscriptionPayload {
 }
 
 export async function GET() {
+  const configured = isFirebaseAdminConfigured();
   return NextResponse.json({
     status: "push subscription endpoint is working",
+    configured,
     timestamp: new Date().toISOString(),
   });
 }
@@ -26,15 +32,11 @@ export async function POST(request: NextRequest) {
     const body = (await request.json()) as PushSubscriptionPayload;
 
     // Validate required fields
-    if (
-      !body.userId ||
-      !body.subscription?.endpoint ||
-      !body.subscription?.keys
-    ) {
+    if (!body.subscription?.endpoint || !body.subscription?.keys) {
       return NextResponse.json(
         {
           error:
-            "Missing required fields: userId and subscription with endpoint and keys are required",
+            "Missing required fields: subscription with endpoint and keys are required",
         },
         { status: 400 }
       );
@@ -48,10 +50,57 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create subscription record
+    // Generate userId if not provided (hash of endpoint for anonymous users)
+    const userId =
+      body.userId ||
+      `anon-${Buffer.from(body.subscription.endpoint).toString("base64").slice(0, 16)}`;
+
+    // Check if Firebase Admin is configured
+    if (!isFirebaseAdminConfigured()) {
+      // Development mode: return success without persisting
+      const subscriptionId = `sub-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+      console.warn(
+        "Push subscribe: Firebase Admin not configured, subscription not persisted"
+      );
+      return NextResponse.json({
+        success: true,
+        message: "Subscription registered (development mode - not persisted)",
+        subscriptionId,
+      });
+    }
+
+    const { db } = getFirebaseAdmin();
+
+    // Check for existing subscription with same endpoint
+    const existingQuery = await db
+      .collection("pushSubscriptions")
+      .where("endpoint", "==", body.subscription.endpoint)
+      .limit(1)
+      .get();
+
+    if (!existingQuery.empty) {
+      // Update existing subscription
+      const existingDoc = existingQuery.docs[0];
+      await existingDoc.ref.update({
+        keys: body.subscription.keys,
+        expirationTime: body.subscription.expirationTime || null,
+        userAgent:
+          body.userAgent || request.headers.get("user-agent") || "unknown",
+        deviceType: body.deviceType || "desktop",
+        updatedAt: new Date().toISOString(),
+        isActive: true,
+      });
+
+      return NextResponse.json({
+        success: true,
+        message: "Subscription updated successfully",
+        subscriptionId: existingDoc.id,
+      });
+    }
+
+    // Create new subscription record
     const subscriptionRecord = {
-      id: `sub-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-      userId: body.userId,
+      userId,
       endpoint: body.subscription.endpoint,
       expirationTime: body.subscription.expirationTime || null,
       keys: body.subscription.keys,
@@ -62,13 +111,15 @@ export async function POST(request: NextRequest) {
       isActive: true,
     };
 
-    // Note: In production, store in Firestore:
-    // await db.collection('pushSubscriptions').doc(subscriptionRecord.id).set(subscriptionRecord);
+    // Store in Firestore
+    const docRef = await db
+      .collection("pushSubscriptions")
+      .add(subscriptionRecord);
 
     return NextResponse.json({
       success: true,
       message: "Subscription registered successfully",
-      subscriptionId: subscriptionRecord.id,
+      subscriptionId: docRef.id,
     });
   } catch (error) {
     console.error("Push subscription error:", error);

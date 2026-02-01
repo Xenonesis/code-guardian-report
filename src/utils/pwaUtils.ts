@@ -61,8 +61,13 @@ export const registerForPushNotifications = async (): Promise<
     throw new Error("Notification permission denied");
   }
 
+  const vapidKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
+  if (!vapidKey) {
+    throw new Error("VAPID public key not configured");
+  }
+
   const registration = await navigator.serviceWorker.ready;
-  const appServerKey = urlBase64ToUint8Array("your-vapid-public-key-here");
+  const appServerKey = urlBase64ToUint8Array(vapidKey);
   const subscription = await registration.pushManager.subscribe({
     userVisibleOnly: true,
     applicationServerKey: appServerKey,

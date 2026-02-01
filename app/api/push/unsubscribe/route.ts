@@ -1,15 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
+import {
+  getFirebaseAdmin,
+  isFirebaseAdminConfigured,
+} from "@/lib/firebaseAdmin";
 
 interface UnsubscribePayload {
-  userId: string;
+  userId?: string;
   endpoint?: string;
   subscriptionId?: string;
   unsubscribeAll?: boolean;
 }
 
 export async function GET() {
+  const configured = isFirebaseAdminConfigured();
   return NextResponse.json({
     status: "push unsubscription endpoint is working",
+    configured,
     timestamp: new Date().toISOString(),
   });
 }
@@ -18,15 +24,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = (await request.json()) as UnsubscribePayload;
 
-    // Validate required fields
-    if (!body.userId) {
-      return NextResponse.json(
-        { error: "Missing required field: userId" },
-        { status: 400 }
-      );
-    }
-
-    // Must provide either endpoint, subscriptionId, or unsubscribeAll
+    // Must provide either endpoint, subscriptionId, or unsubscribeAll with userId
     if (!body.endpoint && !body.subscriptionId && !body.unsubscribeAll) {
       return NextResponse.json(
         {
@@ -37,28 +35,53 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    if (body.unsubscribeAll && !body.userId) {
+      return NextResponse.json(
+        { error: "userId is required when unsubscribeAll is true" },
+        { status: 400 }
+      );
+    }
+
+    // Check if Firebase Admin is configured
+    if (!isFirebaseAdminConfigured()) {
+      console.warn("Push unsubscribe: Firebase Admin not configured");
+      return NextResponse.json({
+        success: true,
+        message: "Unsubscription processed (development mode)",
+        removedCount: 1,
+      });
+    }
+
+    const { db } = getFirebaseAdmin();
     let removedCount = 0;
 
-    if (body.unsubscribeAll) {
-      // Note: In production, delete all subscriptions for user:
-      // const snapshot = await db.collection('pushSubscriptions').where('userId', '==', body.userId).get();
-      // const batch = db.batch();
-      // snapshot.docs.forEach(doc => batch.delete(doc.ref));
-      // await batch.commit();
-      // removedCount = snapshot.size;
-      removedCount = 1; // Placeholder
+    if (body.unsubscribeAll && body.userId) {
+      // Delete all subscriptions for user
+      const snapshot = await db
+        .collection("pushSubscriptions")
+        .where("userId", "==", body.userId)
+        .get();
+
+      const batch = db.batch();
+      snapshot.docs.forEach((doc) => batch.delete(doc.ref));
+      await batch.commit();
+      removedCount = snapshot.size;
     } else if (body.subscriptionId) {
-      // Note: In production, delete by subscriptionId:
-      // await db.collection('pushSubscriptions').doc(body.subscriptionId).delete();
+      // Delete by subscriptionId
+      await db
+        .collection("pushSubscriptions")
+        .doc(body.subscriptionId)
+        .delete();
       removedCount = 1;
     } else if (body.endpoint) {
-      // Note: In production, delete by endpoint:
-      // const snapshot = await db.collection('pushSubscriptions')
-      //   .where('userId', '==', body.userId)
-      //   .where('endpoint', '==', body.endpoint).get();
-      // await Promise.all(snapshot.docs.map(doc => doc.ref.delete()));
-      // removedCount = snapshot.size;
-      removedCount = 1;
+      // Delete by endpoint
+      const snapshot = await db
+        .collection("pushSubscriptions")
+        .where("endpoint", "==", body.endpoint)
+        .get();
+
+      await Promise.all(snapshot.docs.map((doc) => doc.ref.delete()));
+      removedCount = snapshot.size;
     }
 
     return NextResponse.json({

@@ -1,4 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
+import {
+  getFirebaseAdmin,
+  isFirebaseAdminConfigured,
+} from "@/lib/firebaseAdmin";
 
 interface ScheduledNotificationPayload {
   title: string;
@@ -10,8 +14,10 @@ interface ScheduledNotificationPayload {
 }
 
 export async function GET() {
+  const configured = isFirebaseAdminConfigured();
   return NextResponse.json({
     status: "push schedule endpoint is working",
+    configured,
     timestamp: new Date().toISOString(),
   });
 }
@@ -47,12 +53,31 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create scheduled notification record
+    // Check if Firebase Admin is configured
+    if (!isFirebaseAdminConfigured()) {
+      const notificationId = `scheduled-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+      console.warn(
+        "Push schedule: Firebase Admin not configured, notification not persisted"
+      );
+      return NextResponse.json({
+        success: true,
+        message: "Notification scheduled (development mode - not persisted)",
+        scheduledNotification: {
+          id: notificationId,
+          scheduledTime: body.scheduledTime,
+          status: "scheduled",
+        },
+      });
+    }
+
+    const { db } = getFirebaseAdmin();
+
+    // Create scheduled notification record in Firestore
     const scheduledNotification = {
-      id: `scheduled-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
       title: body.title,
       body: body.body,
       scheduledTime: body.scheduledTime,
+      scheduledTimestamp: scheduledDate.getTime(),
       userId: body.userId,
       icon: body.icon || "/icons/icon-192x192.png",
       data: body.data || {},
@@ -60,14 +85,16 @@ export async function POST(request: NextRequest) {
       createdAt: new Date().toISOString(),
     };
 
-    // Note: In production, store in database and use a job scheduler
-    // e.g., Firebase Cloud Functions scheduled triggers or a job queue
+    // Store in Firestore - Cloud Functions will process scheduled notifications
+    const docRef = await db
+      .collection("scheduledNotifications")
+      .add(scheduledNotification);
 
     return NextResponse.json({
       success: true,
       message: "Notification scheduled successfully",
       scheduledNotification: {
-        id: scheduledNotification.id,
+        id: docRef.id,
         scheduledTime: scheduledNotification.scheduledTime,
         status: scheduledNotification.status,
       },

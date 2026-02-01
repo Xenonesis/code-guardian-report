@@ -25,9 +25,8 @@ export interface PushSubscription {
 
 class PushNotificationService {
   private static instance: PushNotificationService;
-  private vapidPublicKey =
-    "BEl62iUYgUivxIkv69yViEuiBIa40HI80NqIUHI-lzKkMiWd2_MzC4AkMaHPXQdmPfflWGxJ4lWzwILyaEp2dDY"; // Replace with your VAPID key
-  private serverEndpoint = "/api/push-notifications";
+  private vapidPublicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY || "";
+  private serverEndpoint = "/api/push";
 
   static getInstance(): PushNotificationService {
     if (!PushNotificationService.instance) {
