@@ -319,12 +319,25 @@ describe("GitHubCopilotService", () => {
       await service.authenticateWithGitHub("ghp_test_token");
       mockFetch.mockClear();
 
-      // Mock completion response
+      // Mock completion response (API proxy endpoint)
       mockFetch.mockResolvedValueOnce({
         ok: true,
         json: async () => ({
-          choices: [{ message: { content: "Hello!" } }],
-          usage: { totalTokens: 10 },
+          id: "test-id",
+          model: "gpt-3.5-turbo",
+          choices: [
+            {
+              index: 0,
+              message: { role: "assistant", content: "Hello!" },
+              finishReason: "stop",
+            },
+          ],
+          usage: {
+            promptTokens: 10,
+            completionTokens: 5,
+            totalTokens: 15,
+          },
+          created: Date.now(),
         }),
       });
 
