@@ -1,17 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import webpush from "web-push";
 
-// Configure VAPID keys for web-push
-const vapidPublicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
-const vapidPrivateKey = process.env.VAPID_PRIVATE_KEY;
-const vapidSubject =
-  process.env.VAPID_SUBJECT || "mailto:admin@codeguardian.dev";
-
-// Initialize web-push with VAPID credentials if available
-if (vapidPublicKey && vapidPrivateKey) {
-  webpush.setVapidDetails(vapidSubject, vapidPublicKey, vapidPrivateKey);
-}
-
 interface PushNotificationPayload {
   title: string;
   body: string;
@@ -31,7 +20,10 @@ interface PushNotificationPayload {
 }
 
 export async function GET() {
+  const vapidPublicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
+  const vapidPrivateKey = process.env.VAPID_PRIVATE_KEY;
   const configured = !!(vapidPublicKey && vapidPrivateKey);
+
   return NextResponse.json({
     status: "push send endpoint is working",
     configured,
@@ -41,6 +33,12 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
+    // Get VAPID configuration at runtime
+    const vapidPublicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
+    const vapidPrivateKey = process.env.VAPID_PRIVATE_KEY;
+    const vapidSubject =
+      process.env.VAPID_SUBJECT || "mailto:admin@codeguardian.dev";
+
     // Validate VAPID configuration
     if (!vapidPublicKey || !vapidPrivateKey) {
       return NextResponse.json(
@@ -48,6 +46,9 @@ export async function POST(request: NextRequest) {
         { status: 503 }
       );
     }
+
+    // Configure VAPID details for this request
+    webpush.setVapidDetails(vapidSubject, vapidPublicKey, vapidPrivateKey);
 
     const body = (await request.json()) as PushNotificationPayload;
 
