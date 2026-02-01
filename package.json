@@ -146,5 +146,8 @@
   "engines": {
     "node": "22.x",
     "npm": ">=9.0.0"
+  },
+  "overrides": {
+    "fast-xml-parser": ">=5.3.4"
   }
 }
