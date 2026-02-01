@@ -1,9 +1,36 @@
 # Changelog
 
 **Project Start Date:** 2025
-**Last Update:** 08/10/2025
+**Last Update:** 01/02/2026
 
 ---
+
+## v8.7.0 (01/02/2026)
+
+- **GitHub Copilot Integration**: Full integration with GitHub Copilot API for AI-powered code analysis
+  - Streaming completions support for real-time responses
+  - Multiple model support (GPT-4o, GPT-3.5-turbo, Claude-3.5-sonnet)
+  - CopilotAnalyticsDashboard for usage tracking and analytics
+  - CopilotModelSelector for easy model switching
+  - CopilotStatusBadge for connection status display
+  - GitHubCopilotManager component for managing Copilot settings
+  - Custom hooks: `useGitHubCopilot` and `useStreamingCopilot`
+  - API proxy endpoint at `/api/copilot/completions` for secure token handling
+  - Comprehensive test coverage for Copilot services
+- **Security Fix**: Resolved Dependabot Alert #22 - RangeError DoS vulnerability in `fast-xml-parser`
+  - Added npm overrides to force `fast-xml-parser >= 5.3.4`
+  - All npm audit vulnerabilities resolved (0 vulnerabilities)
+- **Test Improvements**: Fixed 4 skipped tests in `githubCopilotService.test.ts`
+  - Improved authentication test coverage
+  - Fixed model fetching tests
+- **Code Quality**: Removed all emojis from documentation files to comply with pre-commit hooks
+- **TypeScript Fixes**: Resolved type errors in Copilot integration components
+  - Fixed optional model type handling in AIProvider
+  - Added proper type annotations for async functions
+  - Fixed Response type handling in API routes
+- **ESLint Cleanup**: Cleaned up unused imports and variables across codebase
+- **Documentation**: Added comprehensive documentation for Copilot integration and CORS fixes
+- **Known Issues**: 8 tests remain skipped due to complex mocking scenarios requiring refactoring
 
 ## v8.6.0 (02/10/2025)
 
