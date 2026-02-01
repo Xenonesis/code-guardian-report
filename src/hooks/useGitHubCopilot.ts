@@ -214,11 +214,13 @@ export function useGitHubCopilot() {
           maxTokens: options?.maxTokens,
         });
 
-        if (!result.success) {
+        if (!result.success || !result.data) {
           throw new Error(result.error || "Failed to generate completion");
         }
 
-        return result.data || "";
+        // Extract content from the response
+        const content = result.data.choices?.[0]?.message?.content || "";
+        return content;
       } catch (err) {
         logger.error("Error generating completion:", err);
         throw err;
