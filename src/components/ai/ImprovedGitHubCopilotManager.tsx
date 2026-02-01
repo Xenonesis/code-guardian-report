@@ -26,7 +26,7 @@ import { toast } from "sonner";
 
 type VerificationStatus = "idle" | "verifying" | "success" | "failed";
 
-export function GitHubCopilotManager() {
+export function ImprovedGitHubCopilotManager() {
   const { isGitHubUser, signInWithGithub } = useAuth();
   const {
     authState,
@@ -307,17 +307,16 @@ export function GitHubCopilotManager() {
                     </p>
 
                     <div className="mb-2 flex flex-wrap gap-2">
-                      {Array.isArray(model.capabilities) &&
-                        model.capabilities.map((capability) => (
-                          <Badge
-                            key={capability}
-                            variant="secondary"
-                            className="flex items-center space-x-1 text-xs transition-all duration-200 hover:scale-105"
-                          >
-                            {getCapabilityIcon(capability)}
-                            <span>{capability}</span>
-                          </Badge>
-                        ))}
+                      {model.capabilities.map((capability) => (
+                        <Badge
+                          key={capability}
+                          variant="secondary"
+                          className="flex items-center space-x-1 text-xs transition-all duration-200 hover:scale-105"
+                        >
+                          {getCapabilityIcon(capability)}
+                          <span>{capability}</span>
+                        </Badge>
+                      ))}
                     </div>
 
                     <div className="text-muted-foreground mt-2 flex items-center justify-between border-t border-gray-200 pt-2 text-xs dark:border-gray-700">

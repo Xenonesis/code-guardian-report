@@ -24,7 +24,6 @@ import { useNavigation } from "@/lib/navigation-context";
 import { AuthModal } from "@/components/auth/AuthModal";
 import NotificationCenter from "@/components/notifications/NotificationCenter";
 import { PWAQuickActions } from "@/components/pwa/PWAQuickActions";
-import { ThemeToggle } from "@/components/common/ThemeToggle";
 
 interface NavigationProps {
   className?: string;
@@ -351,9 +350,6 @@ export const Navigation: React.FC<NavigationProps> = ({
             {/* Notification Center */}
             <NotificationCenter className="xs:h-9 xs:w-9 h-8 w-8 rounded-full bg-slate-100/80 transition-all duration-200 hover:bg-slate-200/80 sm:h-10 sm:w-10 dark:bg-slate-800/50 dark:hover:bg-slate-700/50" />
 
-            {/* Theme Toggle */}
-            <ThemeToggle />
-
             {/* PWA Quick Actions */}
             <PWAQuickActions className="xs:h-9 xs:w-9 hidden h-8 w-8 rounded-full bg-slate-100/80 transition-all duration-200 hover:bg-slate-200/80 sm:flex sm:h-10 sm:w-10 dark:bg-slate-800/50 dark:hover:bg-slate-700/50" />
 
@@ -382,7 +378,7 @@ export const Navigation: React.FC<NavigationProps> = ({
         {/* Mobile Menu - Enhanced Full Screen Overlay */}
         <div
           className={cn(
-            "fixed inset-0 bg-white transition-all duration-300 ease-out md:hidden dark:bg-slate-950",
+            "bg-background fixed inset-0 transition-all duration-300 ease-out md:hidden",
             isMobileMenuOpen
               ? "pointer-events-auto translate-y-0 opacity-100"
               : "pointer-events-none -translate-y-4 opacity-0"

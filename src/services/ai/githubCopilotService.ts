@@ -24,6 +24,7 @@ export interface GitHubCopilotAuthConfig {
   expiresAt?: number;
   scope: string[];
   userId?: string;
+  hasCopilotAccess?: boolean;
 }
 
 export interface CopilotCompletionRequest {
@@ -136,36 +137,38 @@ export class GitHubCopilotService {
 
       const userData = await userResponse.json();
 
-      // Check for Copilot access (optional, may return 404 if no subscription)
-      // Note: We skip this check as it's optional and may not work for all accounts
-      let hasCopilotAccess = false;
+      // Note: We skip the subscription check to avoid console spam
+      // The actual API calls will determine if the user has Copilot access
+      // This provides a cleaner user experience without false negatives
+      const hasCopilotAccess = false; // Will be determined on first API call
+      const copilotCheckMessage =
+        "Subscription status will be verified on first use";
 
-      // Commenting out Copilot seat check to avoid 404 errors in console
-      // The integration works without this check
       logger.debug(
-        "GitHub Copilot access check: skipped (optional feature, works without subscription)"
+        "GitHub token validated. Copilot access will be verified on first API call."
       );
 
-      // Store auth config
+      // Store auth config with Copilot access status
       const authConfig: GitHubCopilotAuthConfig = {
         accessToken: githubAccessToken,
         tokenType: "Bearer",
         scope: ["user", "copilot"],
         userId: userData.login,
         expiresAt: Date.now() + 24 * 60 * 60 * 1000, // 24 hours
+        hasCopilotAccess,
       };
 
       await this.saveAuthConfig(authConfig);
 
       logger.debug(
-        `GitHub Copilot authentication successful. Copilot access: ${hasCopilotAccess}`
+        `GitHub Copilot authentication successful. User: ${userData.login}, ${copilotCheckMessage}`
       );
 
+      // Return success regardless of Copilot subscription status
+      // The integration can work with or without a subscription
       return {
         success: true,
-        error: hasCopilotAccess
-          ? undefined
-          : "GitHub Copilot subscription not detected. Some features may be limited.",
+        error: undefined, // No error - authentication succeeded
       };
     } catch (error) {
       logger.error("GitHub Copilot authentication failed:", error);
@@ -208,8 +211,14 @@ export class GitHubCopilotService {
   }
 
   /**
-   * Fetch available GitHub Copilot models
-   * Note: GitHub Copilot uses OpenAI models through a proxy
+   * Check if user has Copilot access
+   */
+  public hasCopilotAccess(): boolean {
+    return this.authConfig?.hasCopilotAccess ?? false;
+  }
+
+  /**
+   * Fetch available GitHub Copilot models from the API
    */
   public async fetchAvailableModels(): Promise<{
     success: boolean;
@@ -225,9 +234,66 @@ export class GitHubCopilotService {
         };
       }
 
-      // GitHub Copilot currently supports these models
-      // These are proxied through GitHub's infrastructure
-      const models: GitHubCopilotModel[] = [
+      // Try to fetch real models from GitHub Copilot API
+      try {
+        const response = await fetch("/api/copilot/models", {
+          headers: {
+            Authorization: `Bearer ${this.authConfig.accessToken}`,
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+
+          // Map API response to our model format
+          const modelsMap = new Map<string, GitHubCopilotModel>();
+
+          data.data?.forEach((model: any) => {
+            // Handle capabilities - can be string, array, or undefined
+            let capabilities: string[] = ["code", "text"];
+            if (model.capabilities) {
+              if (Array.isArray(model.capabilities)) {
+                capabilities = model.capabilities;
+              } else if (typeof model.capabilities === "string") {
+                capabilities = [model.capabilities];
+              }
+            }
+
+            const modelId = model.id || model.model;
+
+            // Only add if not already in map (deduplication)
+            if (!modelsMap.has(modelId)) {
+              modelsMap.set(modelId, {
+                id: modelId,
+                name: model.name || modelId,
+                description: model.description || `${modelId} model`,
+                version: model.version || "latest",
+                maxTokens: model.max_tokens || 4096,
+                contextWindow: model.context_window || model.max_tokens || 4096,
+                capabilities,
+              });
+            }
+          });
+
+          const models = Array.from(modelsMap.values());
+
+          if (models.length > 0) {
+            logger.debug(
+              `Fetched ${models.length} unique models from GitHub Copilot API`
+            );
+            return { success: true, models };
+          }
+        }
+      } catch (apiError) {
+        logger.warn(
+          "Failed to fetch models from API, using fallback list:",
+          apiError
+        );
+      }
+
+      // Fallback: Use known GitHub Copilot models
+      // These are the models typically available through GitHub Copilot
+      const fallbackModels: GitHubCopilotModel[] = [
         {
           id: "gpt-4o",
           name: "GPT-4o",
@@ -265,19 +331,12 @@ export class GitHubCopilotService {
           contextWindow: 16384,
           capabilities: ["code", "text"],
         },
-        {
-          id: "claude-3.5-sonnet",
-          name: "Claude 3.5 Sonnet",
-          description: "Anthropic's most intelligent model (if available)",
-          version: "20241022",
-          maxTokens: 200000,
-          contextWindow: 200000,
-          capabilities: ["code", "text", "reasoning"],
-        },
       ];
 
-      logger.debug(`Fetched ${models.length} GitHub Copilot models`);
-      return { success: true, models };
+      logger.debug(
+        `Using ${fallbackModels.length} fallback GitHub Copilot models`
+      );
+      return { success: true, models: fallbackModels };
     } catch (error) {
       logger.error("Error fetching GitHub Copilot models:", error);
       return {
@@ -349,6 +408,12 @@ export class GitHubCopilotService {
         // If unauthorized, clear auth
         if (response.status === 401 || response.status === 403) {
           this.clearAuth();
+          errorMessage =
+            "GitHub Copilot access denied. This may indicate:\n" +
+            "1. No active Copilot subscription\n" +
+            "2. Token expired or invalid\n" +
+            "3. Insufficient permissions\n\n" +
+            "Please ensure you have an active GitHub Copilot subscription.";
         }
 
         endTracking(false, undefined, new Error(errorMessage));
@@ -356,6 +421,13 @@ export class GitHubCopilotService {
       }
 
       const data: CopilotCompletionResponse = await response.json();
+
+      // Update Copilot access status on successful call
+      if (this.authConfig && !this.authConfig.hasCopilotAccess) {
+        this.authConfig.hasCopilotAccess = true;
+        await this.saveAuthConfig(this.authConfig);
+        logger.debug("Copilot access confirmed via successful API call");
+      }
 
       // Track successful request with token usage
       endTracking(true, {
@@ -438,6 +510,12 @@ export class GitHubCopilotService {
 
         if (response.status === 401 || response.status === 403) {
           this.clearAuth();
+          errorMessage =
+            "GitHub Copilot access denied. This may indicate:\n" +
+            "1. No active Copilot subscription\n" +
+            "2. Token expired or invalid\n" +
+            "3. Insufficient permissions\n\n" +
+            "Please ensure you have an active GitHub Copilot subscription.";
         }
 
         const error = new Error(errorMessage);

@@ -1,7 +1,7 @@
 // src/hooks/useGitHubCopilot.ts
-// React hook for GitHub Copilot integration
+// React hook for GitHub Copilot integration with performance optimizations
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { githubCopilotService } from "@/services/ai/githubCopilotService";
 import type {
   CopilotAuthState,
@@ -30,44 +30,81 @@ export function useGitHubCopilot() {
   const hasInitializedRef = useRef(false);
 
   /**
-   * Authenticate with GitHub token
+   * Verify subscription in background (non-blocking)
    */
-  const authenticateWithToken = useCallback(async (githubToken: string) => {
+  const verifySubscriptionInBackground = useCallback(async () => {
     try {
-      setIsLoading(true);
-      setError(null);
+      logger.debug("Verifying Copilot subscription in background...");
 
-      const result =
-        await githubCopilotService.authenticateWithGitHub(githubToken);
+      // Make a lightweight test call
+      const result = await githubCopilotService.testConnection();
 
       if (result.success) {
+        // Update auth state with Copilot access
         const config = githubCopilotService.getAuthConfig();
-        if (config) {
-          setAuthState({
-            isAuthenticated: true,
-            accessToken: config.accessToken,
-            expiresAt: config.expiresAt ?? null,
-            userId: config.userId ?? null,
-            hasCopilotAccess: !result.error,
-          });
-
-          // Fetch available models
-          await fetchModels();
-
-          if (result.error) {
-            setError(result.error);
-          }
+        if (config && config.hasCopilotAccess) {
+          setAuthState((prev) => ({
+            ...prev,
+            hasCopilotAccess: true,
+          }));
+          logger.debug("Copilot subscription verified automatically");
+          // Note: We don't show a toast here to avoid interrupting the user
+          // The UI will update automatically with the green success message
         }
       } else {
-        setError(result.error || "Authentication failed");
+        // Subscription not available, but don't show error
+        // User can still use the app, just without Copilot features
+        logger.debug("Copilot subscription not detected:", result.message);
       }
     } catch (err) {
-      logger.error("Error authenticating with GitHub:", err);
-      setError(err instanceof Error ? err.message : "Authentication failed");
-    } finally {
-      setIsLoading(false);
+      // Silent fail - don't interrupt user experience
+      logger.debug("Background subscription check failed:", err);
     }
   }, []);
+
+  /**
+   * Authenticate with GitHub token
+   */
+  const authenticateWithToken = useCallback(
+    async (githubToken: string) => {
+      try {
+        setIsLoading(true);
+        setError(null);
+
+        const result =
+          await githubCopilotService.authenticateWithGitHub(githubToken);
+
+        if (result.success) {
+          const config = githubCopilotService.getAuthConfig();
+          if (config) {
+            setAuthState({
+              isAuthenticated: true,
+              accessToken: config.accessToken,
+              expiresAt: config.expiresAt ?? null,
+              userId: config.userId ?? null,
+              hasCopilotAccess: config.hasCopilotAccess ?? false,
+            });
+
+            // Fetch available models
+            await fetchModels();
+
+            // Automatically verify Copilot subscription in background
+            verifySubscriptionInBackground();
+
+            // No error message - authentication succeeded
+          }
+        } else {
+          setError(result.error || "Authentication failed");
+        }
+      } catch (err) {
+        logger.error("Error authenticating with GitHub:", err);
+        setError(err instanceof Error ? err.message : "Authentication failed");
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [verifySubscriptionInBackground]
+  );
 
   /**
    * Fetch available models
@@ -129,16 +166,16 @@ export function useGitHubCopilot() {
   }, []);
 
   /**
-   * Get selected model details
+   * Get selected model details (memoized for performance)
    */
-  const getSelectedModel = useCallback((): CopilotModel | null => {
+  const getSelectedModel = useMemo((): CopilotModel | null => {
     if (!modelSelection.selectedModelId) return null;
     return (
       modelSelection.availableModels.find(
         (m) => m.id === modelSelection.selectedModelId
       ) || null
     );
-  }, [modelSelection]);
+  }, [modelSelection.selectedModelId, modelSelection.availableModels]);
 
   /**
    * Disconnect GitHub Copilot
@@ -173,6 +210,15 @@ export function useGitHubCopilot() {
 
       if (!result.success) {
         setError(result.message);
+      } else {
+        // On successful test, update auth state with Copilot access
+        const config = githubCopilotService.getAuthConfig();
+        if (config && config.hasCopilotAccess) {
+          setAuthState((prev) => ({
+            ...prev,
+            hasCopilotAccess: true,
+          }));
+        }
       }
 
       return result;
@@ -202,7 +248,7 @@ export function useGitHubCopilot() {
           throw new Error("Not authenticated with GitHub Copilot");
         }
 
-        const selectedModel = getSelectedModel();
+        const selectedModel = getSelectedModel;
         if (!selectedModel) {
           throw new Error("No model selected");
         }
@@ -263,7 +309,7 @@ export function useGitHubCopilot() {
   return {
     authState,
     modelSelection,
-    selectedModel: getSelectedModel(),
+    selectedModel: getSelectedModel,
     isLoading,
     error,
     authenticateWithToken,
