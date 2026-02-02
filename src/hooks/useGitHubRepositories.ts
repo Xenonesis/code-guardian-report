@@ -87,8 +87,12 @@ export const useGitHubRepositories = ({
         return username;
       }
 
-      // 404 is expected when username doesn't exist - don't log as error
+      // 404 is expected when username doesn't exist - provide user-friendly info
       if (response.status === 404) {
+        logger.info(
+          `GitHub user "${username}" not found. Please verify the username is correct.`
+        );
+      } else {
         logger.debug(
           `No GitHub account found for extracted username: ${username}`
         );

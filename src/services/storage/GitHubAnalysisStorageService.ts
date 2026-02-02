@@ -93,40 +93,17 @@ export class GitHubAnalysisStorageService {
 
       return repositories;
     } catch (error) {
-      logger.error("Error fetching repositories:", error);
-      logger.warn(
-        "Using offline mode - Firebase unavailable. Returning empty data."
-      );
-
-      if (typeof window !== "undefined") {
-        setTimeout(() => {
-          const toastNotifications = window.toastNotifications;
-          if (toastNotifications) {
-            toastNotifications.warning(
-              "Unable to fetch repositories. Please check your connection."
-            );
-          } else if (window.showToast) {
-            window.showToast(
-              "warning",
-              "Offline Mode",
-              "Unable to fetch repositories. Please check your connection."
-            );
-          }
-        }, 0);
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      
+      // Don't log permission errors as errors - they're expected when not authenticated
+      if (errorMessage.includes('permission') || errorMessage.includes('insufficient permissions')) {
+        logger.debug("Firebase read requires authentication. Using offline mode with empty data.");
+      } else {
+        logger.error("Error fetching repositories:", error);
       }
 
-      // Return empty array instead of mock data in production
-      if (process.env.NODE_ENV === "production") {
-        return [];
-      }
-
-      // Only return mock data in development (with warning)
-      if (typeof window !== "undefined" && window.toastNotifications) {
-        setTimeout(() => {
-          window.toastNotifications?.mockDataWarning();
-        }, 0);
-      }
-      return this.getMockRepositories();
+      // Return empty array gracefully for offline/unauthenticated mode
+      return [];
     }
   }
 
@@ -166,40 +143,17 @@ export class GitHubAnalysisStorageService {
 
       return analyses;
     } catch (error) {
-      logger.error("Error fetching analysis history:", error);
-      logger.warn(
-        "Using offline mode - Firebase unavailable. Returning empty data."
-      );
-
-      if (typeof window !== "undefined") {
-        setTimeout(() => {
-          const toastNotifications = window.toastNotifications;
-          if (toastNotifications?.services) {
-            toastNotifications.services.analysisFailed(
-              "Unable to fetch analysis history"
-            );
-          } else if (window.showToast) {
-            window.showToast(
-              "warning",
-              "Offline Mode",
-              "Unable to fetch analysis history. Please check your connection."
-            );
-          }
-        }, 0);
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      
+      // Don't log permission errors as errors - they're expected when not authenticated
+      if (errorMessage.includes('permission') || errorMessage.includes('insufficient permissions')) {
+        logger.debug("Firebase read requires authentication. Using offline mode with empty data.");
+      } else {
+        logger.error("Error fetching analysis history:", error);
       }
 
-      // Return empty array instead of mock data in production
-      if (process.env.NODE_ENV === "production") {
-        return [];
-      }
-
-      // Only return mock data in development (with warning)
-      if (typeof window !== "undefined" && window.toastNotifications) {
-        setTimeout(() => {
-          window.toastNotifications?.mockDataWarning();
-        }, 0);
-      }
-      return this.getMockAnalysisHistory();
+      // Return empty array gracefully for offline/unauthenticated mode
+      return [];
     }
   }
 
