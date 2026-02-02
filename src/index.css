@@ -334,6 +334,7 @@ a:active,
   background: hsl(
     var(--success) / 10%
   ); /* Assuming success var exists or similar */
+
   color: #059669;
   border-color: #05966933;
 }
