@@ -41,17 +41,11 @@ const EnhancedCard = React.forwardRef<HTMLDivElement, EnhancedCardProps>(
 
     const hoverEffects = {
       default: hover ? "hover:shadow-md" : "",
-      modern: hover
-        ? "hover:shadow-md hover:-translate-y-0.5 hover:border-primary/20"
-        : "",
-      glass: hover
-        ? "hover:bg-background/80 hover:shadow-md hover:-translate-y-0.5"
-        : "",
-      gradient: hover ? "hover:shadow-md hover:-translate-y-0.5" : "",
-      elevated: hover ? "hover:shadow-lg hover:-translate-y-0.5" : "",
-      interactive: hover
-        ? "hover:shadow-md hover:-translate-y-0.5 hover:scale-[1.005]"
-        : "",
+      modern: hover ? "hover:shadow-md hover:border-primary/20" : "",
+      glass: hover ? "hover:bg-background/80 hover:shadow-md" : "",
+      gradient: hover ? "hover:shadow-md" : "",
+      elevated: hover ? "hover:shadow-lg" : "",
+      interactive: hover ? "hover:shadow-md" : "",
     };
 
     const glowEffects = {

@@ -11,14 +11,14 @@
 @layer base {
   :root {
     /* Light mode colors - Refined warm cream palette */
-    --background: 45 100% 96%; /* Softer warm cream */
+    --background: 30 67% 94%; /* Warm cream #FAF0E6 */
     --foreground: 224 71% 8%;
-    --card: 0 0% 100%;
+    --card: 30 67% 96%; /* Slightly lighter cream */
     --card-foreground: 224 71% 8%;
-    --popover: 0 0% 100%;
+    --popover: 30 67% 96%;
     --popover-foreground: 224 71% 8%;
-    --primary: 226 76% 48%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 0 0% 75%;
+    --primary-foreground: 0 0% 4.7%;
     --secondary: 220 14% 96%;
     --secondary-foreground: 224 71% 8%;
     --muted: 220 14% 96%;
@@ -29,11 +29,11 @@
     --destructive-foreground: 0 0% 100%;
     --border: 220 13% 91%;
     --input: 220 13% 91%;
-    --ring: 226 76% 48%;
+    --ring: 0 0% 75%;
     --radius: 0.5rem;
 
     /* Sidebar */
-    --sidebar-background: 0 0% 100%;
+    --sidebar-background: 30 67% 96%;
     --sidebar-foreground: 224 71% 8%;
     --sidebar-primary: 250 89% 60%;
     --sidebar-primary-foreground: 0 0% 100%;
@@ -43,10 +43,10 @@
     --sidebar-ring: 250 89% 60%;
 
     /* Premium enhancement tokens */
-    --glass-bg: 0 0% 100%;
-    --glass-border: 0 0% 100%;
+    --glass-bg: 30 67% 96%;
+    --glass-border: 30 67% 96%;
     --shadow-color: 224 71% 4%;
-    --glow-primary: 226 76% 48%;
+    --glow-primary: 0 0% 75%;
     --glow-accent: 250 89% 66%;
   }
 
@@ -58,8 +58,8 @@
     --card-foreground: 210 40% 98%;
     --popover: 222 47% 7%;
     --popover-foreground: 210 40% 98%;
-    --primary: 226 76% 58%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 0 0% 75%;
+    --primary-foreground: 0 0% 4.7%;
     --secondary: 217 33% 12%;
     --secondary-foreground: 210 40% 98%;
     --muted: 217 33% 12%;
@@ -70,7 +70,7 @@
     --destructive-foreground: 0 0% 100%;
     --border: 217 33% 15%;
     --input: 217 33% 15%;
-    --ring: 250 89% 66%;
+    --ring: 0 0% 75%;
 
     /* Sidebar */
     --sidebar-background: 222 47% 5%;
@@ -85,8 +85,8 @@
     /* Premium enhancement tokens */
     --glass-bg: 222 47% 7%;
     --glass-border: 217 33% 20%;
-    --shadow-color: 0 0% 0%;
-    --glow-primary: 226 76% 58%;
+    --shadow-color: 0 0% 4.7%;
+    --glow-primary: 0 0% 75%;
     --glow-accent: 250 89% 66%;
   }
 

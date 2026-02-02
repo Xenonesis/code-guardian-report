@@ -130,7 +130,7 @@
 
 .hover-float:hover {
   transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgb(0 0 0 / 10%);
+  box-shadow: 0 20px 40px rgb(12 12 12 / 10%);
 }
 
 .hover-float-subtle {
@@ -141,7 +141,7 @@
 
 .hover-float-subtle:hover {
   transform: translateY(-4px);
-  box-shadow: 0 10px 25px rgb(0 0 0 / 8%);
+  box-shadow: 0 10px 25px rgb(12 12 12 / 8%);
 }
 
 .hover-float-strong {
@@ -153,7 +153,7 @@
 
 .hover-float-strong:hover {
   transform: translateY(-12px) scale(1.02);
-  box-shadow: 0 25px 50px rgb(0 0 0 / 15%);
+  box-shadow: 0 25px 50px rgb(12 12 12 / 15%);
   filter: brightness(1.05);
 }
 
@@ -178,7 +178,7 @@
 
 .hover-scale-float:hover {
   transform: translateY(-6px) scale(1.05);
-  box-shadow: 0 15px 35px rgb(0 0 0 / 12%);
+  box-shadow: 0 15px 35px rgb(12 12 12 / 12%);
 }
 
 /* Bounce hover effect */

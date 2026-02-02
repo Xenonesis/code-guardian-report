@@ -27,28 +27,27 @@ export const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "text-white shadow-2xl hover:shadow-[0_20px_40px_-12px_rgba(59,130,246,0.4)] transform hover:scale-110 focus:scale-110 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:via-indigo-500 hover:to-purple-500",
+          "bg-primary text-primary-foreground shadow-md hover:shadow-lg hover:bg-primary/90",
         destructive:
-          "text-white shadow-2xl hover:shadow-[0_20px_40px_-12px_rgba(239,68,68,0.4)] transform hover:scale-110 bg-gradient-to-r from-red-600 via-pink-600 to-rose-600 hover:from-red-500 hover:via-pink-500 hover:to-rose-500",
+          "bg-destructive text-destructive-foreground shadow-md hover:shadow-lg hover:bg-destructive/90",
         outline:
-          "border-2 border-white/30 dark:border-white/20 bg-white/10 dark:bg-black/10 backdrop-blur-xl hover:border-blue-300/50 dark:hover:border-blue-600/50 text-slate-700 dark:text-slate-300 shadow-xl hover:shadow-2xl transform hover:scale-110 hover:bg-white/20 dark:hover:bg-black/20",
+          "border-2 border-white/30 dark:border-white/20 bg-white/10 dark:bg-black/10 backdrop-blur-xl hover:border-primary/50 text-slate-700 dark:text-slate-300 shadow-md hover:shadow-lg hover:bg-white/20 dark:hover:bg-black/20",
         secondary:
-          "bg-white/15 dark:bg-black/15 backdrop-blur-xl border border-white/20 dark:border-white/10 text-slate-900 dark:text-slate-100 hover:bg-white/25 dark:hover:bg-black/25 shadow-xl hover:shadow-2xl transform hover:scale-110",
-        ghost:
-          "hover:bg-white/10 dark:hover:bg-black/10 backdrop-blur-sm text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transform hover:scale-110",
-        link: "text-blue-600 dark:text-blue-400 underline-offset-4 hover:underline hover:text-blue-700 dark:hover:text-blue-300 transform hover:scale-105",
+          "bg-secondary text-secondary-foreground shadow-md hover:shadow-lg hover:bg-secondary/80",
+        ghost: "hover:bg-muted text-muted-foreground hover:text-foreground",
+        link: "text-primary underline-offset-4 hover:underline hover:text-primary/80",
         modern:
-          "bg-white/95 dark:bg-slate-800/95 backdrop-blur-xl border border-white/30 dark:border-white/20 text-slate-900 dark:text-white shadow-2xl hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] hover:bg-white dark:hover:bg-slate-700 transform hover:scale-110",
+          "bg-card backdrop-blur-xl border border-border text-card-foreground shadow-md hover:shadow-lg hover:bg-card/90",
         glass:
-          "backdrop-blur-2xl bg-white/10 dark:bg-black/10 border border-white/30 dark:border-white/20 text-slate-900 dark:text-white shadow-2xl hover:bg-white/20 dark:hover:bg-black/20 hover:border-white/50 dark:hover:border-white/30 transform hover:scale-110",
+          "backdrop-blur-2xl bg-card/50 border border-border text-card-foreground shadow-md hover:bg-card/60",
         gradient:
-          "text-white shadow-2xl hover:shadow-[0_20px_40px_-12px_rgba(147,51,234,0.4)] transform hover:scale-110 bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 hover:from-purple-500 hover:via-pink-500 hover:to-rose-500",
+          "bg-primary text-primary-foreground shadow-md hover:shadow-lg hover:bg-primary/90",
         success:
-          "text-white shadow-2xl hover:shadow-[0_20px_40px_-12px_rgba(16,185,129,0.4)] transform hover:scale-110 bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 hover:from-emerald-500 hover:via-teal-500 hover:to-cyan-500",
+          "bg-green-600 text-white shadow-md hover:shadow-lg hover:bg-green-700",
         warning:
-          "text-white shadow-2xl hover:shadow-[0_20px_40px_-12px_rgba(245,158,11,0.4)] transform hover:scale-110 bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 hover:from-amber-400 hover:via-orange-400 hover:to-red-400",
+          "bg-yellow-600 text-white shadow-md hover:shadow-lg hover:bg-yellow-700",
         ultra:
-          "text-white shadow-2xl hover:shadow-[0_25px_50px_-12px_rgba(59,130,246,0.5)] transform hover:scale-110 focus:scale-110 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-500 hover:via-purple-500 hover:to-pink-500 animate-gradient-flow",
+          "bg-primary text-primary-foreground shadow-md hover:shadow-lg hover:bg-primary/90",
       },
       size: {
         default: "h-12 px-8 py-3 text-sm",

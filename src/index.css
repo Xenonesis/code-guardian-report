@@ -144,38 +144,38 @@ a:active,
   background: rgb(255 255 255 / 70%);
   border: 1px solid rgb(226 232 240 / 60%);
   box-shadow:
-    0 4px 6px -1px rgb(0 0 0 / 5%),
-    0 2px 4px -1px rgb(0 0 0 / 3%);
+    0 4px 6px -1px rgb(12 12 12 / 5%),
+    0 2px 4px -1px rgb(12 12 12 / 3%);
 }
 
 .glass-card:hover {
   box-shadow:
-    0 10px 15px -3px rgb(0 0 0 / 5%),
-    0 4px 6px -2px rgb(0 0 0 / 2.5%);
+    0 10px 15px -3px rgb(12 12 12 / 5%),
+    0 4px 6px -2px rgb(12 12 12 / 2.5%);
   transform: translateY(-1px);
 }
 
 .dark .glass-card {
   background: rgb(15 23 42 / 60%);
   border-color: rgb(51 65 85 / 50%);
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 30%);
+  box-shadow: 0 4px 6px -1px rgb(12 12 12 / 30%);
 }
 
 .dark .glass-card:hover {
-  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 40%);
+  box-shadow: 0 10px 15px -3px rgb(12 12 12 / 40%);
 }
 
 .glass-nav {
   backdrop-filter: blur(12px);
   background: rgb(255 255 255 / 85%);
   border-bottom: 1px solid rgb(226 232 240 / 80%);
-  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 5%);
+  box-shadow: 0 1px 2px 0 rgb(12 12 12 / 5%);
 }
 
 .dark .glass-nav {
   background: rgb(15 23 42 / 85%);
   border-color: rgb(51 65 85 / 50%);
-  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 20%);
+  box-shadow: 0 1px 2px 0 rgb(12 12 12 / 20%);
 }
 
 /* Modern Cards - Professional Edition */
@@ -183,8 +183,8 @@ a:active,
   background: hsl(var(--card));
   border: 1px solid hsl(var(--border));
   box-shadow:
-    0 1px 3px 0 rgb(0 0 0 / 10%),
-    0 1px 2px 0 rgb(0 0 0 / 6%);
+    0 1px 3px 0 rgb(12 12 12 / 10%),
+    0 1px 2px 0 rgb(12 12 12 / 6%);
   border-radius: 0.75rem;
   padding: 1.5rem;
   transition: all 0.2s ease-in-out;
@@ -195,19 +195,19 @@ a:active,
 .dark .modern-card {
   background: hsl(var(--card));
   border-color: hsl(var(--border));
-  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 20%);
+  box-shadow: 0 1px 3px 0 rgb(12 12 12 / 20%);
 }
 
 .modern-card:hover {
   box-shadow:
-    0 4px 6px -1px rgb(0 0 0 / 10%),
-    0 2px 4px -1px rgb(0 0 0 / 6%);
+    0 4px 6px -1px rgb(12 12 12 / 10%),
+    0 2px 4px -1px rgb(12 12 12 / 6%);
   transform: translateY(-2px);
   border-color: hsl(var(--primary) / 20%);
 }
 
 .dark .modern-card:hover {
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 30%);
+  box-shadow: 0 4px 6px -1px rgb(12 12 12 / 30%);
   border-color: hsl(var(--primary) / 30%);
 }
 
@@ -216,7 +216,7 @@ a:active,
   background: hsl(var(--card) / 80%);
   backdrop-filter: blur(8px);
   border: 1px solid hsl(var(--border));
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 5%);
+  box-shadow: 0 4px 6px -1px rgb(12 12 12 / 5%);
   border-radius: 0.75rem;
   transition: all 0.2s ease-in-out;
 }
@@ -227,7 +227,7 @@ a:active,
 }
 
 .card-glass-modern:hover {
-  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 5%);
+  box-shadow: 0 10px 15px -3px rgb(12 12 12 / 5%);
   transform: translateY(-2px);
   border-color: hsl(var(--border));
 }
@@ -259,12 +259,12 @@ a:active,
 .btn-primary-modern {
   background: hsl(var(--primary));
   color: hsl(var(--primary-foreground));
-  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 5%);
+  box-shadow: 0 1px 2px 0 rgb(12 12 12 / 5%);
 }
 
 .btn-primary-modern:hover {
   background: hsl(var(--primary) / 90%);
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 10%);
+  box-shadow: 0 4px 6px -1px rgb(12 12 12 / 10%);
 }
 
 .btn-secondary-modern {
@@ -290,7 +290,7 @@ a:active,
   padding: 0.625rem 0.875rem;
   transition: all 0.2s ease;
   color: hsl(var(--foreground));
-  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 5%);
+  box-shadow: 0 1px 2px 0 rgb(12 12 12 / 5%);
 }
 
 .input-modern:hover {
@@ -371,7 +371,8 @@ a:active,
 }
 
 /* Floating elements - Subtle */
-.floating {
+
+/* .floating {
   animation: floating 6s ease-in-out infinite;
 }
 
@@ -384,10 +385,11 @@ a:active,
   50% {
     transform: translateY(-4px);
   }
-}
+} */
 
 /* Shimmer effect for loading */
-.shimmer {
+
+/* .shimmer {
   background: linear-gradient(
     90deg,
     transparent 0%,
@@ -406,10 +408,11 @@ a:active,
   100% {
     background-position: 200% 0;
   }
-}
+} */
 
 /* Pulse animation - Subtle */
-.pulse-glow {
+
+/* .pulse-glow {
   animation: pulseGlow 3s ease-in-out infinite;
 }
 
@@ -422,13 +425,13 @@ a:active,
   50% {
     opacity: 0.7;
   }
-}
+} */
 
 /* Custom shadows */
 .shadow-3xl {
   box-shadow:
-    0 20px 25px -5px rgb(0 0 0 / 10%),
-    0 10px 10px -5px rgb(0 0 0 / 4%);
+    0 20px 25px -5px rgb(12 12 12 / 10%),
+    0 10px 10px -5px rgb(12 12 12 / 4%);
 }
 
 .shadow-glow {
@@ -508,7 +511,7 @@ a:active,
   opacity: 0;
   visibility: hidden;
   transition: all 0.2s ease;
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 10%);
+  box-shadow: 0 4px 6px -1px rgb(12 12 12 / 10%);
   z-index: 50;
 }
 

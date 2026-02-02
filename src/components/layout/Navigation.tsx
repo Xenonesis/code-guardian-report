@@ -346,7 +346,11 @@ export const Navigation: React.FC<NavigationProps> = ({
                 <Button
                   size="sm"
                   onClick={() => setShowAuthModal(true)}
-                  className="rounded-full border border-blue-400/20 bg-gradient-to-r from-blue-600 to-violet-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-lg shadow-blue-500/30 transition-all duration-300 hover:translate-y-[-1px] hover:from-blue-500 hover:to-violet-500 hover:shadow-xl hover:shadow-blue-500/40 active:translate-y-0 active:shadow-lg lg:px-5 lg:py-2 lg:text-sm"
+                  className="text-primary-foreground hover:bg-primary/90 rounded-full px-3.5 py-1.5 text-xs font-semibold shadow-md transition-all duration-300 hover:shadow-lg lg:px-5 lg:py-2 lg:text-sm"
+                  style={{
+                    backgroundColor: "hsl(var(--primary))",
+                    color: "hsl(var(--primary-foreground))",
+                  }}
                 >
                   Get Started
                 </Button>

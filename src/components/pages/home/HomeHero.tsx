@@ -46,13 +46,17 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ onStartAnalysis }) => {
           <Button
             onClick={onStartAnalysis}
             size="lg"
-            className="group relative w-full min-w-[280px] overflow-hidden rounded-2xl border border-white/10 px-10 py-5 text-lg font-semibold transition-all duration-400 hover:translate-y-[-2px] hover:shadow-2xl focus:translate-y-[-2px] sm:w-auto sm:min-w-[320px] sm:rounded-3xl sm:px-12 sm:py-6 sm:text-xl"
+            className="group relative w-full min-w-[280px] overflow-hidden rounded-2xl border border-white/10 px-10 py-5 text-lg font-semibold transition-all duration-400 hover:shadow-2xl sm:w-auto sm:min-w-[320px] sm:rounded-3xl sm:px-12 sm:py-6 sm:text-xl"
+            style={{ backgroundColor: "hsl(var(--primary))" }}
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-violet-600 to-fuchsia-600 opacity-100 transition-opacity duration-400" />
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-violet-500 to-fuchsia-500 opacity-0 transition-opacity duration-400 group-hover:opacity-100" />
+            <div className="bg-primary absolute inset-0 opacity-100 transition-opacity duration-400" />
+            <div className="bg-primary/90 absolute inset-0 opacity-0 transition-opacity duration-400 group-hover:opacity-100" />
             <div className="absolute inset-0 bg-gradient-to-b from-white/15 to-transparent" />
             <div className="absolute inset-0 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.2)]" />
-            <div className="relative flex items-center justify-center gap-3 text-white sm:gap-4">
+            <div
+              className="text-primary-foreground relative flex items-center justify-center gap-3 sm:gap-4"
+              style={{ color: "hsl(var(--primary-foreground))" }}
+            >
               <Brain className="h-6 w-6 transition-transform duration-300 group-hover:scale-110 sm:h-7 sm:w-7" />
               <span className="tracking-tight whitespace-nowrap">
                 Start AI Analysis

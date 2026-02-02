@@ -93,11 +93,17 @@ export class GitHubAnalysisStorageService {
 
       return repositories;
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : String(error);
-      
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+
       // Don't log permission errors as errors - they're expected when not authenticated
-      if (errorMessage.includes('permission') || errorMessage.includes('insufficient permissions')) {
-        logger.debug("Firebase read requires authentication. Using offline mode with empty data.");
+      if (
+        errorMessage.includes("permission") ||
+        errorMessage.includes("insufficient permissions")
+      ) {
+        logger.debug(
+          "Firebase read requires authentication. Using offline mode with empty data."
+        );
       } else {
         logger.error("Error fetching repositories:", error);
       }
@@ -143,11 +149,17 @@ export class GitHubAnalysisStorageService {
 
       return analyses;
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : String(error);
-      
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+
       // Don't log permission errors as errors - they're expected when not authenticated
-      if (errorMessage.includes('permission') || errorMessage.includes('insufficient permissions')) {
-        logger.debug("Firebase read requires authentication. Using offline mode with empty data.");
+      if (
+        errorMessage.includes("permission") ||
+        errorMessage.includes("insufficient permissions")
+      ) {
+        logger.debug(
+          "Firebase read requires authentication. Using offline mode with empty data."
+        );
       } else {
         logger.error("Error fetching analysis history:", error);
       }
@@ -706,66 +718,6 @@ export class GitHubAnalysisStorageService {
   }
 
   // Mock data methods for offline/fallback scenarios
-  private getMockRepositories(): Repository[] {
-    return [
-      {
-        id: "mock-1",
-        name: "code-guardian",
-        fullName: "user/code-guardian",
-        description: "Advanced security analysis tool",
-        url: "https://github.com/user/code-guardian",
-        lastAnalyzed: new Date(Date.now() - 86400000),
-        securityScore: 8.5,
-        issuesFound: 3,
-        criticalIssues: 0,
-        language: "TypeScript",
-        stars: 42,
-        forks: 8,
-      },
-      {
-        id: "mock-2",
-        name: "api-gateway",
-        fullName: "user/api-gateway",
-        description: "Microservices API gateway",
-        url: "https://github.com/user/api-gateway",
-        lastAnalyzed: new Date(Date.now() - 172800000),
-        securityScore: 7.2,
-        issuesFound: 8,
-        criticalIssues: 2,
-        language: "JavaScript",
-        stars: 28,
-        forks: 5,
-      },
-    ];
-  }
-
-  private getMockAnalysisHistory(): AnalysisRecord[] {
-    return [
-      {
-        id: "analysis-1",
-        repositoryName: "code-guardian",
-        repositoryUrl: "https://github.com/user/code-guardian",
-        analyzedAt: new Date(Date.now() - 86400000),
-        duration: 45,
-        issuesFound: 3,
-        criticalIssues: 0,
-        securityScore: 8.5,
-        language: "TypeScript",
-      },
-      {
-        id: "analysis-2",
-        repositoryName: "api-gateway",
-        repositoryUrl: "https://github.com/user/api-gateway",
-        analyzedAt: new Date(Date.now() - 172800000),
-        duration: 62,
-        issuesFound: 8,
-        criticalIssues: 2,
-        securityScore: 7.2,
-        language: "JavaScript",
-      },
-    ];
-  }
-
   private getMockSecurityTrends() {
     return {
       trends: [

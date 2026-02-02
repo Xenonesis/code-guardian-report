@@ -3,14 +3,14 @@
 /* Enhanced Card Shadows and Depth - Tamed */
 .shadow-3xl {
   box-shadow:
-    0 4px 6px -1px rgb(0 0 0 / 10%),
-    0 2px 4px -2px rgb(0 0 0 / 10%);
+    0 4px 6px -1px rgb(12 12 12 / 10%),
+    0 2px 4px -2px rgb(12 12 12 / 10%);
 }
 
 .dark .shadow-3xl {
   box-shadow:
     0 0 0 1px rgb(255 255 255 / 10%),
-    0 4px 6px -1px rgb(0 0 0 / 50%);
+    0 4px 6px -1px rgb(12 12 12 / 50%);
 }
 
 /* Professional Typography Enhancements */
@@ -60,6 +60,6 @@
 .card-professional-hover:hover {
   transform: translateY(-2px);
   box-shadow:
-    0 10px 15px -3px rgb(0 0 0 / 10%),
-    0 4px 6px -4px rgb(0 0 0 / 10%);
+    0 10px 15px -3px rgb(12 12 12 / 10%),
+    0 4px 6px -4px rgb(12 12 12 / 10%);
 }

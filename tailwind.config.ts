@@ -8,6 +8,7 @@ const config: Config = {
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
   ],
+  safelist: ["bg-primary", "text-primary-foreground"],
   theme: {
     extend: {
       screens: {

@@ -15,7 +15,7 @@
   background: rgb(255 255 255 / 8%);
   border-color: rgb(255 255 255 / 20%);
   transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgb(0 0 0 / 30%);
+  box-shadow: 0 10px 30px rgb(12 12 12 / 30%);
 }
 
 .github-stat-card {
