@@ -107,7 +107,7 @@ export const StatsGrid: React.FC<StatsGridProps> = ({ className = "" }) => {
       {stats.map((stat, index) => (
         <div
           key={index}
-          className="stat-card-enhanced glass-card-ultra enhanced-card-hover glow-on-hover group relative overflow-hidden p-6 lg:p-8"
+          className="stat-card-enhanced enhanced-card-hover glow-on-hover group relative overflow-hidden rounded-xl border border-slate-200/50 bg-white/90 p-6 shadow-sm backdrop-blur-sm transition-all duration-200 hover:border-slate-300/50 lg:p-8 dark:border-slate-700/50 dark:bg-slate-900/90"
           style={{
             animationDelay: `${index * 0.1}s`,
           }}

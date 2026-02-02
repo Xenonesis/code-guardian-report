@@ -24,6 +24,7 @@ import { useNavigation } from "@/lib/navigation-context";
 import { AuthModal } from "@/components/auth/AuthModal";
 import NotificationCenter from "@/components/notifications/NotificationCenter";
 import { PWAQuickActions } from "@/components/pwa/PWAQuickActions";
+import { ThemeToggle } from "@/components/common/ThemeToggle";
 
 interface NavigationProps {
   className?: string;
@@ -352,6 +353,9 @@ export const Navigation: React.FC<NavigationProps> = ({
               </div>
             )}
 
+            {/* Theme Toggle */}
+            <ThemeToggle />
+
             {/* Notification Center */}
             <NotificationCenter className="xs:h-9 xs:w-9 h-8 w-8 rounded-full bg-slate-100/80 transition-all duration-200 hover:bg-slate-200/80 sm:h-10 sm:w-10 dark:bg-slate-800/50 dark:hover:bg-slate-700/50" />
 
@@ -567,6 +571,9 @@ export const Navigation: React.FC<NavigationProps> = ({
 
             {/* Footer in mobile menu */}
             <div className="xs:mt-8 xs:pt-6 mt-6 border-t border-slate-200 pt-4 text-center dark:border-slate-800">
+              <div className="mb-4 flex justify-center">
+                <ThemeToggle />
+              </div>
               <p className="xs:text-xs text-[10px] text-slate-400 dark:text-slate-500">
                 © 2024 Code Guardian. All rights reserved.
               </p>

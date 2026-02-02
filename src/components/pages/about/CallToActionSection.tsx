@@ -30,7 +30,7 @@ export const CallToActionSection: React.FC<CallToActionSectionProps> = ({
       </div>
 
       <div className="relative z-10 container mx-auto px-4">
-        <Card className="glass-card-ultra enhanced-card-hover glow-on-hover group relative mx-auto max-w-4xl overflow-hidden">
+        <Card className="enhanced-card-hover glow-on-hover group relative mx-auto max-w-4xl overflow-hidden rounded-xl border border-slate-200/50 bg-white/90 shadow-sm backdrop-blur-sm transition-all duration-200 hover:border-slate-300/50 dark:border-slate-700/50 dark:bg-slate-900/90">
           {/* Enhanced Animated Gradient Overlay */}
           <div className="animated-border absolute inset-0 opacity-0 transition-opacity duration-700 group-hover:opacity-100"></div>
 
@@ -62,7 +62,7 @@ export const CallToActionSection: React.FC<CallToActionSectionProps> = ({
               </h3>
 
               {/* Enhanced Description */}
-              <div className="glass-card-ultra mb-10 p-6">
+              <div className="mb-10 rounded-xl border border-slate-200/50 bg-white/90 p-6 shadow-sm backdrop-blur-sm transition-all duration-200 hover:border-slate-300/50 dark:border-slate-700/50 dark:bg-slate-900/90">
                 <p className="text-xl leading-relaxed text-slate-800 dark:text-slate-200">
                   Start analyzing your codebase today with our comprehensive
                   security and quality tools. Join thousands of developers who
@@ -105,7 +105,7 @@ export const CallToActionSection: React.FC<CallToActionSectionProps> = ({
                 ].map((item, index) => (
                   <div
                     key={index}
-                    className="glass-card-ultra enhanced-card-hover group p-4"
+                    className="enhanced-card-hover group rounded-xl border border-slate-200/50 bg-white/90 p-4 shadow-sm backdrop-blur-sm transition-all duration-200 hover:border-slate-300/50 dark:border-slate-700/50 dark:bg-slate-900/90"
                     style={{ animationDelay: item.delay }}
                   >
                     <div className="flex items-center justify-center gap-3">

@@ -29,7 +29,7 @@ export const VersionInfo: React.FC = () => {
   return (
     <div className="flex flex-col items-center justify-center gap-6 lg:flex-row lg:gap-12">
       {/* Enhanced Version Badge */}
-      <div className="glass-card-ultra enhanced-card-hover px-6 py-4">
+      <div className="enhanced-card-hover rounded-xl border border-slate-200/50 bg-white/90 px-6 py-4 shadow-sm backdrop-blur-sm transition-all duration-200 hover:border-slate-300/50 dark:border-slate-700/50 dark:bg-slate-900/90">
         <div className="flex items-center gap-3">
           <div className="rounded-xl bg-gradient-to-r from-blue-500 to-purple-500 p-2">
             <Code2 className="h-5 w-5 text-white" />
@@ -46,7 +46,7 @@ export const VersionInfo: React.FC = () => {
       </div>
 
       {/* Enhanced Tech Stack */}
-      <div className="glass-card-ultra enhanced-card-hover px-6 py-4">
+      <div className="enhanced-card-hover rounded-xl border border-slate-200/50 bg-white/90 px-6 py-4 shadow-sm backdrop-blur-sm transition-all duration-200 hover:border-slate-300/50 dark:border-slate-700/50 dark:bg-slate-900/90">
         <div className="flex flex-col items-center gap-4 sm:flex-row">
           <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">
             Built with

@@ -28,41 +28,37 @@ const EnhancedCard = React.forwardRef<HTMLDivElement, EnhancedCardProps>(
     const variants = {
       default: "rounded-lg border bg-card text-card-foreground shadow-sm",
       modern:
-        "rounded-2xl bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm border-0 shadow-xl transition-all duration-300",
+        "rounded-xl bg-background border border-border shadow-sm transition-all duration-200",
       glass:
-        "rounded-2xl backdrop-blur-xl bg-white/10 dark:bg-black/10 border border-white/20 dark:border-white/10 shadow-2xl",
+        "rounded-xl backdrop-blur-md bg-background/60 border border-border/50 shadow-sm",
       gradient:
-        "rounded-2xl bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-900 border-0 shadow-xl",
+        "rounded-xl bg-gradient-to-br from-background to-muted/50 border border-border/50 shadow-sm",
       elevated:
-        "rounded-2xl bg-card border-0 shadow-2xl transition-all duration-500",
+        "rounded-xl bg-card border border-border/50 shadow-md transition-all duration-200",
       interactive:
-        "rounded-2xl bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm border-0 shadow-xl transition-all duration-500 cursor-pointer",
+        "rounded-xl bg-background border border-border shadow-sm transition-all duration-200 cursor-pointer hover:border-primary/50",
     };
 
     const hoverEffects = {
-      default: hover ? "hover:shadow-xl hover:-translate-y-1" : "",
+      default: hover ? "hover:shadow-md" : "",
       modern: hover
-        ? "hover:shadow-2xl hover:-translate-y-1 hover:scale-[1.02]"
+        ? "hover:shadow-md hover:-translate-y-0.5 hover:border-primary/20"
         : "",
       glass: hover
-        ? "hover:bg-white/20 dark:hover:bg-black/20 hover:-translate-y-1"
+        ? "hover:bg-background/80 hover:shadow-md hover:-translate-y-0.5"
         : "",
-      gradient: hover
-        ? "hover:shadow-2xl hover:-translate-y-1 hover:scale-[1.02]"
-        : "",
-      elevated: hover
-        ? "hover:shadow-3xl hover:-translate-y-2 hover:scale-[1.03]"
-        : "",
+      gradient: hover ? "hover:shadow-md hover:-translate-y-0.5" : "",
+      elevated: hover ? "hover:shadow-lg hover:-translate-y-0.5" : "",
       interactive: hover
-        ? "hover:shadow-2xl hover:-translate-y-2 hover:scale-[1.02] active:scale-[1.01] active:-translate-y-1"
+        ? "hover:shadow-md hover:-translate-y-0.5 hover:scale-[1.005]"
         : "",
     };
 
     const glowEffects = {
-      blue: "hover:shadow-blue-500/25 hover:shadow-2xl",
-      purple: "hover:shadow-purple-500/25 hover:shadow-2xl",
-      green: "hover:shadow-emerald-500/25 hover:shadow-2xl",
-      orange: "hover:shadow-orange-500/25 hover:shadow-2xl",
+      blue: "hover:shadow-[0_0_15px_rgba(59,130,246,0.15)]",
+      purple: "hover:shadow-[0_0_15px_rgba(168,85,247,0.15)]",
+      green: "hover:shadow-[0_0_15px_rgba(34,197,94,0.15)]",
+      orange: "hover:shadow-[0_0_15px_rgba(249,115,22,0.15)]",
       none: "",
     };
 

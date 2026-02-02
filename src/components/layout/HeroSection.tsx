@@ -73,7 +73,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         )}
 
         {subtitle && (
-          <div className="glass-card-ultra mx-auto mb-6 max-w-4xl px-6 py-4 sm:mb-8 sm:px-8 sm:py-6 lg:mb-10">
+          <div className="mx-auto mb-6 max-w-4xl rounded-lg border border-slate-200/50 bg-white/90 p-6 shadow-sm backdrop-blur-sm transition-all duration-200 hover:border-slate-300/50 sm:mb-8 sm:px-8 sm:py-6 lg:mb-10 dark:border-slate-700/50 dark:!bg-slate-950/90">
             <h2 className="text-responsive-lg leading-relaxed font-semibold text-slate-800 dark:text-slate-200">
               {subtitle}
             </h2>
