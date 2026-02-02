@@ -1,17 +1,3 @@
-/**
- * Modern Security Dashboard Component
- *
- * Displays SonarQube-style security and code quality metrics:
- * - Quality Gate status
- * - Security Rating (A-E)
- * - Reliability Rating (A-E)
- * - Maintainability Rating (A-E)
- * - Technical Debt
- * - Code Coverage estimate
- * - Complexity metrics
- * - Issue breakdown by type
- */
-
 import React from "react";
 import {
   Card,
@@ -111,7 +97,7 @@ export const ModernSecurityDashboard: React.FC<
 
   return (
     <div className="space-y-6">
-      {/* Quality Gate Status */}
+      {}
       <Card
         className={`border-2 ${qualityGate.passed ? "border-green-500 dark:border-green-700" : "border-red-500 dark:border-red-700"}`}
       >
@@ -162,9 +148,9 @@ export const ModernSecurityDashboard: React.FC<
         )}
       </Card>
 
-      {/* Rating Cards */}
+      {}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-        {/* Security Rating */}
+        {}
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
@@ -201,7 +187,7 @@ export const ModernSecurityDashboard: React.FC<
           </CardContent>
         </Card>
 
-        {/* Reliability Rating */}
+        {}
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
@@ -236,7 +222,7 @@ export const ModernSecurityDashboard: React.FC<
           </CardContent>
         </Card>
 
-        {/* Maintainability Rating */}
+        {}
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
@@ -274,9 +260,9 @@ export const ModernSecurityDashboard: React.FC<
         </Card>
       </div>
 
-      {/* Technical Debt & Metrics */}
+      {}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        {/* Technical Debt */}
+        {}
         <Card>
           <CardHeader>
             <div className="flex items-center gap-2">
@@ -318,7 +304,7 @@ export const ModernSecurityDashboard: React.FC<
           </CardContent>
         </Card>
 
-        {/* Code Metrics */}
+        {}
         <Card>
           <CardHeader>
             <div className="flex items-center gap-2">
@@ -355,7 +341,7 @@ export const ModernSecurityDashboard: React.FC<
         </Card>
       </div>
 
-      {/* Complexity Metrics */}
+      {}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         <Card>
           <CardHeader>
@@ -409,7 +395,7 @@ export const ModernSecurityDashboard: React.FC<
         </Card>
       </div>
 
-      {/* Issue Breakdown */}
+      {}
       <Card>
         <CardHeader>
           <div className="flex items-center gap-2">

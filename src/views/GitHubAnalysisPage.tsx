@@ -35,7 +35,6 @@ import { cn } from "@/lib/utils";
 import { GitHubProfileHeader } from "@/components/github/GitHubProfileHeader";
 import { GitHubNavigationTabs } from "@/components/github/GitHubNavigationTabs";
 
-// Lazy load the results component for better performance
 const EnhancedSecurityResults = lazy(() =>
   import("@/components/analysis/EnhancedSecurityResults").then((m) => ({
     default: m.EnhancedSecurityResults,
@@ -93,7 +92,6 @@ export const GitHubAnalysisPage: React.FC = () => {
     loading: true,
   });
 
-  // Fetch dashboard stats
   useEffect(() => {
     const loadDashboardStats = async () => {
       if (!user?.uid) return;
@@ -123,7 +121,6 @@ export const GitHubAnalysisPage: React.FC = () => {
     loadDashboardStats();
   }, [user?.uid, selectedTab]);
 
-  // GitHub repositories integration - always enabled for authenticated users
   const {
     repositories,
     loading: reposLoading,
@@ -138,10 +135,9 @@ export const GitHubAnalysisPage: React.FC = () => {
     refreshRepositories,
   } = useGitHubRepositories({
     email: userProfile?.email || null,
-    enabled: !!user, // Enable for all authenticated users
+    enabled: !!user,
   });
 
-  // Show error toast when repository fetch fails
   useEffect(() => {
     if (reposError) {
       toast.error(reposError, {
@@ -151,25 +147,20 @@ export const GitHubAnalysisPage: React.FC = () => {
     }
   }, [reposError]);
 
-  // Auto-fetch GitHub data for GitHub authenticated users
   useEffect(() => {
     const autoFetchGitHubData = async () => {
       if (!isGitHubUser) return;
 
-      // Try to get username from profile or metadata
       const username =
         userProfile?.githubUsername ||
         userProfile?.githubMetadata?.login ||
         null;
 
       if (!username) {
-        // No username available yet, wait for profile to load
         return;
       }
 
-      // Validate username format before proceeding
       if (!isValidGitHubUsername(username)) {
-        // Clear invalid stored username if present
         const storedUsername = localStorage.getItem("github_username");
         if (storedUsername === username) {
           localStorage.removeItem("github_username");
@@ -178,7 +169,6 @@ export const GitHubAnalysisPage: React.FC = () => {
         return;
       }
 
-      // For GitHub users, automatically set their username to trigger repo fetch
       const storedUsername = localStorage.getItem("github_username");
       if (storedUsername !== username) {
         localStorage.setItem("github_username", username);
@@ -188,7 +178,6 @@ export const GitHubAnalysisPage: React.FC = () => {
           logger.debug("Auto-fetched GitHub data for:", username);
         }
       } else if (repositories.length === 0 && !reposLoading) {
-        // Username is already stored but repos not loaded, refresh
         refreshRepositories?.();
       }
     };
@@ -204,7 +193,6 @@ export const GitHubAnalysisPage: React.FC = () => {
     refreshRepositories,
   ]);
 
-  // Derive header profile view
   const nonGithubConnected = !isGitHubUser;
   const githubAvatarUrl = nonGithubConnected
     ? githubUser?.avatar_url || null
@@ -223,7 +211,6 @@ export const GitHubAnalysisPage: React.FC = () => {
     : userProfile?.githubMetadata?.publicRepos || 0;
   const isLoadingProfile = !githubUsername && isGitHubUser;
 
-  // Show permission modal logic
   useEffect(() => {
     if (
       !isGitHubUser &&
@@ -244,7 +231,6 @@ export const GitHubAnalysisPage: React.FC = () => {
     user,
   ]);
 
-  // Show username input logic
   useEffect(() => {
     if (
       !isGitHubUser &&
@@ -457,11 +443,10 @@ export const GitHubAnalysisPage: React.FC = () => {
     }
   };
 
-  // Not signed in with GitHub and no permission granted
   if (!isGitHubUser && !permissionGranted && !user) {
     return (
       <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-white p-4 dark:bg-slate-950">
-        {/* Background Elements */}
+        {}
         <div className="pointer-events-none absolute top-0 left-0 h-full w-full overflow-hidden">
           <div className="absolute -top-[20%] -left-[10%] h-[50%] w-[50%] rounded-full bg-blue-500/10 blur-[100px] dark:bg-blue-500/10" />
           <div className="absolute top-[40%] -right-[10%] h-[40%] w-[40%] rounded-full bg-purple-500/10 blur-[100px] dark:bg-purple-500/10" />
@@ -608,9 +593,9 @@ export const GitHubAnalysisPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Main Content Area */}
+        {}
         <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-          {/* GitHub Repositories Section - Show for authenticated users with repos */}
+          {}
           {repositories.length > 0 && (
             <div className="mb-8">
               <Card className="border-slate-200 p-6 shadow-sm dark:border-slate-800">
@@ -660,7 +645,7 @@ export const GitHubAnalysisPage: React.FC = () => {
             </div>
           )}
 
-          {/* Prompt to connect GitHub when no repos loaded */}
+          {}
           {repositories.length === 0 &&
             !reposLoading &&
             !isGitHubUser &&
@@ -689,7 +674,7 @@ export const GitHubAnalysisPage: React.FC = () => {
               </div>
             )}
 
-          {/* Loading state for repos */}
+          {}
           {reposLoading && repositories.length === 0 && (
             <div className="mb-8">
               <Card className="border-slate-200 p-8 text-center dark:border-slate-800">
@@ -755,7 +740,7 @@ export const GitHubAnalysisPage: React.FC = () => {
 
             {selectedTab === "results" && analysisResults && (
               <div className="animate-in fade-in space-y-6 duration-500">
-                {/* Results Header */}
+                {}
                 <Card className="relative overflow-hidden border-slate-200 p-6 shadow-sm dark:border-slate-800">
                   <div className="pointer-events-none absolute top-0 right-0 -mt-32 -mr-32 h-64 w-64 rounded-full bg-emerald-500/5 blur-3xl" />
 
@@ -803,7 +788,7 @@ export const GitHubAnalysisPage: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Quick Stats Grid */}
+                  {}
                   <div className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-5">
                     {[
                       {
@@ -887,7 +872,7 @@ export const GitHubAnalysisPage: React.FC = () => {
                   </div>
                 </Card>
 
-                {/* Detailed Results */}
+                {}
                 <Suspense
                   fallback={
                     <div className="flex flex-col items-center justify-center py-12">

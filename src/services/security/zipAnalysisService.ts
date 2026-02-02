@@ -1,14 +1,3 @@
-/**
- * Advanced ZIP File Security Analysis Service
- * Provides comprehensive security analysis of ZIP archives including:
- * - File structure analysis
- * - Dependency vulnerability scanning
- * - Malware detection patterns
- * - License compliance checking
- * - Code quality assessment
- * - Supply chain security analysis
- */
-
 import JSZip from "jszip";
 
 export interface ZipFileEntry {
@@ -138,7 +127,7 @@ export interface ZipAnalysisResult {
     toolVersion: string;
     rulesVersion: string;
   };
-  /** Optional extracted file contents for detailed analysis */
+
   files?: Array<{
     name: string;
     content: string;
@@ -147,7 +136,7 @@ export interface ZipAnalysisResult {
 }
 
 export class ZipAnalysisService {
-  private readonly MAX_FILE_SIZE = 100 * 1024 * 1024; // 100MB
+  private readonly MAX_FILE_SIZE = 100 * 1024 * 1024;
   private readonly MAX_FILES = 10000;
 
   private malwarePatterns: RegExp[] = [
@@ -199,17 +188,12 @@ export class ZipAnalysisService {
     "go.mod": "go modules",
   };
 
-  /**
-   * Analyze ZIP file for security threats and code quality
-   */
   public async analyzeZipFile(file: ZipInputFile): Promise<ZipAnalysisResult> {
     const startTime = Date.now();
 
     try {
-      // Extract and analyze ZIP contents
       const entries = await this.extractZipEntries(file);
 
-      // Perform comprehensive analysis
       const fileStructure = this.analyzeFileStructure(entries);
       const securityThreats = await this.detectSecurityThreats(entries);
       const dependencies = await this.analyzeDependencies(entries);
@@ -247,11 +231,7 @@ export class ZipAnalysisService {
     }
   }
 
-  /**
-   * Extract ZIP file entries with security validation
-   */
   private async extractZipEntries(file: ZipInputFile): Promise<ZipFileEntry[]> {
-    // Real extraction using JSZip
     if (file.size > this.MAX_FILE_SIZE) {
       throw new Error("File too large for security analysis");
     }
@@ -259,7 +239,6 @@ export class ZipAnalysisService {
     const arrayBuffer = await file.arrayBuffer();
     const zip = await JSZip.loadAsync(arrayBuffer, { checkCRC32: true });
 
-    // Collect uncompressed sizes first
     const tempEntries: Array<{
       path: string;
       name: string;
@@ -332,11 +311,9 @@ export class ZipAnalysisService {
         continue;
       }
 
-      // Read binary bytes to compute exact uncompressed size
       const bytes = await zipObj.async("uint8array");
       const size = bytes.byteLength;
 
-      // Optionally decode to text for known text extensions and reasonable size
       const ext = this.getFileExtension(name);
       let content: string | ArrayBuffer | undefined;
       let encoding: string | undefined;
@@ -377,7 +354,7 @@ export class ZipAnalysisService {
       (sum, e) => sum + (e.size || 0),
       0
     );
-    const totalCompressed = file.size; // approximate: total on-disk ZIP size
+    const totalCompressed = file.size;
 
     const entries: ZipFileEntry[] = tempEntries.map((e) => {
       const compressedSize =
@@ -406,9 +383,6 @@ export class ZipAnalysisService {
     return entries;
   }
 
-  /**
-   * Analyze file structure and detect anomalies
-   */
   private analyzeFileStructure(entries: ZipFileEntry[]) {
     const fileTypes: Record<string, number> = {};
     let totalSize = 0;
@@ -426,12 +400,10 @@ export class ZipAnalysisService {
       const pathDepth = entry.path.split("/").length;
       deepestPath = Math.max(deepestPath, pathDepth);
 
-      // Check for suspicious files
       if (this.suspiciousExtensions.includes(extension.toLowerCase())) {
         suspiciousFiles.push(entry.path);
       }
 
-      // Check for hidden files or suspicious names
       if (entry.name.startsWith(".") || this.isSuspiciousFilename(entry.name)) {
         suspiciousFiles.push(entry.path);
       }
@@ -447,16 +419,12 @@ export class ZipAnalysisService {
     };
   }
 
-  /**
-   * Detect security threats in ZIP contents
-   */
   private async detectSecurityThreats(
     entries: ZipFileEntry[]
   ): Promise<SecurityThreat[]> {
     const threats: SecurityThreat[] = [];
 
     for (const entry of entries) {
-      // Check for ZIP bomb (high compression ratio)
       if (entry.compressionRatio < 0.01 && entry.size > 1000000) {
         threats.push({
           type: "zip_bomb",
@@ -473,7 +441,6 @@ export class ZipAnalysisService {
         });
       }
 
-      // Check for path traversal
       if (entry.path.includes("../") || entry.path.includes("..\\")) {
         threats.push({
           type: "path_traversal",
@@ -486,7 +453,6 @@ export class ZipAnalysisService {
         });
       }
 
-      // Check for executable files
       const extension = this.getFileExtension(entry.name);
       if (this.suspiciousExtensions.includes(extension)) {
         threats.push({
@@ -499,7 +465,6 @@ export class ZipAnalysisService {
         });
       }
 
-      // Analyze file content for malware patterns
       if (entry.content && typeof entry.content === "string") {
         const malwareFindings = this.scanForMalware(entry.content, entry.path);
         threats.push(...malwareFindings);
@@ -509,9 +474,6 @@ export class ZipAnalysisService {
     return threats;
   }
 
-  /**
-   * Scan file content for malware patterns
-   */
   private scanForMalware(content: string, filepath: string): SecurityThreat[] {
     const threats: SecurityThreat[] = [];
 
@@ -523,7 +485,7 @@ export class ZipAnalysisService {
           severity: "Critical",
           file: filepath,
           description: "Potential malware pattern detected",
-          evidence: matches.slice(0, 3), // Show first 3 matches
+          evidence: matches.slice(0, 3),
           mitigation: "Remove file or quarantine for detailed analysis",
           cweId: "CWE-506",
         });
@@ -533,9 +495,6 @@ export class ZipAnalysisService {
     return threats;
   }
 
-  /**
-   * Analyze dependencies for vulnerabilities
-   */
   private async analyzeDependencies(entries: ZipFileEntry[]): Promise<{
     packageFiles: string[];
     vulnerabilities: DependencyVulnerability[];
@@ -560,9 +519,6 @@ export class ZipAnalysisService {
 
       if (Object.keys(this.packageManagers).includes(filename)) {
         packageFiles.push(entry.path);
-
-        // TODO: Parse package files and check for vulnerabilities
-        // This would integrate with vulnerability databases
       }
     });
 
@@ -573,9 +529,6 @@ export class ZipAnalysisService {
     };
   }
 
-  /**
-   * Analyze licenses in the project
-   */
   private async analyzeLicenses(
     entries: ZipFileEntry[]
   ): Promise<LicenseInfo[]> {
@@ -590,7 +543,6 @@ export class ZipAnalysisService {
         filename.includes("copying") ||
         filename.includes("copyright")
       ) {
-        // TODO: Parse license content and identify license type
         licenses.push({
           name: "Unknown License",
           type: "unknown",
@@ -604,9 +556,6 @@ export class ZipAnalysisService {
     return licenses;
   }
 
-  /**
-   * Analyze code quality metrics
-   */
   private async analyzeCodeQuality(
     entries: ZipFileEntry[]
   ): Promise<CodeQualityMetrics> {
@@ -636,18 +585,14 @@ export class ZipAnalysisService {
         if (isConfig) configFiles++;
         if (isDoc) documentationFiles++;
 
-        // Count lines of code for text files
         if (entry.content && typeof entry.content === "string") {
           linesOfCode += entry.content.split("\n").length;
         }
 
-        // Track largest files
         if (entry.size > 50000) {
-          // Files larger than 50KB
           largestFiles.push({ file: entry.path, size: entry.size });
         }
 
-        // Generate hash for duplicate detection
         if (entry.crc32) {
           fileHashes.set(entry.path, entry.crc32);
         }
@@ -656,7 +601,6 @@ export class ZipAnalysisService {
 
     largestFiles.sort((a, b) => b.size - a.size);
 
-    // Create stats object for complexity calculations
     const stats = {
       codeFiles,
       totalLines: linesOfCode,
@@ -684,9 +628,6 @@ export class ZipAnalysisService {
     };
   }
 
-  /**
-   * Analyze supply chain security
-   */
   private async analyzeSupplyChain(entries: ZipFileEntry[]) {
     return {
       sourceOrigin: "unknown",
@@ -695,16 +636,10 @@ export class ZipAnalysisService {
     };
   }
 
-  /**
-   * Check compliance issues
-   */
   private async checkCompliance(entries: ZipFileEntry[]) {
     return entries.length >= 0 ? [] : [];
   }
 
-  /**
-   * Generate security recommendations
-   */
   private generateRecommendations(analysis: any) {
     const recommendations = [];
 
@@ -721,7 +656,6 @@ export class ZipAnalysisService {
     return recommendations;
   }
 
-  // Helper methods
   private getFileExtension(filename: string): string {
     const parts = filename.split(".");
     return parts.length > 1 ? "." + parts[parts.length - 1].toLowerCase() : "";
@@ -822,9 +756,6 @@ export class ZipAnalysisService {
     return docExtensions.includes(extension);
   }
 
-  /**
-   * Find duplicate files by comparing hashes
-   */
   private findDuplicateFiles(
     fileHashes: Map<string, string>
   ): Array<{ files: string[]; hash: string }> {
@@ -847,17 +778,12 @@ export class ZipAnalysisService {
     return duplicates;
   }
 
-  /**
-   * Calculate average cyclomatic complexity
-   */
   private calculateAverageCyclomaticComplexity(stats: any): number {
-    // Estimate based on file types and sizes
     const codeFiles = stats.codeFiles || 0;
     const totalLines = stats.totalLines || 0;
 
     if (codeFiles === 0) return 0;
 
-    // Simple estimation: complexity increases with file size
     const avgLinesPerFile = totalLines / codeFiles;
     const estimatedComplexity = Math.min(
       50,
@@ -867,19 +793,12 @@ export class ZipAnalysisService {
     return estimatedComplexity;
   }
 
-  /**
-   * Estimate average cognitive complexity
-   */
   private estimateAverageCognitiveComplexity(stats: any): number {
-    // Cognitive complexity is typically 20-30% higher than cyclomatic
     const cyclomaticComplexity =
       this.calculateAverageCyclomaticComplexity(stats);
     return Math.floor(cyclomaticComplexity * 1.25);
   }
 
-  /**
-   * Calculate maintainability index
-   */
   private calculateMaintainabilityIndex(stats: any): number {
     const codeFiles = stats.codeFiles || 0;
     const totalLines = stats.totalLines || 0;
@@ -887,23 +806,19 @@ export class ZipAnalysisService {
 
     if (codeFiles === 0) return 100;
 
-    // Maintainability Index formula (simplified)
-    // MI = 171 - 5.2 * ln(Halstead Volume) - 0.23 * Cyclomatic - 16.2 * ln(Lines of Code)
     const avgLinesPerFile = totalLines / codeFiles;
     const cyclomaticComplexity =
       this.calculateAverageCyclomaticComplexity(stats);
 
-    // Simplified calculation
     let mi = 100;
-    mi -= Math.log(avgLinesPerFile + 1) * 5; // Penalty for large files
-    mi -= cyclomaticComplexity * 0.5; // Penalty for complexity
-    mi -= issues * 2; // Penalty for issues
+    mi -= Math.log(avgLinesPerFile + 1) * 5;
+    mi -= cyclomaticComplexity * 0.5;
+    mi -= issues * 2;
 
     return Math.max(0, Math.min(100, Math.floor(mi)));
   }
 }
 
-// Convenience function for direct ZIP analysis
 export async function analyzeZipFile(
   file: ZipInputFile
 ): Promise<ZipAnalysisResult> {

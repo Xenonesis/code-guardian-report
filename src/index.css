@@ -1,19 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap");
-
-/* Code Guardian - Additional Styles */
-
-/* Tailwind base, components, utilities are imported via base.css in main.tsx */
-
-/* Professional enhancements and github theme use standard CSS */
 @import "./styles/professional-ui.css";
 @import "./styles/github-theme.css";
 
-/* Base styling - Theme colors are controlled via CSS variables in styles/base.css */
 html {
   scroll-behavior: auto;
   -webkit-overflow-scrolling: touch;
-
-  /* Prevent text size adjustment on orientation change */
   text-size-adjust: 100%;
 }
 
@@ -31,14 +22,10 @@ body {
   line-height: 1.6;
   font-size: clamp(14px, 0.875rem + 0.1vw, 16px);
   min-height: 100vh;
-  min-height: 100dvh; /* Dynamic viewport height for mobile */
+  min-height: 100dvh;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-.dark body {
-  /* body colors are handled by styles/base.css */
 }
 
 #root {
@@ -48,7 +35,6 @@ body {
   color: inherit;
 }
 
-/* Responsive base font sizing */
 @media (width <= 320px) {
   body {
     font-size: 13px;
@@ -67,12 +53,10 @@ body {
   }
 }
 
-/* Performance optimizations */
 * {
   box-sizing: border-box;
 }
 
-/* Smoother transitions for interactive elements */
 button,
 [type="button"],
 [type="submit"],
@@ -95,7 +79,6 @@ a:active,
   transform: scale(0.99);
 }
 
-/* Accessibility: reduce motion for users who prefer it */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -106,7 +89,6 @@ a:active,
   }
 }
 
-/* Professional Gradients - Subtle & Authoritative */
 .gradient-primary {
   background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
 }
@@ -138,7 +120,6 @@ a:active,
   -webkit-text-fill-color: transparent;
 }
 
-/* Glass Morphism - Professional */
 .glass-card {
   backdrop-filter: blur(12px);
   background: rgb(255 255 255 / 70%);
@@ -178,7 +159,6 @@ a:active,
   box-shadow: 0 1px 2px 0 rgb(12 12 12 / 20%);
 }
 
-/* Modern Cards - Professional Edition */
 .modern-card {
   background: hsl(var(--card));
   border: 1px solid hsl(var(--border));
@@ -211,7 +191,6 @@ a:active,
   border-color: hsl(var(--primary) / 30%);
 }
 
-/* Card Glass Modern - Refined */
 .card-glass-modern {
   background: hsl(var(--card) / 80%);
   backdrop-filter: blur(8px);
@@ -232,7 +211,6 @@ a:active,
   border-color: hsl(var(--border));
 }
 
-/* Modern Buttons - Professional */
 .btn-modern {
   padding: 0.625rem 1.25rem;
   border-radius: 0.5rem;
@@ -282,7 +260,6 @@ a:active,
   border-color: hsl(var(--border));
 }
 
-/* Modern Inputs - Professional */
 .input-modern {
   background: hsl(var(--background));
   border: 1px solid hsl(var(--input));
@@ -311,7 +288,6 @@ a:active,
   box-shadow: 0 0 0 2px hsl(var(--ring) / 30%);
 }
 
-/* Badge Styles - Professional */
 .badge-modern {
   display: inline-flex;
   align-items: center;
@@ -331,10 +307,7 @@ a:active,
 }
 
 .badge-success {
-  background: hsl(
-    var(--success) / 10%
-  ); /* Assuming success var exists or similar */
-
+  background: hsl(var(--success) / 10%);
   color: #059669;
   border-color: #05966933;
 }
@@ -351,7 +324,6 @@ a:active,
   border-color: hsl(var(--destructive) / 20%);
 }
 
-/* Scrollbar Styling */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -370,64 +342,6 @@ a:active,
   background: hsl(var(--muted-foreground) / 50%);
 }
 
-/* Floating elements - Subtle */
-
-/* .floating {
-  animation: floating 6s ease-in-out infinite;
-}
-
-@keyframes floating {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-4px);
-  }
-} */
-
-/* Shimmer effect for loading */
-
-/* .shimmer {
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    hsl(var(--foreground) / 5%) 50%,
-    transparent 100%
-  );
-  background-size: 200% 100%;
-  animation: shimmer 2s infinite;
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-
-  100% {
-    background-position: 200% 0;
-  }
-} */
-
-/* Pulse animation - Subtle */
-
-/* .pulse-glow {
-  animation: pulseGlow 3s ease-in-out infinite;
-}
-
-@keyframes pulseGlow {
-  0%,
-  100% {
-    opacity: 1;
-  }
-
-  50% {
-    opacity: 0.7;
-  }
-} */
-
-/* Custom shadows */
 .shadow-3xl {
   box-shadow:
     0 20px 25px -5px rgb(12 12 12 / 10%),
@@ -438,7 +352,6 @@ a:active,
   box-shadow: 0 0 15px rgb(59 130 246 / 15%);
 }
 
-/* Extra rounded corners - Professional max */
 .rounded-4xl {
   border-radius: 1.5rem;
 }
@@ -447,7 +360,6 @@ a:active,
   border-radius: 2rem;
 }
 
-/* Section backgrounds */
 .section-gradient {
   background: linear-gradient(
     180deg,
@@ -456,7 +368,6 @@ a:active,
   );
 }
 
-/* Nav item styling */
 .nav-item {
   position: relative;
   transition: color 0.2s ease;
@@ -490,7 +401,6 @@ a:active,
   border: 1px solid hsl(var(--border) / 50%);
 }
 
-/* Tooltip styling */
 .tooltip {
   position: relative;
 }
@@ -520,7 +430,6 @@ a:active,
   visibility: visible;
 }
 
-/* Container improvements */
 .container-modern {
   width: 100%;
   max-width: 1280px;
@@ -544,7 +453,6 @@ a:active,
   }
 }
 
-/* Mobile optimizations */
 @media (width <= 640px) {
   .modern-card {
     padding: 1rem;
@@ -556,21 +464,18 @@ a:active,
     min-height: 40px;
   }
 
-  /* Improve touch targets */
   button,
   [role="button"],
   a {
     min-height: 40px;
   }
 
-  /* Better spacing on mobile */
   .container-modern {
     padding-left: 1rem;
     padding-right: 1rem;
   }
 }
 
-/* Extra small screen optimizations (< 375px) */
 @media (width <= 374px) {
   html {
     font-size: 14px;
@@ -585,13 +490,11 @@ a:active,
     padding-right: 0.75rem;
   }
 
-  /* Reduce glass blur on tiny screens for performance */
   .glass-card {
     backdrop-filter: blur(8px);
   }
 }
 
-/* Ultra-small screens (< 320px) */
 @media (width <= 319px) {
   html {
     font-size: 13px;
@@ -607,13 +510,11 @@ a:active,
     border-radius: 0.375rem;
   }
 
-  /* Stack everything vertically */
   .flex-responsive {
     flex-direction: column !important;
   }
 }
 
-/* Tablet optimizations (768px - 1023px) */
 @media (width >= 768px) and (width <= 1023px) {
   .container-modern {
     max-width: 720px;
@@ -621,27 +522,23 @@ a:active,
     padding-right: 2rem;
   }
 
-  /* Better card grid for tablets */
   .grid-auto-fit-md {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-/* Desktop optimizations (1024px - 1279px) */
 @media (width >= 1024px) and (width <= 1279px) {
   .container-modern {
     max-width: 960px;
   }
 }
 
-/* Large desktop optimizations (1280px - 1535px) */
 @media (width >= 1280px) and (width <= 1535px) {
   .container-modern {
     max-width: 1200px;
   }
 }
 
-/* Extra large desktop (1536px - 1919px) */
 @media (width >= 1536px) and (width <= 1919px) {
   html {
     font-size: 17px;
@@ -653,14 +550,12 @@ a:active,
     padding-right: 4rem;
   }
 
-  /* Larger glass cards */
   .glass-card {
     padding: 2rem;
     border-radius: 1.25rem;
   }
 }
 
-/* Full HD+ screens (1920px - 2559px) */
 @media (width >= 1920px) {
   html {
     font-size: 18px;
@@ -682,7 +577,6 @@ a:active,
     border-radius: 1rem;
   }
 
-  /* Larger shadows for depth on big screens */
   .glass-card:hover {
     box-shadow:
       0 24px 64px -16px hsl(var(--shadow-color) / 20%),
@@ -690,7 +584,6 @@ a:active,
   }
 }
 
-/* 2K / Ultra-wide screens (2560px+) */
 @media (width >= 2560px) {
   html {
     font-size: 20px;
@@ -712,13 +605,11 @@ a:active,
     border-radius: 1.125rem;
   }
 
-  /* Extra large typography for ultra-wide */
   .text-responsive-2xl {
     font-size: 2.5rem;
   }
 }
 
-/* Landscape phone handling */
 @media (orientation: landscape) and (height <= 500px) {
   .container-modern {
     padding-top: 0.5rem;
@@ -729,36 +620,30 @@ a:active,
     padding: 0.75rem;
   }
 
-  /* Reduce hero padding in landscape */
   .hero-section {
     padding-top: 1rem;
     padding-bottom: 1rem;
     min-height: auto;
   }
 
-  /* Smaller navigation in landscape phone */
   .portal-navbar {
     padding-top: 0.25rem;
     padding-bottom: 0.25rem;
   }
 }
 
-/* High DPI display optimizations */
 @media (min-device-pixel-ratio: 2), (resolution >= 192dpi) {
   .modern-card,
   .card-glass-modern {
     backdrop-filter: blur(20px);
   }
 
-  /* Sharper borders on retina */
   .glass-card {
     border-width: 0.5px;
   }
 }
 
-/* Touch device optimizations */
 @media (pointer: coarse) {
-  /* Ensure minimum touch targets */
   button,
   [role="button"],
   a,
@@ -769,18 +654,15 @@ a:active,
     min-width: 44px;
   }
 
-  /* Add extra padding for touch */
   .btn-modern {
     padding-top: 0.75rem;
     padding-bottom: 0.75rem;
   }
 
-  /* Disable hover effects on touch */
   .glass-card:hover {
     transform: none;
   }
 
-  /* Add active states instead */
   .glass-card:active {
     transform: scale(0.98);
     transition-duration: 0.1s;
@@ -791,7 +673,6 @@ a:active,
   }
 }
 
-/* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
   .glass-card,
   .btn-modern,
@@ -809,7 +690,6 @@ a:active,
   }
 }
 
-/* Print styles */
 @media print {
   .no-print {
     display: none !important;

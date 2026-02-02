@@ -1,10 +1,4 @@
 #!/usr/bin/env node
-/**
- * Auto-update README sections: Repository Statistics and Top Contributors.
- * - Fetches data from GitHub REST API
- * - Replaces only the target HTML blocks while preserving styles
- * - Commits only when there are changes
- */
 
 const fs = require("fs");
 const path = require("path");
@@ -15,7 +9,6 @@ const TOKEN = process.env.GITHUB_TOKEN || process.env.GH_TOKEN || "";
 const ROOT = process.cwd();
 const README_PATH = path.join(ROOT, "README.md");
 
-// Config
 const MAX_TOP_CONTRIBUTORS = parseInt(
   process.env.MAX_TOP_CONTRIBUTORS || "8",
   10
@@ -101,7 +94,7 @@ async function fetchRepoStats() {
 function _replaceBetween(content, startMarker, endMarker, newBlock) {
   const startIdx = content.indexOf(startMarker);
   const endIdx = content.indexOf(endMarker, startIdx + startMarker.length);
-  if (startIdx === -1 || endIdx === -1) return content; // not found
+  if (startIdx === -1 || endIdx === -1) return content;
   return (
     content.slice(0, startIdx + startMarker.length) +
     newBlock +
@@ -110,7 +103,6 @@ function _replaceBetween(content, startMarker, endMarker, newBlock) {
 }
 
 function renderRepositoryStatsHTML(stats) {
-  // Preserve the surrounding gradient container by only replacing the inner <table> ... </table>
   const table = `
   <table style="margin: 0 auto;">
     <tr>
@@ -144,7 +136,6 @@ function renderRepositoryStatsHTML(stats) {
 }
 
 function renderTopContributorsTable(top) {
-  // Renders the block of <tr>...</tr> tables with 4 items per row similar to current layout
   const chunk = (arr, size) =>
     arr.reduce(
       (acc, _, i) => (i % size ? acc : [...acc, arr.slice(i, i + size)]),
@@ -177,7 +168,7 @@ function renderTopContributorsTable(top) {
 function safeReplaceRepositoryStats(readme, stats) {
   const start =
     '<h3 style="color: white; margin-bottom: 20px;">**Repository Statistics**</h3>';
-  // We replace the immediate following <table>...</table> block within the stats container
+
   const tableStart = '<table style="margin: 0 auto;">';
   const tableEnd = "</table>";
 
@@ -196,13 +187,12 @@ function safeReplaceRepositoryStats(readme, stats) {
 
 function safeReplaceTopContributors(readme, top) {
   const header = "**Top Contributors**";
-  const headerAlt = "**Top Contributors**</h3>"; // in case of exact h3 markup
+  const headerAlt = "**Top Contributors**</h3>";
   const sectionStartIdx = readme.indexOf(header);
   const sectionIdx =
     sectionStartIdx !== -1 ? sectionStartIdx : readme.indexOf(headerAlt);
   if (sectionIdx === -1) return readme;
 
-  // Locate the gradient container table area following the header; replace rows inside first <table> ... </table>
   const tableStart = '<table style="margin: 0 auto;">';
   const tableEnd = "</table>";
   const tStartIdx = readme.indexOf(tableStart, sectionIdx);
@@ -210,7 +200,6 @@ function safeReplaceTopContributors(readme, top) {
   const tEndIdx = readme.indexOf(tableEnd, tStartIdx);
   if (tEndIdx === -1) return readme;
 
-  // Inside this table, replace content between the first <tr> ... last </tr> with freshly rendered rows
   const firstTr = readme.indexOf("<tr>", tStartIdx);
   const lastTrEnd = readme.lastIndexOf("</tr>", tEndIdx);
   if (firstTr === -1 || lastTrEnd === -1) return readme;
@@ -244,7 +233,7 @@ async function main() {
     }
   } catch (err) {
     console.error("Failed to update README:", err.message);
-    process.exit(0); // do not fail CI for transient issues
+    process.exit(0);
   }
 }
 

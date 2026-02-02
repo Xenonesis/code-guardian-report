@@ -25,7 +25,7 @@ export const Privacy: React.FC = () => {
       lastUpdated="November 28, 2025"
       icon={<Shield className="h-8 w-8" />}
     >
-      {/* Introduction */}
+      {}
       <LegalSection title="Introduction" icon={<Eye className="h-5 w-5" />}>
         <p>
           Welcome to Code Guardian, an AI-powered code security analysis
@@ -41,7 +41,7 @@ export const Privacy: React.FC = () => {
         </p>
       </LegalSection>
 
-      {/* Information We Collect */}
+      {}
       <LegalSection
         title="Information We Collect"
         icon={<Database className="h-5 w-5" />}
@@ -94,7 +94,7 @@ export const Privacy: React.FC = () => {
         </LegalSubsection>
       </LegalSection>
 
-      {/* How We Use Information */}
+      {}
       <LegalSection
         title="How We Use Your Information"
         icon={<FileText className="h-5 w-5" />}
@@ -134,7 +134,7 @@ export const Privacy: React.FC = () => {
         </LegalSubsection>
       </LegalSection>
 
-      {/* Data Protection */}
+      {}
       <LegalSection
         title="Data Protection & Security"
         icon={<Lock className="h-5 w-5" />}
@@ -168,7 +168,7 @@ export const Privacy: React.FC = () => {
         </LegalSubsection>
       </LegalSection>
 
-      {/* Information Sharing */}
+      {}
       <LegalSection
         title="Information Sharing"
         icon={<Users className="h-5 w-5" />}
@@ -202,7 +202,7 @@ export const Privacy: React.FC = () => {
         </LegalSubsection>
       </LegalSection>
 
-      {/* Your Rights */}
+      {}
       <LegalSection
         title="Your Privacy Rights"
         icon={<Shield className="h-5 w-5" />}
@@ -236,7 +236,7 @@ export const Privacy: React.FC = () => {
         </LegalSubsection>
       </LegalSection>
 
-      {/* International Users */}
+      {}
       <LegalSection
         title="International Users"
         icon={<Globe className="h-5 w-5" />}
@@ -270,7 +270,7 @@ export const Privacy: React.FC = () => {
         </LegalSubsection>
       </LegalSection>
 
-      {/* Contact Information */}
+      {}
       <LegalSection title="Contact Us" icon={<Mail className="h-5 w-5" />}>
         <p>
           If you have questions about this Privacy Policy or our data practices,
@@ -304,7 +304,7 @@ export const Privacy: React.FC = () => {
         </p>
       </LegalSection>
 
-      {/* Legal Navigation */}
+      {}
       <LegalNavigation />
     </LegalPageLayout>
   );

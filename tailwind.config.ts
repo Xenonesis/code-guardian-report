@@ -8,31 +8,30 @@ const config: Config = {
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
   ],
-  safelist: ["bg-primary", "text-primary-foreground"],
   theme: {
     extend: {
       screens: {
-        "2xs": "320px", // Extra tiny mobile
-        xs: "375px", // Small mobile (iPhone SE)
-        sm: "640px", // Large mobile / small tablet
-        md: "768px", // Tablet
-        lg: "1024px", // Small desktop / large tablet
-        xl: "1280px", // Desktop
-        "2xl": "1536px", // Large desktop
-        "3xl": "1920px", // Full HD
-        "4xl": "2560px", // 2K / Ultra-wide
+        "2xs": "320px",
+        xs: "375px",
+        sm: "640px",
+        md: "768px",
+        lg: "1024px",
+        xl: "1280px",
+        "2xl": "1536px",
+        "3xl": "1920px",
+        "4xl": "2560px",
       },
       spacing: {
         "safe-top": "env(safe-area-inset-top)",
         "safe-bottom": "env(safe-area-inset-bottom)",
         "safe-left": "env(safe-area-inset-left)",
         "safe-right": "env(safe-area-inset-right)",
-        "4.5": "1.125rem", // 18px
-        "5.5": "1.375rem", // 22px
-        "6.5": "1.625rem", // 26px
-        "7.5": "1.875rem", // 30px
-        "18": "4.5rem", // 72px
-        "22": "5.5rem", // 88px
+        "4.5": "1.125rem",
+        "5.5": "1.375rem",
+        "6.5": "1.625rem",
+        "7.5": "1.875rem",
+        "18": "4.5rem",
+        "22": "5.5rem",
       },
       minHeight: {
         touch: "44px",
@@ -44,13 +43,13 @@ const config: Config = {
         touch: "44px",
       },
       maxWidth: {
-        "8xl": "88rem", // 1408px
-        "9xl": "96rem", // 1536px
-        "10xl": "112rem", // 1792px
+        "8xl": "88rem",
+        "9xl": "96rem",
+        "10xl": "112rem",
       },
       fontSize: {
-        "2xs": ["0.625rem", { lineHeight: "0.875rem" }], // 10px
-        "3xs": ["0.5rem", { lineHeight: "0.75rem" }], // 8px
+        "2xs": ["0.625rem", { lineHeight: "0.875rem" }],
+        "3xs": ["0.5rem", { lineHeight: "0.75rem" }],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -111,7 +110,7 @@ const config: Config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
-        // Professional, subtle animations
+
         fade: {
           "0%": { opacity: "0" },
           "100%": { opacity: "1" },

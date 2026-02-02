@@ -11,8 +11,8 @@ export default defineConfig({
       "tests/**/*.{test,spec}.{ts,tsx}",
     ],
     exclude: ["node_modules", ".next", "out", "coverage", "functions"],
-    testTimeout: 10000, // 10 second timeout for tests
-    hookTimeout: 10000, // 10 second timeout for hooks
+    testTimeout: 10000,
+    hookTimeout: 10000,
     coverage: {
       provider: "v8",
       reporter: ["text", "json", "html"],

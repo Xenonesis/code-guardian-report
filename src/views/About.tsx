@@ -20,14 +20,14 @@ const About = () => {
     <div className="relative min-h-screen overflow-hidden">
       <AnimatedBackground />
 
-      {/* Navigation - spans full width above everything */}
+      {}
       <AboutPageLayout showNavigation={true} noContainer={true}>
-        {/* Main Content */}
+        {}
         <div className="pt-16">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            {/* Enhanced Content with Modern Layout */}
+            {}
             <div className="relative z-10 space-y-16 sm:space-y-20 lg:space-y-24">
-              {/* Enhanced Hero Section */}
+              {}
               <section id="introduction">
                 <HeroSection
                   title="Code Guardian Enterprise"
@@ -43,7 +43,7 @@ const About = () => {
                 </HeroSection>
               </section>
 
-              {/* Enhanced Information Sections */}
+              {}
               <div className="space-y-16 sm:space-y-20">
                 <section id="getting-started">
                   <DetailedInfo />
@@ -66,7 +66,7 @@ const About = () => {
                 <AboutFeatures />
               </section>
 
-              {/* Enhanced Bottom Sections */}
+              {}
               <div className="space-y-16 sm:space-y-20">
                 <section id="custom-rules">
                   <CustomRulesSection />

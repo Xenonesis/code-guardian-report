@@ -22,7 +22,7 @@ export const SecretDetectionCard: React.FC<SecretDetectionCardProps> = ({
   );
 
   if (secretIssues.length === 0) {
-    return null; // Don't show anything if no secrets found
+    return null;
   }
 
   const getSeverityBadge = (severity: string) => {
@@ -61,7 +61,7 @@ export const SecretDetectionCard: React.FC<SecretDetectionCardProps> = ({
 
   return (
     <div className="rounded-lg border border-slate-700/50 bg-slate-900/50">
-      {/* Header */}
+      {}
       <div className="border-b border-slate-700/50 p-6">
         <div className="flex items-center justify-between">
           <div>
@@ -77,7 +77,7 @@ export const SecretDetectionCard: React.FC<SecretDetectionCardProps> = ({
         </div>
       </div>
 
-      {/* Secret List */}
+      {}
       <div className="space-y-4 p-6">
         {secretIssues.map((secret) => {
           const isExpanded = expandedSecrets.has(secret.id);
@@ -87,7 +87,7 @@ export const SecretDetectionCard: React.FC<SecretDetectionCardProps> = ({
               key={secret.id}
               className="rounded-lg border border-slate-700/50 bg-slate-800/50"
             >
-              {/* Secret Header */}
+              {}
               <div
                 className="cursor-pointer p-4 transition-colors hover:bg-slate-800/70"
                 onClick={() => toggleSecretExpansion(secret.id)}
@@ -122,11 +122,11 @@ export const SecretDetectionCard: React.FC<SecretDetectionCardProps> = ({
                 </p>
               </div>
 
-              {/* Expanded Details */}
+              {}
               {isExpanded && (
                 <div className="border-t border-slate-700/50 p-4">
                   <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-                    {/* Issue Details */}
+                    {}
                     <div>
                       <h4 className="mb-3 font-medium text-white">
                         Issue Details
@@ -159,7 +159,7 @@ export const SecretDetectionCard: React.FC<SecretDetectionCardProps> = ({
                       </div>
                     </div>
 
-                    {/* Remediation */}
+                    {}
                     <div>
                       <h4 className="mb-3 font-medium text-white">
                         Remediation
@@ -197,7 +197,7 @@ export const SecretDetectionCard: React.FC<SecretDetectionCardProps> = ({
                     </div>
                   </div>
 
-                  {/* Vulnerable Code */}
+                  {}
                   {secret.codeSnippet && (
                     <div className="mt-6">
                       <div className="mb-3 flex items-center justify-between">
@@ -223,7 +223,7 @@ export const SecretDetectionCard: React.FC<SecretDetectionCardProps> = ({
                     </div>
                   )}
 
-                  {/* Fixed Code */}
+                  {}
                   {secret.remediation.fixExample && (
                     <div className="mt-4">
                       <h4 className="mb-3 font-medium text-green-400">
@@ -237,7 +237,7 @@ export const SecretDetectionCard: React.FC<SecretDetectionCardProps> = ({
                     </div>
                   )}
 
-                  {/* References */}
+                  {}
                   {secret.references && secret.references.length > 0 && (
                     <div className="mt-6">
                       <h4 className="mb-3 font-medium text-white">

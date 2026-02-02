@@ -1,8 +1,3 @@
-/**
- * Custom Rules Editor Component
- * UI for creating, editing, and managing custom security rules
- */
-
 import React, { useState, useEffect } from "react";
 import {
   CustomRulesEngine,
@@ -189,7 +184,7 @@ const CustomRulesEditor: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
+      {}
       <div className="flex items-center justify-between">
         <div>
           <h2 className="flex items-center gap-3 text-3xl font-bold">
@@ -242,7 +237,7 @@ const CustomRulesEditor: React.FC = () => {
         </div>
       </div>
 
-      {/* Stats */}
+      {}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
         <Card>
           <CardContent className="pt-6">
@@ -297,7 +292,7 @@ const CustomRulesEditor: React.FC = () => {
         </TabsList>
 
         <TabsContent value="rules" className="space-y-4">
-          {/* Category Filter */}
+          {}
           <div className="flex items-center gap-2">
             <Label>Filter by category:</Label>
             <Select value={filterCategory} onValueChange={setFilterCategory}>
@@ -315,7 +310,7 @@ const CustomRulesEditor: React.FC = () => {
             </Select>
           </div>
 
-          {/* Rules List */}
+          {}
           <Card>
             <CardHeader>
               <CardTitle>Your Custom Rules</CardTitle>

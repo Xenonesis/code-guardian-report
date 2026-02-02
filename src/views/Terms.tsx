@@ -25,7 +25,7 @@ export const Terms: React.FC = () => {
       lastUpdated="November 28, 2025"
       icon={<Scale className="h-8 w-8" />}
     >
-      {/* Introduction */}
+      {}
       <LegalSection
         title="Agreement to Terms"
         icon={<FileText className="h-5 w-5" />}
@@ -51,7 +51,7 @@ export const Terms: React.FC = () => {
         </div>
       </LegalSection>
 
-      {/* Service Description */}
+      {}
       <LegalSection
         title="Service Description"
         icon={<Shield className="h-5 w-5" />}
@@ -83,7 +83,7 @@ export const Terms: React.FC = () => {
         </LegalSubsection>
       </LegalSection>
 
-      {/* User Responsibilities */}
+      {}
       <LegalSection
         title="User Responsibilities"
         icon={<Users className="h-5 w-5" />}
@@ -130,7 +130,7 @@ export const Terms: React.FC = () => {
         </LegalSubsection>
       </LegalSection>
 
-      {/* Intellectual Property */}
+      {}
       <LegalSection
         title="Intellectual Property"
         icon={<Shield className="h-5 w-5" />}
@@ -161,7 +161,7 @@ export const Terms: React.FC = () => {
         </LegalSubsection>
       </LegalSection>
 
-      {/* Disclaimers */}
+      {}
       <LegalSection
         title="Disclaimers & Limitations"
         icon={<AlertTriangle className="h-5 w-5" />}
@@ -198,7 +198,7 @@ export const Terms: React.FC = () => {
         </LegalSubsection>
       </LegalSection>
 
-      {/* Privacy & Data */}
+      {}
       <LegalSection
         title="Privacy & Data Handling"
         icon={<Shield className="h-5 w-5" />}
@@ -221,7 +221,7 @@ export const Terms: React.FC = () => {
         </LegalSubsection>
       </LegalSection>
 
-      {/* Termination */}
+      {}
       <LegalSection title="Termination" icon={<Gavel className="h-5 w-5" />}>
         <LegalSubsection title="Termination by You">
           <p>You may stop using our service at any time:</p>
@@ -249,7 +249,7 @@ export const Terms: React.FC = () => {
         </LegalSubsection>
       </LegalSection>
 
-      {/* Governing Law */}
+      {}
       <LegalSection
         title="Governing Law & Disputes"
         icon={<Globe className="h-5 w-5" />}
@@ -281,7 +281,7 @@ export const Terms: React.FC = () => {
         </LegalSubsection>
       </LegalSection>
 
-      {/* Contact Information */}
+      {}
       <LegalSection
         title="Contact Information"
         icon={<Mail className="h-5 w-5" />}
@@ -316,7 +316,7 @@ export const Terms: React.FC = () => {
         </p>
       </LegalSection>
 
-      {/* Legal Navigation */}
+      {}
       <LegalNavigation />
     </LegalPageLayout>
   );

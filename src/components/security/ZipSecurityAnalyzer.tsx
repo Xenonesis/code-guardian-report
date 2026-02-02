@@ -196,11 +196,9 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
     }
   };
 
-  // Removed unused getRiskLevelColor
-
   return (
     <div className={`space-y-6 ${className}`}>
-      {/* Upload Section */}
+      {}
       <Card>
         <CardHeader className="flex flex-row items-center justify-between gap-4">
           <CardTitle className="flex items-center gap-2">
@@ -267,7 +265,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
         </CardContent>
       </Card>
 
-      {/* Analysis Results */}
+      {}
       {results.zipAnalysis && (
         <Tabs defaultValue="overview" className="w-full">
           <TabsList className="bg-card/80 supports-[backdrop-filter]:bg-card/60 sticky top-0 z-10 grid w-full grid-cols-6 rounded-md shadow-sm backdrop-blur">
@@ -307,10 +305,10 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
             </TabsTrigger>
           </TabsList>
 
-          {/* Overview Tab */}
+          {}
           <TabsContent value="overview" className="space-y-6">
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-              {/* Security Score */}
+              {}
               <Card>
                 <CardContent className="p-4">
                   <div className="flex items-center gap-3">
@@ -327,7 +325,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
                 </CardContent>
               </Card>
 
-              {/* Total Files */}
+              {}
               <Card>
                 <CardContent className="p-4">
                   <div className="flex items-center gap-3">
@@ -344,7 +342,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
                 </CardContent>
               </Card>
 
-              {/* Security Threats */}
+              {}
               <Card>
                 <CardContent className="p-4">
                   <div className="flex items-center gap-3">
@@ -361,7 +359,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
                 </CardContent>
               </Card>
 
-              {/* Vulnerabilities */}
+              {}
               <Card>
                 <CardContent className="p-4">
                   <div className="flex items-center gap-3">
@@ -380,7 +378,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
               </Card>
             </div>
 
-            {/* Quick Summary */}
+            {}
             <Card>
               <CardHeader>
                 <CardTitle>Analysis Summary</CardTitle>
@@ -458,7 +456,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
             </Card>
           </TabsContent>
 
-          {/* Security Threats Tab */}
+          {}
           <TabsContent value="threats" className="space-y-6">
             <Card>
               <CardHeader>
@@ -536,10 +534,10 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
             </Card>
           </TabsContent>
 
-          {/* File Structure Tab */}
+          {}
           <TabsContent value="structure" className="space-y-6">
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-              {/* File Types Distribution */}
+              {}
               <Card>
                 <CardHeader>
                   <CardTitle>File Types</CardTitle>
@@ -575,7 +573,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
                 </CardContent>
               </Card>
 
-              {/* Suspicious Files */}
+              {}
               <Card>
                 <CardHeader>
                   <CardTitle>Suspicious Files</CardTitle>
@@ -609,11 +607,11 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
             </div>
           </TabsContent>
 
-          {/* Dependencies Tab */}
+          {}
           <TabsContent value="dependencies" className="space-y-6">
             {results.dependencyAnalysis ? (
               <>
-                {/* Dependency Summary */}
+                {}
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
                   <Card>
                     <CardContent className="p-4">
@@ -684,7 +682,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
                   </Card>
                 </div>
 
-                {/* Vulnerabilities List */}
+                {}
                 <Card>
                   <CardHeader>
                     <CardTitle>Dependency Vulnerabilities</CardTitle>
@@ -759,7 +757,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
             )}
           </TabsContent>
 
-          {/* Code Quality Tab */}
+          {}
           <TabsContent value="quality" className="space-y-6">
             <Card>
               <CardHeader>
@@ -798,7 +796,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
               </CardContent>
             </Card>
 
-            {/* Largest Files */}
+            {}
             {results.zipAnalysis!.codeQuality.largestFiles.length > 0 && (
               <Card>
                 <CardHeader>
@@ -825,7 +823,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
             )}
           </TabsContent>
 
-          {/* Compliance Tab */}
+          {}
           <TabsContent value="compliance" className="space-y-6">
             <Card>
               <CardHeader>
@@ -874,7 +872,7 @@ export const ZipSecurityAnalyzer: React.FC<ZipSecurityAnalyzerProps> = ({
               </CardContent>
             </Card>
 
-            {/* Recommendations */}
+            {}
             <Card>
               <CardHeader>
                 <CardTitle>Recommendations</CardTitle>

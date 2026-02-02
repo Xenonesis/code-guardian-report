@@ -229,7 +229,7 @@ export const CodeProvenanceCard: React.FC<CodeProvenanceCardProps> = ({
           </TabsList>
 
           <TabsContent value="overview" className="space-y-4">
-            {/* Status Cards */}
+            {}
             <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
               <Card>
                 <CardContent className="p-4">
@@ -306,7 +306,7 @@ export const CodeProvenanceCard: React.FC<CodeProvenanceCardProps> = ({
               </Card>
             </div>
 
-            {/* Risk Assessment */}
+            {}
             {report && (
               <Card>
                 <CardHeader>
@@ -355,7 +355,7 @@ export const CodeProvenanceCard: React.FC<CodeProvenanceCardProps> = ({
               </Card>
             )}
 
-            {/* Actions */}
+            {}
             <div className="flex gap-2">
               {!statistics.monitoringStatus ? (
                 <Button

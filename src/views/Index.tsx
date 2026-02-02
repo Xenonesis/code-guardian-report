@@ -7,7 +7,6 @@ import { StorageBanner } from "@/components/pages/home/StorageBanner";
 import { useAnalysisHandlers } from "@/components/pages/home/AnalysisHandlers";
 import { useEnhancedAnalysis } from "@/hooks/useEnhancedAnalysis";
 
-// Lazy load heavy components for better performance
 const FloatingChatBot = lazy(() => import("@/components/ai/FloatingChatBot"));
 const StorageStatus = lazy(() => import("@/components/firebase/StorageStatus"));
 const AnalysisHistoryModal = lazy(
@@ -76,7 +75,7 @@ const Index = () => {
         onToggleStorageStatus={() => setShowStorageStatus(!showStorageStatus)}
       />
 
-      {/* Storage Status Component */}
+      {}
       {showStorageStatus && (
         <div className="mx-auto mb-6 max-w-6xl">
           <Suspense
@@ -107,7 +106,7 @@ const Index = () => {
         isRedirecting={isRedirecting}
       />
 
-      {/* Analysis History Modal */}
+      {}
       <Suspense fallback={null}>
         <AnalysisHistoryModal
           isOpen={showHistoryModal}
@@ -117,7 +116,7 @@ const Index = () => {
         />
       </Suspense>
 
-      {/* Floating Chat Bot */}
+      {}
       <Suspense fallback={null}>
         {analysisResults && (
           <FloatingChatBot analysisResults={analysisResults} />

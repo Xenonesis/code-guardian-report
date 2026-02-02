@@ -1,10 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 
-/**
- * Error Logging Endpoint
- * Receives client-side errors for server-side logging/monitoring
- */
-
 interface ErrorLog {
   message: string;
   digest?: string;
@@ -16,15 +11,10 @@ interface ErrorLog {
   extra?: Record<string, unknown>;
 }
 
-/**
- * POST /api/log-error
- * Logs client-side errors to the server
- */
 export async function POST(request: NextRequest) {
   try {
     const body = (await request.json()) as Partial<ErrorLog>;
 
-    // Validate required fields
     if (!body.message || !body.timestamp) {
       return NextResponse.json(
         { error: "Missing required fields: message, timestamp" },
@@ -32,7 +22,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Add server-side metadata
     const errorLog: ErrorLog & { serverTimestamp: string; ip: string | null } =
       {
         message: body.message,
@@ -49,21 +38,9 @@ export async function POST(request: NextRequest) {
           request.headers.get("x-real-ip"),
       };
 
-    // Log to console in development only
     if (process.env.NODE_ENV === "development") {
       console.error("[Client Error]", JSON.stringify(errorLog, null, 2));
     }
-
-    // In production, forward to logging service:
-    // - Sentry: Sentry.captureException(new Error(body.message))
-    // - LogRocket: LogRocket.captureException(new Error(body.message))
-    // - Datadog: datadogLogs.logger.error(body.message, errorLog)
-    // - Custom logging service via HTTP
-    // - Database for error analytics
-    // TODO: Implement production error logging service
-
-    // Rate limiting could be implemented here
-    // to prevent abuse of the logging endpoint
 
     return NextResponse.json(
       { success: true, logged: true },

@@ -130,6 +130,7 @@
     "prettier": "^3.8.1",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "rimraf": "^6.1.2",
+    "strip-comments": "^2.0.1",
     "stylelint": "^17.0.0",
     "stylelint-config-standard": "^40.0.0",
     "tsx": "^4.21.0",

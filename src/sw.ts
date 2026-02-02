@@ -1,5 +1,3 @@
-// Service Worker for Serwist PWA in Next.js
-/// <reference lib="webworker" />
 import type { PrecacheEntry, SerwistGlobalConfig } from "serwist";
 import {
   Serwist,
@@ -9,8 +7,6 @@ import {
   ExpirationPlugin,
 } from "serwist";
 
-// This declares the value of `injectionPoint` to TypeScript.
-// At build time, `injectionPoint` will be replaced by Serwist with the actual precache manifest.
 declare global {
   interface WorkerGlobalScope extends SerwistGlobalConfig {
     __SW_MANIFEST: (PrecacheEntry | string)[] | undefined;
@@ -26,7 +22,6 @@ const serwist = new Serwist({
   navigationPreload: true,
   runtimeCaching: [
     {
-      // Cache page navigations
       matcher: ({ request }: { request: Request }) =>
         request.mode === "navigate",
       handler: new NetworkFirst({
@@ -34,13 +29,12 @@ const serwist = new Serwist({
         plugins: [
           new ExpirationPlugin({
             maxEntries: 50,
-            maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
+            maxAgeSeconds: 30 * 24 * 60 * 60,
           }),
         ],
       }),
     },
     {
-      // Cache static assets
       matcher: ({ request }: { request: Request }) =>
         request.destination === "style" ||
         request.destination === "script" ||
@@ -50,13 +44,12 @@ const serwist = new Serwist({
         plugins: [
           new ExpirationPlugin({
             maxEntries: 100,
-            maxAgeSeconds: 365 * 24 * 60 * 60, // 1 year
+            maxAgeSeconds: 365 * 24 * 60 * 60,
           }),
         ],
       }),
     },
     {
-      // Cache images
       matcher: ({ request }: { request: Request }) =>
         request.destination === "image",
       handler: new CacheFirst({
@@ -64,20 +57,19 @@ const serwist = new Serwist({
         plugins: [
           new ExpirationPlugin({
             maxEntries: 100,
-            maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
+            maxAgeSeconds: 30 * 24 * 60 * 60,
           }),
         ],
       }),
     },
     {
-      // Cache API responses
       matcher: ({ url }: { url: URL }) => url.pathname.startsWith("/api/"),
       handler: new NetworkFirst({
         cacheName: "api-cache",
         plugins: [
           new ExpirationPlugin({
             maxEntries: 50,
-            maxAgeSeconds: 5 * 60, // 5 minutes
+            maxAgeSeconds: 5 * 60,
           }),
         ],
       }),
@@ -87,7 +79,6 @@ const serwist = new Serwist({
 
 serwist.addEventListeners();
 
-// Handle custom messages from the app
 self.addEventListener("message", (event) => {
   if (event.data && event.data.type === "SKIP_WAITING") {
     self.skipWaiting();
@@ -107,14 +98,11 @@ self.addEventListener("message", (event) => {
   if (event.data && event.data.type === "PRELOAD_ROUTES") {
     const routes = event.data.routes as string[];
     routes.forEach((route) => {
-      fetch(route).catch(() => {
-        // Silently fail if preload fails
-      });
+      fetch(route).catch(() => {});
     });
   }
 });
 
-// Handle push notifications
 self.addEventListener("push", (event) => {
   if (event.data) {
     const payload = event.data.json();
@@ -133,7 +121,6 @@ self.addEventListener("push", (event) => {
   }
 });
 
-// Handle notification click
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
 
@@ -144,14 +131,13 @@ self.addEventListener("notificationclick", (event) => {
     const urlToOpen = data?.url || "/";
     event.waitUntil(
       self.clients.matchAll({ type: "window" }).then(async (clientList) => {
-        // Try to focus an existing window
         for (const client of clientList) {
           if (client.url === urlToOpen && "focus" in client) {
             await client.focus();
             return;
           }
         }
-        // Open a new window if none found
+
         if (self.clients.openWindow) {
           await self.clients.openWindow(urlToOpen);
         }
@@ -160,11 +146,9 @@ self.addEventListener("notificationclick", (event) => {
   }
 });
 
-// Background sync for offline analysis uploads
 self.addEventListener("sync", (event: SyncEvent) => {
   if (event.tag === "sync-uploads") {
     event.waitUntil(
-      // Notify the app to process queued uploads
       self.clients.matchAll().then((clients) => {
         clients.forEach((client) => {
           client.postMessage({ type: "PROCESS_UPLOAD_QUEUE" });

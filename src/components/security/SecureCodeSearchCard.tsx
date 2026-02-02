@@ -181,7 +181,7 @@ export const SecureCodeSearchCard: React.FC<SecureCodeSearchCardProps> = ({
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        {/* Search Form */}
+        {}
         <form onSubmit={handleSearch} className="space-y-4">
           <div className="flex gap-2">
             <div className="relative flex-1">
@@ -206,7 +206,7 @@ export const SecureCodeSearchCard: React.FC<SecureCodeSearchCardProps> = ({
             </Button>
           </div>
 
-          {/* Filters */}
+          {}
           {showFilters && (
             <div className="grid grid-cols-1 gap-4 rounded-lg bg-slate-50 p-4 md:grid-cols-3 lg:grid-cols-5 dark:bg-slate-800">
               <Select
@@ -292,7 +292,7 @@ export const SecureCodeSearchCard: React.FC<SecureCodeSearchCardProps> = ({
           )}
         </form>
 
-        {/* Search Results */}
+        {}
         {searchResults && searchResults.length > 0 && (
           <div className="space-y-4">
             <div className="flex items-center justify-between">
@@ -507,7 +507,7 @@ export const SecureCodeSearchCard: React.FC<SecureCodeSearchCardProps> = ({
           </div>
         )}
 
-        {/* No Results */}
+        {}
         {searchQuery &&
           searchResults &&
           searchResults.length === 0 &&
@@ -523,7 +523,7 @@ export const SecureCodeSearchCard: React.FC<SecureCodeSearchCardProps> = ({
             </div>
           )}
 
-        {/* Initial State */}
+        {}
         {!searchQuery && (!searchResults || searchResults.length === 0) && (
           <div className="py-8 text-center">
             <BookOpen className="mx-auto mb-4 h-12 w-12 text-slate-400" />

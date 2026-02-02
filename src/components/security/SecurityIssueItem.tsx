@@ -319,7 +319,7 @@ export const SecurityIssueItem: React.FC<SecurityIssueItemProps> = ({
 
             <TabsContent value="details" className="space-y-3 sm:space-y-4">
               <div className="grid grid-cols-1 gap-3 sm:gap-4">
-                {/* Issue Details Section */}
+                {}
                 <div className="rounded-lg border border-slate-700/50 bg-slate-800/50 p-3 sm:p-4">
                   <h4 className="mb-3 flex items-center gap-2 text-base font-semibold text-white">
                     <Info className="h-4 w-4 text-blue-400" />
@@ -375,7 +375,7 @@ export const SecurityIssueItem: React.FC<SecurityIssueItemProps> = ({
                   </div>
                 </div>
 
-                {/* Technical Information Section */}
+                {}
                 <div className="rounded-lg border border-slate-700/50 bg-slate-800/50 p-3 sm:p-4">
                   <h4 className="mb-3 flex items-center gap-2 text-base font-semibold text-white">
                     <Settings className="h-4 w-4 text-purple-400" />
@@ -459,7 +459,7 @@ export const SecurityIssueItem: React.FC<SecurityIssueItemProps> = ({
                 </div>
               </div>
 
-              {/* Code Examples */}
+              {}
               {(issue.codeSnippet || issue.remediation.codeExample) && (
                 <div className="space-y-3 sm:space-y-4">
                   {issue.remediation.codeExample && (

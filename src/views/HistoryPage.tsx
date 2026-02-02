@@ -1,10 +1,5 @@
 "use client";
 
-/**
- * Analysis History Page
- * Shows user's personal analysis history from Firebase
- */
-
 import { useState, useEffect, useCallback } from "react";
 import {
   Card,
@@ -111,7 +106,6 @@ export const HistoryPage = ({
       logger.debug(`Retrieved history: ${history.length} analyses`);
       logger.debug("History data:", history);
 
-      // Deduplicate history entries based on fileName and fileHash
       const deduplicatedHistory = history.filter((analysis, index, array) => {
         const firstOccurrence = array.findIndex(
           (item) =>
@@ -155,17 +149,14 @@ export const HistoryPage = ({
   useEffect(() => {
     if (!currentUser?.uid) return;
 
-    // Subscribe first so we don't miss the initial snapshot
     const unsubscribe = firebaseAnalysisStorage.subscribe((data) => {
       setAnalysisHistory(data);
     });
 
-    // Then start realtime listener for this user
     firebaseAnalysisStorage.setUserId(currentUser.uid);
-    // Also perform an immediate load as a fallback (in case the snapshot requires indexes)
+
     loadAnalysisHistory();
 
-    // Load user stats separately
     loadUserStats();
 
     return () => {
@@ -191,7 +182,6 @@ export const HistoryPage = ({
   const filterHistory = () => {
     let filtered = [...analysisHistory];
 
-    // Filter by search term
     if (searchTerm.trim()) {
       filtered = filtered.filter(
         (analysis) =>
@@ -207,7 +197,6 @@ export const HistoryPage = ({
       );
     }
 
-    // Filter by time range
     if (selectedTimeRange !== "all") {
       const now = new Date();
       const timeRanges = {
@@ -242,7 +231,6 @@ export const HistoryPage = ({
       });
     }
 
-    // Filter by severity
     if (selectedSeverity !== "all") {
       filtered = filtered.filter((analysis) =>
         analysis.results.issues?.some(
@@ -274,7 +262,6 @@ export const HistoryPage = ({
         description: "Analysis has been permanently deleted.",
       });
 
-      // Reload stats after deletion
       loadUserStats();
     } catch (error) {
       logger.error("Error deleting analysis:", error);
@@ -362,30 +349,25 @@ export const HistoryPage = ({
         | number
         | null
         | undefined;
-      // Handle null, undefined, or empty values silently
+
       if (!t || t === "") {
         return "N/A";
       }
 
       if (typeof (t as FireTimestamp).toDate === "function") {
-        // Firebase Timestamp
         date = (t as FireTimestamp).toDate!();
       } else if (typeof (t as FireTimestamp).seconds === "number") {
-        // Firebase Timestamp object with seconds
         date = new Date((t as FireTimestamp).seconds! * 1000);
       } else if (timestamp instanceof Date) {
-        // Already a Date object
         date = timestamp;
       } else if (typeof t === "string" || typeof t === "number") {
-        // String or number timestamp
         const parsed = new Date(t);
-        // Check if the date is valid
+
         if (isNaN(parsed.getTime())) {
           return "N/A";
         }
         date = parsed;
       } else {
-        // Unknown format - return N/A instead of logging warning
         return "N/A";
       }
 
@@ -419,10 +401,10 @@ export const HistoryPage = ({
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-slate-50 dark:bg-slate-950">
-      {/* Background patterns removed for professional UI */}
+      {}
 
       <div className="relative z-10 container mx-auto space-y-8 py-12">
-        {/* Professional Header */}
+        {}
         <div className="mb-8">
           <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
             <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
@@ -464,7 +446,7 @@ export const HistoryPage = ({
           </div>
         </div>
 
-        {/* Stats Cards Row */}
+        {}
         {userStats && (
           <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
             {[
@@ -517,7 +499,7 @@ export const HistoryPage = ({
           </div>
         )}
 
-        {/* Filters Section */}
+        {}
         <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
           <div className="mb-5 flex items-center justify-between gap-3">
             <div className="flex items-center gap-3">
@@ -610,9 +592,9 @@ export const HistoryPage = ({
           </div>
         </div>
 
-        {/* Analysis History Section */}
+        {}
         <div className="rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
-          {/* Section Header */}
+          {}
           <div className="border-b border-slate-200 px-6 py-4 dark:border-slate-800">
             <div className="flex items-center justify-between">
               <div>
@@ -633,7 +615,7 @@ export const HistoryPage = ({
             </div>
           </div>
 
-          {/* Content */}
+          {}
           <div className="p-6">
             {isLoading ? (
               <div className="flex flex-col items-center justify-center py-16">
@@ -680,7 +662,7 @@ export const HistoryPage = ({
                   >
                     <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
                       <div className="flex-1 space-y-4">
-                        {/* File name and badges */}
+                        {}
                         <div className="flex flex-wrap items-center gap-3">
                           <h3 className="text-lg font-bold text-slate-900 dark:text-white">
                             {analysis.fileName}
@@ -708,7 +690,7 @@ export const HistoryPage = ({
                           )}
                         </div>
 
-                        {/* Stats grid */}
+                        {}
                         <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
                           {[
                             {
@@ -738,7 +720,7 @@ export const HistoryPage = ({
                           ))}
                         </div>
 
-                        {/* Severity badges */}
+                        {}
                         {analysis.results.issues &&
                           analysis.results.issues.length > 0 && (
                             <div className="flex flex-wrap gap-2">
@@ -777,7 +759,7 @@ export const HistoryPage = ({
                           )}
                       </div>
 
-                      {/* Action buttons */}
+                      {}
                       <div className="flex items-center gap-2 lg:flex-col lg:gap-2">
                         <Button
                           onClick={(e) => handleViewAnalysis(analysis, e)}
@@ -804,7 +786,7 @@ export const HistoryPage = ({
           </div>
         </div>
 
-        {/* Delete Confirmation Dialog */}
+        {}
         <Dialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
           <DialogContent className="sm:max-w-md">
             <DialogHeader>

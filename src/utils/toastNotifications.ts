@@ -1,8 +1,3 @@
-/**
- * Toast Notification Utilities
- * Provides a centralized way to show notifications throughout the app
- */
-
 import { toast } from "sonner";
 
 export type ToastType = "success" | "error" | "warning" | "info";
@@ -17,9 +12,6 @@ export interface ToastOptions {
   };
 }
 
-/**
- * Show a toast notification
- */
 export function showToast(
   type: ToastType,
   title: string,
@@ -48,9 +40,6 @@ export function showToast(
   }
 }
 
-/**
- * Specific toast notifications for common scenarios
- */
 export const toastNotifications = {
   offline: () => {
     showToast(
@@ -192,9 +181,6 @@ export const toastNotifications = {
   },
 };
 
-/**
- * Setup global toast function for use in services
- */
 export function setupGlobalToast() {
   if (typeof window !== "undefined") {
     window.showToast = showToast;
@@ -202,9 +188,6 @@ export function setupGlobalToast() {
   }
 }
 
-/**
- * Toast notifications for specific service errors
- */
 export const serviceToasts = {
   githubRepositories: {
     loadError: () => {

@@ -23,7 +23,6 @@ interface SecurityMetricsDashboardProps {
 export const SecurityMetricsDashboard: React.FC<
   SecurityMetricsDashboardProps
 > = ({ results }) => {
-  // Ensure quality score is a valid number
   const safeQualityScore =
     typeof results.summary.qualityScore === "number" &&
     !Number.isNaN(results.summary.qualityScore)
@@ -42,7 +41,7 @@ export const SecurityMetricsDashboard: React.FC<
   return (
     <TooltipProvider>
       <div className="space-y-6">
-        {/* Page Header */}
+        {}
         <div className="mb-8 border-b-2 border-slate-200/60 pb-6 dark:border-slate-700/60">
           <h2 className="mb-3 bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 bg-clip-text text-3xl font-bold text-transparent sm:text-4xl dark:from-white dark:via-blue-100 dark:to-indigo-100">
             Detailed Security Metrics
@@ -53,7 +52,7 @@ export const SecurityMetricsDashboard: React.FC<
           </p>
         </div>
 
-        {/* Key Metrics Grid - Focus on unique metrics not in header */}
+        {}
         <div className="grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
           <MetricsCard
             title="Technical Debt"
@@ -86,7 +85,7 @@ export const SecurityMetricsDashboard: React.FC<
           />
         </div>
 
-        {/* Detailed Metrics Cards */}
+        {}
         <div className="grid grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-2">
           <SeverityChart
             criticalIssues={results.summary.criticalIssues}
@@ -98,7 +97,7 @@ export const SecurityMetricsDashboard: React.FC<
           <OwaspChart issues={results.issues} />
         </div>
 
-        {/* Analysis Summary */}
+        {}
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           <Card>
             <CardHeader>

@@ -14,7 +14,7 @@ export function PWASettingsPage() {
       <AnimatedBackground />
       <PageLayout>
         <div className="relative z-10 container mx-auto px-4 py-8">
-          {/* Breadcrumb */}
+          {}
           <nav
             className="mb-6 flex items-center text-sm"
             aria-label="Breadcrumb"
@@ -38,7 +38,7 @@ export function PWASettingsPage() {
             </span>
           </nav>
 
-          {/* Page Header */}
+          {}
           <div className="mb-8">
             <h1 className="mb-2 text-3xl font-bold">PWA Settings</h1>
             <p className="text-muted-foreground">
@@ -47,7 +47,7 @@ export function PWASettingsPage() {
             </p>
           </div>
 
-          {/* PWA Dashboard */}
+          {}
           <PWADashboard />
         </div>
       </PageLayout>

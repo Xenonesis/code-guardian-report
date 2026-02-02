@@ -15,7 +15,6 @@ interface FileStatusProps {
   analysisProgress?: AnalysisProgress;
 }
 
-// Format seconds to human readable time
 const formatTimeRemaining = (seconds: number): string => {
   if (seconds <= 0) return "Almost done...";
   if (seconds < 1) return "Less than a second";
@@ -90,7 +89,7 @@ export const FileStatus: React.FC<FileStatusProps> = ({
 
       {isAnalyzing && (
         <div className="animate-fade-in space-y-4 rounded-xl border border-purple-200 bg-gradient-to-r from-purple-50 to-pink-50 p-4 sm:p-6 dark:border-purple-500 dark:from-purple-900/50 dark:to-pink-900/50">
-          {/* Header Row */}
+          {}
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-2">
               <Sparkles
@@ -114,7 +113,7 @@ export const FileStatus: React.FC<FileStatusProps> = ({
             </div>
           </div>
 
-          {/* Progress Bar */}
+          {}
           <div className="relative">
             <Progress
               value={analysisProgress?.percentComplete ?? 0}
@@ -127,7 +126,7 @@ export const FileStatus: React.FC<FileStatusProps> = ({
             )}
           </div>
 
-          {/* Footer Row */}
+          {}
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-xs leading-relaxed font-medium text-purple-600 sm:text-sm dark:text-purple-300">
               Extracting files from ZIP • Running security pattern matching •
