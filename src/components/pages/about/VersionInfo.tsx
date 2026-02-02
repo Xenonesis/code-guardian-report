@@ -55,7 +55,7 @@ export const VersionInfo: React.FC = () => {
             {techStack.map((tech, index) => (
               <div
                 key={tech.name}
-                className="glass-card-ultra enhanced-card-hover glow-on-hover group px-3 py-2"
+                className="enhanced-card-hover glow-on-hover group rounded-lg border border-slate-200/50 bg-white/50 px-3 py-2 shadow-sm backdrop-blur-sm transition-all duration-200 hover:border-slate-300/50 hover:bg-white/80 dark:border-slate-700/50 dark:bg-slate-900/50"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <div className="flex items-center gap-2">
