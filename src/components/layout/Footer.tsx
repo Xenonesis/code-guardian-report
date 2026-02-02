@@ -3,7 +3,6 @@
 import * as React from "react";
 import {
   Shield,
-  Heart,
   Mail,
   Github,
   Globe,
@@ -24,8 +23,6 @@ interface FooterProps {
 }
 
 export const Footer: React.FC<FooterProps> = ({ className = "" }) => {
-  const currentYear = new Date().getFullYear();
-
   const scrollToSection = (sectionId: string) => {
     const section = document.getElementById(sectionId);
     if (section) {
@@ -93,28 +90,26 @@ export const Footer: React.FC<FooterProps> = ({ className = "" }) => {
 
   return (
     <footer
-      className={`border-border/60 from-background via-primary/5 to-background relative overflow-hidden border-t bg-gradient-to-br ${className}`}
+      className={`relative overflow-hidden border-t border-slate-200/60 bg-gradient-to-b from-slate-50/80 via-white to-white dark:border-slate-800/60 dark:from-slate-900/80 dark:via-slate-950 dark:to-slate-950 ${className}`}
       style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
     >
       {/* Enhanced Background Effects */}
       <div className="pointer-events-none absolute inset-0">
-        <div className="animate-float-slow absolute top-0 left-1/4 h-64 w-64 rounded-full bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-pink-500/5 blur-3xl"></div>
-        <div className="animate-float-delayed absolute right-1/4 bottom-0 h-48 w-48 rounded-full bg-gradient-to-r from-emerald-500/5 via-teal-500/5 to-cyan-500/5 blur-3xl"></div>
-        <div className="animate-pulse-slow absolute top-1/2 left-0 h-32 w-32 rounded-full bg-gradient-to-r from-orange-500/5 to-red-500/5 blur-2xl"></div>
+        <div className="animate-float-slow xs:h-48 xs:w-48 absolute top-0 left-1/4 h-32 w-32 rounded-full bg-gradient-to-r from-blue-500/[0.03] via-violet-500/[0.03] to-fuchsia-500/[0.03] blur-3xl sm:h-64 sm:w-64"></div>
+        <div className="animate-float-delayed xs:h-32 xs:w-32 absolute right-1/4 bottom-0 h-24 w-24 rounded-full bg-gradient-to-r from-emerald-500/[0.03] via-teal-500/[0.03] to-cyan-500/[0.03] blur-3xl sm:h-48 sm:w-48"></div>
       </div>
 
-      <div className="relative z-10 container mx-auto px-3 py-10 sm:px-4 sm:py-12 md:px-6 lg:px-8 lg:py-16">
-        {/* Main Footer Content */}
-        <div className="mb-8 grid grid-cols-1 gap-8 sm:mb-10 sm:grid-cols-2 sm:gap-10 lg:mb-12 lg:grid-cols-5 lg:gap-12">
-          {/* Brand Section */}
-          <div className="lg:col-span-2">
+      <div className="xs:px-6 xs:py-10 relative z-10 container mx-auto px-4 py-8 sm:px-8 sm:py-12 md:px-10 lg:px-12 lg:py-16">
+        <div className="xs:grid-cols-2 grid gap-8 sm:gap-8 md:grid-cols-2 lg:grid-cols-6 lg:gap-12">
+          {/* Brand Section - Spans 2 cols on large screens, full width on mobile unless grid override */}
+          <div className="xs:col-span-2 lg:col-span-2">
             <div className="mb-4 flex items-center gap-2.5 sm:mb-5 sm:gap-3 lg:mb-6 lg:gap-4">
-              <div className="relative rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 p-2 shadow-lg transition-all duration-300 group-hover:shadow-xl sm:rounded-xl sm:p-2.5 lg:p-3">
+              <div className="relative rounded-xl bg-gradient-to-br from-blue-600 to-violet-600 p-2 shadow-lg shadow-blue-500/20 transition-all duration-300 group-hover:shadow-xl sm:rounded-xl sm:p-2.5 lg:p-3">
                 <Shield className="h-6 w-6 text-white sm:h-6 sm:w-6 lg:h-7 lg:w-7" />
-                <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-white/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:rounded-xl"></div>
+                <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-white/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
               </div>
               <div>
-                <h3 className="bg-gradient-to-r from-slate-900 to-blue-900 bg-clip-text text-xl font-bold text-transparent sm:text-xl lg:text-2xl dark:from-white dark:to-blue-100">
+                <h3 className="bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-xl font-bold text-transparent sm:text-xl lg:text-2xl dark:from-white dark:to-slate-300">
                   Code Guardian
                 </h3>
                 <p
@@ -147,10 +142,10 @@ export const Footer: React.FC<FooterProps> = ({ className = "" }) => {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group border-border/60 bg-muted/60 text-muted-foreground hover:bg-muted/80 hover:text-foreground rounded-lg border p-2 transition-all duration-300 hover:scale-110 sm:rounded-xl sm:p-2.5 lg:p-3"
+                    className="group rounded-xl border border-slate-200/60 bg-white/60 p-2.5 text-slate-500 transition-all duration-300 hover:translate-y-[-2px] hover:border-slate-300/80 hover:bg-white hover:text-slate-700 hover:shadow-lg sm:rounded-xl sm:p-3 dark:border-slate-700/40 dark:bg-slate-800/40 dark:text-slate-400 dark:hover:border-slate-600/60 dark:hover:bg-slate-800/60 dark:hover:text-white"
                     aria-label={social.name}
                   >
-                    <IconComponent className="h-4 w-4 transition-transform duration-300 group-hover:scale-110 sm:h-4.5 sm:w-4.5 lg:h-5 lg:w-5" />
+                    <IconComponent className="h-4 w-4 transition-transform duration-300 group-hover:scale-110 sm:h-5 sm:w-5" />
                   </a>
                 );
               })}
@@ -232,27 +227,21 @@ export const Footer: React.FC<FooterProps> = ({ className = "" }) => {
             </ul>
           </div>
         </div>
+      </div>
 
-        {/* Enhanced Bottom Section */}
-        <div className="border-border/60 border-t pt-6 sm:pt-7 lg:pt-8">
-          <div className="flex flex-col items-center justify-between gap-4 sm:gap-5 lg:flex-row lg:gap-6">
-            {/* Copyright and Trust Badge */}
-            <div className="flex flex-col items-center gap-3 text-xs sm:flex-row sm:gap-4 sm:text-sm lg:gap-6">
-              <div className="text-muted-foreground flex items-center gap-2 sm:gap-2.5 lg:gap-3">
-                <div className="flex items-center gap-1.5 sm:gap-2">
-                  <Heart className="h-3.5 w-3.5 animate-pulse text-red-400 sm:h-4 sm:w-4" />
-                  <span className="text-center sm:text-left">
-                    © {currentYear} Code Guardian. Made with love for
-                    developers.
-                  </span>
-                </div>
-              </div>
-              <div className="flex items-center gap-1.5 rounded-full border border-blue-400/30 bg-gradient-to-r from-blue-500/20 to-indigo-500/20 px-3 py-1.5 backdrop-blur-sm sm:gap-2 sm:px-4 sm:py-2">
-                <Star className="h-3.5 w-3.5 text-yellow-400 sm:h-4 sm:w-4" />
-                <span className="text-xs font-medium text-blue-900 sm:text-sm dark:text-blue-100">
-                  Trusted by 10K+ developers
-                </span>
-              </div>
+      {/* Bottom Bar */}
+      <div className="relative z-10 border-t border-slate-200/60 bg-white/40 backdrop-blur-sm dark:border-slate-800/60 dark:bg-slate-950/40">
+        <div className="xs:px-6 container mx-auto flex flex-col items-center justify-between gap-4 px-4 py-6 sm:px-8 md:flex-row md:px-10 md:py-8 lg:px-12">
+          <div className="flex flex-col items-center gap-4 sm:flex-row sm:gap-6">
+            <p className="text-center text-xs font-medium text-slate-500 sm:text-left sm:text-sm dark:text-slate-400">
+              © {new Date().getFullYear()} Code Guardian.
+            </p>
+            <div className="hidden h-1 w-1 rounded-full bg-slate-300 sm:block dark:bg-slate-700"></div>
+            <div className="flex items-center gap-1.5 rounded-full border border-blue-200/50 bg-gradient-to-r from-blue-50 to-violet-50 px-3 py-1.5 backdrop-blur-sm sm:gap-2 sm:px-4 sm:py-2 dark:border-blue-800/40 dark:from-blue-900/20 dark:to-violet-900/20">
+              <Star className="h-3.5 w-3.5 text-amber-500 sm:h-4 sm:w-4" />
+              <span className="text-xs font-medium text-blue-700 sm:text-sm dark:text-blue-300">
+                Trusted by 10K+ developers
+              </span>
             </div>
 
             {/* Contact and Version */}

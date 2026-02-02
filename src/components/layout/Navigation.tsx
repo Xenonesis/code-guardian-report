@@ -151,10 +151,10 @@ export const Navigation: React.FC<NavigationProps> = ({
   const navContent = (
     <nav
       className={cn(
-        "portal-navbar bg-white transition-all duration-500 ease-out dark:bg-slate-950",
+        "portal-navbar transition-all duration-400 ease-out",
         isScrolled
-          ? "border-border/60 border-b shadow-lg shadow-black/5 dark:shadow-black/30"
-          : "border-border/40 border-b"
+          ? "border-b border-slate-200/60 bg-white/95 shadow-lg shadow-slate-900/5 backdrop-blur-xl dark:border-slate-800/60 dark:bg-slate-950/95 dark:shadow-black/20"
+          : "border-b border-slate-200/40 bg-white/80 backdrop-blur-lg dark:border-slate-800/40 dark:bg-slate-950/80"
       )}
       style={{
         position: "fixed",
@@ -175,13 +175,13 @@ export const Navigation: React.FC<NavigationProps> = ({
           >
             {/* Shield Icon with Glow Effect */}
             <div className="relative flex-shrink-0">
-              <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 opacity-40 blur-lg transition-opacity duration-300 group-hover:opacity-60"></div>
-              <div className="xs:p-2 relative rounded-xl bg-gradient-to-br from-blue-500 via-blue-600 to-indigo-600 p-1.5 shadow-lg transition-all duration-300 group-hover:rotate-3 group-hover:shadow-xl sm:p-2.5">
+              <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-blue-500 to-violet-600 opacity-30 blur-xl transition-all duration-400 group-hover:opacity-50 group-hover:blur-2xl"></div>
+              <div className="xs:p-2 relative rounded-xl bg-gradient-to-br from-blue-500 via-blue-600 to-violet-600 p-1.5 shadow-lg shadow-blue-500/25 transition-all duration-300 group-hover:shadow-xl group-hover:shadow-blue-500/35 sm:p-2.5">
                 <Shield
                   className="xs:h-5 xs:w-5 h-4 w-4 text-white drop-shadow-sm sm:h-6 sm:w-6"
                   strokeWidth={2.5}
                 />
-                <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-white/25 to-transparent"></div>
+                <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-white/20 to-transparent"></div>
               </div>
             </div>
 
@@ -193,6 +193,11 @@ export const Navigation: React.FC<NavigationProps> = ({
                 </h1>
                 <Sparkles className="xs:h-3 xs:w-3 h-2.5 w-2.5 flex-shrink-0 text-amber-500 opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:h-3.5 sm:w-3.5" />
               </div>
+              <div className="xs:block hidden">
+                <h1 className="bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-base font-extrabold tracking-tight text-transparent transition-all duration-300 group-hover:to-blue-600 sm:text-lg md:text-xl lg:text-2xl dark:from-white dark:to-slate-300 dark:group-hover:to-blue-400">
+                  Code Guardian
+                </h1>
+              </div>
               <p className="xs:text-[10px] hidden truncate text-[9px] font-medium tracking-wide text-slate-500 sm:block sm:text-xs dark:text-slate-400">
                 Security Analysis Platform
               </p>
@@ -201,7 +206,7 @@ export const Navigation: React.FC<NavigationProps> = ({
 
           {/* Desktop Navigation - Enhanced */}
           <div className="hidden flex-1 items-center justify-center px-4 lg:flex">
-            <div className="bg-muted/80 flex items-center gap-0.5 rounded-full p-1">
+            <div className="flex items-center gap-0.5 rounded-full border border-slate-200/60 bg-slate-100/80 p-1 shadow-inner shadow-slate-900/5 dark:border-slate-700/40 dark:bg-slate-800/60 dark:shadow-black/20">
               {navItems.map((item) => (
                 <button
                   key={item.id}
@@ -211,8 +216,8 @@ export const Navigation: React.FC<NavigationProps> = ({
                   className={cn(
                     "group relative flex items-center gap-1.5 rounded-full px-3 py-2 text-xs font-medium transition-all duration-300 xl:px-4 xl:text-sm",
                     isActive(item.id)
-                      ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/25"
-                      : "text-muted-foreground hover:bg-background/80 hover:text-foreground"
+                      ? "bg-gradient-to-r from-blue-600 to-violet-600 text-white shadow-lg shadow-blue-500/30 dark:shadow-blue-500/20"
+                      : "text-slate-600 hover:bg-white/80 hover:text-slate-900 hover:shadow-sm dark:text-slate-400 dark:hover:bg-slate-700/60 dark:hover:text-white"
                   )}
                 >
                   <span
@@ -340,7 +345,7 @@ export const Navigation: React.FC<NavigationProps> = ({
                 <Button
                   size="sm"
                   onClick={() => setShowAuthModal(true)}
-                  className="rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-lg shadow-blue-500/25 transition-all duration-300 hover:scale-[1.02] hover:from-blue-700 hover:to-indigo-700 hover:shadow-xl hover:shadow-blue-500/30 active:scale-[0.98] lg:px-5 lg:py-2 lg:text-sm"
+                  className="rounded-full border border-blue-400/20 bg-gradient-to-r from-blue-600 to-violet-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-lg shadow-blue-500/30 transition-all duration-300 hover:translate-y-[-1px] hover:from-blue-500 hover:to-violet-500 hover:shadow-xl hover:shadow-blue-500/40 active:translate-y-0 active:shadow-lg lg:px-5 lg:py-2 lg:text-sm"
                 >
                   Get Started
                 </Button>
@@ -359,9 +364,9 @@ export const Navigation: React.FC<NavigationProps> = ({
               size="sm"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className={cn(
-                "xs:h-9 xs:w-9 flex h-8 w-8 items-center justify-center rounded-full p-0 transition-all duration-300 sm:h-10 sm:w-10 md:hidden",
+                "xs:h-9 xs:w-9 flex h-8 w-8 items-center justify-center rounded-full p-0 transition-all duration-300 sm:h-10 sm:w-10 lg:hidden",
                 isMobileMenuOpen
-                  ? "bg-foreground text-background rotate-90"
+                  ? "rotate-90 bg-slate-900 text-white shadow-lg dark:bg-white dark:text-slate-900"
                   : "bg-slate-100/80 text-slate-600 hover:bg-slate-200/80 dark:bg-slate-800/50 dark:text-slate-400 dark:hover:bg-slate-700/50"
               )}
               aria-label="Toggle mobile menu"
@@ -378,7 +383,7 @@ export const Navigation: React.FC<NavigationProps> = ({
         {/* Mobile Menu - Enhanced Full Screen Overlay */}
         <div
           className={cn(
-            "bg-background fixed inset-0 transition-all duration-300 ease-out md:hidden",
+            "fixed inset-0 bg-white/95 backdrop-blur-3xl transition-all duration-300 ease-out md:hidden dark:bg-slate-950/95",
             isMobileMenuOpen
               ? "pointer-events-auto translate-y-0 opacity-100"
               : "pointer-events-none -translate-y-4 opacity-0"

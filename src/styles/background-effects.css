@@ -50,25 +50,25 @@
   top: 85%;
 }
 
-/* Pulsing animation for gradient orbs */
+/* Pulsing animation for gradient orbs - Refined */
 @keyframes gentle-pulse {
   0%,
   100% {
-    opacity: 0.3;
+    opacity: 0.25;
     transform: scale(1);
   }
 
   50% {
-    opacity: 0.6;
-    transform: scale(1.1);
+    opacity: 0.45;
+    transform: scale(1.05);
   }
 }
 
 .gentle-pulse {
-  animation: gentle-pulse 4s ease-in-out infinite;
+  animation: gentle-pulse 5s ease-in-out infinite;
 }
 
-/* Floating animation */
+/* Floating animation - Refined */
 @keyframes float {
   0%,
   100% {
@@ -76,15 +76,15 @@
   }
 
   50% {
-    transform: translateY(-20px);
+    transform: translateY(-15px);
   }
 }
 
 .float-animation {
-  animation: float 6s ease-in-out infinite;
+  animation: float 7s ease-in-out infinite;
 }
 
-/* Rotating animation for decorative elements */
+/* Rotating animation for decorative elements - Slower */
 @keyframes slow-rotate {
   from {
     transform: rotate(0deg);
@@ -96,7 +96,7 @@
 }
 
 .slow-rotate {
-  animation: slow-rotate 20s linear infinite;
+  animation: slow-rotate 30s linear infinite;
 }
 
 /* Animation delay classes */
