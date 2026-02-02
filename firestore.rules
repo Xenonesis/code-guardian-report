@@ -49,6 +49,20 @@ service cloud.firestore {
       allow write: if false; // Admin-only via Firebase Admin SDK
     }
     
+    // GitHub repositories - allow read without auth for public access
+    match /github_repositories/{repoId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+      allow create: if request.auth != null;
+    }
+    
+    // GitHub analysis - allow read without auth for public access
+    match /github_analyses/{analysisId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+      allow create: if request.auth != null;
+    }
+    
     // Deny all other access by default (security best practice)
     match /{document=**} {
       allow read, write: if false;
