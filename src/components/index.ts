@@ -39,7 +39,6 @@ export { PWADashboard } from "./pwa/PWADashboard";
 
 // Firebase components
 export { FirebaseAnalyticsDashboard } from "./firebase/FirebaseAnalyticsDashboard";
-export { FirebaseTestPanel } from "./firebase/FirebaseTestPanel";
 export { FirestoreStatus } from "./firebase/FirestoreStatus";
 export { FirestoreHealthChecker } from "./firebase/FirestoreHealthChecker";
 export { FirestoreErrorNotification } from "./firebase/FirestoreErrorNotification";

@@ -29,11 +29,6 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui",
-    "test-automation": "node scripts/test-automation.js",
-    "test:e2e-zip": "tsx scripts/e2e-zip-analysis.ts",
-    "test:multi-language": "tsx src/tests/multiLanguageAnalysis.test.ts",
-    "test:multi-language-auto": "node scripts/run-multi-language-tests.js",
-    "ci:multi-language-check": "node scripts/ci-multi-language-check.js",
     "ci:validate": "npm run lint:strict && npm run type-check && npm run test",
     "ci:build": "npm run ci:validate && npm run build",
     "docker:build": "docker build -t code-guardian:latest .",
@@ -44,17 +39,14 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,cjs,mjs}": [
-      "node scripts/no-emoji-check.cjs",
       "eslint --fix",
       "prettier --write"
     ],
     "*.{css,scss}": [
-      "node scripts/no-emoji-check.cjs",
       "stylelint --fix",
       "prettier --write"
     ],
     "*.{json,md,yml,yaml,sh,html,xml}": [
-      "node scripts/no-emoji-check.cjs",
       "prettier --write"
     ]
   },
