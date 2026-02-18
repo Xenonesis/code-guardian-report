@@ -39,6 +39,7 @@ const sectionToPath: Record<string, string> = {
   terms: "/legal?tab=terms",
   help: "/help",
   "pwa-settings": "/pwa-settings",
+  changelog: "/changelog",
 };
 
 // Map URL paths to section IDs
@@ -52,6 +53,7 @@ const pathToSection: Record<string, string> = {
   "/terms": "legal",
   "/help": "help",
   "/pwa-settings": "pwa-settings",
+  "/changelog": "changelog",
 };
 
 export const NavigationProvider: React.FC<NavigationProviderProps> = ({

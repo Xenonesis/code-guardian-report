@@ -26,6 +26,38 @@ export interface ContributorWithDetails extends GitHubContributor {
   followers?: number;
 }
 
+export interface GitHubRelease {
+  id: number;
+  name: string;
+  tag_name: string;
+  body: string;
+  published_at: string;
+  html_url: string;
+  author: {
+    login: string;
+    avatar_url: string;
+    html_url: string;
+  };
+}
+
+export interface GitHubCommit {
+  sha: string;
+  commit: {
+    author: {
+      name: string;
+      email: string;
+      date: string;
+    };
+    message: string;
+  };
+  html_url: string;
+  author: {
+    login: string;
+    avatar_url: string;
+    html_url: string;
+  } | null;
+}
+
 class GitHubService {
   private readonly baseUrl = "https://api.github.com";
   private readonly repoOwner = "Xenonesis";
@@ -187,6 +219,54 @@ class GitHubService {
     } catch (error) {
       logger.error("Error fetching repository stats:", error);
       return null;
+    }
+  }
+
+  async getReleases(): Promise<GitHubRelease[]> {
+    try {
+      const response = await fetch(
+        `${this.baseUrl}/repos/${this.repoOwner}/${this.repoName}/releases`
+      );
+
+      if (response.status === 404) {
+        logger.warn(
+          `GitHub repository not found: ${this.repoOwner}/${this.repoName}`
+        );
+        return [];
+      }
+
+      if (!response.ok) {
+        throw new Error(`GitHub API error: ${response.status}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      logger.error("Error fetching releases:", error);
+      return [];
+    }
+  }
+
+  async getCommits(): Promise<GitHubCommit[]> {
+    try {
+      const response = await fetch(
+        `${this.baseUrl}/repos/${this.repoOwner}/${this.repoName}/commits?per_page=50`
+      );
+
+      if (response.status === 404) {
+        logger.warn(
+          `GitHub repository not found: ${this.repoOwner}/${this.repoName}`
+        );
+        return [];
+      }
+
+      if (!response.ok) {
+        throw new Error(`GitHub API error: ${response.status}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      logger.error("Error fetching commits:", error);
+      return [];
     }
   }
 }
