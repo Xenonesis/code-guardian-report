@@ -1,7 +1,7 @@
 {
   "name": "code-guardian-report",
   "private": true,
-  "version": "13.0.0",
+  "version": "14.0.0",
   "description": "Code analysis tool with security scanning and metrics reporting",
   "scripts": {
     "dev": "next dev",
