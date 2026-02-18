@@ -345,6 +345,17 @@ const nextConfig: NextConfig = {
         destination: "/?tab=reports",
         permanent: false,
       },
+      // Merge privacy and terms to legal
+      {
+        source: "/privacy",
+        destination: "/legal?tab=privacy",
+        permanent: true,
+      },
+      {
+        source: "/terms",
+        destination: "/legal?tab=terms",
+        permanent: true,
+      },
       // Trailing slash normalization
       {
         source: "/:path+/",

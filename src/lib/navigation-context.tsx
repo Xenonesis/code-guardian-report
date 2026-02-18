@@ -34,8 +34,9 @@ const sectionToPath: Record<string, string> = {
   about: "/about",
   history: "/history",
   "github-analysis": "/github-analysis",
-  privacy: "/privacy",
-  terms: "/terms",
+  legal: "/legal",
+  privacy: "/legal?tab=privacy",
+  terms: "/legal?tab=terms",
   help: "/help",
   "pwa-settings": "/pwa-settings",
 };
@@ -46,8 +47,9 @@ const pathToSection: Record<string, string> = {
   "/about": "about",
   "/history": "history",
   "/github-analysis": "github-analysis",
-  "/privacy": "privacy",
-  "/terms": "terms",
+  "/legal": "legal",
+  "/privacy": "legal",
+  "/terms": "legal",
   "/help": "help",
   "/pwa-settings": "pwa-settings",
 };
