@@ -34,10 +34,12 @@ const sectionToPath: Record<string, string> = {
   about: "/about",
   history: "/history",
   "github-analysis": "/github-analysis",
-  privacy: "/privacy",
-  terms: "/terms",
+  legal: "/legal",
+  privacy: "/legal?tab=privacy",
+  terms: "/legal?tab=terms",
   help: "/help",
   "pwa-settings": "/pwa-settings",
+  changelog: "/changelog",
 };
 
 // Map URL paths to section IDs
@@ -46,10 +48,12 @@ const pathToSection: Record<string, string> = {
   "/about": "about",
   "/history": "history",
   "/github-analysis": "github-analysis",
-  "/privacy": "privacy",
-  "/terms": "terms",
+  "/legal": "legal",
+  "/privacy": "legal",
+  "/terms": "legal",
   "/help": "help",
   "/pwa-settings": "pwa-settings",
+  "/changelog": "changelog",
 };
 
 export const NavigationProvider: React.FC<NavigationProviderProps> = ({

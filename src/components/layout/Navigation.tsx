@@ -8,13 +8,12 @@ import {
   Menu,
   X,
   Info,
-  Lock,
-  Award,
   User,
   LogOut,
   History,
   Github,
   ChevronDown,
+  FileClock,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -116,8 +115,12 @@ export const Navigation: React.FC<NavigationProps> = ({
       icon: <Github className="h-4 w-4" />,
       badge: "Pro",
     },
-    { id: "privacy", label: "Privacy", icon: <Lock className="h-4 w-4" /> },
-    { id: "terms", label: "Terms", icon: <Award className="h-4 w-4" /> },
+    {
+      id: "changelog",
+      label: "Changelog",
+      icon: <FileClock className="h-4 w-4" />,
+    },
+    { id: "legal", label: "Legal", icon: <Shield className="h-4 w-4" /> },
   ];
 
   const isActive = (sectionId: string) => currentSection === sectionId;

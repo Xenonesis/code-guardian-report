@@ -450,20 +450,20 @@ export const GitHubAnalysisPage: React.FC = () => {
         {/* Industrial Background */}
         <div className="fixed inset-0 z-0">
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:60px_60px] opacity-20" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#000000_100%)] opacity-80" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#ffffff_100%)] opacity-80 dark:bg-[radial-gradient(circle_at_center,transparent_0%,#000000_100%)]" />
         </div>
 
-        <Card className="relative z-10 w-full max-w-4xl overflow-hidden border-white/10 bg-black/40 shadow-2xl backdrop-blur-sm">
+        <Card className="border-border/40 bg-card/80 relative z-10 w-full max-w-4xl overflow-hidden shadow-2xl backdrop-blur-sm dark:border-white/10 dark:bg-black/40">
           <div className="grid grid-cols-1 md:grid-cols-2">
             <div className="flex flex-col justify-center p-8 md:p-12">
-              <div className="mb-8 flex h-16 w-16 items-center justify-center rounded-2xl border border-white/10 bg-white/5 shadow-lg">
-                <Github className="h-8 w-8 text-white" />
+              <div className="border-border/40 bg-muted/50 mb-8 flex h-16 w-16 items-center justify-center rounded-2xl border shadow-lg dark:border-white/10 dark:bg-white/5">
+                <Github className="text-foreground h-8 w-8 dark:text-white" />
               </div>
 
-              <h1 className="font-display mb-4 text-3xl font-bold tracking-tight text-white md:text-4xl">
+              <h1 className="font-display text-foreground mb-4 text-3xl font-bold tracking-tight md:text-4xl dark:text-white">
                 GITHUB <span className="text-primary">ANALYSIS</span>
               </h1>
-              <p className="mb-8 font-mono text-sm leading-relaxed text-slate-400">
+              <p className="text-muted-foreground mb-8 font-mono text-sm leading-relaxed dark:text-slate-400">
                 CONNECT_GITHUB // ENABLE_ADVANCED_SECURITY_PROTOCOLS
                 <br />
                 System will perform automated vulnerability scanning on
@@ -481,7 +481,7 @@ export const GitHubAnalysisPage: React.FC = () => {
                 </Button>
 
                 {!user && (
-                  <p className="text-center font-mono text-xs text-slate-500">
+                  <p className="text-muted-foreground text-center font-mono text-xs dark:text-slate-500">
                     NO_ACCOUNT?{" "}
                     <a
                       href="https://github.com/signup"
@@ -496,8 +496,8 @@ export const GitHubAnalysisPage: React.FC = () => {
               </div>
             </div>
 
-            <div className="flex flex-col justify-center border-l border-white/10 bg-black/20 p-8 md:p-12">
-              <h3 className="font-display mb-6 flex items-center gap-2 font-bold tracking-wide text-white">
+            <div className="border-border/40 bg-muted/30 flex flex-col justify-center border-l p-8 md:p-12 dark:border-white/10 dark:bg-black/20">
+              <h3 className="font-display text-foreground mb-6 flex items-center gap-2 font-bold tracking-wide dark:text-white">
                 <Shield className="text-primary h-5 w-5" />
                 PREMIUM_MODULES
               </h3>
@@ -520,23 +520,23 @@ export const GitHubAnalysisPage: React.FC = () => {
                     icon: Lock,
                     title: "THREAT_PREVENTION",
                     desc: "Identify critical issues before they become threats",
-                    color: "text-slate-400",
+                    color: "text-muted-foreground dark:text-slate-400",
                   },
                 ].map((feature, i) => (
                   <div key={i} className="group flex gap-4">
                     <div
                       className={cn(
-                        "group-hover:border-primary/30 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/5 shadow-sm transition-colors",
+                        "group-hover:border-primary/30 border-border/40 bg-background flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg border shadow-sm transition-colors dark:border-white/10 dark:bg-white/5",
                         feature.color
                       )}
                     >
                       <feature.icon className="h-5 w-5" />
                     </div>
                     <div>
-                      <h4 className="font-mono text-sm font-bold text-white">
+                      <h4 className="text-foreground font-mono text-sm font-bold dark:text-white">
                         {feature.title}
                       </h4>
-                      <p className="mt-1 text-xs leading-relaxed text-slate-500">
+                      <p className="text-muted-foreground mt-1 text-xs leading-relaxed dark:text-slate-500">
                         {feature.desc}
                       </p>
                     </div>

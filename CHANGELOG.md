@@ -5,11 +5,72 @@ All notable changes to Code Guardian Report will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [14.7.0] - 2026-02-18
 
 ### Added
 
-- Placeholder for upcoming features
+- **Changelog Page Overhaul**:
+  - New static commits data file (`commitsData.ts`) with full commit history
+  - Paginated commits view with "Show More" functionality (20 commits per page)
+  - Hardcoded releases data derived from CHANGELOG.md for offline reliability
+  - Simple Markdown parser component for rendering release notes in-browser
+
+- **GitHub Analysis Dashboard Enhancements**:
+  - Redesigned `GitHubProfileHeader` with responsive stats cards (Analyzed repos, Score, Issues)
+  - Skeleton loading states for profile name and username while data loads
+  - Improved responsive layout for mobile and desktop views
+
+- **Repository Activity Analytics**:
+  - New skeleton loading UI for activity stats cards
+  - Empty state UI when no analyses have been performed yet
+  - Language distribution bar chart with gradient color coding
+  - Activity stats: Total Analyses, Avg. Analysis Time, Most Analyzed Repo, Most Common Language
+
+- **Security Analytics Section**:
+  - Skeleton loading states for all stats cards and trend chart
+  - Empty state UI with call-to-action for first repository analysis
+  - Security score trend chart with color-coded performance bars (green/yellow/red)
+  - Stats: Average Security Score, Total Issues, Critical Issues, Analyses Completed
+
+- **Analysis History Section**:
+  - Full-featured analysis history with Timeline and List view modes
+  - Search bar for filtering analysis history by repository name
+  - Detailed analysis report modal with security score, stats grid, and executive summary
+  - Score badges (Excellent / Good / Poor) with color-coded indicators
+  - Skeleton loading states for history list items
+
+- **UI Components**:
+  - Enhanced `Skeleton` component with variant support (`default`, `card`, `text`, `avatar`, `chart`, `button`)
+  - Configurable `rounded`, `width`, `height`, and `animate` props on Skeleton
+  - New `skeleton-index.ts` barrel export for skeleton components
+
+- **Home Page (Index)**:
+  - Lazy-loaded `FloatingChatBot`, `StorageStatus`, and `AnalysisHistoryModal` with Suspense
+  - Skeleton fallback for `StorageStatus` lazy load
+
+- **Page Wrappers**:
+  - `GitHubAnalysisPageWrapper` updated with `loading: () => null` for cleaner SSR transitions
+  - `PWASettingsPageWrapper` simplified dynamic import
+
+### Changed
+
+- Improved GitHub dashboard layout with better responsive grid breakpoints (`sm:grid-cols-3`, `lg:min-w-[500px]`)
+- Analysis history deduplication logic based on `fileName` and `fileHash`
+- History page filter bar now shows active filter count and reset button
+- Changelog page now uses static data instead of live GitHub API calls for better performance
+
+### Fixed
+
+- Fixed skeleton shimmer animation not applying correctly in dark mode
+- Fixed analysis history not deduplicating entries with same file hash
+- Fixed GitHub profile header layout overflow on small screens
+- Fixed PWA settings page wrapper missing loading state
+
+### Performance
+
+- Reduced changelog page load time by switching to static commit/release data
+- Lazy loading of heavy components (ChatBot, StorageStatus, HistoryModal) reduces initial bundle size
+- Skeleton loading states improve perceived performance across GitHub dashboard
 
 ## [13.0.0] - 2026-02-11
 

@@ -20,6 +20,8 @@ interface GitHubProfileHeaderProps {
   openConnectGitHubPrompt: () => void;
 }
 
+import { Skeleton } from "@/components/ui/skeleton";
+
 export const GitHubProfileHeader: React.FC<GitHubProfileHeaderProps> = ({
   githubAvatarUrl,
   githubDisplayName,
@@ -53,14 +55,14 @@ export const GitHubProfileHeader: React.FC<GitHubProfileHeaderProps> = ({
         <div className="min-w-0">
           <h1 className="text-foreground mb-1 text-2xl font-bold tracking-tight break-words sm:text-3xl">
             {isLoadingProfile ? (
-              <span className="bg-muted inline-block h-8 w-48 animate-pulse rounded" />
+              <Skeleton className="inline-block h-8 w-48 rounded" />
             ) : (
               githubDisplayName || "GitHub User"
             )}
           </h1>
           <div className="text-muted-foreground flex flex-wrap items-center gap-2 sm:gap-3">
             {isLoadingProfile ? (
-              <span className="bg-muted inline-block h-5 w-32 animate-pulse rounded" />
+              <Skeleton className="inline-block h-5 w-32 rounded" />
             ) : githubUsername ? (
               <a
                 href={`https://github.com/${githubUsername}`}

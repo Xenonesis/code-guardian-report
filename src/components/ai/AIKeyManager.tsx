@@ -3,8 +3,6 @@
 import React, { useState, useEffect } from "react";
 import {
   Key,
-  Eye,
-  EyeOff,
   Plus,
   Trash2,
   Bot,
@@ -13,19 +11,10 @@ import {
   Zap,
   Shield,
   Sparkles,
-  Clock,
   Star,
-  Code2,
-  Volume2,
-  Brain,
+  Search,
+  Github,
 } from "lucide-react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -37,12 +26,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Skeleton } from "@/components/ui/skeleton";
 import {
   setLocalStorageItem,
   removeLocalStorageItem,
-} from "@/utils/storageEvents"; // Ensure both are imported
+} from "@/utils/storageEvents";
 import {
   discoverModels,
   validateAPIKey,
@@ -84,7 +71,7 @@ const ClaudeIcon = () => (
   <img
     src="https://img.icons8.com/?size=100&id=H5H0mqCCr5AV&format=png&color=000000"
     alt="Claude"
-    className="h-6 w-6"
+    className="h-6 w-6 dark:invert"
   />
 );
 
@@ -161,6 +148,15 @@ interface AIProvider {
 }
 
 const aiProviders: AIProvider[] = [
+  {
+    id: "github-copilot",
+    name: "GitHub Copilot",
+    icon: <Github className="h-6 w-6" />,
+    description: "AI pair programmer",
+    keyPrefix: "",
+    keyPlaceholder: "",
+    models: [],
+  },
   {
     id: "openai",
     name: "OpenAI",
@@ -244,19 +240,16 @@ interface APIKey {
 }
 
 export const AIKeyManager: React.FC = () => {
-  // Initialize apiKeys state by reading from localStorage directly (Lazy Initialization)
-  // This function runs only once when the component mounts for the first time
   const [apiKeys, setApiKeys] = useState<APIKey[]>(() => {
     try {
       const storedKeys = localStorage.getItem("aiApiKeys");
       if (storedKeys) {
-        const parsedKeys = JSON.parse(storedKeys);
-        return parsedKeys;
+        return JSON.parse(storedKeys);
       }
     } catch {
-      localStorage.removeItem("aiApiKeys"); // Clear bad data if parsing fails
+      localStorage.removeItem("aiApiKeys");
     }
-    return []; // Default to empty array if no keys are found or an error occurs
+    return [];
   });
 
   const [newKey, setNewKey] = useState({
@@ -265,46 +258,31 @@ export const AIKeyManager: React.FC = () => {
     key: "",
     name: "",
   });
-  const [showKeys, setShowKeys] = useState<Record<string, boolean>>({});
   const [isAdding, setIsAdding] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [discoveredModels, setDiscoveredModels] = useState<AIModel[]>([]);
-  const [isScanning, setIsScanning] = useState(false);
+  const [_isScanning, setIsScanning] = useState(false);
   const [scanStatus, setScanStatus] = useState<{
     message: string;
     type: "success" | "error" | "info";
   } | null>(null);
 
-  // Effect to save keys to localStorage whenever apiKeys state changes
-  // This effect is now responsible for ALL saves (add, remove)
   useEffect(() => {
-    // This condition prevents saving an empty array on the very first render if no keys exist
-    // It will save when keys are added, or removed.
     if (apiKeys.length > 0) {
-      const keysToSave = JSON.stringify(apiKeys);
-      setLocalStorageItem("aiApiKeys", keysToSave);
+      setLocalStorageItem("aiApiKeys", JSON.stringify(apiKeys));
     } else {
-      // If apiKeys array becomes empty (e.g., all keys removed), ensure localStorage is cleared
-      removeLocalStorageItem("aiApiKeys"); // Using your utility function to clean up
+      removeLocalStorageItem("aiApiKeys");
     }
-  }, [apiKeys]); // Dependency on apiKeys state
+  }, [apiKeys]);
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
-
-    if (!newKey.provider.trim()) {
+    if (!newKey.provider.trim())
       newErrors.provider = "Please select an AI provider";
-    }
-
-    if (!newKey.model.trim()) {
-      newErrors.model = "Please select a model";
-    }
-
-    if (!newKey.name.trim()) {
+    if (!newKey.model.trim()) newErrors.model = "Please select a model";
+    if (!newKey.name.trim())
       newErrors.name = "Please enter a name for this API key";
-    }
-
     if (!newKey.key.trim()) {
       newErrors.key = "Please enter your API key";
     } else if (newKey.key.length < 10) {
@@ -315,7 +293,6 @@ export const AIKeyManager: React.FC = () => {
         newErrors.key = `API key should start with "${provider.keyPrefix}"`;
       }
     }
-
     if (
       newKey.name.trim() &&
       apiKeys.some(
@@ -324,38 +301,31 @@ export const AIKeyManager: React.FC = () => {
     ) {
       newErrors.name = "A key with this name already exists";
     }
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const addAPIKey = async () => {
     if (isSubmitting) return;
-
     setIsSubmitting(true);
     setErrors({});
-
     try {
       if (!validateForm()) {
         setIsSubmitting(false);
         return;
       }
-
       const key: APIKey = {
-        id: Date.now().toString(), // Using Date.now() for a unique ID
+        id: Date.now().toString(),
         provider: newKey.provider.trim(),
         model: newKey.model.trim(),
         key: newKey.key.trim(),
         name: newKey.name.trim(),
       };
-      setApiKeys((prevKeys) => [...prevKeys, key]); // This will trigger the save useEffect automatically
-      // logger.debug("AIKeyManager: API key added to state, save useEffect should be triggered."); // Debug log removed for PR
-
+      setApiKeys((prevKeys) => [...prevKeys, key]);
       setNewKey({ provider: "", model: "", key: "", name: "" });
       setIsAdding(false);
       setErrors({});
     } catch {
-      // logger.error('AIKeyManager: Error adding API key:', error); // Debug log removed for PR
       setErrors({ general: "Failed to add API key. Please try again." });
     } finally {
       setIsSubmitting(false);
@@ -363,14 +333,8 @@ export const AIKeyManager: React.FC = () => {
   };
 
   const removeAPIKey = (id: string) => {
-    // logger.debug(`AIKeyManager: Attempting to remove API key with ID: ${id}`); // Debug log removed for PR
     const updatedKeys = apiKeys.filter((key) => key.id !== id);
-    setApiKeys(updatedKeys); // This will trigger the save useEffect (and clear localStorage if array becomes empty)
-    // logger.debug("AIKeyManager: API key removed from state, save useEffect should be triggered (clearing if empty)."); // Debug log removed for PR
-  };
-
-  const toggleKeyVisibility = (id: string) => {
-    setShowKeys((prev) => ({ ...prev, [id]: !prev[id] }));
+    setApiKeys(updatedKeys);
   };
 
   const getProviderInfo = (providerId: string) => {
@@ -388,17 +352,10 @@ export const AIKeyManager: React.FC = () => {
   };
 
   const handleProviderChange = (value: string) => {
-    setNewKey({
-      ...newKey,
-      provider: value,
-      model: "",
-      key: "",
-    });
+    setNewKey({ ...newKey, provider: value, model: "", key: "" });
     setDiscoveredModels([]);
     setScanStatus(null);
-    if (errors.provider) {
-      setErrors((prev) => ({ ...prev, provider: "" }));
-    }
+    if (errors.provider) setErrors((prev) => ({ ...prev, provider: "" }));
   };
 
   const handleScanAPI = async () => {
@@ -409,17 +366,13 @@ export const AIKeyManager: React.FC = () => {
       });
       return;
     }
-
     setIsScanning(true);
     setScanStatus({
       message: "Scanning API and discovering available models...",
       type: "info",
     });
-
     try {
-      // First validate the API key
       const validation = await validateAPIKey(newKey.provider, newKey.key);
-
       if (!validation.valid) {
         setScanStatus({
           message: validation.error || "Invalid API key",
@@ -428,10 +381,7 @@ export const AIKeyManager: React.FC = () => {
         setIsScanning(false);
         return;
       }
-
-      // Then discover available models
       const result = await discoverModels(newKey.provider, newKey.key);
-
       if (result.success && result.models.length > 0) {
         setDiscoveredModels(result.models);
         setScanStatus({
@@ -444,26 +394,22 @@ export const AIKeyManager: React.FC = () => {
         setScanStatus({ message: "No models found", type: "error" });
       }
     } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "Failed to scan API";
-      setScanStatus({ message: errorMessage, type: "error" });
+      setScanStatus({
+        message: error instanceof Error ? error.message : "Failed to scan API",
+        type: "error",
+      });
     } finally {
       setIsScanning(false);
     }
   };
 
-  // Automatically scan API when provider and key are both entered
   useEffect(() => {
-    // Only auto-scan if we have both provider and key, and key looks valid
     if (newKey.provider && newKey.key && newKey.key.length > 10) {
-      // Debounce the auto-scan to avoid scanning on every keystroke
       const timeoutId = setTimeout(() => {
         handleScanAPI();
-      }, 1000); // Wait 1 second after user stops typing
-
+      }, 1000);
       return () => clearTimeout(timeoutId);
     }
-    // Clear discovered models if key is cleared or too short
     setDiscoveredModels([]);
     setScanStatus(null);
     return undefined;
@@ -474,1049 +420,474 @@ export const AIKeyManager: React.FC = () => {
     return provider?.keyPlaceholder || "Enter your API key";
   };
 
-  // logger.debug("AIKeyManager: Current apiKeys state during render:", apiKeys); // Debug log removed for PR
-
   return (
-    <div className="mx-auto w-full max-w-6xl space-y-6 sm:space-y-8">
-      {/* Hero Section */}
-      <Card variant="modern" className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-600/10 via-blue-600/10 to-indigo-600/10 dark:from-purple-400/10 dark:via-blue-400/10 dark:to-indigo-400/10" />
-        <CardHeader className="relative z-10 pb-6">
-          <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
-            <div className="flex items-center gap-3">
-              <div className="rounded-2xl bg-gradient-to-br from-purple-500 to-blue-600 p-3 shadow-lg">
-                <Bot className="h-6 w-6 text-white" />
-              </div>
-              <div>
-                <CardTitle className="bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 bg-clip-text text-2xl font-bold text-transparent sm:text-3xl dark:from-purple-400 dark:via-blue-400 dark:to-indigo-400">
-                  AI Analysis Integration
-                </CardTitle>
-                <CardDescription className="text-muted-foreground mt-1 text-base">
-                  Supercharge your code analysis with AI-powered insights
-                </CardDescription>
-              </div>
+    <div className="mx-auto w-full max-w-5xl space-y-8 p-6 text-slate-200">
+      {/* Header Section */}
+      <div className="relative overflow-hidden rounded-xl border border-blue-900/50 bg-[#0B1120] p-6 shadow-2xl">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/10 to-purple-900/10" />
+        <div className="relative z-10 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 p-3 shadow-lg shadow-blue-900/20">
+              <Bot className="h-6 w-6 text-white" />
             </div>
-            <div className="ml-auto flex items-center gap-2">
-              <div className="flex items-center gap-2 rounded-full border border-green-200 bg-green-100 px-3 py-1.5 dark:border-green-800 dark:bg-green-900/30">
-                <CheckCircle className="h-4 w-4 text-green-600 dark:text-green-400" />
-                <span className="text-xs font-medium text-green-700 dark:text-green-300">
-                  Secure Storage
-                </span>
-              </div>
+            <div>
+              <h1 className="font-display bg-gradient-to-r from-blue-100 to-indigo-200 bg-clip-text text-2xl font-bold tracking-tight text-transparent">
+                AI ANALYSIS INTEGRATION
+              </h1>
+              <p className="text-sm text-slate-400">
+                Supercharge your code analysis with AI-powered insights
+              </p>
             </div>
           </div>
-        </CardHeader>
-      </Card>
-
-      {/* GitHub Copilot Integration Section */}
-      <div>
-        <GitHubCopilotManager />
+          <Badge
+            variant="outline"
+            className="border-green-800 bg-green-950/30 px-3 py-1 text-green-400"
+          >
+            <CheckCircle className="mr-1.5 h-3.5 w-3.5" />
+            Secure Storage
+          </Badge>
+        </div>
       </div>
 
       {/* Supported AI Providers */}
-      <Card variant="modern">
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 p-2">
-                <Sparkles className="h-5 w-5 text-white" />
-              </div>
-              <div>
-                <CardTitle className="text-foreground text-xl font-bold">
-                  Supported AI Providers
-                </CardTitle>
-                <CardDescription className="text-muted-foreground">
-                  Choose from industry-leading AI providers for enhanced
-                  analysis
-                </CardDescription>
-              </div>
-            </div>
-            {discoveredModels.length > 0 && (
-              <Badge variant="outline" className="flex items-center gap-2">
-                <CheckCircle className="h-3 w-3 text-green-600" />
-                {discoveredModels.length} Models Discovered
-              </Badge>
-            )}
+      <div className="space-y-4">
+        <div className="flex items-center gap-3 px-1">
+          <div className="rounded-lg bg-blue-500/10 p-2">
+            <Sparkles className="h-5 w-5 text-blue-400" />
           </div>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
-            {aiProviders.map((provider, _index) => {
-              const isConfigured = apiKeys.some(
-                (key) => key.provider === provider.id
-              );
-              return (
-                <Card
-                  key={provider.id}
-                  variant="glass"
-                  className={`group relative overflow-hidden transition-all duration-300 ${
-                    isConfigured
-                      ? "bg-green-50/50 ring-2 ring-green-400/50 dark:bg-green-900/20 dark:ring-green-500/50"
-                      : "hover:ring-primary/50 dark:hover:ring-primary/50 hover:ring-2"
-                  }`}
-                >
-                  {isConfigured && (
-                    <div className="absolute top-3 right-3">
-                      <div className="flex items-center gap-1 rounded-full border border-green-300 bg-green-100 px-2 py-1 dark:border-green-700 dark:bg-green-900/50">
-                        <CheckCircle className="h-3 w-3 text-green-600 dark:text-green-400" />
-                        <span className="text-xs font-medium text-green-700 dark:text-green-300">
-                          Active
-                        </span>
-                      </div>
-                    </div>
-                  )}
-                  <CardHeader className="pb-3">
-                    <div className="flex items-center gap-3">
-                      <div className="text-foreground/80 rounded-xl border border-white/30 bg-white/50 p-2 transition-transform duration-200 group-hover:scale-110 dark:border-white/10 dark:bg-black/20 dark:text-slate-200">
-                        {provider.icon}
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <h4 className="text-foreground truncate text-base font-semibold">
-                          {provider.name}
-                        </h4>
-                        <p className="text-muted-foreground line-clamp-2 text-sm">
-                          {provider.description}
-                        </p>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="pt-0">
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between">
-                        <Badge variant="outline" className="text-xs">
-                          <Sparkles className="mr-1 h-3 w-3" />
-                          Live Discovery
-                        </Badge>
-                        <div className="text-muted-foreground flex items-center gap-1 text-xs">
-                          <Clock className="h-3 w-3" />
-                          <span>Real-time</span>
-                        </div>
-                      </div>
-                      <div className="text-muted-foreground text-xs">
-                        Models are discovered automatically from the API when
-                        you add your key
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              );
-            })}
+          <div>
+            <h2 className="font-display text-lg font-bold text-slate-100">
+              SUPPORTED AI PROVIDERS
+            </h2>
+            <p className="text-xs text-slate-500">
+              Choose from industry-leading AI providers for enhanced analysis
+            </p>
           </div>
-        </CardContent>
-      </Card>
+        </div>
 
-      {/* Current API Keys */}
-      <Card variant="modern">
-        <CardHeader>
-          <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
-            <div className="flex items-center gap-3">
-              <div className="rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 p-2">
-                <Key className="h-5 w-5 text-white" />
-              </div>
-              <div>
-                <CardTitle className="text-foreground text-xl font-bold">
-                  Your API Keys
-                </CardTitle>
-                <CardDescription className="text-muted-foreground">
-                  Manage your AI provider credentials securely
-                </CardDescription>
-              </div>
-            </div>
-            <Button
-              onClick={() => setIsAdding(true)}
-              variant="default"
-              className="focus-ring flex items-center gap-2"
-              disabled={isAdding}
-              size="sm"
-            >
-              <Plus className="h-4 w-4" />
-              <span className="hidden sm:inline">Add API Key</span>
-              <span className="sm:hidden">Add Key</span>
-            </Button>
-          </div>
-        </CardHeader>
-        <CardContent>
-          {/* Empty State */}
-          {apiKeys.length === 0 && !isAdding && (
-            <div className="animate-fade-in py-12 text-center">
-              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900">
-                <Key className="text-muted-foreground h-8 w-8" />
-              </div>
-              <h3 className="text-foreground mb-2 text-lg font-semibold">
-                No API Keys Configured
-              </h3>
-              <p className="text-muted-foreground mx-auto mb-6 max-w-md">
-                Add your first API key to unlock AI-powered code analysis,
-                intelligent insights, and chat assistance.
-              </p>
-              <Button
-                onClick={() => setIsAdding(true)}
-                variant="default"
-                size="lg"
-                className="animate-pulse"
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {aiProviders.map((provider) => {
+            if (provider.id === "github-copilot") {
+              return (
+                <div
+                  key={provider.id}
+                  className="col-span-1 md:col-span-2 lg:col-span-3"
+                >
+                  <GitHubCopilotManager />
+                </div>
+              );
+            }
+            const isConfigured = apiKeys.some(
+              (key) => key.provider === provider.id
+            );
+            return (
+              <div
+                key={provider.id}
+                className={`group relative overflow-hidden rounded-xl border bg-[#0F1629] p-5 transition-all duration-300 hover:shadow-lg hover:shadow-blue-900/10 ${
+                  isConfigured
+                    ? "border-green-500/30 ring-1 ring-green-500/20"
+                    : "border-slate-800 hover:border-blue-700/50"
+                }`}
               >
-                <Plus className="mr-2 h-5 w-5" />
-                Get Started
+                <div className="flex items-start gap-4">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-slate-700/50 bg-[#161F36] text-slate-200 shadow-inner transition-colors group-hover:border-blue-700/30 group-hover:text-blue-400">
+                    {provider.icon}
+                  </div>
+                  <div className="flex-1 space-y-1">
+                    <h3 className="text-sm font-semibold text-slate-200 transition-colors group-hover:text-blue-300">
+                      {provider.name}
+                    </h3>
+                    <p className="line-clamp-2 text-xs text-slate-500">
+                      {provider.description}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mt-6 flex items-center justify-between border-t border-slate-800 pt-4">
+                  <div className="flex items-center gap-1.5 rounded-full border border-slate-700/50 bg-slate-900/50 px-2 py-0.5 text-[10px] text-slate-400 transition-colors group-hover:border-blue-800/30 group-hover:text-blue-300">
+                    <Search className="h-3 w-3" />
+                    Live Discovery
+                  </div>
+                  <div className="flex items-center gap-1.5 text-[10px] text-slate-500">
+                    <div className="h-1.5 w-1.5 rounded-full bg-slate-600 transition-colors group-hover:bg-blue-500" />
+                    Real-time
+                  </div>
+                </div>
+
+                <div className="mt-2 text-center text-[10px] text-slate-600 opacity-0 transition-opacity group-hover:opacity-100">
+                  Models are discovered automatically from the API when you add
+                  your key
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Your API Keys Section */}
+      <div className="rounded-xl border border-blue-900/30 bg-[#0B1120] p-6 shadow-xl">
+        <div className="mb-6 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="rounded-lg bg-emerald-500/10 p-2">
+              <Key className="h-5 w-5 text-emerald-400" />
+            </div>
+            <div>
+              <h2 className="font-display text-lg font-bold text-slate-100">
+                YOUR API KEYS
+              </h2>
+              <p className="text-xs text-slate-500">
+                Manage your AI provider credentials securely
+              </p>
+            </div>
+          </div>
+          <Button
+            onClick={() => setIsAdding(true)}
+            variant="outline"
+            size="sm"
+            className="border-slate-700 bg-slate-900/50 text-xs text-slate-300 transition-all hover:border-blue-700/50 hover:bg-blue-900/20 hover:text-blue-300"
+            disabled={isAdding}
+          >
+            <Plus className="mr-1.5 h-3.5 w-3.5" />
+            ADD API KEY
+          </Button>
+        </div>
+
+        {isAdding && (
+          <div className="animate-in slide-in-from-top-4 fade-in mb-6 rounded-lg border border-blue-900/30 bg-[#0F1629] p-6 duration-300">
+            <h3 className="mb-4 text-sm font-semibold text-slate-200">
+              Add New API Key
+            </h3>
+            <div className="grid gap-4 md:grid-cols-2">
+              <div className="space-y-2">
+                <Label className="text-xs text-slate-400">Provider</Label>
+                <Select
+                  value={newKey.provider}
+                  onValueChange={handleProviderChange}
+                >
+                  <SelectTrigger className="border-slate-700 bg-slate-900 text-slate-200">
+                    <SelectValue placeholder="Select Provider" />
+                  </SelectTrigger>
+                  <SelectContent className="border-slate-700 bg-[#0F1629] text-slate-200">
+                    {aiProviders
+                      .filter((p) => p.id !== "github-copilot")
+                      .map((p) => (
+                        <SelectItem key={p.id} value={p.id}>
+                          {p.name}
+                        </SelectItem>
+                      ))}
+                  </SelectContent>
+                </Select>
+                {errors.provider && (
+                  <p className="text-xs text-red-400">{errors.provider}</p>
+                )}
+              </div>
+
+              <div className="space-y-2">
+                <Label className="text-xs text-slate-400">API Key</Label>
+                <Input
+                  type="password"
+                  value={newKey.key}
+                  onChange={(e) => {
+                    setNewKey({ ...newKey, key: e.target.value });
+                    if (errors.key) setErrors({ ...errors, key: "" });
+                  }}
+                  className="border-slate-700 bg-slate-900 font-mono text-xs text-slate-200"
+                  placeholder={getKeyPlaceholder(newKey.provider)}
+                />
+                {errors.key && (
+                  <p className="text-xs text-red-400">{errors.key}</p>
+                )}
+              </div>
+
+              <div className="space-y-2">
+                <Label className="text-xs text-slate-400">Display Name</Label>
+                <Input
+                  value={newKey.name}
+                  onChange={(e) => {
+                    setNewKey({ ...newKey, name: e.target.value });
+                    if (errors.name) setErrors({ ...errors, name: "" });
+                  }}
+                  className="border-slate-700 bg-slate-900 text-xs text-slate-200"
+                  placeholder="e.g. My Production Key"
+                />
+                {errors.name && (
+                  <p className="text-xs text-red-400">{errors.name}</p>
+                )}
+              </div>
+
+              {discoveredModels.length > 0 && (
+                <div className="space-y-2">
+                  <Label className="text-xs text-slate-400">Model</Label>
+                  <Select
+                    value={newKey.model}
+                    onValueChange={(val) =>
+                      setNewKey({ ...newKey, model: val })
+                    }
+                  >
+                    <SelectTrigger className="border-slate-700 bg-slate-900 text-slate-200">
+                      <SelectValue placeholder="Select Model" />
+                    </SelectTrigger>
+                    <SelectContent className="border-slate-700 bg-[#0F1629] text-slate-200">
+                      {discoveredModels.map((m) => (
+                        <SelectItem key={m.id} value={m.id}>
+                          {m.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {errors.model && (
+                    <p className="text-xs text-red-400">{errors.model}</p>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {scanStatus && (
+              <div
+                className={`mt-4 flex items-center gap-2 rounded p-2 text-xs ${scanStatus.type === "success" ? "bg-green-900/20 text-green-400" : scanStatus.type === "error" ? "bg-red-900/20 text-red-400" : "bg-blue-900/20 text-blue-400"}`}
+              >
+                {scanStatus.type === "success" ? (
+                  <CheckCircle className="h-3 w-3" />
+                ) : (
+                  <AlertTriangle className="h-3 w-3" />
+                )}
+                {scanStatus.message}
+              </div>
+            )}
+
+            <div className="mt-6 flex justify-end gap-3">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsAdding(false)}
+                className="text-slate-400 hover:text-slate-200"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={addAPIKey}
+                disabled={isSubmitting}
+                size="sm"
+                className="bg-blue-600 text-white hover:bg-blue-700"
+              >
+                {isSubmitting ? "Saving..." : "Save API Key"}
               </Button>
             </div>
-          )}
+          </div>
+        )}
 
-          <div className="space-y-4">
-            {apiKeys.map((key, _index) => {
+        {apiKeys.length === 0 && !isAdding ? (
+          <div className="flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-slate-800 bg-[#0F1629]/50 py-12 text-center">
+            <div className="mb-4 rounded-full bg-slate-800 p-4 ring-1 ring-slate-700">
+              <Key className="h-6 w-6 text-slate-500" />
+            </div>
+            <h3 className="mb-2 text-lg font-medium text-slate-200">
+              No API Keys Configured
+            </h3>
+            <p className="mb-6 max-w-sm text-sm text-slate-500">
+              Add your first API key to unlock AI-powered code analysis,
+              intelligent insights, and chat assistance.
+            </p>
+            <Button
+              onClick={() => setIsAdding(true)}
+              variant="outline"
+              className="border-slate-700 bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white"
+            >
+              <Plus className="mr-2 h-4 w-4" />
+              GET STARTED
+            </Button>
+          </div>
+        ) : (
+          <div className="grid gap-3">
+            {apiKeys.map((key) => {
               const provider = getProviderInfo(key.provider);
               const model = getModelInfo(key.provider, key.model);
               return (
-                <Card
+                <div
                   key={key.id}
-                  variant="glass"
-                  className="group border-border/50 hover:scale-[1.02]/50 relative overflow-hidden border transition-all duration-300"
+                  className="flex items-center justify-between rounded-lg border border-slate-800 bg-[#0F1629] p-4 transition-all hover:border-slate-700"
                 >
-                  <CardContent className="p-4">
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="flex min-w-0 flex-1 items-start gap-3">
-                        <div className="border-border/50 group-hover:scale-110/50 rounded-xl border bg-gradient-to-br from-white to-slate-50 p-2 transition-transform duration-200 dark:from-slate-800 dark:to-slate-900">
-                          <span className="text-lg">{provider?.icon}</span>
-                        </div>
-                        <div className="min-w-0 flex-1">
-                          <div className="mb-2 flex items-center gap-2">
-                            <h4 className="text-foreground truncate text-base font-semibold">
-                              {key.name}
-                            </h4>
-                            <div className="flex items-center gap-1 rounded-full bg-green-100 px-2 py-0.5 dark:bg-green-900/30">
-                              <div className="h-2 w-2 animate-pulse rounded-full bg-green-500" />
-                              <span className="text-xs font-medium text-green-700 dark:text-green-300">
-                                Active
-                              </span>
-                            </div>
-                          </div>
-
-                          <div className="mb-3 flex flex-wrap items-center gap-2">
-                            <Badge
-                              variant="outline"
-                              className="bg-white/50 text-xs dark:bg-black/20"
-                            >
-                              {provider?.name}
-                            </Badge>
-                            {model && (
-                              <Badge variant="secondary" className="text-xs">
-                                {model.name}
-                              </Badge>
-                            )}
-                            {model?.capabilities && (
-                              <div className="flex items-center gap-1">
-                                {model.capabilities.includes("code") && (
-                                  <div className="flex h-5 w-5 items-center justify-center rounded-full bg-teal-100 dark:bg-teal-900/30">
-                                    <Code2 className="text-primary h-3 w-3 dark:text-teal-300" />
-                                  </div>
-                                )}
-                                {model.capabilities.includes("vision") && (
-                                  <div className="flex h-5 w-5 items-center justify-center rounded-full bg-purple-100 dark:bg-purple-900/30">
-                                    <Eye className="h-3 w-3 text-purple-600 dark:text-purple-300" />
-                                  </div>
-                                )}
-                              </div>
-                            )}
-                          </div>
-
-                          <div className="flex items-center gap-3">
-                            <div className="min-w-0 flex-1">
-                              <div className="border-border/50 bg-muted p-2/50/50 flex items-center gap-2 rounded-lg border">
-                                <span className="text-muted-foreground flex-1 truncate font-mono text-xs">
-                                  {showKeys[key.id]
-                                    ? key.key
-                                    : maskKey(key.key)}
-                                </span>
-                                <Button
-                                  variant="ghost"
-                                  size="sm"
-                                  onClick={() => toggleKeyVisibility(key.id)}
-                                  className="hover:bg-muted h-6 w-6 p-0 dark:hover:bg-slate-700"
-                                  aria-label={
-                                    showKeys[key.id]
-                                      ? "Hide API key"
-                                      : "Show API key"
-                                  }
-                                >
-                                  {showKeys[key.id] ? (
-                                    <EyeOff className="h-3 w-3" />
-                                  ) : (
-                                    <Eye className="h-3 w-3" />
-                                  )}
-                                </Button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => removeAPIKey(key.id)}
-                        className="rounded-xl p-2 text-red-500 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20"
-                        aria-label={`Remove ${key.name} API key`}
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-
-                    {model && (
-                      <div className="border-border/50 pt-3/50 mt-3 border-t">
-                        <div className="text-muted-foreground flex items-center justify-between text-xs">
-                          <span>
-                            Max Context:{" "}
-                            {model.maxTokens?.toLocaleString() || "N/A"} tokens
-                          </span>
-                          <span>Updated: Just now</span>
-                        </div>
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
-              );
-            })}
-
-            {/* Add New Key Form */}
-            {isAdding && (
-              <Card
-                variant="modern"
-                className="animate-slide-down relative overflow-hidden"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-indigo-50/30 to-purple-50/50 dark:from-blue-900/20 dark:via-indigo-900/10 dark:to-purple-900/20" />
-                <CardHeader className="relative z-10 pb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 p-2">
-                      <Plus className="h-5 w-5 text-white" />
+                  <div className="flex items-center gap-4">
+                    <div className="rounded bg-slate-800 p-2 text-slate-400">
+                      {provider?.icon}
                     </div>
                     <div>
-                      <CardTitle className="text-foreground text-lg font-bold">
-                        Add New API Key
-                      </CardTitle>
-                      <CardDescription className="text-muted-foreground">
-                        Connect your AI provider to unlock powerful features
-                      </CardDescription>
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent className="relative z-10 space-y-6">
-                  {errors.general && (
-                    <Alert className="border-red-200 bg-red-50 dark:bg-red-950/20">
-                      <AlertTriangle className="h-4 w-4 text-red-600" />
-                      <AlertDescription className="text-red-700 dark:text-red-300">
-                        {errors.general}
-                      </AlertDescription>
-                    </Alert>
-                  )}
-
-                  <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-                    <div className="space-y-2">
-                      <Label
-                        htmlFor="provider-select"
-                        className="text-foreground/80 text-sm font-medium"
-                      >
-                        AI Provider <span className="text-red-500">*</span>
-                      </Label>
-                      <Select
-                        value={newKey.provider}
-                        onValueChange={handleProviderChange}
-                      >
-                        <SelectTrigger
-                          id="provider-select"
-                          className={`h-12 rounded-xl border-2 transition-all duration-200 ${
-                            errors.provider
-                              ? "border-red-300 focus:border-red-500 focus:ring-red-200"
-                              : "border-border focus:border-primary focus:ring-ring/30 dark:focus:border-primary"
-                          }`}
+                      <div className="flex items-center gap-2">
+                        <h4 className="font-medium text-slate-200">
+                          {key.name}
+                        </h4>
+                        <Badge
+                          variant="secondary"
+                          className="bg-blue-900/30 text-[10px] text-blue-400 hover:bg-blue-900/50"
                         >
-                          <SelectValue placeholder="Choose your AI provider" />
-                        </SelectTrigger>
-                        <SelectContent className="border-border backdrop-blur-xl/95 rounded-xl border-2 bg-white/95 shadow-2xl">
-                          {aiProviders.map((provider) => (
-                            <SelectItem
-                              key={provider.id}
-                              value={provider.id}
-                              className="hover:bg-muted my-1 rounded-lg dark:hover:bg-slate-700/50"
-                            >
-                              <div className="flex items-center gap-3 py-1">
-                                <div className="text-foreground/80 dark:text-slate-200">
-                                  {provider.icon}
-                                </div>
-                                <div>
-                                  <div className="font-medium">
-                                    {provider.name}
-                                  </div>
-                                  <div className="text-muted-foreground text-xs">
-                                    {provider.description}
-                                  </div>
-                                </div>
-                              </div>
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      {errors.provider && (
-                        <p className="mt-1 flex items-center gap-1 text-xs text-red-500">
-                          <AlertTriangle className="h-3 w-3" />
-                          {errors.provider}
-                        </p>
-                      )}
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label
-                        htmlFor="model-select"
-                        className="text-foreground/80 text-sm font-medium"
-                      >
-                        AI Model <span className="text-red-500">*</span>
-                        {discoveredModels.length > 0 && (
-                          <Badge variant="outline" className="ml-2 text-xs">
-                            <Sparkles className="mr-1 h-3 w-3" />
-                            {discoveredModels.length} Live Models
-                          </Badge>
-                        )}
-                      </Label>
-                      <Select
-                        value={newKey.model}
-                        onValueChange={(value) => {
-                          setNewKey({ ...newKey, model: value });
-                          if (errors.model) {
-                            setErrors((prev) => ({ ...prev, model: "" }));
-                          }
-                        }}
-                        disabled={!newKey.provider}
-                      >
-                        <SelectTrigger
-                          id="model-select"
-                          className={`h-12 rounded-xl border-2 transition-all duration-200 ${
-                            !newKey.provider
-                              ? "bg-muted opacity-60/50 cursor-not-allowed"
-                              : errors.model
-                                ? "border-red-300 focus:border-red-500 focus:ring-red-200"
-                                : "border-border focus:border-primary focus:ring-ring/30 dark:focus:border-primary"
-                          }`}
-                        >
-                          <SelectValue
-                            placeholder={
-                              newKey.provider
-                                ? discoveredModels.length > 0
-                                  ? "Choose from discovered models"
-                                  : "Choose a model or scan API first"
-                                : "Select provider first"
-                            }
-                          />
-                        </SelectTrigger>
-                        <SelectContent className="border-border backdrop-blur-xl/95 max-h-96 rounded-xl border-2 bg-white/95 shadow-2xl">
-                          {newKey.provider ? (
-                            <>
-                              {discoveredModels.length > 0 ? (
-                                <>
-                                  <div className="text-muted-foreground sticky top-0 z-10 bg-gradient-to-r from-green-50 to-blue-50 px-2 py-1.5 text-xs font-semibold dark:from-green-900/20 dark:to-blue-900/20">
-                                    <div className="flex items-center gap-2">
-                                      <Sparkles className="h-3 w-3 text-green-600 dark:text-green-400" />
-                                      Available Models (
-                                      {discoveredModels.length})
-                                    </div>
-                                  </div>
-                                  {discoveredModels.map((model) => (
-                                    <SelectItem
-                                      key={model.id}
-                                      value={model.id}
-                                      className="hover:bg-muted my-1 rounded-lg dark:hover:bg-slate-700/50"
-                                    >
-                                      <div className="flex flex-col items-start py-1">
-                                        <div className="flex items-center gap-2">
-                                          <CheckCircle className="h-3 w-3 text-green-600 dark:text-green-400" />
-                                          <span className="font-medium">
-                                            {model.name}
-                                          </span>
-                                          <div className="flex items-center gap-1">
-                                            {model.capabilities.includes(
-                                              "code"
-                                            ) && (
-                                              <span
-                                                className="text-xs"
-                                                title="Code"
-                                              >
-                                                <Code2 className="text-primary h-3 w-3" />
-                                              </span>
-                                            )}
-                                            {model.capabilities.includes(
-                                              "vision"
-                                            ) && (
-                                              <span
-                                                className="text-xs"
-                                                title="Vision"
-                                              >
-                                                <Eye className="h-3 w-3 text-purple-600" />
-                                              </span>
-                                            )}
-                                            {model.capabilities.includes(
-                                              "audio"
-                                            ) && (
-                                              <span
-                                                className="text-xs"
-                                                title="Audio"
-                                              >
-                                                <Volume2 className="h-3 w-3 text-emerald-600" />
-                                              </span>
-                                            )}
-                                            {model.capabilities.includes(
-                                              "reasoning"
-                                            ) && (
-                                              <span
-                                                className="text-xs"
-                                                title="Advanced Reasoning"
-                                              >
-                                                <Brain className="h-3 w-3 text-amber-600" />
-                                              </span>
-                                            )}
-                                          </div>
-                                        </div>
-                                        <span className="text-muted-foreground line-clamp-1 text-xs">
-                                          {model.description}
-                                        </span>
-                                        <span className="mt-0.5 text-xs font-medium text-green-600 dark:text-green-400">
-                                          {model.maxTokens?.toLocaleString()}{" "}
-                                          tokens
-                                        </span>
-                                      </div>
-                                    </SelectItem>
-                                  ))}
-                                </>
-                              ) : (
-                                <div className="text-muted-foreground p-4 text-center text-sm">
-                                  {isScanning ? (
-                                    <div className="flex items-center justify-center gap-2">
-                                      <Skeleton className="h-4 w-4 rounded-full" />
-                                      <span>
-                                        Scanning for available models...
-                                      </span>
-                                    </div>
-                                  ) : scanStatus?.type === "error" ? (
-                                    <div className="flex flex-col items-center gap-2">
-                                      <AlertTriangle className="h-8 w-8 text-red-500" />
-                                      <span className="font-medium">
-                                        Unable to fetch models
-                                      </span>
-                                      <span className="text-xs">
-                                        {scanStatus.message}
-                                      </span>
-                                    </div>
-                                  ) : (
-                                    <div className="flex flex-col items-center gap-2">
-                                      <Sparkles className="text-primary h-8 w-8" />
-                                      <span className="font-medium">
-                                        Enter your API key to discover models
-                                      </span>
-                                      <span className="text-xs">
-                                        Models will appear automatically after
-                                        scanning
-                                      </span>
-                                    </div>
-                                  )}
-                                </div>
-                              )}
-                            </>
-                          ) : (
-                            <div className="text-muted-foreground p-4 text-center text-sm">
-                              <div className="flex flex-col items-center gap-2">
-                                <Key className="text-muted-foreground h-8 w-8" />
-                                <span className="font-medium">
-                                  Select a provider first
-                                </span>
-                              </div>
-                            </div>
-                          )}
-                        </SelectContent>
-                      </Select>
-                      {errors.model && (
-                        <p className="mt-1 flex items-center gap-1 text-xs text-red-500">
-                          <AlertTriangle className="h-3 w-3" />
-                          {errors.model}
-                        </p>
-                      )}
-                      {newKey.provider &&
-                        discoveredModels.length === 0 &&
-                        !isScanning &&
-                        !scanStatus && (
-                          <p className="text-primary dark:text-primary mt-1 flex items-center gap-1 text-xs">
-                            <Sparkles className="h-3 w-3" />
-                            Tip: Models will be discovered automatically from
-                            the API
-                          </p>
-                        )}
+                          {provider?.name}
+                        </Badge>
+                      </div>
+                      <div className="flex items-center gap-2 text-xs text-slate-500">
+                        <span className="font-mono">{maskKey(key.key)}</span>
+                        {model && <span>• {model.name}</span>}
+                      </div>
                     </div>
                   </div>
-
-                  <div className="space-y-2">
-                    <Label
-                      htmlFor="key-name"
-                      className="text-foreground/80 text-sm font-medium"
-                    >
-                      Display Name <span className="text-red-500">*</span>
-                    </Label>
-                    <Input
-                      id="key-name"
-                      placeholder="e.g., My Production OpenAI Key"
-                      value={newKey.name}
-                      onChange={(e) => {
-                        setNewKey({ ...newKey, name: e.target.value });
-                        if (errors.name) {
-                          setErrors((prev) => ({ ...prev, name: "" }));
-                        }
-                      }}
-                      className={`h-12 rounded-xl border-2 transition-all duration-200 ${
-                        errors.name
-                          ? "border-red-300 focus:border-red-500 focus:ring-red-200"
-                          : "border-border focus:border-primary focus:ring-ring/30 dark:focus:border-primary"
-                      }`}
-                      aria-describedby={errors.name ? "name-error" : undefined}
-                    />
-                    {errors.name && (
-                      <p
-                        id="name-error"
-                        className="mt-1 flex items-center gap-1 text-xs text-red-500"
-                      >
-                        <AlertTriangle className="h-3 w-3" />
-                        {errors.name}
-                      </p>
-                    )}
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label
-                      htmlFor="api-key"
-                      className="text-foreground/80 text-sm font-medium"
-                    >
-                      API Key <span className="text-red-500">*</span>
-                    </Label>
-                    <div className="relative">
-                      <Input
-                        id="api-key"
-                        type="password"
-                        placeholder={getKeyPlaceholder(newKey.provider)}
-                        value={newKey.key}
-                        onChange={(e) => {
-                          setNewKey({ ...newKey, key: e.target.value });
-                          setDiscoveredModels([]);
-                          setScanStatus(null);
-                          if (errors.key) {
-                            setErrors((prev) => ({ ...prev, key: "" }));
-                          }
-                        }}
-                        className={`h-12 rounded-xl border-2 pr-12 font-mono transition-all duration-200 ${
-                          errors.key
-                            ? "border-red-300 focus:border-red-500 focus:ring-red-200"
-                            : "border-border focus:border-primary focus:ring-ring/30 dark:focus:border-primary"
-                        }`}
-                        aria-describedby={errors.key ? "key-error" : undefined}
-                      />
-                      {isScanning && (
-                        <div className="absolute top-1/2 right-3 -translate-y-1/2">
-                          <Skeleton className="h-5 w-5 rounded-full" />
-                        </div>
-                      )}
-                      {scanStatus?.type === "success" && (
-                        <div className="absolute top-1/2 right-3 -translate-y-1/2">
-                          <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400" />
-                        </div>
-                      )}
-                      {scanStatus?.type === "error" && (
-                        <div className="absolute top-1/2 right-3 -translate-y-1/2">
-                          <AlertTriangle className="h-5 w-5 text-red-600 dark:text-red-400" />
-                        </div>
-                      )}
-                    </div>
-                    {errors.key && (
-                      <p
-                        id="key-error"
-                        className="mt-1 flex items-center gap-1 text-xs text-red-500"
-                      >
-                        <AlertTriangle className="h-3 w-3" />
-                        {errors.key}
-                      </p>
-                    )}
-                    {scanStatus && (
-                      <Alert
-                        className={`mt-2 ${
-                          scanStatus.type === "success"
-                            ? "border-green-200 bg-green-50 dark:bg-green-950/20"
-                            : scanStatus.type === "error"
-                              ? "border-red-200 bg-red-50 dark:bg-red-950/20"
-                              : "border-border bg-muted dark:bg-blue-950/20"
-                        }`}
-                      >
-                        {scanStatus.type === "success" ? (
-                          <CheckCircle className="h-4 w-4 text-green-600" />
-                        ) : scanStatus.type === "error" ? (
-                          <AlertTriangle className="h-4 w-4 text-red-600" />
-                        ) : (
-                          <Skeleton className="h-4 w-4 rounded-full" />
-                        )}
-                        <AlertDescription
-                          className={
-                            scanStatus.type === "success"
-                              ? "text-green-700 dark:text-green-300"
-                              : scanStatus.type === "error"
-                                ? "text-red-700 dark:text-red-300"
-                                : "text-teal-600 dark:text-teal-300"
-                          }
-                        >
-                          {scanStatus.message}
-                          {scanStatus.type === "success" &&
-                            " You can now save this configuration."}
-                        </AlertDescription>
-                      </Alert>
-                    )}
-                  </div>
-                  {newKey.provider && (
-                    <Card variant="glass" className="bg-muted/50/30">
-                      <CardContent className="p-4">
-                        <div className="mb-3 flex items-center gap-2">
-                          <Shield className="text-primary dark:text-primary h-4 w-4" />
-                          <h5 className="text-foreground text-sm font-semibold dark:text-slate-200">
-                            Configuration Preview
-                          </h5>
-                        </div>
-                        <div className="grid grid-cols-1 gap-4 text-sm md:grid-cols-2">
-                          <div className="space-y-2">
-                            <div className="flex items-center gap-2">
-                              <span className="text-muted-foreground">
-                                Provider:
-                              </span>
-                              <Badge variant="outline" className="text-xs">
-                                {
-                                  aiProviders.find(
-                                    (p) => p.id === newKey.provider
-                                  )?.name
-                                }
-                              </Badge>
-                            </div>
-                            {newKey.model && (
-                              <div className="flex items-center gap-2">
-                                <span className="text-muted-foreground">
-                                  Model:
-                                </span>
-                                <Badge variant="secondary" className="text-xs">
-                                  {
-                                    aiProviders
-                                      .find((p) => p.id === newKey.provider)
-                                      ?.models.find(
-                                        (m) => m.id === newKey.model
-                                      )?.name
-                                  }
-                                </Badge>
-                              </div>
-                            )}
-                          </div>
-                          {newKey.model && (
-                            <div className="space-y-2">
-                              <div className="flex items-center gap-2">
-                                <span className="text-muted-foreground">
-                                  Capabilities:
-                                </span>
-                                <div className="flex items-center gap-1">
-                                  {aiProviders
-                                    .find((p) => p.id === newKey.provider)
-                                    ?.models.find((m) => m.id === newKey.model)
-                                    ?.capabilities.map((cap) => (
-                                      <Badge
-                                        key={cap}
-                                        variant="outline"
-                                        className="text-xs"
-                                      >
-                                        {cap}
-                                      </Badge>
-                                    ))}
-                                </div>
-                              </div>
-                              <div className="flex items-center gap-2">
-                                <span className="text-muted-foreground">
-                                  Max Context:
-                                </span>
-                                <span className="text-foreground text-xs font-medium dark:text-slate-200">
-                                  {aiProviders
-                                    .find((p) => p.id === newKey.provider)
-                                    ?.models.find((m) => m.id === newKey.model)
-                                    ?.maxTokens?.toLocaleString() ||
-                                    "Unknown"}{" "}
-                                  tokens
-                                </span>
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      </CardContent>
-                    </Card>
-                  )}
-
-                  <div className="flex flex-col gap-3 pt-2 sm:flex-row">
+                  <div className="flex items-center gap-2">
                     <Button
-                      onClick={addAPIKey}
-                      disabled={
-                        isSubmitting ||
-                        isScanning ||
-                        scanStatus?.type !== "success"
-                      }
-                      variant="default"
-                      size="lg"
-                      className="flex-1 sm:flex-none"
-                      title={
-                        isScanning
-                          ? "Please wait for API scan to complete"
-                          : scanStatus?.type !== "success"
-                            ? "Please scan your API key first"
-                            : "Add this API key"
-                      }
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => removeAPIKey(key.id)}
+                      className="h-8 w-8 text-slate-500 hover:bg-red-900/20 hover:text-red-400"
                     >
-                      {isSubmitting ? (
-                        <>
-                          <Skeleton className="mr-2 h-4 w-4 rounded-full" />
-                          <Skeleton className="h-3 w-20" />
-                        </>
-                      ) : (
-                        <>
-                          <Plus className="mr-2 h-4 w-4" />
-                          Add API Key
-                        </>
-                      )}
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="lg"
-                      onClick={() => {
-                        setIsAdding(false);
-                        setNewKey({
-                          provider: "",
-                          model: "",
-                          key: "",
-                          name: "",
-                        });
-                        setErrors({});
-                        setDiscoveredModels([]);
-                        setScanStatus(null);
-                      }}
-                      disabled={isSubmitting}
-                      className="flex-1 sm:flex-none"
-                    >
-                      Cancel
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* AI-Powered Features Status */}
-      <Card variant="modern">
-        <CardHeader className="pb-4">
-          <div className="flex items-center gap-3">
-            <div className="rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 p-2">
-              <Zap className="h-5 w-5 text-white" />
-            </div>
-            <div>
-              <CardTitle className="text-foreground text-xl font-bold">
-                Available AI Features
-              </CardTitle>
-              <CardDescription className="text-muted-foreground">
-                Unlock powerful analysis capabilities with your API keys
-              </CardDescription>
-            </div>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-            <Card
-              variant="glass"
-              className={`group transition-all duration-300 ${
-                apiKeys.length > 0
-                  ? "bg-gradient-to-br from-purple-50/50 to-blue-50/50 ring-2 ring-purple-200/50 dark:from-purple-900/20 dark:to-blue-900/20 dark:ring-purple-800/50"
-                  : "bg-gradient-to-br from-slate-50/50 to-slate-100/50 dark:from-slate-800/20 dark:to-slate-900/20"
-              }`}
-            >
-              <CardContent className="p-4">
-                <div className="flex items-start gap-3">
-                  <div
-                    className={`rounded-xl p-2.5 transition-all duration-200 ${
-                      apiKeys.length > 0
-                        ? "bg-gradient-to-br from-purple-500 to-blue-600 group-hover:scale-110"
-                        : "bg-slate-400"
-                    }`}
-                  >
-                    <Bot className="h-5 w-5 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="mb-1 flex items-center gap-2">
-                      <h4 className="text-foreground font-semibold">
-                        AI Fix Suggestions
-                      </h4>
-                      {apiKeys.length > 0 ? (
-                        <CheckCircle className="text-primary h-4 w-4" />
-                      ) : (
-                        <Clock className="text-muted-foreground h-4 w-4" />
-                      )}
-                    </div>
-                    <p className="text-muted-foreground mb-2 text-sm">
-                      Intelligent code fixes and security recommendations
-                    </p>
-                    <div className="flex items-center gap-1">
-                      <div
-                        className={`h-2 w-2 rounded-full ${apiKeys.length > 0 ? "animate-pulse bg-green-500" : "bg-slate-400"}`}
-                      />
-                      <span
-                        className={`text-xs font-medium ${
-                          apiKeys.length > 0
-                            ? "text-green-700 dark:text-green-300"
-                            : "text-muted-foreground"
-                        }`}
-                      >
-                        {apiKeys.length > 0 ? "Ready" : "Requires API Key"}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card
-              variant="glass"
-              className="group ring-border dark:ring-border bg-gradient-to-br from-blue-50/50 to-indigo-50/50 ring-2 transition-all duration-300 dark:from-blue-900/20 dark:to-indigo-900/20"
-            >
-              <CardContent className="p-4">
-                <div className="flex items-start gap-3">
-                  <div className="rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 p-2.5 transition-transform duration-200 group-hover:scale-110">
-                    <Shield className="h-5 w-5 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="mb-1 flex items-center gap-2">
-                      <h4 className="text-foreground font-semibold">
-                        Secure Code Search
-                      </h4>
-                      <CheckCircle className="text-primary h-4 w-4" />
-                    </div>
-                    <p className="text-muted-foreground mb-2 text-sm">
-                      Advanced pattern matching and vulnerability detection
-                    </p>
-                    <div className="flex items-center gap-1">
-                      <div className="h-2 w-2 animate-pulse rounded-full bg-green-500" />
-                      <span className="text-xs font-medium text-green-700 dark:text-green-300">
-                        Always Available
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card
-              variant="glass"
-              className="group bg-gradient-to-br from-emerald-50/50 to-teal-50/50 ring-2 ring-emerald-200/50 transition-all duration-300 dark:from-emerald-900/20 dark:to-teal-900/20 dark:ring-emerald-800/50"
-            >
-              <CardContent className="p-4">
-                <div className="flex items-start gap-3">
-                  <div className="rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 p-2.5 transition-transform duration-200 group-hover:scale-110">
-                    <Star className="h-5 w-5 text-white" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="mb-1 flex items-center gap-2">
-                      <h4 className="text-foreground font-semibold">
-                        Code Provenance
-                      </h4>
-                      <CheckCircle className="text-primary h-4 w-4" />
-                    </div>
-                    <p className="text-muted-foreground mb-2 text-sm">
-                      Track code origins and identify potential supply chain
-                      risks
-                    </p>
-                    <div className="flex items-center gap-1">
-                      <div className="h-2 w-2 animate-pulse rounded-full bg-green-500" />
-                      <span className="text-xs font-medium text-green-700 dark:text-green-300">
-                        Always Available
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {apiKeys.length === 0 && (
-            <Card
-              variant="glass"
-              className="mt-6 border border-amber-200/50 bg-gradient-to-r from-amber-50/50 to-orange-50/50 dark:border-amber-800/50 dark:from-amber-900/20 dark:to-orange-900/20"
-            >
-              <CardContent className="p-4">
-                <div className="flex items-start gap-3">
-                  <div className="rounded-xl bg-amber-500 p-2">
-                    <AlertTriangle className="h-5 w-5 text-white" />
-                  </div>
-                  <div>
-                    <h4 className="mb-1 font-semibold text-amber-900 dark:text-amber-200">
-                      Unlock AI-Powered Analysis
-                    </h4>
-                    <p className="mb-3 text-sm text-amber-800 dark:text-amber-300">
-                      Add your first API key to enable intelligent fix
-                      suggestions, contextual code analysis, and AI-powered chat
-                      assistance. Your keys are stored securely in your browser
-                      and never shared with our servers.
-                    </p>
-                    <Button
-                      onClick={() => setIsAdding(true)}
-                      variant="default"
-                      size="sm"
-                      className="bg-amber-600 text-white hover:bg-amber-700"
-                    >
-                      <Plus className="mr-2 h-4 w-4" />
-                      Add Your First API Key
+                      <Trash2 className="h-4 w-4" />
                     </Button>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
-          )}
-        </CardContent>
-      </Card>
+              );
+            })}
+          </div>
+        )}
+      </div>
 
-      {/* Security Notice */}
-      <Card
-        variant="glass"
-        className="bg-gradient-to-r from-slate-50/50 to-slate-100/50 dark:from-slate-800/20 dark:to-slate-900/20"
-      >
-        <CardContent className="p-6">
-          <div className="flex items-start gap-4">
-            <div className="bg-muted rounded-2xl p-3 dark:bg-slate-700">
-              <Shield className="text-muted-foreground h-6 w-6" />
+      {/* Available AI Features */}
+      <div className="rounded-xl border border-blue-900/30 bg-[#0B1120] p-6 shadow-xl">
+        <div className="mb-6 flex items-center gap-3">
+          <div className="rounded-lg bg-violet-500/10 p-2">
+            <Zap className="h-5 w-5 text-violet-400" />
+          </div>
+          <div>
+            <h2 className="font-display text-lg font-bold text-slate-100">
+              AVAILABLE AI FEATURES
+            </h2>
+            <p className="text-xs text-slate-500">
+              Unlock powerful analytic capabilities with your API keys
+            </p>
+          </div>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-3">
+          <div className="group rounded-lg border border-slate-800 bg-[#0F1629] p-4 transition-all hover:border-blue-700/50 hover:bg-[#161F36]">
+            <div className="mb-3 flex items-start justify-between">
+              <div className="rounded-lg bg-blue-500/10 p-2 text-blue-400 group-hover:bg-blue-500/20 group-hover:text-blue-300">
+                <Bot className="h-5 w-5" />
+              </div>
+              <div className="rounded-full bg-slate-800 p-1 text-slate-500">
+                <AlertTriangle className="h-3 w-3" />
+              </div>
             </div>
-            <div>
-              <h4 className="text-foreground mb-2 font-semibold">
-                Privacy & Security Guarantee
-              </h4>
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                Your API keys are encrypted and stored locally in your browser.
-                They are never transmitted to our servers and are only used to
-                communicate directly with your chosen AI providers. You maintain
-                complete control over your credentials at all times.
-              </p>
-              <div className="text-muted-foreground mt-3 flex items-center gap-4 text-xs">
-                <div className="flex items-center gap-1">
-                  <CheckCircle className="text-primary h-3 w-3" />
-                  <span>Local Storage Only</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <CheckCircle className="text-primary h-3 w-3" />
-                  <span>End-to-End Encryption</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <CheckCircle className="text-primary h-3 w-3" />
-                  <span>Zero Server Access</span>
-                </div>
+            <h3 className="mb-1 font-semibold text-slate-200">
+              AI Fix Suggestions
+            </h3>
+            <p className="mb-3 text-xs text-slate-500">
+              Intelligent code fixes and security recommendations
+            </p>
+            <div className="flex items-center gap-1.5 text-[10px] text-slate-500">
+              <div className="h-1.5 w-1.5 rounded-full bg-amber-500" />
+              Requires API Key
+            </div>
+          </div>
+
+          <div className="group rounded-lg border border-blue-900/30 bg-blue-900/5 p-4 ring-1 ring-blue-900/20">
+            <div className="mb-3 flex items-start justify-between">
+              <div className="rounded-lg bg-blue-500/10 p-2 text-blue-400">
+                <Shield className="h-5 w-5" />
+              </div>
+              <div className="rounded-full bg-green-900/20 p-1 text-green-400">
+                <CheckCircle className="h-3 w-3" />
+              </div>
+            </div>
+            <h3 className="mb-1 font-semibold text-blue-100">
+              Secure Code Search
+            </h3>
+            <p className="mb-3 text-xs text-blue-300/60">
+              Advanced pattern matching and vulnerability detection
+            </p>
+            <div className="flex items-center gap-1.5 text-[10px] text-green-400">
+              <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-green-500" />
+              Always Available
+            </div>
+          </div>
+
+          <div className="group rounded-lg border border-emerald-900/30 bg-emerald-900/5 p-4 ring-1 ring-emerald-900/20">
+            <div className="mb-3 flex items-start justify-between">
+              <div className="rounded-lg bg-emerald-500/10 p-2 text-emerald-400">
+                <Star className="h-5 w-5" />
+              </div>
+              <div className="rounded-full bg-green-900/20 p-1 text-green-400">
+                <CheckCircle className="h-3 w-3" />
+              </div>
+            </div>
+            <h3 className="mb-1 font-semibold text-emerald-100">
+              Code Provenance
+            </h3>
+            <p className="mb-3 text-xs text-emerald-300/60">
+              Track code origins and identify potential supply chain risks
+            </p>
+            <div className="flex items-center gap-1.5 text-[10px] text-green-400">
+              <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-green-500" />
+              Always Available
+            </div>
+          </div>
+        </div>
+
+        {apiKeys.length === 0 && (
+          <div className="mt-6 rounded-lg border border-amber-900/30 bg-amber-900/10 p-4">
+            <div className="flex gap-3">
+              <AlertTriangle className="h-5 w-5 shrink-0 text-amber-500" />
+              <div>
+                <h4 className="text-sm font-semibold text-amber-200">
+                  Unlock AI-Powered Analysis
+                </h4>
+                <p className="mt-1 text-xs text-amber-200/70">
+                  Add your first API key to enable intelligent fix suggestions,
+                  contextual code analysis, and AI-powered chat assistance. Your
+                  keys are stored securely in your browser and never shared with
+                  our servers.
+                </p>
+                <Button
+                  onClick={() => setIsAdding(true)}
+                  size="sm"
+                  className="mt-3 h-8 border-none bg-amber-600 text-xs text-white hover:bg-amber-700"
+                >
+                  <Plus className="mr-1.5 h-3.5 w-3.5" />
+                  ADD YOUR FIRST API KEY
+                </Button>
               </div>
             </div>
           </div>
-        </CardContent>
-      </Card>
+        )}
+      </div>
+
+      {/* Privacy Footer */}
+      <div className="rounded-lg border border-slate-800 bg-[#0B1120] p-4 text-slate-400">
+        <div className="flex items-start gap-4">
+          <div className="rounded-lg bg-slate-800 p-2">
+            <Shield className="h-5 w-5 text-slate-400" />
+          </div>
+          <div>
+            <h4 className="text-sm font-semibold text-slate-200">
+              Privacy & Security Guarantee
+            </h4>
+            <p className="mt-1 text-xs leading-relaxed text-slate-500">
+              Your API keys are encrypted and stored locally in your browser.
+              They are never transmitted to our servers and are only used to
+              communicate directly with your chosen AI providers. You maintain
+              complete control over your credentials at all times.
+            </p>
+            <div className="mt-3 flex gap-4 text-[10px] text-slate-500">
+              <span className="flex items-center gap-1">
+                <div className="h-1 w-1 rounded-full bg-slate-600" /> Local
+                Storage Only
+              </span>
+              <span className="flex items-center gap-1">
+                <div className="h-1 w-1 rounded-full bg-slate-600" /> End-to-End
+                Encryption
+              </span>
+              <span className="flex items-center gap-1">
+                <div className="h-1 w-1 rounded-full bg-slate-600" /> Zero
+                Server Access
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

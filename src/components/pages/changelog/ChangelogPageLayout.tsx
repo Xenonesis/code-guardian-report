@@ -1,22 +1,27 @@
 import React from "react";
 import { PageLayout } from "@/components/layout/PageLayout";
-import { Shield, Scale, Calendar, Globe } from "lucide-react";
+import { History, Calendar, GitCommit, Tag } from "lucide-react";
 import { APP_VERSION_WITH_PREFIX } from "@/utils/version";
 
-interface LegalPageLayoutProps {
+interface ChangelogPageLayoutProps {
   title: string;
   subtitle: string;
-  lastUpdated: string;
+  lastUpdated?: string;
   children: React.ReactNode;
   icon?: React.ReactNode;
+  stats?: {
+    releases?: number;
+    commits?: number;
+  };
 }
 
-export const LegalPageLayout: React.FC<LegalPageLayoutProps> = ({
+export const ChangelogPageLayout: React.FC<ChangelogPageLayoutProps> = ({
   title,
   subtitle,
   lastUpdated,
   children,
-  icon = <Scale className="h-8 w-8" />,
+  icon = <History className="h-8 w-8" />,
+  stats,
 }) => {
   return (
     <PageLayout>
@@ -43,45 +48,45 @@ export const LegalPageLayout: React.FC<LegalPageLayoutProps> = ({
           </div>
         </div>
 
-        {/* Legal Info Bar */}
+        {/* Info Bar */}
         <div className="border-border/40 bg-background/80 sticky top-0 z-20 border-b backdrop-blur-sm dark:border-white/10 dark:bg-black/40">
           <div className="container mx-auto px-4 py-3">
             <div className="text-muted-foreground flex flex-col items-center justify-center gap-4 font-mono text-xs sm:flex-row dark:text-slate-400">
-              <div className="flex items-center gap-2">
-                <Calendar className="text-primary h-4 w-4" />
-                <span>LAST_UPDATED: {lastUpdated}</span>
-              </div>
+              {lastUpdated && (
+                <div className="flex items-center gap-2">
+                  <Calendar className="text-primary h-4 w-4" />
+                  <span>LAST_UPDATED: {lastUpdated}</span>
+                </div>
+              )}
               <div className="text-border hidden sm:block dark:text-white/10">
                 |
               </div>
               <div className="flex items-center gap-2">
-                <Shield className="text-primary h-4 w-4" />
+                <Tag className="text-primary h-4 w-4" />
                 <span>VERSION: {APP_VERSION_WITH_PREFIX}</span>
               </div>
-              <div className="text-border hidden sm:block dark:text-white/10">
-                |
-              </div>
-              <div className="flex items-center gap-2">
-                <Globe className="text-primary h-4 w-4" />
-                <span>SCOPE: GLOBAL</span>
-              </div>
+              {stats && (
+                <>
+                  <div className="text-border hidden sm:block dark:text-white/10">
+                    |
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <GitCommit className="text-primary h-4 w-4" />
+                    <span>COMMITS: {stats.commits || 0}</span>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>
 
-        {/* Legal Content */}
+        {/* Content */}
         <div className="container mx-auto px-4 py-12 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-4xl">
-            <div className="border-border bg-card relative overflow-hidden rounded-lg border p-8 shadow-2xl backdrop-blur-sm sm:p-12 dark:border-white/10 dark:bg-black/40">
-              <div className="prose prose-lg prose-headings:font-display prose-headings:tracking-wide prose-p:text-muted-foreground prose-li:text-muted-foreground prose-strong:text-foreground prose-a:text-primary hover:prose-a:text-primary/80 dark:prose-invert dark:prose-p:text-slate-300 dark:prose-li:text-slate-300 dark:prose-strong:text-white max-w-none">
-                {children}
-              </div>
-            </div>
-          </div>
+          <div className="mx-auto max-w-4xl">{children}</div>
         </div>
       </div>
     </PageLayout>
   );
 };
 
-export default LegalPageLayout;
+export default ChangelogPageLayout;

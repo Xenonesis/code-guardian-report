@@ -6,10 +6,15 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { useGitHubCopilot } from "@/hooks/useGitHubCopilot";
 import { useAuth } from "@/lib/auth-context";
-import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Alert } from "@/components/ui/alert";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   CheckCircle,
   XCircle,
@@ -20,6 +25,8 @@ import {
   Brain,
   Eye,
   AlertCircle,
+  Github,
+  Activity,
 } from "lucide-react";
 import { toast } from "sonner";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -120,14 +127,12 @@ export function GitHubCopilotManager() {
   // Memoize status icon to avoid re-renders
   const statusIcon = useMemo(() => {
     if (verificationStatus === "verifying") {
-      return <Skeleton className="h-5 w-5 rounded-full" />;
+      return <Skeleton className="h-5 w-5 rounded-full bg-blue-900/20" />;
     }
     if (authState.isAuthenticated) {
-      return (
-        <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400" />
-      );
+      return <CheckCircle className="h-5 w-5 text-green-400" />;
     }
-    return <XCircle className="text-muted-foreground h-5 w-5" />;
+    return <XCircle className="h-5 w-5 text-slate-500" />;
   }, [verificationStatus, authState.isAuthenticated]);
 
   // Memoize status text
@@ -140,63 +145,75 @@ export function GitHubCopilotManager() {
   // Not signed in with GitHub
   if (!isGitHubUser) {
     return (
-      <Card className="border-2 bg-gradient-to-br from-slate-50 to-slate-100 p-6 transition-all duration-300 hover:shadow-lg dark:from-slate-900 dark:to-slate-800">
-        <div className="flex flex-col items-center space-y-4 text-center">
-          <div className="animate-pulse rounded-full bg-teal-100 p-4 dark:bg-teal-900/30">
-            <Sparkles className="text-primary dark:text-primary h-8 w-8" />
+      <div className="rounded-xl border border-slate-800 bg-[#0B1120] p-6 text-slate-200">
+        <div className="flex flex-col items-center justify-center space-y-4 py-8 text-center">
+          <div className="relative">
+            <div className="absolute inset-0 animate-pulse rounded-full bg-blue-500/20 blur-xl"></div>
+            <div className="relative rounded-full bg-slate-800 p-4 ring-1 ring-slate-700">
+              <Github className="h-8 w-8 text-white" />
+            </div>
           </div>
-          <div>
-            <h3 className="mb-2 text-xl font-semibold">
-              GitHub Copilot AI Integration
+          <div className="max-w-md space-y-2">
+            <h3 className="font-display text-xl font-bold text-white">
+              GitHub Copilot Integration
             </h3>
-            <p className="text-muted-foreground mb-4 text-sm">
-              Sign in with GitHub to unlock AI-powered code analysis with GitHub
-              Copilot models
+            <p className="text-sm leading-relaxed text-slate-400">
+              Sign in with GitHub to unlock AI-powered code analysis,
+              intelligent suggestions, and automated fixes using GitHub Copilot
+              models.
             </p>
           </div>
           <Button
             onClick={handleSignIn}
-            className="bg-primary hover:bg-primary/90 transform transition-all duration-300"
+            className="mt-4 border-none bg-[#2da44e] text-white shadow-lg shadow-green-900/20 transition-all duration-300 hover:scale-105 hover:bg-[#2c974b]"
           >
-            <Sparkles className="mr-2 h-4 w-4" />
-            Sign in with GitHub
+            <Github className="mr-2 h-4 w-4" />
+            Connect GitHub Account
           </Button>
         </div>
-      </Card>
+      </div>
     );
   }
 
   return (
     <div className="space-y-6">
       {/* Authentication Status */}
-      <Card className="p-6 transition-all duration-300 hover:shadow-md">
-        <div className="mb-4 flex items-center justify-between">
-          <div className="flex items-center space-x-3">
+      <div className="rounded-xl border border-blue-900/30 bg-[#0B1120] p-6 shadow-xl transition-all duration-300 hover:shadow-blue-900/10">
+        <div className="mb-6 flex items-center justify-between">
+          <div className="flex items-center gap-3">
             <div
-              className={`rounded-full p-2 transition-all duration-300 ${
+              className={`rounded-lg p-2 transition-all duration-300 ${
                 authState.isAuthenticated
-                  ? "bg-green-100 dark:bg-green-900/30"
-                  : "bg-muted dark:bg-foreground"
+                  ? "bg-green-500/10 ring-1 ring-green-500/20"
+                  : "bg-slate-800"
               }`}
             >
               {statusIcon}
             </div>
             <div>
-              <h3 className="text-lg font-semibold">GitHub Copilot Status</h3>
-              <p className="text-muted-foreground text-sm">{statusText}</p>
-              {authState.isAuthenticated && (
-                <Badge
-                  variant={authState.hasCopilotAccess ? "default" : "secondary"}
-                  className="mt-1 transition-all duration-300"
-                >
-                  {authState.hasCopilotAccess
-                    ? "Copilot Active"
-                    : "GitHub Auth Only"}
-                </Badge>
-              )}
+              <h3 className="font-display text-lg font-bold text-slate-100">
+                GITHUB COPILOT STATUS
+              </h3>
+              <div className="flex items-center gap-2 text-sm text-slate-400">
+                <span>{statusText}</span>
+                {authState.isAuthenticated && (
+                  <Badge
+                    variant={
+                      authState.hasCopilotAccess ? "default" : "secondary"
+                    }
+                    className={`h-5 px-2 py-0 text-[10px] ${
+                      authState.hasCopilotAccess
+                        ? "border-blue-500/30 bg-blue-500/20 text-blue-300 hover:bg-blue-500/30"
+                        : "border-slate-700 bg-slate-800 text-slate-400"
+                    }`}
+                  >
+                    {authState.hasCopilotAccess ? "Active" : "Auth Only"}
+                  </Badge>
+                )}
+              </div>
             </div>
           </div>
-          <div className="flex space-x-2">
+          <div className="flex items-center gap-2">
             {authState.isAuthenticated && (
               <>
                 <Button
@@ -204,23 +221,23 @@ export function GitHubCopilotManager() {
                   size="sm"
                   onClick={handleTestConnection}
                   disabled={isTesting || verificationStatus === "verifying"}
-                  className="transition-all duration-300"
+                  className="h-8 border-slate-700 bg-slate-800 text-slate-300 transition-all duration-300 hover:bg-slate-700 hover:text-white"
                 >
                   {isTesting || verificationStatus === "verifying" ? (
-                    <Skeleton className="h-4 w-4 rounded-full" />
+                    <Skeleton className="h-3 w-3 rounded-full bg-slate-600" />
                   ) : (
-                    <RefreshCw className="h-4 w-4" />
+                    <RefreshCw className="mr-1.5 h-3.5 w-3.5" />
                   )}
-                  <span className="ml-2">Test</span>
+                  Test
                 </Button>
                 <Button
-                  variant="outline"
+                  variant="ghost"
                   size="sm"
                   onClick={handleDisconnect}
-                  className="transition-all duration-300"
+                  className="h-8 text-slate-400 transition-all duration-300 hover:bg-red-900/10 hover:text-red-400"
                 >
-                  <LogOut className="h-4 w-4" />
-                  <span className="ml-2">Disconnect</span>
+                  <LogOut className="mr-1.5 h-3.5 w-3.5" />
+                  Disconnect
                 </Button>
               </>
             )}
@@ -229,139 +246,169 @@ export function GitHubCopilotManager() {
 
         {/* Status Alerts */}
         {authState.isAuthenticated && verificationStatus === "success" && (
-          <Alert className="animate-in fade-in border-green-200 bg-green-50 duration-500 dark:border-green-800 dark:bg-green-900/20">
-            <CheckCircle className="h-4 w-4 text-green-600 dark:text-green-400" />
-            <p className="ml-2 text-sm text-green-800 dark:text-green-200">
-              GitHub Copilot subscription verified. All features available.
-            </p>
-          </Alert>
+          <div className="flex items-start gap-3 rounded-lg border border-green-900/30 bg-green-900/10 p-4">
+            <CheckCircle className="mt-0.5 h-5 w-5 text-green-400" />
+            <div>
+              <h4 className="text-sm font-medium text-green-300">
+                Subscription Active
+              </h4>
+              <p className="mt-1 text-xs text-green-400/70">
+                GitHub Copilot subscription verified. You have full access to AI
+                analysis features.
+              </p>
+            </div>
+          </div>
         )}
 
         {authState.isAuthenticated &&
           verificationStatus === "verifying" &&
           !isLoading && (
-            <Alert className="animate-in fade-in border-border bg-muted dark:border-border duration-500 dark:bg-teal-900/20">
-              <Skeleton className="h-4 w-4 rounded-full" />
-              <div className="ml-2 flex flex-col gap-1">
-                <Skeleton className="h-3 w-40" />
-                <p className="text-sm text-blue-800 dark:text-blue-200">
+            <div className="flex items-center gap-3 rounded-lg border border-blue-900/30 bg-blue-900/10 p-4">
+              <Skeleton className="h-5 w-5 rounded-full bg-blue-500/20" />
+              <div className="space-y-1">
+                <Skeleton className="h-4 w-32 bg-blue-500/20" />
+                <p className="text-xs text-blue-300">
                   Verifying Copilot subscription...
                 </p>
               </div>
-            </Alert>
+            </div>
           )}
 
         {error && verificationStatus === "failed" && (
-          <Alert className="animate-in fade-in border-red-200 bg-red-50 duration-500 dark:border-red-800 dark:bg-red-900/20">
-            <AlertCircle className="h-4 w-4 text-red-600 dark:text-red-400" />
-            <p className="ml-2 text-sm text-red-800 dark:text-red-200">
-              {error}
-            </p>
-          </Alert>
+          <div className="flex items-start gap-3 rounded-lg border border-red-900/30 bg-red-900/10 p-4">
+            <AlertCircle className="mt-0.5 h-5 w-5 text-red-400" />
+            <div>
+              <h4 className="text-sm font-medium text-red-300">
+                Connection Failed
+              </h4>
+              <p className="mt-1 text-xs text-red-400/70">{error}</p>
+            </div>
+          </div>
         )}
-      </Card>
+      </div>
 
       {/* Model Selection */}
       {authState.isAuthenticated &&
         modelSelection.availableModels.length > 0 && (
-          <Card className="p-6 transition-all duration-300 hover:shadow-md">
-            <div className="mb-4">
-              <h3 className="mb-2 text-lg font-semibold">Select AI Model</h3>
-              <p className="text-muted-foreground text-sm">
-                Choose the GitHub Copilot model for your analysis tasks
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-              {modelSelection.availableModels.map((model) => {
-                const isSelected = model.id === modelSelection.selectedModelId;
-                return (
-                  <div
-                    key={model.id}
-                    className={`relative transform cursor-pointer rounded-lg border-2 p-4 transition-all duration-300 hover:scale-102 ${
-                      isSelected
-                        ? "border-primary bg-muted shadow-md dark:bg-blue-950/30"
-                        : "border-border dark:border-border hover:border-teal-300 hover:shadow-sm dark:hover:border-blue-700"
-                    }`}
-                    onClick={() => handleModelSelect(model.id)}
-                    role="button"
-                    tabIndex={0}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        handleModelSelect(model.id);
-                      }
-                    }}
-                  >
-                    {isSelected && (
-                      <div className="animate-in zoom-in absolute top-2 right-2 duration-300">
-                        <CheckCircle className="text-primary dark:text-primary h-5 w-5" />
-                      </div>
-                    )}
-
-                    <div className="mb-2">
-                      <h4 className="text-base font-semibold">{model.name}</h4>
-                      <p className="text-muted-foreground text-xs">
-                        {model.version}
-                      </p>
-                    </div>
-
-                    <p className="text-muted-foreground mb-3 text-sm">
-                      {model.description}
-                    </p>
-
-                    <div className="mb-2 flex flex-wrap gap-2">
-                      {Array.isArray(model.capabilities) &&
-                        model.capabilities.map((capability) => (
-                          <Badge
-                            key={capability}
-                            variant="secondary"
-                            className="flex items-center space-x-1 text-xs transition-all duration-200"
-                          >
-                            {getCapabilityIcon(capability)}
-                            <span>{capability}</span>
-                          </Badge>
-                        ))}
-                    </div>
-
-                    <div className="text-muted-foreground border-border dark:border-border mt-2 flex items-center justify-between border-t pt-2 text-xs">
-                      <span>
-                        Max tokens: {model.maxTokens.toLocaleString()}
-                      </span>
-                      <span>
-                        Context: {(model.contextWindow / 1000).toFixed(0)}k
-                      </span>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            {selectedModel && (
-              <div className="animate-in slide-in-from-bottom border-border dark:border-border mt-4 rounded-lg border bg-gradient-to-r from-blue-50 to-purple-50 p-4 duration-500 dark:from-blue-950/20 dark:to-purple-950/20">
-                <div className="flex items-center space-x-2">
-                  <Sparkles className="text-primary dark:text-primary h-5 w-5" />
-                  <div>
-                    <p className="text-sm font-semibold">
-                      Currently using: {selectedModel.name}
-                    </p>
-                    <p className="text-muted-foreground text-xs">
-                      This model will be used for all AI analysis tasks
-                    </p>
-                  </div>
+          <div className="rounded-xl border border-blue-900/30 bg-[#0B1120] p-6 shadow-xl transition-all duration-300 hover:shadow-blue-900/10">
+            <div className="mb-6 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="rounded-lg bg-purple-500/10 p-2">
+                  <Brain className="h-5 w-5 text-purple-400" />
+                </div>
+                <div>
+                  <h3 className="font-display text-lg font-bold text-slate-100">
+                    SELECT AI MODEL
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    Choose the optimal model for your analysis needs
+                  </p>
                 </div>
               </div>
-            )}
-          </Card>
+            </div>
+
+            <div className="space-y-6">
+              <Select
+                value={modelSelection.selectedModelId ?? undefined}
+                onValueChange={handleModelSelect}
+              >
+                <SelectTrigger className="h-12 w-full border-slate-700 bg-[#0F1629] text-slate-200">
+                  <SelectValue placeholder="Select a model" />
+                </SelectTrigger>
+                <SelectContent className="max-h-[300px] border-slate-700 bg-[#0F1629] text-slate-200">
+                  {modelSelection.availableModels.map((model) => (
+                    <SelectItem
+                      key={model.id}
+                      value={model.id}
+                      className="cursor-pointer py-3 focus:bg-slate-800 focus:text-white"
+                    >
+                      <div className="flex flex-col gap-1">
+                        <span className="text-sm font-medium">
+                          {model.name}
+                        </span>
+                        <span className="text-xs text-slate-500">
+                          {model.version}
+                        </span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
+              {selectedModel && (
+                <div className="animate-in fade-in rounded-xl border border-purple-900/30 bg-[#161F36] p-5 shadow-lg shadow-purple-900/10 duration-500">
+                  <div className="flex items-start gap-4">
+                    <div className="shrink-0 rounded-full bg-purple-500/20 p-2 text-purple-400">
+                      <Sparkles className="h-5 w-5" />
+                    </div>
+                    <div className="flex-1 space-y-4">
+                      <div>
+                        <div className="mb-1 flex items-center gap-2">
+                          <h4 className="text-base font-bold text-purple-100">
+                            {selectedModel.name}
+                          </h4>
+                          <Badge
+                            variant="outline"
+                            className="border-purple-500/30 bg-purple-500/10 text-[10px] text-purple-300"
+                          >
+                            {selectedModel.version}
+                          </Badge>
+                        </div>
+                        <p className="text-sm leading-relaxed text-slate-400">
+                          {selectedModel.description}
+                        </p>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-4 border-t border-slate-700/50 pt-4">
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-1.5 text-[10px] font-semibold tracking-wider text-slate-500 uppercase">
+                            <Activity className="h-3 w-3" />
+                            Max Tokens
+                          </div>
+                          <p className="font-mono text-sm text-slate-200">
+                            {selectedModel.maxTokens.toLocaleString()}
+                          </p>
+                        </div>
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-1.5 text-[10px] font-semibold tracking-wider text-slate-500 uppercase">
+                            <Brain className="h-3 w-3" />
+                            Context Window
+                          </div>
+                          <p className="font-mono text-sm text-slate-200">
+                            {(selectedModel.contextWindow / 1000).toFixed(0)}k
+                            tokens
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex flex-wrap gap-2 pt-1">
+                        {Array.isArray(selectedModel.capabilities) &&
+                          selectedModel.capabilities.map((capability) => (
+                            <div
+                              key={capability}
+                              className="flex items-center gap-1.5 rounded-full border border-slate-700 bg-slate-800/50 px-2.5 py-1 text-[10px] font-medium text-slate-300"
+                            >
+                              {getCapabilityIcon(capability)}
+                              <span className="capitalize">{capability}</span>
+                            </div>
+                          ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
         )}
 
       {/* Loading State */}
       {isLoading && !authState.isAuthenticated && (
-        <div className="flex items-center justify-center p-8">
-          <Skeleton className="h-6 w-6 rounded-full" />
-          <div className="ml-2 flex flex-col gap-1">
-            <Skeleton className="h-3 w-32" />
-            <span className="text-muted-foreground text-sm">
-              Loading GitHub Copilot...
+        <div className="flex items-center justify-center rounded-xl border border-slate-800 bg-[#0B1120] p-12">
+          <div className="flex animate-pulse flex-col items-center gap-3">
+            <div className="h-10 w-10 rounded-full bg-slate-800"></div>
+            <div className="h-4 w-32 rounded bg-slate-800"></div>
+            <span className="text-sm text-slate-500">
+              Connecting to GitHub Copilot...
             </span>
           </div>
         </div>

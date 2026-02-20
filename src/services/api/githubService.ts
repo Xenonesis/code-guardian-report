@@ -26,6 +26,38 @@ export interface ContributorWithDetails extends GitHubContributor {
   followers?: number;
 }
 
+export interface GitHubRelease {
+  id: number;
+  name: string;
+  tag_name: string;
+  body: string;
+  published_at: string;
+  html_url: string;
+  author: {
+    login: string;
+    avatar_url: string;
+    html_url: string;
+  };
+}
+
+export interface GitHubCommit {
+  sha: string;
+  commit: {
+    author: {
+      name: string;
+      email: string;
+      date: string;
+    };
+    message: string;
+  };
+  html_url: string;
+  author: {
+    login: string;
+    avatar_url: string;
+    html_url: string;
+  } | null;
+}
+
 class GitHubService {
   private readonly baseUrl = "https://api.github.com";
   private readonly repoOwner = "Xenonesis";
@@ -68,6 +100,145 @@ class GitHubService {
       : 0;
 
     return { isLimited, waitTime, remaining: this.rateLimitInfo.remaining };
+  }
+
+  private getAuthToken(): string | null {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("github_oauth_token");
+    }
+    return process.env.NEXT_PUBLIC_GITHUB_TOKEN || null;
+  }
+
+  private async fetchAll<T>(endpoint: string): Promise<T[]> {
+    let page = 1;
+    let allData: T[] = [];
+    let hasMore = true;
+    const maxPages = 100; // Increased limit to ~10,000 items
+
+    while (hasMore && page <= maxPages) {
+      // Check rate limit before request
+      const { isLimited } = this.getRateLimitStatus();
+      if (isLimited) {
+        logger.warn(`GitHub API rate limited. Stopping fetch at page ${page}.`);
+        break;
+      }
+
+      const separator = endpoint.includes("?") ? "&" : "?";
+      const url = `${endpoint}${separator}per_page=100&page=${page}`;
+
+      try {
+        const headers: HeadersInit = {
+          Accept: "application/vnd.github.v3+json",
+        };
+
+        const token = this.getAuthToken();
+        if (token) {
+          headers["Authorization"] = `Bearer ${token}`;
+        }
+
+        const response = await fetch(url, { headers, cache: "no-store" });
+        this.updateRateLimitFromResponse(response);
+
+        if ((response.status === 401 || response.status === 403) && token) {
+          // If we fail with token, retry without it
+          logger.warn(
+            `GitHub API ${response.status} with token. Retrying without token...`
+          );
+          const headersNoToken: HeadersInit = {
+            Accept: "application/vnd.github.v3+json",
+          };
+          const responseNoToken = await fetch(url, {
+            headers: headersNoToken,
+            cache: "no-store",
+          });
+          this.updateRateLimitFromResponse(responseNoToken);
+
+          if (responseNoToken.ok) {
+            const data = await responseNoToken.json();
+            if (Array.isArray(data) && data.length > 0) {
+              allData = [...allData, ...data];
+              if (data.length < 100) hasMore = false;
+              else page++;
+              continue; // Process next page
+            } else {
+              hasMore = false;
+              continue;
+            }
+          } else {
+            // If retry also fails, handle error below based on original or new response
+            // We'll let it fall through to original error handling but log it
+            logger.warn(
+              `Retry without token failed with status ${responseNoToken.status}`
+            );
+            if (
+              responseNoToken.status === 403 ||
+              responseNoToken.status === 429
+            ) {
+              const resetTime =
+                responseNoToken.headers.get("X-RateLimit-Reset");
+              const waitSeconds = resetTime
+                ? Math.max(
+                    0,
+                    parseInt(resetTime, 10) - Math.floor(Date.now() / 1000)
+                  )
+                : 60;
+              logger.warn(
+                `Rate limit exceeded (no token). Wait ${waitSeconds}s.`
+              );
+              break;
+            }
+          }
+        }
+
+        if (response.status === 404) {
+          if (page === 1) {
+            logger.warn(`GitHub repository or endpoint not found: ${url}`);
+          }
+          break;
+        }
+
+        if (response.status === 403) {
+          const resetTime = response.headers.get("X-RateLimit-Reset");
+          const waitSeconds = resetTime
+            ? Math.max(
+                0,
+                parseInt(resetTime, 10) - Math.floor(Date.now() / 1000)
+              )
+            : 60;
+          logger.warn(
+            `GitHub API rate limit exceeded on page ${page}. Wait ${waitSeconds}s.`
+          );
+          break;
+        }
+
+        if (response.status === 401) {
+          logger.warn(`GitHub API unauthorized. Page ${page}.`);
+          break;
+        }
+
+        if (!response.ok) {
+          logger.error(`GitHub API error on page ${page}: ${response.status}`);
+          break;
+        }
+
+        const data = await response.json();
+        if (Array.isArray(data) && data.length > 0) {
+          allData = [...allData, ...data];
+          if (data.length < 100) {
+            hasMore = false;
+          } else {
+            page++;
+          }
+        } else {
+          hasMore = false;
+        }
+      } catch (error) {
+        logger.error(`Error fetching page ${page}:`, error);
+        break;
+      }
+    }
+
+    return allData;
   }
 
   async getContributors(): Promise<GitHubContributor[]> {
@@ -188,6 +359,18 @@ class GitHubService {
       logger.error("Error fetching repository stats:", error);
       return null;
     }
+  }
+
+  async getReleases(): Promise<GitHubRelease[]> {
+    return this.fetchAll<GitHubRelease>(
+      `${this.baseUrl}/repos/${this.repoOwner}/${this.repoName}/releases`
+    );
+  }
+
+  async getCommits(): Promise<GitHubCommit[]> {
+    return this.fetchAll<GitHubCommit>(
+      `${this.baseUrl}/repos/${this.repoOwner}/${this.repoName}/commits`
+    );
   }
 }
 

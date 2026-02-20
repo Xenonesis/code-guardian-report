@@ -635,12 +635,42 @@ export const HistoryPage = ({
           {/* List Body */}
           <div className="p-4 sm:p-6">
             {isLoading ? (
-              <div className="flex flex-col items-center justify-center py-16">
-                <Skeleton className="h-16 w-16 rounded-full bg-white/5" />
-                <Skeleton className="mt-4 h-4 w-48 bg-white/5" />
-                <span className="mt-2 font-mono text-sm text-slate-500">
-                  LOADING_DATA...
-                </span>
+              <div className="space-y-4">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <div
+                    key={i}
+                    className="rounded-lg border border-white/5 bg-black/20 p-6"
+                    style={{ animationDelay: `${i * 80}ms` }}
+                  >
+                    <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                      <div className="flex-1 space-y-3">
+                        {/* Title row */}
+                        <div className="flex flex-wrap items-center gap-3">
+                          <Skeleton className="h-5 w-48 rounded" />
+                          <Skeleton className="h-5 w-16 rounded-full" />
+                          <Skeleton className="h-5 w-20 rounded-full" />
+                        </div>
+                        {/* Stats row */}
+                        <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+                          <Skeleton className="h-3 w-28 rounded" />
+                          <Skeleton className="h-3 w-20 rounded" />
+                          <Skeleton className="h-3 w-20 rounded" />
+                          <Skeleton className="h-3 w-24 rounded" />
+                        </div>
+                        {/* Severity tags */}
+                        <div className="flex gap-2">
+                          <Skeleton className="h-5 w-20 rounded-full" />
+                          <Skeleton className="h-5 w-16 rounded-full" />
+                        </div>
+                      </div>
+                      {/* Actions */}
+                      <div className="flex gap-2 lg:flex-col">
+                        <Skeleton className="h-8 w-20 rounded-lg" />
+                        <Skeleton className="h-8 w-8 rounded-lg" />
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             ) : filteredHistory.length === 0 ? (
               <div className="py-16 text-center">

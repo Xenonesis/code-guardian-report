@@ -22,6 +22,7 @@ import {
 import { GitHubAnalysisStorageService } from "@/services/storage/GitHubAnalysisStorageService";
 import { logger } from "@/utils/logger";
 import { cn } from "@/lib/utils";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface AnalysisRecord {
   id: string;
@@ -131,24 +132,24 @@ export const AnalysisHistorySection: React.FC<AnalysisHistorySectionProps> = ({
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <div className="bg-muted mb-2 h-7 w-48 animate-pulse rounded"></div>
-            <div className="bg-muted h-4 w-64 animate-pulse rounded"></div>
+            <Skeleton className="mb-2 h-7 w-48 rounded" />
+            <Skeleton className="h-4 w-64 rounded" />
           </div>
           <div className="flex gap-2">
-            <div className="bg-muted h-9 w-24 animate-pulse rounded"></div>
-            <div className="bg-muted h-9 w-20 animate-pulse rounded"></div>
+            <Skeleton className="h-9 w-24 rounded" />
+            <Skeleton className="h-9 w-20 rounded" />
           </div>
         </div>
-        <div className="bg-muted h-10 w-full animate-pulse rounded"></div>
+        <Skeleton className="h-10 w-full rounded" />
         <div className="space-y-4">
           {Array.from({ length: 3 }).map((_, i) => (
             <Card key={i} className="border-border p-6">
               <div className="flex items-center justify-between">
                 <div className="space-y-2">
-                  <div className="bg-muted h-5 w-40 animate-pulse rounded"></div>
-                  <div className="bg-muted h-4 w-56 animate-pulse rounded"></div>
+                  <Skeleton className="h-5 w-40 rounded" />
+                  <Skeleton className="h-4 w-56 rounded" />
                 </div>
-                <div className="bg-muted h-8 w-24 animate-pulse rounded"></div>
+                <Skeleton className="h-8 w-24 rounded" />
               </div>
             </Card>
           ))}

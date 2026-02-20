@@ -6,6 +6,7 @@ import { AnalysisTabs } from "@/components/pages/home/AnalysisTabs";
 import { StorageBanner } from "@/components/pages/home/StorageBanner";
 import { useAnalysisHandlers } from "@/components/pages/home/AnalysisHandlers";
 import { useEnhancedAnalysis } from "@/hooks/useEnhancedAnalysis";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const FloatingChatBot = lazy(() => import("@/components/ai/FloatingChatBot"));
 const StorageStatus = lazy(() => import("@/components/firebase/StorageStatus"));
@@ -78,11 +79,7 @@ const Index = () => {
       {}
       {showStorageStatus && (
         <div className="mx-auto mb-6 max-w-6xl">
-          <Suspense
-            fallback={
-              <div className="h-32 animate-pulse rounded-lg bg-muted dark:bg-foreground"></div>
-            }
-          >
+          <Suspense fallback={<Skeleton className="h-32 rounded-lg" />}>
             <StorageStatus
               hasStoredData={hasStoredData}
               storedAnalysis={storedAnalysis}

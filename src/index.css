@@ -488,3 +488,51 @@ body::before {
 .animate-glitch {
   animation: glitch 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
 }
+
+/* ---- Skeleton Shimmer ---- */
+
+@keyframes skeleton-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.skeleton-shimmer {
+  background: hsl(var(--muted));
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    hsl(var(--foreground) / 5%) 40%,
+    hsl(var(--foreground) / 10%) 50%,
+    hsl(var(--foreground) / 5%) 60%,
+    transparent 100%
+  );
+  animation: skeleton-shimmer 1.6s ease-in-out infinite;
+}
+
+.dark .skeleton-shimmer {
+  background: hsl(var(--muted) / 60%);
+}
+
+.dark .skeleton-shimmer::after {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    hsl(var(--foreground) / 4%) 40%,
+    hsl(var(--foreground) / 8%) 50%,
+    hsl(var(--foreground) / 4%) 60%,
+    transparent 100%
+  );
+}

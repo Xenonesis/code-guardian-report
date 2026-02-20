@@ -11,12 +11,12 @@ interface SkeletonProps {
 }
 
 const variantStyles = {
-  default: "bg-muted rounded-none",
-  card: "bg-muted rounded-none",
-  text: "bg-muted rounded-none",
-  avatar: "bg-muted rounded-none",
-  chart: "bg-muted rounded-none",
-  button: "bg-muted rounded-none",
+  default: "bg-white/5 dark:bg-white/5",
+  card: "bg-white/5 dark:bg-white/5",
+  text: "bg-white/5 dark:bg-white/5",
+  avatar: "bg-white/5 dark:bg-white/5",
+  chart: "bg-white/5 dark:bg-white/5",
+  button: "bg-white/5 dark:bg-white/5",
 };
 
 const roundedStyles = {
@@ -37,9 +37,10 @@ export const Skeleton: React.FC<SkeletonProps> = ({
   animate = true,
 }) => {
   const baseClasses = cn(
+    "relative overflow-hidden",
     variantStyles[variant],
     rounded && roundedStyles[rounded],
-    animate && "animate-pulse",
+    animate && "skeleton-shimmer",
     className
   );
 
