@@ -166,6 +166,42 @@ export class MultiLanguageSecurityAnalyzer {
         recommendation:
           "Use subprocess with shell=False and pass arguments as a list.",
       },
+      {
+        id: "py-weak-random",
+        name: "Weak Random Number Generation",
+        description: "random module functions are not cryptographically secure",
+        severity: "Medium",
+        pattern: /random\.(randint|random|choice)/gi,
+        languages: ["python"],
+        cwe: "CWE-338",
+        owasp: "A02:2021",
+        recommendation:
+          "Use the secrets module for cryptographically secure randomness.",
+      },
+      {
+        id: "py-path-traversal",
+        name: "Path Traversal via dynamic file paths",
+        description:
+          "Concatenating user-controlled data into file paths may lead to path traversal",
+        severity: "High",
+        pattern: /open\s*\([^)]*['"]\s*\+/gi,
+        languages: ["python"],
+        cwe: "CWE-22",
+        owasp: "A01:2021",
+        recommendation: "Use os.path.join and sanitize or validate file paths.",
+      },
+      {
+        id: "py-hardcoded-password",
+        name: "Hardcoded Password",
+        description: "Password literal detected in Python code",
+        severity: "Critical",
+        pattern: /password\s*=\s*['"][^'"]+['"]/gi,
+        languages: ["python"],
+        cwe: "CWE-798",
+        owasp: "A07:2021",
+        recommendation:
+          "Store passwords in environment variables or a secret manager.",
+      },
 
       // Java Rules
       {
@@ -510,13 +546,26 @@ export class MultiLanguageSecurityAnalyzer {
       {
         id: "swift-sql-injection",
         name: "SQL Injection Risk",
-        description: "String interpolation in SQL queries",
+        description:
+          "String interpolation in SQL queries can lead to SQL injection vulnerabilities",
         severity: "Critical",
-        pattern: [/executeQuery\s*\([^)]*\\/g, /executeUpdate\s*\([^)]*\\/g],
+        pattern: [
+          /var\s+\w+\s*=\s*["']SELECT\s+.*\\(\w+\).*["']/gi,
+          /var\s+\w+\s*=\s*["']INSERT\s+.*\\(\w+\).*["']/gi,
+          /var\s+\w+\s*=\s*["']UPDATE\s+.*\\(\w+\).*["']/gi,
+          /var\s+\w+\s*=\s*["']DELETE\s+.*\\(\w+\).*["']/gi,
+          /db\.execute\s*\(\s*["'].*\\(\w+\).*["']/gi,
+          /db\.query\s*\(\s*["'].*\\(\w+\).*["']/gi,
+          /SQLiteConnection\.execute\s*\(\s*["'].*\\(\w+\).*["']/gi,
+          /statement\s*=\s*["'].*\+\s*\w+.*\+\s*["']/gi,
+          /FMDatabase.*executeQuery.*\+/gi,
+          /FMDatabase.*executeUpdate.*\+/gi,
+        ],
         languages: ["swift"],
         cwe: "CWE-89",
         owasp: "A03:2021",
-        recommendation: "Use parameterized queries with prepared statements.",
+        recommendation:
+          "Use parameterized queries with prepared statements or bind parameters instead of string interpolation.",
       },
       {
         id: "swift-force-unwrap",

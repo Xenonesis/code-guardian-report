@@ -4,9 +4,10 @@
   "version": "14.7.0",
   "description": "Code analysis tool with security scanning and metrics reporting",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --webpack",
     "dev:turbo": "next dev --turbo",
     "build": "next build",
+    "build:webpack": "next build --webpack",
     "build:prod": "npm run clean && npm run lint && npm run type-check && next build",
     "build:analyze": "ANALYZE=true next build",
     "start": "next start",
@@ -103,7 +104,7 @@
     "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3",
     "web-push": "^3.6.7",
-    "web-tree-sitter": "^0.26.3",
+    "web-tree-sitter": "^0.26.5",
     "web-vitals": "^5.1.0"
   },
   "devDependencies": {

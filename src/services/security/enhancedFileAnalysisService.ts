@@ -156,6 +156,8 @@ export interface EnhancedFileAnalysisResult {
   }>;
 }
 
+import { PythonDataFlowAnalyzer } from "@/services/analysis/PythonDataFlowAnalyzer";
+
 export class EnhancedFileAnalysisService {
   private readonly fileSignatures: Record<string, string> = {
     pdf: "25504446", // %PDF
@@ -214,6 +216,15 @@ export class EnhancedFileAnalysisService {
   /**
    * Perform comprehensive file analysis
    */
+  private pythonAnalyzer: PythonDataFlowAnalyzer | null = null;
+
+  private async ensurePythonAnalyzer(): Promise<void> {
+    if (!this.pythonAnalyzer) {
+      this.pythonAnalyzer = new PythonDataFlowAnalyzer();
+      await this.pythonAnalyzer.init();
+    }
+  }
+
   public async analyzeFile(
     file: File,
     content: string
@@ -223,7 +234,36 @@ export class EnhancedFileAnalysisService {
     const dataFlow = this.analyzeDataFlow(content);
     const complexity = this.calculateComplexity(content);
     const apiSecurity = this.analyzeAPISecurity(content);
-    const securityFindings = this.performSecurityAnalysis(content, file.name);
+    let securityFindings = this.performSecurityAnalysis(content, file.name);
+
+    // if python file, run the Python taint/dataflow analyzer and merge issues
+    if (file.name.toLowerCase().endsWith(".py")) {
+      try {
+        await this.ensurePythonAnalyzer();
+        const pyIssues = this.pythonAnalyzer?.analyzeDataFlow([
+          { filename: file.name, content },
+        ]);
+        if (pyIssues && pyIssues.length) {
+          pyIssues.forEach((issue) => {
+            securityFindings.push({
+              type: issue.type,
+              severity: issue.severity as any,
+              description: issue.message,
+              line: issue.line,
+              column: issue.column,
+              evidence: issue.codeSnippet || "",
+              recommendation: issue.recommendation || "",
+              cwe: (issue as any).cweId,
+              owasp: (issue as any).owaspCategory,
+            });
+          });
+        }
+      } catch (err) {
+        // don't let a python analyzer failure break overall analysis
+        console.warn("Python analyzer failed:", err);
+      }
+    }
+
     const qualityIssues = this.analyzeCodeQuality(content);
     const dependencies = this.analyzeDependencies(content);
     const performanceIssues = this.analyzePerformance(content);

@@ -209,6 +209,7 @@ Math.random() * 1000000; // Insecure random for security
 import os
 import pickle
 import yaml
+import sys
 
 user_input = request.args.get('cmd')
 os.system(user_input)
@@ -220,9 +221,21 @@ config = yaml.load(open('config.yaml'))
 
 password = "hardcoded_password_123"
 api_key = "sk-1234567890abcdefghijklmnopqrstuvwx"
+
+# propagation via function return
+
+def echo(x):
+    return x
+
+arg = echo(user_input)
+os.system(arg)
+
+# another source variant
+arg2 = sys.argv[1]
+os.system(arg2)
         `,
         expectedIssues: {
-          minCount: 4,
+          minCount: 6,
           types: [
             "Command Injection",
             "Deserialization",
@@ -230,6 +243,21 @@ api_key = "sk-1234567890abcdefghijklmnopqrstuvwx"
             "Hardcoded",
           ],
           severities: ["Critical", "High"],
+        },
+      },
+      {
+        name: "Python Sanitizer Behavior",
+        description: "Sanitized value should not be flagged",
+        filename: "test_sanitize.py",
+        code: `
+user_input = input()
+safe = sanitize(user_input)
+os.system(safe)
+        `,
+        expectedIssues: {
+          minCount: 0,
+          types: [],
+          severities: [],
         },
       },
     ];

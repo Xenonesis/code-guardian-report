@@ -71,7 +71,11 @@ const nextConfig: NextConfig = {
   },
 
   // Turbopack configuration for Next.js 16+
-  // Set root to project directory to silence multiple lockfiles warning
+  // NOTE: Turbopack currently breaks when web-tree-sitter is imported
+  // (it attempts to resolve fs/promises). To avoid that, always run the
+  // dev/build commands with the `--webpack` flag or use the npm script
+  // "build:webpack".  We don't add a "disabled" option since Next.js
+  // doesn't recognize it.
   turbopack: {
     root: ".",
   },
@@ -114,14 +118,34 @@ const nextConfig: NextConfig = {
 
     // Add fallbacks for Node.js built-in modules (client-side)
     if (!isServer) {
+      // prevent client-side bundling of Node builtins (web-tree-sitter triggers
+      // a dynamic import of "fs/promises" when it thinks it's running in Node).
+      // Turbopack/webpack otherwise try to resolve that path, causing a build
+      // error.  Mark both fs and fs/promises as false so the import is ignored.
       config.resolve.fallback = {
         ...config.resolve.fallback,
         fs: false,
+        // also stub the promise-specific module to satisfy the tree-sitter check
+        "fs/promises": false,
         path: false,
         crypto: false,
         stream: false,
         buffer: false,
       };
+
+      // also add aliases in case fallback isn't applied to dynamic import paths
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        "fs/promises": false as any,
+        module: false as any,
+      };
+
+      // ignore both modules entirely with IgnorePlugin
+      const webpack = require("webpack");
+      config.plugins.push(
+        new webpack.IgnorePlugin({ resourceRegExp: /^fs\/promises$/ }),
+        new webpack.IgnorePlugin({ resourceRegExp: /^module$/ })
+      );
     }
 
     // Handle .wasm files

@@ -3,6 +3,7 @@ import { SecurityAnalyzer } from "./analysis/SecurityAnalyzer";
 import { MetricsCalculator } from "./analysis/MetricsCalculator";
 import { ASTAnalyzer } from "./analysis/ASTAnalyzer";
 import { DataFlowAnalyzer } from "./analysis/DataFlowAnalyzer";
+import { PythonDataFlowAnalyzer } from "./analysis/PythonDataFlowAnalyzer";
 import { DependencyVulnerabilityScanner } from "./security/dependencyVulnerabilityScanner";
 import { logger } from "@/utils/logger";
 import JSZip from "jszip";
@@ -18,6 +19,7 @@ export class EnhancedAnalysisEngine {
   private readonly metricsCalculator: MetricsCalculator;
   private readonly astAnalyzer: ASTAnalyzer;
   private readonly dataFlowAnalyzer: DataFlowAnalyzer;
+  private readonly pythonAnalyzer: PythonDataFlowAnalyzer;
   private readonly dependencyScanner: DependencyVulnerabilityScanner;
 
   constructor() {
@@ -25,6 +27,7 @@ export class EnhancedAnalysisEngine {
     this.metricsCalculator = new MetricsCalculator();
     this.astAnalyzer = new ASTAnalyzer();
     this.dataFlowAnalyzer = new DataFlowAnalyzer();
+    this.pythonAnalyzer = new PythonDataFlowAnalyzer();
     this.dependencyScanner = new DependencyVulnerabilityScanner();
   }
 
@@ -193,10 +196,20 @@ export class EnhancedAnalysisEngine {
           allIssues = [...allIssues, ...astIssues];
         }
 
-        // Phase 3: Data flow and taint analysis
+        // Phase 3: Data flow and taint analysis (JS/TS)
         const dataFlowIssues =
           this.dataFlowAnalyzer.analyzeDataFlow(fileContents);
         allIssues = [...allIssues, ...dataFlowIssues];
+
+        // Phase 3b: Python-specific taint analysis
+        try {
+          await this.pythonAnalyzer.init();
+          const pythonIssues =
+            this.pythonAnalyzer.analyzeDataFlow(fileContents);
+          allIssues = [...allIssues, ...pythonIssues];
+        } catch (err) {
+          logger.warn("python taint analyzer failed", err);
+        }
 
         // Phase 4: Dependency vulnerability scanning
         try {

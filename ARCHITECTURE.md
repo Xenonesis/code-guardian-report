@@ -353,8 +353,33 @@ class SecurityAnalyzer {
 - Static analysis rules
 - Data flow analysis
 - Control flow analysis
-- Taint analysis
+- Taint analysis (JavaScript/TypeScript via ASTAnalyzer; Python via new PythonDataFlowAnalyzer with tree-sitter)
 - Pattern matching
+
+### Python Taint Engine
+
+The project now includes a dedicated Python taint/data‑flow analyzer located in
+`src/services/analysis/PythonDataFlowAnalyzer.ts`. It wraps `web-tree-sitter`
+with the Python grammar and implements:
+
+- configurable **sources**, **sinks** and **sanitizers** loaded via a simple
+  JSON-like `PythonTaintConfig` object
+- inter‑procedural taint propagation through assignments, function calls and
+  return values
+- recognition of common Python user input locations (`input()`,
+  `sys.argv`, `os.getenv`, Flask/Django request objects, etc.)
+- detection of dangerous sinks (`os.system`, `subprocess.run`, `eval`,
+  `pickle.loads`, `yaml.load`, `requests.*`, …) with taint checks
+- built‑in sanitizers (e.g. `escape()`, `urllib.parse.quote`) that break
+  flows
+- integration with the enhanced file analysis service: Python issues are
+  surfaced alongside regex-based findings and made available to the UI,
+  SARIF output, etc.
+
+The analyzer is exercised by `test-python-parser.ts` as well as the general
+`analysisAccuracyTest.ts` suite; new test cases cover propagation through
+return values and sanitization. The engine is designed to be extended with
+additional language features or custom rules via the public API.
 
 ### 2. Storage Services
 

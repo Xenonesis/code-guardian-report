@@ -5,6 +5,51 @@ All notable changes to Code Guardian Report will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased] - Python Taint Analysis Engine
+
+### Added
+
+- **Python Data-Flow / Taint Analyzer** - Enterprise-grade security analysis for Python code:
+  - AST-based taint tracking using web-tree-sitter parser
+  - Configurable sources: `input()`, `sys.argv`, Flask/Django request objects, environment variables
+  - Configurable sinks: `os.system`, `subprocess.run`, `eval`, `exec`, `pickle.loads`, `yaml.load`, HTTP requests
+  - Configurable sanitizers: `escape()`, `html.escape`, `urllib.parse.quote`, `bleach.clean`, `re.sub`
+  - Inter-procedural analysis with return-value propagation
+  - CWE, OWASP Top 10 2021, and CVSS 3.1 scoring
+  - Full SecurityIssue metadata including recommendations and remediation steps
+  - Integrated into EnhancedAnalysisEngine (Phase 3b) and EnhancedFileAnalysisService
+  - Graceful error handling (does not block overall analysis if parser fails)
+
+- **Python Security Rules** in MultiLanguageSecurityAnalyzer:
+  - `py-weak-random`: Detects insecure random.\* usage (CWE-338, Medium)
+  - `py-path-traversal`: Detects dynamic file path concatenation (CWE-22, High)
+  - `py-hardcoded-password`: Detects hardcoded password literals (CWE-798, Critical)
+
+- **Documentation**:
+  - `PYTHON_QUICKSTART.md`: Quick-start guide with examples and troubleshooting
+  - `PYTHON_TAINT_DESIGN.md`: Comprehensive architecture and design details
+  - `ARCHITECTURE.md`: New Python section describing the taint engine
+  - `README.md`: Usage instructions and integration examples
+
+- **Tests**:
+  - `src/tests/pythonAnalyzerIntegration.test.ts`: 28 comprehensive test cases
+  - `src/tests/analysisAccuracyTest.ts`: Enhanced with Python scenario tests
+  - `test-python-parser.ts`: Standalone smoke test
+
+### Changed
+
+- EnhancedAnalysisEngine pipeline now includes Python taint analysis
+- EnhancedFileAnalysisService now calls Python analyzer for `.py` files
+- MultiLanguageSecurityAnalyzer is now the canonical source for Python security rules
+- securityAnalysisEngine `python` array deprecated (rules migrated, array kept empty for backward compatibility)
+
+### Technical Details
+
+- **Performance**: ~50-100ms per 1000 LOC Python file
+- **Configuration**: Runtime-configurable via `PythonTaintConfig` interface
+- **Architecture**: Modular design with clear separation of parsing, tracking, and issue generation
+- **Compatibility**: Fully compatible with existing analysis pipeline; Python analysis is optional Phase 3b
+
 ## [14.7.0] - 2026-02-18
 
 ### Added

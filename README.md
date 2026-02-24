@@ -417,7 +417,7 @@ Code Guardian Report follows a modern, modular architecture designed for scalabi
 
 #### 4. Analysis Engine Architecture
 
-```
+````
 ┌──────────────────────────────────────────────────────────────────┐
 │                     Analysis Pipeline                             │
 ├──────────────────────────────────────────────────────────────────┤
@@ -435,198 +435,238 @@ Code Guardian Report follows a modern, modular architecture designed for scalabi
 │     ├─> Data Flow Analysis                                      │
 │     ├─> Control Flow Analysis                                   │
 │     ├─> Taint Analysis                                          │
+│           • Python-specific engine now available (see docs)   │
 │     └─> Pattern Matching                                        │
 ├──────────────────────────────────────────────────────────────────┤
-│  4. Vulnerability Detection                                      │
-│     ├─> OWASP Checks                                            │
-│     ├─> CWE Mapping                                             │
-│     ├─> Framework-Specific Rules                               │
-│     └─> Custom Rules                                            │
+
+The project now includes a fully fledged Python taint/data‑flow analysis
+engine (`PythonDataFlowAnalyzer` in `src/services/analysis`).  It uses
+`web-tree-sitter` with the Python grammar to detect user‑controlled data
+(e.g. `input()`, `sys.argv`, Flask/Django request objects) flowing into
+dangerous sinks (`os.system`, `subprocess.run`, `eval`, `pickle.loads`,
+`yaml.load`, etc.).  The configuration is fully extensible and sanitizers
+(e.g. `sanitize()`, `html.escape`, `urllib.parse.quote`) are recognised to
+break flows.
+
+To exercise the Python engine manually run:
+
+```sh
+# quick parser smoke test
+npx tsx test-python-parser.ts
+
+# full regression suite (includes python cases)
+npm test -- --testPathPattern=analysisAccuracyTest.ts
+````
+
+For programmatic usage the existing `EnhancedAnalysisEngine` and
+`EnhancedFileAnalysisService` automatically invoke the Python analyzer when
+`.py` files are encountered; you do not need to change your code.
+
+```ts
+import { EnhancedAnalysisEngine } from "./src/services/enhancedAnalysisEngine";
+
+const engine = new EnhancedAnalysisEngine();
+const results = await engine.analyzeCodebase(zipBlob);
+// results.issues will include both regex rules and Python taint issues
+```
+
+The engine has been hardened to the same architectural level as the
+JavaScript/TypeScript analyzers, making it ready for enterprise use.
+
 ├──────────────────────────────────────────────────────────────────┤
-│  5. Secret Detection                                             │
-│     ├─> API Key Patterns                                        │
-│     ├─> Token Patterns                                          │
-│     ├─> Password Patterns                                       │
-│     └─> Certificate Patterns                                    │
+│ 4. Vulnerability Detection │
+│ ├─> OWASP Checks │
+│ ├─> CWE Mapping │
+│ ├─> Framework-Specific Rules │
+│ └─> Custom Rules │
 ├──────────────────────────────────────────────────────────────────┤
-│  6. Dependency Analysis                                          │
-│     ├─> Package.json/requirements.txt Parsing                   │
-│     ├─> Version Checking                                        │
-│     └─> Known Vulnerability Database Lookup                     │
+│ 5. Secret Detection │
+│ ├─> API Key Patterns │
+│ ├─> Token Patterns │
+│ ├─> Password Patterns │
+│ └─> Certificate Patterns │
 ├──────────────────────────────────────────────────────────────────┤
-│  7. Metrics Calculation                                          │
-│     ├─> Cyclomatic Complexity                                   │
-│     ├─> Code Smells                                             │
-│     ├─> Maintainability Index                                   │
-│     └─> Security Score                                          │
+│ 6. Dependency Analysis │
+│ ├─> Package.json/requirements.txt Parsing │
+│ ├─> Version Checking │
+│ └─> Known Vulnerability Database Lookup │
 ├──────────────────────────────────────────────────────────────────┤
-│  8. AI Enhancement (Optional)                                    │
-│     ├─> Natural Language Descriptions                           │
-│     ├─> Fix Suggestions                                         │
-│     └─> Context Analysis                                        │
+│ 7. Metrics Calculation │
+│ ├─> Cyclomatic Complexity │
+│ ├─> Code Smells │
+│ ├─> Maintainability Index │
+│ └─> Security Score │
 ├──────────────────────────────────────────────────────────────────┤
-│  9. Report Generation                                            │
-│     ├─> PDF Export                                              │
-│     ├─> JSON Export                                             │
-│     ├─> HTML Report                                             │
-│     └─> SARIF Export                                            │
+│ 8. AI Enhancement (Optional) │
+│ ├─> Natural Language Descriptions │
+│ ├─> Fix Suggestions │
+│ └─> Context Analysis │
+├──────────────────────────────────────────────────────────────────┤
+│ 9. Report Generation │
+│ ├─> PDF Export │
+│ ├─> JSON Export │
+│ ├─> HTML Report │
+│ └─> SARIF Export │
 └──────────────────────────────────────────────────────────────────┘
+
 ```
 
 ### Directory Structure
 
 ```
+
 code-guardian-report/
-├── app/                          # Next.js App Router
-│   ├── about/                    # About page
-│   ├── api/                      # API routes
-│   │   ├── analytics/            # Analytics endpoints
-│   │   │   └── pwa/             # PWA analytics
-│   │   ├── copilot/             # Copilot AI endpoints
-│   │   │   ├── completions/     # AI completions
-│   │   │   └── models/          # AI model discovery
-│   │   ├── health/               # Health check
-│   │   ├── log-error/            # Error logging
-│   │   └── push/                 # Push notification endpoints
-│   │       ├── schedule/         # Push scheduling
-│   │       ├── send/             # Push sending
-│   │       ├── subscribe/        # Push subscription
-│   │       └── unsubscribe/      # Push unsubscription
-│   ├── github-analysis/          # GitHub analysis page
-│   ├── help/                     # Help documentation
-│   ├── history/                  # Analysis history
-│   ├── privacy/                  # Privacy policy
-│   ├── pwa-settings/             # PWA settings
-│   ├── terms/                    # Terms of service
-│   ├── layout.tsx                # Root layout
-│   └── page.tsx                  # Home page
+├── app/ # Next.js App Router
+│ ├── about/ # About page
+│ ├── api/ # API routes
+│ │ ├── analytics/ # Analytics endpoints
+│ │ │ └── pwa/ # PWA analytics
+│ │ ├── copilot/ # Copilot AI endpoints
+│ │ │ ├── completions/ # AI completions
+│ │ │ └── models/ # AI model discovery
+│ │ ├── health/ # Health check
+│ │ ├── log-error/ # Error logging
+│ │ └── push/ # Push notification endpoints
+│ │ ├── schedule/ # Push scheduling
+│ │ ├── send/ # Push sending
+│ │ ├── subscribe/ # Push subscription
+│ │ └── unsubscribe/ # Push unsubscription
+│ ├── github-analysis/ # GitHub analysis page
+│ ├── help/ # Help documentation
+│ ├── history/ # Analysis history
+│ ├── privacy/ # Privacy policy
+│ ├── pwa-settings/ # PWA settings
+│ ├── terms/ # Terms of service
+│ ├── layout.tsx # Root layout
+│ └── page.tsx # Home page
 ├── src/
-│   ├── components/               # React components
-│   │   ├── ai/                   # AI-related components
-│   │   ├── analysis/             # Analysis components
-│   │   ├── auth/                 # Authentication components
-│   │   ├── common/               # Common/shared components
-│   │   ├── dashboard/            # Dashboard components
-│   │   ├── export/               # Export components
-│   │   ├── firebase/             # Firebase components
-│   │   ├── github/               # GitHub components
-│   │   ├── language/             # Language detection components
-│   │   ├── layout/               # Layout components
-│   │   ├── monitoring/           # Monitoring components
-│   │   ├── notifications/        # Notification components
-│   │   ├── pwa/                  # PWA components
-│   │   ├── results/              # Results display components
-│   │   ├── rules/                # Custom rules components
-│   │   ├── security/             # Security components
-│   │   ├── ui/                   # UI primitives (Radix UI)
-│   │   └── upload/               # File upload components
-│   ├── config/                   # Configuration files
-│   │   ├── constants.ts          # Application constants
-│   │   ├── pwa.ts                # PWA configuration
-│   │   └── security.ts           # Security configuration
-│   ├── hooks/                    # Custom React hooks
-│   │   ├── useAnalysis.ts        # Analysis hook
-│   │   ├── useFileUpload.ts      # File upload hook
-│   │   ├── useGitHubRepositories.ts
-│   │   ├── usePWA.ts             # PWA hook
-│   │   └── ...
-│   ├── lib/                      # Library code
-│   │   ├── auth-context.tsx      # Authentication context
-│   │   ├── firebase.ts           # Firebase configuration
-│   │   ├── firestore-utils.ts    # Firestore utilities
-│   │   └── utils.ts              # Utility functions
-│   ├── services/                 # Business logic services
-│   │   ├── ai/                   # AI services
-│   │   │   ├── aiService.ts      # Main AI service
-│   │   │   ├── aiFixSuggestionsService.ts
-│   │   │   ├── modelDiscoveryService.ts
-│   │   │   └── naturalLanguageDescriptionService.ts
-│   │   ├── analysis/             # Analysis services
-│   │   │   ├── ASTAnalyzer.ts    # AST analysis
-│   │   │   ├── DataFlowAnalyzer.ts
-│   │   │   ├── MetricsCalculator.ts
-│   │   │   ├── MultiLanguageParser.ts
-│   │   │   ├── MultiLanguageSecurityAnalyzer.ts
-│   │   │   └── SecurityAnalyzer.ts
-│   │   ├── api/                  # API services
-│   │   │   └── githubService.ts  # GitHub API
-│   │   ├── detection/            # Detection services
-│   │   │   ├── codeProvenanceService.ts
-│   │   │   ├── frameworkDetectionEngine.ts
-│   │   │   └── languageDetectionService.ts
-│   │   ├── export/               # Export services
-│   │   │   └── pdfExportService.ts
-│   │   ├── monitoring/           # Monitoring services
-│   │   │   └── WebhookManager.ts
-│   │   ├── notifications/        # Notification services
-│   │   │   └── NotificationManager.ts
-│   │   ├── pwa/                  # PWA services
-│   │   │   ├── backgroundSync.ts
-│   │   │   ├── pushNotifications.ts
-│   │   │   └── pwaAnalytics.ts
-│   │   ├── rules/                # Rules engine
-│   │   │   └── CustomRulesEngine.ts
-│   │   ├── security/             # Security services
-│   │   │   ├── dependencyVulnerabilityScanner.ts
-│   │   │   ├── modernCodeScanningService.ts
-│   │   │   ├── secretDetectionService.ts
-│   │   │   ├── securityAnalysisEngine.ts
-│   │   │   └── zipAnalysisService.ts
-│   │   └── storage/              # Storage services
-│   │       ├── analysisStorage.ts
-│   │       ├── firebaseAnalysisStorage.ts
-│   │       ├── GitHubAnalysisStorageService.ts
-│   │       └── offlineManager.ts
-│   ├── styles/                   # CSS styles
-│   ├── tests/                    # Test files
-│   ├── types/                    # TypeScript types
-│   │   ├── analysis.ts           # Analysis types
-│   │   ├── api.ts                # API types
-│   │   ├── auth.ts               # Authentication types
-│   │   └── common.ts             # Common types
-│   ├── utils/                    # Utility functions
-│   │   ├── errorHandler.ts       # Error handling
-│   │   ├── fileValidation.ts     # File validation
-│   │   ├── logger.ts             # Logging
-│   │   └── security.ts           # Security utilities
-│   └── views/                    # Page views
-├── public/                       # Static assets
-│   ├── icons/                    # Application icons
-│   ├── manifest.json             # PWA manifest
-│   ├── robots.txt                # SEO robots file
-│   └── sitemap.xml               # SEO sitemap
-├── functions/                    # Firebase Cloud Functions
-│   └── src/
-│       └── index.ts              # Functions entry point
-├── .github/                      # GitHub configuration
-│   └── workflows/                # GitHub Actions workflows
-│       ├── ci.yml                # CI/CD pipeline
-│       ├── codeql.yml            # CodeQL analysis
-│       ├── security-audit.yml    # Security audits
-│       └── ...
-├── scripts/                      # Utility scripts
-│   ├── e2e-zip-analysis.ts       # E2E tests
-│   ├── run-all-tests.ts          # Test runner
-│   └── update-contributors.js    # Contributors update
-├── md/                           # Markdown documentation
-│   ├── CONTRIBUTING.md           # Contribution guidelines
-│   ├── CODE_OF_CONDUCT.md        # Code of conduct
-│   └── changelogs.md             # Version changelogs
-├── .env.example                  # Environment variables template
-├── Dockerfile                    # Docker configuration
-├── next.config.ts                # Next.js configuration
-├── tsconfig.json                 # TypeScript configuration
-├── tailwind.config.ts            # Tailwind CSS configuration
-├── package.json                  # Node.js dependencies
-├── vercel.json                   # Vercel deployment config
-├── firebase.json                 # Firebase configuration
-├── jest.config.js                # Jest test configuration
-├── vitest.config.ts              # Vitest configuration
-├── DEPLOYMENT.md                 # Deployment guide
-├── SECURITY.md                   # Security policy
-├── LICENSE                       # MIT License
-└── README.md                     # This file
-```
+│ ├── components/ # React components
+│ │ ├── ai/ # AI-related components
+│ │ ├── analysis/ # Analysis components
+│ │ ├── auth/ # Authentication components
+│ │ ├── common/ # Common/shared components
+│ │ ├── dashboard/ # Dashboard components
+│ │ ├── export/ # Export components
+│ │ ├── firebase/ # Firebase components
+│ │ ├── github/ # GitHub components
+│ │ ├── language/ # Language detection components
+│ │ ├── layout/ # Layout components
+│ │ ├── monitoring/ # Monitoring components
+│ │ ├── notifications/ # Notification components
+│ │ ├── pwa/ # PWA components
+│ │ ├── results/ # Results display components
+│ │ ├── rules/ # Custom rules components
+│ │ ├── security/ # Security components
+│ │ ├── ui/ # UI primitives (Radix UI)
+│ │ └── upload/ # File upload components
+│ ├── config/ # Configuration files
+│ │ ├── constants.ts # Application constants
+│ │ ├── pwa.ts # PWA configuration
+│ │ └── security.ts # Security configuration
+│ ├── hooks/ # Custom React hooks
+│ │ ├── useAnalysis.ts # Analysis hook
+│ │ ├── useFileUpload.ts # File upload hook
+│ │ ├── useGitHubRepositories.ts
+│ │ ├── usePWA.ts # PWA hook
+│ │ └── ...
+│ ├── lib/ # Library code
+│ │ ├── auth-context.tsx # Authentication context
+│ │ ├── firebase.ts # Firebase configuration
+│ │ ├── firestore-utils.ts # Firestore utilities
+│ │ └── utils.ts # Utility functions
+│ ├── services/ # Business logic services
+│ │ ├── ai/ # AI services
+│ │ │ ├── aiService.ts # Main AI service
+│ │ │ ├── aiFixSuggestionsService.ts
+│ │ │ ├── modelDiscoveryService.ts
+│ │ │ └── naturalLanguageDescriptionService.ts
+│ │ ├── analysis/ # Analysis services
+│ │ │ ├── ASTAnalyzer.ts # AST analysis
+│ │ │ ├── DataFlowAnalyzer.ts
+│ │ │ ├── MetricsCalculator.ts
+│ │ │ ├── MultiLanguageParser.ts
+│ │ │ ├── MultiLanguageSecurityAnalyzer.ts
+│ │ │ └── SecurityAnalyzer.ts
+│ │ ├── api/ # API services
+│ │ │ └── githubService.ts # GitHub API
+│ │ ├── detection/ # Detection services
+│ │ │ ├── codeProvenanceService.ts
+│ │ │ ├── frameworkDetectionEngine.ts
+│ │ │ └── languageDetectionService.ts
+│ │ ├── export/ # Export services
+│ │ │ └── pdfExportService.ts
+│ │ ├── monitoring/ # Monitoring services
+│ │ │ └── WebhookManager.ts
+│ │ ├── notifications/ # Notification services
+│ │ │ └── NotificationManager.ts
+│ │ ├── pwa/ # PWA services
+│ │ │ ├── backgroundSync.ts
+│ │ │ ├── pushNotifications.ts
+│ │ │ └── pwaAnalytics.ts
+│ │ ├── rules/ # Rules engine
+│ │ │ └── CustomRulesEngine.ts
+│ │ ├── security/ # Security services
+│ │ │ ├── dependencyVulnerabilityScanner.ts
+│ │ │ ├── modernCodeScanningService.ts
+│ │ │ ├── secretDetectionService.ts
+│ │ │ ├── securityAnalysisEngine.ts
+│ │ │ └── zipAnalysisService.ts
+│ │ └── storage/ # Storage services
+│ │ ├── analysisStorage.ts
+│ │ ├── firebaseAnalysisStorage.ts
+│ │ ├── GitHubAnalysisStorageService.ts
+│ │ └── offlineManager.ts
+│ ├── styles/ # CSS styles
+│ ├── tests/ # Test files
+│ ├── types/ # TypeScript types
+│ │ ├── analysis.ts # Analysis types
+│ │ ├── api.ts # API types
+│ │ ├── auth.ts # Authentication types
+│ │ └── common.ts # Common types
+│ ├── utils/ # Utility functions
+│ │ ├── errorHandler.ts # Error handling
+│ │ ├── fileValidation.ts # File validation
+│ │ ├── logger.ts # Logging
+│ │ └── security.ts # Security utilities
+│ └── views/ # Page views
+├── public/ # Static assets
+│ ├── icons/ # Application icons
+│ ├── manifest.json # PWA manifest
+│ ├── robots.txt # SEO robots file
+│ └── sitemap.xml # SEO sitemap
+├── functions/ # Firebase Cloud Functions
+│ └── src/
+│ └── index.ts # Functions entry point
+├── .github/ # GitHub configuration
+│ └── workflows/ # GitHub Actions workflows
+│ ├── ci.yml # CI/CD pipeline
+│ ├── codeql.yml # CodeQL analysis
+│ ├── security-audit.yml # Security audits
+│ └── ...
+├── scripts/ # Utility scripts
+│ ├── e2e-zip-analysis.ts # E2E tests
+│ ├── run-all-tests.ts # Test runner
+│ └── update-contributors.js # Contributors update
+├── md/ # Markdown documentation
+│ ├── CONTRIBUTING.md # Contribution guidelines
+│ ├── CODE_OF_CONDUCT.md # Code of conduct
+│ └── changelogs.md # Version changelogs
+├── .env.example # Environment variables template
+├── Dockerfile # Docker configuration
+├── next.config.ts # Next.js configuration
+├── tsconfig.json # TypeScript configuration
+├── tailwind.config.ts # Tailwind CSS configuration
+├── package.json # Node.js dependencies
+├── vercel.json # Vercel deployment config
+├── firebase.json # Firebase configuration
+├── jest.config.js # Jest test configuration
+├── vitest.config.ts # Vitest configuration
+├── DEPLOYMENT.md # Deployment guide
+├── SECURITY.md # Security policy
+├── LICENSE # MIT License
+└── README.md # This file
+
+````
 
 ---
 
@@ -848,7 +888,7 @@ npm install
 
 # 3. Start the development server
 npm run dev
-```
+````
 
 **That's it!** 🎉 Open http://localhost:3000 in your browser.
 
@@ -5455,13 +5495,6 @@ Special thanks to all contributors who have helped make Code Guardian Report bet
 
 <h3 style="color: white; margin-bottom: 20px;">**Repository Statistics**</h3>
 
-  
-  
-  
-  
-  
-  
-  
   <table style="margin: 0 auto;">
     <tr>
       <td align="center" style="padding: 15px;">
@@ -5508,7 +5541,7 @@ Special thanks to all contributors who have helped make Code Guardian Report bet
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">391 commits</span>
         </div>
       </td>
-    
+
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/65916846?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
@@ -5520,7 +5553,7 @@ Special thanks to all contributors who have helped make Code Guardian Report bet
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">51 commits</span>
         </div>
       </td>
-    
+
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/in/15368?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
@@ -5532,7 +5565,7 @@ Special thanks to all contributors who have helped make Code Guardian Report bet
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">33 commits</span>
         </div>
       </td>
-    
+
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/186174121?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
@@ -5544,8 +5577,9 @@ Special thanks to all contributors who have helped make Code Guardian Report bet
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">5 commits</span>
         </div>
       </td>
-    
+
     </tr>
+
 <tr>
 
       <td align="center" style="padding: 20px;">
@@ -5558,7 +5592,7 @@ Special thanks to all contributors who have helped make Code Guardian Report bet
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">4 commits</span>
         </div>
       </td>
-    
+
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/164482191?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
@@ -5570,7 +5604,7 @@ Special thanks to all contributors who have helped make Code Guardian Report bet
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">4 commits</span>
         </div>
       </td>
-    
+
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/176881379?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
@@ -5582,7 +5616,7 @@ Special thanks to all contributors who have helped make Code Guardian Report bet
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">3 commits</span>
         </div>
       </td>
-    
+
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/in/1143301?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
@@ -5594,7 +5628,7 @@ Special thanks to all contributors who have helped make Code Guardian Report bet
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">3 commits</span>
         </div>
       </td>
-    
+
     </tr>
 
 </table>
