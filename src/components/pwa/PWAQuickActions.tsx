@@ -120,13 +120,18 @@ export function PWAQuickActions({
       </PopoverTrigger>
 
       <PopoverContent
-        className="border-border bg-card w-72 p-3 shadow-xl"
+        className="border-border w-80 rounded-xl border p-3.5 opacity-100 shadow-[0_18px_44px_-26px_hsl(var(--foreground)/0.85)] backdrop-blur-none filter-none"
         align="end"
+        style={{
+          backgroundColor: "hsl(var(--card))",
+          color: "hsl(var(--card-foreground))",
+          opacity: 1,
+        }}
       >
         <div className="space-y-3">
           {/* Header */}
-          <div className="flex items-center justify-between">
-            <h4 className="flex items-center gap-2 text-sm font-semibold">
+          <div className="border-border/60 flex items-center justify-between border-b pb-2.5">
+            <h4 className="flex items-center gap-2 text-sm font-semibold tracking-tight">
               <Zap className="text-primary h-4 w-4" />
               Quick Actions
             </h4>
@@ -149,7 +154,7 @@ export function PWAQuickActions({
           </div>
 
           {/* Quick Action Buttons */}
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-2 gap-2.5">
             {/* Install */}
             {!isInstalled && isInstallable && (
               <ActionButton
@@ -200,7 +205,7 @@ export function PWAQuickActions({
           </div>
 
           {/* Status Info */}
-          <div className="border-t pt-2">
+          <div className="border-border/60 border-t pt-2.5">
             <div className="text-muted-foreground flex items-center justify-between text-xs">
               <span className="flex items-center gap-1">
                 {status.serviceWorkerReady ? (
@@ -228,7 +233,7 @@ export function PWAQuickActions({
             <Button
               variant="ghost"
               size="sm"
-              className="mt-2 w-full text-xs"
+              className="font-tech border-border/50 hover:bg-muted/60 mt-2 w-full rounded-md border text-xs tracking-[0.08em] uppercase"
               onClick={() => {
                 navigateTo("pwa-settings");
                 setOpen(false);
@@ -260,11 +265,11 @@ function ActionButton({
   variant = "default",
 }: ActionButtonProps) {
   const variantStyles = {
-    default: "bg-muted hover:bg-muted/80",
+    default: "border-border/60 bg-muted/50 text-foreground hover:bg-muted/75 border",
     primary:
-      "bg-teal-100 hover:bg-blue-200 text-teal-600 dark:bg-teal-900/30 dark:hover:bg-teal-900/50 dark:text-teal-300",
+      "border-primary/25 bg-primary/12 text-primary hover:bg-primary/18 border",
     success:
-      "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300",
+      "border-green-300 bg-green-100 text-green-800 dark:border-green-800 dark:bg-green-900/30 dark:text-green-300 border",
   };
 
   return (
@@ -272,7 +277,7 @@ function ActionButton({
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        "flex flex-col items-center gap-1.5 rounded-lg p-3 transition-colors",
+        "font-tech flex min-h-20 flex-col items-center justify-center gap-1.5 rounded-lg p-3 text-[11px] tracking-[0.08em] uppercase transition-colors",
         "disabled:cursor-not-allowed disabled:opacity-50",
         variantStyles[variant]
       )}

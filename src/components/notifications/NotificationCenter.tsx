@@ -183,7 +183,14 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({
         </Button>
       </SheetTrigger>
 
-      <SheetContent className="w-full sm:max-w-xl">
+      <SheetContent
+        className="w-full overflow-hidden border-l border-border/70 bg-card text-card-foreground opacity-100 shadow-[0_24px_60px_-30px_hsl(var(--foreground)/0.7)] backdrop-blur-none filter-none sm:max-w-xl"
+        style={{
+          backgroundColor: "hsl(var(--card))",
+          color: "hsl(var(--card-foreground))",
+          opacity: 1,
+        }}
+      >
         {showPreferences ? (
           <div>
             <div className="mb-4 flex items-center justify-between">
@@ -203,7 +210,7 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({
           </div>
         ) : (
           <>
-            <SheetHeader>
+            <SheetHeader className="border-border/60 border-b pb-4">
               <div className="flex items-center justify-between">
                 <SheetTitle className="flex items-center gap-2">
                   <Bell className="h-5 w-5" />
@@ -230,23 +237,23 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({
 
             {/* Stats */}
             <div className="my-4 grid grid-cols-4 gap-2">
-              <div className="bg-muted rounded-lg p-2 text-center">
+              <div className="border-border/60 bg-muted/40 rounded-lg border p-2 text-center">
                 <div className="text-2xl font-bold">{stats.total}</div>
                 <div className="text-muted-foreground text-xs">Total</div>
               </div>
-              <div className="bg-muted rounded-lg p-2 text-center">
+              <div className="border-border/60 bg-muted/40 rounded-lg border p-2 text-center">
                 <div className="text-primary text-2xl font-bold">
                   {stats.byType.info}
                 </div>
                 <div className="text-muted-foreground text-xs">Info</div>
               </div>
-              <div className="bg-muted rounded-lg p-2 text-center">
+              <div className="border-border/60 bg-muted/40 rounded-lg border p-2 text-center">
                 <div className="text-2xl font-bold text-orange-600">
                   {stats.byType.warning}
                 </div>
                 <div className="text-muted-foreground text-xs">Warnings</div>
               </div>
-              <div className="bg-muted rounded-lg p-2 text-center">
+              <div className="border-border/60 bg-muted/40 rounded-lg border p-2 text-center">
                 <div className="text-2xl font-bold text-red-600">
                   {stats.byType.error}
                 </div>
@@ -261,6 +268,7 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({
                 size="sm"
                 onClick={handleMarkAllAsRead}
                 disabled={unreadCount === 0}
+                className="font-tech rounded-md tracking-[0.08em] uppercase"
               >
                 <Check className="mr-2 h-4 w-4" />
                 Mark all read
@@ -270,6 +278,7 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({
                 size="sm"
                 onClick={handleClearAll}
                 disabled={notifications.length === 0}
+                className="font-tech rounded-md tracking-[0.08em] uppercase"
               >
                 <Trash2 className="mr-2 h-4 w-4" />
                 Clear all
@@ -278,20 +287,25 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({
 
             {/* Filters */}
             <Tabs defaultValue="all" className="mb-4">
-              <TabsList className="grid w-full grid-cols-3">
+              <TabsList className="border-border/60 bg-muted/35 grid w-full grid-cols-3 rounded-md border p-1">
                 <TabsTrigger
                   value="all"
+                  className="font-tech tracking-[0.08em] uppercase"
                   onClick={() => setShowOnlyUnread(false)}
                 >
                   All
                 </TabsTrigger>
                 <TabsTrigger
                   value="unread"
+                  className="font-tech tracking-[0.08em] uppercase"
                   onClick={() => setShowOnlyUnread(true)}
                 >
                   Unread ({unreadCount})
                 </TabsTrigger>
-                <TabsTrigger value="filters">
+                <TabsTrigger
+                  value="filters"
+                  className="font-tech tracking-[0.08em] uppercase"
+                >
                   <Filter className="mr-2 h-4 w-4" />
                   Filters
                 </TabsTrigger>
@@ -373,9 +387,9 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({
                     <div
                       key={notification.id}
                       className={cn(
-                        "rounded-lg border p-4 transition-all",
-                        !notification.read && "bg-accent/50 border-primary/50",
-                        notification.read && "opacity-60"
+                        "border-border/65 rounded-lg border p-4 transition-all hover:border-primary/40 hover:shadow-[0_10px_24px_-20px_hsl(var(--foreground)/0.8)]",
+                        !notification.read && "bg-accent/45 border-primary/45",
+                        notification.read && "opacity-70"
                       )}
                     >
                       <div className="flex items-start gap-3">

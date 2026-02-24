@@ -66,7 +66,7 @@ export const UploadForm: React.FC<UploadFormProps> = ({
           </CardDescription>
         </CardHeader>
 
-        <CardContent className="space-y-8 p-6 sm:p-8">
+        <CardContent className="space-y-6 sm:space-y-8 p-4 sm:p-6 md:p-8">
           {!selectedFile && !error && (
             <Tabs
               value={uploadMethod}
@@ -75,19 +75,19 @@ export const UploadForm: React.FC<UploadFormProps> = ({
               }
               className="w-full"
             >
-              <TabsList className="bg-muted/30 border-border/50 mb-8 grid h-auto w-full grid-cols-2 rounded-xl border p-1.5">
+              <TabsList className="bg-muted/30 border-border/50 mb-6 sm:mb-8 grid h-auto w-full grid-cols-2 rounded-xl border p-1.5">
                 <TabsTrigger
                   value="file"
-                  className="data-[state=active]:bg-background text-muted-foreground hover:text-foreground data-[state=active]:text-primary data-[state=active]: dark:data-[state=active]:text-primary flex h-12 items-center justify-center gap-2.5 rounded-lg text-sm font-semibold transition-all duration-200 data-[state=active]:shadow-md"
+                  className="data-[state=active]:bg-background text-muted-foreground hover:text-foreground data-[state=active]:text-primary data-[state=active]: dark:data-[state=active]:text-primary flex h-10 sm:h-12 items-center justify-center gap-2 sm:gap-2.5 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-200 data-[state=active]:shadow-md"
                 >
-                  <Upload className="h-5 w-5" />
+                  <Upload className="h-4 w-4 sm:h-5 sm:w-5" />
                   Upload ZIP
                 </TabsTrigger>
                 <TabsTrigger
                   value="github"
-                  className="data-[state=active]:bg-background text-muted-foreground hover:text-foreground flex h-12 items-center justify-center gap-2.5 rounded-lg text-sm font-semibold transition-all duration-200 data-[state=active]:text-purple-600 data-[state=active]:shadow-md data-[state=active]:shadow-purple-500/5 dark:data-[state=active]:text-purple-400"
+                  className="data-[state=active]:bg-background text-muted-foreground hover:text-foreground flex h-10 sm:h-12 items-center justify-center gap-2 sm:gap-2.5 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-200 data-[state=active]:text-purple-600 data-[state=active]:shadow-md data-[state=active]:shadow-purple-500/5 dark:data-[state=active]:text-purple-400"
                 >
-                  <Github className="h-5 w-5" />
+                  <Github className="h-4 w-4 sm:h-5 sm:w-5" />
                   GitHub Repo
                 </TabsTrigger>
               </TabsList>

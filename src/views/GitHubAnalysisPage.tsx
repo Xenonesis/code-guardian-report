@@ -578,8 +578,8 @@ export const GitHubAnalysisPage: React.FC = () => {
         />
 
         {/* Hero Section */}
-        <div className="relative border-b border-white/10">
-          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
+        <div className="relative border-b border-border/50 dark:border-white/10">
+          <div className="absolute inset-0 bg-background/40 backdrop-blur-sm dark:bg-black/40" />
 
           <div className="relative z-10 mx-auto max-w-7xl px-4 pt-24 pb-12 sm:px-6 lg:px-8">
             <GitHubProfileHeader
@@ -605,17 +605,17 @@ export const GitHubAnalysisPage: React.FC = () => {
           {/* Repository Selection Card */}
           {repositories.length > 0 && (
             <div className="mb-8">
-              <Card className="border-white/10 bg-black/40 p-4 shadow-sm backdrop-blur-sm sm:p-6">
+              <Card className="border-border/50 bg-background/40 p-4 shadow-sm backdrop-blur-sm sm:p-6 dark:border-white/10 dark:bg-black/40">
                 <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                   <div className="flex min-w-0 items-center gap-3">
                     <div className="bg-primary/10 border-primary/20 rounded-lg border p-2">
                       <Github className="text-primary h-5 w-5" />
                     </div>
                     <div className="min-w-0">
-                      <h2 className="font-display text-lg font-bold tracking-wide text-white">
+                      <h2 className="font-display text-lg font-bold tracking-wide text-foreground">
                         ACTIVE REPOSITORIES
                       </h2>
-                      <p className="font-mono text-xs break-words text-slate-400">
+                      <p className="font-mono text-xs break-words text-muted-foreground">
                         SELECT_TARGET // ({repositories.length} NODES_DETECTED)
                       </p>
                     </div>
@@ -626,7 +626,7 @@ export const GitHubAnalysisPage: React.FC = () => {
                       size="sm"
                       onClick={() => refreshRepositories?.()}
                       disabled={reposLoading}
-                      className="w-full border-white/10 font-mono text-xs text-slate-300 hover:bg-white/5 sm:w-auto"
+                      className="w-full border-border/50 font-mono text-xs text-foreground/80 hover:bg-muted sm:w-auto dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/5"
                     >
                       {reposLoading ? "SCANNING..." : "REFRESH_NODES"}
                     </Button>
@@ -634,7 +634,7 @@ export const GitHubAnalysisPage: React.FC = () => {
                       variant="outline"
                       size="sm"
                       onClick={() => setShowGitHubRepos(!showGitHubRepos)}
-                      className="w-full border-white/10 font-mono text-xs text-slate-300 hover:bg-white/5 sm:w-auto"
+                      className="w-full border-border/50 font-mono text-xs text-foreground/80 hover:bg-muted sm:w-auto dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/5"
                     >
                       {showGitHubRepos ? "HIDE_LIST" : "SHOW_LIST"}
                     </Button>
@@ -659,20 +659,20 @@ export const GitHubAnalysisPage: React.FC = () => {
             !isGitHubUser &&
             !permissionGranted && (
               <div className="mb-8">
-                <Card className="hover:border-primary/30 border-2 border-dashed border-white/10 bg-black/40 p-8 text-center backdrop-blur-sm transition-colors">
-                  <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full border border-white/10 bg-white/5">
-                    <Github className="h-8 w-8 text-white" />
+                <Card className="hover:border-primary/30 border-2 border-dashed border-border/50 bg-background/40 p-8 text-center backdrop-blur-sm transition-colors dark:border-white/10 dark:bg-black/40">
+                  <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full border border-border/50 bg-muted/50 dark:border-white/10 dark:bg-white/5">
+                    <Github className="h-8 w-8 text-foreground" />
                   </div>
-                  <h3 className="font-display mb-2 text-xl font-bold text-white">
+                  <h3 className="font-display mb-2 text-xl font-bold text-foreground">
                     CONNECT_GITHUB_ACCOUNT
                   </h3>
-                  <p className="mx-auto mb-6 max-w-md font-mono text-xs text-slate-400">
+                  <p className="mx-auto mb-6 max-w-md font-mono text-xs text-muted-foreground">
                     Link your GitHub username to automatically load your
                     repositories for security analysis.
                   </p>
                   <Button
                     onClick={openConnectGitHubPrompt}
-                    className="border border-white/20 bg-white/10 font-bold text-white hover:bg-white/20"
+                    className="border border-border/50 bg-muted/50 font-bold text-foreground hover:bg-muted dark:border-white/20 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
                   >
                     <Github className="mr-2 h-4 w-4" />
                     INITIALIZE_CONNECTION
@@ -684,26 +684,26 @@ export const GitHubAnalysisPage: React.FC = () => {
           {/* Loading Skeleton */}
           {reposLoading && repositories.length === 0 && (
             <div className="mb-8">
-              <Card className="relative overflow-hidden border border-white/10 bg-black/40 p-6 backdrop-blur-sm sm:p-8">
+              <Card className="relative overflow-hidden border border-border/50 bg-background/40 p-6 backdrop-blur-sm sm:p-8 dark:border-white/10 dark:bg-black/40">
                 <div className="relative space-y-6">
                   <div className="flex flex-col items-center gap-4 text-center">
-                    <Skeleton className="h-16 w-16 rounded-full bg-white/5" />
+                    <Skeleton className="h-16 w-16 rounded-full bg-muted/50 dark:bg-white/5" />
                     <div className="space-y-2">
-                      <Skeleton className="h-4 w-48 bg-white/5" />
-                      <Skeleton className="h-3 w-32 bg-white/5" />
+                      <Skeleton className="h-4 w-48 bg-muted/50 dark:bg-white/5" />
+                      <Skeleton className="h-3 w-32 bg-muted/50 dark:bg-white/5" />
                     </div>
                   </div>
                   <div className="grid gap-3 sm:grid-cols-2">
                     {Array.from({ length: 4 }).map((_, index) => (
                       <div
                         key={`repo-skeleton-${index}`}
-                        className="rounded-xl border border-white/5 bg-white/5 p-4"
+                        className="rounded-xl border border-border/50 bg-muted/50 p-4 dark:border-white/5 dark:bg-white/5"
                       >
                         <div className="flex items-start gap-3">
-                          <Skeleton className="h-9 w-9 rounded bg-white/10" />
+                          <Skeleton className="h-9 w-9 rounded bg-muted dark:bg-white/10" />
                           <div className="flex-1 space-y-2">
-                            <Skeleton className="h-3 w-3/4 bg-white/10" />
-                            <Skeleton className="h-2 w-1/2 bg-white/10" />
+                            <Skeleton className="h-3 w-3/4 bg-muted dark:bg-white/10" />
+                            <Skeleton className="h-2 w-1/2 bg-muted dark:bg-white/10" />
                           </div>
                         </div>
                       </div>
@@ -767,20 +767,20 @@ export const GitHubAnalysisPage: React.FC = () => {
             {selectedTab === "results" && analysisResults && (
               <div className="animate-in fade-in space-y-6 duration-500">
                 {/* Results Header Card */}
-                <Card className="relative overflow-hidden border-white/10 bg-black/40 p-4 shadow-sm backdrop-blur-sm sm:p-6">
+                <Card className="relative overflow-hidden border-border/50 bg-background/40 dark:border-white/10 dark:bg-black/40 p-4 shadow-sm backdrop-blur-sm sm:p-6">
                   {/* Glow effect */}
                   <div className="bg-primary/5 pointer-events-none absolute top-0 right-0 -mt-32 -mr-32 h-64 w-64 rounded-full blur-3xl" />
 
                   <div className="relative z-10 flex flex-col justify-between gap-6 md:flex-row md:items-center">
                     <div className="flex min-w-0 items-center gap-4 sm:gap-5">
-                      <div className="border-primary/30 flex h-14 w-14 items-center justify-center rounded-2xl border bg-black/40 shadow-[0_0_15px_-5px_rgba(16,185,129,0.3)] sm:h-16 sm:w-16">
+                      <div className="border-primary/30 flex h-14 w-14 items-center justify-center rounded-2xl border bg-background/40 dark:bg-black/40 shadow-[0_0_15px_-5px_rgba(16,185,129,0.3)] sm:h-16 sm:w-16">
                         <FileCode className="text-primary h-8 w-8" />
                       </div>
                       <div className="min-w-0">
-                        <h2 className="font-display mb-1 text-xl font-bold tracking-wide text-white sm:text-2xl">
+                        <h2 className="font-display mb-1 text-xl font-bold tracking-wide text-foreground dark:text-white sm:text-2xl">
                           ANALYSIS RESULTS
                         </h2>
-                        <div className="flex min-w-0 items-center gap-2 font-mono text-xs text-slate-400">
+                        <div className="flex min-w-0 items-center gap-2 font-mono text-xs text-muted-foreground dark:text-slate-400">
                           <GitBranch className="h-3 w-3" />
                           <span className="truncate">{analyzedRepoName}</span>
                         </div>
@@ -789,9 +789,9 @@ export const GitHubAnalysisPage: React.FC = () => {
 
                     <div className="flex w-full flex-col gap-4 sm:w-auto sm:flex-row sm:items-center sm:gap-6">
                       <div className="text-left sm:text-right">
-                        <div className="font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                        <div className="font-display text-3xl font-bold tracking-tight text-foreground dark:text-white sm:text-4xl">
                           {analysisResults.summary.securityScore}
-                          <span className="text-xl font-medium text-slate-500">
+                          <span className="text-xl font-medium text-muted-foreground dark:text-slate-500">
                             /100
                           </span>
                         </div>
@@ -799,7 +799,7 @@ export const GitHubAnalysisPage: React.FC = () => {
                           Security Score
                         </div>
                       </div>
-                      <div className="hidden h-12 w-px bg-white/10 sm:block" />
+                      <div className="hidden h-12 w-px bg-border/50 dark:bg-white/10 sm:block" />
                       <Button
                         variant="outline"
                         onClick={() => {
@@ -807,7 +807,7 @@ export const GitHubAnalysisPage: React.FC = () => {
                           setAnalyzedRepoName("");
                           setSelectedTab("overview");
                         }}
-                        className="w-full border-white/10 text-slate-300 hover:bg-white/5 sm:w-auto"
+                        className="w-full border-border/50 dark:border-white/10 text-muted-foreground dark:text-slate-300 hover:bg-muted/50 dark:hover:bg-white/5 sm:w-auto"
                       >
                         <ArrowLeft className="mr-2 h-4 w-4" />
                         BACK_TO_DASHBOARD
@@ -847,7 +847,7 @@ export const GitHubAnalysisPage: React.FC = () => {
                       <div
                         key={i}
                         className={cn(
-                          "rounded-lg border bg-black/20 p-4 backdrop-blur-sm transition-all",
+                          "rounded-lg border bg-background/20 dark:bg-black/20 p-4 backdrop-blur-sm transition-all",
                           stat.color === "red" &&
                             "border-red-500/30 text-red-500",
                           stat.color === "orange" &&
@@ -857,7 +857,7 @@ export const GitHubAnalysisPage: React.FC = () => {
                           stat.color === "blue" &&
                             "border-emerald-500/30 text-emerald-500",
                           stat.color === "slate" &&
-                            "border-white/10 text-slate-400"
+                            "border-border/50 dark:border-white/10 text-muted-foreground dark:text-slate-400"
                         )}
                       >
                         <div className="font-display mb-1 text-2xl font-bold">
@@ -876,7 +876,7 @@ export const GitHubAnalysisPage: React.FC = () => {
                   fallback={
                     <div className="flex flex-col items-center justify-center py-12">
                       <Terminal className="text-primary/50 mb-4 h-12 w-12 animate-pulse" />
-                      <p className="font-mono text-sm text-slate-400">
+                      <p className="font-mono text-sm text-muted-foreground dark:text-slate-400">
                         DECRYPTING_RESULTS...
                       </p>
                     </div>

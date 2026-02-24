@@ -15,11 +15,11 @@ export const TabNavigation: React.FC<TabNavigationProps> = ({
   isRedirecting = false,
 }) => {
   const tabClass =
-    "relative z-10 flex min-w-[48px] flex-shrink-0 items-center justify-center gap-0 rounded-md px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-sm sm:min-w-[110px] sm:gap-2 sm:px-5";
+    "relative z-10 flex min-w-[48px] flex-shrink-0 items-center justify-center gap-1.5 sm:gap-2 rounded-md px-3 sm:px-5 py-2 text-xs sm:text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-sm sm:min-w-[110px]";
 
   return (
     <TabsList
-      className="mb-4 flex w-full gap-1 overflow-x-auto rounded-lg border border-border bg-card p-1 sm:mb-6 sm:justify-center sm:gap-1"
+      className="mb-4 flex w-full gap-1 overflow-x-auto rounded-lg border border-border bg-card p-1 sm:mb-6 sm:justify-center sm:gap-1 scrollbar-hide"
       role="tablist"
       aria-label="Main navigation tabs"
     >
@@ -31,8 +31,8 @@ export const TabNavigation: React.FC<TabNavigationProps> = ({
         aria-selected={currentTab === "upload"}
         aria-label="Upload Code"
       >
-        <UploadCloud className="mr-0 h-4 w-4 sm:mr-1.5" aria-hidden="true" />
-        <span className="hidden whitespace-nowrap sm:inline">Upload Code</span>
+        <UploadCloud className="h-4 w-4" aria-hidden="true" />
+        <span className="whitespace-nowrap">Upload Code</span>
       </TabsTrigger>
 
       <TabsTrigger
@@ -43,8 +43,8 @@ export const TabNavigation: React.FC<TabNavigationProps> = ({
         aria-selected={currentTab === "ai-config"}
         aria-label="AI Config"
       >
-        <Sliders className="mr-0 h-4 w-4 sm:mr-1.5" aria-hidden="true" />
-        <span className="hidden whitespace-nowrap sm:inline">AI Config</span>
+        <Sliders className="h-4 w-4" aria-hidden="true" />
+        <span className="whitespace-nowrap">AI Config</span>
       </TabsTrigger>
 
       <TabsTrigger
@@ -55,8 +55,8 @@ export const TabNavigation: React.FC<TabNavigationProps> = ({
         aria-selected={currentTab === "prompts"}
         aria-label="Prompts"
       >
-        <MessageSquare className="mr-0 h-4 w-4 sm:mr-1.5" aria-hidden="true" />
-        <span className="hidden whitespace-nowrap sm:inline">Prompts</span>
+        <MessageSquare className="h-4 w-4" aria-hidden="true" />
+        <span className="whitespace-nowrap">Prompts</span>
       </TabsTrigger>
 
       <TabsTrigger
@@ -71,8 +71,8 @@ export const TabNavigation: React.FC<TabNavigationProps> = ({
         aria-disabled={!analysisResults}
         aria-label="Results"
       >
-        <BarChart3 className="mr-0 h-4 w-4 sm:mr-1.5" aria-hidden="true" />
-        <span className="hidden whitespace-nowrap sm:inline">
+        <BarChart3 className="h-4 w-4" aria-hidden="true" />
+        <span className="whitespace-nowrap">
           {isRedirecting ? "Loading..." : "Results"}
         </span>
       </TabsTrigger>

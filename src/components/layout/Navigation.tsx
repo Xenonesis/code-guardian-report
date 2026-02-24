@@ -30,7 +30,7 @@ interface NavigationProps {
 }
 
 export const Navigation: React.FC<NavigationProps> = ({
-  className: _className,
+  className,
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -136,13 +136,16 @@ export const Navigation: React.FC<NavigationProps> = ({
         className={cn(
           "fixed top-0 right-0 left-0 z-50 w-full transition-all duration-300",
           isScrolled || isMobileMenuOpen
-            ? "bg-background/80 supports-[backdrop-filter]:bg-background/60 border-border/40 border-b shadow-sm backdrop-blur-xl"
-            : "border-b border-transparent bg-transparent py-2"
+            ? "border-border/50 bg-background/85 supports-[backdrop-filter]:bg-background/70 border-b shadow-[0_10px_40px_-24px_hsl(var(--foreground)/0.65)] backdrop-blur-xl"
+            : "border-b border-transparent bg-transparent py-2",
+          className
         )}
         style={{
           paddingTop: "env(safe-area-inset-top)",
         }}
       >
+        <div className="from-primary/6 via-primary/2 to-background pointer-events-none absolute inset-x-0 top-0 h-full bg-gradient-to-b" />
+        <div className="pointer-events-none absolute right-0 left-0 h-px bg-gradient-to-r from-transparent via-primary/45 to-transparent" />
         <div className="relative z-50 mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
           <div className="flex h-14 items-center justify-between sm:h-16">
             {/* Logo */}
@@ -151,16 +154,18 @@ export const Navigation: React.FC<NavigationProps> = ({
               className="group flex items-center gap-2 transition-opacity hover:opacity-90 sm:gap-2.5"
               aria-label="Go to home"
             >
-              <div className="from-primary/20 to-primary/5 relative flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr transition-transform group-hover:scale-105">
+              <div className="from-primary/25 to-primary/5 border-primary/35 relative flex h-9 w-9 items-center justify-center rounded-lg border bg-gradient-to-tr shadow-[0_0_0_1px_hsl(var(--background))_inset] transition-transform group-hover:scale-105">
                 <Shield className="text-primary h-5 w-5 transition-colors" />
               </div>
-              <span className="font-display text-foreground hidden text-lg font-medium tracking-tight whitespace-nowrap sm:block md:text-xl">
-                Code Guardian
-              </span>
+              <div className="hidden items-center sm:flex">
+                <span className="font-display text-foreground text-lg font-medium tracking-tight whitespace-nowrap md:text-xl">
+                  Code Guardian
+                </span>
+              </div>
             </button>
 
             {/* Desktop Nav */}
-            <div className="bg-muted/30 border-border/20 hidden items-center justify-center rounded-full border p-1.5 backdrop-blur-sm lg:flex">
+            <div className="border-border/45 bg-background/70 hidden items-center justify-center rounded-xl border p-1.5 shadow-[0_4px_24px_-16px_hsl(var(--foreground)/0.5)] backdrop-blur-sm lg:flex">
               <div className="flex items-center gap-1">
                 {navItems.map((item) => {
                   const active = isActive(item.id);
@@ -169,7 +174,7 @@ export const Navigation: React.FC<NavigationProps> = ({
                       key={item.id}
                       onClick={() => handleNavigate(item.id)}
                       className={cn(
-                        "relative flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-medium transition-colors",
+                        "relative flex items-center gap-2 rounded-lg px-3.5 py-1.5 text-sm font-medium transition-colors",
                         active
                           ? "text-primary-foreground"
                           : "text-muted-foreground hover:text-foreground"
@@ -178,7 +183,7 @@ export const Navigation: React.FC<NavigationProps> = ({
                       {active && (
                         <motion.div
                           layoutId="active-nav-pill"
-                          className="bg-primary absolute inset-0 rounded-full shadow-sm"
+                          className="bg-primary absolute inset-0 rounded-lg shadow-[0_8px_18px_-10px_hsl(var(--primary))]"
                           transition={{
                             type: "spring",
                             bounce: 0.2,
@@ -187,11 +192,14 @@ export const Navigation: React.FC<NavigationProps> = ({
                         />
                       )}
                       <span className="relative z-10 flex items-center gap-2">
+                        <span className="text-[10px] tracking-[0.14em] uppercase opacity-70">
+                          {item.id.slice(0, 2)}
+                        </span>
                         {item.label}
                         {item.badge && (
                           <span
                             className={cn(
-                              "rounded-full px-1.5 py-0.5 text-[10px] font-bold uppercase",
+                              "font-tech rounded-sm px-1.5 py-0.5 text-[10px] font-bold tracking-[0.08em] uppercase",
                               active
                                 ? "bg-white/20 text-white"
                                 : "bg-primary/10 text-primary"
@@ -208,7 +216,7 @@ export const Navigation: React.FC<NavigationProps> = ({
             </div>
 
             {/* Tablet Nav (Icon Only) */}
-            <div className="bg-muted/30 border-border/20 hidden items-center justify-center rounded-full border p-1 backdrop-blur-sm md:flex lg:hidden">
+            <div className="border-border/45 bg-background/70 hidden items-center justify-center rounded-xl border p-1 backdrop-blur-sm md:flex lg:hidden">
               <div className="flex items-center gap-1">
                 {navItems.slice(0, 4).map((item) => {
                   const active = isActive(item.id);
@@ -217,17 +225,17 @@ export const Navigation: React.FC<NavigationProps> = ({
                       key={item.id}
                       onClick={() => handleNavigate(item.id)}
                       className={cn(
-                        "relative flex h-9 w-9 items-center justify-center rounded-full transition-colors",
+                        "relative flex h-9 w-9 items-center justify-center rounded-lg transition-colors",
                         active
                           ? "text-primary-foreground"
-                          : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                          : "text-muted-foreground hover:bg-muted/70 hover:text-foreground"
                       )}
                       aria-label={item.label}
                     >
                       {active && (
                         <motion.div
                           layoutId="active-nav-tablet-pill"
-                          className="bg-primary absolute inset-0 rounded-full shadow-sm"
+                          className="bg-primary absolute inset-0 rounded-lg shadow-[0_8px_18px_-10px_hsl(var(--primary))]"
                           transition={{
                             type: "spring",
                             bounce: 0.2,
@@ -251,7 +259,7 @@ export const Navigation: React.FC<NavigationProps> = ({
                 <div className="relative hidden md:block" ref={userDropdownRef}>
                   <button
                     onClick={() => setShowUserDropdown(!showUserDropdown)}
-                    className="group border-border/40 bg-background/50 hover:bg-muted/50 flex items-center gap-3 rounded-full border py-1 pr-3 pl-1 text-sm transition-all"
+                    className="group border-border/50 bg-background/75 hover:bg-muted/60 flex items-center gap-3 rounded-xl border py-1 pr-3 pl-1 text-sm shadow-[0_6px_20px_-14px_hsl(var(--foreground)/0.7)] transition-all"
                   >
                     {getGithubAvatarUrl() ? (
                       <img
@@ -283,7 +291,7 @@ export const Navigation: React.FC<NavigationProps> = ({
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 10, scale: 0.95 }}
                         transition={{ duration: 0.2 }}
-                        className="border-border bg-popover/80 absolute right-0 z-50 mt-2 w-64 rounded-xl border p-2 shadow-xl backdrop-blur-xl"
+                        className="border-border bg-popover/92 absolute right-0 z-50 mt-2 w-64 rounded-xl border p-2 shadow-[0_16px_48px_-22px_hsl(var(--foreground)/0.75)] backdrop-blur-xl"
                       >
                         <div className="px-3 py-2.5">
                           <p className="text-foreground truncate text-sm font-semibold">
@@ -325,31 +333,31 @@ export const Navigation: React.FC<NavigationProps> = ({
                   <Button
                     variant="ghost"
                     onClick={() => setShowAuthModal(true)}
-                    className="text-muted-foreground hover:text-foreground font-medium"
+                    className="text-muted-foreground hover:text-foreground border-border/50 hover:bg-muted/60 rounded-lg border px-4 font-medium"
                   >
                     Sign In
                   </Button>
                   <Button
                     onClick={() => setShowAuthModal(true)}
-                    className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-primary/20 rounded-full px-6 shadow-lg transition-all hover:scale-105 active:scale-95"
+                    className="text-primary-foreground from-primary to-primary/85 hover:to-primary bg-gradient-to-r shadow-primary/20 rounded-lg border border-transparent px-6 shadow-lg transition-all hover:scale-105 active:scale-95"
                   >
                     Get Started
                   </Button>
                 </div>
               )}
 
-              <div className="bg-border/50 hidden h-6 w-px sm:block" />
+              <div className="bg-border/60 hidden h-6 w-px sm:block" />
 
               <ThemeToggle />
-              <NotificationCenter className="hover:bg-muted/50 h-9 w-9 rounded-full transition-colors" />
-              <PWAQuickActions className="hover:bg-muted/50 hidden h-9 w-9 rounded-full transition-colors sm:flex" />
+              <NotificationCenter className="hover:bg-muted/60 border-border/40 h-9 w-9 rounded-lg border transition-colors" />
+              <PWAQuickActions className="hover:bg-muted/60 border-border/40 hidden h-9 w-9 rounded-lg border transition-colors sm:flex" />
 
               {/* Mobile Toggle */}
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="h-9 w-9 rounded-full lg:hidden"
+                className="border-border/50 hover:bg-muted/70 h-9 w-9 rounded-lg border lg:hidden"
                 aria-label="Toggle mobile menu"
               >
                 {isMobileMenuOpen ? (
@@ -371,10 +379,11 @@ export const Navigation: React.FC<NavigationProps> = ({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="bg-background fixed inset-0 z-40 flex flex-col backdrop-blur-3xl lg:hidden"
+            className="bg-background/96 fixed inset-0 z-40 flex flex-col backdrop-blur-3xl lg:hidden"
           >
+            <div className="from-primary/12 via-primary/4 to-background pointer-events-none absolute inset-0 bg-gradient-to-b" />
             <motion.div
-              className="flex flex-1 flex-col overflow-y-auto px-6 pt-24 pb-20"
+              className="relative flex flex-1 flex-col overflow-y-auto px-6 pt-24 pb-20"
               initial="hidden"
               animate="visible"
               exit="hidden"
@@ -399,10 +408,10 @@ export const Navigation: React.FC<NavigationProps> = ({
                       }}
                       onClick={() => handleNavigate(item.id)}
                       className={cn(
-                        "group relative flex w-full items-center gap-4 overflow-hidden rounded-2xl px-4 py-3 text-left transition-all active:scale-98",
+                        "group border-border/45 relative flex w-full items-center gap-4 overflow-hidden rounded-xl border px-4 py-3 text-left transition-all active:scale-98",
                         active
                           ? "bg-primary text-primary-foreground shadow-primary/25 shadow-lg"
-                          : "hover:bg-muted/50 text-muted-foreground hover:text-foreground"
+                          : "bg-background/60 hover:bg-muted/55 text-muted-foreground hover:text-foreground"
                       )}
                     >
                       <div

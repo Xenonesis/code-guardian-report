@@ -28,7 +28,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ onStartAnalysis }) => {
         {/* Tagline */}
         {/* Top Technical Marker */}
         <div className="mb-8 flex justify-center">
-          <div className="border-primary/30 bg-primary/5 text-primary relative border px-3 py-1 font-mono text-xs tracking-[0.2em] uppercase">
+          <div className="border-primary/30 bg-primary/5 text-primary relative border px-2 py-1 sm:px-3 font-mono text-[10px] sm:text-xs tracking-[0.1em] sm:tracking-[0.2em] uppercase">
             <span className="border-primary absolute -top-1 -left-1 h-2 w-2 border-t border-l"></span>
             <span className="border-primary absolute -right-1 -bottom-1 h-2 w-2 border-r border-b"></span>
             System Status: Online // Monitoring Active
@@ -36,7 +36,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ onStartAnalysis }) => {
         </div>
 
         <div className="animate-fade-in space-y-6">
-          <h1 className="font-display text-foreground text-5xl leading-none tracking-tight uppercase sm:text-7xl md:text-8xl">
+          <h1 className="font-display text-foreground text-4xl leading-none tracking-tight uppercase sm:text-6xl md:text-8xl">
             Code{" "}
             <span
               className="text-transparent"
@@ -51,11 +51,11 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ onStartAnalysis }) => {
             <span className="text-primary">Enterprise</span>
           </h1>
 
-          <div className="text-muted-foreground flex flex-wrap items-center justify-center gap-4 font-mono text-xs tracking-widest uppercase">
+          <div className="text-muted-foreground flex flex-wrap items-center justify-center gap-2 sm:gap-4 font-mono text-[10px] sm:text-xs tracking-wider sm:tracking-widest uppercase">
             <span>[ Static Analysis ]</span>
-            <span className="text-primary">•</span>
+            <span className="text-primary hidden sm:inline">•</span>
             <span>[ Vulnerability Detection ]</span>
-            <span className="text-primary">•</span>
+            <span className="text-primary hidden sm:inline">•</span>
             <span>[ Automated Repair ]</span>
           </div>
 
