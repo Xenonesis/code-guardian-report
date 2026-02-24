@@ -145,19 +145,19 @@ export function GitHubCopilotManager() {
   // Not signed in with GitHub
   if (!isGitHubUser) {
     return (
-      <div className="rounded-xl border border-slate-800 bg-[#0B1120] p-6 text-slate-200">
+      <div className="bg-card border-border text-foreground rounded-xl border p-6">
         <div className="flex flex-col items-center justify-center space-y-4 py-8 text-center">
           <div className="relative">
             <div className="absolute inset-0 animate-pulse rounded-full bg-blue-500/20 blur-xl"></div>
-            <div className="relative rounded-full bg-slate-800 p-4 ring-1 ring-slate-700">
+            <div className="bg-muted ring-border relative rounded-full p-4 ring-1">
               <Github className="h-8 w-8 text-white" />
             </div>
           </div>
           <div className="max-w-md space-y-2">
-            <h3 className="font-display text-xl font-bold text-white">
+            <h3 className="font-display text-foreground text-xl font-bold">
               GitHub Copilot Integration
             </h3>
-            <p className="text-sm leading-relaxed text-slate-400">
+            <p className="text-muted-foreground text-sm leading-relaxed">
               Sign in with GitHub to unlock AI-powered code analysis,
               intelligent suggestions, and automated fixes using GitHub Copilot
               models.
@@ -178,23 +178,23 @@ export function GitHubCopilotManager() {
   return (
     <div className="space-y-6">
       {/* Authentication Status */}
-      <div className="rounded-xl border border-blue-900/30 bg-[#0B1120] p-6 shadow-xl transition-all duration-300 hover:shadow-blue-900/10">
+      <div className="bg-card border-border rounded-xl border p-6 shadow-xl transition-all duration-300 hover:shadow-lg">
         <div className="mb-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div
               className={`rounded-lg p-2 transition-all duration-300 ${
                 authState.isAuthenticated
                   ? "bg-green-500/10 ring-1 ring-green-500/20"
-                  : "bg-slate-800"
+                  : "bg-muted"
               }`}
             >
               {statusIcon}
             </div>
             <div>
-              <h3 className="font-display text-lg font-bold text-slate-100">
+              <h3 className="font-display text-foreground text-lg font-bold">
                 GITHUB COPILOT STATUS
               </h3>
-              <div className="flex items-center gap-2 text-sm text-slate-400">
+              <div className="text-muted-foreground flex items-center gap-2 text-sm">
                 <span>{statusText}</span>
                 {authState.isAuthenticated && (
                   <Badge
@@ -204,7 +204,7 @@ export function GitHubCopilotManager() {
                     className={`h-5 px-2 py-0 text-[10px] ${
                       authState.hasCopilotAccess
                         ? "border-blue-500/30 bg-blue-500/20 text-blue-300 hover:bg-blue-500/30"
-                        : "border-slate-700 bg-slate-800 text-slate-400"
+                        : "border-border bg-muted text-muted-foreground"
                     }`}
                   >
                     {authState.hasCopilotAccess ? "Active" : "Auth Only"}
@@ -221,10 +221,10 @@ export function GitHubCopilotManager() {
                   size="sm"
                   onClick={handleTestConnection}
                   disabled={isTesting || verificationStatus === "verifying"}
-                  className="h-8 border-slate-700 bg-slate-800 text-slate-300 transition-all duration-300 hover:bg-slate-700 hover:text-white"
+                  className="border-border bg-background text-muted-foreground hover:text-foreground h-8 transition-all duration-300"
                 >
                   {isTesting || verificationStatus === "verifying" ? (
-                    <Skeleton className="h-3 w-3 rounded-full bg-slate-600" />
+                    <Skeleton className="bg-muted-foreground/40 h-3 w-3 rounded-full" />
                   ) : (
                     <RefreshCw className="mr-1.5 h-3.5 w-3.5" />
                   )}
@@ -234,7 +234,7 @@ export function GitHubCopilotManager() {
                   variant="ghost"
                   size="sm"
                   onClick={handleDisconnect}
-                  className="h-8 text-slate-400 transition-all duration-300 hover:bg-red-900/10 hover:text-red-400"
+                  className="text-muted-foreground hover:bg-destructive/10 hover:text-destructive h-8 transition-all duration-300"
                 >
                   <LogOut className="mr-1.5 h-3.5 w-3.5" />
                   Disconnect
@@ -246,13 +246,13 @@ export function GitHubCopilotManager() {
 
         {/* Status Alerts */}
         {authState.isAuthenticated && verificationStatus === "success" && (
-          <div className="flex items-start gap-3 rounded-lg border border-green-900/30 bg-green-900/10 p-4">
+          <div className="border-emerald-500/30 bg-emerald-500/10 flex items-start gap-3 rounded-lg border p-4">
             <CheckCircle className="mt-0.5 h-5 w-5 text-green-400" />
             <div>
-              <h4 className="text-sm font-medium text-green-300">
+              <h4 className="text-sm font-medium text-emerald-600 dark:text-emerald-300">
                 Subscription Active
               </h4>
-              <p className="mt-1 text-xs text-green-400/70">
+              <p className="mt-1 text-xs text-emerald-700/80 dark:text-emerald-300/70">
                 GitHub Copilot subscription verified. You have full access to AI
                 analysis features.
               </p>
@@ -263,11 +263,11 @@ export function GitHubCopilotManager() {
         {authState.isAuthenticated &&
           verificationStatus === "verifying" &&
           !isLoading && (
-            <div className="flex items-center gap-3 rounded-lg border border-blue-900/30 bg-blue-900/10 p-4">
+            <div className="border-primary/30 bg-primary/10 flex items-center gap-3 rounded-lg border p-4">
               <Skeleton className="h-5 w-5 rounded-full bg-blue-500/20" />
               <div className="space-y-1">
                 <Skeleton className="h-4 w-32 bg-blue-500/20" />
-                <p className="text-xs text-blue-300">
+                <p className="text-primary text-xs">
                   Verifying Copilot subscription...
                 </p>
               </div>
@@ -275,13 +275,13 @@ export function GitHubCopilotManager() {
           )}
 
         {error && verificationStatus === "failed" && (
-          <div className="flex items-start gap-3 rounded-lg border border-red-900/30 bg-red-900/10 p-4">
+          <div className="border-destructive/30 bg-destructive/10 flex items-start gap-3 rounded-lg border p-4">
             <AlertCircle className="mt-0.5 h-5 w-5 text-red-400" />
             <div>
-              <h4 className="text-sm font-medium text-red-300">
+              <h4 className="text-destructive text-sm font-medium">
                 Connection Failed
               </h4>
-              <p className="mt-1 text-xs text-red-400/70">{error}</p>
+              <p className="text-destructive/80 mt-1 text-xs">{error}</p>
             </div>
           </div>
         )}
@@ -290,17 +290,17 @@ export function GitHubCopilotManager() {
       {/* Model Selection */}
       {authState.isAuthenticated &&
         modelSelection.availableModels.length > 0 && (
-          <div className="rounded-xl border border-blue-900/30 bg-[#0B1120] p-6 shadow-xl transition-all duration-300 hover:shadow-blue-900/10">
+          <div className="bg-card border-border rounded-xl border p-6 shadow-xl transition-all duration-300 hover:shadow-lg">
             <div className="mb-6 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="rounded-lg bg-purple-500/10 p-2">
                   <Brain className="h-5 w-5 text-purple-400" />
                 </div>
                 <div>
-                  <h3 className="font-display text-lg font-bold text-slate-100">
+                  <h3 className="font-display text-foreground text-lg font-bold">
                     SELECT AI MODEL
                   </h3>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-muted-foreground text-xs">
                     Choose the optimal model for your analysis needs
                   </p>
                 </div>
@@ -312,21 +312,21 @@ export function GitHubCopilotManager() {
                 value={modelSelection.selectedModelId ?? undefined}
                 onValueChange={handleModelSelect}
               >
-                <SelectTrigger className="h-12 w-full border-slate-700 bg-[#0F1629] text-slate-200">
+                <SelectTrigger className="border-border bg-background text-foreground h-12 w-full">
                   <SelectValue placeholder="Select a model" />
                 </SelectTrigger>
-                <SelectContent className="max-h-[300px] border-slate-700 bg-[#0F1629] text-slate-200">
+                <SelectContent className="border-border bg-popover text-popover-foreground max-h-[300px]">
                   {modelSelection.availableModels.map((model) => (
                     <SelectItem
                       key={model.id}
                       value={model.id}
-                      className="cursor-pointer py-3 focus:bg-slate-800 focus:text-white"
+                      className="focus:bg-muted cursor-pointer py-3"
                     >
                       <div className="flex flex-col gap-1">
                         <span className="text-sm font-medium">
                           {model.name}
                         </span>
-                        <span className="text-xs text-slate-500">
+                        <span className="text-muted-foreground text-xs">
                           {model.version}
                         </span>
                       </div>
@@ -336,7 +336,7 @@ export function GitHubCopilotManager() {
               </Select>
 
               {selectedModel && (
-                <div className="animate-in fade-in rounded-xl border border-purple-900/30 bg-[#161F36] p-5 shadow-lg shadow-purple-900/10 duration-500">
+                <div className="bg-primary/5 border-primary/20 animate-in fade-in rounded-xl border p-5 shadow-lg duration-500">
                   <div className="flex items-start gap-4">
                     <div className="shrink-0 rounded-full bg-purple-500/20 p-2 text-purple-400">
                       <Sparkles className="h-5 w-5" />
@@ -344,7 +344,7 @@ export function GitHubCopilotManager() {
                     <div className="flex-1 space-y-4">
                       <div>
                         <div className="mb-1 flex items-center gap-2">
-                          <h4 className="text-base font-bold text-purple-100">
+                          <h4 className="text-foreground text-base font-bold">
                             {selectedModel.name}
                           </h4>
                           <Badge
@@ -354,27 +354,27 @@ export function GitHubCopilotManager() {
                             {selectedModel.version}
                           </Badge>
                         </div>
-                        <p className="text-sm leading-relaxed text-slate-400">
+                        <p className="text-muted-foreground text-sm leading-relaxed">
                           {selectedModel.description}
                         </p>
                       </div>
 
-                      <div className="grid grid-cols-2 gap-4 border-t border-slate-700/50 pt-4">
+                      <div className="border-border grid grid-cols-2 gap-4 border-t pt-4">
                         <div className="space-y-1">
-                          <div className="flex items-center gap-1.5 text-[10px] font-semibold tracking-wider text-slate-500 uppercase">
+                          <div className="text-muted-foreground flex items-center gap-1.5 text-[10px] font-semibold tracking-wider uppercase">
                             <Activity className="h-3 w-3" />
                             Max Tokens
                           </div>
-                          <p className="font-mono text-sm text-slate-200">
+                          <p className="text-foreground font-mono text-sm">
                             {selectedModel.maxTokens.toLocaleString()}
                           </p>
                         </div>
                         <div className="space-y-1">
-                          <div className="flex items-center gap-1.5 text-[10px] font-semibold tracking-wider text-slate-500 uppercase">
+                          <div className="text-muted-foreground flex items-center gap-1.5 text-[10px] font-semibold tracking-wider uppercase">
                             <Brain className="h-3 w-3" />
                             Context Window
                           </div>
-                          <p className="font-mono text-sm text-slate-200">
+                          <p className="text-foreground font-mono text-sm">
                             {(selectedModel.contextWindow / 1000).toFixed(0)}k
                             tokens
                           </p>
@@ -386,7 +386,7 @@ export function GitHubCopilotManager() {
                           selectedModel.capabilities.map((capability) => (
                             <div
                               key={capability}
-                              className="flex items-center gap-1.5 rounded-full border border-slate-700 bg-slate-800/50 px-2.5 py-1 text-[10px] font-medium text-slate-300"
+                              className="bg-muted/70 border-border text-muted-foreground flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[10px] font-medium"
                             >
                               {getCapabilityIcon(capability)}
                               <span className="capitalize">{capability}</span>
@@ -403,11 +403,11 @@ export function GitHubCopilotManager() {
 
       {/* Loading State */}
       {isLoading && !authState.isAuthenticated && (
-        <div className="flex items-center justify-center rounded-xl border border-slate-800 bg-[#0B1120] p-12">
+        <div className="bg-card border-border flex items-center justify-center rounded-xl border p-12">
           <div className="flex animate-pulse flex-col items-center gap-3">
-            <div className="h-10 w-10 rounded-full bg-slate-800"></div>
-            <div className="h-4 w-32 rounded bg-slate-800"></div>
-            <span className="text-sm text-slate-500">
+            <div className="bg-muted h-10 w-10 rounded-full"></div>
+            <div className="bg-muted h-4 w-32 rounded"></div>
+            <span className="text-muted-foreground text-sm">
               Connecting to GitHub Copilot...
             </span>
           </div>

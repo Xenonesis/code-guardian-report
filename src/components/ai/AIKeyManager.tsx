@@ -442,27 +442,27 @@ export const AIKeyManager: React.FC = () => {
   };
 
   return (
-    <div className="mx-auto w-full max-w-5xl space-y-8 p-6 text-slate-200">
+    <div className="text-foreground mx-auto w-full max-w-5xl space-y-8 p-6">
       {/* Header Section */}
-      <div className="relative overflow-hidden rounded-xl border border-blue-900/50 bg-[#0B1120] p-6 shadow-2xl">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/10 to-purple-900/10" />
+      <div className="bg-card border-border relative overflow-hidden rounded-xl border p-6 shadow-xl">
+        <div className="from-primary/10 to-primary/0 absolute inset-0 bg-gradient-to-r" />
         <div className="relative z-10 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 p-3 shadow-lg shadow-blue-900/20">
               <Bot className="h-6 w-6 text-white" />
             </div>
             <div>
-              <h2 className="font-display bg-gradient-to-r from-blue-100 to-indigo-200 bg-clip-text text-2xl font-bold tracking-tight text-transparent">
+              <h2 className="font-display from-foreground to-primary bg-gradient-to-r bg-clip-text text-2xl font-bold tracking-tight text-transparent">
                 AI ANALYSIS INTEGRATION
               </h2>
-              <p className="text-sm text-slate-400">
+              <p className="text-muted-foreground text-sm">
                 Supercharge your code analysis with AI-powered insights
               </p>
             </div>
           </div>
           <Badge
             variant="outline"
-            className="border-green-800 bg-green-950/30 px-3 py-1 text-green-400"
+            className="border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-emerald-600 dark:text-emerald-400"
           >
             <CheckCircle className="mr-1.5 h-3.5 w-3.5" />
             Secure Storage
@@ -477,10 +477,10 @@ export const AIKeyManager: React.FC = () => {
             <Sparkles className="h-5 w-5 text-blue-400" />
           </div>
           <div>
-            <h2 className="font-display text-lg font-bold text-slate-100">
+            <h2 className="font-display text-lg font-bold text-foreground">
               SUPPORTED AI PROVIDERS
             </h2>
-            <p className="text-xs text-slate-500">
+            <p className="text-muted-foreground text-xs">
               Choose from industry-leading AI providers for enhanced analysis
             </p>
           </div>
@@ -504,38 +504,38 @@ export const AIKeyManager: React.FC = () => {
             return (
               <div
                 key={provider.id}
-                className={`group relative overflow-hidden rounded-xl border bg-[#0F1629] p-5 transition-all duration-300 hover:shadow-lg hover:shadow-blue-900/10 ${
+                className={`bg-card/80 border-border group relative overflow-hidden rounded-xl border p-5 transition-all duration-300 hover:border-primary/40 hover:shadow-lg ${
                   isConfigured
                     ? "border-green-500/30 ring-1 ring-green-500/20"
-                    : "border-slate-800 hover:border-blue-700/50"
+                    : ""
                 }`}
               >
                 <div className="flex items-start gap-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-slate-700/50 bg-[#161F36] text-slate-200 shadow-inner transition-colors group-hover:border-blue-700/30 group-hover:text-blue-400">
+                  <div className="bg-muted border-border flex h-12 w-12 items-center justify-center rounded-lg border text-foreground shadow-inner transition-colors group-hover:border-primary/40 group-hover:text-primary">
                     {provider.icon}
                   </div>
                   <div className="flex-1 space-y-1">
-                    <h3 className="text-sm font-semibold text-slate-200 transition-colors group-hover:text-blue-300">
+                    <h3 className="text-foreground text-sm font-semibold transition-colors group-hover:text-primary">
                       {provider.name}
                     </h3>
-                    <p className="line-clamp-2 text-xs text-slate-500">
+                    <p className="text-muted-foreground line-clamp-2 text-xs">
                       {provider.description}
                     </p>
                   </div>
                 </div>
 
-                <div className="mt-6 flex items-center justify-between border-t border-slate-800 pt-4">
-                  <div className="flex items-center gap-1.5 rounded-full border border-slate-700/50 bg-slate-900/50 px-2 py-0.5 text-[10px] text-slate-400 transition-colors group-hover:border-blue-800/30 group-hover:text-blue-300">
+                <div className="border-border mt-6 flex items-center justify-between border-t pt-4">
+                  <div className="text-muted-foreground bg-muted/60 border-border flex items-center gap-1.5 rounded-full border px-2 py-0.5 text-[10px] transition-colors group-hover:border-primary/40 group-hover:text-primary">
                     <Search className="h-3 w-3" />
                     Live Discovery
                   </div>
-                  <div className="flex items-center gap-1.5 text-[10px] text-slate-500">
-                    <div className="h-1.5 w-1.5 rounded-full bg-slate-600 transition-colors group-hover:bg-blue-500" />
+                  <div className="text-muted-foreground flex items-center gap-1.5 text-[10px]">
+                    <div className="bg-muted-foreground h-1.5 w-1.5 rounded-full transition-colors group-hover:bg-primary" />
                     Real-time
                   </div>
                 </div>
 
-                <div className="mt-2 text-center text-[10px] text-slate-600 opacity-0 transition-opacity group-hover:opacity-100">
+                <div className="text-muted-foreground mt-2 text-center text-[10px] opacity-0 transition-opacity group-hover:opacity-100">
                   Models are discovered automatically from the API when you add
                   your key
                 </div>
@@ -546,17 +546,17 @@ export const AIKeyManager: React.FC = () => {
       </div>
 
       {/* Your API Keys Section */}
-      <div className="rounded-xl border border-blue-900/30 bg-[#0B1120] p-6 shadow-xl">
+      <div className="bg-card border-border rounded-xl border p-6 shadow-xl">
         <div className="mb-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="rounded-lg bg-emerald-500/10 p-2">
               <Key className="h-5 w-5 text-emerald-400" />
             </div>
             <div>
-              <h2 className="font-display text-lg font-bold text-slate-100">
+              <h2 className="font-display text-lg font-bold text-foreground">
                 YOUR API KEYS
               </h2>
-              <p className="text-xs text-slate-500">
+              <p className="text-muted-foreground text-xs">
                 Manage your AI provider credentials securely
               </p>
             </div>
@@ -565,7 +565,7 @@ export const AIKeyManager: React.FC = () => {
             onClick={() => setIsAdding(true)}
             variant="outline"
             size="sm"
-            className="border-slate-700 bg-slate-900/50 text-xs text-slate-300 transition-all hover:border-blue-700/50 hover:bg-blue-900/20 hover:text-blue-300"
+            className="border-border bg-background text-muted-foreground hover:border-primary/40 hover:text-foreground text-xs transition-all"
             disabled={isAdding}
           >
             <Plus className="mr-1.5 h-3.5 w-3.5" />
@@ -574,21 +574,21 @@ export const AIKeyManager: React.FC = () => {
         </div>
 
         {isAdding && (
-          <div className="animate-in slide-in-from-top-4 fade-in mb-6 rounded-lg border border-blue-900/30 bg-[#0F1629] p-6 duration-300">
-            <h3 className="mb-4 text-sm font-semibold text-slate-200">
+          <div className="bg-card animate-in slide-in-from-top-4 fade-in border-border mb-6 rounded-lg border p-6 duration-300">
+            <h3 className="text-foreground mb-4 text-sm font-semibold">
               Add New API Key
             </h3>
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label className="text-xs text-slate-400">Provider</Label>
+                <Label className="text-muted-foreground text-xs">Provider</Label>
                 <Select
                   value={newKey.provider}
                   onValueChange={handleProviderChange}
                 >
-                  <SelectTrigger className="border-slate-700 bg-slate-900 text-slate-200">
+                  <SelectTrigger className="border-border bg-background text-foreground">
                     <SelectValue placeholder="Select Provider" />
                   </SelectTrigger>
-                  <SelectContent className="border-slate-700 bg-[#0F1629] text-slate-200">
+                  <SelectContent className="border-border bg-popover text-popover-foreground">
                     {aiProviders
                       .filter((p) => p.id !== "github-copilot")
                       .map((p) => (
@@ -604,7 +604,7 @@ export const AIKeyManager: React.FC = () => {
               </div>
 
               <div className="space-y-2">
-                <Label className="text-xs text-slate-400">API Key</Label>
+                <Label className="text-muted-foreground text-xs">API Key</Label>
                 <Input
                   type="password"
                   value={newKey.key}
@@ -612,7 +612,7 @@ export const AIKeyManager: React.FC = () => {
                     setNewKey({ ...newKey, key: e.target.value });
                     if (errors.key) setErrors({ ...errors, key: "" });
                   }}
-                  className="border-slate-700 bg-slate-900 font-mono text-xs text-slate-200"
+                  className="border-border bg-background text-foreground font-mono text-xs"
                   placeholder={getKeyPlaceholder(newKey.provider)}
                 />
                 {errors.key && (
@@ -621,14 +621,14 @@ export const AIKeyManager: React.FC = () => {
               </div>
 
               <div className="space-y-2">
-                <Label className="text-xs text-slate-400">Display Name</Label>
+                <Label className="text-muted-foreground text-xs">Display Name</Label>
                 <Input
                   value={newKey.name}
                   onChange={(e) => {
                     setNewKey({ ...newKey, name: e.target.value });
                     if (errors.name) setErrors({ ...errors, name: "" });
                   }}
-                  className="border-slate-700 bg-slate-900 text-xs text-slate-200"
+                  className="border-border bg-background text-foreground text-xs"
                   placeholder="e.g. My Production Key"
                 />
                 {errors.name && (
@@ -638,17 +638,17 @@ export const AIKeyManager: React.FC = () => {
 
               {discoveredModels.length > 0 && (
                 <div className="space-y-2">
-                  <Label className="text-xs text-slate-400">Model</Label>
+                  <Label className="text-muted-foreground text-xs">Model</Label>
                   <Select
                     value={newKey.model}
                     onValueChange={(val) =>
                       setNewKey({ ...newKey, model: val })
                     }
                   >
-                    <SelectTrigger className="border-slate-700 bg-slate-900 text-slate-200">
+                    <SelectTrigger className="border-border bg-background text-foreground">
                       <SelectValue placeholder="Select Model" />
                     </SelectTrigger>
-                    <SelectContent className="border-slate-700 bg-[#0F1629] text-slate-200">
+                    <SelectContent className="border-border bg-popover text-popover-foreground">
                       {discoveredModels.map((m) => (
                         <SelectItem key={m.id} value={m.id}>
                           {m.name}
@@ -681,7 +681,7 @@ export const AIKeyManager: React.FC = () => {
                 variant="ghost"
                 size="sm"
                 onClick={() => setIsAdding(false)}
-                className="text-slate-400 hover:text-slate-200"
+                className="text-muted-foreground hover:text-foreground"
               >
                 Cancel
               </Button>
@@ -698,21 +698,21 @@ export const AIKeyManager: React.FC = () => {
         )}
 
         {apiKeys.length === 0 && !isAdding ? (
-          <div className="flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-slate-800 bg-[#0F1629]/50 py-12 text-center">
-            <div className="mb-4 rounded-full bg-slate-800 p-4 ring-1 ring-slate-700">
-              <Key className="h-6 w-6 text-slate-500" />
+          <div className="bg-muted/30 border-border flex flex-col items-center justify-center rounded-lg border-2 border-dashed py-12 text-center">
+            <div className="bg-background ring-border mb-4 rounded-full p-4 ring-1">
+              <Key className="text-muted-foreground h-6 w-6" />
             </div>
-            <h3 className="mb-2 text-lg font-medium text-slate-200">
+            <h3 className="text-foreground mb-2 text-lg font-medium">
               No API Keys Configured
             </h3>
-            <p className="mb-6 max-w-sm text-sm text-slate-500">
+            <p className="text-muted-foreground mb-6 max-w-sm text-sm">
               Add your first API key to unlock AI-powered code analysis,
               intelligent insights, and chat assistance.
             </p>
             <Button
               onClick={() => setIsAdding(true)}
               variant="outline"
-              className="border-slate-700 bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white"
+              className="border-border bg-background text-muted-foreground hover:text-foreground"
             >
               <Plus className="mr-2 h-4 w-4" />
               GET STARTED
@@ -726,15 +726,15 @@ export const AIKeyManager: React.FC = () => {
               return (
                 <div
                   key={key.id}
-                  className="flex items-center justify-between rounded-lg border border-slate-800 bg-[#0F1629] p-4 transition-all hover:border-slate-700"
+                  className="bg-card border-border flex items-center justify-between rounded-lg border p-4 transition-all hover:border-primary/40"
                 >
                   <div className="flex items-center gap-4">
-                    <div className="rounded bg-slate-800 p-2 text-slate-400">
+                    <div className="bg-muted text-muted-foreground rounded p-2">
                       {provider?.icon}
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
-                        <h4 className="font-medium text-slate-200">
+                        <h4 className="text-foreground font-medium">
                           {key.name}
                         </h4>
                         <Badge
@@ -744,7 +744,7 @@ export const AIKeyManager: React.FC = () => {
                           {provider?.name}
                         </Badge>
                       </div>
-                      <div className="flex items-center gap-2 text-xs text-slate-500">
+                      <div className="text-muted-foreground flex items-center gap-2 text-xs">
                         <span className="font-mono">{maskKey(key.key)}</span>
                         {model && <span>• {model.name}</span>}
                       </div>
@@ -755,7 +755,7 @@ export const AIKeyManager: React.FC = () => {
                       variant="ghost"
                       size="icon"
                       onClick={() => removeAPIKey(key.id)}
-                      className="h-8 w-8 text-slate-500 hover:bg-red-900/20 hover:text-red-400"
+                      className="text-muted-foreground hover:bg-destructive/10 hover:text-destructive h-8 w-8"
                       aria-label={`Remove API key ${key.name}`}
                     >
                       <Trash2 className="h-4 w-4" />
@@ -769,80 +769,80 @@ export const AIKeyManager: React.FC = () => {
       </div>
 
       {/* Available AI Features */}
-      <div className="rounded-xl border border-blue-900/30 bg-[#0B1120] p-6 shadow-xl">
+      <div className="bg-card border-border rounded-xl border p-6 shadow-xl">
         <div className="mb-6 flex items-center gap-3">
           <div className="rounded-lg bg-violet-500/10 p-2">
             <Zap className="h-5 w-5 text-violet-400" />
           </div>
           <div>
-            <h2 className="font-display text-lg font-bold text-slate-100">
+            <h2 className="font-display text-lg font-bold text-foreground">
               AVAILABLE AI FEATURES
             </h2>
-            <p className="text-xs text-slate-500">
+            <p className="text-muted-foreground text-xs">
               Unlock powerful analytic capabilities with your API keys
             </p>
           </div>
         </div>
 
         <div className="grid gap-4 md:grid-cols-3">
-          <div className="group rounded-lg border border-slate-800 bg-[#0F1629] p-4 transition-all hover:border-blue-700/50 hover:bg-[#161F36]">
+          <div className="bg-muted/40 border-border group rounded-lg border p-4 transition-all hover:border-primary/40 hover:bg-muted/70">
             <div className="mb-3 flex items-start justify-between">
               <div className="rounded-lg bg-blue-500/10 p-2 text-blue-400 group-hover:bg-blue-500/20 group-hover:text-blue-300">
                 <Bot className="h-5 w-5" />
               </div>
-              <div className="rounded-full bg-slate-800 p-1 text-slate-500">
+              <div className="bg-muted rounded-full p-1 text-muted-foreground">
                 <AlertTriangle className="h-3 w-3" />
               </div>
             </div>
-            <h3 className="mb-1 font-semibold text-slate-200">
+            <h3 className="text-foreground mb-1 font-semibold">
               AI Fix Suggestions
             </h3>
-            <p className="mb-3 text-xs text-slate-500">
+            <p className="text-muted-foreground mb-3 text-xs">
               Intelligent code fixes and security recommendations
             </p>
-            <div className="flex items-center gap-1.5 text-[10px] text-slate-500">
+            <div className="text-muted-foreground flex items-center gap-1.5 text-[10px]">
               <div className="h-1.5 w-1.5 rounded-full bg-amber-500" />
               Requires API Key
             </div>
           </div>
 
-          <div className="group rounded-lg border border-blue-900/30 bg-blue-900/5 p-4 ring-1 ring-blue-900/20">
+          <div className="border-primary/30 bg-primary/5 group rounded-lg border p-4 ring-1 ring-primary/20">
             <div className="mb-3 flex items-start justify-between">
               <div className="rounded-lg bg-blue-500/10 p-2 text-blue-400">
                 <Shield className="h-5 w-5" />
               </div>
-              <div className="rounded-full bg-green-900/20 p-1 text-green-400">
+              <div className="bg-emerald-500/10 rounded-full p-1 text-emerald-500">
                 <CheckCircle className="h-3 w-3" />
               </div>
             </div>
-            <h3 className="mb-1 font-semibold text-blue-100">
+            <h3 className="text-foreground mb-1 font-semibold">
               Secure Code Search
             </h3>
-            <p className="mb-3 text-xs text-blue-300/60">
+            <p className="text-muted-foreground mb-3 text-xs">
               Advanced pattern matching and vulnerability detection
             </p>
-            <div className="flex items-center gap-1.5 text-[10px] text-green-400">
+            <div className="text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5 text-[10px]">
               <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-green-500" />
               Always Available
             </div>
           </div>
 
-          <div className="group rounded-lg border border-emerald-900/30 bg-emerald-900/5 p-4 ring-1 ring-emerald-900/20">
+          <div className="border-emerald-500/30 bg-emerald-500/5 group rounded-lg border p-4 ring-1 ring-emerald-500/20">
             <div className="mb-3 flex items-start justify-between">
               <div className="rounded-lg bg-emerald-500/10 p-2 text-emerald-400">
                 <Star className="h-5 w-5" />
               </div>
-              <div className="rounded-full bg-green-900/20 p-1 text-green-400">
+              <div className="bg-emerald-500/10 rounded-full p-1 text-emerald-500">
                 <CheckCircle className="h-3 w-3" />
               </div>
             </div>
-            <h3 className="mb-1 font-semibold text-emerald-100">
+            <h3 className="text-foreground mb-1 font-semibold">
               Code Provenance
             </h3>
-            <p className="mb-3 text-xs text-emerald-300/60">
+            <p className="text-muted-foreground mb-3 text-xs">
               Track code origins and identify potential supply chain risks
             </p>
-            <div className="flex items-center gap-1.5 text-[10px] text-green-400">
+            <div className="text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5 text-[10px]">
               <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-green-500" />
               Always Available
             </div>
@@ -878,32 +878,32 @@ export const AIKeyManager: React.FC = () => {
       </div>
 
       {/* Privacy Footer */}
-      <div className="rounded-lg border border-slate-800 bg-[#0B1120] p-4 text-slate-400">
+      <div className="bg-card text-muted-foreground border-border rounded-lg border p-4">
         <div className="flex items-start gap-4">
-          <div className="rounded-lg bg-slate-800 p-2">
-            <Shield className="h-5 w-5 text-slate-400" />
+          <div className="bg-muted rounded-lg p-2">
+            <Shield className="text-muted-foreground h-5 w-5" />
           </div>
           <div>
-            <h4 className="text-sm font-semibold text-slate-200">
+            <h4 className="text-foreground text-sm font-semibold">
               Privacy & Security Guarantee
             </h4>
-            <p className="mt-1 text-xs leading-relaxed text-slate-500">
+            <p className="text-muted-foreground mt-1 text-xs leading-relaxed">
               Your API keys are stored locally in your browser. They are never
               transmitted to our servers and are only used to communicate
               directly with your chosen AI providers. You maintain complete
               control over your credentials at all times.
             </p>
-            <div className="mt-3 flex gap-4 text-[10px] text-slate-500">
+            <div className="text-muted-foreground mt-3 flex gap-4 text-[10px]">
               <span className="flex items-center gap-1">
-                <div className="h-1 w-1 rounded-full bg-slate-600" /> Local
+                <div className="bg-muted-foreground h-1 w-1 rounded-full" /> Local
                 Storage Only
               </span>
               <span className="flex items-center gap-1">
-                <div className="h-1 w-1 rounded-full bg-slate-600" /> Direct
+                <div className="bg-muted-foreground h-1 w-1 rounded-full" /> Direct
                 Provider Calls
               </span>
               <span className="flex items-center gap-1">
-                <div className="h-1 w-1 rounded-full bg-slate-600" /> Zero
+                <div className="bg-muted-foreground h-1 w-1 rounded-full" /> Zero
                 Server Access
               </span>
             </div>

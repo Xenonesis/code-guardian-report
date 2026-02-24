@@ -92,30 +92,37 @@ async function checkMemory(): Promise<HealthStatus["checks"][0]> {
       const memory = process.memoryUsage();
       const heapUsedMB = Math.round(memory.heapUsed / 1024 / 1024);
       const heapTotalMB = Math.round(memory.heapTotal / 1024 / 1024);
+      const rssMB = Math.round(memory.rss / 1024 / 1024);
       const usagePercent = Math.round(
         (memory.heapUsed / memory.heapTotal) * 100
       );
+      const isDev = process.env.NODE_ENV !== "production";
 
-      if (usagePercent > 90) {
+      // RSS is a better signal for process pressure than heap ratio alone.
+      // Heap ratio can spike during normal GC behavior and produce false alarms.
+      const rssWarnLimitMB = isDev ? 900 : 700;
+      const rssFailLimitMB = isDev ? 1200 : 900;
+
+      if (rssMB >= rssFailLimitMB) {
         return {
           name: "memory",
           status: "fail",
-          message: `Critical memory usage: ${usagePercent}% (${heapUsedMB}MB / ${heapTotalMB}MB)`,
+          message: `Critical memory usage: RSS ${rssMB}MB (heap ${heapUsedMB}MB / ${heapTotalMB}MB, ${usagePercent}%)`,
         };
       }
 
-      if (usagePercent > 75) {
+      if (rssMB >= rssWarnLimitMB || (!isDev && usagePercent > 92)) {
         return {
           name: "memory",
           status: "warn",
-          message: `High memory usage: ${usagePercent}% (${heapUsedMB}MB / ${heapTotalMB}MB)`,
+          message: `High memory usage: RSS ${rssMB}MB (heap ${heapUsedMB}MB / ${heapTotalMB}MB, ${usagePercent}%)`,
         };
       }
 
       return {
         name: "memory",
         status: "pass",
-        message: `Memory usage: ${usagePercent}% (${heapUsedMB}MB / ${heapTotalMB}MB)`,
+        message: `Memory usage normal: RSS ${rssMB}MB (heap ${heapUsedMB}MB / ${heapTotalMB}MB, ${usagePercent}%)`,
       };
     }
 
