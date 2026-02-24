@@ -3,7 +3,7 @@
 import * as React from "react";
 import { Shield, Mail, Github, ExternalLink } from "lucide-react";
 import { APP_VERSION_WITH_PREFIX } from "@/utils/version";
-
+import Link from "next/link";
 interface FooterProps {
   className?: string;
 }
@@ -20,6 +20,7 @@ const Footer: React.FC<FooterProps> = ({ className = "" }) => {
     { label: "Upload Code", id: "upload" },
     { label: "AI Analysis", id: "ai-config" },
     { label: "Results", id: "results" },
+    { label: "Feedback", href: "/feedback" },
   ];
 
   const companyLinks = [
@@ -89,13 +90,22 @@ const Footer: React.FC<FooterProps> = ({ className = "" }) => {
             </h4>
             <ul className="space-y-2.5">
               {platformLinks.map((link) => (
-                <li key={link.id}>
-                  <button
-                    onClick={() => scrollToSection(link.id)}
-                    className="text-muted-foreground hover:text-foreground text-sm transition-colors"
-                  >
-                    {link.label}
-                  </button>
+                <li key={link.label}>
+                  {link.id ? (
+                    <button
+                      onClick={() => scrollToSection(link.id!)}
+                      className="text-muted-foreground hover:text-foreground text-sm transition-colors"
+                    >
+                      {link.label}
+                    </button>
+                  ) : (
+                    <Link
+                      href={link.href!}
+                      className="text-muted-foreground hover:text-foreground text-sm transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>

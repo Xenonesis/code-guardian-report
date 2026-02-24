@@ -1,4 +1,10 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  useCallback,
+  useMemo,
+} from "react";
 import { Bot, Send, X, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -28,8 +34,29 @@ const FloatingChatBot: React.FC<FloatingChatBotProps> = ({
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isAIConfigured, setIsAIConfigured] = useState<boolean | null>(null);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
-  const aiService = new AIService();
+  const aiService = useMemo(() => new AIService(), []);
+
+  useEffect(() => {
+    let mounted = true;
+    aiService
+      .hasConfiguredProviders()
+      .then((configured) => {
+        if (mounted) {
+          setIsAIConfigured(configured);
+        }
+      })
+      .catch(() => {
+        if (mounted) {
+          setIsAIConfigured(false);
+        }
+      });
+
+    return () => {
+      mounted = false;
+    };
+  }, [aiService]);
 
   useEffect(() => {
     if (isOpen && messages.length === 0) {
@@ -84,6 +111,10 @@ How can I help you today?`,
         throw new Error(
           "No analysis results available. Please run an analysis first."
         );
+      }
+
+      if (isAIConfigured === false) {
+        throw new Error("No AI API keys configured");
       }
 
       const response = await aiService.answerQuestion(
@@ -187,6 +218,13 @@ How can I help you today?`,
             {/* Messages */}
             <ScrollArea className="flex-1 p-3 sm:p-4" ref={scrollAreaRef}>
               <div className="space-y-3 sm:space-y-4">
+                {isAIConfigured === false && (
+                  <div className="rounded-lg border border-amber-300 bg-amber-50 p-3 text-xs text-amber-900 sm:text-sm">
+                    AI providers are not configured. Open the AI Configuration
+                    tab and add at least one provider key (OpenAI, Gemini,
+                    Claude, or Copilot).
+                  </div>
+                )}
                 {messages.map((message) => (
                   <div
                     key={message.id}
@@ -235,13 +273,15 @@ How can I help you today?`,
                   onChange={(e) => setInput(e.target.value)}
                   onKeyPress={handleKeyPress}
                   placeholder="Ask about your code analysis..."
-                  disabled={isLoading}
+                  disabled={isLoading || isAIConfigured === false}
                   className="focus-ring flex-1 text-sm"
                   aria-label="Chat message input"
                 />
                 <Button
                   onClick={handleSendMessage}
-                  disabled={!input.trim() || isLoading}
+                  disabled={
+                    !input.trim() || isLoading || isAIConfigured === false
+                  }
                   size="sm"
                   className="focus-ring bg-primary hover:bg-primary/90 flex-shrink-0"
                   aria-label="Send message"

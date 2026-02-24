@@ -57,16 +57,18 @@ export async function POST(request: NextRequest) {
 
     // Check if Firebase Admin is configured
     if (!isFirebaseAdminConfigured()) {
-      // Development mode: return success without persisting
-      const subscriptionId = `sub-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
       console.warn(
         "Push subscribe: Firebase Admin not configured, subscription not persisted"
       );
-      return NextResponse.json({
-        success: true,
-        message: "Subscription registered (development mode - not persisted)",
-        subscriptionId,
-      });
+      return NextResponse.json(
+        {
+          success: false,
+          configured: false,
+          error:
+            "Push subscription storage is not configured. Set Firebase Admin credentials.",
+        },
+        { status: 503 }
+      );
     }
 
     const { db } = getFirebaseAdmin();

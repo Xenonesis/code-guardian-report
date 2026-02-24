@@ -94,6 +94,11 @@ export class AIService {
     }
   }
 
+  async hasConfiguredProviders(): Promise<boolean> {
+    const providers = await this.getStoredAPIKeysAsync();
+    return providers.length > 0;
+  }
+
   /**
    * Get GitHub Copilot as a provider if authenticated
    */

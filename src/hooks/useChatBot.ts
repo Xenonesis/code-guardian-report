@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 import { AIService } from "../services/ai/aiService";
 import { toast } from "sonner";
 import { AnalysisResults } from "./useAnalysis";
@@ -13,7 +13,15 @@ interface ChatMessage {
 export const useChatBot = (analysisResults: AnalysisResults) => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isAIConfigured, setIsAIConfigured] = useState<boolean | null>(null);
   const aiService = useMemo(() => new AIService(), []);
+
+  useEffect(() => {
+    aiService
+      .hasConfiguredProviders()
+      .then((configured) => setIsAIConfigured(configured))
+      .catch(() => setIsAIConfigured(false));
+  }, [aiService]);
 
   const initializeChat = useCallback(() => {
     if (messages.length === 0) {
@@ -42,6 +50,10 @@ export const useChatBot = (analysisResults: AnalysisResults) => {
       setIsLoading(true);
 
       try {
+        if (isAIConfigured === false) {
+          throw new Error("No AI API keys configured");
+        }
+
         if (!analysisResults || !analysisResults.issues) {
           throw new Error(
             "No analysis results available. Please run an analysis first."
@@ -91,12 +103,13 @@ export const useChatBot = (analysisResults: AnalysisResults) => {
         setIsLoading(false);
       }
     },
-    [analysisResults, isLoading, aiService]
+    [analysisResults, isLoading, aiService, isAIConfigured]
   );
 
   return {
     messages,
     isLoading,
+    isAIConfigured,
     initializeChat,
     sendMessage,
   };
