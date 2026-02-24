@@ -172,6 +172,7 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({
           variant="ghost"
           size="icon"
           className={cn("relative p-1 sm:p-1.5", className)}
+          aria-label="Open notifications"
         >
           <Bell className="h-4 w-4 sm:h-5 sm:w-5" />
           {unreadCount > 0 && (
@@ -193,6 +194,7 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({
                 variant="ghost"
                 size="sm"
                 onClick={() => setShowPreferences(false)}
+                aria-label="Close notification preferences"
               >
                 <X className="h-4 w-4" />
               </Button>
@@ -215,6 +217,7 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({
                     variant="ghost"
                     size="icon"
                     onClick={() => setShowPreferences(true)}
+                    aria-label="Open notification settings"
                   >
                     <Settings className="h-4 w-4" />
                   </Button>

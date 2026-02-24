@@ -98,7 +98,12 @@ export function PWAQuickActions({
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button variant="ghost" size="sm" className={cn("relative", className)}>
+        <Button
+          variant="ghost"
+          size="sm"
+          className={cn("relative", className)}
+          aria-label="Open PWA quick actions"
+        >
           <div className="relative">
             <Zap className="h-4 w-4" />
             {/* Status indicator dot */}
@@ -115,14 +120,14 @@ export function PWAQuickActions({
       </PopoverTrigger>
 
       <PopoverContent
-        className="w-72 border-border bg-card p-3 shadow-xl"
+        className="border-border bg-card w-72 p-3 shadow-xl"
         align="end"
       >
         <div className="space-y-3">
           {/* Header */}
           <div className="flex items-center justify-between">
             <h4 className="flex items-center gap-2 text-sm font-semibold">
-              <Zap className="h-4 w-4 text-primary" />
+              <Zap className="text-primary h-4 w-4" />
               Quick Actions
             </h4>
             <Badge
@@ -200,12 +205,12 @@ export function PWAQuickActions({
               <span className="flex items-center gap-1">
                 {status.serviceWorkerReady ? (
                   <>
-                    <Cloud className="h-3 w-3 text-primary" />
+                    <Cloud className="text-primary h-3 w-3" />
                     Service Worker Ready
                   </>
                 ) : (
                   <>
-                    <CloudOff className="h-3 w-3 text-muted-foreground" />
+                    <CloudOff className="text-muted-foreground h-3 w-3" />
                     Initializing...
                   </>
                 )}
@@ -213,7 +218,7 @@ export function PWAQuickActions({
 
               {status.backgroundSyncSupported && (
                 <span className="flex items-center gap-1">
-                  <RefreshCw className="h-3 w-3 text-primary" />
+                  <RefreshCw className="text-primary h-3 w-3" />
                   Sync Available
                 </span>
               )}

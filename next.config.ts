@@ -73,7 +73,7 @@ const nextConfig: NextConfig = {
   // Turbopack configuration for Next.js 16+
   // Set root to project directory to silence multiple lockfiles warning
   turbopack: {
-    root: ".",
+    root: process.cwd(),
   },
 
   // Configure image optimization
@@ -220,7 +220,7 @@ const nextConfig: NextConfig = {
           {
             key: "Content-Security-Policy",
             value:
-              "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://apis.google.com https://vercel.live https://vitals.vercel-insights.com https://va.vercel-scripts.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https:; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https://api.github.com https://*.github.com https://raw.githubusercontent.com https://codeload.github.com https://fonts.gstatic.com https://*.google.com https://*.firebaseio.com https://*.googleapis.com https://*.firebase.com https://*.google-analytics.com https://vercel.live https://vitals.vercel-insights.com https://va.vercel-insights.com wss://*.firebaseio.com; frame-src 'self' https://vercel.live https://*.firebaseapp.com https://*.firebase.com https://apis.google.com; worker-src 'self' blob:; manifest-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self';",
+              "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://apis.google.com https://vercel.live https://vitals.vercel-insights.com https://va.vercel-scripts.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https:; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https://api.github.com https://*.github.com https://raw.githubusercontent.com https://codeload.github.com https://api.openai.com https://api.anthropic.com https://api.groq.com https://generativelanguage.googleapis.com https://fonts.gstatic.com https://*.google.com https://*.firebaseio.com https://*.googleapis.com https://*.firebase.com https://*.google-analytics.com https://vercel.live https://vitals.vercel-insights.com https://va.vercel-insights.com wss://*.firebaseio.com; frame-src 'self' https://vercel.live https://*.firebaseapp.com https://*.firebase.com https://apis.google.com; worker-src 'self' blob:; manifest-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self';",
           },
           // HSTS - Strict Transport Security
           ...(isProd

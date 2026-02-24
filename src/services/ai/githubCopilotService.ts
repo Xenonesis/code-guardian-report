@@ -285,10 +285,9 @@ export class GitHubCopilotService {
           }
         }
       } catch (apiError) {
-        logger.warn(
-          "Failed to fetch models from API, using fallback list:",
-          apiError
-        );
+        const log =
+          process.env.NODE_ENV === "development" ? logger.debug : logger.warn;
+        log("Failed to fetch models from API, using fallback list:", apiError);
       }
 
       // Fallback: Use known GitHub Copilot models

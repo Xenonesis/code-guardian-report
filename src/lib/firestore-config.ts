@@ -12,16 +12,25 @@ import { FirebaseApp } from "firebase/app";
 import { logger } from "@/utils/logger";
 export function createOptimizedFirestore(app: FirebaseApp): Firestore {
   let db: Firestore;
+  const forceLongPolling =
+    process.env.NEXT_PUBLIC_FIRESTORE_FORCE_LONG_POLLING === "true";
 
   try {
-    // Initialize with long polling to fix 404/transport errors
+    // Use auto-detection by default to reduce noisy aborted listen requests.
+    // Allow explicit forcing via env var for restrictive networks.
     db = initializeFirestore(app, {
-      experimentalForceLongPolling: true,
+      experimentalAutoDetectLongPolling: true,
+      experimentalForceLongPolling: forceLongPolling,
       localCache: persistentLocalCache({
         tabManager: persistentMultipleTabManager(),
       }),
     });
-    logger.debug("Firestore initialized with long polling and persistence");
+    logger.debug(
+      "Firestore initialized with optimized transport and persistence",
+      {
+        forceLongPolling,
+      }
+    );
   } catch (error) {
     // Fallback if already initialized
     logger.debug(

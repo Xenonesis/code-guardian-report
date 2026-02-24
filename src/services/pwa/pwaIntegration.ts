@@ -48,6 +48,11 @@ class PWAIntegrationService {
   }
 
   private async initServiceWorker(): Promise<void> {
+    // Serwist is disabled in development, so /sw.js is not generated.
+    if (process.env.NODE_ENV !== "production") {
+      return;
+    }
+
     if ("serviceWorker" in navigator) {
       try {
         // Reuse existing registration if available to avoid duplicate listeners/registration

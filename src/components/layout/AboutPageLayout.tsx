@@ -26,10 +26,10 @@ export const AboutPageLayout: React.FC<AboutPageLayoutProps> = ({
   noContainer = false,
 }) => {
   return (
-    <div className={`min-h-screen bg-background ${className}`}>
+    <div className={`bg-background min-h-screen ${className}`}>
       {showNavigation && <Navigation />}
 
-      <main className="relative z-10">
+      <section aria-label="About content" className="relative z-10">
         {noContainer ? (
           children
         ) : (
@@ -37,11 +37,11 @@ export const AboutPageLayout: React.FC<AboutPageLayoutProps> = ({
             {children}
           </div>
         )}
-      </main>
+      </section>
 
       {/* Features Section (if needed) */}
       {features && features.length > 0 && (
-        <section className="border-t border-border bg-muted/30 py-16 lg:py-24">
+        <section className="border-border bg-muted/30 border-t py-16 lg:py-24">
           <FeatureGrid
             features={features}
             title="Comprehensive Security & Quality Analysis"

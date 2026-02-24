@@ -32,7 +32,7 @@ const Footer: React.FC<FooterProps> = ({ className = "" }) => {
 
   return (
     <footer
-      className={`bg-background relative ${className}`}
+      className={`bg-background border-border/60 relative border-t border-dashed ${className}`}
       style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
     >
       {/* Premium gradient border */}
@@ -65,17 +65,17 @@ const Footer: React.FC<FooterProps> = ({ className = "" }) => {
             </p>
             <div className="flex items-center gap-3">
               <a
-                href="https://github.com/ARedRocket/code-guardian-report"
+                href="https://github.com/Xenonesis/code-guardian-report"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="border-border text-muted-foreground hover:text-foreground rounded-md border p-2 transition-colors"
+                className="border-border text-muted-foreground hover:text-foreground hover:border-primary/40 border p-2 transition-colors"
                 aria-label="GitHub"
               >
                 <Github className="h-4 w-4" />
               </a>
               <a
                 href="mailto:contact@codeguardian.dev"
-                className="border-border text-muted-foreground hover:text-foreground rounded-md border p-2 transition-colors"
+                className="border-border text-muted-foreground hover:text-foreground hover:border-primary/40 border p-2 transition-colors"
                 aria-label="Email"
               >
                 <Mail className="h-4 w-4" />
@@ -85,7 +85,7 @@ const Footer: React.FC<FooterProps> = ({ className = "" }) => {
 
           {/* Platform */}
           <div>
-            <h4 className="text-foreground mb-4 text-sm font-medium">
+            <h4 className="text-foreground mb-4 font-mono text-xs tracking-[0.16em] uppercase">
               Platform
             </h4>
             <ul className="space-y-2.5">
@@ -94,14 +94,14 @@ const Footer: React.FC<FooterProps> = ({ className = "" }) => {
                   {link.id ? (
                     <button
                       onClick={() => scrollToSection(link.id!)}
-                      className="text-muted-foreground hover:text-foreground text-sm transition-colors"
+                      className="text-muted-foreground hover:text-foreground font-mono text-xs tracking-[0.08em] uppercase transition-colors"
                     >
                       {link.label}
                     </button>
                   ) : (
                     <Link
                       href={link.href!}
-                      className="text-muted-foreground hover:text-foreground text-sm transition-colors"
+                      className="text-muted-foreground hover:text-foreground font-mono text-xs tracking-[0.08em] uppercase transition-colors"
                     >
                       {link.label}
                     </Link>
@@ -113,7 +113,7 @@ const Footer: React.FC<FooterProps> = ({ className = "" }) => {
 
           {/* Company */}
           <div>
-            <h4 className="text-foreground mb-4 text-sm font-medium">
+            <h4 className="text-foreground mb-4 font-mono text-xs tracking-[0.16em] uppercase">
               Company
             </h4>
             <ul className="space-y-2.5">
@@ -121,7 +121,7 @@ const Footer: React.FC<FooterProps> = ({ className = "" }) => {
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1 text-sm transition-colors"
+                    className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1 font-mono text-xs tracking-[0.08em] uppercase transition-colors"
                   >
                     {link.label}
                     {link.href.startsWith("http") && (
@@ -136,13 +136,13 @@ const Footer: React.FC<FooterProps> = ({ className = "" }) => {
       </div>
 
       {/* Bottom bar */}
-      <div className="border-border border-t">
+      <div className="border-border border-t border-dashed">
         <div className="container mx-auto flex flex-col items-center justify-between gap-3 px-4 py-5 sm:flex-row sm:px-6 lg:px-8">
-          <p className="text-muted-foreground text-xs">
+          <p className="text-muted-foreground font-mono text-[11px] tracking-[0.08em] uppercase">
             © {new Date().getFullYear()} Code Guardian. All rights reserved.
           </p>
           {APP_VERSION_WITH_PREFIX && (
-            <span className="text-muted-foreground text-xs">
+            <span className="text-muted-foreground font-mono text-[11px] tracking-[0.08em] uppercase">
               {APP_VERSION_WITH_PREFIX}
             </span>
           )}

@@ -280,7 +280,10 @@ export const AIKeyManager: React.FC = () => {
     const newErrors: Record<string, string> = {};
     if (!newKey.provider.trim())
       newErrors.provider = "Please select an AI provider";
-    if (!newKey.model.trim()) newErrors.model = "Please select a model";
+    // Require explicit model selection only when discovery returned choices.
+    if (discoveredModels.length > 0 && !newKey.model.trim()) {
+      newErrors.model = "Please select a model";
+    }
     if (!newKey.name.trim())
       newErrors.name = "Please enter a name for this API key";
     if (!newKey.key.trim()) {
@@ -305,6 +308,17 @@ export const AIKeyManager: React.FC = () => {
     return Object.keys(newErrors).length === 0;
   };
 
+  const resolveModelForKey = () => {
+    if (newKey.model.trim()) return newKey.model.trim();
+
+    if (discoveredModels.length > 0) {
+      return discoveredModels[0].id;
+    }
+
+    const provider = aiProviders.find((p) => p.id === newKey.provider.trim());
+    return provider?.models[0]?.id || "";
+  };
+
   const addAPIKey = async () => {
     if (isSubmitting) return;
     setIsSubmitting(true);
@@ -317,7 +331,7 @@ export const AIKeyManager: React.FC = () => {
       const key: APIKey = {
         id: Date.now().toString(),
         provider: newKey.provider.trim(),
-        model: newKey.model.trim(),
+        model: resolveModelForKey(),
         key: newKey.key.trim(),
         name: newKey.name.trim(),
       };
@@ -384,6 +398,13 @@ export const AIKeyManager: React.FC = () => {
       const result = await discoverModels(newKey.provider, newKey.key);
       if (result.success && result.models.length > 0) {
         setDiscoveredModels(result.models);
+        setNewKey((prev) => ({
+          ...prev,
+          model: prev.model || result.models[0].id,
+        }));
+        if (errors.model) {
+          setErrors((prev) => ({ ...prev, model: "" }));
+        }
         setScanStatus({
           message: `Successfully discovered ${result.models.length} available models!`,
           type: "success",
@@ -431,9 +452,9 @@ export const AIKeyManager: React.FC = () => {
               <Bot className="h-6 w-6 text-white" />
             </div>
             <div>
-              <h1 className="font-display bg-gradient-to-r from-blue-100 to-indigo-200 bg-clip-text text-2xl font-bold tracking-tight text-transparent">
+              <h2 className="font-display bg-gradient-to-r from-blue-100 to-indigo-200 bg-clip-text text-2xl font-bold tracking-tight text-transparent">
                 AI ANALYSIS INTEGRATION
-              </h1>
+              </h2>
               <p className="text-sm text-slate-400">
                 Supercharge your code analysis with AI-powered insights
               </p>
@@ -735,6 +756,7 @@ export const AIKeyManager: React.FC = () => {
                       size="icon"
                       onClick={() => removeAPIKey(key.id)}
                       className="h-8 w-8 text-slate-500 hover:bg-red-900/20 hover:text-red-400"
+                      aria-label={`Remove API key ${key.name}`}
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>
@@ -866,10 +888,10 @@ export const AIKeyManager: React.FC = () => {
               Privacy & Security Guarantee
             </h4>
             <p className="mt-1 text-xs leading-relaxed text-slate-500">
-              Your API keys are encrypted and stored locally in your browser.
-              They are never transmitted to our servers and are only used to
-              communicate directly with your chosen AI providers. You maintain
-              complete control over your credentials at all times.
+              Your API keys are stored locally in your browser. They are never
+              transmitted to our servers and are only used to communicate
+              directly with your chosen AI providers. You maintain complete
+              control over your credentials at all times.
             </p>
             <div className="mt-3 flex gap-4 text-[10px] text-slate-500">
               <span className="flex items-center gap-1">
@@ -877,8 +899,8 @@ export const AIKeyManager: React.FC = () => {
                 Storage Only
               </span>
               <span className="flex items-center gap-1">
-                <div className="h-1 w-1 rounded-full bg-slate-600" /> End-to-End
-                Encryption
+                <div className="h-1 w-1 rounded-full bg-slate-600" /> Direct
+                Provider Calls
               </span>
               <span className="flex items-center gap-1">
                 <div className="h-1 w-1 rounded-full bg-slate-600" /> Zero

@@ -74,6 +74,7 @@ export class FirebaseAnalysisStorageService {
   private userId: string | null = null;
   private listeners: Set<(data: FirebaseAnalysisData[]) => void> = new Set();
   private unsubscribeSnapshot: (() => void) | null = null;
+  private activeListenerUserId: string | null = null;
 
   constructor() {
     this.initializeAuth();
@@ -620,12 +621,33 @@ export class FirebaseAnalysisStorageService {
    * Setup real-time listener for user's analysis results
    */
   public setupRealtimeListener(): void {
+    const enableRealtimeInDev =
+      process.env.NEXT_PUBLIC_FIREBASE_REALTIME_DEV === "true";
+    if (process.env.NODE_ENV === "development" && !enableRealtimeInDev) {
+      if (this.unsubscribeSnapshot) {
+        this.unsubscribeSnapshot();
+        this.unsubscribeSnapshot = null;
+      }
+      this.activeListenerUserId = null;
+      return;
+    }
+
     if (!this.userId) {
       // Clean up any existing listener if no userId
       if (this.unsubscribeSnapshot) {
         this.unsubscribeSnapshot();
         this.unsubscribeSnapshot = null;
       }
+      this.activeListenerUserId = null;
+      return;
+    }
+
+    // Reuse active listener when already subscribed for the same user.
+    if (
+      this.unsubscribeSnapshot &&
+      this.activeListenerUserId &&
+      this.activeListenerUserId === this.userId
+    ) {
       return;
     }
 
@@ -633,6 +655,7 @@ export class FirebaseAnalysisStorageService {
     if (this.unsubscribeSnapshot) {
       this.unsubscribeSnapshot();
       this.unsubscribeSnapshot = null;
+      this.activeListenerUserId = null;
     }
 
     try {
@@ -688,13 +711,16 @@ export class FirebaseAnalysisStorageService {
               this.unsubscribeSnapshot();
               this.unsubscribeSnapshot = null;
             }
+            this.activeListenerUserId = null;
           } else {
             logger.error("Real-time listener error:", error);
           }
         }
       );
+      this.activeListenerUserId = this.userId;
     } catch (error) {
       logger.error("Failed to setup real-time listener:", error);
+      this.activeListenerUserId = null;
     }
   }
 
@@ -716,6 +742,7 @@ export class FirebaseAnalysisStorageService {
       this.unsubscribeSnapshot();
       this.unsubscribeSnapshot = null;
     }
+    this.activeListenerUserId = null;
     this.listeners.clear();
   }
 

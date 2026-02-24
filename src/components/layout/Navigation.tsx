@@ -149,6 +149,7 @@ export const Navigation: React.FC<NavigationProps> = ({
             <button
               onClick={() => handleNavigate("home")}
               className="group flex items-center gap-2 transition-opacity hover:opacity-90 sm:gap-2.5"
+              aria-label="Go to home"
             >
               <div className="from-primary/20 to-primary/5 relative flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr transition-transform group-hover:scale-105">
                 <Shield className="text-primary h-5 w-5 transition-colors" />

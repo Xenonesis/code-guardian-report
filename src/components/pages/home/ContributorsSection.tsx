@@ -120,14 +120,21 @@ export const ContributorsSection = () => {
   };
 
   return (
-    <section className="bg-background relative w-full overflow-hidden py-24">
-      {/* Background Gradients */}
-      <div className="pointer-events-none absolute top-0 left-0 h-full w-full overflow-hidden">
-        <div className="bg-primary/5 absolute top-[20%] right-[10%] h-[500px] w-[500px] rounded-full blur-[120px]" />
-        <div className="absolute bottom-[10%] left-[10%] h-[400px] w-[400px] rounded-full bg-blue-500/5 blur-[100px]" />
+    <section className="bg-background border-border/60 relative w-full overflow-hidden border-t border-dashed py-20 sm:py-24">
+      {/* Background glow and technical overlay */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="bg-primary/6 absolute top-[18%] right-[8%] h-[420px] w-[420px] rounded-full blur-[120px]" />
+        <div
+          className="absolute inset-0 opacity-[0.04]"
+          style={{
+            backgroundImage:
+              "linear-gradient(to right, hsl(var(--border)) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--border)) 1px, transparent 1px)",
+            backgroundSize: "28px 28px",
+          }}
+        />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -138,20 +145,18 @@ export const ContributorsSection = () => {
           {/* Left Column: Stats & Text */}
           <div className="flex flex-col space-y-8 lg:col-span-5">
             <motion.div variants={itemVariants} className="space-y-4">
-              <div className="bg-primary/10 text-primary border-primary/20 inline-flex items-center space-x-2 rounded-full border px-3 py-1 text-xs font-medium">
+              <div className="bg-primary/10 text-primary border-primary/30 inline-flex items-center space-x-2 border px-3 py-1 font-mono text-[11px] tracking-[0.18em] uppercase">
                 <Github className="h-3 w-3" />
                 <span>OPEN SOURCE</span>
               </div>
 
-              <h2 className="text-foreground font-serif text-4xl font-bold tracking-tight md:text-5xl">
+              <h2 className="text-foreground font-display text-4xl leading-[0.95] tracking-tight sm:text-5xl md:text-6xl">
                 Built by developers,
                 <br />
-                <span className="text-muted-foreground italic">
-                  for developers.
-                </span>
+                <span className="text-primary/70 italic">for developers.</span>
               </h2>
 
-              <p className="text-muted-foreground max-w-md text-lg leading-relaxed">
+              <p className="text-muted-foreground border-border/70 max-w-md border-l-2 pl-4 font-mono text-sm leading-relaxed md:border-l-0 md:pl-0">
                 Code Guardian is open source and community driven. Join our
                 mission to improve code security and quality for everyone.
               </p>
@@ -163,16 +168,18 @@ export const ContributorsSection = () => {
             >
               <EnhancedCard
                 variant="modern"
-                className="bg-card/50 border-primary/10 p-6 backdrop-blur-sm"
+                className="bg-card/70 border-primary/20 rounded-none border p-5 backdrop-blur-sm"
               >
                 <div className="flex flex-col">
                   <div className="text-muted-foreground mb-2 flex items-center space-x-2">
                     <Star className="h-4 w-4" />
-                    <span className="text-sm font-medium">Stars</span>
+                    <span className="font-mono text-[11px] tracking-[0.16em] uppercase">
+                      Stars
+                    </span>
                   </div>
-                  <span className="font-mono text-3xl font-bold">
+                  <span className="font-mono text-3xl font-bold tracking-tight">
                     {loading ? (
-                      <span className="bg-muted block h-8 w-16 animate-pulse rounded" />
+                      <span className="bg-muted block h-8 w-16 animate-pulse" />
                     ) : (
                       stats.stars.toLocaleString()
                     )}
@@ -182,16 +189,18 @@ export const ContributorsSection = () => {
 
               <EnhancedCard
                 variant="modern"
-                className="bg-card/50 border-primary/10 p-6 backdrop-blur-sm"
+                className="bg-card/70 border-primary/20 rounded-none border p-5 backdrop-blur-sm"
               >
                 <div className="flex flex-col">
                   <div className="text-muted-foreground mb-2 flex items-center space-x-2">
                     <GitFork className="h-4 w-4" />
-                    <span className="text-sm font-medium">Forks</span>
+                    <span className="font-mono text-[11px] tracking-[0.16em] uppercase">
+                      Forks
+                    </span>
                   </div>
-                  <span className="font-mono text-3xl font-bold">
+                  <span className="font-mono text-3xl font-bold tracking-tight">
                     {loading ? (
-                      <span className="bg-muted block h-8 w-16 animate-pulse rounded" />
+                      <span className="bg-muted block h-8 w-16 animate-pulse" />
                     ) : (
                       stats.forks.toLocaleString()
                     )}
@@ -201,17 +210,19 @@ export const ContributorsSection = () => {
 
               <EnhancedCard
                 variant="modern"
-                className="bg-card/50 border-primary/10 col-span-2 p-6 backdrop-blur-sm"
+                className="bg-card/70 border-primary/20 col-span-2 rounded-none border p-5 backdrop-blur-sm"
               >
                 <div className="flex items-center justify-between">
                   <div>
                     <div className="text-muted-foreground mb-2 flex items-center space-x-2">
                       <Users className="h-4 w-4" />
-                      <span className="text-sm font-medium">Contributors</span>
+                      <span className="font-mono text-[11px] tracking-[0.16em] uppercase">
+                        Contributors
+                      </span>
                     </div>
-                    <span className="font-mono text-3xl font-bold">
+                    <span className="font-mono text-3xl font-bold tracking-tight">
                       {loading ? (
-                        <span className="bg-muted block h-8 w-16 animate-pulse rounded" />
+                        <span className="bg-muted block h-8 w-16 animate-pulse" />
                       ) : (
                         stats.contributors.toLocaleString()
                       )}
@@ -221,7 +232,8 @@ export const ContributorsSection = () => {
                     href={`https://github.com/${REPO_OWNER}/${REPO_NAME}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group bg-primary/10 hover:bg-primary/20 text-primary flex h-12 w-12 cursor-pointer items-center justify-center rounded-full transition-colors"
+                    className="group bg-primary/10 hover:bg-primary/20 text-primary border-primary/30 flex h-11 w-11 cursor-pointer items-center justify-center border transition-colors"
+                    aria-label="Open repository on GitHub"
                   >
                     <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5" />
                   </a>
@@ -234,7 +246,7 @@ export const ContributorsSection = () => {
                 href={`https://github.com/${REPO_OWNER}/${REPO_NAME}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:ring-ring inline-flex items-center justify-center space-x-2 rounded-lg px-6 py-3 text-sm font-medium shadow transition-colors focus-visible:ring-1 focus-visible:outline-none"
+                className="btn-primary focus-visible:ring-ring inline-flex h-11 items-center justify-center space-x-2 px-6 text-xs tracking-[0.14em] uppercase shadow-none transition-colors focus-visible:ring-2 focus-visible:outline-none"
               >
                 <Github className="h-4 w-4" />
                 <span>Star on GitHub</span>
@@ -248,13 +260,13 @@ export const ContributorsSection = () => {
             {/* Decorative elements behind grid */}
             <div className="from-background pointer-events-none absolute inset-0 z-20 bg-gradient-to-tr via-transparent to-transparent opacity-0 lg:opacity-100" />
 
-            <div className="relative z-10 grid grid-cols-4 gap-3 sm:grid-cols-5 md:grid-cols-6 md:gap-4">
+            <div className="relative z-10 grid grid-cols-4 gap-2 sm:grid-cols-5 sm:gap-3 md:grid-cols-6 md:gap-4">
               {loading
                 ? // Loading skeletons
                   Array.from({ length: 18 }).map((_, i) => (
                     <div
                       key={i}
-                      className="bg-muted/30 aspect-square animate-pulse rounded-xl"
+                      className="bg-muted/30 border-border/50 aspect-square animate-pulse border"
                     />
                   ))
                 : // Actual contributors
@@ -276,15 +288,15 @@ export const ContributorsSection = () => {
                       >
                         <EnhancedCard
                           variant="modern"
-                          className="aspect-square overflow-hidden border-0 bg-transparent p-0 shadow-none"
+                          className="aspect-square overflow-hidden rounded-none border-0 bg-transparent p-0 shadow-none"
                         >
                           <img
                             src={contributor.avatar_url}
                             alt={contributor.login}
-                            className="border-border/50 group-hover:border-primary/50 h-full w-full rounded-xl border object-cover grayscale transition-all duration-300 group-hover:shadow-[0_0_15px_rgba(59,130,246,0.3)] group-hover:grayscale-0"
+                            className="border-border/60 group-hover:border-primary/60 h-full w-full border object-cover grayscale transition-all duration-300 group-hover:grayscale-0"
                           />
-                          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-2 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-                            <p className="truncate text-center font-mono text-[10px] text-white">
+                          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 to-transparent p-2 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                            <p className="truncate text-center font-mono text-[10px] tracking-[0.08em] text-white uppercase">
                               {contributor.login}
                             </p>
                           </div>
@@ -299,9 +311,9 @@ export const ContributorsSection = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   variants={itemVariants}
-                  className="bg-muted/30 border-muted-foreground/30 hover:bg-muted/50 flex aspect-square items-center justify-center rounded-xl border border-dashed transition-colors"
+                  className="bg-muted/30 border-muted-foreground/30 hover:bg-muted/50 flex aspect-square items-center justify-center border border-dashed transition-colors"
                 >
-                  <span className="text-muted-foreground font-mono text-xs">
+                  <span className="text-muted-foreground font-mono text-xs tracking-[0.12em]">
                     +{contributors.length - 24}
                   </span>
                 </motion.a>
@@ -316,6 +328,14 @@ export const ContributorsSection = () => {
           </div>
         </motion.div>
       </div>
+
+      <div
+        className="pointer-events-none absolute right-0 bottom-0 left-0 h-px"
+        style={{
+          background:
+            "linear-gradient(90deg, transparent, hsl(var(--glow) / 0.16), transparent)",
+        }}
+      />
     </section>
   );
 };

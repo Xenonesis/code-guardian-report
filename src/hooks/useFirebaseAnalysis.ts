@@ -99,10 +99,10 @@ export const useFirebaseAnalysis = () => {
       setHasCloudData(data.length > 0);
 
       // Set the most recent analysis as current if no local analysis exists
-      if (data.length > 0 && !analysisResults) {
+      if (data.length > 0) {
         const mostRecent = data[0];
-        setCloudAnalysis(mostRecent);
-        setAnalysisResults(mostRecent.results);
+        setCloudAnalysis((prev) => prev ?? mostRecent);
+        setAnalysisResults((prev) => prev ?? mostRecent.results);
       }
     });
 
@@ -110,9 +110,8 @@ export const useFirebaseAnalysis = () => {
 
     return () => {
       unsubscribe();
-      firebaseAnalysisStorage.cleanup();
     };
-  }, [user?.uid, isOnline, analysisResults]);
+  }, [user?.uid, isOnline]);
 
   const loadInitialData = async () => {
     try {

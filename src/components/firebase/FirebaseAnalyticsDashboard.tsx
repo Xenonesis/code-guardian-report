@@ -70,10 +70,15 @@ export const FirebaseAnalyticsDashboard = ({
   }, []);
 
   useEffect(() => {
-    if (userId && isOnline) {
-      loadAnalysisHistory();
-      setupRealtimeListener();
-    }
+    if (!userId || !isOnline) return;
+
+    firebaseAnalysisStorage.setUserId(userId);
+    loadAnalysisHistory();
+
+    const unsubscribe = setupRealtimeListener();
+    return () => {
+      unsubscribe?.();
+    };
   }, [userId, isOnline]);
 
   const loadAnalysisHistory = async () => {
