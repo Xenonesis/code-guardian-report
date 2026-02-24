@@ -23,16 +23,27 @@ export async function GET(request: NextRequest) {
     });
 
     if (!response.ok) {
-      // If models endpoint doesn't work, return empty list
-      // The client will use fallback models
-      return NextResponse.json({ data: [] }, { status: 200 });
+      const errorBody = await response.text();
+      return NextResponse.json(
+        {
+          error: "Failed to fetch Copilot models",
+          details: errorBody || response.statusText,
+          upstreamStatus: response.status,
+        },
+        { status: response.status }
+      );
     }
 
     const data = await response.json();
     return NextResponse.json(data);
   } catch (error) {
     console.error("Copilot models API error:", error);
-    // Return empty list on error, client will use fallback
-    return NextResponse.json({ data: [] }, { status: 200 });
+    return NextResponse.json(
+      {
+        error: "Copilot models request failed",
+        details: error instanceof Error ? error.message : "Unknown error",
+      },
+      { status: 500 }
+    );
   }
 }

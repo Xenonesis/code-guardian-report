@@ -1,4 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
+import {
+  getFirebaseAdmin,
+  isFirebaseAdminConfigured,
+} from "@/lib/firebaseAdmin";
 
 interface PWAAnalyticsPayload {
   event:
@@ -51,13 +55,24 @@ export async function POST(request: NextRequest) {
       timestamp: new Date().toISOString(),
     };
 
-    // Note: In production, store in Firestore:
-    // await db.collection('pwaAnalytics').add(pwaAnalyticsRecord);
+    if (!isFirebaseAdminConfigured()) {
+      return NextResponse.json(
+        {
+          error:
+            "PWA analytics storage is not configured. Set Firebase Admin credentials.",
+        },
+        { status: 503 }
+      );
+    }
+
+    const { db } = getFirebaseAdmin();
+    await db.collection("pwaAnalytics").add(pwaAnalyticsRecord);
 
     return NextResponse.json({
       success: true,
       message: "PWA analytics event recorded",
       eventId: pwaAnalyticsRecord.id,
+      persisted: true,
     });
   } catch (error) {
     console.error("PWA Analytics error:", error);

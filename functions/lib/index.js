@@ -60,7 +60,8 @@ var __importStar =
     };
   })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.cleanupCompletedTasks =
+exports.processScheduledNotifications =
+  exports.cleanupCompletedTasks =
   exports.cleanupWebhookLogs =
   exports.processWebhookTask =
   exports.processWebhook =
@@ -71,6 +72,7 @@ const https_1 = require("firebase-functions/v2/https");
 const firestore_1 = require("firebase-functions/v2/firestore");
 const scheduler_1 = require("firebase-functions/v2/scheduler");
 const logger = __importStar(require("firebase-functions/logger"));
+const webpush = __importStar(require("web-push"));
 // Initialize Firebase Admin
 admin.initializeApp();
 const db = admin.firestore();
@@ -258,6 +260,129 @@ exports.cleanupCompletedTasks = (0, scheduler_1.onSchedule)(
     });
     await batch.commit();
     logger.info(`Cleaned up ${snapshot.size} completed tasks`);
+  }
+);
+/**
+ * Process scheduled push notifications.
+ * Runs every 5 minutes and delivers pending notifications whose scheduled time has passed.
+ */
+exports.processScheduledNotifications = (0, scheduler_1.onSchedule)(
+  { schedule: "*/5 * * * *", timeZone: "UTC" },
+  async () => {
+    var _a, _b;
+    const vapidPublicKey =
+      process.env.VAPID_PUBLIC_KEY || process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
+    const vapidPrivateKey = process.env.VAPID_PRIVATE_KEY;
+    const vapidSubject =
+      process.env.VAPID_SUBJECT || "mailto:admin@codeguardian.dev";
+    if (!vapidPublicKey || !vapidPrivateKey) {
+      logger.warn(
+        "Skipping scheduled push processing: VAPID keys are not configured"
+      );
+      return;
+    }
+    webpush.setVapidDetails(vapidSubject, vapidPublicKey, vapidPrivateKey);
+    const now = Date.now();
+    const scheduledSnapshot = await db
+      .collection("scheduledNotifications")
+      .where("status", "==", "scheduled")
+      .where("scheduledTimestamp", "<=", now)
+      .limit(100)
+      .get();
+    if (scheduledSnapshot.empty) {
+      logger.debug("No scheduled notifications ready for delivery");
+      return;
+    }
+    for (const scheduledDoc of scheduledSnapshot.docs) {
+      const notification = scheduledDoc.data();
+      try {
+        const subscriptionsSnapshot = await db
+          .collection("pushSubscriptions")
+          .where("userId", "==", notification.userId)
+          .where("isActive", "==", true)
+          .get();
+        if (subscriptionsSnapshot.empty) {
+          await scheduledDoc.ref.update({
+            status: "failed",
+            error: "No active subscriptions for user",
+            processedAt: admin.firestore.FieldValue.serverTimestamp(),
+          });
+          continue;
+        }
+        let successCount = 0;
+        let failureCount = 0;
+        for (const subDoc of subscriptionsSnapshot.docs) {
+          const sub = subDoc.data();
+          if (
+            !sub.endpoint ||
+            !((_a = sub.keys) === null || _a === void 0 ? void 0 : _a.p256dh) ||
+            !((_b = sub.keys) === null || _b === void 0 ? void 0 : _b.auth)
+          ) {
+            failureCount += 1;
+            continue;
+          }
+          const payload = {
+            title: notification.title,
+            body: notification.body,
+            icon: notification.icon || "/icons/icon-192x192.png",
+            data: Object.assign(Object.assign({}, notification.data || {}), {
+              scheduledNotificationId: scheduledDoc.id,
+            }),
+          };
+          try {
+            await webpush.sendNotification(
+              {
+                endpoint: sub.endpoint,
+                keys: {
+                  p256dh: sub.keys.p256dh,
+                  auth: sub.keys.auth,
+                },
+              },
+              JSON.stringify(payload)
+            );
+            successCount += 1;
+            await subDoc.ref.update({
+              lastUsedAt: admin.firestore.FieldValue.serverTimestamp(),
+            });
+          } catch (error) {
+            failureCount += 1;
+            const statusCode =
+              error === null || error === void 0 ? void 0 : error.statusCode;
+            if (statusCode === 404 || statusCode === 410) {
+              // Mark stale subscriptions inactive to avoid repeated failures.
+              await subDoc.ref.update({
+                isActive: false,
+                invalidatedAt: admin.firestore.FieldValue.serverTimestamp(),
+              });
+            }
+            logger.warn("Scheduled push send failed", {
+              scheduledNotificationId: scheduledDoc.id,
+              subscriptionId: subDoc.id,
+              statusCode,
+            });
+          }
+        }
+        await scheduledDoc.ref.update({
+          status: successCount > 0 ? "sent" : "failed",
+          sentCount: successCount,
+          failedCount: failureCount,
+          processedAt: admin.firestore.FieldValue.serverTimestamp(),
+        });
+      } catch (error) {
+        logger.error("Failed to process scheduled notification", {
+          scheduledNotificationId: scheduledDoc.id,
+          error,
+        });
+        await scheduledDoc.ref.update({
+          status: "failed",
+          error: error instanceof Error ? error.message : "Unknown error",
+          processedAt: admin.firestore.FieldValue.serverTimestamp(),
+        });
+      }
+    }
+    logger.info("Processed scheduled notifications", {
+      count: scheduledSnapshot.size,
+    });
   }
 );
 /**

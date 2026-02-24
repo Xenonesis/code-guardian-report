@@ -38,6 +38,8 @@ export const PDFDownloadButton: React.FC<PDFDownloadButtonProps> = ({
     try {
       const pdfBlob = await pdfExportService.generateReport(results, {
         customTitle,
+        includeCharts: true,
+        includeCodeSnippets: true,
       });
 
       // Create download link

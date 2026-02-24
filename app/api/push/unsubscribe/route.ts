@@ -45,11 +45,15 @@ export async function POST(request: NextRequest) {
     // Check if Firebase Admin is configured
     if (!isFirebaseAdminConfigured()) {
       console.warn("Push unsubscribe: Firebase Admin not configured");
-      return NextResponse.json({
-        success: true,
-        message: "Unsubscription processed (development mode)",
-        removedCount: 1,
-      });
+      return NextResponse.json(
+        {
+          success: false,
+          configured: false,
+          error:
+            "Push unsubscription storage is not configured. Set Firebase Admin credentials.",
+        },
+        { status: 503 }
+      );
     }
 
     const { db } = getFirebaseAdmin();

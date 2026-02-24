@@ -10,6 +10,7 @@ import { onRequest } from "firebase-functions/v2/https";
 import { onDocumentCreated } from "firebase-functions/v2/firestore";
 import { onSchedule } from "firebase-functions/v2/scheduler";
 import * as logger from "firebase-functions/logger";
+import * as webpush from "web-push";
 
 // Initialize Firebase Admin
 admin.initializeApp();
@@ -242,6 +243,163 @@ export const cleanupCompletedTasks = onSchedule(
 
     await batch.commit();
     logger.info(`Cleaned up ${snapshot.size} completed tasks`);
+  }
+);
+
+interface StoredPushSubscription {
+  endpoint: string;
+  keys: {
+    p256dh: string;
+    auth: string;
+  };
+  isActive?: boolean;
+}
+
+interface ScheduledNotificationDoc {
+  title: string;
+  body: string;
+  icon?: string;
+  data?: Record<string, unknown>;
+  userId: string;
+  status: string;
+  scheduledTimestamp?: number;
+}
+
+/**
+ * Process scheduled push notifications.
+ * Runs every 5 minutes and delivers pending notifications whose scheduled time has passed.
+ */
+export const processScheduledNotifications = onSchedule(
+  { schedule: "*/5 * * * *", timeZone: "UTC" },
+  async () => {
+    const vapidPublicKey =
+      process.env.VAPID_PUBLIC_KEY || process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
+    const vapidPrivateKey = process.env.VAPID_PRIVATE_KEY;
+    const vapidSubject =
+      process.env.VAPID_SUBJECT || "mailto:admin@codeguardian.dev";
+
+    if (!vapidPublicKey || !vapidPrivateKey) {
+      logger.warn(
+        "Skipping scheduled push processing: VAPID keys are not configured"
+      );
+      return;
+    }
+
+    webpush.setVapidDetails(vapidSubject, vapidPublicKey, vapidPrivateKey);
+
+    const now = Date.now();
+    const scheduledSnapshot = await db
+      .collection("scheduledNotifications")
+      .where("status", "==", "scheduled")
+      .where("scheduledTimestamp", "<=", now)
+      .limit(100)
+      .get();
+
+    if (scheduledSnapshot.empty) {
+      logger.debug("No scheduled notifications ready for delivery");
+      return;
+    }
+
+    for (const scheduledDoc of scheduledSnapshot.docs) {
+      const notification = scheduledDoc.data() as ScheduledNotificationDoc;
+
+      try {
+        const subscriptionsSnapshot = await db
+          .collection("pushSubscriptions")
+          .where("userId", "==", notification.userId)
+          .where("isActive", "==", true)
+          .get();
+
+        if (subscriptionsSnapshot.empty) {
+          await scheduledDoc.ref.update({
+            status: "failed",
+            error: "No active subscriptions for user",
+            processedAt: admin.firestore.FieldValue.serverTimestamp(),
+          });
+          continue;
+        }
+
+        let successCount = 0;
+        let failureCount = 0;
+
+        for (const subDoc of subscriptionsSnapshot.docs) {
+          const sub = subDoc.data() as StoredPushSubscription;
+
+          if (!sub.endpoint || !sub.keys?.p256dh || !sub.keys?.auth) {
+            failureCount += 1;
+            continue;
+          }
+
+          const payload = {
+            title: notification.title,
+            body: notification.body,
+            icon: notification.icon || "/icons/icon-192x192.png",
+            data: {
+              ...(notification.data || {}),
+              scheduledNotificationId: scheduledDoc.id,
+            },
+          };
+
+          try {
+            await webpush.sendNotification(
+              {
+                endpoint: sub.endpoint,
+                keys: {
+                  p256dh: sub.keys.p256dh,
+                  auth: sub.keys.auth,
+                },
+              },
+              JSON.stringify(payload)
+            );
+
+            successCount += 1;
+
+            await subDoc.ref.update({
+              lastUsedAt: admin.firestore.FieldValue.serverTimestamp(),
+            });
+          } catch (error: unknown) {
+            failureCount += 1;
+
+            const statusCode = (error as { statusCode?: number })?.statusCode;
+            if (statusCode === 404 || statusCode === 410) {
+              // Mark stale subscriptions inactive to avoid repeated failures.
+              await subDoc.ref.update({
+                isActive: false,
+                invalidatedAt: admin.firestore.FieldValue.serverTimestamp(),
+              });
+            }
+
+            logger.warn("Scheduled push send failed", {
+              scheduledNotificationId: scheduledDoc.id,
+              subscriptionId: subDoc.id,
+              statusCode,
+            });
+          }
+        }
+
+        await scheduledDoc.ref.update({
+          status: successCount > 0 ? "sent" : "failed",
+          sentCount: successCount,
+          failedCount: failureCount,
+          processedAt: admin.firestore.FieldValue.serverTimestamp(),
+        });
+      } catch (error) {
+        logger.error("Failed to process scheduled notification", {
+          scheduledNotificationId: scheduledDoc.id,
+          error,
+        });
+
+        await scheduledDoc.ref.update({
+          status: "failed",
+          error: error instanceof Error ? error.message : "Unknown error",
+          processedAt: admin.firestore.FieldValue.serverTimestamp(),
+        });
+      }
+    }
+
+    logger.info("Processed scheduled notifications", {
+      count: scheduledSnapshot.size,
+    });
   }
 );
 

@@ -55,19 +55,18 @@ export async function POST(request: NextRequest) {
 
     // Check if Firebase Admin is configured
     if (!isFirebaseAdminConfigured()) {
-      const notificationId = `scheduled-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
       console.warn(
         "Push schedule: Firebase Admin not configured, notification not persisted"
       );
-      return NextResponse.json({
-        success: true,
-        message: "Notification scheduled (development mode - not persisted)",
-        scheduledNotification: {
-          id: notificationId,
-          scheduledTime: body.scheduledTime,
-          status: "scheduled",
+      return NextResponse.json(
+        {
+          success: false,
+          configured: false,
+          error:
+            "Push scheduling storage is not configured. Set Firebase Admin credentials.",
         },
-      });
+        { status: 503 }
+      );
     }
 
     const { db } = getFirebaseAdmin();

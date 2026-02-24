@@ -1,4 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
+import {
+  getFirebaseAdmin,
+  isFirebaseAdminConfigured,
+} from "@/lib/firebaseAdmin";
 
 type AnalyticsEventType =
   | "page_view"
@@ -67,7 +71,10 @@ export async function POST(request: NextRequest) {
   }
 }
 
-function handleSingleAnalytics(body: AnalyticsPayload, request: NextRequest) {
+async function handleSingleAnalytics(
+  body: AnalyticsPayload,
+  request: NextRequest
+) {
   // Validate required fields
   if (!body.event) {
     return NextResponse.json(
@@ -90,17 +97,28 @@ function handleSingleAnalytics(body: AnalyticsPayload, request: NextRequest) {
     ip: request.headers.get("x-forwarded-for")?.split(",")[0] || "unknown",
   };
 
-  // Note: In production, store in Firestore:
-  // await db.collection('analytics').add(analyticsRecord);
+  if (!isFirebaseAdminConfigured()) {
+    return NextResponse.json(
+      {
+        error:
+          "Analytics storage is not configured. Set Firebase Admin credentials.",
+      },
+      { status: 503 }
+    );
+  }
+
+  const { db } = getFirebaseAdmin();
+  await db.collection("analytics").add(analyticsRecord);
 
   return NextResponse.json({
     success: true,
     message: "Analytics event recorded",
     eventId: analyticsRecord.id,
+    persisted: true,
   });
 }
 
-function handleBatchAnalytics(
+async function handleBatchAnalytics(
   body: AnalyticsBatchPayload,
   request: NextRequest
 ) {
@@ -133,18 +151,29 @@ function handleBatchAnalytics(
     userAgent: request.headers.get("user-agent") || "unknown",
   }));
 
-  // Note: In production, batch write to Firestore:
-  // const batch = db.batch();
-  // processedEvents.forEach(event => {
-  //   const ref = db.collection('analytics').doc(event.id);
-  //   batch.set(ref, event);
-  // });
-  // await batch.commit();
+  if (!isFirebaseAdminConfigured()) {
+    return NextResponse.json(
+      {
+        error:
+          "Analytics storage is not configured. Set Firebase Admin credentials.",
+      },
+      { status: 503 }
+    );
+  }
+
+  const { db } = getFirebaseAdmin();
+  const batch = db.batch();
+  processedEvents.forEach((event) => {
+    const ref = db.collection("analytics").doc(event.id);
+    batch.set(ref, event);
+  });
+  await batch.commit();
 
   return NextResponse.json({
     success: true,
     message: `${processedEvents.length} analytics events recorded`,
     batchId,
     eventCount: processedEvents.length,
+    persisted: true,
   });
 }

@@ -8,6 +8,7 @@ export interface PDFReportOptions {
   includeCodeSnippets?: boolean;
   includeAIInsights?: boolean;
   customTitle?: string;
+  chartSelectors?: string[];
 }
 
 export class PDFExportService {
@@ -47,10 +48,15 @@ export class PDFExportService {
       this.addExecutiveSummary(results);
 
       // Security Issues
-      this.addSecurityIssues(results);
+      this.addSecurityIssues(results, options);
 
       // Metrics
       this.addMetrics(results);
+
+      // Chart snapshots from the current dashboard view
+      if (options.includeCharts) {
+        await this.addCharts(options.chartSelectors);
+      }
 
       // Language Detection
       if (results.languageDetection) {
@@ -123,7 +129,10 @@ export class PDFExportService {
     this.currentY += 10;
   }
 
-  private addSecurityIssues(results: AnalysisResults): void {
+  private addSecurityIssues(
+    results: AnalysisResults,
+    options: PDFReportOptions
+  ): void {
     if (!this.doc) return;
 
     if (results.issues.length === 0) {
@@ -197,8 +206,89 @@ export class PDFExportService {
         this.currentY += 4;
       }
 
+      if (options.includeCodeSnippets && issue.codeSnippet) {
+        const snippetLines = this.doc.splitTextToSize(
+          `Snippet: ${issue.codeSnippet}`,
+          this.pageWidth - this.margin * 2 - 10
+        );
+
+        this.doc.setFont("courier", "normal");
+        this.doc.text(snippetLines, this.margin + 5, this.currentY);
+        this.currentY += snippetLines.length * 4;
+        this.doc.setFont("helvetica", "normal");
+      }
+
       this.currentY += 8;
     });
+  }
+
+  private async addCharts(chartSelectors?: string[]): Promise<void> {
+    if (!this.doc || typeof document === "undefined") {
+      return;
+    }
+
+    const selectors =
+      chartSelectors && chartSelectors.length > 0
+        ? chartSelectors
+        : ["[data-chart-export='true']", ".recharts-wrapper"];
+
+    const chartElements: HTMLElement[] = [];
+    for (const selector of selectors) {
+      document.querySelectorAll(selector).forEach((node) => {
+        if (
+          node instanceof HTMLElement &&
+          !chartElements.includes(node) &&
+          chartElements.length < 3
+        ) {
+          chartElements.push(node);
+        }
+      });
+      if (chartElements.length >= 3) {
+        break;
+      }
+    }
+
+    if (chartElements.length === 0) {
+      return;
+    }
+
+    if (this.currentY > this.pageHeight - 110) {
+      this.doc.addPage();
+      this.currentY = 20;
+    }
+
+    this.doc.setFontSize(12);
+    this.doc.setFont("helvetica", "bold");
+    this.doc.text("Chart Snapshots", this.margin, this.currentY);
+    this.currentY += 8;
+
+    for (const [index, element] of chartElements.entries()) {
+      if (this.currentY > this.pageHeight - 95) {
+        this.doc.addPage();
+        this.currentY = 20;
+      }
+
+      const imageData = await this.captureElementAsImage(element);
+      const targetWidth = this.pageWidth - this.margin * 2;
+      const targetHeight = 70;
+
+      this.doc.setFontSize(10);
+      this.doc.setFont("helvetica", "normal");
+      this.doc.text(`Chart ${index + 1}`, this.margin, this.currentY);
+      this.currentY += 4;
+
+      this.doc.addImage(
+        imageData,
+        "PNG",
+        this.margin,
+        this.currentY,
+        targetWidth,
+        targetHeight,
+        undefined,
+        "FAST"
+      );
+      this.currentY += targetHeight + 8;
+    }
   }
 
   private addMetrics(results: AnalysisResults): void {
