@@ -404,7 +404,7 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
               <div className="bg-border/40 hidden h-5 w-px md:block" />
 
               {/* Utility pill */}
-              <div className="border-border/50 bg-muted/30 flex items-center gap-0.5 rounded-xl border p-0.5 backdrop-blur-sm">
+              <div className="border-border/50 bg-muted/30 hidden items-center gap-0.5 rounded-xl border p-0.5 backdrop-blur-sm md:flex">
                 <ThemeToggle />
                 <NotificationCenter className="hover:bg-muted/60 h-8 w-8 rounded-lg transition-colors" />
                 <PWAQuickActions className="hover:bg-muted/60 hidden h-8 w-8 rounded-lg transition-colors sm:flex" />
@@ -455,6 +455,17 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
                 },
               }}
             >
+              <div className="border-border/50 bg-muted/25 mb-4 flex items-center justify-between rounded-xl border p-2">
+                <span className="text-muted-foreground font-mono text-[10px] tracking-[0.12em] uppercase">
+                  Quick Actions
+                </span>
+                <div className="flex items-center gap-1">
+                  <ThemeToggle />
+                  <NotificationCenter className="hover:bg-muted/60 h-8 w-8 rounded-lg transition-colors" />
+                  <PWAQuickActions className="hover:bg-muted/60 h-8 w-8 rounded-lg transition-colors" />
+                </div>
+              </div>
+
               <nav className="flex flex-col gap-2">
                 {navItems.map((item) => {
                   const active = isActive(item.id);

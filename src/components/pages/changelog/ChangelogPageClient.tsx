@@ -14,13 +14,16 @@ import { STATIC_COMMITS } from "./commitsData";
 // Hardcoded Releases Data derived from CHANGELOG.md
 const STATIC_RELEASES: GitHubRelease[] = [
   {
-    id: 9999,
-    tag_name: "Unreleased",
-    name: "Unreleased",
+    id: 1500,
+    tag_name: "15.0.0",
+    name: "Version 15.0.0",
     body: `### Changed
 
 - Restored mobile navbar implementation from commit \`526bbfae554ccc18e21f779bafa1e8ec3f462844\` by replacing current mobile-only navbar sections.
 - Refined responsive navigation behavior across breakpoints while preserving desktop/tablet navigation structure.
+- Updated Quick Actions availability across breakpoints:
+  - Desktop/Tablet: kept utility pill in top navigation
+  - Mobile: moved Quick Actions (Theme, Notifications, PWA) into the mobile menu for reliable access
 
 ### Removed
 
@@ -37,7 +40,8 @@ const STATIC_RELEASES: GitHubRelease[] = [
   - \`uiux.md\` -> \`docs/uiux.md\`
 - Updated README references to use the new \`docs/\` paths.`,
     published_at: "2026-02-26T00:00:00Z",
-    html_url: "https://github.com/Xenonesis/code-guardian-report/commits/main",
+    html_url:
+      "https://github.com/Xenonesis/code-guardian-report/releases/tag/15.0.0",
     author: {
       login: "Xenonesis",
       avatar_url: "https://github.com/Xenonesis.png",

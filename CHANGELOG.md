@@ -5,12 +5,15 @@ All notable changes to Code Guardian Report will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [15.0.0] - 2026-02-26
 
 ### Changed
 
 - Restored mobile navbar implementation from commit `526bbfae554ccc18e21f779bafa1e8ec3f462844` by replacing current mobile-only navbar sections.
 - Refined responsive navigation behavior across breakpoints while preserving desktop/tablet navigation structure.
+- Updated Quick Actions availability across breakpoints:
+  - Desktop/Tablet: kept utility pill in top navigation
+  - Mobile: moved Quick Actions (Theme, Notifications, PWA) into the mobile menu for reliable access
 
 ### Removed
 
