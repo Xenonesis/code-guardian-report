@@ -6177,3 +6177,6 @@ A: Yes, set `NEXT_PUBLIC_ENABLE_ANALYTICS=false` in your environment variables.
 **Made with love by the Code Guardian Team**
 
 **[Star us on GitHub](https://github.com/Xenonesis/code-guardian-report)** | **[Documentation](https://github.com/Xenonesis/code-guardian-report/tree/main/md)** | **[Report Bug](https://github.com/Xenonesis/code-guardian-report/issues)** | **[Request Feature](https://github.com/Xenonesis/code-guardian-report/issues/new?labels=enhancement)**
+
+ 
+ 
