@@ -96,6 +96,7 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
         }
       };
     }
+    return undefined;
   }, [isMobileMenuOpen, lenis]);
 
   const handleNavigate = (sectionId: string) => {

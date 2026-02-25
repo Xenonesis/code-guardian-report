@@ -107,6 +107,7 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({
         }
       };
     }
+    return undefined;
   }, [isOpen, lenis]);
 
   const filteredNotifications = notifications
