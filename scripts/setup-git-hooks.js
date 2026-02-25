@@ -7,7 +7,6 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Git hook script content
 const postCommitHook = `#!/bin/sh
 # Auto-update contributors after commit
 
@@ -71,7 +70,6 @@ function setupGitHooks() {
 
     const gitHooksDir = path.join(process.cwd(), ".git", "hooks");
 
-    // Check if .git directory exists
     if (!fs.existsSync(path.join(process.cwd(), ".git"))) {
       console.error(
         "Error: Not in a Git repository. Please run this from the project root."
@@ -79,18 +77,13 @@ function setupGitHooks() {
       process.exit(1);
     }
 
-    // Create hooks directory if it doesn't exist
     if (!fs.existsSync(gitHooksDir)) {
       fs.mkdirSync(gitHooksDir, { recursive: true });
     }
 
-    // Write post-commit hook
-    const postCommitPath = path.join(gitHooksDir, "post-commit");
     fs.writeFileSync(postCommitPath, postCommitHook, { mode: 0o755 });
     console.log("Created post-commit hook");
 
-    // Write pre-commit hook
-    const preCommitPath = path.join(gitHooksDir, "pre-commit");
     fs.writeFileSync(preCommitPath, preCommitHook, { mode: 0o755 });
     console.log("Created pre-commit hook");
 

@@ -51,7 +51,6 @@ class Logger {
   private flushInterval: ReturnType<typeof setInterval> | null = null;
 
   private constructor() {
-    // Start periodic flush for production
     if (IS_PROD && typeof window !== "undefined") {
       this.flushInterval = setInterval(() => this.flush(), 30000); // Flush every 30 seconds
     }
@@ -123,12 +122,10 @@ class Logger {
     const entry = this.createLogEntry(LogLevel.ERROR, message, error);
     this.addToBuffer(entry);
 
-    // Only show errors in development, in production send to tracking service
     if (IS_DEV) {
       console.error(`[ERROR] ${message}`, error || "");
     }
 
-    // In production, send to error tracking service
     if (IS_PROD) {
       this.sendToErrorTracking(entry);
     }
@@ -141,7 +138,6 @@ class Logger {
     // Always log fatal errors
     console.error(`[FATAL] ${message}`, error || "");
 
-    // Send immediately to error tracking
     this.sendToErrorTracking(entry);
   }
 

@@ -17,7 +17,6 @@ interface ErrorProps {
 
 export default function Error({ error, reset }: ErrorProps) {
   useEffect(() => {
-    // Log error in development only
     if (process.env.NODE_ENV === "development") {
       console.error("Application Error:", {
         message: error.message,
@@ -27,12 +26,10 @@ export default function Error({ error, reset }: ErrorProps) {
       });
     }
 
-    // In production, send to error monitoring service
     if (
       typeof window !== "undefined" &&
       process.env.NODE_ENV === "production"
     ) {
-      // Send to analytics/monitoring
       try {
         fetch("/api/log-error", {
           method: "POST",
@@ -44,12 +41,8 @@ export default function Error({ error, reset }: ErrorProps) {
             userAgent: navigator.userAgent,
             timestamp: new Date().toISOString(),
           }),
-        }).catch(() => {
-          // Silently fail if logging fails
-        });
-      } catch {
-        // Silently fail
-      }
+        }).catch(() => {});
+      } catch {}
     }
   }, [error]);
 

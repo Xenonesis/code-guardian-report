@@ -1,6 +1,5 @@
 "use client";
 
-// lib/auth-context.tsx
 import React, {
   createContext,
   useContext,

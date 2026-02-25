@@ -90,9 +90,30 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = isMobileMenuOpen ? "hidden" : "unset";
+    if (isMobileMenuOpen) {
+      const scrollY = window.scrollY;
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.left = "0";
+      document.body.style.right = "0";
+      document.body.style.overflow = "hidden";
+    } else {
+      const top = document.body.style.top;
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.left = "";
+      document.body.style.right = "";
+      document.body.style.overflow = "";
+      if (top) {
+        window.scrollTo(0, parseInt(top, 10) * -1);
+      }
+    }
     return () => {
-      document.body.style.overflow = "unset";
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.left = "";
+      document.body.style.right = "";
+      document.body.style.overflow = "";
     };
   }, [isMobileMenuOpen]);
 
@@ -102,13 +123,6 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
     };
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [isMobileMenuOpen]);
-
-  useEffect(() => {
-    if (!isMobileMenuOpen) return;
-    const close = () => setIsMobileMenuOpen(false);
-    window.addEventListener("scroll", close, { passive: true });
-    return () => window.removeEventListener("scroll", close);
   }, [isMobileMenuOpen]);
 
   const handleNavigate = (sectionId: string) => {
@@ -431,21 +445,21 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
       </motion.nav>
 
       {/* Mobile Menu */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="bg-background/96 fixed inset-0 z-40 flex flex-col backdrop-blur-3xl lg:hidden"
-          >
-            <div className="from-primary/12 via-primary/4 to-background pointer-events-none absolute inset-0 bg-gradient-to-b" />
+      <div
+        className={cn(
+          "bg-background/96 fixed inset-0 z-40 overflow-y-scroll overscroll-contain backdrop-blur-3xl transition-opacity duration-200 lg:hidden",
+          isMobileMenuOpen
+            ? "opacity-100"
+            : "pointer-events-none opacity-0"
+        )}
+        style={{ WebkitOverflowScrolling: "touch" }}
+      >
+        <div className="from-primary/12 via-primary/4 to-background pointer-events-none fixed inset-0 z-[-1] bg-gradient-to-b" />
+        <div className="relative px-6 pt-24 pb-20">
+          {isMobileMenuOpen && (
             <motion.div
-              className="relative flex flex-1 flex-col overflow-y-auto px-6 pt-24 pb-20"
               initial="hidden"
               animate="visible"
-              exit="hidden"
               variants={{
                 visible: {
                   transition: { staggerChildren: 0.05, delayChildren: 0.1 },
@@ -511,10 +525,7 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
                         </span>
                       )}
                       {active && (
-                        <motion.div
-                          layoutId="mobile-active-glow"
-                          className="absolute inset-0 -z-10 bg-gradient-to-r from-white/10 to-transparent opacity-20"
-                        />
+                        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-white/10 to-transparent opacity-20" />
                       )}
                     </motion.button>
                   );
@@ -526,7 +537,7 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
                   hidden: { opacity: 0, y: 20 },
                   visible: { opacity: 1, y: 0 },
                 }}
-                className="mt-auto space-y-4 pt-6"
+                className="space-y-4 pt-6"
               >
                 <div className="via-border h-px w-full bg-gradient-to-r from-transparent to-transparent" />
                 {user ? (
@@ -591,9 +602,9 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
                 )}
               </motion.div>
             </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          )}
+        </div>
+      </div>
     </>
   );
 
