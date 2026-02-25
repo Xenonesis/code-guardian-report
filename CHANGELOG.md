@@ -5,6 +5,28 @@ All notable changes to Code Guardian Report will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+
+- Restored mobile navbar implementation from commit `526bbfae554ccc18e21f779bafa1e8ec3f462844` by replacing current mobile-only navbar sections.
+- Refined responsive navigation behavior across breakpoints while preserving desktop/tablet navigation structure.
+
+### Removed
+
+- Removed obsolete root files: `GITHUB_DOWNLOAD_FIX.md`, `IMPLEMENTATION_SUMMARY.md`, `all_commits.txt`, and `generate_commits_ts.py`.
+
+### Documentation
+
+- Reorganized technical documentation into `docs/`:
+  - `API.md` -> `docs/API.md`
+  - `ARCHITECTURE.md` -> `docs/ARCHITECTURE.md`
+  - `DEPLOYMENT.md` -> `docs/DEPLOYMENT.md`
+  - `ROADMAP.md` -> `docs/ROADMAP.md`
+  - `TROUBLESHOOTING.md` -> `docs/TROUBLESHOOTING.md`
+  - `uiux.md` -> `docs/uiux.md`
+- Updated `README.md` references to use the new `docs/` paths.
+
 ## [14.7.0] - 2026-02-18
 
 ### Added

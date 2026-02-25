@@ -14,6 +14,37 @@ import { STATIC_COMMITS } from "./commitsData";
 // Hardcoded Releases Data derived from CHANGELOG.md
 const STATIC_RELEASES: GitHubRelease[] = [
   {
+    id: 9999,
+    tag_name: "Unreleased",
+    name: "Unreleased",
+    body: `### Changed
+
+- Restored mobile navbar implementation from commit \`526bbfae554ccc18e21f779bafa1e8ec3f462844\` by replacing current mobile-only navbar sections.
+- Refined responsive navigation behavior across breakpoints while preserving desktop/tablet navigation structure.
+
+### Removed
+
+- Removed obsolete root files: \`GITHUB_DOWNLOAD_FIX.md\`, \`IMPLEMENTATION_SUMMARY.md\`, \`all_commits.txt\`, and \`generate_commits_ts.py\`.
+
+### Documentation
+
+- Reorganized technical documentation into \`docs/\`:
+  - \`API.md\` -> \`docs/API.md\`
+  - \`ARCHITECTURE.md\` -> \`docs/ARCHITECTURE.md\`
+  - \`DEPLOYMENT.md\` -> \`docs/DEPLOYMENT.md\`
+  - \`ROADMAP.md\` -> \`docs/ROADMAP.md\`
+  - \`TROUBLESHOOTING.md\` -> \`docs/TROUBLESHOOTING.md\`
+  - \`uiux.md\` -> \`docs/uiux.md\`
+- Updated README references to use the new \`docs/\` paths.`,
+    published_at: "2026-02-26T00:00:00Z",
+    html_url: "https://github.com/Xenonesis/code-guardian-report/commits/main",
+    author: {
+      login: "Xenonesis",
+      avatar_url: "https://github.com/Xenonesis.png",
+      html_url: "https://github.com/Xenonesis",
+    },
+  },
+  {
     id: 1470,
     tag_name: "14.7.0",
     name: "Version 14.7.0",
