@@ -133,6 +133,7 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
   const navContent = (
     <>
       <motion.nav
+        role="banner"
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
@@ -166,18 +167,16 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
             <button
               onClick={() => handleNavigate("home")}
               aria-label="Go to home"
-              className="group flex flex-shrink-0 items-center gap-2.5 focus-visible:outline-none"
+              className="group flex items-center gap-2 transition-opacity hover:opacity-90 sm:gap-2.5"
             >
               <div className="relative">
-                <div className="from-primary/20 to-primary/5 border-primary/25 relative flex h-9 w-9 items-center justify-center rounded-xl border bg-gradient-to-br transition-all duration-300 group-hover:scale-105 group-hover:shadow-[0_0_18px_-4px_hsl(var(--primary)/0.5)]">
-                  <Shield className="text-primary h-[18px] w-[18px]" />
+                <div className="from-primary/25 to-primary/5 border-primary/35 relative flex h-9 w-9 items-center justify-center rounded-lg border bg-gradient-to-tr shadow-[0_0_0_1px_hsl(var(--background))_inset] transition-transform group-hover:scale-105">
+                  <Shield className="text-primary h-5 w-5 transition-colors" />
                 </div>
-                {/* Active ping ring on hover */}
-                <span className="border-primary/40 absolute inset-0 rounded-xl border opacity-0 transition-opacity duration-300 group-hover:[animation:ping_1s_cubic-bezier(0,0,0.2,1)_1] group-hover:opacity-100" />
               </div>
-              <div className="hidden sm:block">
-                <span className="text-foreground font-display text-[17px] font-semibold tracking-tight md:text-lg">
-                  Code <span className="text-primary">Guardian</span>
+              <div className="hidden items-center sm:flex">
+                <span className="font-display text-foreground text-lg font-medium tracking-tight whitespace-nowrap md:text-xl">
+                  Code Guardian
                 </span>
               </div>
             </button>
@@ -254,7 +253,7 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
                     aria-current={active ? "page" : undefined}
                     title={item.label}
                     className={cn(
-                      "group focus-visible:ring-primary/50 relative flex h-9 items-center gap-1 rounded-lg px-2.5 text-xs font-medium transition-colors outline-none focus-visible:ring-2",
+                      "group focus-visible:ring-primary/50 relative flex h-9 items-center gap-1 rounded-lg px-2 text-xs font-medium transition-colors outline-none focus-visible:ring-2",
                       active
                         ? "text-primary-foreground"
                         : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
@@ -277,11 +276,10 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
                     <span className="relative z-10 flex items-center gap-1">
                       <Icon
                         className={cn(
-                          "h-3.5 w-3.5",
+                          "h-4 w-4",
                           active ? "opacity-90" : "opacity-60"
                         )}
                       />
-                      <span className="hidden sm:inline">{item.label}</span>
                     </span>
                     {item.badge && (
                       <span
@@ -412,228 +410,177 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
                 <PWAQuickActions className="hover:bg-muted/60 hidden h-8 w-8 rounded-lg transition-colors sm:flex" />
               </div>
 
-              {/* Mobile hamburger */}
-              <button
+              {/* Mobile Toggle */}
+              <Button
+                variant="ghost"
+                size="icon"
                 onClick={() => setIsMobileMenuOpen((v) => !v)}
+                className="border-border/50 hover:bg-muted/70 h-9 w-9 rounded-lg border lg:hidden"
                 aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
                 aria-expanded={isMobileMenuOpen}
-                className="border-border/40 hover:bg-muted/60 focus-visible:ring-primary/50 flex h-9 w-9 items-center justify-center rounded-xl border transition-colors focus-visible:ring-2 focus-visible:outline-none md:hidden"
               >
-                <AnimatePresence mode="wait" initial={false}>
-                  {isMobileMenuOpen ? (
-                    <motion.span
-                      key="close"
-                      initial={{ rotate: -90, opacity: 0 }}
-                      animate={{ rotate: 0, opacity: 1 }}
-                      exit={{ rotate: 90, opacity: 0 }}
-                      transition={{ duration: 0.15 }}
-                    >
-                      <X className="h-5 w-5" />
-                    </motion.span>
-                  ) : (
-                    <motion.span
-                      key="open"
-                      initial={{ rotate: 90, opacity: 0 }}
-                      animate={{ rotate: 0, opacity: 1 }}
-                      exit={{ rotate: -90, opacity: 0 }}
-                      transition={{ duration: 0.15 }}
-                    >
-                      <Menu className="h-5 w-5" />
-                    </motion.span>
-                  )}
-                </AnimatePresence>
-              </button>
+                {isMobileMenuOpen ? (
+                  <X className="h-5 w-5" />
+                ) : (
+                  <Menu className="h-5 w-5" />
+                )}
+              </Button>
             </div>
           </div>
         </div>
       </motion.nav>
 
-      {/* Mobile Menu — bottom sheet */}
+      {/* Mobile Menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <>
-            {/* Dimmed backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="bg-background/96 fixed inset-0 z-40 flex flex-col backdrop-blur-3xl lg:hidden"
+          >
+            <div className="from-primary/12 via-primary/4 to-background pointer-events-none absolute inset-0 bg-gradient-to-b" />
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="bg-background/50 fixed inset-0 z-40 backdrop-blur-sm md:hidden"
-              onClick={() => setIsMobileMenuOpen(false)}
-            />
-
-            {/* Drawer */}
-            <motion.div
-              initial={{ y: "100%" }}
-              animate={{ y: 0 }}
-              exit={{ y: "100%" }}
-              transition={{ type: "spring", bounce: 0.06, duration: 0.42 }}
-              className="border-border/40 bg-background/96 fixed inset-x-0 bottom-0 z-50 flex flex-col rounded-t-2xl border-t shadow-[0_-24px_64px_-20px_hsl(var(--foreground)/0.35)] backdrop-blur-2xl md:hidden"
-              style={{ maxHeight: "88dvh" }}
+              className="relative flex flex-1 flex-col overflow-y-auto px-6 pt-24 pb-20"
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              variants={{
+                visible: {
+                  transition: { staggerChildren: 0.05, delayChildren: 0.1 },
+                },
+                hidden: {
+                  transition: { staggerChildren: 0.05, staggerDirection: -1 },
+                },
+              }}
             >
-              {/* Handle */}
-              <div className="flex flex-shrink-0 justify-center pt-3 pb-1">
-                <div className="bg-muted-foreground/25 h-1 w-10 rounded-full" />
-              </div>
-
-              {/* Drawer header */}
-              <div className="border-border/25 flex flex-shrink-0 items-center justify-between border-b px-5 py-3">
-                <div className="flex items-center gap-2.5">
-                  <div className="from-primary/20 to-primary/5 border-primary/25 flex h-8 w-8 items-center justify-center rounded-lg border bg-gradient-to-br">
-                    <Shield className="text-primary h-4 w-4" />
-                  </div>
-                  <div>
-                    <p className="text-foreground text-sm leading-tight font-semibold">
-                      Code <span className="text-primary">Guardian</span>
-                    </p>
-                    <p className="text-muted-foreground font-mono text-[9px] leading-tight tracking-widest uppercase">
-                      Navigation
-                    </p>
-                  </div>
-                </div>
-                <button
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-muted-foreground hover:text-foreground hover:bg-muted/60 flex h-8 w-8 items-center justify-center rounded-lg transition-colors"
-                >
-                  <X className="h-4 w-4" />
-                </button>
-              </div>
-
-              {/* Nav grid */}
-              <div className="flex-1 overflow-y-auto px-4 py-3">
-                <nav className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-                  {navItems.map((item, i) => {
-                    const active = isActive(item.id);
-                    const Icon = item.icon;
-                    return (
-                      <motion.button
-                        key={item.id}
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{
-                          delay: i * 0.035,
-                          duration: 0.22,
-                          ease: [0.22, 1, 0.36, 1],
-                        }}
-                        onClick={() => handleNavigate(item.id)}
-                        aria-current={active ? "page" : undefined}
+              <nav className="flex flex-col gap-2">
+                {navItems.map((item) => {
+                  const active = isActive(item.id);
+                  const Icon = item.icon;
+                  return (
+                    <motion.button
+                      key={item.id}
+                      variants={{
+                        hidden: { opacity: 0, x: -20 },
+                        visible: { opacity: 1, x: 0 },
+                      }}
+                      onClick={() => handleNavigate(item.id)}
+                      className={cn(
+                        "group border-border/45 relative flex w-full items-center gap-4 overflow-hidden rounded-xl border px-4 py-3 text-left transition-all active:scale-95",
+                        active
+                          ? "bg-primary text-primary-foreground shadow-primary/25 shadow-lg"
+                          : "bg-background/60 text-muted-foreground hover:bg-muted/55 hover:text-foreground"
+                      )}
+                    >
+                      <div
                         className={cn(
-                          "group relative flex flex-col items-start gap-2 overflow-hidden rounded-xl border p-3.5 text-left transition-all active:scale-[0.97]",
+                          "flex h-10 w-10 items-center justify-center rounded-xl transition-colors",
                           active
-                            ? "border-primary/30 bg-primary/10"
-                            : "border-border/35 bg-muted/15 hover:bg-muted/35 hover:border-border/60"
+                            ? "bg-primary-foreground/20 text-primary-foreground"
+                            : "bg-muted text-foreground group-hover:bg-background"
                         )}
                       >
-                        {active && (
-                          <div className="from-primary/15 pointer-events-none absolute inset-0 bg-gradient-to-br to-transparent" />
-                        )}
-                        <div
+                        <Icon className="h-5 w-5" />
+                      </div>
+                      <span className="text-lg font-semibold tracking-tight">
+                        {item.label}
+                      </span>
+                      {item.badge && (
+                        <span
                           className={cn(
-                            "relative flex h-8 w-8 items-center justify-center rounded-lg",
+                            "ml-auto rounded-full px-2.5 py-0.5 text-xs font-bold tracking-wider uppercase",
                             active
-                              ? "bg-primary/20 text-primary"
-                              : "bg-background/80 text-muted-foreground group-hover:text-foreground"
+                              ? "bg-primary-foreground/20 text-primary-foreground"
+                              : "bg-primary/10 text-primary"
                           )}
                         >
-                          <Icon className="h-4 w-4" />
-                        </div>
-                        <div className="relative flex w-full items-center justify-between gap-1">
-                          <span
-                            className={cn(
-                              "text-sm font-semibold",
-                              active ? "text-primary" : "text-foreground"
-                            )}
-                          >
-                            {item.label}
-                          </span>
-                          {item.badge && (
-                            <span
-                              className={cn(
-                                "rounded px-1.5 py-0.5 text-[8px] font-black tracking-widest uppercase",
-                                active
-                                  ? "bg-primary/20 text-primary"
-                                  : "bg-primary/10 text-primary"
-                              )}
-                            >
-                              {item.badge}
-                            </span>
-                          )}
-                        </div>
-                      </motion.button>
-                    );
-                  })}
-                </nav>
-              </div>
+                          {item.badge}
+                        </span>
+                      )}
+                      {active && (
+                        <motion.div
+                          layoutId="mobile-active-glow"
+                          className="absolute inset-0 -z-10 bg-gradient-to-r from-white/10 to-transparent opacity-20"
+                        />
+                      )}
+                    </motion.button>
+                  );
+                })}
+              </nav>
 
-              {/* Auth footer */}
-              <div
-                className="border-border/25 flex-shrink-0 border-t px-4 py-4"
-                style={{
-                  paddingBottom: "max(1rem, env(safe-area-inset-bottom))",
+              <motion.div
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0 },
                 }}
+                className="mt-auto space-y-4 pt-6"
               >
+                <div className="via-border h-px w-full bg-gradient-to-r from-transparent to-transparent" />
                 {user ? (
-                  <div className="flex items-center gap-3">
-                    {getGithubAvatarUrl() ? (
-                      <img
-                        src={getGithubAvatarUrl() as string}
-                        alt="Profile"
-                        className="ring-primary/20 h-10 w-10 flex-shrink-0 rounded-full object-cover ring-2"
-                      />
-                    ) : (
-                      <div className="bg-primary/15 text-primary ring-primary/20 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full text-sm font-bold ring-2">
-                        {getUserInitials()}
+                  <div className="space-y-3">
+                    <div className="border-border/50 bg-muted/30 flex items-center gap-4 rounded-2xl border p-3">
+                      {getGithubAvatarUrl() ? (
+                        <img
+                          src={getGithubAvatarUrl() as string}
+                          alt="Profile"
+                          className="ring-primary/20 h-10 w-10 rounded-full object-cover ring-2"
+                        />
+                      ) : (
+                        <div className="bg-primary/10 ring-primary/20 flex h-10 w-10 items-center justify-center rounded-full ring-2">
+                          <User className="text-primary h-5 w-5" />
+                        </div>
+                      )}
+                      <div className="flex-1 overflow-hidden">
+                        <p className="text-foreground truncate font-semibold">
+                          {userProfile?.displayName || "User"}
+                        </p>
+                        <p className="text-muted-foreground truncate text-sm">
+                          {user?.email}
+                        </p>
                       </div>
-                    )}
-                    <div className="min-w-0 flex-1">
-                      <p className="text-foreground truncate text-sm font-semibold">
-                        {userProfile?.displayName ||
-                          userProfile?.githubUsername ||
-                          "User"}
-                      </p>
-                      <p className="text-muted-foreground truncate text-xs">
-                        {user?.email}
-                      </p>
                     </div>
-                    <button
+                    <Button
+                      variant="destructive"
+                      className="h-11 w-full justify-center gap-2 rounded-xl text-base font-medium shadow-sm"
                       onClick={() => {
                         logout();
                         setIsMobileMenuOpen(false);
                       }}
-                      aria-label="Sign out"
-                      className="border-border/40 text-muted-foreground hover:text-destructive hover:border-destructive/40 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl border transition-colors"
                     >
-                      <LogOut className="h-4 w-4" />
-                    </button>
+                      <LogOut className="h-5 w-5" />
+                      Sign Out
+                    </Button>
                   </div>
                 ) : (
-                  <div className="flex gap-2">
+                  <div className="grid gap-3">
                     <Button
                       variant="outline"
-                      className="border-border/50 bg-muted/20 hover:bg-muted/50 h-10 flex-1 gap-2 rounded-xl text-sm"
+                      className="border-border/50 bg-background/50 hover:bg-muted/50 h-11 w-full justify-center gap-2 rounded-xl text-base font-medium backdrop-blur-sm"
                       onClick={() => {
                         setShowAuthModal(true);
                         setIsMobileMenuOpen(false);
                       }}
                     >
-                      <User className="h-4 w-4" />
+                      <User className="h-5 w-5" />
                       Sign In
                     </Button>
                     <Button
-                      className="from-primary to-primary/80 shadow-primary/25 h-10 flex-1 gap-2 rounded-xl bg-gradient-to-br text-sm shadow-md transition-transform active:scale-95"
+                      className="shadow-primary/20 h-11 w-full justify-center gap-2 rounded-xl text-base font-medium shadow-lg transition-transform active:scale-95"
                       onClick={() => {
                         setShowAuthModal(true);
                         setIsMobileMenuOpen(false);
                       }}
                     >
-                      <Zap className="h-4 w-4" />
+                      <Shield className="h-5 w-5" />
                       Get Started
                     </Button>
                   </div>
                 )}
-              </div>
+              </motion.div>
             </motion.div>
-          </>
+          </motion.div>
         )}
       </AnimatePresence>
     </>

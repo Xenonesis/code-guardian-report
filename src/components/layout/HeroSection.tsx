@@ -42,7 +42,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       <div className="bg-border absolute top-0 right-[10%] bottom-0 hidden w-px lg:block" />
 
       <div className="relative z-10 container mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
-        <div className="bg-primary/10 border-primary/30 text-primary group relative mb-6 inline-block overflow-hidden border px-3 py-1 font-mono text-xs tracking-[0.2em] uppercase">
+        <div className="bg-primary/10 border-primary/30 text-primary group relative mb-6 inline-block overflow-hidden border px-2 py-1 font-mono text-[10px] tracking-[0.1em] uppercase sm:px-3 sm:text-xs sm:tracking-[0.2em]">
           <span className="relative z-10">System_Access_Authorized</span>
           <div className="bg-primary/20 absolute inset-0 -translate-x-full transform transition-transform duration-1000 ease-in-out group-hover:translate-x-full" />
         </div>
@@ -50,7 +50,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         {title && (
           <h1
             id={titleId}
-            className="mb-6 font-mono text-4xl font-bold tracking-tight uppercase sm:text-5xl md:text-6xl lg:text-7xl"
+            className="xs:text-3xl mb-6 font-mono text-2xl font-bold tracking-tight uppercase sm:text-5xl md:text-6xl lg:text-7xl"
           >
             <span className="text-primary/40 mb-2 block text-lg font-normal tracking-normal normal-case opacity-70 sm:text-xl">
               Enterprise_Grade
