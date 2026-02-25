@@ -24,6 +24,7 @@ import NotificationCenter from "@/components/notifications/NotificationCenter";
 import { PWAQuickActions } from "@/components/pwa/PWAQuickActions";
 import { ThemeToggle } from "@/components/common/ThemeToggle";
 import { motion, AnimatePresence } from "framer-motion";
+import { LenisContext } from "../../../app/providers/SmoothScrollProvider";
 
 interface NavigationProps {
   className?: string;
@@ -39,6 +40,7 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
 
   const { user, userProfile, logout } = useAuth();
   const { currentSection, navigateTo } = useNavigation();
+  const lenis = React.useContext(LenisContext);
 
   const getGithubAvatarUrl = () => {
     const githubProvider = user?.providerData?.find(
@@ -80,14 +82,21 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
 
   useEffect(() => {
     if (isMobileMenuOpen) {
+      const originalStyle = document.body.style.overflow;
       document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
+
+      if (lenis) {
+        lenis.stop();
+      }
+
+      return () => {
+        document.body.style.overflow = originalStyle;
+        if (lenis) {
+          lenis.start();
+        }
+      };
     }
-    return () => {
-      document.body.style.overflow = "unset";
-    };
-  }, [isMobileMenuOpen]);
+  }, [isMobileMenuOpen, lenis]);
 
   const handleNavigate = (sectionId: string) => {
     navigateTo(sectionId);
@@ -378,6 +387,7 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             className="bg-background/96 fixed inset-0 z-40 flex flex-col backdrop-blur-3xl lg:hidden"
+            data-lenis-prevent
           >
             <div className="from-primary/12 via-primary/4 to-background pointer-events-none absolute inset-0 bg-gradient-to-b" />
             <motion.div
