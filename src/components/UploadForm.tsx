@@ -49,8 +49,8 @@ export const UploadForm: React.FC<UploadFormProps> = ({
 
   return (
     <div className="mx-auto w-full max-w-3xl">
-      <Card className="border-muted/40 dark:border-white/5/50 overflow-hidden shadow-2xl shadow-black/5 backdrop-blur-xl dark:shadow-black/20">
-        <CardHeader className="border-border/40 bg-muted/20 border-b pt-10 pb-8 text-center dark:bg-white/[0.02]">
+      <Card className="border-muted/40 overflow-hidden bg-[hsl(var(--card))] shadow-2xl shadow-black/5 dark:border-white/5 dark:shadow-black/20">
+        <CardHeader className="border-border/40 border-b bg-[hsl(var(--card))] pt-10 pb-8 text-center">
           <div className="border-primary bg-primary/10 relative mx-auto mb-6 flex h-20 w-20 items-center justify-center border">
             <span className="border-primary absolute -top-1 -right-1 h-3 w-3 border-t-2 border-r-2" />
             <span className="border-primary absolute -bottom-1 -left-1 h-3 w-3 border-b-2 border-l-2" />
@@ -66,7 +66,7 @@ export const UploadForm: React.FC<UploadFormProps> = ({
           </CardDescription>
         </CardHeader>
 
-        <CardContent className="space-y-6 sm:space-y-8 p-4 sm:p-6 md:p-8">
+        <CardContent className="space-y-6 p-4 sm:space-y-8 sm:p-6 md:p-8">
           {!selectedFile && !error && (
             <Tabs
               value={uploadMethod}
@@ -75,17 +75,17 @@ export const UploadForm: React.FC<UploadFormProps> = ({
               }
               className="w-full"
             >
-              <TabsList className="bg-muted/30 border-border/50 mb-6 sm:mb-8 grid h-auto w-full grid-cols-2 rounded-xl border p-1.5">
+              <TabsList className="border-border/50 mb-6 grid h-auto w-full grid-cols-2 rounded-xl border bg-[hsl(var(--muted))] p-1.5 sm:mb-8">
                 <TabsTrigger
                   value="file"
-                  className="data-[state=active]:bg-background text-muted-foreground hover:text-foreground data-[state=active]:text-primary data-[state=active]: dark:data-[state=active]:text-primary flex h-10 sm:h-12 items-center justify-center gap-2 sm:gap-2.5 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-200 data-[state=active]:shadow-md"
+                  className="data-[state=active]:bg-background text-muted-foreground hover:text-foreground data-[state=active]:text-primary data-[state=active]: dark:data-[state=active]:text-primary flex h-10 items-center justify-center gap-2 rounded-lg text-xs font-semibold transition-all duration-200 data-[state=active]:shadow-md sm:h-12 sm:gap-2.5 sm:text-sm"
                 >
                   <Upload className="h-4 w-4 sm:h-5 sm:w-5" />
                   Upload ZIP
                 </TabsTrigger>
                 <TabsTrigger
                   value="github"
-                  className="data-[state=active]:bg-background text-muted-foreground hover:text-foreground flex h-10 sm:h-12 items-center justify-center gap-2 sm:gap-2.5 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-200 data-[state=active]:text-purple-600 data-[state=active]:shadow-md data-[state=active]:shadow-purple-500/5 dark:data-[state=active]:text-purple-400"
+                  className="data-[state=active]:bg-background text-muted-foreground hover:text-foreground flex h-10 items-center justify-center gap-2 rounded-lg text-xs font-semibold transition-all duration-200 data-[state=active]:text-purple-600 data-[state=active]:shadow-md data-[state=active]:shadow-purple-500/5 sm:h-12 sm:gap-2.5 sm:text-sm dark:data-[state=active]:text-purple-400"
                 >
                   <Github className="h-4 w-4 sm:h-5 sm:w-5" />
                   GitHub Repo
@@ -143,7 +143,7 @@ export const UploadForm: React.FC<UploadFormProps> = ({
           )}
         </CardContent>
 
-        <div className="bg-muted/30 border-border/40 border-t p-4 px-6 sm:px-8">
+        <div className="border-border/40 border-t bg-[hsl(var(--muted))] p-4 px-6 sm:px-8">
           <div className="text-muted-foreground/80 flex items-start gap-3 text-xs">
             <Shield className="mt-0.5 h-4 w-4 shrink-0 text-emerald-500" />
             <p className="leading-relaxed">

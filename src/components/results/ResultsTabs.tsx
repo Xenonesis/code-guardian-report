@@ -27,7 +27,7 @@ export const ResultsTabs: React.FC<ResultsTabsProps> = ({ results }) => {
               <TabsList className="border-border/60 bg-card/90 sm:shadow-lg/70/80 grid grid-cols-5 gap-1 rounded-3xl border px-1.5 py-1 shadow-inner shadow-black/10 backdrop-blur-2xl sm:flex sm:flex-nowrap sm:gap-1.5 sm:rounded-full sm:px-2 sm:py-1.5">
                 <TabsTrigger
                   value="overview"
-                  className="text-muted-foreground focus-visible:ring-ring data-[state=active]:bg-muted data-[state=active]:shadow-primary/20 flex flex-col items-center justify-center gap-1 rounded-2xl px-1.5 py-2 text-[11px] font-medium transition-all duration-200 hover:text-white focus-visible:ring-2 focus-visible:outline-none data-[state=active]:text-white data-[state=active]:shadow-lg sm:flex-row sm:gap-2 sm:px-4 sm:text-sm"
+                  className="text-muted-foreground focus-visible:ring-ring data-[state=active]:bg-muted data-[state=active]:shadow-primary/20 hover:text-foreground data-[state=active]:text-foreground flex flex-col items-center justify-center gap-1 rounded-2xl px-1.5 py-2 text-[11px] font-medium transition-all duration-200 focus-visible:ring-2 focus-visible:outline-none data-[state=active]:shadow-lg sm:flex-row sm:gap-2 sm:px-4 sm:text-sm"
                 >
                   <Shield className="h-4 w-4 flex-shrink-0" />
                   <span className="hidden sm:inline">Overview</span>
@@ -36,7 +36,7 @@ export const ResultsTabs: React.FC<ResultsTabsProps> = ({ results }) => {
                 {hasLanguageDetection && (
                   <TabsTrigger
                     value="language-detection"
-                    className="text-muted-foreground flex flex-col items-center justify-center gap-1 rounded-2xl px-1.5 py-2 text-[11px] font-medium transition-all duration-200 hover:text-white focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:outline-none data-[state=active]:bg-purple-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-purple-500/30 sm:flex-row sm:gap-2 sm:px-4 sm:text-sm"
+                    className="text-muted-foreground hover:text-foreground flex flex-col items-center justify-center gap-1 rounded-2xl px-1.5 py-2 text-[11px] font-medium transition-all duration-200 focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:outline-none data-[state=active]:bg-purple-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-purple-500/30 sm:flex-row sm:gap-2 sm:px-4 sm:text-sm"
                   >
                     <FileCode className="h-4 w-4 flex-shrink-0" />
                     <span className="hidden sm:inline">Languages</span>
@@ -45,7 +45,7 @@ export const ResultsTabs: React.FC<ResultsTabsProps> = ({ results }) => {
 
                 <TabsTrigger
                   value="dependency-analysis"
-                  className="text-muted-foreground flex flex-col items-center justify-center gap-1 rounded-2xl px-1.5 py-2 text-[11px] font-medium transition-all duration-200 hover:text-white focus-visible:ring-2 focus-visible:ring-green-400 focus-visible:outline-none data-[state=active]:bg-green-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-green-500/30 sm:flex-row sm:gap-2 sm:px-4 sm:text-sm"
+                  className="text-muted-foreground hover:text-foreground flex flex-col items-center justify-center gap-1 rounded-2xl px-1.5 py-2 text-[11px] font-medium transition-all duration-200 focus-visible:ring-2 focus-visible:ring-green-400 focus-visible:outline-none data-[state=active]:bg-green-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-green-500/30 sm:flex-row sm:gap-2 sm:px-4 sm:text-sm"
                 >
                   <Package className="h-4 w-4 flex-shrink-0" />
                   <span className="hidden sm:inline">Dependencies</span>
@@ -53,7 +53,7 @@ export const ResultsTabs: React.FC<ResultsTabsProps> = ({ results }) => {
 
                 <TabsTrigger
                   value="ai-insights"
-                  className="text-muted-foreground flex flex-col items-center justify-center gap-1 rounded-2xl px-1.5 py-2 text-[11px] font-medium transition-all duration-200 hover:text-white focus-visible:ring-2 focus-visible:ring-orange-400 focus-visible:outline-none data-[state=active]:bg-orange-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-orange-500/30 sm:flex-row sm:gap-2 sm:px-4 sm:text-sm"
+                  className="text-muted-foreground hover:text-foreground flex flex-col items-center justify-center gap-1 rounded-2xl px-1.5 py-2 text-[11px] font-medium transition-all duration-200 focus-visible:ring-2 focus-visible:ring-orange-400 focus-visible:outline-none data-[state=active]:bg-orange-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-orange-500/30 sm:flex-row sm:gap-2 sm:px-4 sm:text-sm"
                 >
                   <Sparkles className="h-4 w-4 flex-shrink-0" />
                   <span className="hidden sm:inline">AI Insights</span>
@@ -61,7 +61,7 @@ export const ResultsTabs: React.FC<ResultsTabsProps> = ({ results }) => {
 
                 <TabsTrigger
                   value="metrics"
-                  className="text-muted-foreground flex flex-col items-center justify-center gap-1 rounded-2xl px-1.5 py-2 text-[11px] font-medium transition-all duration-200 hover:text-white focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:outline-none data-[state=active]:bg-emerald-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-emerald-500/30 sm:flex-row sm:gap-2 sm:px-4 sm:text-sm"
+                  className="text-muted-foreground hover:text-foreground flex flex-col items-center justify-center gap-1 rounded-2xl px-1.5 py-2 text-[11px] font-medium transition-all duration-200 focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:outline-none data-[state=active]:bg-emerald-500 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-emerald-500/30 sm:flex-row sm:gap-2 sm:px-4 sm:text-sm"
                 >
                   <BarChart3 className="h-4 w-4 flex-shrink-0" />
                   <span className="hidden sm:inline">Metrics</span>

@@ -131,7 +131,7 @@ export const HomeSection: React.FC = () => {
       className="bg-background relative min-h-screen overflow-hidden"
     >
       <AnimatedBackground />
-      <PageLayout showNavigation={false}>
+      <PageLayout showNavigation={false} noContainer={true}>
         <HomeHero onStartAnalysis={handleStartAnalysis} />
 
         <StorageBanner

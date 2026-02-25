@@ -29,9 +29,7 @@ interface NavigationProps {
   className?: string;
 }
 
-export const Navigation: React.FC<NavigationProps> = ({
-  className,
-}) => {
+export const Navigation: React.FC<NavigationProps> = ({ className }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -145,7 +143,7 @@ export const Navigation: React.FC<NavigationProps> = ({
         }}
       >
         <div className="from-primary/6 via-primary/2 to-background pointer-events-none absolute inset-x-0 top-0 h-full bg-gradient-to-b" />
-        <div className="pointer-events-none absolute right-0 left-0 h-px bg-gradient-to-r from-transparent via-primary/45 to-transparent" />
+        <div className="via-primary/45 pointer-events-none absolute right-0 left-0 h-px bg-gradient-to-r from-transparent to-transparent" />
         <div className="relative z-50 mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
           <div className="flex h-14 items-center justify-between sm:h-16">
             {/* Logo */}
@@ -201,7 +199,7 @@ export const Navigation: React.FC<NavigationProps> = ({
                             className={cn(
                               "font-tech rounded-sm px-1.5 py-0.5 text-[10px] font-bold tracking-[0.08em] uppercase",
                               active
-                                ? "bg-white/20 text-white"
+                                ? "bg-primary-foreground/20 text-primary-foreground"
                                 : "bg-primary/10 text-primary"
                             )}
                           >
@@ -339,7 +337,7 @@ export const Navigation: React.FC<NavigationProps> = ({
                   </Button>
                   <Button
                     onClick={() => setShowAuthModal(true)}
-                    className="text-primary-foreground from-primary to-primary/85 hover:to-primary bg-gradient-to-r shadow-primary/20 rounded-lg border border-transparent px-6 shadow-lg transition-all hover:scale-105 active:scale-95"
+                    className="text-primary-foreground from-primary to-primary/85 hover:to-primary shadow-primary/20 rounded-lg border border-transparent bg-gradient-to-r px-6 shadow-lg transition-all hover:scale-105 active:scale-95"
                   >
                     Get Started
                   </Button>
@@ -418,7 +416,7 @@ export const Navigation: React.FC<NavigationProps> = ({
                         className={cn(
                           "flex h-10 w-10 items-center justify-center rounded-xl transition-colors",
                           active
-                            ? "bg-white/20 text-white"
+                            ? "bg-primary-foreground/20 text-primary-foreground"
                             : "bg-muted group-hover:bg-background text-foreground"
                         )}
                       >
@@ -439,7 +437,7 @@ export const Navigation: React.FC<NavigationProps> = ({
                           className={cn(
                             "ml-auto rounded-full px-2.5 py-0.5 text-xs font-bold tracking-wider uppercase",
                             active
-                              ? "bg-white/20 text-white"
+                              ? "bg-primary-foreground/20 text-primary-foreground"
                               : "bg-primary/10 text-primary"
                           )}
                         >

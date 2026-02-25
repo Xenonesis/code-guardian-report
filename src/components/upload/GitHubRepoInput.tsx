@@ -344,7 +344,7 @@ export const GitHubRepoInput: React.FC<GitHubRepoInputProps> = ({
   };
 
   return (
-    <div className="space-y-4 sm:space-y-6">
+    <div className="relative isolate space-y-4 sm:space-y-6">
       <div className="relative z-30 flex flex-col gap-3">
         <div ref={searchContainerRef} className="relative isolate z-40 w-full">
           <Github className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 z-10 h-4 w-4 -translate-y-1/2 transform sm:h-5 sm:w-5" />
@@ -362,7 +362,7 @@ export const GitHubRepoInput: React.FC<GitHubRepoInputProps> = ({
             disabled={isLoading}
             autoComplete="off"
             title="Search repositories or paste a GitHub URL"
-            className="focus:border-primary h-12 w-full rounded-none border-2 pr-10 pl-9 font-mono text-sm transition-all focus:shadow-[4px_4px_0px_0px_hsl(var(--primary))] sm:h-14 sm:pl-10 sm:text-base"
+            className="focus:border-primary h-12 w-full rounded-none border-2 bg-[hsl(var(--background))] pr-10 pl-9 font-mono text-sm transition-all focus:shadow-[4px_4px_0px_0px_hsl(var(--primary))] sm:h-14 sm:pl-10 sm:text-base"
           />
           {(isFetchingInfo || isSearching) && (
             <Skeleton className="absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 rounded-full sm:h-5 sm:w-5" />
@@ -380,14 +380,14 @@ export const GitHubRepoInput: React.FC<GitHubRepoInputProps> = ({
                 data-lenis-prevent
                 onWheelCapture={handleSuggestionsWheel}
                 onTouchMoveCapture={handleSuggestionsTouchMove}
-                className="border-border bg-background animate-in fade-in zoom-in-95 max-h-64 overflow-y-auto overscroll-contain rounded-none border-2 p-0 shadow-xl dark:bg-slate-950"
+                className="border-border animate-in fade-in zoom-in-95 max-h-64 overflow-y-auto overscroll-contain rounded-none border-2 bg-[hsl(var(--card))] p-0 shadow-xl"
               >
                 <div className="divide-border flex flex-col gap-0 divide-y">
                   {mergedSuggestions.map((suggestion) => (
                     <button
                       key={suggestion.id}
                       type="button"
-                      className="bg-background hover:bg-muted focus:bg-muted flex w-full flex-col items-start gap-0.5 rounded-none px-4 py-3 text-left transition-colors outline-none"
+                      className="flex w-full flex-col items-start gap-0.5 rounded-none bg-[hsl(var(--card))] px-4 py-3 text-left transition-colors outline-none hover:bg-[hsl(var(--muted))] focus:bg-[hsl(var(--muted))]"
                       onClick={() => handleSuggestionSelect(suggestion)}
                     >
                       <div className="flex w-full items-center justify-between gap-2">

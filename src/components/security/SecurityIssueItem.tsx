@@ -149,7 +149,7 @@ export const SecurityIssueItem: React.FC<SecurityIssueItemProps> = ({
             </div>
             <div className="mb-3">
               <div className="mb-2 flex flex-col gap-2 sm:flex-row sm:items-center">
-                <h3 className="text-base font-semibold text-white">
+                <h3 className="text-foreground text-base font-semibold">
                   {showNaturalLanguage
                     ? "Plain English Summary"
                     : "Technical Details"}
@@ -185,7 +185,7 @@ export const SecurityIssueItem: React.FC<SecurityIssueItemProps> = ({
                     {naturalLanguageDescription}
                   </p>
                 ) : (
-                  <p className="font-medium text-white">{issue.message}</p>
+                  <p className="text-foreground font-medium">{issue.message}</p>
                 )}
               </div>
             </div>
@@ -214,33 +214,33 @@ export const SecurityIssueItem: React.FC<SecurityIssueItemProps> = ({
             <TabsList className="bg-muted mb-4 flex w-full snap-x snap-mandatory gap-1 overflow-x-auto rounded-lg p-1 [-ms-overflow-style:'none'] [scrollbar-width:'none'] sm:flex sm:flex-wrap sm:justify-start [&::-webkit-scrollbar]:hidden">
               <TabsTrigger
                 value="summary"
-                className="touch-target text-muted-foreground data-[state=active]:bg-primary flex min-w-[90px] flex-shrink-0 snap-center items-center justify-center gap-1.5 rounded-md px-3 py-2 text-xs transition-all data-[state=active]:text-white sm:w-auto sm:text-sm"
+                className="touch-target text-muted-foreground data-[state=active]:bg-primary data-[state=active]:text-primary-foreground flex min-w-[90px] flex-shrink-0 snap-center items-center justify-center gap-1.5 rounded-md px-3 py-2 text-xs transition-all sm:w-auto sm:text-sm"
               >
                 <MessageSquare className="h-3.5 w-3.5 flex-shrink-0 sm:h-4 sm:w-4" />
                 <span>Summary</span>
               </TabsTrigger>
               <TabsTrigger
                 value="details"
-                className="touch-target text-muted-foreground data-[state=active]:bg-primary flex min-w-[90px] flex-shrink-0 snap-center items-center justify-center rounded-md px-3 py-2 text-xs transition-all data-[state=active]:text-white sm:w-auto sm:text-sm"
+                className="touch-target text-muted-foreground data-[state=active]:bg-primary data-[state=active]:text-primary-foreground flex min-w-[90px] flex-shrink-0 snap-center items-center justify-center rounded-md px-3 py-2 text-xs transition-all sm:w-auto sm:text-sm"
               >
                 <span>Technical</span>
               </TabsTrigger>
               <TabsTrigger
                 value="remediation"
-                className="touch-target text-muted-foreground data-[state=active]:bg-primary flex min-w-[90px] flex-shrink-0 snap-center items-center justify-center rounded-md px-3 py-2 text-xs transition-all data-[state=active]:text-white sm:w-auto sm:text-sm"
+                className="touch-target text-muted-foreground data-[state=active]:bg-primary data-[state=active]:text-primary-foreground flex min-w-[90px] flex-shrink-0 snap-center items-center justify-center rounded-md px-3 py-2 text-xs transition-all sm:w-auto sm:text-sm"
               >
                 <span>Fix Guide</span>
               </TabsTrigger>
               <TabsTrigger
                 value="ai-fixes"
-                className="touch-target text-muted-foreground data-[state=active]:bg-primary flex min-w-[90px] flex-shrink-0 snap-center items-center justify-center gap-1.5 rounded-md px-3 py-2 text-xs transition-all data-[state=active]:text-white sm:w-auto sm:text-sm"
+                className="touch-target text-muted-foreground data-[state=active]:bg-primary data-[state=active]:text-primary-foreground flex min-w-[90px] flex-shrink-0 snap-center items-center justify-center gap-1.5 rounded-md px-3 py-2 text-xs transition-all sm:w-auto sm:text-sm"
               >
                 <Brain className="h-3.5 w-3.5 flex-shrink-0 sm:h-4 sm:w-4" />
                 <span>AI Fixes</span>
               </TabsTrigger>
               <TabsTrigger
                 value="references"
-                className="touch-target text-muted-foreground data-[state=active]:bg-primary flex min-w-[90px] flex-shrink-0 snap-center items-center justify-center rounded-md px-3 py-2 text-xs transition-all data-[state=active]:text-white sm:w-auto sm:text-sm"
+                className="touch-target text-muted-foreground data-[state=active]:bg-primary data-[state=active]:text-primary-foreground flex min-w-[90px] flex-shrink-0 snap-center items-center justify-center rounded-md px-3 py-2 text-xs transition-all sm:w-auto sm:text-sm"
               >
                 <span>References</span>
               </TabsTrigger>
@@ -250,7 +250,7 @@ export const SecurityIssueItem: React.FC<SecurityIssueItemProps> = ({
               <div className="border-border rounded-xl border bg-blue-950/20 p-4">
                 <div className="flex items-start gap-3">
                   <div className="bg-muted flex-shrink-0 rounded-lg p-2">
-                    <MessageSquare className="h-4 w-4 text-white" />
+                    <MessageSquare className="text-foreground h-4 w-4" />
                   </div>
                   <div className="min-w-0 flex-1">
                     <h4 className="mb-2 text-base font-semibold text-blue-100">
@@ -296,7 +296,7 @@ export const SecurityIssueItem: React.FC<SecurityIssueItemProps> = ({
               </div>
 
               <div className="border-border/50 bg-muted/50 rounded-lg border p-3 sm:p-4">
-                <h4 className="mb-2 text-sm font-semibold text-white sm:text-base">
+                <h4 className="text-foreground mb-2 text-sm font-semibold sm:text-base">
                   Location
                 </h4>
                 <div className="text-muted-foreground space-y-1.5 text-xs sm:text-sm">
@@ -307,13 +307,16 @@ export const SecurityIssueItem: React.FC<SecurityIssueItemProps> = ({
                     </code>
                   </p>
                   <p>
-                    at line <strong className="text-white">{issue.line}</strong>
+                    at line{" "}
+                    <strong className="text-foreground">{issue.line}</strong>
                   </p>
                 </div>
                 {issue.confidence && (
                   <p className="border-border/50 text-muted-foreground mt-2 border-t pt-2 text-xs sm:text-sm">
                     Detection confidence:{" "}
-                    <strong className="text-white">{issue.confidence}%</strong>
+                    <strong className="text-foreground">
+                      {issue.confidence}%
+                    </strong>
                   </p>
                 )}
               </div>
@@ -323,7 +326,7 @@ export const SecurityIssueItem: React.FC<SecurityIssueItemProps> = ({
               <div className="grid grid-cols-1 gap-3 sm:gap-4">
                 {}
                 <div className="border-border/50 bg-muted/50 rounded-lg border p-3 sm:p-4">
-                  <h4 className="mb-3 flex items-center gap-2 text-base font-semibold text-white">
+                  <h4 className="text-foreground mb-3 flex items-center gap-2 text-base font-semibold">
                     <Info className="text-primary h-4 w-4" />
                     Issue Details
                   </h4>
@@ -379,7 +382,7 @@ export const SecurityIssueItem: React.FC<SecurityIssueItemProps> = ({
 
                 {}
                 <div className="border-border/50 bg-muted/50 rounded-lg border p-3 sm:p-4">
-                  <h4 className="mb-3 flex items-center gap-2 text-base font-semibold text-white">
+                  <h4 className="text-foreground mb-3 flex items-center gap-2 text-base font-semibold">
                     <Settings className="h-4 w-4 text-purple-400" />
                     Technical Information
                   </h4>
@@ -420,7 +423,7 @@ export const SecurityIssueItem: React.FC<SecurityIssueItemProps> = ({
 
             <TabsContent value="remediation" className="space-y-3 sm:space-y-4">
               <div className="border-border/50 bg-muted/50 rounded-lg border p-3 sm:p-4">
-                <h4 className="mb-3 flex items-center gap-2 text-base font-semibold text-white">
+                <h4 className="text-foreground mb-3 flex items-center gap-2 text-base font-semibold">
                   <Wrench className="h-4 w-4 text-green-400" />
                   Remediation Guidance
                 </h4>
@@ -569,7 +572,7 @@ export const SecurityIssueItem: React.FC<SecurityIssueItemProps> = ({
             <TabsContent value="references" className="space-y-4">
               {issue.references && issue.references.length > 0 ? (
                 <div className="border-border/50 bg-muted/50 rounded-lg border p-3 sm:p-4">
-                  <h4 className="mb-3 flex items-center gap-2 text-base font-semibold text-white">
+                  <h4 className="text-foreground mb-3 flex items-center gap-2 text-base font-semibold">
                     <ExternalLink className="text-primary h-4 w-4" />
                     External References
                   </h4>

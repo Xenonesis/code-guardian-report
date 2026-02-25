@@ -179,7 +179,7 @@ export const DependencyAnalysisDisplay: React.FC<
       case "medium":
         return "bg-yellow-500 text-black";
       case "low":
-        return "bg-muted text-white";
+        return "bg-muted text-muted-foreground";
       default:
         return "bg-muted-foreground text-white";
     }

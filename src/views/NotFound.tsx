@@ -25,12 +25,12 @@ const NotFound = () => {
         <Card className="animate-fade-in bg-card/95 text-foreground backdrop-blur-sm/95 w-full max-w-2xl border-0 shadow-2xl">
           <CardHeader className="pb-6 text-center">
             <div className="animate-bounce-in bg-primary mx-auto mb-6 w-fit rounded-full p-4">
-              <Shield className="h-12 w-12 text-white" />
+              <Shield className="text-primary-foreground h-12 w-12" />
             </div>
             <CardTitle className="bg-primary mb-4 bg-clip-text text-6xl font-bold text-transparent sm:text-8xl">
               404
             </CardTitle>
-            <CardTitle className="text-foreground mb-2 text-2xl font-bold sm:text-3xl dark:text-white">
+            <CardTitle className="text-foreground mb-2 text-2xl font-bold sm:text-3xl">
               Page Not Found
             </CardTitle>
             <CardDescription className="text-muted-foreground text-lg">
@@ -40,7 +40,7 @@ const NotFound = () => {
 
           <CardContent className="space-y-6">
             <div className="space-y-4">
-              <h3 className="text-foreground font-semibold dark:text-white">
+              <h3 className="text-foreground font-semibold">
                 What you can do:
               </h3>
               <ul className="text-muted-foreground space-y-2 text-sm">

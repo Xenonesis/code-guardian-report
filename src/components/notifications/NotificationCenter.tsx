@@ -128,19 +128,16 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({
 
   const getPriorityBadge = (priority: NotificationPriority) => {
     const colors = {
-      urgent: "bg-red-500",
-      high: "bg-orange-500",
-      normal: "bg-muted",
-      low: "bg-muted-foreground",
+      urgent: "bg-red-500 text-white dark:text-white",
+      high: "bg-orange-500 text-white dark:text-white",
+      normal: "bg-muted text-muted-foreground",
+      low: "bg-muted-foreground text-muted",
     };
 
     if (priority === "normal") return null; // Don't show badge for normal priority
 
     return (
-      <Badge
-        variant="secondary"
-        className={cn("text-xs", colors[priority], "text-white")}
-      >
+      <Badge variant="secondary" className={cn("text-xs", colors[priority])}>
         {priority}
       </Badge>
     );
@@ -176,7 +173,7 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({
         >
           <Bell className="h-4 w-4 sm:h-5 sm:w-5" />
           {unreadCount > 0 && (
-            <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-semibold text-white">
+            <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-semibold text-white dark:text-white">
               {unreadCount > 9 ? "9+" : unreadCount}
             </span>
           )}
@@ -184,7 +181,7 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({
       </SheetTrigger>
 
       <SheetContent
-        className="w-full overflow-hidden border-l border-border/70 bg-card text-card-foreground opacity-100 shadow-[0_24px_60px_-30px_hsl(var(--foreground)/0.7)] backdrop-blur-none filter-none sm:max-w-xl"
+        className="border-border/70 bg-card text-card-foreground w-full overflow-hidden border-l opacity-100 shadow-[0_24px_60px_-30px_hsl(var(--foreground)/0.7)] filter-none backdrop-blur-none sm:max-w-xl"
         style={{
           backgroundColor: "hsl(var(--card))",
           color: "hsl(var(--card-foreground))",
@@ -387,7 +384,7 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({
                     <div
                       key={notification.id}
                       className={cn(
-                        "border-border/65 rounded-lg border p-4 transition-all hover:border-primary/40 hover:shadow-[0_10px_24px_-20px_hsl(var(--foreground)/0.8)]",
+                        "border-border/65 hover:border-primary/40 rounded-lg border p-4 transition-all hover:shadow-[0_10px_24px_-20px_hsl(var(--foreground)/0.8)]",
                         !notification.read && "bg-accent/45 border-primary/45",
                         notification.read && "opacity-70"
                       )}

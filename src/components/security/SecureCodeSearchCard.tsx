@@ -169,9 +169,9 @@ export const SecureCodeSearchCard: React.FC<SecureCodeSearchCardProps> = ({
     >
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <Search className="h-5 w-5 text-primary" />
+          <Search className="text-primary h-5 w-5" />
           Secure Code Search Engine
-          <Badge variant="outline" className="border-teal-300 text-primary">
+          <Badge variant="outline" className="text-primary border-teal-300">
             Pattern Library
           </Badge>
         </CardTitle>
@@ -185,7 +185,7 @@ export const SecureCodeSearchCard: React.FC<SecureCodeSearchCardProps> = ({
         <form onSubmit={handleSearch} className="space-y-4">
           <div className="flex gap-2">
             <div className="relative flex-1">
-              <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform text-muted-foreground" />
+              <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform" />
               <Input
                 placeholder="Search for secure code patterns, vulnerabilities, or implementations..."
                 value={searchQuery}
@@ -208,7 +208,7 @@ export const SecureCodeSearchCard: React.FC<SecureCodeSearchCardProps> = ({
 
           {}
           {showFilters && (
-            <div className="grid grid-cols-1 gap-4 rounded-lg bg-muted p-4 md:grid-cols-3 lg:grid-cols-5">
+            <div className="bg-muted grid grid-cols-1 gap-4 rounded-lg p-4 md:grid-cols-3 lg:grid-cols-5">
               <Select
                 value={filters.language || "all"}
                 onValueChange={(value) => updateFilter("language", value)}
@@ -299,7 +299,7 @@ export const SecureCodeSearchCard: React.FC<SecureCodeSearchCardProps> = ({
               <h3 className="text-lg font-semibold">
                 Search Results ({searchResults.length})
               </h3>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <div className="text-muted-foreground flex items-center gap-2 text-sm">
                 <TrendingUp className="h-4 w-4" />
                 Sorted by relevance
               </div>
@@ -346,7 +346,7 @@ export const SecureCodeSearchCard: React.FC<SecureCodeSearchCardProps> = ({
                           >
                             {result.snippet.difficulty}
                           </Badge>
-                          <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                          <div className="text-muted-foreground flex items-center gap-1 text-sm">
                             <Star className="h-3 w-3" />
                             {Math.round(result.relevanceScore)}% match
                           </div>
@@ -387,14 +387,14 @@ export const SecureCodeSearchCard: React.FC<SecureCodeSearchCardProps> = ({
                       </TabsList>
 
                       <TabsContent value="code" className="space-y-2">
-                        <pre className="overflow-x-auto rounded-lg bg-card p-4 text-sm text-slate-100">
+                        <pre className="bg-muted text-foreground overflow-x-auto rounded-lg p-4 text-sm">
                           <code
                             dangerouslySetInnerHTML={{
                               __html: result.highlightedCode,
                             }}
                           />
                         </pre>
-                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <div className="text-muted-foreground flex items-center gap-2 text-sm">
                           <Code className="h-4 w-4" />
                           Use Case: {result.snippet.useCase}
                         </div>
@@ -406,7 +406,7 @@ export const SecureCodeSearchCard: React.FC<SecureCodeSearchCardProps> = ({
                             <BookOpen className="h-4 w-4" />
                             Security Explanation
                           </h4>
-                          <p className="text-sm text-muted-foreground">
+                          <p className="text-muted-foreground text-sm">
                             {result.snippet.explanation}
                           </p>
                         </div>
@@ -513,11 +513,11 @@ export const SecureCodeSearchCard: React.FC<SecureCodeSearchCardProps> = ({
           searchResults.length === 0 &&
           !isLoading && (
             <div className="py-8 text-center">
-              <Search className="mx-auto mb-4 h-12 w-12 text-muted-foreground" />
-              <p className="mb-2 text-muted-foreground">
+              <Search className="text-muted-foreground mx-auto mb-4 h-12 w-12" />
+              <p className="text-muted-foreground mb-2">
                 No secure code patterns found for "{searchQuery}"
               </p>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 Try different keywords or adjust your filters
               </p>
             </div>
@@ -526,11 +526,11 @@ export const SecureCodeSearchCard: React.FC<SecureCodeSearchCardProps> = ({
         {}
         {!searchQuery && (!searchResults || searchResults.length === 0) && (
           <div className="py-8 text-center">
-            <BookOpen className="mx-auto mb-4 h-12 w-12 text-muted-foreground" />
-            <p className="mb-2 text-muted-foreground">
+            <BookOpen className="text-muted-foreground mx-auto mb-4 h-12 w-12" />
+            <p className="text-muted-foreground mb-2">
               Search for secure code patterns and implementations
             </p>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-muted-foreground text-sm">
               Find examples of secure coding practices, vulnerability fixes, and
               best practices
             </p>

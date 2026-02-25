@@ -133,17 +133,17 @@ ${suggestion.testingRecommendations.map((rec, i) => `${i + 1}. ${rec}`).join("\n
         <Card className="border-border bg-gradient-to-br from-slate-50 to-white shadow-sm dark:from-slate-900/40 dark:to-slate-900/10">
           <CardContent className="p-8">
             <div className="animate-pulse space-y-4">
-              <div className="h-6 w-48 rounded bg-muted" />
+              <div className="bg-muted h-6 w-48 rounded" />
               <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-                <div className="h-32 rounded-lg bg-muted" />
-                <div className="h-32 rounded-lg bg-muted" />
-                <div className="h-32 rounded-lg bg-muted" />
+                <div className="bg-muted h-32 rounded-lg" />
+                <div className="bg-muted h-32 rounded-lg" />
+                <div className="bg-muted h-32 rounded-lg" />
               </div>
               <div className="space-y-3">
-                <div className="h-4 w-64 rounded bg-muted" />
-                <div className="h-4 w-80 rounded bg-muted" />
-                <div className="h-20 rounded-lg bg-muted" />
-                <div className="h-20 rounded-lg bg-muted" />
+                <div className="bg-muted h-4 w-64 rounded" />
+                <div className="bg-muted h-4 w-80 rounded" />
+                <div className="bg-muted h-20 rounded-lg" />
+                <div className="bg-muted h-20 rounded-lg" />
               </div>
             </div>
           </CardContent>
@@ -313,7 +313,7 @@ ${suggestion.testingRecommendations.map((rec, i) => `${i + 1}. ${rec}`).join("\n
           results={results}
           variant="default"
           size="sm"
-          className="bg-primary text-white shadow-lg hover:bg-primary/90"
+          className="bg-primary hover:bg-primary/90 text-white shadow-lg"
         />
       </div>
 
@@ -337,21 +337,21 @@ ${suggestion.testingRecommendations.map((rec, i) => `${i + 1}. ${rec}`).join("\n
         }}
       />
 
-      <div className="rounded-lg border border-border/50 bg-card/50">
+      <div className="border-border/50 bg-card/50 rounded-lg border">
         {/* Header */}
-        <div className="border-b border-border/50 p-6">
+        <div className="border-border/50 border-b p-6">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="mb-2 flex items-center gap-2 text-xl font-semibold text-white">
+              <h2 className="text-foreground mb-2 flex items-center gap-2 text-xl font-semibold">
                 <Shield className="h-5 w-5" />
                 Other Security Issues ({otherIssues.length})
               </h2>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 Comprehensive security analysis with OWASP classifications and
                 CVSS scoring
               </p>
             </div>
-            <ChevronDown className="h-5 w-5 text-muted-foreground" />
+            <ChevronDown className="text-muted-foreground h-5 w-5" />
           </div>
         </div>
 
@@ -373,7 +373,7 @@ ${suggestion.testingRecommendations.map((rec, i) => `${i + 1}. ${rec}`).join("\n
             />
           ))}
           {otherIssues.length === 0 && (
-            <p className="py-4 text-center text-muted-foreground">
+            <p className="text-muted-foreground py-4 text-center">
               No other security issues detected.
             </p>
           )}

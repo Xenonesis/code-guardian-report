@@ -53,12 +53,12 @@ const EnhancedAnalyticsDashboard: React.FC<EnhancedAnalyticsDashboardProps> = ({
       <Card className="animate-fade-in">
         <CardContent className="p-6 text-center sm:p-8">
           <div className="mx-auto mb-4 w-fit rounded-full bg-gradient-to-r from-green-500 to-emerald-600 p-2.5 sm:p-3">
-            <Shield className="h-6 w-6 text-white sm:h-8 sm:w-8" />
+            <Shield className="h-6 w-6 text-white sm:h-8 sm:w-8 dark:text-white" />
           </div>
-          <h3 className="mb-2 text-lg font-semibold text-foreground sm:text-xl dark:text-white">
+          <h3 className="text-foreground mb-2 text-lg font-semibold sm:text-xl dark:text-white">
             Excellent Code Quality!
           </h3>
-          <p className="text-sm text-muted-foreground sm:text-base">
+          <p className="text-muted-foreground text-sm sm:text-base">
             No issues found in your code analysis. Keep up the great work!
           </p>
           <div className="mt-4 grid grid-cols-3 gap-3 text-center sm:mt-6 sm:gap-4">
@@ -66,19 +66,25 @@ const EnhancedAnalyticsDashboard: React.FC<EnhancedAnalyticsDashboardProps> = ({
               <p className="text-xl font-bold text-green-600 sm:text-2xl">
                 100%
               </p>
-              <p className="text-xs text-muted-foreground sm:text-sm">Quality Score</p>
+              <p className="text-muted-foreground text-xs sm:text-sm">
+                Quality Score
+              </p>
             </div>
             <div>
               <p className="text-xl font-bold text-green-600 sm:text-2xl">
                 {totalFiles}
               </p>
-              <p className="text-xs text-muted-foreground sm:text-sm">Files Clean</p>
+              <p className="text-muted-foreground text-xs sm:text-sm">
+                Files Clean
+              </p>
             </div>
             <div>
               <p className="text-xl font-bold text-green-600 sm:text-2xl">
                 {analysisTime}
               </p>
-              <p className="text-xs text-muted-foreground sm:text-sm">Analysis Time</p>
+              <p className="text-muted-foreground text-xs sm:text-sm">
+                Analysis Time
+              </p>
             </div>
           </div>
         </CardContent>
@@ -91,10 +97,10 @@ const EnhancedAnalyticsDashboard: React.FC<EnhancedAnalyticsDashboardProps> = ({
       {/* Header with controls */}
       <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center sm:gap-4">
         <div className="w-full sm:w-auto">
-          <h2 className="text-xl font-bold text-foreground sm:text-2xl dark:text-white">
+          <h2 className="text-foreground text-xl font-bold sm:text-2xl dark:text-white">
             Analytics Dashboard
           </h2>
-          <p className="mt-1 text-xs text-muted-foreground sm:text-sm">
+          <p className="text-muted-foreground mt-1 text-xs sm:text-sm">
             Comprehensive analysis of {issues.length} issues across {totalFiles}{" "}
             files
           </p>

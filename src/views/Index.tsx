@@ -64,7 +64,7 @@ const Index = () => {
   };
 
   return (
-    <PageLayout>
+    <PageLayout noContainer={true}>
       <HomeHero onStartAnalysis={handleStartAnalysis} />
 
       <StorageBanner

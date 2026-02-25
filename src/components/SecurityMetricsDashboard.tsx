@@ -42,11 +42,11 @@ export const SecurityMetricsDashboard: React.FC<
     <TooltipProvider>
       <div className="space-y-6">
         {}
-        <div className="mb-8 border-b-2 border-border/60 pb-6/60">
+        <div className="border-border/60 pb-6/60 mb-8 border-b-2">
           <h2 className="mb-3 bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 bg-clip-text text-3xl font-bold text-transparent sm:text-4xl dark:from-white dark:via-blue-100 dark:to-indigo-100">
             Detailed Security Metrics
           </h2>
-          <p className="text-sm leading-relaxed font-medium text-muted-foreground sm:text-base">
+          <p className="text-muted-foreground text-sm leading-relaxed font-medium sm:text-base">
             In-depth analysis of security vulnerabilities, code quality metrics,
             and actionable recommendations
           </p>
@@ -130,11 +130,11 @@ export const SecurityMetricsDashboard: React.FC<
             </CardContent>
           </Card>
 
-          <Card className="border-2 border-border bg-muted/50 shadow-xl transition-all duration-300 hover:shadow-2xl dark:border-border dark:from-blue-900/20 dark:via-indigo-900/15 dark:to-purple-900/10">
+          <Card className="border-border bg-muted/50 dark:border-border border-2 shadow-xl transition-all duration-300 hover:shadow-2xl dark:from-blue-900/20 dark:via-indigo-900/15 dark:to-purple-900/10">
             <CardHeader>
               <CardTitle className="flex items-center gap-3 text-xl">
                 <div className="rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 p-2 shadow-lg">
-                  <Bug className="h-5 w-5 text-white" />
+                  <Bug className="h-5 w-5 text-white dark:text-white" />
                 </div>
                 <span className="text-foreground font-bold">
                   Advanced Quality Metrics
@@ -146,10 +146,10 @@ export const SecurityMetricsDashboard: React.FC<
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-3">
-                <div className="flex items-center justify-between rounded-lg bg-card/50 p-3 transition-colors hover:bg-card/70/50/70">
+                <div className="bg-card/50 hover:bg-card/70/50/70 flex items-center justify-between rounded-lg p-3 transition-colors">
                   <div>
                     <span className="text-sm font-medium">Quality Rating</span>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-muted-foreground text-xs">
                       {getQualityRating(safeQualityScore)}
                     </p>
                   </div>
@@ -157,12 +157,12 @@ export const SecurityMetricsDashboard: React.FC<
                     {Math.round(safeQualityScore)}/100
                   </Badge>
                 </div>
-                <div className="flex items-center justify-between rounded-lg bg-card/50 p-3 transition-colors hover:bg-card/70/50/70">
+                <div className="bg-card/50 hover:bg-card/70/50/70 flex items-center justify-between rounded-lg p-3 transition-colors">
                   <div>
                     <span className="text-sm font-medium">
                       Maintainability Index
                     </span>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-muted-foreground text-xs">
                       Code maintainability score
                     </p>
                   </div>
@@ -170,12 +170,12 @@ export const SecurityMetricsDashboard: React.FC<
                     {results.metrics.maintainabilityIndex}
                   </Badge>
                 </div>
-                <div className="flex items-center justify-between rounded-lg bg-card/50 p-3 transition-colors hover:bg-card/70/50/70">
+                <div className="bg-card/50 hover:bg-card/70/50/70 flex items-center justify-between rounded-lg p-3 transition-colors">
                   <div>
                     <span className="text-sm font-medium">
                       Duplicated Lines
                     </span>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-muted-foreground text-xs">
                       Lines of duplicated code
                     </p>
                   </div>
@@ -184,10 +184,10 @@ export const SecurityMetricsDashboard: React.FC<
                   </Badge>
                 </div>
                 {results.metrics.testCoverage && (
-                  <div className="flex items-center justify-between rounded-lg bg-card/50 p-3 transition-colors hover:bg-card/70/50/70">
+                  <div className="bg-card/50 hover:bg-card/70/50/70 flex items-center justify-between rounded-lg p-3 transition-colors">
                     <div>
                       <span className="text-sm font-medium">Test Coverage</span>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-muted-foreground text-xs">
                         Code covered by tests
                       </p>
                     </div>
@@ -197,11 +197,11 @@ export const SecurityMetricsDashboard: React.FC<
                   </div>
                 )}
               </div>
-              <div className="mt-4 rounded-lg border border-border bg-teal-100 p-3 dark:border-border dark:bg-teal-900/30">
+              <div className="border-border dark:border-border mt-4 rounded-lg border bg-teal-100 p-3 dark:bg-teal-900/30">
                 <p className="text-xs font-medium text-blue-800 dark:text-blue-200">
                   Quality Assessment: {getQualityRating(safeQualityScore)}
                 </p>
-                <p className="mt-1 text-xs text-primary dark:text-teal-300">
+                <p className="text-primary mt-1 text-xs dark:text-teal-300">
                   Based on complexity, maintainability, duplication, and
                   industry best practices
                 </p>

@@ -26,7 +26,7 @@ export const AboutPageLayout: React.FC<AboutPageLayoutProps> = ({
   noContainer = false,
 }) => {
   return (
-    <div className={`bg-background min-h-screen ${className}`}>
+    <div className={`relative min-h-screen ${className}`}>
       {showNavigation && <Navigation />}
 
       <section aria-label="About content" className="relative z-10">

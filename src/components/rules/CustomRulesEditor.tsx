@@ -418,10 +418,10 @@ const RuleCard: React.FC<RuleCardProps> = ({
   onEdit,
 }) => {
   const severityColors = {
-    Critical: "bg-red-500",
-    High: "bg-orange-500",
-    Medium: "bg-yellow-500",
-    Low: "bg-muted",
+    Critical: "bg-red-500 text-white",
+    High: "bg-orange-500 text-white",
+    Medium: "bg-yellow-500 text-white",
+    Low: "bg-muted text-muted-foreground",
   };
 
   return (
@@ -435,7 +435,7 @@ const RuleCard: React.FC<RuleCardProps> = ({
         <div className="flex-1">
           <div className="mb-2 flex items-center gap-2">
             <h3 className="font-semibold">{rule.name}</h3>
-            <Badge className={cn("text-white", severityColors[rule.severity])}>
+            <Badge className={cn(severityColors[rule.severity])}>
               {rule.severity}
             </Badge>
             <Badge variant="outline">{rule.type}</Badge>
@@ -499,10 +499,10 @@ interface TemplateCardProps {
 
 const TemplateCard: React.FC<TemplateCardProps> = ({ template, onUse }) => {
   const severityColors = {
-    Critical: "bg-red-500",
-    High: "bg-orange-500",
-    Medium: "bg-yellow-500",
-    Low: "bg-muted",
+    Critical: "bg-red-500 text-white",
+    High: "bg-orange-500 text-white",
+    Medium: "bg-yellow-500 text-white",
+    Low: "bg-muted text-muted-foreground",
   };
 
   return (
@@ -510,9 +510,7 @@ const TemplateCard: React.FC<TemplateCardProps> = ({ template, onUse }) => {
       <CardHeader>
         <div className="flex items-start justify-between">
           <CardTitle className="text-lg">{template.name}</CardTitle>
-          <Badge
-            className={cn("text-white", severityColors[template.severity])}
-          >
+          <Badge className={cn(severityColors[template.severity])}>
             {template.severity}
           </Badge>
         </div>

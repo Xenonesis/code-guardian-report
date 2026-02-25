@@ -65,7 +65,7 @@ export const SecretDetectionCard: React.FC<SecretDetectionCardProps> = ({
       <div className="border-border/50 border-b p-6">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="mb-2 text-xl font-semibold text-white">
+            <h2 className="text-foreground mb-2 text-xl font-semibold">
               Secret Detection ({secretIssues.length})
             </h2>
             <p className="text-muted-foreground text-sm">
@@ -113,7 +113,7 @@ export const SecretDetectionCard: React.FC<SecretDetectionCardProps> = ({
                   )}
                 </div>
 
-                <h3 className="mt-2 mb-1 font-medium text-white">
+                <h3 className="text-foreground mt-2 mb-1 font-medium">
                   {secret.message}
                 </h3>
                 <p className="text-muted-foreground text-sm">
@@ -128,23 +128,25 @@ export const SecretDetectionCard: React.FC<SecretDetectionCardProps> = ({
                   <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
                     {}
                     <div>
-                      <h4 className="mb-3 font-medium text-white">
+                      <h4 className="text-foreground mb-3 font-medium">
                         Issue Details
                       </h4>
                       <div className="space-y-2 text-sm">
                         <div className="flex justify-between">
                           <span className="text-muted-foreground">CWE:</span>
-                          <span className="text-white">
+                          <span className="text-foreground">
                             {secret.cweId || "N/A"}
                           </span>
                         </div>
                         <div className="flex justify-between">
                           <span className="text-muted-foreground">Risk:</span>
-                          <span className="text-white">{secret.severity}</span>
+                          <span className="text-foreground">
+                            {secret.severity}
+                          </span>
                         </div>
                         <div className="flex justify-between">
                           <span className="text-muted-foreground">Impact:</span>
-                          <span className="text-white">
+                          <span className="text-foreground">
                             {secret.impact || "Unknown"}
                           </span>
                         </div>
@@ -153,7 +155,7 @@ export const SecretDetectionCard: React.FC<SecretDetectionCardProps> = ({
                             <span className="text-muted-foreground">
                               CVSS Score:
                             </span>
-                            <span className="text-white">
+                            <span className="text-foreground">
                               {secret.cvssScore.toFixed(1)}
                             </span>
                           </div>
@@ -163,7 +165,7 @@ export const SecretDetectionCard: React.FC<SecretDetectionCardProps> = ({
 
                     {}
                     <div>
-                      <h4 className="mb-3 font-medium text-white">
+                      <h4 className="text-foreground mb-3 font-medium">
                         Remediation
                       </h4>
                       <p className="text-muted-foreground mb-3 text-sm">
@@ -212,7 +214,7 @@ export const SecretDetectionCard: React.FC<SecretDetectionCardProps> = ({
                           onClick={() =>
                             copyToClipboard(secret.codeSnippet || "")
                           }
-                          className="text-muted-foreground hover:text-white"
+                          className="text-muted-foreground hover:text-foreground"
                         >
                           <Copy className="h-4 w-4" />
                         </Button>
@@ -242,7 +244,7 @@ export const SecretDetectionCard: React.FC<SecretDetectionCardProps> = ({
                   {}
                   {secret.references && secret.references.length > 0 && (
                     <div className="mt-6">
-                      <h4 className="mb-3 font-medium text-white">
+                      <h4 className="text-foreground mb-3 font-medium">
                         References
                       </h4>
                       <div className="space-y-2">

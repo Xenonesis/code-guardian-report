@@ -296,7 +296,7 @@ export const ContributorsSection = () => {
                             className="border-border/60 group-hover:border-primary/60 h-full w-full border object-cover grayscale transition-all duration-300 group-hover:grayscale-0"
                           />
                           <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 to-transparent p-2 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-                            <p className="truncate text-center font-mono text-[10px] tracking-[0.08em] text-white uppercase">
+                            <p className="truncate text-center font-mono text-[10px] tracking-[0.08em] text-white uppercase dark:text-white">
                               {contributor.login}
                             </p>
                           </div>

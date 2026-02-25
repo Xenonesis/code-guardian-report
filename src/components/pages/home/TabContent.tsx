@@ -472,7 +472,7 @@ export const TabContent: React.FC<TabContentProps> = ({
                     <CardHeader className="pb-4">
                       <div className="flex items-center gap-3">
                         <div className="bg-primary rounded-xl p-2.5 shadow-lg">
-                          <AlertTriangle className="h-5 w-5 text-white" />
+                          <AlertTriangle className="text-primary-foreground h-5 w-5" />
                         </div>
                         <div>
                           <CardTitle className="bg-gradient-to-r from-amber-900 via-orange-900 to-yellow-900 bg-clip-text text-lg font-bold text-transparent sm:text-xl dark:from-amber-200 dark:via-orange-200 dark:to-yellow-200">
@@ -499,7 +499,7 @@ export const TabContent: React.FC<TabContentProps> = ({
                               className="group bg-muted/60 flex items-center gap-3 rounded-xl border-2 border-amber-300/50 p-3.5 transition-all duration-200 hover:-translate-y-0.5 hover:border-amber-400/70 hover:shadow-lg dark:border-amber-700/30 dark:from-amber-900/40 dark:via-orange-900/30 dark:to-yellow-900/40 dark:hover:border-amber-600/50"
                             >
                               <div className="bg-primary rounded-lg p-1.5 shadow-sm transition-transform duration-200 group-hover:scale-110">
-                                <AlertTriangle className="h-3.5 w-3.5 text-white" />
+                                <AlertTriangle className="text-primary-foreground h-3.5 w-3.5" />
                               </div>
                               <span className="flex-1 truncate font-mono text-sm font-medium text-amber-900 dark:text-amber-100">
                                 {file}
@@ -566,7 +566,7 @@ export const TabContent: React.FC<TabContentProps> = ({
               </p>
               <Button
                 variant="outline"
-                className="bg-primary hover:bg-primary/90 gap-2 text-white shadow-lg"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2 shadow-lg"
                 onClick={() => {
                   // Switch to the upload tab
                   const uploadTab = document.querySelector(

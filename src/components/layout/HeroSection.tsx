@@ -18,7 +18,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 }) => {
   return (
     <section
-      className={`border-primary/20 bg-background relative flex min-h-[50vh] flex-col justify-center overflow-hidden border-b-2 pt-20 pb-16 ${className}`}
+      className={`border-primary/20 relative flex min-h-[50vh] flex-col justify-center overflow-hidden border-b-2 bg-transparent pt-20 pb-16 ${className}`}
       aria-labelledby={titleId}
     >
       {/* Technical Grid Background */}

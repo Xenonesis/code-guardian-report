@@ -13,7 +13,7 @@ export const PageLayout: React.FC<PageLayoutProps> = ({
   noContainer = false,
 }) => {
   return (
-    <div className="bg-background relative min-h-screen w-full overflow-x-clip">
+    <div className="relative min-h-screen w-full overflow-x-clip">
       {showNavigation && <Navigation />}
       <section
         aria-label="Page content"
