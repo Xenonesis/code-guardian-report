@@ -1,12 +1,14 @@
+"use client";
+
 import React from "react";
-import { Card, CardContent } from "@/components/ui/card";
+import { motion } from "framer-motion";
 import {
   Shield,
   AlertTriangle,
   Target,
   Key,
-  TrendingUp,
-  Info,
+  FileSearch,
+  Timer,
 } from "lucide-react";
 import { AnalysisResults } from "@/hooks/useAnalysis";
 import {
@@ -15,295 +17,304 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { AnimatedScoreRing } from "./AnimatedScoreRing";
+import { SmartInsightsSummary } from "./SmartInsightsSummary";
 
 interface UnifiedMetricsHeaderProps {
   results: AnalysisResults;
 }
 
-export const UnifiedMetricsHeader: React.FC<UnifiedMetricsHeaderProps> = ({
-  results,
+/* Severity distribution mini-bar */
+const SeverityBar: React.FC<{
+  critical: number;
+  high: number;
+  medium: number;
+  low: number;
+}> = ({ critical, high, medium, low }) => {
+  const total = critical + high + medium + low;
+  if (total === 0)
+    return (
+      <div className="h-2.5 w-full rounded-full bg-emerald-200/60 dark:bg-emerald-800/30" />
+    );
+  const pct = (n: number) => `${((n / total) * 100).toFixed(1)}%`;
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <div className="flex h-2.5 w-full cursor-help overflow-hidden rounded-full">
+            {critical > 0 && (
+              <div
+                className="bg-red-500 transition-all duration-700"
+                style={{ width: pct(critical) }}
+              />
+            )}
+            {high > 0 && (
+              <div
+                className="bg-orange-500 transition-all duration-700"
+                style={{ width: pct(high) }}
+              />
+            )}
+            {medium > 0 && (
+              <div
+                className="bg-amber-400 transition-all duration-700"
+                style={{ width: pct(medium) }}
+              />
+            )}
+            {low > 0 && (
+              <div
+                className="bg-sky-400 transition-all duration-700"
+                style={{ width: pct(low) }}
+              />
+            )}
+          </div>
+        </TooltipTrigger>
+        <TooltipContent>
+          <div className="space-y-1 text-xs">
+            <div className="flex items-center gap-2">
+              <span className="h-2 w-2 rounded-full bg-red-500" />
+              Critical: {critical}
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="h-2 w-2 rounded-full bg-orange-500" />
+              High: {high}
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="h-2 w-2 rounded-full bg-amber-400" />
+              Medium: {medium}
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="h-2 w-2 rounded-full bg-sky-400" />
+              Low: {low}
+            </div>
+          </div>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+};
+
+/* Stat pill for the quick-stats row */
+const StatPill: React.FC<{
+  icon: React.ElementType;
+  label: string;
+  value: React.ReactNode;
+  colorClass?: string;
+  tooltip?: string;
+}> = ({
+  icon: Icon,
+  label,
+  value,
+  colorClass = "text-foreground",
+  tooltip,
 }) => {
-  const secretIssues = results.issues.filter(
-    (issue) =>
-      issue?.category === "Secret Detection" || issue?.type === "Secret"
+  const content = (
+    <div className="border-border/50 bg-card/60 hover:bg-muted/50 flex items-center gap-2.5 rounded-xl border px-3 py-2 transition-colors">
+      <Icon className={`h-4 w-4 flex-shrink-0 ${colorClass}`} />
+      <div className="flex flex-col">
+        <span className="text-muted-foreground text-[10px] font-medium tracking-wider uppercase">
+          {label}
+        </span>
+        <span
+          className={`text-sm leading-tight font-bold tabular-nums ${colorClass}`}
+        >
+          {value}
+        </span>
+      </div>
+    </div>
   );
 
-  const getScoreColor = (score: number) => {
-    if (score >= 80) return "from-green-500 to-emerald-500";
-    if (score >= 60) return "from-yellow-500 to-orange-400";
-    if (score >= 40) return "from-orange-500 to-red-400";
-    return "from-red-500 to-rose-600";
-  };
-
-  const getScoreTextColor = (score: number) => {
-    if (score >= 80) return "text-green-700 dark:text-green-300";
-    if (score >= 60) return "text-yellow-700 dark:text-yellow-300";
-    if (score >= 40) return "text-orange-700 dark:text-orange-300";
-    return "text-red-700 dark:text-red-300";
-  };
-
-  const getScoreBgColor = (score: number) => {
-    if (score >= 80) {
-      return "border-green-300 dark:border-green-600 ring-1 ring-inset ring-green-200/60 dark:ring-green-900/40";
-    }
-    if (score >= 60) {
-      return "border-amber-300 dark:border-amber-600 ring-1 ring-inset ring-amber-200/60 dark:ring-amber-900/40";
-    }
-    if (score >= 40) {
-      return "border-orange-300 dark:border-orange-600 ring-1 ring-inset ring-orange-200/60 dark:ring-orange-900/40";
-    }
-    return "border-red-300 dark:border-red-600 ring-1 ring-inset ring-destructive/30 dark:ring-destructive/30";
-  };
+  if (!tooltip) return content;
 
   return (
     <TooltipProvider>
-      <div className="border-border/70 bg-card/95 backdrop-blur-sm/60/80 mb-6 rounded-2xl border shadow-sm">
-        <div className="border-border/60 md:justify-between/60 flex items-center justify-center border-b px-3 py-4 sm:px-6 sm:py-5">
-          <div className="flex items-center justify-center gap-2 sm:gap-3 md:justify-start">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 shadow-md sm:h-11 sm:w-11">
-              <Shield className="h-4 w-4 text-white sm:h-5 sm:w-5" />
-            </div>
-            <div className="flex flex-col items-start leading-tight md:hidden">
-              <span className="bg-gradient-to-r from-slate-900 to-blue-900 bg-clip-text text-sm font-bold text-transparent dark:from-white dark:to-blue-100">
-                Code Guardian
-              </span>
-              <span className="text-muted-foreground text-[10px] font-medium tracking-wide uppercase">
-                Security Analysis
-              </span>
-            </div>
-            <div className="hidden flex-col md:flex">
-              <span className="text-muted-foreground text-xs font-semibold tracking-wide uppercase">
-                Executive Summary
-              </span>
-              <h3 className="text-foreground text-lg font-semibold">
-                Security Analysis Overview
-              </h3>
-            </div>
+      <Tooltip>
+        <TooltipTrigger asChild>{content}</TooltipTrigger>
+        <TooltipContent className="max-w-xs">
+          <p className="text-xs">{tooltip}</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+};
+
+export const UnifiedMetricsHeader: React.FC<UnifiedMetricsHeaderProps> = ({
+  results,
+}) => {
+  const { summary, issues, metrics } = results;
+
+  const secretCount = issues.filter(
+    (issue) =>
+      issue?.category === "Secret Detection" || issue?.type === "Secret"
+  ).length;
+
+  const critHighTotal = summary.criticalIssues + summary.highIssues;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="border-border/60 bg-card/95 mb-6 overflow-hidden rounded-2xl border shadow-sm backdrop-blur-sm"
+    >
+      {/* ─── Top bar with title + file/line stats ─── */}
+      <div className="border-border/40 flex flex-wrap items-center justify-between gap-3 border-b px-4 py-3 sm:px-6 sm:py-4">
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 shadow-md">
+            <Shield className="h-5 w-5 text-white" />
           </div>
-          <div className="text-muted-foreground hidden flex-col items-end text-sm md:flex">
-            <span>
-              <span className="text-foreground font-semibold">
-                {results.totalFiles}
-              </span>{" "}
-              files
-            </span>
-            <span>
-              <span className="text-foreground font-semibold">
-                {results.summary.linesAnalyzed.toLocaleString()}
-              </span>{" "}
-              lines analyzed
-            </span>
+          <div>
+            <h3 className="text-foreground text-base font-bold tracking-tight sm:text-lg">
+              Security Analysis
+            </h3>
+            <p className="text-muted-foreground text-[11px] font-medium">
+              Executive Summary
+            </p>
           </div>
         </div>
-
-        <div className="px-3 py-4 sm:px-6">
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-6">
-            {/* Security Score */}
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Card
-                  className={`border-border/70 bg-card/95/60/70 border ${getScoreBgColor(results.summary.securityScore)} group cursor-help transition-all duration-300 hover:scale-[1.02] hover:shadow-lg`}
-                >
-                  <CardContent className="p-3 sm:p-4">
-                    <div className="flex items-center justify-between">
-                      <div
-                        className={`flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br sm:h-10 sm:w-10 ${getScoreColor(results.summary.securityScore)} shadow-sm transition-shadow group-hover:shadow-md`}
-                      >
-                        <Shield className="h-4 w-4 text-white sm:h-5 sm:w-5" />
-                      </div>
-                      <p
-                        className={`text-lg font-semibold sm:text-xl ${getScoreTextColor(results.summary.securityScore)} tabular-nums`}
-                      >
-                        {results.summary.securityScore}
-                      </p>
-                    </div>
-                    <p className="text-muted-foreground mt-3 text-xs font-semibold tracking-wide uppercase">
-                      Security Score
-                    </p>
-                  </CardContent>
-                </Card>
-              </TooltipTrigger>
-              <TooltipContent className="max-w-xs">
-                <p className="mb-1 font-semibold">Security Score (0-100)</p>
-                <p className="text-xs">
-                  Based on severity and density of issues.
-                </p>
-                <div className="mt-2 space-y-0.5 text-xs">
-                  <p>• 80-100: Excellent</p>
-                  <p>• 60-79: Good</p>
-                  <p>• 40-59: Needs Work</p>
-                  <p>• 0-39: Critical</p>
-                </div>
-              </TooltipContent>
-            </Tooltip>
-
-            {/* Critical & High Issues */}
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Card className="group border-border/70 bg-card/95 ring-destructive/30 hover:shadow-lg/60/70 dark:ring-destructive/30 cursor-help border ring-1 transition-all duration-300 ring-inset hover:scale-[1.02]">
-                  <CardContent className="p-3 sm:p-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-red-500 to-rose-500 shadow-sm transition-shadow group-hover:shadow-md sm:h-10 sm:w-10">
-                        <AlertTriangle className="h-4 w-4 text-white sm:h-5 sm:w-5" />
-                      </div>
-                      <p className="text-lg font-semibold text-red-700 tabular-nums sm:text-xl dark:text-red-300">
-                        {results.summary.criticalIssues +
-                          results.summary.highIssues}
-                      </p>
-                    </div>
-                    <p className="text-muted-foreground mt-3 text-xs font-semibold tracking-wide uppercase">
-                      Critical & High
-                    </p>
-                  </CardContent>
-                </Card>
-              </TooltipTrigger>
-              <TooltipContent className="max-w-xs">
-                <p className="mb-1 font-semibold">Critical & High Priority</p>
-                <p className="text-xs">
-                  Critical ({results.summary.criticalIssues}) + High (
-                  {results.summary.highIssues}) severity issues requiring
-                  immediate attention.
-                </p>
-              </TooltipContent>
-            </Tooltip>
-
-            {/* Vulnerability Density */}
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Card className="group border-border/70 bg-card/95 ring-border hover:shadow-lg/60/70 dark:ring-border cursor-help border ring-1 transition-all duration-300 ring-inset hover:scale-[1.02]">
-                  <CardContent className="p-3 sm:p-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-indigo-500 shadow-sm transition-shadow group-hover:shadow-md sm:h-10 sm:w-10">
-                        <Target className="h-4 w-4 text-white sm:h-5 sm:w-5" />
-                      </div>
-                      <p className="text-lg font-semibold text-teal-600 tabular-nums sm:text-xl dark:text-teal-300">
-                        {results.metrics.vulnerabilityDensity}
-                      </p>
-                    </div>
-                    <p className="text-muted-foreground mt-3 text-xs font-semibold tracking-wide uppercase">
-                      Vuln Density
-                    </p>
-                  </CardContent>
-                </Card>
-              </TooltipTrigger>
-              <TooltipContent className="max-w-xs">
-                <p className="mb-1 font-semibold">Vulnerability Density</p>
-                <p className="text-xs">
-                  Issues per 1,000 lines. Benchmark: &lt;5. Lower is better.
-                </p>
-              </TooltipContent>
-            </Tooltip>
-
-            {/* Secrets Found */}
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Card
-                  className={`group border-border/70 bg-card/95 hover:shadow-lg/60/70 cursor-help border ring-1 transition-all duration-300 ring-inset hover:scale-[1.02] ${
-                    secretIssues.length > 0
-                      ? "border-orange-300 ring-amber-200/60 dark:border-orange-700 dark:ring-amber-900/40"
-                      : "border-emerald-300 ring-emerald-200/60 dark:border-emerald-700 dark:ring-emerald-900/40"
-                  }`}
-                >
-                  <CardContent className="p-3 sm:p-4">
-                    <div className="flex items-center justify-between">
-                      <div
-                        className={`flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br sm:h-10 sm:w-10 ${secretIssues.length > 0 ? "from-orange-500 to-amber-500" : "from-green-500 to-emerald-500"} shadow-sm transition-shadow group-hover:shadow-md`}
-                      >
-                        <Key className="h-4 w-4 text-white sm:h-5 sm:w-5" />
-                      </div>
-                      <p
-                        className={`text-lg font-semibold sm:text-xl ${
-                          secretIssues.length > 0
-                            ? "text-orange-700 dark:text-orange-300"
-                            : "text-green-700 dark:text-green-300"
-                        } tabular-nums`}
-                      >
-                        {secretIssues.length}
-                      </p>
-                    </div>
-                    <p className="text-muted-foreground mt-3 text-xs font-semibold tracking-wide uppercase">
-                      Secrets Found
-                    </p>
-                  </CardContent>
-                </Card>
-              </TooltipTrigger>
-              <TooltipContent className="max-w-xs">
-                <p className="mb-1 font-semibold">Exposed Secrets</p>
-                <p className="text-xs">
-                  API keys, passwords, tokens found in code. Should NEVER be
-                  committed.
-                </p>
-              </TooltipContent>
-            </Tooltip>
-
-            {/* Quality Score */}
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Card
-                  className={`border-border/70 bg-card/95/60/70 border ${getScoreBgColor(results.summary.qualityScore)} group cursor-help transition-all duration-300 hover:scale-[1.02] hover:shadow-lg`}
-                >
-                  <CardContent className="p-3 sm:p-4">
-                    <div className="flex items-center justify-between">
-                      <div
-                        className={`flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br sm:h-10 sm:w-10 ${getScoreColor(results.summary.qualityScore)} shadow-sm transition-shadow group-hover:shadow-md`}
-                      >
-                        <TrendingUp className="h-4 w-4 text-white sm:h-5 sm:w-5" />
-                      </div>
-                      <p
-                        className={`text-lg font-semibold sm:text-xl ${getScoreTextColor(results.summary.qualityScore)} tabular-nums`}
-                      >
-                        {results.summary.qualityScore}
-                      </p>
-                    </div>
-                    <p className="text-muted-foreground mt-3 text-xs font-semibold tracking-wide uppercase">
-                      Quality Score
-                    </p>
-                  </CardContent>
-                </Card>
-              </TooltipTrigger>
-              <TooltipContent className="max-w-xs">
-                <p className="mb-1 font-semibold">Code Quality Score (0-100)</p>
-                <p className="text-xs">
-                  Based on maintainability, complexity, and best practices.
-                </p>
-              </TooltipContent>
-            </Tooltip>
-
-            {/* Total Issues */}
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Card className="group border-border/70 bg-card/95 ring-border/60 hover:shadow-lg/60/70 dark:ring-border/40 cursor-help border ring-1 transition-all duration-300 ring-inset hover:scale-[1.02]">
-                  <CardContent className="p-3 sm:p-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-purple-500 to-violet-600 shadow-sm transition-shadow group-hover:shadow-md sm:h-10 sm:w-10">
-                        <Info className="h-4 w-4 text-white sm:h-5 sm:w-5" />
-                      </div>
-                      <p className="text-lg font-semibold text-purple-700 tabular-nums sm:text-xl dark:text-purple-300">
-                        {results.issues.length}
-                      </p>
-                    </div>
-                    <p className="text-muted-foreground mt-3 text-xs font-semibold tracking-wide uppercase">
-                      Total Issues
-                    </p>
-                  </CardContent>
-                </Card>
-              </TooltipTrigger>
-              <TooltipContent className="max-w-xs">
-                <p className="mb-1 font-semibold">Total Issues</p>
-                <p className="text-xs">
-                  All security and quality concerns found.
-                </p>
-                <div className="mt-2 space-y-0.5 text-xs">
-                  <p>• Critical: {results.summary.criticalIssues}</p>
-                  <p>• High: {results.summary.highIssues}</p>
-                  <p>• Medium: {results.summary.mediumIssues}</p>
-                  <p>• Low: {results.summary.lowIssues}</p>
-                </div>
-              </TooltipContent>
-            </Tooltip>
-          </div>
+        <div className="text-muted-foreground flex items-center gap-4 text-xs font-medium">
+          <span className="flex items-center gap-1.5">
+            <FileSearch className="h-3.5 w-3.5" />
+            <span className="text-foreground font-semibold">
+              {results.totalFiles}
+            </span>{" "}
+            files
+          </span>
+          <span className="flex items-center gap-1.5">
+            <Timer className="h-3.5 w-3.5" />
+            <span className="text-foreground font-semibold">
+              {summary.linesAnalyzed.toLocaleString()}
+            </span>{" "}
+            lines
+          </span>
         </div>
       </div>
-    </TooltipProvider>
+
+      <div className="px-4 py-5 sm:px-6 sm:py-6">
+        {/* ─── Score Rings + Severity Bar + Stats row ─── */}
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-8">
+          {/* Left: Score rings */}
+          <div className="flex items-center justify-center gap-6 sm:gap-8 lg:justify-start">
+            <AnimatedScoreRing
+              score={summary.securityScore}
+              size={88}
+              strokeWidth={7}
+              label="Security"
+            />
+            <AnimatedScoreRing
+              score={summary.qualityScore}
+              size={88}
+              strokeWidth={7}
+              label="Quality"
+            />
+          </div>
+
+          {/* Right: Severity bar + stats */}
+          <div className="flex min-w-0 flex-1 flex-col gap-4">
+            {/* Severity distribution */}
+            <div>
+              <div className="mb-2 flex items-center justify-between">
+                <span className="text-muted-foreground text-[11px] font-semibold tracking-wider uppercase">
+                  Issue Severity Distribution
+                </span>
+                <span className="text-muted-foreground text-[11px] tabular-nums">
+                  {issues.length} total
+                </span>
+              </div>
+              <SeverityBar
+                critical={summary.criticalIssues}
+                high={summary.highIssues}
+                medium={summary.mediumIssues}
+                low={summary.lowIssues}
+              />
+              {/* Legend */}
+              <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1">
+                {[
+                  {
+                    label: "Critical",
+                    count: summary.criticalIssues,
+                    color: "bg-red-500",
+                  },
+                  {
+                    label: "High",
+                    count: summary.highIssues,
+                    color: "bg-orange-500",
+                  },
+                  {
+                    label: "Medium",
+                    count: summary.mediumIssues,
+                    color: "bg-amber-400",
+                  },
+                  {
+                    label: "Low",
+                    count: summary.lowIssues,
+                    color: "bg-sky-400",
+                  },
+                ].map((s) => (
+                  <span
+                    key={s.label}
+                    className="text-muted-foreground flex items-center gap-1.5 text-[11px]"
+                  >
+                    <span className={`h-1.5 w-1.5 rounded-full ${s.color}`} />
+                    {s.label}{" "}
+                    <span className="text-foreground font-semibold tabular-nums">
+                      {s.count}
+                    </span>
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Quick stats row */}
+            <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+              <StatPill
+                icon={AlertTriangle}
+                label="Critical & High"
+                value={critHighTotal}
+                colorClass={
+                  critHighTotal > 0
+                    ? "text-red-600 dark:text-red-400"
+                    : "text-emerald-600 dark:text-emerald-400"
+                }
+                tooltip={`${summary.criticalIssues} critical + ${summary.highIssues} high severity issues`}
+              />
+              <StatPill
+                icon={Target}
+                label="Vuln Density"
+                value={metrics.vulnerabilityDensity}
+                colorClass={
+                  metrics.vulnerabilityDensity > 5
+                    ? "text-amber-600 dark:text-amber-400"
+                    : "text-teal-600 dark:text-teal-400"
+                }
+                tooltip="Issues per 1,000 lines of code. Benchmark: <5"
+              />
+              <StatPill
+                icon={Key}
+                label="Secrets"
+                value={secretCount}
+                colorClass={
+                  secretCount > 0
+                    ? "text-orange-600 dark:text-orange-400"
+                    : "text-emerald-600 dark:text-emerald-400"
+                }
+                tooltip="API keys, tokens, and passwords found in source code"
+              />
+              <StatPill
+                icon={Shield}
+                label="Total Issues"
+                value={issues.length}
+                colorClass="text-purple-600 dark:text-purple-400"
+                tooltip={`Critical: ${summary.criticalIssues} · High: ${summary.highIssues} · Medium: ${summary.mediumIssues} · Low: ${summary.lowIssues}`}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* ─── Smart Insights ─── */}
+        <div className="mt-6">
+          <SmartInsightsSummary results={results} />
+        </div>
+      </div>
+    </motion.div>
   );
 };
