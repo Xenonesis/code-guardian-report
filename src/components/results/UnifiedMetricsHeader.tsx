@@ -24,7 +24,8 @@ export const UnifiedMetricsHeader: React.FC<UnifiedMetricsHeaderProps> = ({
   results,
 }) => {
   const secretIssues = results.issues.filter(
-    (issue) => issue.category === "Secret Detection" || issue.type === "Secret"
+    (issue) =>
+      issue?.category === "Secret Detection" || issue?.type === "Secret"
   );
 
   const getScoreColor = (score: number) => {
@@ -56,8 +57,8 @@ export const UnifiedMetricsHeader: React.FC<UnifiedMetricsHeaderProps> = ({
 
   return (
     <TooltipProvider>
-      <div className="mb-6 rounded-2xl border border-border/70 bg-card/95 shadow-sm backdrop-blur-sm/60/80">
-        <div className="flex items-center justify-center border-b border-border/60 px-3 py-4 sm:px-6 sm:py-5 md:justify-between/60">
+      <div className="border-border/70 bg-card/95 backdrop-blur-sm/60/80 mb-6 rounded-2xl border shadow-sm">
+        <div className="border-border/60 md:justify-between/60 flex items-center justify-center border-b px-3 py-4 sm:px-6 sm:py-5">
           <div className="flex items-center justify-center gap-2 sm:gap-3 md:justify-start">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 shadow-md sm:h-11 sm:w-11">
               <Shield className="h-4 w-4 text-white sm:h-5 sm:w-5" />
@@ -66,12 +67,12 @@ export const UnifiedMetricsHeader: React.FC<UnifiedMetricsHeaderProps> = ({
               <span className="bg-gradient-to-r from-slate-900 to-blue-900 bg-clip-text text-sm font-bold text-transparent dark:from-white dark:to-blue-100">
                 Code Guardian
               </span>
-              <span className="text-[10px] font-medium tracking-wide text-muted-foreground uppercase">
+              <span className="text-muted-foreground text-[10px] font-medium tracking-wide uppercase">
                 Security Analysis
               </span>
             </div>
             <div className="hidden flex-col md:flex">
-              <span className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+              <span className="text-muted-foreground text-xs font-semibold tracking-wide uppercase">
                 Executive Summary
               </span>
               <h3 className="text-foreground text-lg font-semibold">
@@ -79,7 +80,7 @@ export const UnifiedMetricsHeader: React.FC<UnifiedMetricsHeaderProps> = ({
               </h3>
             </div>
           </div>
-          <div className="hidden flex-col items-end text-sm text-muted-foreground md:flex">
+          <div className="text-muted-foreground hidden flex-col items-end text-sm md:flex">
             <span>
               <span className="text-foreground font-semibold">
                 {results.totalFiles}
@@ -101,7 +102,7 @@ export const UnifiedMetricsHeader: React.FC<UnifiedMetricsHeaderProps> = ({
             <Tooltip>
               <TooltipTrigger asChild>
                 <Card
-                  className={`border border-border/70 bg-card/95/60/70 ${getScoreBgColor(results.summary.securityScore)} group cursor-help transition-all duration-300 hover:scale-[1.02] hover:shadow-lg`}
+                  className={`border-border/70 bg-card/95/60/70 border ${getScoreBgColor(results.summary.securityScore)} group cursor-help transition-all duration-300 hover:scale-[1.02] hover:shadow-lg`}
                 >
                   <CardContent className="p-3 sm:p-4">
                     <div className="flex items-center justify-between">
@@ -116,7 +117,7 @@ export const UnifiedMetricsHeader: React.FC<UnifiedMetricsHeaderProps> = ({
                         {results.summary.securityScore}
                       </p>
                     </div>
-                    <p className="mt-3 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+                    <p className="text-muted-foreground mt-3 text-xs font-semibold tracking-wide uppercase">
                       Security Score
                     </p>
                   </CardContent>
@@ -139,7 +140,7 @@ export const UnifiedMetricsHeader: React.FC<UnifiedMetricsHeaderProps> = ({
             {/* Critical & High Issues */}
             <Tooltip>
               <TooltipTrigger asChild>
-                <Card className="group cursor-help border border-border/70 bg-card/95 ring-1 ring-destructive/30 transition-all duration-300 ring-inset hover:scale-[1.02] hover:shadow-lg/60/70 dark:ring-destructive/30">
+                <Card className="group border-border/70 bg-card/95 ring-destructive/30 hover:shadow-lg/60/70 dark:ring-destructive/30 cursor-help border ring-1 transition-all duration-300 ring-inset hover:scale-[1.02]">
                   <CardContent className="p-3 sm:p-4">
                     <div className="flex items-center justify-between">
                       <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-red-500 to-rose-500 shadow-sm transition-shadow group-hover:shadow-md sm:h-10 sm:w-10">
@@ -150,7 +151,7 @@ export const UnifiedMetricsHeader: React.FC<UnifiedMetricsHeaderProps> = ({
                           results.summary.highIssues}
                       </p>
                     </div>
-                    <p className="mt-3 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+                    <p className="text-muted-foreground mt-3 text-xs font-semibold tracking-wide uppercase">
                       Critical & High
                     </p>
                   </CardContent>
@@ -169,7 +170,7 @@ export const UnifiedMetricsHeader: React.FC<UnifiedMetricsHeaderProps> = ({
             {/* Vulnerability Density */}
             <Tooltip>
               <TooltipTrigger asChild>
-                <Card className="group cursor-help border border-border/70 bg-card/95 ring-1 ring-border transition-all duration-300 ring-inset hover:scale-[1.02] hover:shadow-lg/60/70 dark:ring-border">
+                <Card className="group border-border/70 bg-card/95 ring-border hover:shadow-lg/60/70 dark:ring-border cursor-help border ring-1 transition-all duration-300 ring-inset hover:scale-[1.02]">
                   <CardContent className="p-3 sm:p-4">
                     <div className="flex items-center justify-between">
                       <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-indigo-500 shadow-sm transition-shadow group-hover:shadow-md sm:h-10 sm:w-10">
@@ -179,7 +180,7 @@ export const UnifiedMetricsHeader: React.FC<UnifiedMetricsHeaderProps> = ({
                         {results.metrics.vulnerabilityDensity}
                       </p>
                     </div>
-                    <p className="mt-3 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+                    <p className="text-muted-foreground mt-3 text-xs font-semibold tracking-wide uppercase">
                       Vuln Density
                     </p>
                   </CardContent>
@@ -197,7 +198,7 @@ export const UnifiedMetricsHeader: React.FC<UnifiedMetricsHeaderProps> = ({
             <Tooltip>
               <TooltipTrigger asChild>
                 <Card
-                  className={`group cursor-help border border-border/70 bg-card/95 ring-1 transition-all duration-300 ring-inset hover:scale-[1.02] hover:shadow-lg/60/70 ${
+                  className={`group border-border/70 bg-card/95 hover:shadow-lg/60/70 cursor-help border ring-1 transition-all duration-300 ring-inset hover:scale-[1.02] ${
                     secretIssues.length > 0
                       ? "border-orange-300 ring-amber-200/60 dark:border-orange-700 dark:ring-amber-900/40"
                       : "border-emerald-300 ring-emerald-200/60 dark:border-emerald-700 dark:ring-emerald-900/40"
@@ -220,7 +221,7 @@ export const UnifiedMetricsHeader: React.FC<UnifiedMetricsHeaderProps> = ({
                         {secretIssues.length}
                       </p>
                     </div>
-                    <p className="mt-3 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+                    <p className="text-muted-foreground mt-3 text-xs font-semibold tracking-wide uppercase">
                       Secrets Found
                     </p>
                   </CardContent>
@@ -239,7 +240,7 @@ export const UnifiedMetricsHeader: React.FC<UnifiedMetricsHeaderProps> = ({
             <Tooltip>
               <TooltipTrigger asChild>
                 <Card
-                  className={`border border-border/70 bg-card/95/60/70 ${getScoreBgColor(results.summary.qualityScore)} group cursor-help transition-all duration-300 hover:scale-[1.02] hover:shadow-lg`}
+                  className={`border-border/70 bg-card/95/60/70 border ${getScoreBgColor(results.summary.qualityScore)} group cursor-help transition-all duration-300 hover:scale-[1.02] hover:shadow-lg`}
                 >
                   <CardContent className="p-3 sm:p-4">
                     <div className="flex items-center justify-between">
@@ -254,7 +255,7 @@ export const UnifiedMetricsHeader: React.FC<UnifiedMetricsHeaderProps> = ({
                         {results.summary.qualityScore}
                       </p>
                     </div>
-                    <p className="mt-3 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+                    <p className="text-muted-foreground mt-3 text-xs font-semibold tracking-wide uppercase">
                       Quality Score
                     </p>
                   </CardContent>
@@ -271,7 +272,7 @@ export const UnifiedMetricsHeader: React.FC<UnifiedMetricsHeaderProps> = ({
             {/* Total Issues */}
             <Tooltip>
               <TooltipTrigger asChild>
-                <Card className="group cursor-help border border-border/70 bg-card/95 ring-1 ring-border/60 transition-all duration-300 ring-inset hover:scale-[1.02] hover:shadow-lg/60/70 dark:ring-border/40">
+                <Card className="group border-border/70 bg-card/95 ring-border/60 hover:shadow-lg/60/70 dark:ring-border/40 cursor-help border ring-1 transition-all duration-300 ring-inset hover:scale-[1.02]">
                   <CardContent className="p-3 sm:p-4">
                     <div className="flex items-center justify-between">
                       <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-purple-500 to-violet-600 shadow-sm transition-shadow group-hover:shadow-md sm:h-10 sm:w-10">
@@ -281,7 +282,7 @@ export const UnifiedMetricsHeader: React.FC<UnifiedMetricsHeaderProps> = ({
                         {results.issues.length}
                       </p>
                     </div>
-                    <p className="mt-3 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+                    <p className="text-muted-foreground mt-3 text-xs font-semibold tracking-wide uppercase">
                       Total Issues
                     </p>
                   </CardContent>

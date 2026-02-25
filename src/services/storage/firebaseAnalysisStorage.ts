@@ -26,6 +26,7 @@ import {
 import { db } from "@/lib/firebase";
 import { AnalysisResults } from "@/hooks/useAnalysis";
 import { safeGetDoc, safeSetDoc } from "@/lib/firestore-utils";
+import { toast } from "sonner";
 
 import { logger } from "@/utils/logger";
 export interface FirebaseAnalysisData {
@@ -202,6 +203,9 @@ export class FirebaseAnalysisStorageService {
         logger.warn("Analysis results were truncated due to size limits", {
           originalIssueCount,
           storedIssueCount: finalResults.issues?.length,
+        });
+        toast.warning("Results truncated for cloud storage", {
+          description: `${originalIssueCount} issues reduced to ${finalResults.issues?.length || 0} to fit storage limits. Full results are available locally.`,
         });
       }
 

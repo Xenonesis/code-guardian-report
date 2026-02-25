@@ -271,11 +271,28 @@ export class EnhancedAnalysisEngine {
    * Verify that we're getting real analysis results, not mock data
    */
   private verifyRealAnalysisResults(
-    _issues: SecurityIssue[],
+    issues: SecurityIssue[],
     totalFiles: number
   ): void {
     if (totalFiles === 0) {
       return;
+    }
+
+    // Warn if no issues found in a large codebase — could indicate analyzer failure
+    if (issues.length === 0 && totalFiles > 10) {
+      logger.warn(
+        `Analysis of ${totalFiles} files produced 0 issues. Verify analyzers ran correctly.`
+      );
+    }
+
+    // Validate issue structure integrity
+    const malformedIssues = issues.filter(
+      (issue) => !issue.severity || !issue.message || !issue.filename
+    );
+    if (malformedIssues.length > 0) {
+      logger.warn(
+        `${malformedIssues.length} issues have missing required fields (severity, message, or filename)`
+      );
     }
   }
 }

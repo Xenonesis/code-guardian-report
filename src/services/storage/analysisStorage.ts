@@ -356,11 +356,21 @@ export class AnalysisStorageService {
 
       // Remove oldest entries
       const toRemove = Math.ceil(sortedHistory.length * 0.3);
+      const removedCount = toRemove;
       const optimizedHistory = sortedHistory.slice(toRemove);
 
       await this.saveHistory({
         ...history,
         previousAnalyses: optimizedHistory,
+      });
+
+      // Notify user about the cleanup
+      logger.warn(
+        `Storage optimization: removed ${removedCount} old analyses to free space`
+      );
+      toast({
+        title: "Storage Optimized",
+        description: `Removed ${removedCount} older analysis result(s) to free storage space. Recent analyses are preserved.`,
       });
     }
   }

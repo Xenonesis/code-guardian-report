@@ -1,18 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { AlertTriangle, Shield, Package, Clock, Database } from "lucide-react";
+import {
+  AlertTriangle,
+  Shield,
+  Package,
+  Clock,
+  Database,
+  ChevronDown,
+  ChevronUp,
+} from "lucide-react";
 import { DependencyScanResult } from "@/services/security/dependencyVulnerabilityScanner";
 
 interface DependencyAnalysisDisplayProps {
   dependencyAnalysis: DependencyScanResult | null | undefined;
-  onRetry?: () => void | Promise<void>;
   isLoading?: boolean;
 }
 
 export const DependencyAnalysisDisplay: React.FC<
   DependencyAnalysisDisplayProps
-> = ({ dependencyAnalysis, onRetry: _onRetry, isLoading }) => {
+> = ({ dependencyAnalysis, isLoading }) => {
   // Handle case where dependency analysis failed or is undefined
   if (isLoading) {
     return (
@@ -37,15 +44,6 @@ export const DependencyAnalysisDisplay: React.FC<
   }
 
   if (!dependencyAnalysis) {
-    const handleRetry = () => {
-      try {
-        // Simple retry: reload the page to re-run analysis flow
-        if (typeof window !== "undefined") window.location.reload();
-      } catch {
-        // no-op fallback
-      }
-    };
-
     return (
       <div className="space-y-6">
         <Card className="border-border bg-gradient-to-br from-slate-50 to-white shadow-sm dark:from-slate-900/40 dark:to-slate-900/10">
@@ -66,12 +64,6 @@ export const DependencyAnalysisDisplay: React.FC<
               </div>
 
               <div className="mt-2 flex flex-col items-center gap-3 md:flex-row">
-                <button
-                  onClick={handleRetry}
-                  className="inline-flex items-center justify-center rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-emerald-700 focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:outline-none dark:focus:ring-offset-slate-900"
-                >
-                  Try again
-                </button>
                 <a
                   href="#dependency-help"
                   className="inline-flex items-center justify-center rounded-lg border border-emerald-200 px-4 py-2 text-sm font-medium text-emerald-700 transition-colors hover:bg-emerald-50/60 dark:border-emerald-800 dark:text-emerald-300 dark:hover:bg-emerald-900/20"
@@ -169,6 +161,11 @@ export const DependencyAnalysisDisplay: React.FC<
     supplyChainRisks,
     recommendations,
   } = dependencyAnalysis;
+
+  const [showAllVulnerabilities, setShowAllVulnerabilities] = useState(false);
+  const [showAllOutdated, setShowAllOutdated] = useState(false);
+
+  const INITIAL_DISPLAY_COUNT = 10;
 
   const getSeverityColor = (severity: string) => {
     switch (severity.toLowerCase()) {
@@ -353,7 +350,10 @@ export const DependencyAnalysisDisplay: React.FC<
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              {vulnerabilities.slice(0, 10).map((vuln, index) => (
+              {(showAllVulnerabilities
+                ? vulnerabilities
+                : vulnerabilities.slice(0, INITIAL_DISPLAY_COUNT)
+              ).map((vuln, index) => (
                 <div
                   key={`vulnerability-${vuln.package}-${vuln.vulnerability.id}-${vuln.version}-${index}`}
                   className="rounded-lg border bg-red-50 p-4 dark:bg-red-950/10"
@@ -395,10 +395,25 @@ export const DependencyAnalysisDisplay: React.FC<
                   </div>
                 </div>
               ))}
-              {vulnerabilities.length > 10 && (
-                <p className="text-muted-foreground text-center text-sm">
-                  ... and {vulnerabilities.length - 10} more vulnerabilities
-                </p>
+              {vulnerabilities.length > INITIAL_DISPLAY_COUNT && (
+                <button
+                  onClick={() =>
+                    setShowAllVulnerabilities(!showAllVulnerabilities)
+                  }
+                  className="mx-auto flex items-center gap-1.5 rounded-lg border border-red-200 px-4 py-2 text-sm font-medium text-red-700 transition-colors hover:bg-red-50 dark:border-red-800 dark:text-red-300 dark:hover:bg-red-900/20"
+                >
+                  {showAllVulnerabilities ? (
+                    <>
+                      <ChevronUp className="h-4 w-4" />
+                      Show less
+                    </>
+                  ) : (
+                    <>
+                      <ChevronDown className="h-4 w-4" />
+                      Show all {vulnerabilities.length} vulnerabilities
+                    </>
+                  )}
+                </button>
               )}
             </div>
           </CardContent>
@@ -452,7 +467,10 @@ export const DependencyAnalysisDisplay: React.FC<
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              {outdatedPackages.slice(0, 10).map((pkg, index) => (
+              {(showAllOutdated
+                ? outdatedPackages
+                : outdatedPackages.slice(0, INITIAL_DISPLAY_COUNT)
+              ).map((pkg, index) => (
                 <div
                   key={`outdated-${pkg.package}-${pkg.currentVersion}-${index}`}
                   className="bg-muted rounded-lg border p-4 dark:bg-blue-950/10"
@@ -484,10 +502,23 @@ export const DependencyAnalysisDisplay: React.FC<
                   </div>
                 </div>
               ))}
-              {outdatedPackages.length > 10 && (
-                <p className="text-muted-foreground text-center text-sm">
-                  ... and {outdatedPackages.length - 10} more outdated packages
-                </p>
+              {outdatedPackages.length > INITIAL_DISPLAY_COUNT && (
+                <button
+                  onClick={() => setShowAllOutdated(!showAllOutdated)}
+                  className="text-primary border-border hover:bg-muted mx-auto flex items-center gap-1.5 rounded-lg border px-4 py-2 text-sm font-medium transition-colors"
+                >
+                  {showAllOutdated ? (
+                    <>
+                      <ChevronUp className="h-4 w-4" />
+                      Show less
+                    </>
+                  ) : (
+                    <>
+                      <ChevronDown className="h-4 w-4" />
+                      Show all {outdatedPackages.length} outdated packages
+                    </>
+                  )}
+                </button>
               )}
             </div>
           </CardContent>

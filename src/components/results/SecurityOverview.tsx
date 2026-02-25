@@ -113,19 +113,28 @@ ${suggestion.testingRecommendations.map((rec, i) => `${i + 1}. ${rec}`).join("\n
 
   // Separate secret detection issues from other security issues
   const secretIssues = results.issues.filter(
-    (issue) => issue.category === "Secret Detection" || issue.type === "Secret"
+    (issue) =>
+      issue?.category === "Secret Detection" || issue?.type === "Secret"
   );
   const otherIssues = results.issues.filter(
-    (issue) => issue.category !== "Secret Detection" && issue.type !== "Secret"
+    (issue) =>
+      issue?.category !== "Secret Detection" && issue?.type !== "Secret"
   );
 
-  // Prepare files for provenance monitoring
-  const filesForProvenance = otherIssues.map((issue) => ({
-    filename: issue.filename,
-    content:
-      issue.codeSnippet ||
-      `// File: ${issue.filename}\n// Issue: ${issue.message}`,
-  }));
+  // Prepare files for provenance monitoring (deduplicated by filename)
+  const seenFiles = new Set<string>();
+  const filesForProvenance = otherIssues
+    .filter((issue) => {
+      if (seenFiles.has(issue.filename)) return false;
+      seenFiles.add(issue.filename);
+      return true;
+    })
+    .map((issue) => ({
+      filename: issue.filename,
+      content:
+        issue.codeSnippet ||
+        `// File: ${issue.filename}\n// Issue: ${issue.message}`,
+    }));
 
   if (isLoading) {
     return (

@@ -1,4 +1,11 @@
-import { Shield, FileCode, Sparkles, BarChart3, Package } from "lucide-react";
+import {
+  Shield,
+  FileCode,
+  Sparkles,
+  BarChart3,
+  Package,
+  AlertTriangle,
+} from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AnalysisResults } from "@/hooks/useAnalysis";
 import { SecurityOverview } from "./SecurityOverview";
@@ -7,13 +14,31 @@ import { SecurityMetricsDashboard } from "@/components/SecurityMetricsDashboard"
 import { LanguageDetectionDisplay } from "../language/LanguageDetectionDisplay";
 import { UnifiedMetricsHeader } from "./UnifiedMetricsHeader";
 import { DependencyAnalysisDisplay } from "./DependencyAnalysisDisplay";
+import { ErrorBoundary } from "@/components/common/ErrorBoundary";
 
 interface ResultsTabsProps {
   results: AnalysisResults;
 }
 
 export const ResultsTabs: React.FC<ResultsTabsProps> = ({ results }) => {
-  const hasLanguageDetection = !!results.languageDetection;
+  const hasLanguageDetection =
+    !!results.languageDetection &&
+    Array.isArray(results.languageDetection.allLanguages) &&
+    results.languageDetection.allLanguages.length > 0;
+
+  const tabErrorFallback = (
+    <div className="border-destructive/30 bg-destructive/5 flex flex-col items-center gap-3 rounded-lg border p-8 text-center">
+      <AlertTriangle className="text-destructive h-8 w-8" />
+      <div>
+        <h3 className="text-foreground text-lg font-semibold">
+          Something went wrong
+        </h3>
+        <p className="text-muted-foreground text-sm">
+          This section encountered an error. Other tabs should still work.
+        </p>
+      </div>
+    </div>
+  );
 
   return (
     <div className="w-full space-y-6">
@@ -72,37 +97,40 @@ export const ResultsTabs: React.FC<ResultsTabsProps> = ({ results }) => {
         </div>
 
         <TabsContent value="overview" className="mt-0 space-y-6">
-          <SecurityOverview results={results} />
+          <ErrorBoundary fallback={tabErrorFallback}>
+            <SecurityOverview results={results} />
+          </ErrorBoundary>
         </TabsContent>
 
         {hasLanguageDetection && results.languageDetection && (
           <TabsContent value="language-detection" className="mt-0 space-y-6">
-            <LanguageDetectionDisplay
-              detectionResult={results.languageDetection}
-            />
+            <ErrorBoundary fallback={tabErrorFallback}>
+              <LanguageDetectionDisplay
+                detectionResult={results.languageDetection}
+              />
+            </ErrorBoundary>
           </TabsContent>
         )}
 
         <TabsContent value="dependency-analysis" className="mt-0 space-y-6">
-          <DependencyAnalysisDisplay
-            dependencyAnalysis={results.dependencyAnalysis}
-            onRetry={() => {
-              try {
-                if (typeof window !== "undefined") window.location.reload();
-              } catch {
-                /* noop */
-              }
-            }}
-            isLoading={false}
-          />
+          <ErrorBoundary fallback={tabErrorFallback}>
+            <DependencyAnalysisDisplay
+              dependencyAnalysis={results.dependencyAnalysis}
+              isLoading={false}
+            />
+          </ErrorBoundary>
         </TabsContent>
 
         <TabsContent value="ai-insights" className="mt-0 space-y-6">
-          <AISecurityInsights results={results} />
+          <ErrorBoundary fallback={tabErrorFallback}>
+            <AISecurityInsights results={results} />
+          </ErrorBoundary>
         </TabsContent>
 
         <TabsContent value="metrics" className="mt-0 space-y-6">
-          <SecurityMetricsDashboard results={results} />
+          <ErrorBoundary fallback={tabErrorFallback}>
+            <SecurityMetricsDashboard results={results} />
+          </ErrorBoundary>
         </TabsContent>
       </Tabs>
     </div>
