@@ -41,14 +41,12 @@ export async function GET() {
   };
   checks.push(appCheck);
 
-  // Check 2: Memory usage
   const memoryCheck = await checkMemory();
   checks.push(memoryCheck);
   if (memoryCheck.status === "fail") overallStatus = "unhealthy";
   if (memoryCheck.status === "warn" && overallStatus === "healthy")
     overallStatus = "degraded";
 
-  // Check 3: Environment configuration
   const envCheck = checkEnvironment();
   checks.push(envCheck);
   if (envCheck.status === "fail") overallStatus = "degraded";
@@ -65,7 +63,6 @@ export async function GET() {
     checks,
   };
 
-  // Return appropriate status code based on health
   const statusCode =
     overallStatus === "healthy"
       ? 200

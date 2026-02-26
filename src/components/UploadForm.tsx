@@ -43,7 +43,6 @@ export const UploadForm: React.FC<UploadFormProps> = ({
   } = useFileUpload({ onFileSelect, onAnalysisComplete });
 
   const handleGitHubFileReady = (file: File) => {
-    // Process the file from GitHub the same way as uploaded files
     processFileDirectly(file);
   };
 

@@ -45,8 +45,10 @@ export class MetricsCalculator {
       linesAnalyzed
     );
 
-    if (issues.length === 0) {
+    if (issues.length === 0 && linesAnalyzed > 0) {
       qualityScore = 100;
+    } else if (issues.length === 0 && linesAnalyzed === 0) {
+      qualityScore = 0; // No files analyzed — score is meaningless
     } else if (qualityScore < 5) {
       qualityScore = 5; // Minimum floor
     }

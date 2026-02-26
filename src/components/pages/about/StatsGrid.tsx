@@ -117,7 +117,7 @@ export const StatsGrid: React.FC<StatsGridProps> = ({ className = "" }) => {
       {stats.map((stat, index) => (
         <div
           key={index}
-          className="group border-primary/20 bg-background/50 hover:border-primary/50 relative flex flex-col items-start border p-6 transition-colors"
+          className="group border-primary/20 bg-background/50 hover:border-primary/50 relative flex flex-col items-start border p-3 transition-colors sm:p-6"
         >
           {/* Corner markers */}
           <div className="border-primary/50 absolute top-0 left-0 h-2 w-2 border-t border-l" />
@@ -137,7 +137,7 @@ export const StatsGrid: React.FC<StatsGridProps> = ({ className = "" }) => {
           </div>
 
           {/* Value */}
-          <div className="text-foreground mb-1 font-mono text-2xl font-bold tracking-tighter tabular-nums sm:text-3xl lg:text-4xl">
+          <div className="text-foreground mb-1 font-mono text-xl font-bold tracking-tighter tabular-nums sm:text-2xl md:text-3xl lg:text-4xl">
             {animatedValues[index]}
           </div>
 

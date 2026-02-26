@@ -1,86 +1,183 @@
-import React, {
-  useState,
-  useRef,
-  useEffect,
-  useCallback,
-  useMemo,
-} from "react";
-import { Bot, Send, X, MessageCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Skeleton } from "@/components/ui/skeleton";
-import { AIService } from "../../services/ai/aiService";
-import { toast } from "sonner";
-import { AnalysisResults } from "@/hooks/useAnalysis";
+"use client";
 
-import { logger } from "@/utils/logger";
-interface ChatMessage {
-  id: string;
-  role: "user" | "assistant";
-  content: string;
-  timestamp: Date;
-}
+import React, { useState, useRef, useEffect, useCallback } from "react";
+import {
+  Bot,
+  Send,
+  X,
+  MessageCircle,
+  RotateCcw,
+  Download,
+  Trash2,
+  Sparkles,
+  Copy,
+  Check,
+} from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { AnalysisResults } from "@/hooks/useAnalysis";
+import { useChatBot } from "@/hooks/useChatBot";
 
 interface FloatingChatBotProps {
   analysisResults: AnalysisResults;
 }
 
+/* ─── Markdown message renderer ─── */
+const ChatMarkdown: React.FC<{ content: string }> = ({ content }) => (
+  <ReactMarkdown
+    remarkPlugins={[remarkGfm]}
+    components={{
+      p: ({ children }) => (
+        <p className="mb-2 text-[13px] leading-relaxed last:mb-0">{children}</p>
+      ),
+      strong: ({ children }) => (
+        <strong className="font-semibold">{children}</strong>
+      ),
+      ul: ({ children }) => (
+        <ul className="mb-2 ml-3 list-disc space-y-0.5 text-[13px]">
+          {children}
+        </ul>
+      ),
+      ol: ({ children }) => (
+        <ol className="mb-2 ml-3 list-decimal space-y-0.5 text-[13px]">
+          {children}
+        </ol>
+      ),
+      li: ({ children }) => <li className="leading-relaxed">{children}</li>,
+      code: ({ children, className }) => {
+        const isBlock = className?.includes("language-");
+        if (isBlock) {
+          return (
+            <pre className="my-2 overflow-x-auto rounded-lg bg-black/10 p-3 text-xs dark:bg-white/10">
+              <code>{children}</code>
+            </pre>
+          );
+        }
+        return (
+          <code className="rounded bg-black/10 px-1 py-0.5 text-xs dark:bg-white/10">
+            {children}
+          </code>
+        );
+      },
+      h1: ({ children }) => (
+        <h1 className="mb-1 text-sm font-bold">{children}</h1>
+      ),
+      h2: ({ children }) => (
+        <h2 className="mb-1 text-sm font-bold">{children}</h2>
+      ),
+      h3: ({ children }) => (
+        <h3 className="mb-1 text-[13px] font-bold">{children}</h3>
+      ),
+      a: ({ href, children }) => (
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-600 underline dark:text-blue-400"
+        >
+          {children}
+        </a>
+      ),
+      table: ({ children }) => (
+        <div className="my-2 overflow-x-auto">
+          <table className="w-full border-collapse text-xs">{children}</table>
+        </div>
+      ),
+      th: ({ children }) => (
+        <th className="border-b border-current/20 px-2 py-1 text-left font-semibold">
+          {children}
+        </th>
+      ),
+      td: ({ children }) => (
+        <td className="border-b border-current/10 px-2 py-1">{children}</td>
+      ),
+    }}
+  >
+    {content}
+  </ReactMarkdown>
+);
+
+/* ─── Copy button for messages ─── */
+const CopyButton: React.FC<{ text: string }> = ({ text }) => {
+  const [copied, setCopied] = useState(false);
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+  return (
+    <button
+      onClick={handleCopy}
+      className="text-muted-foreground hover:text-foreground rounded p-1 opacity-0 transition-all group-hover:opacity-100"
+      aria-label="Copy message"
+    >
+      {copied ? (
+        <Check className="h-3 w-3 text-emerald-500" />
+      ) : (
+        <Copy className="h-3 w-3" />
+      )}
+    </button>
+  );
+};
+
+/* ─── Typing indicator ─── */
+const TypingIndicator: React.FC = () => (
+  <div className="flex items-center gap-3 px-1">
+    <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-purple-600">
+      <Bot className="h-3.5 w-3.5 text-white" />
+    </div>
+    <div className="bg-muted/80 flex items-center gap-1.5 rounded-2xl rounded-bl-md px-4 py-3">
+      <motion.span
+        className="bg-muted-foreground/60 h-1.5 w-1.5 rounded-full"
+        animate={{ opacity: [0.3, 1, 0.3] }}
+        transition={{ duration: 1, repeat: Infinity, delay: 0 }}
+      />
+      <motion.span
+        className="bg-muted-foreground/60 h-1.5 w-1.5 rounded-full"
+        animate={{ opacity: [0.3, 1, 0.3] }}
+        transition={{ duration: 1, repeat: Infinity, delay: 0.15 }}
+      />
+      <motion.span
+        className="bg-muted-foreground/60 h-1.5 w-1.5 rounded-full"
+        animate={{ opacity: [0.3, 1, 0.3] }}
+        transition={{ duration: 1, repeat: Infinity, delay: 0.3 }}
+      />
+    </div>
+  </div>
+);
+
+/* ─── Main component ─── */
 const FloatingChatBot: React.FC<FloatingChatBotProps> = ({
   analysisResults,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [isAIConfigured, setIsAIConfigured] = useState<boolean | null>(null);
-  const scrollAreaRef = useRef<HTMLDivElement>(null);
-  const aiService = useMemo(() => new AIService(), []);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
+  const {
+    messages,
+    isLoading,
+    isAIConfigured,
+    suggestedQuestions,
+    initializeChat,
+    sendMessage,
+    clearChat,
+    regenerateLastResponse,
+    exportChat,
+  } = useChatBot(analysisResults);
 
+  // Auto-init chat when opened
   useEffect(() => {
-    let mounted = true;
-    aiService
-      .hasConfiguredProviders()
-      .then((configured) => {
-        if (mounted) {
-          setIsAIConfigured(configured);
-        }
-      })
-      .catch(() => {
-        if (mounted) {
-          setIsAIConfigured(false);
-        }
-      });
+    if (isOpen) initializeChat();
+  }, [isOpen, initializeChat]);
 
-    return () => {
-      mounted = false;
-    };
-  }, [aiService]);
-
-  useEffect(() => {
-    if (isOpen && messages.length === 0) {
-      const welcomeMessage: ChatMessage = {
-        id: "1",
-        role: "assistant",
-        content: `Hello! I'm your AI assistant for code analysis. I can help you understand the analysis results of your codebase. 
-
-I found ${analysisResults?.issues?.length || 0} issues across ${analysisResults?.totalFiles || 0} files. Feel free to ask me questions like:
-- "What are the most critical security issues?"
-- "Show me all high severity bugs"
-- "How can I improve my code quality?"
-- "What should I fix first?"
-
-How can I help you today?`,
-        timestamp: new Date(),
-      };
-      setMessages([welcomeMessage]);
-    }
-  }, [isOpen, analysisResults, messages.length]);
-
+  // Auto-scroll
   const scrollToBottom = useCallback(() => {
-    if (scrollAreaRef.current) {
-      scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight;
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, []);
 
@@ -88,211 +185,290 @@ How can I help you today?`,
     scrollToBottom();
   }, [messages.length, scrollToBottom]);
 
-  const handleSendMessage = async () => {
-    if (!input.trim() || isLoading) return;
-
-    const userMessage: ChatMessage = {
-      id: Date.now().toString(),
-      role: "user",
-      content: input,
-      timestamp: new Date(),
-    };
-
-    setMessages((prev) => [...prev, userMessage]);
-    const currentInput = input;
-    setInput("");
-    setIsLoading(true);
-
-    try {
-      logger.debug("Sending question to AI service:", currentInput);
-      logger.debug("Analysis results available:", !!analysisResults?.issues);
-
-      if (!analysisResults || !analysisResults.issues) {
-        throw new Error(
-          "No analysis results available. Please run an analysis first."
-        );
-      }
-
-      if (isAIConfigured === false) {
-        throw new Error("No AI API keys configured");
-      }
-
-      const response = await aiService.answerQuestion(
-        currentInput,
-        analysisResults
-      );
-
-      const assistantMessage: ChatMessage = {
-        id: (Date.now() + 1).toString(),
-        role: "assistant",
-        content: response,
-        timestamp: new Date(),
-      };
-
-      setMessages((prev) => [...prev, assistantMessage]);
-    } catch (error) {
-      logger.error("Error getting AI response:", error);
-
-      let errorMessage =
-        "Sorry, I encountered an error while processing your question.";
-
-      if (error instanceof Error) {
-        if (error.message.includes("No AI API keys configured")) {
-          errorMessage =
-            "Please configure your AI API keys in the AI Configuration tab to use this feature.";
-        } else if (error.message.includes("All AI providers failed")) {
-          errorMessage =
-            "Unable to connect to AI services. Please check your API keys are valid and have sufficient credits.";
-        } else if (error.message.includes("No analysis results")) {
-          errorMessage =
-            "No analysis results found. Please upload and analyze a code file first.";
-        } else {
-          errorMessage = `AI Service Error: ${error.message}`;
-        }
-      }
-
-      logger.error("Detailed error for user:", errorMessage);
-      toast.error(errorMessage);
-
-      const errorResponse: ChatMessage = {
-        id: (Date.now() + 1).toString(),
-        role: "assistant",
-        content: errorMessage,
-        timestamp: new Date(),
-      };
-
-      setMessages((prev) => [...prev, errorResponse]);
-    } finally {
-      setIsLoading(false);
+  // Focus input when opening
+  useEffect(() => {
+    if (isOpen) {
+      setTimeout(() => inputRef.current?.focus(), 300);
     }
+  }, [isOpen]);
+
+  const handleSend = () => {
+    if (!input.trim() || isLoading) return;
+    sendMessage(input);
+    setInput("");
+    // Reset textarea height
+    if (inputRef.current) inputRef.current.style.height = "auto";
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      handleSendMessage();
+      handleSend();
     }
   };
 
-  if (!analysisResults) {
-    return null;
-  }
+  const handleSuggestedClick = (q: string) => {
+    sendMessage(q);
+  };
+
+  // Auto-resize textarea
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setInput(e.target.value);
+    const el = e.target;
+    el.style.height = "auto";
+    el.style.height = `${Math.min(el.scrollHeight, 120)}px`;
+  };
+
+  if (!analysisResults) return null;
+
+  const hasMessages = messages.length > 1; // more than just welcome
 
   return (
     <>
-      {/* Floating Chat Button */}
-      {!isOpen && (
-        <Button
-          onClick={() => setIsOpen(true)}
-          className="focus-ring animate-float bg-primary hover:bg-primary/90 fixed right-4 bottom-4 z-50 h-12 w-12 rounded-full shadow-lg transition-all duration-300 hover:shadow-xl sm:right-6 sm:bottom-6 sm:h-14 sm:w-14"
-          size="sm"
-          aria-label="Open AI chat assistant"
-        >
-          <MessageCircle className="h-5 w-5 sm:h-6 sm:w-6" />
-        </Button>
-      )}
+      {/* ─── Floating trigger button ─── */}
+      <AnimatePresence>
+        {!isOpen && (
+          <motion.div
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0, opacity: 0 }}
+            transition={{ type: "spring", stiffness: 260, damping: 20 }}
+            className="fixed right-5 bottom-20 z-[60] sm:right-6 sm:bottom-20"
+          >
+            <button
+              onClick={() => setIsOpen(true)}
+              className="group relative flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-purple-600 shadow-lg shadow-purple-500/25 transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/30"
+              aria-label="Open AI chat assistant"
+            >
+              <MessageCircle className="h-6 w-6 text-white transition-transform group-hover:scale-110" />
+              {/* Notification pulse */}
+              {analysisResults.summary.criticalIssues > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75" />
+                  <span className="relative inline-flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[9px] font-bold text-white">
+                    {analysisResults.summary.criticalIssues}
+                  </span>
+                </span>
+              )}
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-      {/* Chat Window */}
-      {isOpen && (
-        <Card className="animate-slide-up fixed right-4 bottom-4 z-50 h-[70vh] max-h-[500px] w-[calc(100vw-2rem)] max-w-sm border-0 bg-white/95 shadow-2xl backdrop-blur-sm sm:right-6 sm:bottom-6 sm:w-96/95">
-          <CardHeader className="bg-primary rounded-t-lg pb-3 text-white">
-            <div className="flex items-center justify-between">
-              <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
-                <Bot className="h-4 w-4 sm:h-5 sm:w-5" />
-                <span className="hidden sm:inline">AI Analysis Assistant</span>
-                <span className="sm:hidden">AI Assistant</span>
-              </CardTitle>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setIsOpen(false)}
-                className="focus-ring h-8 w-8 p-0 text-white hover:bg-white/20"
-                aria-label="Close chat"
-              >
-                <X className="h-4 w-4" />
-              </Button>
-            </div>
-          </CardHeader>
-
-          <CardContent className="flex h-[calc(70vh-80px)] max-h-[420px] flex-col p-0">
-            {/* Messages */}
-            <ScrollArea className="flex-1 p-3 sm:p-4" ref={scrollAreaRef}>
-              <div className="space-y-3 sm:space-y-4">
-                {isAIConfigured === false && (
-                  <div className="rounded-lg border border-amber-300 bg-amber-50 p-3 text-xs text-amber-900 sm:text-sm">
-                    AI providers are not configured. Open the AI Configuration
-                    tab and add at least one provider key (OpenAI, Gemini,
-                    Claude, or Copilot).
-                  </div>
+      {/* ─── Chat panel ─── */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.95 }}
+            transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
+            className="border-border/60 bg-background/95 fixed right-3 bottom-3 z-50 flex h-[75vh] max-h-[600px] w-[calc(100vw-1.5rem)] flex-col overflow-hidden rounded-2xl border shadow-2xl backdrop-blur-xl sm:right-6 sm:bottom-6 sm:w-[400px]"
+          >
+            {/* ─── Header ─── */}
+            <div className="border-border/40 flex flex-shrink-0 items-center justify-between border-b bg-gradient-to-r from-violet-600 to-purple-600 px-4 py-3">
+              <div className="flex items-center gap-2.5">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm">
+                  <Sparkles className="h-4 w-4 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-white">
+                    Code Guardian AI
+                  </h3>
+                  <p className="text-[10px] font-medium text-white/70">
+                    {isAIConfigured === false
+                      ? "Not configured"
+                      : isLoading
+                        ? "Thinking..."
+                        : "Ready to help"}
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-1">
+                {hasMessages && (
+                  <>
+                    <button
+                      onClick={exportChat}
+                      className="rounded-lg p-1.5 text-white/70 transition-colors hover:bg-white/15 hover:text-white"
+                      aria-label="Export chat"
+                      title="Export chat"
+                    >
+                      <Download className="h-3.5 w-3.5" />
+                    </button>
+                    <button
+                      onClick={clearChat}
+                      className="rounded-lg p-1.5 text-white/70 transition-colors hover:bg-white/15 hover:text-white"
+                      aria-label="Clear chat"
+                      title="Clear chat"
+                    >
+                      <Trash2 className="h-3.5 w-3.5" />
+                    </button>
+                  </>
                 )}
-                {messages.map((message) => (
-                  <div
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="rounded-lg p-1.5 text-white/70 transition-colors hover:bg-white/15 hover:text-white"
+                  aria-label="Close chat"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+
+            {/* ─── AI not configured banner ─── */}
+            {isAIConfigured === false && (
+              <div className="flex-shrink-0 border-b border-amber-200/50 bg-amber-50/90 px-4 py-2.5 dark:border-amber-800/30 dark:bg-amber-950/30">
+                <p className="text-[11px] font-medium text-amber-800 dark:text-amber-200">
+                  AI providers not configured. Add an API key in the AI
+                  Configuration tab to enable the assistant.
+                </p>
+              </div>
+            )}
+
+            {/* ─── Messages ─── */}
+            <ScrollArea className="flex-1 overflow-y-auto" ref={scrollRef}>
+              <div className="space-y-4 px-4 py-4">
+                {messages.map((message, idx) => (
+                  <motion.div
                     key={message.id}
-                    className={`flex ${message.role === "user" ? "justify-end" : "justify-start"} animate-fade-in`}
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                      duration: 0.2,
+                      delay: idx === messages.length - 1 ? 0.05 : 0,
+                    }}
+                    className={`flex gap-2.5 ${message.role === "user" ? "flex-row-reverse" : "flex-row"}`}
                   >
+                    {/* Avatar */}
+                    {message.role === "assistant" && (
+                      <div className="mt-0.5 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-purple-600">
+                        <Bot className="h-3.5 w-3.5 text-white" />
+                      </div>
+                    )}
+
+                    {/* Bubble */}
                     <div
-                      className={`max-w-[85%] rounded-lg p-2 sm:max-w-[80%] sm:p-3 ${
+                      className={`group relative max-w-[82%] rounded-2xl px-3.5 py-2.5 ${
                         message.role === "user"
-                          ? "bg-primary text-white"
-                          : "bg-muted text-foreground dark:text-white"
+                          ? "rounded-br-md bg-gradient-to-br from-violet-500 to-purple-600 text-white"
+                          : `rounded-bl-md ${(message as { isError?: boolean }).isError ? "border border-red-200/60 bg-red-50/80 text-red-800 dark:border-red-800/40 dark:bg-red-950/30 dark:text-red-200" : "bg-muted/80 text-foreground"}`
                       }`}
                     >
-                      <p className="text-xs leading-relaxed whitespace-pre-wrap sm:text-sm">
-                        {message.content}
-                      </p>
-                      <span className="mt-1 block text-xs opacity-70">
-                        {message.timestamp.toLocaleTimeString([], {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        })}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-                {isLoading && (
-                  <div className="animate-fade-in flex justify-start">
-                    <div className="bg-muted flex items-center gap-2 rounded-lg p-2 sm:p-3">
-                      <Skeleton className="h-3 w-3 rounded-full sm:h-4 sm:w-4" />
-                      <div className="flex flex-col gap-1">
-                        <Skeleton className="h-3 w-20 sm:w-24" />
-                        <span className="text-muted-foreground text-xs sm:text-sm">
-                          AI is thinking...
+                      {message.role === "assistant" ? (
+                        <ChatMarkdown content={message.content} />
+                      ) : (
+                        <p className="text-[13px] leading-relaxed whitespace-pre-wrap">
+                          {message.content}
+                        </p>
+                      )}
+                      {/* Timestamp + actions on hover */}
+                      <div
+                        className={`mt-1 flex items-center justify-between gap-2 ${message.role === "user" ? "text-white/60" : "text-muted-foreground"}`}
+                      >
+                        <span className="text-[10px]">
+                          {message.timestamp.toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })}
                         </span>
+                        {message.role === "assistant" && (
+                          <CopyButton text={message.content} />
+                        )}
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
+                ))}
+
+                {/* Typing indicator */}
+                {isLoading && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <TypingIndicator />
+                  </motion.div>
                 )}
+
+                {/* Suggested questions — after welcome message only */}
+                {messages.length === 1 &&
+                  !isLoading &&
+                  isAIConfigured !== false && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3, delay: 0.2 }}
+                      className="space-y-1.5 pl-9"
+                    >
+                      <p className="text-muted-foreground mb-2 text-[10px] font-semibold tracking-wider uppercase">
+                        Suggested questions
+                      </p>
+                      {suggestedQuestions.map((q, i) => (
+                        <button
+                          key={i}
+                          onClick={() => handleSuggestedClick(q)}
+                          className="border-border/50 bg-card/60 text-foreground block w-full rounded-xl border px-3 py-2 text-left text-xs font-medium transition-all hover:border-violet-300 hover:bg-violet-50/50 dark:hover:border-violet-700 dark:hover:bg-violet-950/30"
+                        >
+                          {q}
+                        </button>
+                      ))}
+                    </motion.div>
+                  )}
               </div>
             </ScrollArea>
 
-            {/* Input Area */}
-            <div className="border-border border-t p-3 sm:p-4">
-              <div className="flex gap-2">
-                <Input
+            {/* ─── Regenerate button ─── */}
+            {hasMessages &&
+              !isLoading &&
+              messages[messages.length - 1]?.role === "assistant" && (
+                <div className="border-border/30 bg-muted/30 flex justify-center border-t py-1.5">
+                  <button
+                    onClick={regenerateLastResponse}
+                    className="text-muted-foreground hover:text-foreground hover:bg-muted/60 flex items-center gap-1.5 rounded-lg px-3 py-1 text-[11px] font-medium transition-colors"
+                  >
+                    <RotateCcw className="h-3 w-3" />
+                    Regenerate response
+                  </button>
+                </div>
+              )}
+
+            {/* ─── Input ─── */}
+            <div className="border-border/40 bg-background/80 flex-shrink-0 border-t px-3 py-3 backdrop-blur-sm">
+              <div className="flex items-end gap-2">
+                <textarea
+                  ref={inputRef}
                   value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  placeholder="Ask about your code analysis..."
+                  onChange={handleInputChange}
+                  onKeyDown={handleKeyDown}
+                  placeholder={
+                    isAIConfigured === false
+                      ? "Configure AI to start chatting…"
+                      : "Ask about your analysis…"
+                  }
                   disabled={isLoading || isAIConfigured === false}
-                  className="focus-ring flex-1 text-sm"
+                  rows={1}
+                  className="placeholder:text-muted-foreground/60 border-border/50 bg-muted/40 text-foreground flex-1 resize-none rounded-xl border px-3.5 py-2.5 text-[13px] leading-relaxed transition-colors outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20 disabled:opacity-50"
                   aria-label="Chat message input"
                 />
                 <Button
-                  onClick={handleSendMessage}
+                  onClick={handleSend}
                   disabled={
                     !input.trim() || isLoading || isAIConfigured === false
                   }
                   size="sm"
-                  className="focus-ring bg-primary hover:bg-primary/90 flex-shrink-0"
+                  className="h-10 w-10 flex-shrink-0 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 p-0 text-white shadow-md shadow-purple-500/20 transition-all hover:shadow-lg disabled:opacity-40"
                   aria-label="Send message"
                 >
-                  <Send className="h-3 w-3 sm:h-4 sm:w-4" />
+                  <Send className="h-4 w-4" />
                 </Button>
               </div>
+              <p className="text-muted-foreground/50 mt-1.5 text-center text-[9px]">
+                AI can make mistakes · Shift+Enter for new line
+              </p>
             </div>
-          </CardContent>
-        </Card>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 };

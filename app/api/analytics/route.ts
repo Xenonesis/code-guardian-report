@@ -4,6 +4,24 @@ import {
   isFirebaseAdminConfigured,
 } from "@/lib/firebaseAdmin";
 
+// Simple in-memory rate limiter
+const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
+const RATE_LIMIT_WINDOW_MS = 60_000; // 1 minute
+const RATE_LIMIT_MAX_REQUESTS = 30; // 30 requests per minute per IP
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const entry = rateLimitMap.get(ip);
+
+  if (!entry || now > entry.resetTime) {
+    rateLimitMap.set(ip, { count: 1, resetTime: now + RATE_LIMIT_WINDOW_MS });
+    return false;
+  }
+
+  entry.count++;
+  return entry.count > RATE_LIMIT_MAX_REQUESTS;
+}
+
 type AnalyticsEventType =
   | "page_view"
   | "analysis_started"
@@ -54,6 +72,16 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
+    const clientIp =
+      request.headers.get("x-forwarded-for")?.split(",")[0] || "unknown";
+
+    if (isRateLimited(clientIp)) {
+      return NextResponse.json(
+        { error: "Too many requests. Please try again later." },
+        { status: 429 }
+      );
+    }
+
     const body = await request.json();
 
     // Check if this is a batch request

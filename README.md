@@ -8,7 +8,7 @@
 [![Security Audit](https://github.com/Xenonesis/code-guardian-report/workflows/Security%20Audit/badge.svg)](https://github.com/Xenonesis/code-guardian-report/actions)
 [![CodeQL](https://github.com/Xenonesis/code-guardian-report/workflows/CodeQL/badge.svg)](https://github.com/Xenonesis/code-guardian-report/security/code-scanning)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-13.0.0-blue.svg)](https://github.com/Xenonesis/code-guardian-report/releases)
+[![Version](https://img.shields.io/badge/version-15.0.0-blue.svg)](https://github.com/Xenonesis/code-guardian-report/releases)
 [![Node.js](https://img.shields.io/badge/node-22.x-green.svg)](https://nodejs.org/)
 [![Next.js](https://img.shields.io/badge/Next.js-16.1.5-black.svg)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-blue.svg)](https://www.typescriptlang.org/)
@@ -622,7 +622,7 @@ code-guardian-report/
 ├── firebase.json                 # Firebase configuration
 ├── jest.config.js                # Jest test configuration
 ├── vitest.config.ts              # Vitest configuration
-├── DEPLOYMENT.md                 # Deployment guide
+├── docs/DEPLOYMENT.md            # Deployment guide
 ├── SECURITY.md                   # Security policy
 ├── LICENSE                       # MIT License
 └── README.md                     # This file
@@ -5404,7 +5404,7 @@ This project uses open-source libraries with the following licenses:
 #### Documentation
 
 - **README**: This file (comprehensive guide)
-- **DEPLOYMENT.md**: Detailed deployment instructions
+- **docs/DEPLOYMENT.md**: Detailed deployment instructions
 - **SECURITY.md**: Security policies and reporting
 - **CONTRIBUTING.md**: Contribution guidelines
 - **CODE_OF_CONDUCT.md**: Community standards
@@ -5461,22 +5461,6 @@ Special thanks to all contributors who have helped make Code Guardian Report bet
   
   
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   <table style="margin: 0 auto;">
     <tr>
       <td align="center" style="padding: 15px;">
@@ -5487,7 +5471,7 @@ Special thanks to all contributors who have helped make Code Guardian Report bet
       </td>
       <td align="center" style="padding: 15px;">
         <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px;">
-          <h4 style="color: white; margin: 0; font-size: 24px;">Forks: 41</h4>
+          <h4 style="color: white; margin: 0; font-size: 24px;">Forks: 43</h4>
           <p style="color: rgba(255,255,255,0.8); margin: 5px 0 0 0; font-size: 14px;">Forks</p>
         </div>
       </td>
@@ -5520,7 +5504,7 @@ Special thanks to all contributors who have helped make Code Guardian Report bet
         <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">Contributor</span>
         <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
         <div style="margin-top: 10px;">
-          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">397 commits</span>
+          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">406 commits</span>
         </div>
       </td>
     
@@ -5532,7 +5516,7 @@ Special thanks to all contributors who have helped make Code Guardian Report bet
         <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">Contributor</span>
         <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
         <div style="margin-top: 10px;">
-          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">70 commits</span>
+          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">81 commits</span>
         </div>
       </td>
     
@@ -5544,7 +5528,7 @@ Special thanks to all contributors who have helped make Code Guardian Report bet
         <br/><span style="background: rgba(255,255,255,0.3); padding: 4px 12px; border-radius: 15px; font-size: 12px; color: white; margin-top: 8px; display: inline-block;">Contributor</span>
         <br/><span style="color: rgba(255,255,255,0.8); font-size: 12px; margin-top: 5px; display: block;">Contributor</span>
         <div style="margin-top: 10px;">
-          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">43 commits</span>
+          <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">44 commits</span>
         </div>
       </td>
     
@@ -6158,3 +6142,4 @@ A: Yes, set `NEXT_PUBLIC_ENABLE_ANALYTICS=false` in your environment variables.
 **Made with love by the Code Guardian Team**
 
 **[Star us on GitHub](https://github.com/Xenonesis/code-guardian-report)** | **[Documentation](https://github.com/Xenonesis/code-guardian-report/tree/main/md)** | **[Report Bug](https://github.com/Xenonesis/code-guardian-report/issues)** | **[Request Feature](https://github.com/Xenonesis/code-guardian-report/issues/new?labels=enhancement)**
+

@@ -843,39 +843,104 @@ Please provide a realistic, actionable remediation roadmap with specific timelin
       throw new Error("No analysis results provided for question answering");
     }
 
+    const criticalCount = analysisResults.issues.filter(
+      (i: SecurityIssue) => i.severity === "Critical"
+    ).length;
+    const highCount = analysisResults.issues.filter(
+      (i: SecurityIssue) => i.severity === "High"
+    ).length;
+    const mediumCount = analysisResults.issues.filter(
+      (i: SecurityIssue) => i.severity === "Medium"
+    ).length;
+    const lowCount = analysisResults.issues.filter(
+      (i: SecurityIssue) => i.severity === "Low"
+    ).length;
+    const securityCount = analysisResults.issues.filter(
+      (i: SecurityIssue) => i.type?.toLowerCase() === "security"
+    ).length;
+    const bugCount = analysisResults.issues.filter(
+      (i: SecurityIssue) => i.type?.toLowerCase() === "bug"
+    ).length;
+    const qualityCount = analysisResults.issues.filter(
+      (i: SecurityIssue) => i.type?.toLowerCase() === "code smell"
+    ).length;
+
+    // Collect unique OWASP categories
+    const owaspCategories = [
+      ...new Set(
+        analysisResults.issues
+          .map(
+            (i: SecurityIssue) =>
+              (i as unknown as Record<string, unknown>).owaspCategory as
+                | string
+                | undefined
+          )
+          .filter(Boolean)
+      ),
+    ];
+
+    // Top affected files
+    const fileCounts: Record<string, number> = {};
+    for (const issue of analysisResults.issues) {
+      if (issue.filename)
+        fileCounts[issue.filename] = (fileCounts[issue.filename] || 0) + 1;
+    }
+    const topFiles = Object.entries(fileCounts)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 5)
+      .map(([file, count]) => `${file} (${count} issues)`)
+      .join(", ");
+
     const systemPrompt = {
       role: "system" as const,
-      content: `You are a helpful code analysis assistant. You have access to the results of a code analysis that found ${analysisResults.issues.length} issues across ${analysisResults.totalFiles} files. Answer user questions about the analysis results in a helpful and detailed way. Be specific and reference the actual findings when possible.`,
+      content: `You are Code Guardian AI, an expert code security and quality assistant. You have access to the complete results of a code analysis that found ${analysisResults.issues.length} issues across ${analysisResults.totalFiles} files.
+
+Respond using **Markdown** formatting for readability:
+- Use **bold** for emphasis and headings (##, ###) to structure longer answers.
+- Use bullet lists and numbered lists where appropriate.
+- Wrap code references in \`backticks\` and use fenced code blocks for multi-line code.
+- Be concise but thorough. Prioritize actionable advice.
+- When referencing specific issues, include the file name and line number.
+- If the user asks what to fix first, prioritize by severity (Critical > High > Medium > Low) and exploitability.`,
     };
 
     const contextPrompt = {
       role: "user" as const,
-      content: `Analysis Context:
-      Total Files Analyzed: ${analysisResults.totalFiles}
-      Analysis Time: ${analysisResults.analysisTime}
-      Total Issues Found: ${analysisResults.issues.length}
+      content: `## Analysis Context
+- **Files Analyzed:** ${analysisResults.totalFiles}
+- **Analysis Time:** ${analysisResults.analysisTime}
+- **Total Issues:** ${analysisResults.issues.length}
+- **Security Score:** ${analysisResults.summary?.securityScore ?? "N/A"}/100
 
-      Issue Breakdown:
-      - Critical Severity: ${analysisResults.issues.filter((i: SecurityIssue) => i.severity === "Critical").length}
-      - High Severity: ${analysisResults.issues.filter((i: SecurityIssue) => i.severity === "High").length}
-      - Medium Severity: ${analysisResults.issues.filter((i: SecurityIssue) => i.severity === "Medium").length}
-      - Low Severity: ${analysisResults.issues.filter((i: SecurityIssue) => i.severity === "Low").length}
+### Severity Breakdown
+| Severity | Count |
+|----------|-------|
+| Critical | ${criticalCount} |
+| High | ${highCount} |
+| Medium | ${mediumCount} |
+| Low | ${lowCount} |
 
-      Issue Types:
-      - Security: ${analysisResults.issues.filter((i: SecurityIssue) => i.type?.toLowerCase() === "security").length}
-      - Bugs: ${analysisResults.issues.filter((i: SecurityIssue) => i.type?.toLowerCase() === "bug").length}
-      - Code Quality: ${analysisResults.issues.filter((i: SecurityIssue) => i.type?.toLowerCase() === "code smell").length}
+### Issue Types
+- Security: ${securityCount} | Bugs: ${bugCount} | Code Quality: ${qualityCount}
 
-      Sample Issues:
-      ${analysisResults.issues
-        .slice(0, 5)
-        .map(
-          (issue: SecurityIssue) =>
-            `- ${issue.severity} ${issue.type}: ${issue.message} in ${issue.filename}:${issue.line}`
-        )
-        .join("\n")}
+${owaspCategories.length > 0 ? `### OWASP Categories\n${owaspCategories.join(", ")}` : ""}
 
-      User Question: ${question}`,
+### Most Affected Files
+${topFiles || "N/A"}
+
+${(analysisResults.summary as Record<string, unknown>)?.dependencyVulnerabilities ? `### Dependencies\n- Vulnerable dependencies: ${(analysisResults.summary as Record<string, unknown>).dependencyVulnerabilities}` : ""}
+
+### Sample Issues (top 8)
+${analysisResults.issues
+  .slice(0, 8)
+  .map(
+    (issue: SecurityIssue) =>
+      `- **[${issue.severity}]** ${issue.type}: ${issue.message} — \`${issue.filename}:${issue.line}\``
+  )
+  .join("\n")}
+
+---
+**User Question:** ${question}`,
     };
 
     try {

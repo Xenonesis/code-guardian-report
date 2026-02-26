@@ -128,6 +128,29 @@ export class ASTAnalyzer {
 
     const ast = this.parseJavaScript(content, filename);
     if (!ast) {
+      // Report that this file could not be parsed
+      issues.push({
+        id: `ast-parse-error-${filename}-${Date.now()}`,
+        line: 1,
+        column: 0,
+        tool: "ASTAnalyzer",
+        type: "Parse Error",
+        category: "Analysis Warning",
+        message: `File could not be parsed for AST analysis. Some security issues may be missed.`,
+        severity: "Low",
+        confidence: 100,
+        recommendation:
+          "Ensure the file contains valid syntax. TypeScript files with advanced syntax may require updated parser support.",
+        remediation: {
+          description: "Review file for syntax errors",
+          effort: "Low",
+          priority: 5,
+        },
+        filename,
+        riskRating: "Low",
+        impact: "Reduced analysis coverage for this file",
+        likelihood: "N/A",
+      });
       return issues;
     }
 

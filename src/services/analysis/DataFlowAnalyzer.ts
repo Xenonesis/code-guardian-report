@@ -183,6 +183,51 @@ export class DataFlowAnalyzer {
             });
           }
         }
+
+        // Handle destructuring: const { password, token } = req.body
+        if (t.isObjectPattern(node.id) && node.init) {
+          if (this.isTaintedExpression(node.init, content)) {
+            const sourceType = this.getSourceType(node.init, content);
+            for (const prop of node.id.properties) {
+              if (t.isObjectProperty(prop) && t.isIdentifier(prop.value)) {
+                this.taintedVariables.set(prop.value.name, {
+                  line: prop.loc?.start.line || node.loc?.start.line || 1,
+                  column: prop.loc?.start.column || node.loc?.start.column || 0,
+                  type: sourceType,
+                  variableName: prop.value.name,
+                });
+              } else if (
+                t.isRestElement(prop) &&
+                t.isIdentifier(prop.argument)
+              ) {
+                this.taintedVariables.set(prop.argument.name, {
+                  line: prop.loc?.start.line || node.loc?.start.line || 1,
+                  column: prop.loc?.start.column || node.loc?.start.column || 0,
+                  type: sourceType,
+                  variableName: prop.argument.name,
+                });
+              }
+            }
+          }
+        }
+
+        // Handle array destructuring: const [first, second] = taintedArray
+        if (t.isArrayPattern(node.id) && node.init) {
+          if (this.isTaintedExpression(node.init, content)) {
+            const sourceType = this.getSourceType(node.init, content);
+            for (const element of node.id.elements) {
+              if (t.isIdentifier(element)) {
+                this.taintedVariables.set(element.name, {
+                  line: element.loc?.start.line || node.loc?.start.line || 1,
+                  column:
+                    element.loc?.start.column || node.loc?.start.column || 0,
+                  type: sourceType,
+                  variableName: element.name,
+                });
+              }
+            }
+          }
+        }
       },
 
       // Track assignments

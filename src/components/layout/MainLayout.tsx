@@ -80,13 +80,8 @@ export function MainLayout({ children }: MainLayoutProps) {
         )}
       </div>
 
-      {/* Navigation */}
-      <header
-        role="banner"
-        className="bg-background/95 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-40 w-full border-b backdrop-blur"
-      >
-        <Navigation />
-      </header>
+      {/* Navigation — portaled to document.body, no wrapper needed */}
+      <Navigation />
 
       {/* Main Content */}
       <main

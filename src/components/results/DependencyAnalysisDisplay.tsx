@@ -1,18 +1,28 @@
-import React from "react";
+import React, { useState, useMemo } from "react";
+import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { AlertTriangle, Shield, Package, Clock, Database } from "lucide-react";
+import {
+  AlertTriangle,
+  Shield,
+  Package,
+  Clock,
+  Database,
+  ChevronDown,
+  ChevronUp,
+  CheckCircle2,
+} from "lucide-react";
 import { DependencyScanResult } from "@/services/security/dependencyVulnerabilityScanner";
+import { AnimatedScoreRing } from "./AnimatedScoreRing";
 
 interface DependencyAnalysisDisplayProps {
   dependencyAnalysis: DependencyScanResult | null | undefined;
-  onRetry?: () => void | Promise<void>;
   isLoading?: boolean;
 }
 
 export const DependencyAnalysisDisplay: React.FC<
   DependencyAnalysisDisplayProps
-> = ({ dependencyAnalysis, onRetry: _onRetry, isLoading }) => {
+> = ({ dependencyAnalysis, isLoading }) => {
   // Handle case where dependency analysis failed or is undefined
   if (isLoading) {
     return (
@@ -37,15 +47,6 @@ export const DependencyAnalysisDisplay: React.FC<
   }
 
   if (!dependencyAnalysis) {
-    const handleRetry = () => {
-      try {
-        // Simple retry: reload the page to re-run analysis flow
-        if (typeof window !== "undefined") window.location.reload();
-      } catch {
-        // no-op fallback
-      }
-    };
-
     return (
       <div className="space-y-6">
         <Card className="border-border bg-gradient-to-br from-slate-50 to-white shadow-sm dark:from-slate-900/40 dark:to-slate-900/10">
@@ -66,12 +67,6 @@ export const DependencyAnalysisDisplay: React.FC<
               </div>
 
               <div className="mt-2 flex flex-col items-center gap-3 md:flex-row">
-                <button
-                  onClick={handleRetry}
-                  className="inline-flex items-center justify-center rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-emerald-700 focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:outline-none dark:focus:ring-offset-slate-900"
-                >
-                  Try again
-                </button>
                 <a
                   href="#dependency-help"
                   className="inline-flex items-center justify-center rounded-lg border border-emerald-200 px-4 py-2 text-sm font-medium text-emerald-700 transition-colors hover:bg-emerald-50/60 dark:border-emerald-800 dark:text-emerald-300 dark:hover:bg-emerald-900/20"
@@ -170,6 +165,29 @@ export const DependencyAnalysisDisplay: React.FC<
     recommendations,
   } = dependencyAnalysis;
 
+  const [showAllVulnerabilities, setShowAllVulnerabilities] = useState(false);
+  const [showAllOutdated, setShowAllOutdated] = useState(false);
+
+  const INITIAL_DISPLAY_COUNT = 10;
+
+  // Compute a dependency health score (0-100)
+  const healthScore = useMemo(() => {
+    const total = summary.totalPackages || 1;
+    const vulnPenalty = Math.min(
+      40,
+      (summary.vulnerablePackages / total) * 200
+    );
+    const outdatedPenalty = Math.min(
+      30,
+      (summary.outdatedPackages / total) * 100
+    );
+    const riskPenalty = Math.min(30, summary.overallRiskScore * 3);
+    return Math.max(
+      0,
+      Math.round(100 - vulnPenalty - outdatedPenalty - riskPenalty)
+    );
+  }, [summary]);
+
   const getSeverityColor = (severity: string) => {
     switch (severity.toLowerCase()) {
       case "critical":
@@ -213,134 +231,113 @@ export const DependencyAnalysisDisplay: React.FC<
 
   return (
     <div className="space-y-6">
-      {/* Scan Metadata Header */}
-      <Card className="border-emerald-200 bg-gradient-to-br from-emerald-50 to-teal-50 dark:border-emerald-900 dark:from-emerald-950/10 dark:to-teal-950/10">
-        <CardHeader className="pb-2">
-          <CardTitle className="flex items-center gap-2 text-emerald-800 dark:text-emerald-200">
-            <Package className="h-5 w-5" />
+      {/* Header with health ring + summary stats */}
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+        className="border-border/60 bg-card/95 overflow-hidden rounded-2xl border shadow-sm"
+      >
+        <div className="border-border/40 flex items-center justify-between border-b px-5 py-3">
+          <h2 className="text-foreground flex items-center gap-2 text-base font-bold">
+            <Package className="h-5 w-5 text-emerald-600" />
             Dependencies Overview
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="pt-0 text-sm text-emerald-900/80 dark:text-emerald-200/80">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex flex-wrap gap-3">
-              <span className="inline-flex items-center gap-2">
-                <span className="font-medium">Scanned:</span>
-                <time
-                  dateTime={new Date(
-                    summary
-                      ? dependencyAnalysis?.scanMetadata?.scanDate || new Date()
-                      : new Date()
-                  ).toISOString()}
-                >
-                  {dependencyAnalysis?.scanMetadata?.scanDate
-                    ? new Date(
-                        dependencyAnalysis.scanMetadata.scanDate
-                      ).toLocaleString()
-                    : "—"}
-                </time>
-              </span>
-              <span className="inline-flex items-center gap-2">
-                <span className="font-medium">Duration:</span>
-                <span>
-                  {typeof dependencyAnalysis?.scanMetadata?.scanDuration ===
-                  "number"
-                    ? `${Math.max(1, Math.round(dependencyAnalysis.scanMetadata.scanDuration))} ms`
-                    : "—"}
-                </span>
-              </span>
-            </div>
-            <div className="text-xs opacity-80">
-              Databases:{" "}
-              {Array.isArray(dependencyAnalysis?.scanMetadata?.databasesUsed)
-                ? dependencyAnalysis!.scanMetadata.databasesUsed.join(", ")
-                : "—"}
-            </div>
+          </h2>
+          <span className="text-muted-foreground text-[11px]">
+            {dependencyAnalysis?.scanMetadata?.scanDate
+              ? new Date(
+                  dependencyAnalysis.scanMetadata.scanDate
+                ).toLocaleString()
+              : ""}
+          </span>
+        </div>
+        <div className="flex flex-col items-center gap-6 px-5 py-6 sm:flex-row sm:items-start">
+          {/* Health ring */}
+          <AnimatedScoreRing
+            score={healthScore}
+            size={88}
+            strokeWidth={7}
+            label="Health"
+          />
+          {/* Stats grid */}
+          <div className="grid flex-1 grid-cols-2 gap-3 sm:grid-cols-4">
+            {[
+              {
+                icon: Package,
+                label: "Packages",
+                value: summary.totalPackages,
+                color: "text-blue-600 dark:text-blue-400",
+                bg: "bg-blue-50 dark:bg-blue-950/20",
+              },
+              {
+                icon: AlertTriangle,
+                label: "Vulnerable",
+                value: summary.vulnerablePackages,
+                color:
+                  summary.vulnerablePackages > 0
+                    ? "text-red-600 dark:text-red-400"
+                    : "text-emerald-600 dark:text-emerald-400",
+                bg:
+                  summary.vulnerablePackages > 0
+                    ? "bg-red-50 dark:bg-red-950/20"
+                    : "bg-emerald-50 dark:bg-emerald-950/20",
+              },
+              {
+                icon: Clock,
+                label: "Outdated",
+                value: summary.outdatedPackages,
+                color:
+                  summary.outdatedPackages > 0
+                    ? "text-amber-600 dark:text-amber-400"
+                    : "text-emerald-600 dark:text-emerald-400",
+                bg:
+                  summary.outdatedPackages > 0
+                    ? "bg-amber-50 dark:bg-amber-950/20"
+                    : "bg-emerald-50 dark:bg-emerald-950/20",
+              },
+              {
+                icon: Shield,
+                label: "Risk Score",
+                value: summary.overallRiskScore,
+                color: "text-purple-600 dark:text-purple-400",
+                bg: "bg-purple-50 dark:bg-purple-950/20",
+              },
+            ].map((stat) => (
+              <div
+                key={stat.label}
+                className={`border-border/40 flex items-center gap-2.5 rounded-xl border p-3 ${stat.bg}`}
+              >
+                <stat.icon className={`h-4 w-4 flex-shrink-0 ${stat.color}`} />
+                <div>
+                  <p className="text-muted-foreground text-[10px] font-medium tracking-wider uppercase">
+                    {stat.label}
+                  </p>
+                  <p
+                    className={`text-lg leading-tight font-bold tabular-nums ${stat.color}`}
+                  >
+                    {stat.value}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
-        </CardContent>
-      </Card>
-      {/* Summary Cards */}
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-        <Card className="border-border bg-muted/50 dark:border-border dark:from-blue-950/20 dark:to-indigo-950/20">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2">
-              <Package className="text-primary h-5 w-5" />
-              <div>
-                <p className="text-sm font-medium text-blue-900 dark:text-blue-100">
-                  Total Packages
-                </p>
-                <p className="text-2xl font-bold text-teal-600 dark:text-teal-300">
-                  {summary.totalPackages}
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-red-200 bg-gradient-to-br from-red-50 to-pink-50 dark:border-red-800 dark:from-red-950/20 dark:to-pink-950/20">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2">
-              <AlertTriangle className="h-5 w-5 text-red-600" />
-              <div>
-                <p className="text-sm font-medium text-red-900 dark:text-red-100">
-                  Vulnerabilities
-                </p>
-                <p className="text-2xl font-bold text-red-700 dark:text-red-300">
-                  {summary.vulnerablePackages}
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-yellow-200 bg-gradient-to-br from-yellow-50 to-orange-50 dark:border-yellow-800 dark:from-yellow-950/20 dark:to-orange-950/20">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2">
-              <Clock className="h-5 w-5 text-yellow-600" />
-              <div>
-                <p className="text-sm font-medium text-yellow-900 dark:text-yellow-100">
-                  Outdated
-                </p>
-                <p className="text-2xl font-bold text-yellow-700 dark:text-yellow-300">
-                  {summary.outdatedPackages}
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-purple-200 bg-gradient-to-br from-purple-50 to-violet-50 dark:border-purple-800 dark:from-purple-950/20 dark:to-violet-950/20">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2">
-              <Shield className="h-5 w-5 text-purple-600" />
-              <div>
-                <p className="text-sm font-medium text-purple-900 dark:text-purple-100">
-                  Risk Score
-                </p>
-                <p className="text-2xl font-bold text-purple-700 dark:text-purple-300">
-                  {summary.overallRiskScore}
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+        </div>
+      </motion.div>
 
       {/* Vulnerabilities Section */}
       {vulnerabilities.length === 0 ? (
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Shield className="h-5 w-5 text-emerald-600" />
-              No Vulnerabilities Found
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="dark:text-muted-foreground text-sm text-gray-600">
-              Great news! We didn’t find any known vulnerabilities in your
-              dependencies. Keep your dependencies updated and consider enabling
-              automated scanning in CI.
-            </p>
+        <Card className="border-emerald-200/60 dark:border-emerald-800/40">
+          <CardContent className="flex items-center gap-4 p-5">
+            <CheckCircle2 className="h-8 w-8 flex-shrink-0 text-emerald-500" />
+            <div>
+              <h3 className="text-foreground font-semibold">
+                No Known Vulnerabilities
+              </h3>
+              <p className="text-muted-foreground text-sm">
+                All dependencies passed the vulnerability check. Keep them
+                updated and enable automated scanning in CI.
+              </p>
+            </div>
           </CardContent>
         </Card>
       ) : (
@@ -353,7 +350,10 @@ export const DependencyAnalysisDisplay: React.FC<
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              {vulnerabilities.slice(0, 10).map((vuln, index) => (
+              {(showAllVulnerabilities
+                ? vulnerabilities
+                : vulnerabilities.slice(0, INITIAL_DISPLAY_COUNT)
+              ).map((vuln, index) => (
                 <div
                   key={`vulnerability-${vuln.package}-${vuln.vulnerability.id}-${vuln.version}-${index}`}
                   className="rounded-lg border bg-red-50 p-4 dark:bg-red-950/10"
@@ -395,10 +395,25 @@ export const DependencyAnalysisDisplay: React.FC<
                   </div>
                 </div>
               ))}
-              {vulnerabilities.length > 10 && (
-                <p className="text-muted-foreground text-center text-sm">
-                  ... and {vulnerabilities.length - 10} more vulnerabilities
-                </p>
+              {vulnerabilities.length > INITIAL_DISPLAY_COUNT && (
+                <button
+                  onClick={() =>
+                    setShowAllVulnerabilities(!showAllVulnerabilities)
+                  }
+                  className="mx-auto flex items-center gap-1.5 rounded-lg border border-red-200 px-4 py-2 text-sm font-medium text-red-700 transition-colors hover:bg-red-50 dark:border-red-800 dark:text-red-300 dark:hover:bg-red-900/20"
+                >
+                  {showAllVulnerabilities ? (
+                    <>
+                      <ChevronUp className="h-4 w-4" />
+                      Show less
+                    </>
+                  ) : (
+                    <>
+                      <ChevronDown className="h-4 w-4" />
+                      Show all {vulnerabilities.length} vulnerabilities
+                    </>
+                  )}
+                </button>
               )}
             </div>
           </CardContent>
@@ -452,7 +467,10 @@ export const DependencyAnalysisDisplay: React.FC<
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              {outdatedPackages.slice(0, 10).map((pkg, index) => (
+              {(showAllOutdated
+                ? outdatedPackages
+                : outdatedPackages.slice(0, INITIAL_DISPLAY_COUNT)
+              ).map((pkg, index) => (
                 <div
                   key={`outdated-${pkg.package}-${pkg.currentVersion}-${index}`}
                   className="bg-muted rounded-lg border p-4 dark:bg-blue-950/10"
@@ -484,10 +502,23 @@ export const DependencyAnalysisDisplay: React.FC<
                   </div>
                 </div>
               ))}
-              {outdatedPackages.length > 10 && (
-                <p className="text-muted-foreground text-center text-sm">
-                  ... and {outdatedPackages.length - 10} more outdated packages
-                </p>
+              {outdatedPackages.length > INITIAL_DISPLAY_COUNT && (
+                <button
+                  onClick={() => setShowAllOutdated(!showAllOutdated)}
+                  className="text-primary border-border hover:bg-muted mx-auto flex items-center gap-1.5 rounded-lg border px-4 py-2 text-sm font-medium transition-colors"
+                >
+                  {showAllOutdated ? (
+                    <>
+                      <ChevronUp className="h-4 w-4" />
+                      Show less
+                    </>
+                  ) : (
+                    <>
+                      <ChevronDown className="h-4 w-4" />
+                      Show all {outdatedPackages.length} outdated packages
+                    </>
+                  )}
+                </button>
               )}
             </div>
           </CardContent>
