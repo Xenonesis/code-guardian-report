@@ -1,0 +1,85 @@
+{
+  "_comment": "SESC-MCP configuration examples for various AI clients.",
+  "_instructions": [
+    "1. Run 'npm run mcp:build' to compile the server first.",
+    "2. Replace '/absolute/path/to/code-guardian-report' with your actual project path.",
+    "3. Copy the relevant section into your AI client's MCP config file."
+  ],
+
+  "claude_desktop": {
+    "_file": "~/Library/Application Support/Claude/claude_desktop_config.json  (macOS)",
+    "_file_win": "%APPDATA%\\Claude\\claude_desktop_config.json  (Windows)",
+    "mcpServers": {
+      "sesc-mcp": {
+        "command": "node",
+        "args": [
+          "/absolute/path/to/code-guardian-report/dist/mcp/transports/stdio.js"
+        ],
+        "env": {
+          "SESC_DB_PATH": "/absolute/path/to/code-guardian-report/sesc-memory.db",
+          "SESC_CONFIDENCE": "0.7"
+        }
+      }
+    }
+  },
+
+  "cursor": {
+    "_file": "~/.cursor/mcp.json",
+    "mcpServers": {
+      "sesc-mcp": {
+        "command": "node",
+        "args": [
+          "/absolute/path/to/code-guardian-report/dist/mcp/transports/stdio.js",
+          "--db",
+          "/absolute/path/to/code-guardian-report/sesc-memory.db",
+          "--confidence",
+          "0.7"
+        ]
+      }
+    }
+  },
+
+  "vscode_copilot": {
+    "_file": ".vscode/mcp.json  (workspace) or settings.json (user)",
+    "servers": {
+      "sesc-mcp": {
+        "type": "stdio",
+        "command": "node",
+        "args": ["${workspaceFolder}/dist/mcp/transports/stdio.js"],
+        "env": {
+          "SESC_DB_PATH": "${workspaceFolder}/sesc-memory.db"
+        }
+      }
+    }
+  },
+
+  "http_remote": {
+    "_description": "For ChatGPT, n8n, or any HTTP-capable MCP client.",
+    "_start": "node /absolute/path/to/code-guardian-report/dist/mcp/transports/http.js --port 3001",
+    "url": "http://localhost:3001/mcp",
+    "transport": "streamable-http"
+  },
+
+  "http_stateless": {
+    "_description": "Stateless HTTP mode — each request creates a fresh session.",
+    "_start": "node /absolute/path/to/code-guardian-report/dist/mcp/transports/http.js --port 3001 --stateless",
+    "url": "http://localhost:3001/mcp",
+    "transport": "streamable-http"
+  },
+
+  "npx_dev": {
+    "_description": "Run in development mode (no build required) using tsx.",
+    "mcpServers": {
+      "sesc-mcp-dev": {
+        "command": "npx",
+        "args": [
+          "tsx",
+          "/absolute/path/to/code-guardian-report/src/mcp/transports/stdio.ts"
+        ],
+        "env": {
+          "SESC_DB_PATH": "/absolute/path/to/code-guardian-report/sesc-memory.db"
+        }
+      }
+    }
+  }
+}
