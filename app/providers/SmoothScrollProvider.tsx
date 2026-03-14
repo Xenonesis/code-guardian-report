@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, createContext, useRef as useReactRef } from "react";
+import { useEffect, createContext, useState } from "react";
 import type Lenis from "lenis";
 
 // Dynamically import Lenis only on client
@@ -13,17 +13,17 @@ interface SmoothScrollProviderProps {
 export const SmoothScrollProvider = ({
   children,
 }: SmoothScrollProviderProps) => {
-  const lenisRef = useReactRef<Lenis | null>(null);
+  const [lenis, setLenis] = useState<Lenis | null>(null);
 
   useEffect(() => {
     // Only load Lenis on client
     if (typeof window === "undefined") return;
 
-    let lenis: Lenis | null = null;
+    let lenisInst: Lenis | null = null;
     let animationId: number;
 
     import("lenis").then(({ default: Lenis }) => {
-      lenis = new Lenis({
+      lenisInst = new Lenis({
         lerp: 0.35,
         duration: 0.6,
         smoothWheel: true,
@@ -33,10 +33,10 @@ export const SmoothScrollProvider = ({
         infinite: false,
         easing: (t: number) => 1 - Math.pow(1 - t, 3),
       });
-      lenisRef.current = lenis;
+      setLenis(lenisInst);
 
       function raf(time: number) {
-        lenis?.raf(time);
+        lenisInst?.raf(time);
         animationId = requestAnimationFrame(raf);
       }
 
@@ -44,8 +44,8 @@ export const SmoothScrollProvider = ({
     });
 
     return () => {
-      if (lenis) {
-        lenis.destroy();
+      if (lenisInst) {
+        lenisInst.destroy();
       }
       if (animationId) {
         cancelAnimationFrame(animationId);
@@ -54,9 +54,7 @@ export const SmoothScrollProvider = ({
   }, []);
 
   return (
-    <LenisContext.Provider value={lenisRef.current}>
-      {children}
-    </LenisContext.Provider>
+    <LenisContext.Provider value={lenis}>{children}</LenisContext.Provider>
   );
 };
 
