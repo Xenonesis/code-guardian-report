@@ -1,4 +1,4 @@
-import { SecurityIssue, AnalysisResults } from "@/hooks/useAnalysis";
+import { SecurityIssue, AnalysisResults } from "@/types/security-types";
 import { logger } from "@/utils/logger";
 
 // Re-defining interfaces since they aren't exported from the service yet

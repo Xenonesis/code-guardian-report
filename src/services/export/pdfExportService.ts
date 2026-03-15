@@ -1,4 +1,4 @@
-import { AnalysisResults } from "@/hooks/useAnalysis";
+import { AnalysisResults } from "@/types/security-types";
 import type { jsPDF } from "jspdf";
 
 import { logger } from "@/utils/logger";

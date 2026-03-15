@@ -1,4 +1,4 @@
-import { SecurityIssue } from "@/hooks/useAnalysis";
+import { SecurityIssue } from "@/types/security-types";
 import {
   SECURITY_RULES,
   calculateCVSSScore,

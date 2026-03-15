@@ -24,7 +24,7 @@ import {
   Timestamp,
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
-import { AnalysisResults } from "@/hooks/useAnalysis";
+import { AnalysisResults } from "@/types/security-types";
 import { safeGetDoc, safeSetDoc } from "@/lib/firestore-utils";
 import { toast } from "sonner";
 

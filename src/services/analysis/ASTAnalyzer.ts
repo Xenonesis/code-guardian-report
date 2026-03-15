@@ -4,7 +4,7 @@ import traverseModule from "@babel/traverse";
 import type { NodePath } from "@babel/traverse";
 import * as t from "@babel/types";
 import { parse as acornParse } from "acorn";
-import { SecurityIssue } from "@/hooks/useAnalysis";
+import { SecurityIssue } from "@/types/security-types";
 
 import { logger } from "@/utils/logger";
 

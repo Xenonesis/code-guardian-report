@@ -1,4 +1,4 @@
-import { SecurityIssue } from "@/hooks/useAnalysis";
+import { SecurityIssue } from "@/types/security-types";
 
 // OWASP Top 10 2025 Categories (Release Candidate - November 2025)
 export const OWASP_CATEGORIES_2025 = {

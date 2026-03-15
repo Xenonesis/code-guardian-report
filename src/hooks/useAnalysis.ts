@@ -1,77 +1,9 @@
 import { useState, useCallback } from "react";
-import { DetectionResult } from "@/services/detection/languageDetectionService";
-import type { ZipAnalysisResult } from "@/services/security/zipAnalysisService";
-import type { DependencyScanResult } from "@/services/security/dependencyVulnerabilityScanner";
 
-export interface SecurityIssue {
-  id: string;
-  line: number;
-  column?: number;
-  endLine?: number;
-  endColumn?: number;
-  startColumn?: number; // Alternative naming for column ranges
-  tool: string;
-  type: string;
-  category: string; // OWASP category
-  message: string;
-  naturalLanguageDescription?: string; // Simplified natural language summary
-  severity: "Critical" | "High" | "Medium" | "Low";
-  confidence: number; // 0-100
-  cvssScore?: number; // 0-10
-  cweId?: string; // CWE reference
-  cveId?: string; // CVE reference
-  owaspCategory?: string; // OWASP Top 10 category
-  recommendation: string;
-  remediation: {
-    description: string;
-    codeExample?: string;
-    fixExample?: string;
-    effort: "Low" | "Medium" | "High";
-    priority: number; // 1-5
-  };
-  filename: string;
-  codeSnippet?: string;
-  riskRating: "Critical" | "High" | "Medium" | "Low";
-  impact: string;
-  likelihood: string;
-  references?: string[];
-  tags?: string[];
-  aiSummary?: string; // AI-generated summary
-  affectedFunction?: string; // Function where issue was found
-  effort?: "Low" | "Medium" | "High"; // Remediation effort (duplicate of remediation.effort for backward compat)
-}
-
-export interface AnalysisResults {
-  issues: SecurityIssue[];
-  totalFiles: number;
-  analysisTime: string;
-  summary: {
-    criticalIssues: number;
-    highIssues: number;
-    mediumIssues: number;
-    lowIssues: number;
-    securityScore: number; // 0-100
-    qualityScore: number; // 0-100
-    coveragePercentage: number;
-    linesAnalyzed: number;
-  };
-  languageDetection?: DetectionResult; // Smart language detection results
-  metrics: {
-    vulnerabilityDensity: number;
-    technicalDebt: string;
-    maintainabilityIndex: number;
-    duplicatedLines: number;
-    testCoverage?: number;
-  };
-  dependencies?: {
-    total: number;
-    vulnerable: number;
-    outdated: number;
-    licenses: string[];
-  };
-  zipAnalysis?: ZipAnalysisResult;
-  dependencyAnalysis?: DependencyScanResult;
-}
+// Re-export canonical types for backward compatibility.
+// All new code should import directly from "@/types/security-types".
+export type { SecurityIssue, AnalysisResults } from "@/types/security-types";
+import type { AnalysisResults } from "@/types/security-types";
 
 export const useAnalysis = () => {
   const [analysisResults, setAnalysisResults] =

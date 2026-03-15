@@ -9,7 +9,7 @@ import {
   limit,
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
-import { SecurityIssue, AnalysisResults } from "@/hooks/useAnalysis";
+import { SecurityIssue, AnalysisResults } from "@/types/security-types";
 import { localStorageGitHubAdapter } from "./localStorageGitHubAdapter";
 
 import { logger } from "@/utils/logger";

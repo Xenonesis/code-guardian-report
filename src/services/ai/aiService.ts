@@ -1,4 +1,4 @@
-import { SecurityIssue, AnalysisResults } from "@/hooks/useAnalysis";
+import { SecurityIssue, AnalysisResults } from "@/types/security-types";
 import { secureStorage, StoredAPIKey } from "@/utils/secureStorage";
 import { logger } from "@/utils/logger";
 

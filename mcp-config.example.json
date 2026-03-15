@@ -1,0 +1,83 @@
+{
+  "_comment": "MCP server configuration examples for Code Guardian Report v15.0.0",
+  "_docs": "Copy the relevant section into your AI client's MCP config file.",
+
+  "claude_desktop": {
+    "_file": "~/Library/Application Support/Claude/claude_desktop_config.json (macOS) or %APPDATA%\\Claude\\claude_desktop_config.json (Windows)",
+    "mcpServers": {
+      "code-guardian": {
+        "command": "node",
+        "args": ["dist/mcp/mcp/transports/stdio.js"],
+        "cwd": "/absolute/path/to/code-guardian-report",
+        "env": {
+          "FIREBASE_PROJECT_ID": "your-project-id",
+          "FIREBASE_CLIENT_EMAIL": "your-client-email@your-project.iam.gserviceaccount.com",
+          "FIREBASE_PRIVATE_KEY": "-----BEGIN PRIVATE KEY-----\\n...\\n-----END PRIVATE KEY-----\\n"
+        }
+      }
+    }
+  },
+
+  "cursor": {
+    "_file": "~/.cursor/mcp.json",
+    "mcpServers": {
+      "code-guardian": {
+        "command": "node",
+        "args": ["dist/mcp/mcp/transports/stdio.js"],
+        "cwd": "/absolute/path/to/code-guardian-report",
+        "env": {
+          "FIREBASE_PROJECT_ID": "your-project-id",
+          "FIREBASE_CLIENT_EMAIL": "your-client-email@your-project.iam.gserviceaccount.com",
+          "FIREBASE_PRIVATE_KEY": "-----BEGIN PRIVATE KEY-----\\n...\\n-----END PRIVATE KEY-----\\n"
+        }
+      }
+    }
+  },
+
+  "vscode_copilot": {
+    "_file": ".vscode/mcp.json (workspace) or ~/Library/Application Support/Code/User/settings.json (global)",
+    "mcp": {
+      "servers": {
+        "code-guardian": {
+          "type": "stdio",
+          "command": "node",
+          "args": ["dist/mcp/mcp/transports/stdio.js"],
+          "cwd": "${workspaceFolder}",
+          "env": {
+            "FIREBASE_PROJECT_ID": "your-project-id",
+            "FIREBASE_CLIENT_EMAIL": "your-client-email@your-project.iam.gserviceaccount.com",
+            "FIREBASE_PRIVATE_KEY": "-----BEGIN PRIVATE KEY-----\\n...\\n-----END PRIVATE KEY-----\\n"
+          }
+        }
+      }
+    }
+  },
+
+  "http_clients": {
+    "_comment": "For ChatGPT, generic HTTP clients, or remote deployments. Start the HTTP transport first: npm run mcp:http",
+    "url": "http://localhost:3100/mcp",
+    "transport": "streamable-http",
+    "headers": {}
+  },
+
+  "dev_mode": {
+    "_comment": "Run directly from TypeScript source without building (uses tsx). No Firebase env vars = in-memory storage fallback.",
+    "mcpServers": {
+      "code-guardian": {
+        "command": "npx",
+        "args": ["tsx", "src/mcp/transports/stdio.ts"],
+        "cwd": "/absolute/path/to/code-guardian-report"
+      }
+    }
+  },
+
+  "inspector": {
+    "_comment": "Launch the MCP Inspector UI for debugging. Run: npm run mcp:inspect",
+    "command": "npx",
+    "args": [
+      "@modelcontextprotocol/inspector",
+      "node",
+      "dist/mcp/mcp/transports/stdio.js"
+    ]
+  }
+}

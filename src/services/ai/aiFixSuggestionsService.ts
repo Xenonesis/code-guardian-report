@@ -1,4 +1,4 @@
-import { SecurityIssue } from "@/hooks/useAnalysis";
+import { SecurityIssue } from "@/types/security-types";
 import { AIService } from "./aiService";
 
 export interface FixSuggestion {

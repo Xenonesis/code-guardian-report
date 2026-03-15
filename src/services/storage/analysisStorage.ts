@@ -9,7 +9,7 @@
  * - Backup/restore functionality
  */
 
-import { AnalysisResults } from "@/hooks/useAnalysis";
+import { AnalysisResults } from "@/types/security-types";
 import {
   setLocalStorageItem,
   removeLocalStorageItem,

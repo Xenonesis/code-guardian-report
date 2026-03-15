@@ -4,7 +4,7 @@
  * Provides a unified interface for storing and retrieving scan results
  */
 
-import { AnalysisResults } from "@/hooks/useAnalysis";
+import { AnalysisResults } from "@/types/security-types";
 import { analysisStorage } from "./storage/analysisStorage";
 import { firebaseAnalysisStorage } from "./storage/firebaseAnalysisStorage";
 

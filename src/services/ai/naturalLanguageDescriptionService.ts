@@ -1,4 +1,4 @@
-import { SecurityIssue } from "@/hooks/useAnalysis";
+import { SecurityIssue } from "@/types/security-types";
 
 /**
  * Natural Language Bug Description Service

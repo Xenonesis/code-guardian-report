@@ -1,5 +1,5 @@
 // Babel traverse types require special handling due to CJS/ESM interop
-import { SecurityIssue } from "@/hooks/useAnalysis";
+import { SecurityIssue } from "@/types/security-types";
 import { parse } from "@babel/parser";
 import traverseModule from "@babel/traverse";
 import type { NodePath } from "@babel/traverse";

@@ -1,4 +1,4 @@
-import { SecurityIssue, AnalysisResults } from "@/hooks/useAnalysis";
+import { SecurityIssue, AnalysisResults } from "@/types/security-types";
 import { SecurityAnalyzer } from "./analysis/SecurityAnalyzer";
 import { MetricsCalculator } from "./analysis/MetricsCalculator";
 import { ASTAnalyzer } from "./analysis/ASTAnalyzer";

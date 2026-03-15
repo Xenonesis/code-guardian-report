@@ -14,7 +14,7 @@
  * Updated: November 2025 with OWASP Top 10 2025 RC categories
  */
 
-import { SecurityIssue } from "@/hooks/useAnalysis";
+import { SecurityIssue } from "@/types/security-types";
 
 // OWASP Top 10 2025 Categories (Release Candidate)
 const OWASP_2025 = {

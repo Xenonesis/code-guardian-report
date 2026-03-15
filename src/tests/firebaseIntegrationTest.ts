@@ -3,7 +3,7 @@
  * Simple test to verify Firebase storage functionality
  */
 
-import { AnalysisResults } from "@/hooks/useAnalysis";
+import { AnalysisResults } from "@/types/security-types";
 import { analysisIntegrationService } from "@/services/analysisIntegrationService";
 
 import { logger } from "@/utils/logger";
