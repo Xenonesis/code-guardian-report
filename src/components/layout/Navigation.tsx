@@ -15,6 +15,7 @@ import {
   ChevronDown,
   FileClock,
   Zap,
+  Cpu,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -136,6 +137,7 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
     { id: "about", label: "About", icon: Info },
     ...(user ? [{ id: "history", label: "History", icon: History }] : []),
     { id: "github-analysis", label: "GitHub", icon: Github, badge: "Pro" },
+    { id: "mcp-setup", label: "MCP", icon: Cpu, badge: "New" },
     { id: "changelog", label: "Changelog", icon: FileClock },
     { id: "legal", label: "Legal", icon: Shield },
   ];
@@ -448,9 +450,7 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
       <div
         className={cn(
           "bg-background/96 fixed inset-0 z-40 overflow-y-scroll overscroll-contain backdrop-blur-3xl transition-opacity duration-200 lg:hidden",
-          isMobileMenuOpen
-            ? "opacity-100"
-            : "pointer-events-none opacity-0"
+          isMobileMenuOpen ? "opacity-100" : "pointer-events-none opacity-0"
         )}
         style={{ WebkitOverflowScrolling: "touch" }}
       >
