@@ -611,7 +611,7 @@ FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY----
             </div>
 
             {/* Client Tab Bar */}
-            <div className="border-border/50 mb-0 flex overflow-hidden rounded-t-xl border border-b-0 bg-black/50">
+            <div className="border-border/50 mb-0 flex overflow-x-auto overflow-y-hidden rounded-t-xl border border-b-0 bg-black/50 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {(
                 Object.keys(clientConfigs) as Array<keyof typeof clientConfigs>
               ).map((key) => {
@@ -620,7 +620,7 @@ FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY----
                   <button
                     key={key}
                     onClick={() => setActiveTab(key)}
-                    className={`flex flex-1 items-center justify-center gap-2 px-3 py-3 font-mono text-xs tracking-wider uppercase transition-all ${
+                    className={`flex shrink-0 items-center justify-center gap-2 px-3 py-3 font-mono text-xs tracking-wider whitespace-nowrap uppercase transition-all sm:flex-1 ${
                       activeTab === key
                         ? "bg-primary/10 text-primary border-b-primary border-b-2"
                         : "text-muted-foreground hover:text-foreground hover:bg-white/5"
@@ -811,7 +811,7 @@ curl http://localhost:3100/mcp
                     i < arr.length - 1 ? "border-b border-white/5" : ""
                   }`}
                 >
-                  <code className="text-primary w-full shrink-0 font-mono text-sm sm:w-64">
+                  <code className="text-primary w-full shrink-0 font-mono text-sm break-words whitespace-pre-wrap sm:w-64 sm:whitespace-nowrap">
                     {item.cmd}
                   </code>
                   <span className="text-muted-foreground text-sm">
