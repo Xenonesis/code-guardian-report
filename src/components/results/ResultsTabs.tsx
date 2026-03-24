@@ -148,6 +148,7 @@ export const ResultsTabs: React.FC<ResultsTabsProps> = ({ results }) => {
 
         <AnimatePresence mode="wait">
           <TabsContent
+            key="tab-overview"
             value="overview"
             className="mt-0 space-y-6"
             forceMount={undefined}
@@ -166,6 +167,7 @@ export const ResultsTabs: React.FC<ResultsTabsProps> = ({ results }) => {
 
           {hasLanguageDetection && results.languageDetection && (
             <TabsContent
+              key="tab-language-detection"
               value="language-detection"
               className="mt-0 space-y-6"
               forceMount={undefined}
@@ -186,6 +188,7 @@ export const ResultsTabs: React.FC<ResultsTabsProps> = ({ results }) => {
           )}
 
           <TabsContent
+            key="tab-dependency-analysis"
             value="dependency-analysis"
             className="mt-0 space-y-6"
             forceMount={undefined}
@@ -206,6 +209,7 @@ export const ResultsTabs: React.FC<ResultsTabsProps> = ({ results }) => {
           </TabsContent>
 
           <TabsContent
+            key="tab-ai-insights"
             value="ai-insights"
             className="mt-0 space-y-6"
             forceMount={undefined}
@@ -223,6 +227,7 @@ export const ResultsTabs: React.FC<ResultsTabsProps> = ({ results }) => {
           </TabsContent>
 
           <TabsContent
+            key="tab-metrics"
             value="metrics"
             className="mt-0 space-y-6"
             forceMount={undefined}
