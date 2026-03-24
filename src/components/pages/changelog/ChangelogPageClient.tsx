@@ -14,6 +14,26 @@ import { STATIC_COMMITS } from "./commitsData";
 // Hardcoded Releases Data derived from CHANGELOG.md
 const STATIC_RELEASES: GitHubRelease[] = [
   {
+    id: 1510,
+    tag_name: "15.0.1",
+    name: "Version 15.0.1",
+    body: `### Fixed
+
+- **MCP Setup Page Responsive Fixes**:
+  - Client tab bar: enabled horizontal scroll with hidden scrollbars on mobile
+  - Tab buttons: prevented compression with shrink-0 and whitespace-nowrap
+  - NPM scripts: wrapped long commands on small viewports with break-words
+  - Resolved horizontal overflow issues on mobile viewports while preserving Industrial Guardian aesthetic`,
+    published_at: "2026-03-25T00:00:00Z",
+    html_url:
+      "https://github.com/Xenonesis/code-guardian-report/releases/tag/15.0.1",
+    author: {
+      login: "Xenonesis",
+      avatar_url: "https://github.com/Xenonesis.png",
+      html_url: "https://github.com/Xenonesis",
+    },
+  },
+  {
     id: 1500,
     tag_name: "15.0.0",
     name: "Version 15.0.0",
