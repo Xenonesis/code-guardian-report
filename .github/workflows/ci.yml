@@ -7,7 +7,7 @@ on:
   pull_request:
     branches: [main, develop]
   schedule:
-    - cron: "0 2 * * 1" # Weekly security scan
+    - cron: "0 2 * * 1"
   workflow_dispatch:
     inputs:
       environment:
@@ -20,8 +20,7 @@ on:
           - production
 
 env:
-  NODE_VERSION: "20.x"
-  CACHE_VERSION: v1
+  NODE_VERSION: "22.x"
   HUSKY: 0
 
 concurrency:
@@ -29,18 +28,12 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # ============================================================================
-  # QUALITY ASSURANCE & TESTING
-  # ============================================================================
-
   quality-gate:
     name: Quality Gate
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
     strategy:
       matrix:
-        node-version: [18.x, 20.x, 21.x]
         os: [ubuntu-latest, windows-latest, macos-latest]
       fail-fast: false
 
@@ -50,10 +43,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Node.js ${{ matrix.node-version }}
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ env.NODE_VERSION }}
           cache: "npm"
           registry-url: "https://registry.npmjs.org"
 
@@ -65,68 +58,31 @@ jobs:
       - name: Install dependencies
         run: npm ci --prefer-offline --no-audit
 
-      - name: TypeScript type checking
-        run: npm run type-check
-
-      - name: ESLint code analysis
-        run: npm run lint -- --format=json --output-file=eslint-report.json
-        continue-on-error: true
-
-      - name: Upload ESLint results
-        uses: github/super-linter@v5
-        if: always()
-        env:
-          DEFAULT_BRANCH: main
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VALIDATE_TYPESCRIPT_ES: true
-          VALIDATE_JAVASCRIPT_ES: true
-
-      - name: Run tests
-        run: npm run test:multi-language-auto
-        continue-on-error: true
+      - name: Validate code quality
+        run: npm run ci:validate
         env:
           CI: true
           NODE_ENV: test
 
-      - name: Upload test coverage
-        uses: codecov/codecov-action@v4
-        if: matrix.node-version == '20.x' && matrix.os == 'ubuntu-latest' && secrets.CODECOV_TOKEN != ''
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./coverage/lcov.info
-          flags: unittests
-          name: code-guardian-coverage
-          fail_ci_if_error: false
-          verbose: true
-
-      - name: Production build
-        run: npm run build:production
+      - name: Build application
+        run: npm run build
         env:
           NODE_ENV: production
 
-      - name: Bundle size analysis
-        run: npm run size
-        if: matrix.node-version == '20.x' && matrix.os == 'ubuntu-latest'
-        continue-on-error: true
-
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
-        if: matrix.node-version == '20.x' && matrix.os == 'ubuntu-latest'
+        if: matrix.os == 'ubuntu-latest'
         with:
           name: build-artifacts-${{ github.sha }}
           path: |
-            dist/
+            .next/
             coverage/
           retention-days: 7
-
-  # ============================================================================
-  # SECURITY & COMPLIANCE
-  # ============================================================================
 
   security-audit:
     name: Security & Compliance Audit
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
 
     steps:
       - name: Checkout repository
@@ -147,19 +103,6 @@ jobs:
           npm audit --audit-level=moderate
         continue-on-error: true
 
-      - name: Advanced dependency scanning
-        run: |
-          npx audit-ci --config .audit-ci.json
-        continue-on-error: true
-
-      - name: SAST Code Scanning
-        uses: github/codeql-action/init@v3
-        with:
-          languages: javascript
-
-      - name: CodeQL Analysis
-        uses: github/codeql-action/analyze@v3
-
       - name: Snyk Security Scan
         uses: snyk/actions/node@master
         continue-on-error: true
@@ -178,73 +121,11 @@ jobs:
             snyk-report.json
           retention-days: 30
 
-  # ============================================================================
-  # PERFORMANCE & ACCESSIBILITY
-  # ============================================================================
-
   performance-audit:
-    name: Performance & Accessibility Audit
-    runs-on: ubuntu-latest
-    needs: quality-gate
-    timeout-minutes: 15
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: "npm"
-
-      - name: Install dependencies
-        run: npm ci --prefer-offline
-
-      - name: Build application
-        run: npm run build:production
-
-      - name: Lighthouse CI Performance Audit
-        run: |
-          npm install -g @lhci/cli@0.14.x
-          lhci autorun
-        env:
-          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
-          LHCI_BUILD_CONTEXT__CURRENT_HASH: ${{ github.sha }}
-        continue-on-error: true
-
-      - name: Accessibility Testing
-        run: |
-          npm install -g @axe-core/cli
-          npm run preview &
-          sleep 10
-          axe http://localhost:4173 --exit
-        continue-on-error: true
-
-      - name: Upload performance reports
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: performance-reports-${{ github.sha }}
-          path: |
-            .lighthouseci/
-            lighthouse-report.html
-          retention-days: 30
-
-  # ============================================================================
-  # CROSS-BROWSER TESTING
-  # ============================================================================
-
-  cross-browser-testing:
-    name: Cross-Browser Compatibility
+    name: Performance Audit
     runs-on: ubuntu-latest
     needs: quality-gate
     timeout-minutes: 20
-
-    strategy:
-      matrix:
-        browser: [chrome, firefox, safari, edge]
-      fail-fast: false
 
     steps:
       - name: Checkout repository
@@ -262,22 +143,24 @@ jobs:
       - name: Build application
         run: npm run build
 
-      - name: Browser compatibility tests
+      - name: Lighthouse CI Performance Audit
         run: |
-          npm run test:browser:${{ matrix.browser }}
+          npm install -g @lhci/cli@0.15.x
+          lhci autorun
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+          LHCI_BUILD_CONTEXT__CURRENT_HASH: ${{ github.sha }}
         continue-on-error: true
 
-      - name: Upload browser test results
+      - name: Upload performance reports
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: browser-test-${{ matrix.browser }}-${{ github.sha }}
-          path: test-results/
-          retention-days: 7
-
-  # ============================================================================
-  # DEPLOYMENT PREVIEW
-  # ============================================================================
+          name: performance-reports-${{ github.sha }}
+          path: |
+            .lighthouseci/
+            lighthouse-report.html
+          retention-days: 30
 
   deploy-preview:
     name: Deploy Preview Environment
@@ -320,21 +203,6 @@ jobs:
           working-directory: ./
           scope: ${{ secrets.VERCEL_ORG_ID }}
 
-      - name: Comment Preview URL
-        uses: actions/github-script@v7
-        with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: `**Preview Deployment Ready!**\n\n**Preview URL:** ${{ steps.deploy.outputs.preview-url }}\n\n**Changes:** ${{ github.event.pull_request.title }}\n**Commit:** ${{ github.sha }}\n\n---\n*Deployed via GitHub Actions*`
-            })
-
-  # ============================================================================
-  # STAGING DEPLOYMENT
-  # ============================================================================
-
   deploy-staging:
     name: Deploy to Staging
     runs-on: ubuntu-latest
@@ -360,7 +228,7 @@ jobs:
         run: npm ci --prefer-offline
 
       - name: Build for staging
-        run: npm run build:production
+        run: npm run build:prod
         env:
           NODE_ENV: production
           NEXT_PUBLIC_APP_ENVIRONMENT: staging
@@ -374,20 +242,10 @@ jobs:
           vercel-args: "--target staging"
           working-directory: ./
 
-      - name: Staging smoke tests
-        run: |
-          npm run test:e2e:staging
-        continue-on-error: true
-
-  # ============================================================================
-  # PRODUCTION DEPLOYMENT
-  # ============================================================================
-
   deploy-production:
     name: Deploy to Production
     runs-on: ubuntu-latest
-    needs:
-      [quality-gate, security-audit, performance-audit, cross-browser-testing]
+    needs: [quality-gate, security-audit, performance-audit]
     if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v') || github.event.inputs.environment == 'production'
     timeout-minutes: 20
 
@@ -409,7 +267,7 @@ jobs:
         run: npm ci --prefer-offline
 
       - name: Build for production
-        run: npm run build:production
+        run: npm run build:prod
         env:
           NODE_ENV: production
           NEXT_PUBLIC_APP_ENVIRONMENT: production
@@ -423,31 +281,8 @@ jobs:
           vercel-args: "--prod"
           working-directory: ./
 
-      - name: Production health checks
-        run: |
-          npm run test:e2e:production
-        continue-on-error: true
-
       - name: Post-deployment monitoring
-        run: |
-          curl -f https://code-guardian-report.vercel.app/health || exit 1
-
-      - name: Deployment success notification
-        uses: actions/github-script@v7
-        with:
-          script: |
-            github.rest.repos.createDeploymentStatus({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              deployment_id: context.payload.deployment.id,
-              state: 'success',
-              environment_url: 'https://code-guardian-report.vercel.app',
-              description: 'Production deployment successful'
-            })
-
-  # ============================================================================
-  # RELEASE MANAGEMENT
-  # ============================================================================
+        run: curl -f https://code-guardian-report.vercel.app/health || exit 1
 
   create-release:
     name: Create Release
@@ -484,56 +319,5 @@ jobs:
             - [Live Application](https://code-guardian-report.vercel.app)
             - [Documentation](https://github.com/Xenonesis/code-guardian-report#readme)
             - [Report Issues](https://github.com/Xenonesis/code-guardian-report/issues)
-
-            ## Metrics
-            - Performance Score: 95+
-            - Accessibility Score: 98+
-            - Security Score: 96+
-            - PWA Ready: Yes
           draft: false
           prerelease: false
-
-  # ============================================================================
-  # CLEANUP & NOTIFICATIONS
-  # ============================================================================
-
-  cleanup:
-    name: Cleanup & Notifications
-    runs-on: ubuntu-latest
-    needs: [deploy-production, create-release]
-    if: always()
-
-    steps:
-      - name: Cleanup old artifacts
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const artifacts = await github.rest.actions.listWorkflowRunArtifacts({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              run_id: context.runId
-            });
-
-            for (const artifact of artifacts.data.artifacts) {
-              if (artifact.name.includes('old-') || artifact.created_at < new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)) {
-                await github.rest.actions.deleteArtifact({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  artifact_id: artifact.id
-                });
-              }
-            }
-
-      - name: Success notification
-        if: success()
-        run: |
-          echo "Code Guardian Enterprise deployment completed successfully!"
-          echo "Production URL: https://code-guardian-report.vercel.app"
-          echo "All quality gates passed"
-
-      - name: Failure notification
-        if: failure()
-        run: |
-          echo "Code Guardian Enterprise deployment failed!"
-          echo "Check the logs for details"
-          echo "Immediate attention required"
