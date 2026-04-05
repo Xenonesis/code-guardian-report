@@ -41,7 +41,6 @@ export const SecurityMetricsDashboard: React.FC<
   return (
     <TooltipProvider>
       <div className="space-y-6">
-        {}
         <div className="border-border/60 pb-6/60 mb-8 border-b-2">
           <h2 className="mb-3 bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 bg-clip-text text-3xl font-bold text-transparent sm:text-4xl dark:from-white dark:via-blue-100 dark:to-indigo-100">
             Detailed Security Metrics
@@ -52,7 +51,6 @@ export const SecurityMetricsDashboard: React.FC<
           </p>
         </div>
 
-        {}
         <div className="grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
           <MetricsCard
             title="Technical Debt"
@@ -85,7 +83,6 @@ export const SecurityMetricsDashboard: React.FC<
           />
         </div>
 
-        {}
         <div className="grid grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-2">
           <SeverityChart
             criticalIssues={results.summary.criticalIssues}

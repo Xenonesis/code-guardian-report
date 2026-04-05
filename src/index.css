@@ -5,12 +5,9 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* ============================================
-   Industrial Guardian — Instrument Serif + Geist + JetBrains Mono
-   Technical. Brutalist. High Reliability.
-   ============================================ */
+/* Technical. Brutalist. High Reliability. */
 
-/* ---- Core Resets ---- */
+/* Core Resets */
 
 html {
   scroll-behavior: smooth;

@@ -1044,7 +1044,6 @@ export class SecurityAnalyzer {
       SECURITY_RULES.javascript;
 
     if (content) {
-      // **NEW: Modern Code Scanning (SonarQube-style analysis)**
       try {
         const modernAnalysis = modernCodeScanningService.analyzeCode(
           content,
@@ -1056,8 +1055,6 @@ export class SecurityAnalyzer {
           filename
         );
         issues.push(...modernIssues);
-
-        // Quality gate results are tracked in the analysis report, no need to log each file
       } catch (error) {
         logger.debug(
           "Modern code scanning failed, using traditional analysis",

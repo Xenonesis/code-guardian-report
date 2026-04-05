@@ -59,7 +59,7 @@ export const UploadForm: React.FC<UploadFormProps> = ({
             Guardian <span className="text-primary font-bold">Analysis</span>
           </CardTitle>
           <CardDescription className="text-muted-foreground border-border mx-auto mt-4 max-w-lg border-t border-dashed pt-4 font-mono text-xs tracking-wider uppercase">
-            // Local Static Analysis Engine //
+            Local Static Analysis Engine
             <br />
             Scanning protocol initialized.
           </CardDescription>
