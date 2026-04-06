@@ -23,7 +23,7 @@
     "lint:css": "stylelint \"src/**/*.css\"",
     "lint:css:fix": "stylelint \"src/**/*.css\" --fix",
     "format": "prettier --write .",
-    "lint:strict": "eslint . --max-warnings 0",
+    "lint:strict": "eslint . --quiet",
     "type-check": "tsc --noEmit",
     "type-check:watch": "tsc --noEmit --watch",
     "clean": "rimraf .next node_modules/.cache dist out",

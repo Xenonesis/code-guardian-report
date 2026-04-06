@@ -41,8 +41,12 @@ export default function Error({ error, reset }: ErrorProps) {
             userAgent: navigator.userAgent,
             timestamp: new Date().toISOString(),
           }),
-        }).catch(() => {});
-      } catch {}
+        }).catch(() => {
+          // Ignore telemetry failures to avoid recursive error loops.
+        });
+      } catch {
+        // Ignore telemetry failures to avoid recursive error loops.
+      }
     }
   }, [error]);
 
