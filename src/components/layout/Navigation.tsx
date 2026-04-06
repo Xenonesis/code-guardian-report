@@ -26,6 +26,7 @@ import NotificationCenter from "@/components/notifications/NotificationCenter";
 import { PWAQuickActions } from "@/components/pwa/PWAQuickActions";
 import { ThemeToggle } from "@/components/common/ThemeToggle";
 import { motion, AnimatePresence } from "framer-motion";
+import { LenisContext } from "../../../app/providers/SmoothScrollProvider";
 
 interface NavigationProps {
   className?: string;
@@ -41,6 +42,7 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
 
   const { user, userProfile, logout } = useAuth();
   const { currentSection, navigateTo } = useNavigation();
+  const lenis = React.useContext(LenisContext);
 
   const getGithubAvatarUrl = () => {
     const githubProvider = user?.providerData?.find(

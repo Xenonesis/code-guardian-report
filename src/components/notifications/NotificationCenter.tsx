@@ -36,6 +36,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import NotificationPreferences from "./NotificationPreferences";
+import { LenisContext } from "../../../app/providers/SmoothScrollProvider";
 
 interface NotificationCenterProps {
   className?: string;
@@ -55,6 +56,7 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({
     NotificationPriority | "all"
   >("all");
   const [showOnlyUnread, setShowOnlyUnread] = useState(false);
+  const lenis = React.useContext(LenisContext);
 
   useEffect(() => {
     // Subscribe to notification updates
@@ -72,6 +74,41 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({
       window.removeEventListener("openNotificationPanel", handleOpenPanel);
     };
   }, []);
+
+  // Explicitly manage body scroll lock to prevent background scrolling
+  useEffect(() => {
+    if (isOpen) {
+      const originalBodyOverflow = document.body.style.overflow;
+      const originalHtmlOverflow = document.documentElement.style.overflow;
+      const originalBodyPointerEvents = document.body.style.pointerEvents;
+
+      // Nuclear lock for both html and body
+      document.body.style.setProperty("overflow", "hidden", "important");
+      document.documentElement.style.setProperty(
+        "overflow",
+        "hidden",
+        "important"
+      );
+      document.body.style.pointerEvents = "none";
+
+      // Stop Lenis if it exists
+      if (lenis) {
+        lenis.stop();
+      }
+
+      return () => {
+        document.body.style.overflow = originalBodyOverflow;
+        document.documentElement.style.overflow = originalHtmlOverflow;
+        document.body.style.pointerEvents = originalBodyPointerEvents;
+
+        // Start Lenis again
+        if (lenis) {
+          lenis.start();
+        }
+      };
+    }
+    return undefined;
+  }, [isOpen, lenis]);
 
   const filteredNotifications = notifications
     .filter((n) => !n.dismissed)
@@ -163,7 +200,7 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({
   const stats = NotificationManager.getStats();
 
   return (
-    <Sheet open={isOpen} onOpenChange={setIsOpen}>
+    <Sheet open={isOpen} onOpenChange={setIsOpen} modal={true}>
       <SheetTrigger asChild>
         <Button
           variant="ghost"
@@ -181,7 +218,8 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({
       </SheetTrigger>
 
       <SheetContent
-        className="border-border/70 bg-card text-card-foreground w-full overflow-hidden border-l opacity-100 shadow-[0_24px_60px_-30px_hsl(var(--foreground)/0.7)] filter-none backdrop-blur-none sm:max-w-xl"
+        className="border-border/70 bg-card text-card-foreground pointer-events-auto flex h-full w-full flex-col overflow-hidden overscroll-none border-l p-0 opacity-100 shadow-[0_24px_60px_-30px_hsl(var(--foreground)/0.7)] filter-none backdrop-blur-none sm:max-w-xl"
+        data-lenis-prevent
         style={{
           backgroundColor: "hsl(var(--card))",
           color: "hsl(var(--card-foreground))",
@@ -189,25 +227,37 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({
         }}
       >
         {showPreferences ? (
-          <div>
-            <div className="mb-4 flex items-center justify-between">
-              <h2 className="text-lg font-semibold">
+          <div
+            className="flex flex-1 flex-col overflow-hidden p-6"
+            data-lenis-prevent
+          >
+            <div className="border-border/60 mb-6 flex items-center justify-between border-b pb-4">
+              <h2 className="flex items-center gap-2 text-xl font-bold">
+                <Settings className="h-5 w-5" />
                 Notification Preferences
               </h2>
               <Button
                 variant="ghost"
-                size="sm"
+                size="icon"
                 onClick={() => setShowPreferences(false)}
                 aria-label="Close notification preferences"
+                className="h-9 w-9 rounded-full"
               >
-                <X className="h-4 w-4" />
+                <X className="h-5 w-5" />
               </Button>
             </div>
-            <NotificationPreferences />
+            <ScrollArea className="-mr-4 flex-1 overscroll-y-contain pr-4">
+              <div className="pr-1 pb-10">
+                <NotificationPreferences />
+              </div>
+            </ScrollArea>
           </div>
         ) : (
-          <>
-            <SheetHeader className="border-border/60 border-b pb-4">
+          <div
+            className="flex flex-1 flex-col overflow-hidden p-6"
+            data-lenis-prevent
+          >
+            <SheetHeader className="border-border/60 mb-4 flex-shrink-0 border-b pb-4">
               <div className="flex items-center justify-between">
                 <SheetTitle className="flex items-center gap-2">
                   <Bell className="h-5 w-5" />
@@ -232,239 +282,246 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({
               </SheetDescription>
             </SheetHeader>
 
-            {/* Stats */}
-            <div className="my-4 grid grid-cols-4 gap-2">
-              <div className="border-border/60 bg-muted/40 rounded-lg border p-2 text-center">
-                <div className="text-2xl font-bold">{stats.total}</div>
-                <div className="text-muted-foreground text-xs">Total</div>
-              </div>
-              <div className="border-border/60 bg-muted/40 rounded-lg border p-2 text-center">
-                <div className="text-primary text-2xl font-bold">
-                  {stats.byType.info}
+            <ScrollArea className="-mr-4 flex-1 overscroll-y-contain pr-4">
+              <div className="pr-1 pb-10">
+                {/* Stats */}
+                <div className="mb-6 grid grid-cols-4 gap-2">
+                  <div className="border-border/60 bg-muted/40 rounded-lg border p-2 text-center">
+                    <div className="text-2xl font-bold">{stats.total}</div>
+                    <div className="text-muted-foreground text-xs">Total</div>
+                  </div>
+                  <div className="border-border/60 bg-muted/40 rounded-lg border p-2 text-center">
+                    <div className="text-primary text-2xl font-bold">
+                      {stats.byType.info}
+                    </div>
+                    <div className="text-muted-foreground text-xs">Info</div>
+                  </div>
+                  <div className="border-border/60 bg-muted/40 rounded-lg border p-2 text-center">
+                    <div className="text-2xl font-bold text-orange-600">
+                      {stats.byType.warning}
+                    </div>
+                    <div className="text-muted-foreground text-xs">
+                      Warnings
+                    </div>
+                  </div>
+                  <div className="border-border/60 bg-muted/40 rounded-lg border p-2 text-center">
+                    <div className="text-2xl font-bold text-red-600">
+                      {stats.byType.error}
+                    </div>
+                    <div className="text-muted-foreground text-xs">Errors</div>
+                  </div>
                 </div>
-                <div className="text-muted-foreground text-xs">Info</div>
-              </div>
-              <div className="border-border/60 bg-muted/40 rounded-lg border p-2 text-center">
-                <div className="text-2xl font-bold text-orange-600">
-                  {stats.byType.warning}
-                </div>
-                <div className="text-muted-foreground text-xs">Warnings</div>
-              </div>
-              <div className="border-border/60 bg-muted/40 rounded-lg border p-2 text-center">
-                <div className="text-2xl font-bold text-red-600">
-                  {stats.byType.error}
-                </div>
-                <div className="text-muted-foreground text-xs">Errors</div>
-              </div>
-            </div>
 
-            {/* Actions */}
-            <div className="mb-4 flex gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleMarkAllAsRead}
-                disabled={unreadCount === 0}
-                className="font-tech rounded-md tracking-[0.08em] uppercase"
-              >
-                <Check className="mr-2 h-4 w-4" />
-                Mark all read
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleClearAll}
-                disabled={notifications.length === 0}
-                className="font-tech rounded-md tracking-[0.08em] uppercase"
-              >
-                <Trash2 className="mr-2 h-4 w-4" />
-                Clear all
-              </Button>
-            </div>
-
-            {/* Filters */}
-            <Tabs defaultValue="all" className="mb-4">
-              <TabsList className="border-border/60 bg-muted/35 grid w-full grid-cols-3 rounded-md border p-1">
-                <TabsTrigger
-                  value="all"
-                  className="font-tech tracking-[0.08em] uppercase"
-                  onClick={() => setShowOnlyUnread(false)}
-                >
-                  All
-                </TabsTrigger>
-                <TabsTrigger
-                  value="unread"
-                  className="font-tech tracking-[0.08em] uppercase"
-                  onClick={() => setShowOnlyUnread(true)}
-                >
-                  Unread ({unreadCount})
-                </TabsTrigger>
-                <TabsTrigger
-                  value="filters"
-                  className="font-tech tracking-[0.08em] uppercase"
-                >
-                  <Filter className="mr-2 h-4 w-4" />
-                  Filters
-                </TabsTrigger>
-              </TabsList>
-
-              <TabsContent value="filters" className="space-y-4">
-                <div>
-                  <label className="mb-2 block text-sm font-medium">
-                    Category
-                  </label>
-                  <select
-                    className="w-full rounded-md border p-2"
-                    value={filterCategory}
-                    onChange={(e) =>
-                      setFilterCategory(
-                        e.target.value as
-                          | "all"
-                          | "system"
-                          | "analysis"
-                          | "security"
-                          | "auth"
-                          | "storage"
-                          | "network"
-                          | "export"
-                          | "general"
-                      )
-                    }
+                {/* Actions */}
+                <div className="mb-6 flex gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleMarkAllAsRead}
+                    disabled={unreadCount === 0}
+                    className="font-tech rounded-md tracking-[0.08em] uppercase"
                   >
-                    <option value="all">All Categories</option>
-                    <option value="system">System</option>
-                    <option value="analysis">Analysis</option>
-                    <option value="security">Security</option>
-                    <option value="auth">Authentication</option>
-                    <option value="storage">Storage</option>
-                    <option value="network">Network</option>
-                    <option value="export">Export</option>
-                    <option value="general">General</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="mb-2 block text-sm font-medium">
-                    Priority
-                  </label>
-                  <select
-                    className="w-full rounded-md border p-2"
-                    value={filterPriority}
-                    onChange={(e) =>
-                      setFilterPriority(
-                        e.target.value as
-                          | "all"
-                          | "urgent"
-                          | "high"
-                          | "normal"
-                          | "low"
-                      )
-                    }
+                    <Check className="mr-2 h-4 w-4" />
+                    Mark all read
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleClearAll}
+                    disabled={notifications.length === 0}
+                    className="font-tech rounded-md tracking-[0.08em] uppercase"
                   >
-                    <option value="all">All Priorities</option>
-                    <option value="urgent">Urgent</option>
-                    <option value="high">High</option>
-                    <option value="normal">Normal</option>
-                    <option value="low">Low</option>
-                  </select>
+                    <Trash2 className="mr-2 h-4 w-4" />
+                    Clear all
+                  </Button>
                 </div>
-              </TabsContent>
-            </Tabs>
 
-            {/* Notification List */}
-            <ScrollArea className="h-[calc(100vh-400px)]">
-              {filteredNotifications.length === 0 ? (
-                <div className="text-muted-foreground py-12 text-center">
-                  <Bell className="mx-auto mb-4 h-12 w-12 opacity-20" />
-                  <p>No notifications</p>
-                </div>
-              ) : (
-                <div className="space-y-2">
-                  {filteredNotifications.map((notification) => (
-                    <div
-                      key={notification.id}
-                      className={cn(
-                        "border-border/65 hover:border-primary/40 rounded-lg border p-4 transition-all hover:shadow-[0_10px_24px_-20px_hsl(var(--foreground)/0.8)]",
-                        !notification.read && "bg-accent/45 border-primary/45",
-                        notification.read && "opacity-70"
-                      )}
+                {/* Filters */}
+                <Tabs defaultValue="all" className="mb-6">
+                  <TabsList className="border-border/60 bg-muted/35 grid w-full grid-cols-3 rounded-md border p-1">
+                    <TabsTrigger
+                      value="all"
+                      className="font-tech tracking-[0.08em] uppercase"
+                      onClick={() => setShowOnlyUnread(false)}
                     >
-                      <div className="flex items-start gap-3">
-                        {/* Icon */}
-                        <div
-                          className={cn(
-                            "flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full font-semibold",
-                            getNotificationColor(notification.type)
-                          )}
-                        >
-                          {getNotificationIcon(notification.type)}
-                        </div>
+                      All
+                    </TabsTrigger>
+                    <TabsTrigger
+                      value="unread"
+                      className="font-tech tracking-[0.08em] uppercase"
+                      onClick={() => setShowOnlyUnread(true)}
+                    >
+                      Unread ({unreadCount})
+                    </TabsTrigger>
+                    <TabsTrigger
+                      value="filters"
+                      className="font-tech tracking-[0.08em] uppercase"
+                    >
+                      <Filter className="mr-2 h-4 w-4" />
+                      Filters
+                    </TabsTrigger>
+                  </TabsList>
 
-                        {/* Content */}
-                        <div className="min-w-0 flex-1">
-                          <div className="mb-1 flex items-start justify-between gap-2">
-                            <h4 className="text-sm font-semibold">
-                              {notification.title}
-                            </h4>
-                            {getPriorityBadge(notification.priority)}
+                  <TabsContent value="filters" className="mt-4 space-y-4">
+                    <div>
+                      <label className="mb-2 block text-sm font-medium">
+                        Category
+                      </label>
+                      <select
+                        className="w-full rounded-md border p-2"
+                        value={filterCategory}
+                        onChange={(e) =>
+                          setFilterCategory(
+                            e.target.value as
+                              | "all"
+                              | "system"
+                              | "analysis"
+                              | "security"
+                              | "auth"
+                              | "storage"
+                              | "network"
+                              | "export"
+                              | "general"
+                          )
+                        }
+                      >
+                        <option value="all">All Categories</option>
+                        <option value="system">System</option>
+                        <option value="analysis">Analysis</option>
+                        <option value="security">Security</option>
+                        <option value="auth">Authentication</option>
+                        <option value="storage">Storage</option>
+                        <option value="network">Network</option>
+                        <option value="export">Export</option>
+                        <option value="general">General</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="mb-2 block text-sm font-medium">
+                        Priority
+                      </label>
+                      <select
+                        className="w-full rounded-md border p-2"
+                        value={filterPriority}
+                        onChange={(e) =>
+                          setFilterPriority(
+                            e.target.value as
+                              | "all"
+                              | "urgent"
+                              | "high"
+                              | "normal"
+                              | "low"
+                          )
+                        }
+                      >
+                        <option value="all">All Priorities</option>
+                        <option value="urgent">Urgent</option>
+                        <option value="high">High</option>
+                        <option value="normal">Normal</option>
+                        <option value="low">Low</option>
+                      </select>
+                    </div>
+                  </TabsContent>
+                </Tabs>
+
+                {/* List Content */}
+                {filteredNotifications.length === 0 ? (
+                  <div className="text-muted-foreground py-12 text-center">
+                    <Bell className="mx-auto mb-4 h-12 w-12 opacity-20" />
+                    <p>No notifications</p>
+                  </div>
+                ) : (
+                  <div className="space-y-2">
+                    {filteredNotifications.map((notification) => (
+                      <div
+                        key={notification.id}
+                        className={cn(
+                          "border-border/65 hover:border-primary/40 rounded-lg border p-4 transition-all hover:shadow-[0_10px_24px_-20px_hsl(var(--foreground)/0.8)]",
+                          !notification.read &&
+                            "bg-accent/45 border-primary/45",
+                          notification.read && "opacity-70"
+                        )}
+                      >
+                        <div className="flex items-start gap-3">
+                          {/* Icon */}
+                          <div
+                            className={cn(
+                              "flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full font-semibold",
+                              getNotificationColor(notification.type)
+                            )}
+                          >
+                            {getNotificationIcon(notification.type)}
                           </div>
 
-                          {notification.message && (
-                            <p className="text-muted-foreground mb-2 text-sm">
-                              {notification.message}
-                            </p>
-                          )}
+                          {/* Content */}
+                          <div className="min-w-0 flex-1">
+                            <div className="mb-1 flex items-start justify-between gap-2">
+                              <h4 className="text-sm font-semibold">
+                                {notification.title}
+                              </h4>
+                              {getPriorityBadge(notification.priority)}
+                            </div>
 
-                          <div className="text-muted-foreground flex items-center gap-2 text-xs">
-                            <span>
-                              {formatTimestamp(notification.timestamp)}
-                            </span>
-                            <span>•</span>
-                            <span className="capitalize">
-                              {notification.category}
-                            </span>
+                            {notification.message && (
+                              <p className="text-muted-foreground mb-2 text-sm">
+                                {notification.message}
+                              </p>
+                            )}
+
+                            <div className="text-muted-foreground flex items-center gap-2 text-xs">
+                              <span>
+                                {formatTimestamp(notification.timestamp)}
+                              </span>
+                              <span>•</span>
+                              <span className="capitalize">
+                                {notification.category}
+                              </span>
+                            </div>
+
+                            {notification.action && (
+                              <Button
+                                variant="link"
+                                size="sm"
+                                className="mt-2 h-auto p-0"
+                                onClick={notification.action.onClick}
+                              >
+                                {notification.action.label}
+                              </Button>
+                            )}
                           </div>
 
-                          {notification.action && (
-                            <Button
-                              variant="link"
-                              size="sm"
-                              className="mt-2 h-auto p-0"
-                              onClick={notification.action.onClick}
-                            >
-                              {notification.action.label}
-                            </Button>
-                          )}
-                        </div>
-
-                        {/* Actions */}
-                        <div className="flex gap-1">
-                          {!notification.read && (
+                          {/* Actions */}
+                          <div className="flex gap-1">
+                            {!notification.read && (
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-8 w-8"
+                                onClick={() =>
+                                  handleMarkAsRead(notification.id)
+                                }
+                              >
+                                <Check className="h-4 w-4" />
+                              </Button>
+                            )}
                             <Button
                               variant="ghost"
                               size="icon"
                               className="h-8 w-8"
-                              onClick={() => handleMarkAsRead(notification.id)}
+                              onClick={() => handleDismiss(notification.id)}
                             >
-                              <Check className="h-4 w-4" />
+                              <X className="h-4 w-4" />
                             </Button>
-                          )}
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8"
-                            onClick={() => handleDismiss(notification.id)}
-                          >
-                            <X className="h-4 w-4" />
-                          </Button>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
-              )}
+                    ))}
+                  </div>
+                )}
+              </div>
             </ScrollArea>
-          </>
+          </div>
         )}
       </SheetContent>
     </Sheet>
