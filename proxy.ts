@@ -101,8 +101,16 @@ export function proxy(request: NextRequest) {
   // Generate nonce for CSP
   const nonce = generateNonce();
 
+  // Propagate nonce into the request so server components/layout can use it.
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set("x-nonce", nonce);
+
   // Create response
-  const response = NextResponse.next();
+  const response = NextResponse.next({
+    request: {
+      headers: requestHeaders,
+    },
+  });
 
   // Add security headers from the shared canonical config.
   Object.entries(SECURITY_HEADERS).forEach(([key, value]) => {
@@ -115,7 +123,7 @@ export function proxy(request: NextRequest) {
     buildContentSecurityPolicy(nonce)
   );
 
-  // Add nonce to request headers for use in layout
+  // Echo nonce for diagnostics and optional client-side consumers.
   response.headers.set("x-nonce", nonce);
 
   // Add cache headers for static assets

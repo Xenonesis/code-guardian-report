@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { headers } from "next/headers";
 import { Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import "@/styles/base.css";
 import "@/styles/responsive-utilities.css";
@@ -103,11 +104,14 @@ export const viewport: Viewport = {
   colorScheme: "light dark",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const headerStore = await headers();
+  const nonce = headerStore.get("x-nonce") ?? undefined;
+
   return (
     <html
       lang="en"
@@ -118,6 +122,7 @@ export default function RootLayout({
       <head>
         {/* Structured data */}
         <script
+          nonce={nonce}
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
