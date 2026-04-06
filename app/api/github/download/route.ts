@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PRODUCTION_CONFIG } from "@/config/security";
+import { checkRateLimit } from "@/lib/rate-limit";
 
 /**
  * GitHub Repository Download Proxy with Caching
@@ -125,6 +126,32 @@ function formatBytes(bytes: number): string {
  */
 export async function POST(request: NextRequest) {
   try {
+    const clientIp =
+      request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+      "unknown";
+    const limiter = await checkRateLimit({
+      prefix: "github-download",
+      identifier: clientIp,
+      maxRequests: 20,
+      windowMs: 60_000,
+    });
+
+    if (limiter.limited) {
+      return NextResponse.json(
+        { error: "Too many repository download requests." },
+        {
+          status: 429,
+          headers: {
+            "Retry-After": String(
+              Math.max(1, Math.ceil((limiter.resetAt - Date.now()) / 1000))
+            ),
+            "X-RateLimit-Remaining": "0",
+            "X-RateLimit-Reset": String(limiter.resetAt),
+          },
+        }
+      );
+    }
+
     const contentType = request.headers.get("content-type") || "";
     if (!contentType.toLowerCase().includes("application/json")) {
       return NextResponse.json(

@@ -2,7 +2,9 @@
 // API route to proxy GitHub Copilot requests (solves CORS issues)
 
 import { NextRequest, NextResponse } from "next/server";
+import { createHash } from "node:crypto";
 import { PRODUCTION_CONFIG } from "@/config/security";
+import { checkRateLimit } from "@/lib/rate-limit";
 
 interface CopilotMessage {
   role: string;
@@ -91,6 +93,38 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { error: { message: "Invalid authorization header format" } },
         { status: 400 }
+      );
+    }
+
+    const tokenFingerprint = createHash("sha256")
+      .update(authHeader)
+      .digest("hex")
+      .slice(0, 24);
+
+    const limiter = await checkRateLimit({
+      prefix: "copilot",
+      identifier: tokenFingerprint,
+      maxRequests: 60,
+      windowMs: 60_000,
+    });
+
+    if (limiter.limited) {
+      return NextResponse.json(
+        {
+          error: {
+            message: "Rate limit exceeded",
+          },
+        },
+        {
+          status: 429,
+          headers: {
+            "Retry-After": String(
+              Math.max(1, Math.ceil((limiter.resetAt - Date.now()) / 1000))
+            ),
+            "X-RateLimit-Remaining": "0",
+            "X-RateLimit-Reset": String(limiter.resetAt),
+          },
+        }
       );
     }
 

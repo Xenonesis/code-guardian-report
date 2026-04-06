@@ -72,7 +72,20 @@ ANTHROPIC_API_KEY=your_anthropic_key
 
 # Or Google Gemini
 GEMINI_API_KEY=your_gemini_key
+
+# Optional: Distributed rate limiting (recommended for multi-instance production)
+UPSTASH_REDIS_REST_URL=https://your-upstash-endpoint
+UPSTASH_REDIS_REST_TOKEN=your_upstash_token
 ```
+
+### 4. Distributed Rate Limiting Notes
+
+- When `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` are set, API rate limiting uses distributed counters.
+- Without Redis configuration, the system falls back to in-memory counters, which are process-local and not suitable for horizontally scaled production.
+- Validate production behavior by sending bursts to:
+  - `/api/analytics`
+  - `/api/copilot/completions`
+  - `/api/github/download`
 
 ---
 

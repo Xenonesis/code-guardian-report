@@ -3,37 +3,10 @@ import {
   getFirebaseAdmin,
   isFirebaseAdminConfigured,
 } from "@/lib/firebaseAdmin";
+import { checkRateLimit } from "@/lib/rate-limit";
 
-// Simple in-memory rate limiter
-const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
 const RATE_LIMIT_WINDOW_MS = 60_000; // 1 minute
 const RATE_LIMIT_MAX_REQUESTS = 30; // 30 requests per minute per IP
-
-function getRateLimitState(ip: string): {
-  limited: boolean;
-  remaining: number;
-  resetAt: number;
-} {
-  const now = Date.now();
-  const entry = rateLimitMap.get(ip);
-
-  if (!entry || now > entry.resetTime) {
-    const next = { count: 1, resetTime: now + RATE_LIMIT_WINDOW_MS };
-    rateLimitMap.set(ip, next);
-    return {
-      limited: false,
-      remaining: RATE_LIMIT_MAX_REQUESTS - 1,
-      resetAt: next.resetTime,
-    };
-  }
-
-  entry.count++;
-  return {
-    limited: entry.count > RATE_LIMIT_MAX_REQUESTS,
-    remaining: Math.max(0, RATE_LIMIT_MAX_REQUESTS - entry.count),
-    resetAt: entry.resetTime,
-  };
-}
 
 type AnalyticsEventType =
   | "page_view"
@@ -146,7 +119,12 @@ export async function POST(request: NextRequest) {
     const clientIp =
       request.headers.get("x-forwarded-for")?.split(",")[0] || "unknown";
 
-    const rateLimit = getRateLimitState(clientIp);
+    const rateLimit = await checkRateLimit({
+      prefix: "analytics",
+      identifier: clientIp,
+      maxRequests: RATE_LIMIT_MAX_REQUESTS,
+      windowMs: RATE_LIMIT_WINDOW_MS,
+    });
     if (rateLimit.limited) {
       return NextResponse.json(
         { error: "Too many requests. Please try again later." },
