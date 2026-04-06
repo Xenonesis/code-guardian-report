@@ -1,97 +1,32 @@
 import { NextRequest, NextResponse } from "next/server";
+import { CSP_DIRECTIVES, SECURITY_HEADERS } from "./src/config/security";
 
 /**
  * Production Security Proxy
  * Handles security headers, rate limiting headers, and request validation
  */
 
-// Security headers for all responses
-const securityHeaders = {
-  // Prevent MIME type sniffing
-  "X-Content-Type-Options": "nosniff",
-  // Prevent clickjacking
-  "X-Frame-Options": "DENY",
-  // Enable XSS filter
-  "X-XSS-Protection": "1; mode=block",
-  // Control referrer information
-  "Referrer-Policy": "strict-origin-when-cross-origin",
-  // Restrict browser features
-  "Permissions-Policy":
-    "camera=(), microphone=(), geolocation=(), interest-cohort=()",
-  // DNS prefetch control
-  "X-DNS-Prefetch-Control": "on",
-  // Prevent IE from executing downloads in site's context
-  "X-Download-Options": "noopen",
-  // Disable Adobe products from handling data
-  "X-Permitted-Cross-Domain-Policies": "none",
-};
+function buildContentSecurityPolicy(nonce: string): string {
+  const directives = Object.entries(CSP_DIRECTIVES).map(([key, values]) => {
+    const entries = [...values];
 
-// Production-only headers
-const productionHeaders = {
-  // HSTS - Strict Transport Security (1 year)
-  "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
-};
+    if (key === "script-src") {
+      entries.push(`'nonce-${nonce}'`);
+      // Runtime policy should never allow eval in production.
+      if (process.env.NODE_ENV === "production") {
+        const filtered = entries.filter((value) => value !== "'unsafe-eval'");
+        return filtered.length ? `${key} ${filtered.join(" ")}` : key;
+      }
+    }
 
-// Content Security Policy
-const getContentSecurityPolicy = (nonce: string) => {
-  const cspDirectives = {
-    "default-src": ["'self'"],
-    "script-src": [
-      "'self'",
-      `'nonce-${nonce}'`,
-      "'unsafe-inline'", // Required for Next.js
-      "'unsafe-eval'", // Required for development only
-      "https://www.googletagmanager.com",
-      "https://www.google-analytics.com",
-      "https://apis.google.com",
-      "https://vercel.live",
-      "https://vitals.vercel-insights.com",
-      "https://va.vercel-scripts.com",
-    ],
-    "style-src": [
-      "'self'",
-      "'unsafe-inline'", // Required for styled-components/emotion
-      "https://fonts.googleapis.com",
-    ],
-    "img-src": ["'self'", "data:", "blob:", "https:"],
-    "font-src": ["'self'", "data:", "https://fonts.gstatic.com"],
-    "connect-src": [
-      "'self'",
-      "https://api.github.com",
-      "https://*.github.com",
-      "https://fonts.gstatic.com",
-      "https://*.google.com",
-      "https://*.firebaseio.com",
-      "https://*.googleapis.com",
-      "https://*.firebase.com",
-      "https://*.google-analytics.com",
-      "https://vercel.live",
-      "https://vitals.vercel-insights.com",
-      "https://va.vercel-insights.com",
-      "wss://*.firebaseio.com",
-    ],
-    "frame-src": [
-      "'self'",
-      "https://vercel.live",
-      "https://*.firebaseapp.com",
-      "https://*.firebase.com",
-      "https://apis.google.com",
-    ],
-    "worker-src": ["'self'", "blob:"],
-    "manifest-src": ["'self'"],
-    "frame-ancestors": ["'none'"],
-    "base-uri": ["'self'"],
-    "form-action": ["'self'"],
-    "upgrade-insecure-requests": [],
-  };
+    return entries.length ? `${key} ${entries.join(" ")}` : key;
+  });
 
-  return Object.entries(cspDirectives)
-    .map(([key, values]) => {
-      if (values.length === 0) return key;
-      return `${key} ${values.join(" ")}`;
-    })
-    .join("; ");
-};
+  // Block legacy plugin contexts explicitly.
+  directives.push("object-src 'none'");
+
+  return directives.join("; ");
+}
 
 // Generate a cryptographically secure nonce
 function generateNonce(): string {
@@ -169,23 +104,16 @@ export function proxy(request: NextRequest) {
   // Create response
   const response = NextResponse.next();
 
-  // Add security headers
-  Object.entries(securityHeaders).forEach(([key, value]) => {
+  // Add security headers from the shared canonical config.
+  Object.entries(SECURITY_HEADERS).forEach(([key, value]) => {
     response.headers.set(key, value);
   });
 
-  // Add production-only headers
-  if (process.env.NODE_ENV === "production") {
-    Object.entries(productionHeaders).forEach(([key, value]) => {
-      response.headers.set(key, value);
-    });
-
-    // Add CSP header in production
-    response.headers.set(
-      "Content-Security-Policy",
-      getContentSecurityPolicy(nonce)
-    );
-  }
+  // Always emit CSP from runtime policy so route responses are consistent.
+  response.headers.set(
+    "Content-Security-Policy",
+    buildContentSecurityPolicy(nonce)
+  );
 
   // Add nonce to request headers for use in layout
   response.headers.set("x-nonce", nonce);

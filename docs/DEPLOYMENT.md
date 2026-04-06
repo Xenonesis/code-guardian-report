@@ -341,6 +341,54 @@ curl https://your-domain.com/api/health
 
 ---
 
+## Security Release Gates
+
+Before promoting a release to production, all of the following checks must pass:
+
+- `npm run ci:validate`
+- `npm run build`
+- `npm run mcp:build`
+- Dependency and secret scan checks in CI
+- Runtime security header check (`Content-Security-Policy`, HSTS, `X-Frame-Options`, `X-Content-Type-Options`)
+- API hardening checks for auth header validation, timeout behavior, and sanitized error responses
+
+### Required SLO/Safety Thresholds
+
+- API error rate must stay below 1% during rollout.
+- API p99 latency must remain below 10 seconds for critical endpoints.
+- CSP violation spikes must be investigated before rollout completion.
+
+---
+
+## Rollback Playbook
+
+If release health degrades past thresholds:
+
+1. Stop rollout and route traffic to previous stable deployment.
+2. Validate health endpoint: `/api/health`.
+3. Validate core headers on `/` and `/api/health`.
+4. Confirm auth flows and core analysis routes return to baseline behavior.
+5. Capture incident timeline and attach deploy/build identifiers.
+
+### Vercel Rollback
+
+1. Open Vercel Dashboard -> Deployments.
+2. Select the prior healthy deployment.
+3. Promote it to production.
+
+### Git-based Rollback (self-hosted)
+
+```bash
+git log --oneline -n 5
+git checkout <last-known-good-sha>
+npm run ci:validate
+npm run build
+```
+
+Then redeploy and verify runtime checks.
+
+---
+
 ## Troubleshooting
 
 ### Common Issues
@@ -392,4 +440,4 @@ NODE_OPTIONS="--max-old-space-size=4096" npm run build
 
 ---
 
-_Last updated: January 1, 2026_
+_Last updated: April 6, 2026_

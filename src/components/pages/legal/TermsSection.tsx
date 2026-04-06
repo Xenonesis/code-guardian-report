@@ -95,6 +95,24 @@ export const TermsSection: React.FC = () => {
             ]}
           />
         </LegalSubsection>
+
+        <LegalSubsection title="Limitation of Liability">
+          <LegalList
+            items={[
+              "To the extent permitted by law, Code Guardian is not liable for indirect, incidental, or consequential damages.",
+              "You are responsible for validating security decisions before deployment to production systems.",
+              "Maximum aggregate liability is limited to fees paid for the applicable service period, where relevant.",
+            ]}
+          />
+        </LegalSubsection>
+
+        <LegalSubsection title="Governing Terms Updates">
+          <p>
+            We may update these terms to reflect operational, legal, and
+            security changes. Material changes are communicated in product
+            channels and become effective on the published date.
+          </p>
+        </LegalSubsection>
       </LegalSection>
     </div>
   );

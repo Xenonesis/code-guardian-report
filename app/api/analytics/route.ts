@@ -9,17 +9,30 @@ const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
 const RATE_LIMIT_WINDOW_MS = 60_000; // 1 minute
 const RATE_LIMIT_MAX_REQUESTS = 30; // 30 requests per minute per IP
 
-function isRateLimited(ip: string): boolean {
+function getRateLimitState(ip: string): {
+  limited: boolean;
+  remaining: number;
+  resetAt: number;
+} {
   const now = Date.now();
   const entry = rateLimitMap.get(ip);
 
   if (!entry || now > entry.resetTime) {
-    rateLimitMap.set(ip, { count: 1, resetTime: now + RATE_LIMIT_WINDOW_MS });
-    return false;
+    const next = { count: 1, resetTime: now + RATE_LIMIT_WINDOW_MS };
+    rateLimitMap.set(ip, next);
+    return {
+      limited: false,
+      remaining: RATE_LIMIT_MAX_REQUESTS - 1,
+      resetAt: next.resetTime,
+    };
   }
 
   entry.count++;
-  return entry.count > RATE_LIMIT_MAX_REQUESTS;
+  return {
+    limited: entry.count > RATE_LIMIT_MAX_REQUESTS,
+    remaining: Math.max(0, RATE_LIMIT_MAX_REQUESTS - entry.count),
+    resetAt: entry.resetTime,
+  };
 }
 
 type AnalyticsEventType =
@@ -52,6 +65,56 @@ interface AnalyticsBatchPayload {
   sessionId?: string;
 }
 
+const SUPPORTED_EVENTS: readonly AnalyticsEventType[] = [
+  "page_view",
+  "analysis_started",
+  "analysis_completed",
+  "file_uploaded",
+  "github_connected",
+  "export_pdf",
+  "error_occurred",
+  "feature_used",
+  "custom",
+] as const;
+
+function isSupportedEvent(event: unknown): event is AnalyticsEventType {
+  return (
+    typeof event === "string" &&
+    SUPPORTED_EVENTS.includes(event as AnalyticsEventType)
+  );
+}
+
+function validateSinglePayload(body: AnalyticsPayload): string | null {
+  if (!isSupportedEvent(body.event)) {
+    return "event is required and must be one of the supported event types";
+  }
+  if (body.userId && typeof body.userId !== "string") {
+    return "userId must be a string when provided";
+  }
+  if (body.sessionId && typeof body.sessionId !== "string") {
+    return "sessionId must be a string when provided";
+  }
+  return null;
+}
+
+function validateBatchPayload(body: AnalyticsBatchPayload): string | null {
+  if (!Array.isArray(body.events) || body.events.length === 0) {
+    return "events array is required and must not be empty";
+  }
+  if (body.events.length > 100) {
+    return "Batch size exceeds maximum of 100 events";
+  }
+  for (const event of body.events) {
+    if (!isSupportedEvent(event.event)) {
+      return "Each event item must include a supported event type";
+    }
+    if (event.timestamp && Number.isNaN(Date.parse(event.timestamp))) {
+      return "Each event timestamp must be a valid ISO date";
+    }
+  }
+  return null;
+}
+
 export async function GET() {
   return NextResponse.json({
     status: "analytics endpoint is working",
@@ -72,13 +135,31 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
+    const contentType = request.headers.get("content-type") || "";
+    if (!contentType.toLowerCase().includes("application/json")) {
+      return NextResponse.json(
+        { error: "Content-Type must be application/json" },
+        { status: 415 }
+      );
+    }
+
     const clientIp =
       request.headers.get("x-forwarded-for")?.split(",")[0] || "unknown";
 
-    if (isRateLimited(clientIp)) {
+    const rateLimit = getRateLimitState(clientIp);
+    if (rateLimit.limited) {
       return NextResponse.json(
         { error: "Too many requests. Please try again later." },
-        { status: 429 }
+        {
+          status: 429,
+          headers: {
+            "Retry-After": String(
+              Math.max(1, Math.ceil((rateLimit.resetAt - Date.now()) / 1000))
+            ),
+            "X-RateLimit-Remaining": "0",
+            "X-RateLimit-Reset": String(rateLimit.resetAt),
+          },
+        }
       );
     }
 
@@ -86,10 +167,25 @@ export async function POST(request: NextRequest) {
 
     // Check if this is a batch request
     if ("events" in body && Array.isArray(body.events)) {
-      return handleBatchAnalytics(body as AnalyticsBatchPayload, request);
+      const validationError = validateBatchPayload(
+        body as AnalyticsBatchPayload
+      );
+      if (validationError) {
+        return NextResponse.json({ error: validationError }, { status: 400 });
+      }
+      return handleBatchAnalytics(
+        body as AnalyticsBatchPayload,
+        request,
+        rateLimit
+      );
     }
 
-    return handleSingleAnalytics(body as AnalyticsPayload, request);
+    const validationError = validateSinglePayload(body as AnalyticsPayload);
+    if (validationError) {
+      return NextResponse.json({ error: validationError }, { status: 400 });
+    }
+
+    return handleSingleAnalytics(body as AnalyticsPayload, request, rateLimit);
   } catch (error) {
     console.error("Analytics error:", error);
     return NextResponse.json(
@@ -101,16 +197,9 @@ export async function POST(request: NextRequest) {
 
 async function handleSingleAnalytics(
   body: AnalyticsPayload,
-  request: NextRequest
+  request: NextRequest,
+  rateLimit: { remaining: number; resetAt: number }
 ) {
-  // Validate required fields
-  if (!body.event) {
-    return NextResponse.json(
-      { error: "Missing required fields: event is required" },
-      { status: 400 }
-    );
-  }
-
   // Create analytics record
   const analyticsRecord = {
     id: `analytics-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
@@ -138,36 +227,27 @@ async function handleSingleAnalytics(
   const { db } = getFirebaseAdmin();
   await db.collection("analytics").add(analyticsRecord);
 
-  return NextResponse.json({
-    success: true,
-    message: "Analytics event recorded",
-    eventId: analyticsRecord.id,
-    persisted: true,
-  });
+  return NextResponse.json(
+    {
+      success: true,
+      message: "Analytics event recorded",
+      eventId: analyticsRecord.id,
+      persisted: true,
+    },
+    {
+      headers: {
+        "X-RateLimit-Remaining": String(rateLimit.remaining),
+        "X-RateLimit-Reset": String(rateLimit.resetAt),
+      },
+    }
+  );
 }
 
 async function handleBatchAnalytics(
   body: AnalyticsBatchPayload,
-  request: NextRequest
+  request: NextRequest,
+  rateLimit: { remaining: number; resetAt: number }
 ) {
-  // Validate required fields
-  if (!body.events?.length) {
-    return NextResponse.json(
-      {
-        error: "Missing required fields: events array are required",
-      },
-      { status: 400 }
-    );
-  }
-
-  // Limit batch size
-  if (body.events.length > 100) {
-    return NextResponse.json(
-      { error: "Batch size exceeds maximum of 100 events" },
-      { status: 400 }
-    );
-  }
-
   const batchId = `batch-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
   const processedEvents = body.events.map((event, index) => ({
     id: `${batchId}-${index}`,
@@ -197,11 +277,19 @@ async function handleBatchAnalytics(
   });
   await batch.commit();
 
-  return NextResponse.json({
-    success: true,
-    message: `${processedEvents.length} analytics events recorded`,
-    batchId,
-    eventCount: processedEvents.length,
-    persisted: true,
-  });
+  return NextResponse.json(
+    {
+      success: true,
+      message: `${processedEvents.length} analytics events recorded`,
+      batchId,
+      eventCount: processedEvents.length,
+      persisted: true,
+    },
+    {
+      headers: {
+        "X-RateLimit-Remaining": String(rateLimit.remaining),
+        "X-RateLimit-Reset": String(rateLimit.resetAt),
+      },
+    }
+  );
 }

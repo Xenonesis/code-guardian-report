@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { PRODUCTION_CONFIG } from "@/config/security";
 
 /**
  * GitHub Repository Download Proxy with Caching
@@ -40,6 +41,15 @@ interface DownloadParams {
   branch: string;
   useArchive?: boolean; // If true, use public archive URL instead of API
   bypassCache?: boolean; // If true, skip cache and fetch fresh data
+}
+
+const GITHUB_DOWNLOAD_TIMEOUT_MS = Math.min(
+  PRODUCTION_CONFIG.apiTimeout * 2,
+  55_000
+);
+
+function safeFilenamePart(value: string): string {
+  return value.replace(/[^a-zA-Z0-9._-]/g, "-").slice(0, 100);
 }
 
 /**
@@ -115,6 +125,14 @@ function formatBytes(bytes: number): string {
  */
 export async function POST(request: NextRequest) {
   try {
+    const contentType = request.headers.get("content-type") || "";
+    if (!contentType.toLowerCase().includes("application/json")) {
+      return NextResponse.json(
+        { error: "Content-Type must be application/json" },
+        { status: 415 }
+      );
+    }
+
     const body: DownloadParams = await request.json();
     const {
       owner,
@@ -219,11 +237,22 @@ export async function POST(request: NextRequest) {
 
     console.log(`[GitHub Proxy] Downloading from: ${downloadUrl}`);
 
-    // Fetch the repository archive from GitHub
-    const response = await fetch(downloadUrl, {
-      headers,
-      redirect: "follow",
-    });
+    // Fetch the repository archive from GitHub with timeout protection.
+    const controller = new AbortController();
+    const timeout = setTimeout(
+      () => controller.abort(),
+      GITHUB_DOWNLOAD_TIMEOUT_MS
+    );
+    let response: Response;
+    try {
+      response = await fetch(downloadUrl, {
+        headers,
+        redirect: "follow",
+        signal: controller.signal,
+      });
+    } finally {
+      clearTimeout(timeout);
+    }
 
     if (!response.ok) {
       console.error(
@@ -268,7 +297,7 @@ export async function POST(request: NextRequest) {
 
       return NextResponse.json(
         {
-          error: `Failed to download repository: ${response.statusText}`,
+          error: "Failed to download repository from upstream source.",
           status: response.status,
         },
         { status: response.status }
@@ -319,12 +348,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const fileOwner = safeFilenamePart(owner);
+    const fileRepo = safeFilenamePart(repo);
+    const fileBranch = safeFilenamePart(branch);
+
     // Return the zip file with appropriate headers
     return new NextResponse(arrayBuffer, {
       status: 200,
       headers: {
         "Content-Type": "application/zip",
-        "Content-Disposition": `attachment; filename="${owner}-${repo}-${branch}.zip"`,
+        "Content-Disposition": `attachment; filename="${fileOwner}-${fileRepo}-${fileBranch}.zip"`,
         "Content-Length": arrayBuffer.byteLength.toString(),
         "X-Cache": "MISS",
         // CORS headers for client-side access
@@ -336,10 +369,18 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("[GitHub Proxy] Error:", error);
 
+    if (error instanceof Error && error.name === "AbortError") {
+      return NextResponse.json(
+        {
+          error: "Repository download timed out while contacting upstream.",
+        },
+        { status: 504 }
+      );
+    }
+
     return NextResponse.json(
       {
         error: "Internal server error while downloading repository",
-        details: error instanceof Error ? error.message : String(error),
       },
       { status: 500 }
     );

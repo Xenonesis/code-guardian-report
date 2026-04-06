@@ -73,6 +73,45 @@ export const PrivacySection: React.FC = () => {
           />
         </LegalSubsection>
       </LegalSection>
+
+      <LegalSection
+        title="Data Retention and Deletion"
+        icon={<Database className="h-5 w-5" />}
+      >
+        <LegalSubsection title="Retention Windows">
+          <LegalList
+            items={[
+              "Analysis history and user telemetry are retained for limited operational periods and purged on schedule.",
+              "Push subscription endpoints are removed after prolonged inactivity.",
+              "Public analysis artifacts are retained for collaboration and may be refreshed or removed as project policy evolves.",
+            ]}
+          />
+        </LegalSubsection>
+        <LegalSubsection title="Deletion Requests">
+          <p>
+            You may request account data deletion through support channels. We
+            verify ownership, process deletion across owner-bound collections,
+            and retain a minimal audit marker for compliance and
+            incident-forensics integrity.
+          </p>
+        </LegalSubsection>
+      </LegalSection>
+
+      <LegalSection
+        title="Your Privacy Rights"
+        icon={<Eye className="h-5 w-5" />}
+      >
+        <LegalSubsection title="Regional Rights (GDPR/CCPA-aligned)">
+          <LegalList
+            items={[
+              "Access: Request a copy of your account and analysis metadata.",
+              "Correction: Request updates for inaccurate profile information.",
+              "Deletion: Request removal of eligible personal data.",
+              "Restriction/Objection: Request limitations on processing where legally applicable.",
+            ]}
+          />
+        </LegalSubsection>
+      </LegalSection>
     </div>
   );
 };

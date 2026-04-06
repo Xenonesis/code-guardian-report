@@ -558,7 +558,7 @@ Strict CSP implementation to prevent XSS attacks:
 ```typescript
 const cspHeader = `
   default-src 'self';
-  script-src 'self' 'unsafe-eval' 'unsafe-inline';
+       script-src 'self' 'nonce-<runtime-nonce>';
   style-src 'self' 'unsafe-inline';
   img-src 'self' data: blob: https:;
   font-src 'self' data:;
@@ -578,6 +578,36 @@ Comprehensive security headers:
 - **Strict-Transport-Security**: `max-age=31536000` - Forces HTTPS
 - **Referrer-Policy**: `strict-origin-when-cross-origin`
 - **Permissions-Policy**: Restricts browser feature access
+
+### Runtime Security Boundary
+
+Security policy enforcement is applied at runtime in `proxy.ts` and uses shared policy inputs from `src/config/security.ts`.
+
+- Policy source: `src/config/security.ts`
+- Runtime enforcement: `proxy.ts`
+- Surface: all app routes and API routes except excluded static internals
+
+This model reduces drift between static config and runtime behavior and ensures consistent headers across response paths.
+
+### Authentication Trust Model
+
+Route trust boundaries are explicit:
+
+1. `app/api/copilot/completions/route.ts`
+   - Requires `Authorization: Bearer <token>` format
+   - Validates request body schema
+   - Applies timeout/abort control for upstream calls
+   - Returns sanitized errors
+
+2. `app/api/github/download/route.ts`
+   - Validates owner/repo/branch inputs
+   - Enforces timeout on upstream GitHub fetches
+   - Returns sanitized upstream failure responses
+
+3. `app/api/analytics/route.ts`
+   - Requires `application/json` payloads
+   - Enforces event payload validation
+   - Applies per-IP in-memory abuse controls (distributed limiter planned)
 
 #### Input Validation
 

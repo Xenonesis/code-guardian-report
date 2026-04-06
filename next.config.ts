@@ -179,60 +179,7 @@ const nextConfig: NextConfig = {
   // Headers for security and caching
   async headers() {
     return [
-      // Global security headers
-      {
-        source: "/(.*)",
-        headers: [
-          {
-            key: "X-Content-Type-Options",
-            value: "nosniff",
-          },
-          {
-            key: "X-Frame-Options",
-            value: "DENY",
-          },
-          {
-            key: "X-XSS-Protection",
-            value: "1; mode=block",
-          },
-          {
-            key: "Referrer-Policy",
-            value: "strict-origin-when-cross-origin",
-          },
-          {
-            key: "Permissions-Policy",
-            value:
-              "camera=(), microphone=(), geolocation=(), interest-cohort=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()",
-          },
-          {
-            key: "X-DNS-Prefetch-Control",
-            value: "on",
-          },
-          {
-            key: "X-Download-Options",
-            value: "noopen",
-          },
-          {
-            key: "X-Permitted-Cross-Domain-Policies",
-            value: "none",
-          },
-          // Content Security Policy - Allow GitHub API access
-          {
-            key: "Content-Security-Policy",
-            value:
-              "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://apis.google.com https://vercel.live https://vitals.vercel-insights.com https://va.vercel-scripts.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https:; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https://api.github.com https://*.github.com https://raw.githubusercontent.com https://codeload.github.com https://api.openai.com https://api.anthropic.com https://api.groq.com https://generativelanguage.googleapis.com https://fonts.gstatic.com https://*.google.com https://*.firebaseio.com https://*.googleapis.com https://*.firebase.com https://*.google-analytics.com https://vercel.live https://vitals.vercel-insights.com https://va.vercel-insights.com wss://*.firebaseio.com; frame-src 'self' https://vercel.live https://*.firebaseapp.com https://*.firebase.com https://apis.google.com; worker-src 'self' blob:; manifest-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self';",
-          },
-          // HSTS - Strict Transport Security
-          ...(isProd
-            ? [
-                {
-                  key: "Strict-Transport-Security",
-                  value: "max-age=31536000; includeSubDomains; preload",
-                },
-              ]
-            : []),
-        ],
-      },
+      // Runtime security headers are enforced centrally by proxy.ts.
       // Service Worker headers
       {
         source: "/sw.js",
@@ -345,12 +292,7 @@ const nextConfig: NextConfig = {
         destination: "/?tab=reports",
         permanent: false,
       },
-      // Merge privacy and terms to legal
-      {
-        source: "/privacy",
-        destination: "/legal?tab=privacy",
-        permanent: true,
-      },
+      // Terms route remains mapped to legal page tabs.
       {
         source: "/terms",
         destination: "/legal?tab=terms",

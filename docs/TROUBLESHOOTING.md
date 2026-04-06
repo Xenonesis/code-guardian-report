@@ -1112,4 +1112,30 @@ if (obj && obj.X) {
 
 ---
 
-_Last updated: February 11, 2026_
+## Incident Response Quick Runbook
+
+### Unauthorized API Access Suspected
+
+1. Revoke or rotate affected credentials immediately.
+2. Validate `Authorization` header handling on:
+   - `/api/copilot/completions`
+   - `/api/github/download`
+3. Check rate-limit behavior and unusual IP spikes.
+4. Re-run CI security checks before restoring rollout velocity.
+
+### CSP Violation Spikes
+
+1. Validate runtime headers on `/` and `/legal`.
+2. Confirm expected script/connect domains in CSP policy.
+3. Roll back if critical application flows break due CSP misconfiguration.
+
+### Rollback Triggered by SLO Breach
+
+1. Promote the previous stable deployment.
+2. Verify `/api/health` and key product routes.
+3. Confirm security headers are still present after rollback.
+4. Record root cause, fix commit, and recovery timeline.
+
+---
+
+_Last updated: April 6, 2026_
