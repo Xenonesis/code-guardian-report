@@ -41,15 +41,15 @@ export async function GET() {
   };
   checks.push(appCheck);
 
+  const envCheck = checkEnvironment();
+  checks.push(envCheck);
+  if (envCheck.status === "fail") overallStatus = "degraded";
+
   const memoryCheck = await checkMemory();
   checks.push(memoryCheck);
   if (memoryCheck.status === "fail") overallStatus = "unhealthy";
   if (memoryCheck.status === "warn" && overallStatus === "healthy")
     overallStatus = "degraded";
-
-  const envCheck = checkEnvironment();
-  checks.push(envCheck);
-  if (envCheck.status === "fail") overallStatus = "degraded";
 
   const response: HealthStatus = {
     status: overallStatus,

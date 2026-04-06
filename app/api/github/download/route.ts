@@ -126,6 +126,31 @@ function formatBytes(bytes: number): string {
  */
 export async function POST(request: NextRequest) {
   try {
+    const contentType = request.headers.get("content-type") || "";
+    if (!contentType.toLowerCase().includes("application/json")) {
+      return NextResponse.json(
+        { error: "Content-Type must be application/json" },
+        { status: 415 }
+      );
+    }
+
+    const body: DownloadParams = await request.json();
+    const {
+      owner,
+      repo,
+      branch,
+      useArchive = false,
+      bypassCache = false,
+    } = body;
+
+    // Validate required parameters
+    if (!owner || !repo || !branch) {
+      return NextResponse.json(
+        { error: "Missing required parameters: owner, repo, branch" },
+        { status: 400 }
+      );
+    }
+
     const clientIp =
       request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
       "unknown";
@@ -152,36 +177,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const contentType = request.headers.get("content-type") || "";
-    if (!contentType.toLowerCase().includes("application/json")) {
-      return NextResponse.json(
-        { error: "Content-Type must be application/json" },
-        { status: 415 }
-      );
-    }
-
-    const body: DownloadParams = await request.json();
-    const {
-      owner,
-      repo,
-      branch,
-      useArchive = false,
-      bypassCache = false,
-    } = body;
-
     // Generate cache key
     const cacheKey = generateCacheKey(owner, repo, branch);
 
     // Periodic cleanup of expired entries
     cleanupExpiredEntries();
-
-    // Validate required parameters
-    if (!owner || !repo || !branch) {
-      return NextResponse.json(
-        { error: "Missing required parameters: owner, repo, branch" },
-        { status: 400 }
-      );
-    }
 
     // Security: Validate owner and repo names (GitHub restrictions)
     const validNamePattern = /^[a-zA-Z0-9._-]+$/;
@@ -331,9 +331,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Get the content as a blob
-    const blob = await response.blob();
-    const arrayBuffer = await blob.arrayBuffer();
+    const arrayBuffer = await response.arrayBuffer();
 
     console.log(
       `[GitHub Proxy] Successfully downloaded ${arrayBuffer.byteLength} bytes`
