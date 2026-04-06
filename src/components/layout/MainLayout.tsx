@@ -1,6 +1,5 @@
 "use client";
 
-import { useEnhancedAnalysis } from "@/hooks/useEnhancedAnalysis";
 import { Navigation } from "@/components/layout/Navigation";
 import { Footer } from "@/components/layout/Footer";
 import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
@@ -38,7 +37,6 @@ const SkipLink = () => (
  */
 export function MainLayout({ children }: MainLayoutProps) {
   const { online, firebaseConnected, usingMockData } = useConnectionStatus();
-  useEnhancedAnalysis();
   // Using navigation context just to ensure it's initialized if needed,
   // but mostly relying on useNavigation inside components.
 

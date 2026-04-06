@@ -1,14 +1,4 @@
-"use client";
-
-import dynamic from "next/dynamic";
-
-const GitHubAnalysisPageClient = dynamic(
-  () => import("./GitHubAnalysisPageClient"),
-  {
-    ssr: false,
-    loading: () => null,
-  }
-);
+import GitHubAnalysisPageClient from "./GitHubAnalysisPageClient";
 
 export default function GitHubAnalysisPageWrapper() {
   return <GitHubAnalysisPageClient />;

@@ -1,10 +1,4 @@
-"use client";
-
-import dynamic from "next/dynamic";
-
-const PWASettingsPageClient = dynamic(() => import("./PWASettingsPageClient"), {
-  ssr: false,
-});
+import PWASettingsPageClient from "./PWASettingsPageClient";
 
 export default function PWASettingsPageWrapper() {
   return <PWASettingsPageClient />;

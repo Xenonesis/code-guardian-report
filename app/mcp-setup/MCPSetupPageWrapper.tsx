@@ -1,11 +1,4 @@
-"use client";
-
-import dynamic from "next/dynamic";
-
-const MCPSetupPageClient = dynamic(() => import("./MCPSetupPageClient"), {
-  ssr: false,
-  loading: () => null,
-});
+import MCPSetupPageClient from "./MCPSetupPageClient";
 
 export default function MCPSetupPageWrapper() {
   return <MCPSetupPageClient />;

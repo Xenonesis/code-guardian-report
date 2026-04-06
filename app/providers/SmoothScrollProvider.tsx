@@ -16,13 +16,19 @@ export const SmoothScrollProvider = ({
   const lenisRef = useReactRef<Lenis | null>(null);
 
   useEffect(() => {
-    // Only load Lenis on client
     if (typeof window === "undefined") return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     let lenis: Lenis | null = null;
-    let animationId: number;
+    let animationId = 0;
+    let timeoutId: ReturnType<typeof setTimeout> | null = null;
+    let idleId: number | null = null;
+    let cancelled = false;
 
-    import("lenis").then(({ default: Lenis }) => {
+    const initLenis = async () => {
+      const { default: Lenis } = await import("lenis");
+      if (cancelled) return;
+
       lenis = new Lenis({
         lerp: 0.35,
         duration: 0.6,
@@ -35,15 +41,36 @@ export const SmoothScrollProvider = ({
       });
       lenisRef.current = lenis;
 
-      function raf(time: number) {
+      const raf = (time: number) => {
+        if (cancelled) return;
         lenis?.raf(time);
         animationId = requestAnimationFrame(raf);
-      }
+      };
 
       animationId = requestAnimationFrame(raf);
-    });
+    };
+
+    if ("requestIdleCallback" in window) {
+      idleId = window.requestIdleCallback(
+        () => {
+          void initLenis();
+        },
+        { timeout: 1000 }
+      );
+    } else {
+      timeoutId = setTimeout(() => {
+        void initLenis();
+      }, 120);
+    }
 
     return () => {
+      cancelled = true;
+      if (idleId) {
+        window.cancelIdleCallback(idleId);
+      }
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
       if (lenis) {
         lenis.destroy();
       }

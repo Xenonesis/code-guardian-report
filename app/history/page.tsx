@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import HistoryPageWrapper from "./HistoryPageWrapper";
 
-// Force dynamic rendering to prevent SSR issues with browser APIs
-export const dynamic = "force-dynamic";
-
 export const metadata: Metadata = {
   title: "Analysis History - Code Guardian Enterprise",
   description:

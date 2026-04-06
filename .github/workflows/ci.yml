@@ -150,7 +150,6 @@ jobs:
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
           LHCI_BUILD_CONTEXT__CURRENT_HASH: ${{ github.sha }}
-        continue-on-error: true
 
       - name: Upload performance reports
         uses: actions/upload-artifact@v4

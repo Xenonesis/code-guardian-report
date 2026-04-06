@@ -51,22 +51,8 @@ export const ConnectionStatus: React.FC<ConnectionStatusProps> = ({
       );
     };
 
-    // Monitor Firebase connection errors
-    const monitorFirebaseErrors = () => {
-      // Note: In production, Firebase errors are handled by the logger
-      // This is a lightweight monitor for connection state only
-      const checkFirebaseHealth = setInterval(() => {
-        // Firebase health is monitored via connection-manager
-      }, 10000);
-
-      return () => {
-        clearInterval(checkFirebaseHealth);
-      };
-    };
-
     window.addEventListener("online", handleOnline);
     window.addEventListener("offline", handleOffline);
-    const cleanupFirebaseMonitor = monitorFirebaseErrors();
 
     // Show status initially if offline
     if (!navigator.onLine) {
@@ -77,7 +63,6 @@ export const ConnectionStatus: React.FC<ConnectionStatusProps> = ({
     return () => {
       window.removeEventListener("online", handleOnline);
       window.removeEventListener("offline", handleOffline);
-      cleanupFirebaseMonitor();
     };
   }, []);
 

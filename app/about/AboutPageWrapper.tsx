@@ -1,11 +1,4 @@
-"use client";
-
-import dynamic from "next/dynamic";
-
-const AboutPageClient = dynamic(() => import("./AboutPageClient"), {
-  ssr: false,
-  loading: () => null,
-});
+import AboutPageClient from "./AboutPageClient";
 
 export default function AboutPageWrapper() {
   return <AboutPageClient />;

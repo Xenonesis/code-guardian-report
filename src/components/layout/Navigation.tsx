@@ -85,36 +85,76 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
 
   useEffect(() => {
     setMounted(true);
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
+    let ticking = false;
+
+    const updateScrollState = () => {
+      const nextIsScrolled = window.scrollY > 20;
+      setIsScrolled((prev) =>
+        prev === nextIsScrolled ? prev : nextIsScrolled
+      );
+      ticking = false;
+    };
+
+    const handleScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(updateScrollState);
+      }
+    };
+
+    updateScrollState();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
+    const previousStyles = {
+      position: document.body.style.position,
+      top: document.body.style.top,
+      left: document.body.style.left,
+      right: document.body.style.right,
+      overflow: document.body.style.overflow,
+      paddingRight: document.body.style.paddingRight,
+    };
+
     if (isMobileMenuOpen) {
       const scrollY = window.scrollY;
+      const scrollbarCompensation = Math.max(
+        0,
+        window.innerWidth - document.documentElement.clientWidth
+      );
+
       document.body.style.position = "fixed";
       document.body.style.top = `-${scrollY}px`;
       document.body.style.left = "0";
       document.body.style.right = "0";
       document.body.style.overflow = "hidden";
+      if (scrollbarCompensation > 0) {
+        document.body.style.paddingRight = `${scrollbarCompensation}px`;
+      }
+      document.documentElement.style.setProperty("scrollbar-gutter", "stable");
     } else {
       const top = document.body.style.top;
-      document.body.style.position = "";
-      document.body.style.top = "";
-      document.body.style.left = "";
-      document.body.style.right = "";
-      document.body.style.overflow = "";
+      document.body.style.position = previousStyles.position;
+      document.body.style.top = previousStyles.top;
+      document.body.style.left = previousStyles.left;
+      document.body.style.right = previousStyles.right;
+      document.body.style.overflow = previousStyles.overflow;
+      document.body.style.paddingRight = previousStyles.paddingRight;
+      document.documentElement.style.removeProperty("scrollbar-gutter");
       if (top) {
         window.scrollTo(0, parseInt(top, 10) * -1);
       }
     }
+
     return () => {
-      document.body.style.position = "";
-      document.body.style.top = "";
-      document.body.style.left = "";
-      document.body.style.right = "";
-      document.body.style.overflow = "";
+      document.body.style.position = previousStyles.position;
+      document.body.style.top = previousStyles.top;
+      document.body.style.left = previousStyles.left;
+      document.body.style.right = previousStyles.right;
+      document.body.style.overflow = previousStyles.overflow;
+      document.body.style.paddingRight = previousStyles.paddingRight;
+      document.documentElement.style.removeProperty("scrollbar-gutter");
     };
   }, [isMobileMenuOpen]);
 

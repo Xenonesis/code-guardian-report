@@ -1,11 +1,25 @@
 import type { Metadata, Viewport } from "next";
+import { Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import "@/styles/base.css";
 import "@/styles/responsive-utilities.css";
 import "@/index.css";
 import "@/styles/enhanced-ui.css";
-import "@/styles/about-page-enhancements.css";
 import { ClientProviders } from "./ClientProviders";
 import { MainLayout } from "@/components/layout/MainLayout";
+
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument-serif",
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  weight: "400",
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://code-guardian-report.vercel.app"),
@@ -99,21 +113,9 @@ export default function RootLayout({
       lang="en"
       suppressHydrationWarning
       data-scroll-behavior="smooth"
+      className={`${instrumentSerif.variable} ${jetbrainsMono.variable}`}
     >
       <head>
-        {/* Preconnect to critical origins */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        {/* Instrument Serif — editorial display font */}
-        <link
-          href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap"
-          rel="stylesheet"
-        />
-
         {/* Structured data */}
         <script
           type="application/ld+json"
