@@ -116,7 +116,7 @@ Our mission is to democratize enterprise-grade security analysis by providing de
 
 ### 1. Advanced Security Analysis
 
-![Security Analysis](public/icons/shield-check.svg)
+![Security Analysis](public/analysis.png)
 
 #### Vulnerability Detection
 
@@ -174,7 +174,7 @@ Our mission is to democratize enterprise-grade security analysis by providing de
 
 ### 3. AI-Powered Intelligence
 
-![AI Features](public/icons/brain.svg)
+![AI Features](public/ai-config.png)
 
 #### Natural Language Descriptions
 
@@ -265,7 +265,7 @@ Our mission is to democratize enterprise-grade security analysis by providing de
 
 ### 7. Real-Time Analytics Dashboard
 
-![Analytics Dashboard](public/icons/layout-dashboard.svg)
+![Analytics Dashboard](public/cc.png)
 
 #### Dashboard Components
 
@@ -1694,8 +1694,6 @@ The AI provides:
 
 #### Chatbot Interaction
 
-![AI Chatbot](public/icons/bot.svg)
-
 Interact with the AI assistant:
 
 **Example Conversations**:
@@ -1763,8 +1761,6 @@ NEXT_PUBLIC_ENABLE_AI_CHATBOT=true
 ---
 
 ## Multi-Language Support
-
-![Code Search](public/icons/search.svg)
 
 ### Supported Languages
 
@@ -2190,8 +2186,6 @@ Automatically identifies frameworks and libraries:
 
 ## Security Analysis
 
-![Security Shield](public/icons/shield-check.svg)
-
 ### Vulnerability Detection
 
 #### OWASP Top 10 Coverage
@@ -2468,8 +2462,6 @@ fetch("http://169.254.169.254/latest/meta-data/"); // HIGH
 ```
 
 ### Secret Scanning
-
-![Secret Detection](public/icons/fingerprint.svg)
 
 #### Detected Secret Types
 
@@ -5018,8 +5010,6 @@ export class SecurityMonitor {
 ---
 
 ## Troubleshooting
-
-![Bug Fixing](public/icons/bug.svg)
 
 ### Common Issues
 
