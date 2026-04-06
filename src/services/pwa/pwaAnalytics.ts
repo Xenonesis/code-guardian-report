@@ -367,6 +367,25 @@ class PWAAnalyticsService {
 
   private loggedEvents = new Set<string>();
 
+  // Map PWA-specific event names to accepted AnalyticsEventType values
+  private mapToApiEvent(
+    event: string
+  ): "feature_used" | "custom" | "error_occurred" {
+    switch (event) {
+      case "pwa_launch":
+      case "install_prompt_shown":
+      case "pwa_installed":
+      case "background_sync":
+      case "push_notification_received":
+      case "share_action":
+      case "file_handled":
+      case "offline_usage":
+        return "feature_used";
+      default:
+        return "custom";
+    }
+  }
+
   private async sendAnalytics(event: string, data?: any): Promise<void> {
     // Skip API calls in development mode or when no backend is available
     if (
@@ -387,10 +406,14 @@ class PWAAnalyticsService {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          event,
-          data,
-          timestamp: Date.now(),
-          session: this.getSessionId(),
+          event: this.mapToApiEvent(event),
+          userId: "anonymous",
+          sessionId: this.getSessionId(),
+          properties: {
+            pwaEvent: event,
+            ...data,
+            timestamp: Date.now(),
+          },
         }),
       });
     } catch {

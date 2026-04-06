@@ -187,6 +187,7 @@
   "capture_links": "existing-client-navigate",
   "scope_extensions": [
     {
+      "type": "url",
       "origin": "https://code-guardian-report.vercel.app"
     }
   ],
