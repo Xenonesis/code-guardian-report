@@ -25,7 +25,7 @@ import {
   Brain,
   Eye,
   AlertCircle,
-  Github,
+  GitFork,
   Activity,
 } from "lucide-react";
 import { toast } from "sonner";
@@ -150,7 +150,7 @@ export function GitHubCopilotManager() {
           <div className="relative">
             <div className="absolute inset-0 animate-pulse rounded-full bg-blue-500/20 blur-xl"></div>
             <div className="bg-muted ring-border relative rounded-full p-4 ring-1">
-              <Github className="h-8 w-8 text-white" />
+              <GitFork className="h-8 w-8 text-white" />
             </div>
           </div>
           <div className="max-w-md space-y-2">
@@ -167,7 +167,7 @@ export function GitHubCopilotManager() {
             onClick={handleSignIn}
             className="mt-4 border-none bg-[#2da44e] text-white shadow-lg shadow-green-900/20 transition-all duration-300 hover:scale-105 hover:bg-[#2c974b]"
           >
-            <Github className="mr-2 h-4 w-4" />
+            <GitFork className="mr-2 h-4 w-4" />
             Connect GitHub Account
           </Button>
         </div>
@@ -246,7 +246,7 @@ export function GitHubCopilotManager() {
 
         {/* Status Alerts */}
         {authState.isAuthenticated && verificationStatus === "success" && (
-          <div className="border-emerald-500/30 bg-emerald-500/10 flex items-start gap-3 rounded-lg border p-4">
+          <div className="flex items-start gap-3 rounded-lg border border-emerald-500/30 bg-emerald-500/10 p-4">
             <CheckCircle className="mt-0.5 h-5 w-5 text-green-400" />
             <div>
               <h4 className="text-sm font-medium text-emerald-600 dark:text-emerald-300">

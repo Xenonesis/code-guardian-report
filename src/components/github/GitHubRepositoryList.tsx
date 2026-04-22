@@ -1,6 +1,6 @@
 // components/github/GitHubRepositoryList.tsx
 import React, { useState } from "react";
-import { Github, Star, GitFork, ExternalLink, TrendingUp } from "lucide-react";
+import { GitFork, Star, ExternalLink, TrendingUp } from "lucide-react";
 import { logger } from "@/utils/logger";
 import { RepositoryCardSkeleton } from "@/components/ui/skeleton-variants";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -56,7 +56,7 @@ const GitHubRepositoryList: React.FC<GitHubRepositoryListProps> = ({
     return (
       <div className="border-border bg-muted/5 rounded-lg border p-6 shadow-sm backdrop-blur-sm">
         <div className="py-8 text-center">
-          <Github className="text-muted-foreground mx-auto mb-4 h-12 w-12" />
+          <GitFork className="text-muted-foreground mx-auto mb-4 h-12 w-12" />
           <p className="text-muted-foreground">No repositories found</p>
         </div>
       </div>
@@ -75,7 +75,7 @@ const GitHubRepositoryList: React.FC<GitHubRepositoryListProps> = ({
             <div className="min-w-0 flex-1">
               {/* Repository name and visibility */}
               <div className="mb-2 flex flex-wrap items-center gap-2">
-                <Github className="text-muted-foreground group-hover:text-muted-foreground h-5 w-5 flex-shrink-0 transition-colors" />
+                <GitFork className="text-muted-foreground group-hover:text-muted-foreground h-5 w-5 flex-shrink-0 transition-colors" />
                 <h3 className="text-foreground truncate text-base font-semibold transition-colors hover:text-purple-600 sm:text-lg">
                   <a
                     href={repo.html_url}

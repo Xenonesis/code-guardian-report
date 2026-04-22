@@ -1,6 +1,6 @@
 // components/github/GitHubRepositoryPermissionModal.tsx
 import React from "react";
-import { X, Github, CheckCircle, AlertCircle } from "lucide-react";
+import { X, GitFork, CheckCircle, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface GitHubRepositoryPermissionModalProps {
@@ -32,7 +32,7 @@ const GitHubRepositoryPermissionModal: React.FC<
           {/* Icon */}
           <div className="mb-6 flex justify-center">
             <div className="bg-primary/10 flex h-16 w-16 items-center justify-center rounded-full">
-              <Github className="text-primary h-8 w-8" />
+              <GitFork className="text-primary h-8 w-8" />
             </div>
           </div>
 

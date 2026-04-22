@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FileCode, AlertTriangle, Github, Upload, Shield } from "lucide-react";
+import { FileCode, AlertTriangle, GitFork, Upload, Shield } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -86,7 +86,7 @@ export const UploadForm: React.FC<UploadFormProps> = ({
                   value="github"
                   className="data-[state=active]:bg-background text-muted-foreground hover:text-foreground flex h-10 items-center justify-center gap-2 rounded-lg text-xs font-semibold transition-all duration-200 data-[state=active]:text-purple-600 data-[state=active]:shadow-md data-[state=active]:shadow-purple-500/5 sm:h-12 sm:gap-2.5 sm:text-sm dark:data-[state=active]:text-purple-400"
                 >
-                  <Github className="h-4 w-4 sm:h-5 sm:w-5" />
+                  <GitFork className="h-4 w-4 sm:h-5 sm:w-5" />
                   GitHub Repo
                 </TabsTrigger>
               </TabsList>

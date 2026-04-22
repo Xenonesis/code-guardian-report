@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Github, Check, X } from "lucide-react";
+import { GitFork, Check, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { logger } from "@/utils/logger";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -90,7 +90,7 @@ const GitHubUsernameInput: React.FC<GitHubUsernameInputProps> = ({
           {/* Icon */}
           <div className="mb-6 flex justify-center">
             <div className="bg-primary/10 flex h-16 w-16 items-center justify-center rounded-full">
-              <Github className="text-primary h-8 w-8" />
+              <GitFork className="text-primary h-8 w-8" />
             </div>
           </div>
 

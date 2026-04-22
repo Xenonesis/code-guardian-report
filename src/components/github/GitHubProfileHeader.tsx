@@ -1,5 +1,5 @@
 import React from "react";
-import { Github, ExternalLink } from "lucide-react";
+import { GitFork, ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
@@ -44,11 +44,11 @@ export const GitHubProfileHeader: React.FC<GitHubProfileHeaderProps> = ({
             />
           ) : (
             <div className="bg-muted ring-background flex h-20 w-20 items-center justify-center rounded-2xl shadow-lg ring-4">
-              <Github className="text-muted-foreground h-10 w-10" />
+              <GitFork className="text-muted-foreground h-10 w-10" />
             </div>
           )}
           <div className="bg-background ring-border absolute -right-2 -bottom-2 rounded-full p-1.5 shadow-md ring-1">
-            <Github className="text-foreground h-4 w-4" />
+            <GitFork className="text-foreground h-4 w-4" />
           </div>
         </div>
 

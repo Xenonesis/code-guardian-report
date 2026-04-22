@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Shield, Mail, Github, ExternalLink } from "lucide-react";
+import { Shield, Mail, GitFork, ExternalLink } from "lucide-react";
 import { APP_VERSION_WITH_PREFIX } from "@/utils/version";
 import Link from "next/link";
 interface FooterProps {
@@ -71,7 +71,7 @@ const Footer: React.FC<FooterProps> = ({ className = "" }) => {
                 className="border-border text-muted-foreground hover:text-foreground hover:border-primary/40 border p-2 transition-colors"
                 aria-label="GitHub"
               >
-                <Github className="h-4 w-4" />
+                <GitFork className="h-4 w-4" />
               </a>
               <a
                 href="mailto:contact@codeguardian.dev"

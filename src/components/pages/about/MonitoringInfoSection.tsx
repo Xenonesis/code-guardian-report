@@ -4,7 +4,7 @@ import {
   Shield,
   Languages,
   Code,
-  Github,
+  GitFork,
   Award,
   Activity,
   Terminal,
@@ -191,7 +191,7 @@ const MonitoringInfoSectionComponent: React.FC = () => {
                 </div>
               </div>
               <div className="flex gap-4">
-                <Github className="text-primary mt-1 h-5 w-5" />
+                <GitFork className="text-primary mt-1 h-5 w-5" />
                 <div>
                   <h5 className="text-foreground mb-1 font-mono text-xs font-bold">
                     GIT_INTEGRATION

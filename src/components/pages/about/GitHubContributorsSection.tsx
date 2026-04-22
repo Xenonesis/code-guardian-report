@@ -9,7 +9,6 @@ import {
   MapPin,
   Building,
   Globe,
-  Github,
   Terminal,
   Code2,
 } from "lucide-react";
@@ -188,7 +187,7 @@ const GitHubContributorsSection = () => {
                         )
                       }
                     >
-                      <Github className="mr-2 h-4 w-4" />
+                      <GitFork className="mr-2 h-4 w-4" />
                       ACCESS_REPOSITORY
                       <ExternalLink className="ml-2 h-3 w-3" />
                     </Button>
@@ -307,7 +306,7 @@ const GitHubContributorsSection = () => {
                   )
                 }
               >
-                <Github className="mr-2 h-4 w-4" />
+                <GitFork className="mr-2 h-4 w-4" />
                 SOURCE_CODE
               </Button>
               <Button

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { useAuth } from "@/lib/auth-context";
-import { Github } from "lucide-react";
+import { GitFork } from "lucide-react";
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -61,7 +61,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         {/* GitHub Icon */}
         <div className="mb-6 flex justify-center">
           <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-gray-800 to-gray-900 shadow-lg">
-            <Github className="h-10 w-10 text-white" />
+            <GitFork className="h-10 w-10 text-white" />
           </div>
         </div>
 

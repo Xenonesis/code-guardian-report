@@ -17,7 +17,7 @@ import { useGitHubRepositories } from "@/hooks/useGitHubRepositories";
 import GitHubRepositoryPermissionModal from "@/components/github/GitHubRepositoryPermissionModal";
 import GitHubRepositoryList from "@/components/github/GitHubRepositoryList";
 import GitHubUsernameInput from "@/components/github/GitHubUsernameInput";
-import { Github } from "lucide-react";
+import { GitFork } from "lucide-react";
 import { toast } from "sonner";
 
 import { logger } from "@/utils/logger";
@@ -406,7 +406,7 @@ const UserDashboard: React.FC = () => {
           <div className="mb-8">
             <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div className="flex min-w-0 items-center gap-2">
-                <Github className="h-6 w-6 text-purple-600 dark:text-purple-400" />
+                <GitFork className="h-6 w-6 text-purple-600 dark:text-purple-400" />
                 <h2 className="text-foreground text-lg font-bold sm:text-xl dark:text-white">
                   Your GitHub Repositories
                 </h2>

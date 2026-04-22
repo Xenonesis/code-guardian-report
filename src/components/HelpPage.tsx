@@ -4,7 +4,7 @@ import React from "react";
 import {
   BookOpen,
   Mail,
-  Github,
+  GitFork,
   ExternalLink,
   Shield,
   Settings,
@@ -115,7 +115,7 @@ export const HelpPage: React.FC<HelpPageProps> = ({ className = "" }) => {
     },
     {
       title: "GitHub Issues",
-      icon: <Github className="h-5 w-5" />,
+      icon: <GitFork className="h-5 w-5" />,
       description: "Report bugs and request features",
       link: "https://github.com/Xenonesis/code-guardian-report/issues",
       external: true,

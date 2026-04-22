@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
-  Github,
+  GitFork,
   CheckCircle,
   AlertCircle,
   Download,
@@ -347,7 +347,7 @@ export const GitHubRepoInput: React.FC<GitHubRepoInputProps> = ({
     <div className="relative isolate space-y-4 sm:space-y-6">
       <div className="relative z-30 flex flex-col gap-3">
         <div ref={searchContainerRef} className="relative isolate z-40 w-full">
-          <Github className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 z-10 h-4 w-4 -translate-y-1/2 transform sm:h-5 sm:w-5" />
+          <GitFork className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 z-10 h-4 w-4 -translate-y-1/2 transform sm:h-5 sm:w-5" />
           <Input
             type="text"
             placeholder="Search repos or paste a GitHub URL"

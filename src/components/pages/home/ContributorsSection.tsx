@@ -2,14 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import {
-  Star,
-  GitFork,
-  Users,
-  Github,
-  ArrowRight,
-  ExternalLink,
-} from "lucide-react";
+import { Star, GitFork, Users, ArrowRight, ExternalLink } from "lucide-react";
 import { EnhancedCard } from "@/components/ui/enhanced-card";
 import { githubRepositoryService } from "@/services/githubRepositoryService";
 
@@ -146,7 +139,7 @@ export const ContributorsSection = () => {
           <div className="flex flex-col space-y-8 lg:col-span-5">
             <motion.div variants={itemVariants} className="space-y-4">
               <div className="bg-primary/10 text-primary border-primary/30 inline-flex items-center space-x-2 border px-3 py-1 font-mono text-[11px] tracking-[0.18em] uppercase">
-                <Github className="h-3 w-3" />
+                <GitFork className="h-3 w-3" />
                 <span>OPEN SOURCE</span>
               </div>
 
@@ -248,7 +241,7 @@ export const ContributorsSection = () => {
                 rel="noopener noreferrer"
                 className="btn-primary focus-visible:ring-ring inline-flex h-11 items-center justify-center space-x-2 px-6 text-xs tracking-[0.14em] uppercase shadow-none transition-colors focus-visible:ring-2 focus-visible:outline-none"
               >
-                <Github className="h-4 w-4" />
+                <GitFork className="h-4 w-4" />
                 <span>Star on GitHub</span>
                 <ExternalLink className="ml-1 h-3 w-3 opacity-50" />
               </a>

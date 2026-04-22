@@ -4,7 +4,7 @@ import React, { useEffect, useState, Suspense, lazy } from "react";
 import { useAuth } from "@/lib/auth-context";
 import { useNavigation } from "@/lib/navigation-context";
 import {
-  Github,
+  GitFork,
   Shield,
   Activity,
   GitBranch,
@@ -457,7 +457,7 @@ export const GitHubAnalysisPage: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2">
             <div className="flex flex-col justify-center p-8 md:p-12">
               <div className="border-border/40 bg-muted/50 mb-8 flex h-16 w-16 items-center justify-center rounded-2xl border shadow-lg dark:border-white/10 dark:bg-white/5">
-                <Github className="text-foreground h-8 w-8 dark:text-white" />
+                <GitFork className="text-foreground h-8 w-8 dark:text-white" />
               </div>
 
               <h1 className="font-display text-foreground mb-4 text-3xl font-bold tracking-tight md:text-4xl dark:text-white">
@@ -476,7 +476,7 @@ export const GitHubAnalysisPage: React.FC = () => {
                   size="lg"
                   className="border-border/50 w-full border bg-[#24292F] font-bold text-white shadow-lg hover:bg-[#24292F]/80 dark:border-white/10"
                 >
-                  <Github className="mr-2 h-5 w-5" />
+                  <GitFork className="mr-2 h-5 w-5" />
                   Continue with GitHub
                 </Button>
 
@@ -609,7 +609,7 @@ export const GitHubAnalysisPage: React.FC = () => {
                 <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                   <div className="flex min-w-0 items-center gap-3">
                     <div className="bg-primary/10 border-primary/20 rounded-lg border p-2">
-                      <Github className="text-primary h-5 w-5" />
+                      <GitFork className="text-primary h-5 w-5" />
                     </div>
                     <div className="min-w-0">
                       <h2 className="font-display text-foreground text-lg font-bold tracking-wide">
@@ -661,7 +661,7 @@ export const GitHubAnalysisPage: React.FC = () => {
               <div className="mb-8">
                 <Card className="hover:border-primary/30 border-border/50 bg-background/40 border-2 border-dashed p-8 text-center backdrop-blur-sm transition-colors dark:border-white/10 dark:bg-black/40">
                   <div className="border-border/50 bg-muted/50 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full border dark:border-white/10 dark:bg-white/5">
-                    <Github className="text-foreground h-8 w-8" />
+                    <GitFork className="text-foreground h-8 w-8" />
                   </div>
                   <h3 className="font-display text-foreground mb-2 text-xl font-bold">
                     CONNECT_GITHUB_ACCOUNT
@@ -674,7 +674,7 @@ export const GitHubAnalysisPage: React.FC = () => {
                     onClick={openConnectGitHubPrompt}
                     className="border-border/50 bg-muted/50 text-foreground hover:bg-muted border font-bold dark:border-white/20 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
                   >
-                    <Github className="mr-2 h-4 w-4" />
+                    <GitFork className="mr-2 h-4 w-4" />
                     INITIALIZE_CONNECTION
                   </Button>
                 </Card>
