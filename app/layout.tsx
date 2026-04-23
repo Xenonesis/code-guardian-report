@@ -120,10 +120,11 @@ export default async function RootLayout({
       className={`${instrumentSerif.variable} ${jetbrainsMono.variable}`}
     >
       <head>
-        {/* Structured data */}
+        {/* Structured data - nonce changes per request, suppress hydration warning */}
         <script
-          {...(nonce && { nonce })}
+          suppressHydrationWarning
           type="application/ld+json"
+          {...(nonce ? { nonce } : {})}
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
