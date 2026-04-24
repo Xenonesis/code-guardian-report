@@ -76,7 +76,7 @@ export const usePrismaAnalysis = () => {
 
       // Also check local storage
       const localHistory = analysisStorage.getAnalysisHistory();
-      setHasLocalData(localHistory.length > 0);
+      setHasLocalData(localHistory.previousAnalyses.length > 0);
 
       setSyncStatus("synced");
       setLastSyncTime(new Date());
@@ -93,8 +93,8 @@ export const usePrismaAnalysis = () => {
   // Load data from local storage only
   const loadLocalData = () => {
     const localHistory = analysisStorage.getAnalysisHistory();
-    setAnalysisHistory(localHistory as any[]);
-    setHasLocalData(localHistory.length > 0);
+    setAnalysisHistory(localHistory.previousAnalyses);
+    setHasLocalData(localHistory.previousAnalyses.length > 0);
     setHasCloudData(false);
     setSyncStatus("offline");
   };
@@ -105,11 +105,12 @@ export const usePrismaAnalysis = () => {
       setIsAnalyzing(true);
       try {
         // Always store locally first
-        analysisStorage.storeAnalysis(results, file.name, file.size);
+        await analysisStorage.storeAnalysisResults(results, file);
         setHasLocalData(true);
 
         // If authenticated, also store in cloud
-        if (isAuthenticated && user?.id) {
+        const userId = (user as { id?: string })?.id;
+        if (isAuthenticated && userId) {
           try {
             const analysisId = await prismaAnalysisStorage.storeAnalysisResults(
               results,
@@ -146,7 +147,8 @@ export const usePrismaAnalysis = () => {
 
   // Sync local data to cloud
   const syncToCloud = useCallback(async () => {
-    if (!isAuthenticated || !user?.id) {
+    const userId = (user as { id?: string })?.id;
+    if (!isAuthenticated || !userId) {
       logger.warn("Cannot sync: User not authenticated");
       return false;
     }
@@ -158,11 +160,11 @@ export const usePrismaAnalysis = () => {
       const localHistory = analysisStorage.getAnalysisHistory();
       let syncCount = 0;
 
-      for (const localAnalysis of localHistory) {
+      for (const localAnalysis of localHistory.previousAnalyses) {
         try {
           // Check if analysis already exists in database
           const cloudHistory =
-            await prismaAnalysisStorage.getUserAnalysisHistory(user.id, {
+            await prismaAnalysisStorage.getUserAnalysisHistory(userId, {
               fileName: localAnalysis.fileName,
               limit: 1,
             });
@@ -216,10 +218,11 @@ export const usePrismaAnalysis = () => {
         }
 
         // Also delete from local storage
-        analysisStorage.deleteAnalysis(analysisId);
+        analysisStorage.clearCurrentAnalysis();
 
         // Refresh history
-        if (isAuthenticated && user?.id) {
+        const userId = (user as { id?: string })?.id;
+        if (isAuthenticated && userId) {
           const history =
             await prismaAnalysisStorage.getUserAnalysisHistory();
           setAnalysisHistory(history);
