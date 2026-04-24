@@ -1,7 +1,6 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ThemeProvider } from "next-themes";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -23,30 +22,6 @@ const ConnectionStatus = dynamic(
   () =>
     import("@/components/common/ConnectionStatus").then(
       (mod) => mod.ConnectionStatus
-    ),
-  { ssr: false }
-);
-
-const FirestoreStatus = dynamic(
-  () =>
-    import("@/components/firebase/FirestoreStatus").then(
-      (mod) => mod.FirestoreStatus
-    ),
-  { ssr: false }
-);
-
-const FirestoreHealthChecker = dynamic(
-  () =>
-    import("@/components/firebase/FirestoreHealthChecker").then(
-      (mod) => mod.FirestoreHealthChecker
-    ),
-  { ssr: false }
-);
-
-const FirestoreErrorNotification = dynamic(
-  () =>
-    import("@/components/firebase/FirestoreErrorNotification").then(
-      (mod) => mod.FirestoreErrorNotification
     ),
   { ssr: false }
 );
@@ -87,7 +62,6 @@ interface ProvidersProps {
 
 export function Providers({ children }: ProvidersProps) {
   const isProd = process.env.NODE_ENV === "production";
-  const pathname = usePathname();
   const [enableDeferredUI, setEnableDeferredUI] = useState(false);
 
   useEffect(() => {
@@ -111,11 +85,6 @@ export function Providers({ children }: ProvidersProps) {
       }
     };
   }, []);
-
-  const needsFirestoreStatus =
-    pathname === "/" ||
-    pathname?.startsWith("/history") ||
-    pathname?.startsWith("/github-analysis");
 
   return (
     <ThemeProvider

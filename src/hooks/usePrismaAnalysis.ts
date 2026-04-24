@@ -50,14 +50,16 @@ export const usePrismaAnalysis = () => {
 
   // Set user ID when authenticated
   useEffect(() => {
-    if (user?.id) {
-      prismaAnalysisStorage.setUserId(user.id as string);
+    const userId = (user as { id?: string })?.id;
+    if (userId) {
+      prismaAnalysisStorage.setUserId(userId);
       loadInitialData();
     } else {
       prismaAnalysisStorage.setUserId(null);
       // Fallback to local storage when not authenticated
       loadLocalData();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   // Load initial data from cloud or local
@@ -223,7 +225,7 @@ export const usePrismaAnalysis = () => {
           setAnalysisHistory(history);
         } else {
           const localHistory = analysisStorage.getAnalysisHistory();
-          setAnalysisHistory(localHistory as any[]);
+          setAnalysisHistory(localHistory.previousAnalyses);
         }
 
         return true;
@@ -248,8 +250,11 @@ export const usePrismaAnalysis = () => {
           }
         }
 
-        // Fallback to local storage
-        return analysisStorage.getAnalysis(analysisId);
+        // Fallback to local storage - search in history
+        const history = analysisStorage.getAnalysisHistory();
+        return (
+          history.previousAnalyses.find((a) => a.id === analysisId) || null
+        );
       } catch (error) {
         logger.error("Error getting analysis:", error);
         return null;
@@ -268,7 +273,7 @@ export const usePrismaAnalysis = () => {
 
         // Local search fallback
         const localHistory = analysisStorage.getAnalysisHistory();
-        return localHistory.filter((item: any) =>
+        return localHistory.previousAnalyses.filter((item) =>
           item.fileName?.toLowerCase().includes(searchTerm.toLowerCase())
         );
       } catch (error) {

@@ -23,8 +23,6 @@ export interface AnalysisHistoryQuery {
 
 export class PrismaAnalysisStorageService {
   private static readonly MAX_HISTORY_SIZE = 50;
-  private static readonly MAX_CODE_SNIPPET_LENGTH = 500;
-  private static readonly MAX_ISSUES_PER_DOCUMENT = 500;
 
   private userId: string | null = null;
 
