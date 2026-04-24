@@ -5,7 +5,7 @@ import { prisma } from "@/lib/prisma";
 
 // GET /api/analysis/[id] - Get specific analysis
 export async function GET(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
@@ -43,7 +43,7 @@ export async function GET(
 
 // PUT /api/analysis/[id] - Update analysis
 export async function PUT(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
@@ -92,7 +92,7 @@ export async function PUT(
 
 // DELETE /api/analysis/[id] - Delete analysis
 export async function DELETE(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
