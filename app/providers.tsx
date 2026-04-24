@@ -12,6 +12,12 @@ import ErrorBoundary from "@/components/common/ErrorBoundary";
 import { AuthProvider } from "@/lib/auth-context";
 import { NavigationProvider } from "@/lib/navigation-context";
 import { SmoothScrollProvider } from "./providers/SmoothScrollProvider";
+import { SessionProvider } from "next-auth/react";
+
+// NextAuth SessionProvider wrapper
+function NextAuthProvider({ children }: { children: React.ReactNode }) {
+  return <SessionProvider>{children}</SessionProvider>;
+}
 
 const ConnectionStatus = dynamic(
   () =>
@@ -118,45 +124,38 @@ export function Providers({ children }: ProvidersProps) {
       enableSystem
       disableTransitionOnChange
     >
-      <AuthProvider>
-        <NavigationProvider>
-          <ErrorBoundary>
-            <TooltipProvider>
-              <SmoothScrollProvider>
-                <Sonner
-                  position="top-right"
-                  toastOptions={{
-                    className: "rounded-lg",
-                    duration: 3000,
-                    style: {
-                      background: "hsl(var(--background))",
-                      color: "hsl(var(--foreground))",
-                      border: "1px solid hsl(var(--border))",
-                    },
-                  }}
-                />
-                {enableDeferredUI ? <ConnectionStatus /> : null}
-                {enableDeferredUI && needsFirestoreStatus ? (
-                  <FirestoreStatus />
-                ) : null}
-                {enableDeferredUI && needsFirestoreStatus ? (
-                  <FirestoreHealthChecker />
-                ) : null}
-                {enableDeferredUI && needsFirestoreStatus ? (
-                  <FirestoreErrorNotification />
-                ) : null}
-                {enableDeferredUI ? <PWAUpdateNotification /> : null}
-                {enableDeferredUI ? <OfflineIndicator /> : null}
-                {enableDeferredUI ? <PWAMobileBanner /> : null}
-                {children}
-                {enableDeferredUI ? <ScrollToTop /> : null}
-                {isProd ? <Analytics /> : null}
-                {isProd ? <SpeedInsights /> : null}
-              </SmoothScrollProvider>
-            </TooltipProvider>
-          </ErrorBoundary>
-        </NavigationProvider>
-      </AuthProvider>
+      <NextAuthProvider>
+        <AuthProvider>
+          <NavigationProvider>
+            <ErrorBoundary>
+              <TooltipProvider>
+                <SmoothScrollProvider>
+                  <Sonner
+                    position="top-right"
+                    toastOptions={{
+                      className: "rounded-lg",
+                      duration: 3000,
+                      style: {
+                        background: "hsl(var(--background))",
+                        color: "hsl(var(--foreground))",
+                        border: "1px solid hsl(var(--border))",
+                      },
+                    }}
+                  />
+                  {enableDeferredUI ? <ConnectionStatus /> : null}
+                  {enableDeferredUI ? <PWAUpdateNotification /> : null}
+                  {enableDeferredUI ? <OfflineIndicator /> : null}
+                  {enableDeferredUI ? <PWAMobileBanner /> : null}
+                  {children}
+                  {enableDeferredUI ? <ScrollToTop /> : null}
+                  {isProd ? <Analytics /> : null}
+                  {isProd ? <SpeedInsights /> : null}
+                </SmoothScrollProvider>
+              </TooltipProvider>
+            </ErrorBoundary>
+          </NavigationProvider>
+        </AuthProvider>
+      </NextAuthProvider>
     </ThemeProvider>
   );
 }
