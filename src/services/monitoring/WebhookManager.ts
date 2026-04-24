@@ -112,6 +112,12 @@ class WebhookManagerClass {
   private monitoringRulesCollection = "monitoringRules";
   private webhookLogsCollection = "webhookLogs";
 
+  getWebhookEndpoint(webhookId: string): string | null {
+    const baseUrl = process.env.NEXT_PUBLIC_WEBHOOK_BASE_URL;
+    if (!baseUrl) return null;
+    return `${baseUrl.replace(/\/$/, "")}?webhookId=${encodeURIComponent(webhookId)}`;
+  }
+
   /**
    * Generate a secure webhook secret
    */

@@ -52,9 +52,36 @@ export interface LanguageDistribution {
   percentage: number;
 }
 
+export type IntegrationStorageStatus = {
+  configured: boolean;
+  persisted: boolean;
+  source: "cloud" | "local" | "unavailable";
+  error?: string;
+};
+
 export class GitHubAnalysisStorageService {
   private readonly GITHUB_ANALYSES_COLLECTION = "github_analyses";
   private readonly GITHUB_REPOSITORIES_COLLECTION = "github_repositories";
+  private lastStorageStatus: IntegrationStorageStatus = {
+    configured: true,
+    persisted: false,
+    source: "unavailable",
+  };
+
+  getLastStorageStatus(): IntegrationStorageStatus {
+    return this.lastStorageStatus;
+  }
+
+  private setStorageStatus(status: IntegrationStorageStatus): void {
+    this.lastStorageStatus = status;
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(
+        new CustomEvent("codeguardian:github-storage-status", {
+          detail: status,
+        })
+      );
+    }
+  }
 
   /**
    * Get all repositories analyzed by a user
@@ -92,6 +119,11 @@ export class GitHubAnalysisStorageService {
         });
       });
 
+      this.setStorageStatus({
+        configured: true,
+        persisted: true,
+        source: "cloud",
+      });
       return repositories;
     } catch (error) {
       const errorMessage =
@@ -112,7 +144,12 @@ export class GitHubAnalysisStorageService {
         );
       }
 
-      // Fallback to local storage
+      this.setStorageStatus({
+        configured: false,
+        persisted: false,
+        source: "local",
+        error: errorMessage,
+      });
       return localStorageGitHubAdapter.getUserRepositories(userId);
     }
   }
@@ -151,6 +188,11 @@ export class GitHubAnalysisStorageService {
         });
       });
 
+      this.setStorageStatus({
+        configured: true,
+        persisted: true,
+        source: "cloud",
+      });
       return analyses;
     } catch (error) {
       const errorMessage =
@@ -171,7 +213,12 @@ export class GitHubAnalysisStorageService {
         );
       }
 
-      // Fallback to local storage
+      this.setStorageStatus({
+        configured: false,
+        persisted: false,
+        source: "local",
+        error: errorMessage,
+      });
       return localStorageGitHubAdapter.getAnalysisHistory(userId);
     }
   }
@@ -383,16 +430,28 @@ export class GitHubAnalysisStorageService {
         userId,
         repositoryData
       );
+      this.setStorageStatus({
+        configured: true,
+        persisted: true,
+        source: "cloud",
+      });
     } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
       logger.error(
         "Error storing repository analysis, falling back to local storage:",
         error
       );
-      // Fallback to local storage
       await localStorageGitHubAdapter.storeRepositoryAnalysis(
         userId,
         repositoryData
       );
+      this.setStorageStatus({
+        configured: false,
+        persisted: true,
+        source: "local",
+        error: errorMessage,
+      });
     }
   }
 

@@ -53,6 +53,12 @@ function safeFilenamePart(value: string): string {
   return value.replace(/[^a-zA-Z0-9._-]/g, "-").slice(0, 100);
 }
 
+function getBearerToken(request: NextRequest): string | null {
+  const authHeader = request.headers.get("authorization");
+  const match = authHeader?.match(/^Bearer\s+(.+)$/i);
+  return match?.[1] || null;
+}
+
 /**
  * Generate cache key for repository
  */
@@ -246,6 +252,7 @@ export async function POST(request: NextRequest) {
       "User-Agent": "CodeGuardian-Security-Scanner/11.0.0",
       Accept: "application/vnd.github+json",
     };
+    const requestToken = getBearerToken(request);
 
     if (useArchive) {
       // Use public archive URL (no authentication required for public repos)
@@ -255,8 +262,7 @@ export async function POST(request: NextRequest) {
       downloadUrl = `https://api.github.com/repos/${owner}/${repo}/zipball/${branch}`;
 
       // Add GitHub token if available for higher rate limits
-      const githubToken =
-        process.env.GITHUB_TOKEN || process.env.NEXT_PUBLIC_GITHUB_TOKEN;
+      const githubToken = requestToken || process.env.GITHUB_TOKEN;
       if (githubToken) {
         headers["Authorization"] = `Bearer ${githubToken}`;
       }

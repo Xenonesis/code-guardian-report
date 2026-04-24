@@ -1,8 +1,72 @@
-import { getApps, initializeApp, cert, App } from "firebase-admin/app";
+import {
+  getApps,
+  initializeApp,
+  cert,
+  applicationDefault,
+  App,
+} from "firebase-admin/app";
 import { getFirestore, Firestore } from "firebase-admin/firestore";
 
 let adminApp: App | undefined;
 let adminDb: Firestore | undefined;
+
+function getProjectId(): string | undefined {
+  return (
+    process.env.FIREBASE_PROJECT_ID ||
+    process.env.GCLOUD_PROJECT ||
+    process.env.GOOGLE_CLOUD_PROJECT ||
+    process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID
+  );
+}
+
+function isPlaceholder(value: string | undefined): boolean {
+  if (!value) return false;
+  return (
+    value.includes("your_project_id") ||
+    value.includes("your-service-account") ||
+    value.includes("...your_private_key...") ||
+    value.trim() === "your_project_id"
+  );
+}
+
+function getServiceAccountCredentials(): {
+  projectId: string;
+  clientEmail: string;
+  privateKey: string;
+} | null {
+  const projectId = getProjectId();
+  const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
+  const privateKey = process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n");
+
+  if (!projectId || !clientEmail || !privateKey) return null;
+
+  if (
+    isPlaceholder(projectId) ||
+    isPlaceholder(clientEmail) ||
+    isPlaceholder(privateKey)
+  ) {
+    return null;
+  }
+
+  if (
+    !clientEmail.includes(".iam.gserviceaccount.com") ||
+    !privateKey.includes("-----BEGIN PRIVATE KEY-----")
+  ) {
+    return null;
+  }
+
+  return { projectId, clientEmail, privateKey };
+}
+
+function canUseApplicationDefaultCredentials(): boolean {
+  return Boolean(
+    process.env.GOOGLE_APPLICATION_CREDENTIALS ||
+    process.env.K_SERVICE ||
+    process.env.FUNCTION_TARGET ||
+    process.env.FUNCTIONS_EMULATOR ||
+    process.env.FIREBASE_CONFIG
+  );
+}
 
 /**
  * Initialize Firebase Admin SDK for server-side operations
@@ -21,34 +85,32 @@ export function getFirebaseAdmin(): { app: App; db: Firestore } {
     return { app: adminApp, db: adminDb };
   }
 
-  // Check for required environment variables
-  const projectId =
-    process.env.FIREBASE_PROJECT_ID ||
-    process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
-  const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
-  const privateKey = process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n");
+  const projectId = getProjectId();
+  const serviceAccount = getServiceAccountCredentials();
 
   if (!projectId) {
     throw new Error(
-      "Firebase Admin: FIREBASE_PROJECT_ID or NEXT_PUBLIC_FIREBASE_PROJECT_ID is required"
+      "Firebase Admin: FIREBASE_PROJECT_ID, GOOGLE_CLOUD_PROJECT, GCLOUD_PROJECT, or NEXT_PUBLIC_FIREBASE_PROJECT_ID is required"
     );
   }
 
-  // Initialize with service account if credentials are available
-  if (clientEmail && privateKey) {
+  if (serviceAccount) {
     adminApp = initializeApp({
       credential: cert({
-        projectId,
-        clientEmail,
-        privateKey,
+        projectId: serviceAccount.projectId,
+        clientEmail: serviceAccount.clientEmail,
+        privateKey: serviceAccount.privateKey,
       }),
     });
+  } else if (canUseApplicationDefaultCredentials()) {
+    adminApp = initializeApp({
+      credential: applicationDefault(),
+      projectId,
+    });
   } else {
-    // Initialize without credentials (works in Google Cloud environments with default credentials)
-    // In development, this will fail if not running in a Google Cloud environment
     console.warn(
-      "Firebase Admin: No service account credentials provided. " +
-        "Set FIREBASE_CLIENT_EMAIL and FIREBASE_PRIVATE_KEY for full functionality."
+      "Firebase Admin: No usable service account or application default credentials found. " +
+        "Firebase CLI login does not provide Admin SDK credentials for Next.js API routes."
     );
     adminApp = initializeApp({
       projectId,
@@ -63,11 +125,9 @@ export function getFirebaseAdmin(): { app: App; db: Firestore } {
  * Check if Firebase Admin is properly configured
  */
 export function isFirebaseAdminConfigured(): boolean {
-  const projectId =
-    process.env.FIREBASE_PROJECT_ID ||
-    process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
-  const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
-  const privateKey = process.env.FIREBASE_PRIVATE_KEY;
-
-  return !!(projectId && clientEmail && privateKey);
+  const projectId = getProjectId();
+  return Boolean(
+    projectId &&
+    (getServiceAccountCredentials() || canUseApplicationDefaultCredentials())
+  );
 }

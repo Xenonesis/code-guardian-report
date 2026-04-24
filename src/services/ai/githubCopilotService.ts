@@ -290,52 +290,12 @@ export class GitHubCopilotService {
         log("Failed to fetch models from API, using fallback list:", apiError);
       }
 
-      // Fallback: Use known GitHub Copilot models
-      // These are the models typically available through GitHub Copilot
-      const fallbackModels: GitHubCopilotModel[] = [
-        {
-          id: "gpt-4o",
-          name: "GPT-4o",
-          description:
-            "Most advanced model with multimodal capabilities, optimized for code analysis",
-          version: "2024-05-13",
-          maxTokens: 128000,
-          contextWindow: 128000,
-          capabilities: ["code", "text", "vision", "reasoning"],
-        },
-        {
-          id: "gpt-4-turbo",
-          name: "GPT-4 Turbo",
-          description: "Fast and powerful GPT-4 model with 128k context window",
-          version: "2024-04-09",
-          maxTokens: 128000,
-          contextWindow: 128000,
-          capabilities: ["code", "text", "vision"],
-        },
-        {
-          id: "gpt-4",
-          name: "GPT-4",
-          description: "Most capable GPT-4 model for complex code analysis",
-          version: "0613",
-          maxTokens: 8192,
-          contextWindow: 8192,
-          capabilities: ["code", "text"],
-        },
-        {
-          id: "gpt-3.5-turbo",
-          name: "GPT-3.5 Turbo",
-          description: "Fast and efficient model for quick analysis",
-          version: "0125",
-          maxTokens: 16384,
-          contextWindow: 16384,
-          capabilities: ["code", "text"],
-        },
-      ];
-
-      logger.debug(
-        `Using ${fallbackModels.length} fallback GitHub Copilot models`
-      );
-      return { success: true, models: fallbackModels };
+      return {
+        success: false,
+        models: [],
+        error:
+          "Unable to load GitHub Copilot models. Verify your token and Copilot subscription.",
+      };
     } catch (error) {
       logger.error("Error fetching GitHub Copilot models:", error);
       return {
@@ -419,7 +379,20 @@ export class GitHubCopilotService {
         return { success: false, error: errorMessage };
       }
 
-      const data: CopilotCompletionResponse = await response.json();
+      const data = (await response.json()) as CopilotCompletionResponse & {
+        usage?: CopilotCompletionResponse["usage"] & {
+          prompt_tokens?: number;
+          completion_tokens?: number;
+          total_tokens?: number;
+        };
+      };
+      data.usage = {
+        promptTokens:
+          data.usage?.promptTokens ?? data.usage?.prompt_tokens ?? 0,
+        completionTokens:
+          data.usage?.completionTokens ?? data.usage?.completion_tokens ?? 0,
+        totalTokens: data.usage?.totalTokens ?? data.usage?.total_tokens ?? 0,
+      };
 
       // Update Copilot access status on successful call
       if (this.authConfig && !this.authConfig.hasCopilotAccess) {
@@ -589,8 +562,9 @@ export class GitHubCopilotService {
 
         request.onComplete?.();
 
-        // Return mock response structure
-        const mockResponse: CopilotCompletionResponse = {
+        // The upstream stream does not send a final JSON envelope, so build the
+        // app's standard completion shape from the streamed content.
+        const streamedResponse: CopilotCompletionResponse = {
           id: `stream_${Date.now()}`,
           model: request.model,
           choices: [
@@ -611,7 +585,7 @@ export class GitHubCopilotService {
           created: Date.now(),
         };
 
-        return { success: true, data: mockResponse };
+        return { success: true, data: streamedResponse };
       } catch (streamError) {
         const error =
           streamError instanceof Error

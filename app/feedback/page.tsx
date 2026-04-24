@@ -5,15 +5,18 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/lib/auth-context";
 
 export default function FeedbackPage() {
+  const { user } = useAuth();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!message.trim()) {
@@ -23,15 +26,47 @@ export default function FeedbackPage() {
     }
 
     setError("");
-    setSuccess(true);
+    setSuccess(false);
+    setIsSubmitting(true);
 
-    setName("");
-    setEmail("");
-    setMessage("");
+    try {
+      const response = await fetch("/api/feedback", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          message,
+          userId: user?.uid,
+        }),
+      });
 
-    setTimeout(() => {
-      setSuccess(false);
-    }, 3000);
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok || !payload.success) {
+        throw new Error(
+          payload.error || "Feedback could not be saved. Please try again."
+        );
+      }
+
+      setSuccess(true);
+      setName("");
+      setEmail("");
+      setMessage("");
+
+      setTimeout(() => {
+        setSuccess(false);
+      }, 3000);
+    } catch (submitError) {
+      setError(
+        submitError instanceof Error
+          ? submitError.message
+          : "Feedback could not be submitted."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -67,8 +102,8 @@ export default function FeedbackPage() {
 
           {error && <p className="text-sm text-red-500">{error}</p>}
 
-          <Button type="submit" className="w-full">
-            Submit Feedback
+          <Button type="submit" className="w-full" disabled={isSubmitting}>
+            {isSubmitting ? "Submitting..." : "Submit Feedback"}
           </Button>
         </form>
 

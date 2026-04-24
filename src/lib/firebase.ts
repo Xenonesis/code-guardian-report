@@ -5,20 +5,6 @@ import { enableNetwork, disableNetwork } from "firebase/firestore";
 import { getAuth, GithubAuthProvider } from "firebase/auth";
 import { logger } from "@/utils/logger";
 
-// Firebase configuration using environment variables
-const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "mock-api-key",
-  authDomain:
-    process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || "mock-auth-domain",
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "mock-project-id",
-  storageBucket:
-    process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || "mock-storage-bucket",
-  messagingSenderId:
-    process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || "mock-sender-id",
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || "mock-app-id",
-};
-
-// Validate Firebase configuration
 const requiredEnvVars = [
   "NEXT_PUBLIC_FIREBASE_API_KEY",
   "NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN",
@@ -29,22 +15,26 @@ const requiredEnvVars = [
 ];
 
 const missingVars = requiredEnvVars.filter((varName) => !process.env[varName]);
-// Only log warning once in development (not in tests)
-if (
-  typeof window !== "undefined" &&
-  !(window as any).__firebaseEnvWarningShown
-) {
-  if (
-    missingVars.length > 0 &&
-    firebaseConfig.apiKey === "mock-api-key" &&
-    process.env.NODE_ENV !== "test" &&
-    !(window as any).isTest
-  ) {
-    // Log debug instead of warn to reduce console noise in development
-    logger.debug("Firebase: Using mock configuration (env vars not set)");
-    (window as any).__firebaseEnvWarningShown = true;
-  }
+
+if (missingVars.length > 0 && process.env.NODE_ENV !== "test") {
+  const message = `Firebase configuration is incomplete. Missing: ${missingVars.join(", ")}`;
+  logger.error(message);
+  throw new Error(message);
 }
+
+// Firebase configuration using environment variables. Test defaults are only
+// used when tests do not mock this module.
+const firebaseConfig = {
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "test-api-key",
+  authDomain:
+    process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || "test-auth-domain",
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "test-project-id",
+  storageBucket:
+    process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || "test-storage-bucket",
+  messagingSenderId:
+    process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || "test-sender-id",
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || "test-app-id",
+};
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

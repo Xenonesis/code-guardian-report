@@ -39,6 +39,20 @@ class GitHubRepositoryService {
   private readonly rawContentUrl = "https://raw.githubusercontent.com";
   private cacheInitialized = false;
 
+  private getGitHubAccessToken(): string | null {
+    if (typeof window === "undefined") return null;
+    try {
+      return localStorage.getItem("github_oauth_token");
+    } catch {
+      return null;
+    }
+  }
+
+  private authHeaders(): HeadersInit {
+    const token = this.getGitHubAccessToken();
+    return token ? { Authorization: `Bearer ${token}` } : {};
+  }
+
   /**
    * Parse GitHub URL to extract owner, repo, and branch
    * Security: Validates that URL is actually from github.com domain
@@ -111,7 +125,14 @@ class GitHubRepositoryService {
    */
   async validateRepository(owner: string, repo: string): Promise<boolean> {
     try {
-      const response = await fetch(`${this.baseUrl}/repos/${owner}/${repo}`);
+      const response = await fetch("/api/github/repo/info", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...this.authHeaders(),
+        },
+        body: JSON.stringify({ owner, repo }),
+      });
       return response.ok;
     } catch (error) {
       logger.error("Error validating repository:", error);
@@ -124,10 +145,22 @@ class GitHubRepositoryService {
    */
   async getRepositoryInfo(owner: string, repo: string) {
     try {
-      const response = await fetch(`${this.baseUrl}/repos/${owner}/${repo}`);
+      const response = await fetch("/api/github/repo/info", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...this.authHeaders(),
+        },
+        body: JSON.stringify({ owner, repo }),
+      });
 
       if (!response.ok) {
-        throw new Error(`Failed to fetch repository: ${response.statusText}`);
+        const payload = await response.json().catch(() => ({}));
+        throw new Error(
+          payload.error ||
+            payload.details ||
+            `Failed to fetch repository: ${response.statusText}`
+        );
       }
 
       const data = await response.json();
@@ -157,7 +190,13 @@ class GitHubRepositoryService {
   async getGitHubUserInfo(username: string): Promise<GitHubUserInfo | null> {
     try {
       const response = await fetch(
-        `${this.baseUrl}/users/${encodeURIComponent(username)}`
+        `${this.baseUrl}/users/${encodeURIComponent(username)}`,
+        {
+          headers: {
+            Accept: "application/vnd.github+json",
+            ...this.authHeaders(),
+          },
+        }
       );
 
       if (!response.ok) {
@@ -181,7 +220,13 @@ class GitHubRepositoryService {
   async getGitHubUserById(userId: string): Promise<GitHubUserInfo | null> {
     try {
       const response = await fetch(
-        `${this.baseUrl}/user/${encodeURIComponent(userId)}`
+        `${this.baseUrl}/user/${encodeURIComponent(userId)}`,
+        {
+          headers: {
+            Accept: "application/vnd.github+json",
+            ...this.authHeaders(),
+          },
+        }
       );
 
       if (!response.ok) {
@@ -205,7 +250,13 @@ class GitHubRepositoryService {
   async getContributors(owner: string, repo: string): Promise<any[]> {
     try {
       const response = await fetch(
-        `${this.baseUrl}/repos/${owner}/${repo}/contributors?per_page=100`
+        `${this.baseUrl}/repos/${owner}/${repo}/contributors?per_page=100`,
+        {
+          headers: {
+            Accept: "application/vnd.github+json",
+            ...this.authHeaders(),
+          },
+        }
       );
 
       if (!response.ok) {
@@ -229,7 +280,13 @@ class GitHubRepositoryService {
   ) {
     try {
       const response = await fetch(
-        `${this.baseUrl}/repos/${owner}/${repo}/git/trees/${branch}?recursive=1`
+        `${this.baseUrl}/repos/${owner}/${repo}/git/trees/${branch}?recursive=1`,
+        {
+          headers: {
+            Accept: "application/vnd.github+json",
+            ...this.authHeaders(),
+          },
+        }
       );
 
       if (!response.ok) {
@@ -400,6 +457,7 @@ class GitHubRepositoryService {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        ...this.authHeaders(),
       },
       body: JSON.stringify({
         owner,

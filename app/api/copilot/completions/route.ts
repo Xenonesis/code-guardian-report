@@ -13,7 +13,11 @@ interface CopilotMessage {
 
 interface CopilotCompletionsBody {
   stream?: boolean;
+  model: string;
   messages: CopilotMessage[];
+  temperature?: number;
+  max_tokens?: number;
+  n?: number;
 }
 
 function isValidAuthHeader(header: string): boolean {
@@ -31,6 +35,10 @@ function validateRequestBody(value: unknown): {
   }
 
   const body = value as Partial<CopilotCompletionsBody>;
+  if (typeof body.model !== "string" || !body.model.trim()) {
+    return { valid: false, message: "Request body must include a model." };
+  }
+
   if (!Array.isArray(body.messages) || body.messages.length === 0) {
     return {
       valid: false,
@@ -57,11 +65,56 @@ function validateRequestBody(value: unknown): {
     return { valid: false, message: "stream must be a boolean when provided." };
   }
 
+  if (
+    typeof body.temperature !== "undefined" &&
+    (typeof body.temperature !== "number" ||
+      body.temperature < 0 ||
+      body.temperature > 2)
+  ) {
+    return {
+      valid: false,
+      message: "temperature must be a number between 0 and 2 when provided.",
+    };
+  }
+
+  if (
+    typeof body.max_tokens !== "undefined" &&
+    (typeof body.max_tokens !== "number" ||
+      body.max_tokens < 1 ||
+      body.max_tokens > 128000)
+  ) {
+    return {
+      valid: false,
+      message: "max_tokens must be a positive number when provided.",
+    };
+  }
+
   return {
     valid: true,
     body: {
+      model: body.model.trim(),
       stream: body.stream,
       messages: body.messages,
+      temperature: body.temperature,
+      max_tokens: body.max_tokens,
+      n: body.n,
+    },
+  };
+}
+
+function normalizeCompletionResponse(data: any) {
+  if (!data || typeof data !== "object") return data;
+
+  const usage = data.usage;
+  if (!usage || typeof usage !== "object") return data;
+
+  return {
+    ...data,
+    usage: {
+      ...usage,
+      promptTokens: usage.promptTokens ?? usage.prompt_tokens ?? 0,
+      completionTokens: usage.completionTokens ?? usage.completion_tokens ?? 0,
+      totalTokens: usage.totalTokens ?? usage.total_tokens ?? 0,
     },
   };
 }
@@ -183,7 +236,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Handle non-streaming responses
-    const data = await response.json();
+    const data = normalizeCompletionResponse(await response.json());
 
     return NextResponse.json(data);
   } catch (error) {

@@ -269,6 +269,9 @@ const WebhookCard: React.FC<WebhookCardProps> = ({
     gitlab: "bg-orange-600 text-white",
     bitbucket: "bg-primary text-white",
   };
+  const endpoint = webhook.id
+    ? WebhookManager.getWebhookEndpoint(webhook.id)
+    : null;
 
   return (
     <div
@@ -294,6 +297,23 @@ const WebhookCard: React.FC<WebhookCardProps> = ({
           <p className="text-muted-foreground mb-3 text-sm">
             {webhook.repositoryUrl}
           </p>
+
+          <div className="mb-3 space-y-2 rounded-md border border-dashed p-3 text-xs">
+            <div>
+              <span className="font-medium">Webhook endpoint: </span>
+              {endpoint ? (
+                <code className="break-all">{endpoint}</code>
+              ) : (
+                <span className="text-amber-600">
+                  Set NEXT_PUBLIC_WEBHOOK_BASE_URL to show the deploy URL
+                </span>
+              )}
+            </div>
+            <div>
+              <span className="font-medium">Signing secret: </span>
+              <code className="break-all">{webhook.secret}</code>
+            </div>
+          </div>
 
           <div className="flex flex-wrap gap-2">
             {webhook.events.map((event) => (

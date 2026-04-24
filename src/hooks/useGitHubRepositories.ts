@@ -46,6 +46,15 @@ export const useGitHubRepositories = ({
   const [githubUser, setGithubUser] = useState<GitHubUserProfile | null>(null);
   const [initialized, setInitialized] = useState(false);
 
+  const getGitHubAccessToken = (): string | null => {
+    if (typeof window === "undefined") return null;
+    try {
+      return localStorage.getItem("github_oauth_token");
+    } catch {
+      return null;
+    }
+  };
+
   // Note: isValidGitHubUsername is imported from @/utils/githubValidation
 
   // Check if email is associated with GitHub
@@ -171,8 +180,12 @@ export const useGitHubRepositories = ({
     setError(null);
 
     try {
+      const token = getGitHubAccessToken();
       const response = await fetch(
-        `https://api.github.com/users/${username}/repos?per_page=100&sort=updated&direction=desc`
+        `/api/github/user/repos?username=${encodeURIComponent(username)}`,
+        {
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
+        }
       );
 
       if (!response.ok) {
