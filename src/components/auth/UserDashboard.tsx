@@ -74,7 +74,7 @@ const UserDashboard: React.FC = () => {
   });
 
   const fetchTasks = async () => {
-    if (!user) return;
+    if (!user || !db) return;
 
     try {
       const q = query(collection(db, "tasks"), where("userId", "==", user.id));
@@ -104,7 +104,7 @@ const UserDashboard: React.FC = () => {
 
   const addTask = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user || !newTaskTitle.trim()) return;
+    if (!user || !newTaskTitle.trim() || !db) return;
 
     setLoading(true);
     try {
@@ -129,6 +129,7 @@ const UserDashboard: React.FC = () => {
   };
 
   const toggleTask = async (taskId: string, completed: boolean) => {
+    if (!db) return;
     try {
       const taskRef = doc(db, "tasks", taskId);
       await updateDoc(taskRef, { completed: !completed });
@@ -139,6 +140,7 @@ const UserDashboard: React.FC = () => {
   };
 
   const deleteTask = async (taskId: string) => {
+    if (!db) return;
     try {
       await deleteDoc(doc(db, "tasks", taskId));
       await fetchTasks();

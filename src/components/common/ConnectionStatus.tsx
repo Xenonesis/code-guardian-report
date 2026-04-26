@@ -35,20 +35,24 @@ export const ConnectionStatus: React.FC<ConnectionStatusProps> = ({
       setShowStatus(true);
       setTimeout(() => setShowStatus(false), 3000);
 
-      // Re-enable Firebase network
-      enableNetwork(db).catch((err) =>
-        logger.warn("Failed to re-enable Firebase network", err)
-      );
+      // Re-enable Firebase network (if configured)
+      if (db) {
+        enableNetwork(db).catch((err) =>
+          logger.warn("Failed to re-enable Firebase network", err)
+        );
+      }
     };
 
     const handleOffline = () => {
       setConnectionState("offline");
       setShowStatus(true);
 
-      // Disable Firebase network to prevent connection attempts
-      disableNetwork(db).catch((err) =>
-        logger.warn("Failed to disable Firebase network", err)
-      );
+      // Disable Firebase network to prevent connection attempts (if configured)
+      if (db) {
+        disableNetwork(db).catch((err) =>
+          logger.warn("Failed to disable Firebase network", err)
+        );
+      }
     };
 
     window.addEventListener("online", handleOnline);
