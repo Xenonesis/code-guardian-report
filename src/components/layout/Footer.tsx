@@ -30,6 +30,10 @@ const Footer: React.FC<FooterProps> = ({ className = "" }) => {
     { label: "Terms", href: "/terms" },
   ];
 
+  const supportEmail = "support@codeguardian.dev";
+  const supportPhonePlaceholder = "Phone support coming soon";
+  const projectContactUrl = "https://github.com/Xenonesis/code-guardian-report";
+
   return (
     <footer
       className={`bg-background border-border/60 relative border-t border-dashed ${className}`}
@@ -52,7 +56,7 @@ const Footer: React.FC<FooterProps> = ({ className = "" }) => {
         }}
       />
       <div className="container mx-auto px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
-        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-5">
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-2">
             <div className="mb-4 flex items-center gap-2.5">
@@ -132,6 +136,45 @@ const Footer: React.FC<FooterProps> = ({ className = "" }) => {
               ))}
             </ul>
           </div>
+
+          <section aria-labelledby="footer-contact-heading">
+            <h4
+              id="footer-contact-heading"
+              className="text-foreground mb-4 font-mono text-xs tracking-[0.16em] uppercase"
+            >
+              Contact Us
+            </h4>
+            <address className="not-italic">
+              <ul className="space-y-2.5">
+                <li>
+                  <a
+                    href={`mailto:${supportEmail}`}
+                    className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1 font-mono text-xs tracking-[0.08em] uppercase transition-colors"
+                    aria-label={`Email support at ${supportEmail}`}
+                  >
+                    Support Email
+                  </a>
+                </li>
+                <li>
+                  <p className="text-muted-foreground font-mono text-xs tracking-[0.08em] uppercase">
+                    {supportPhonePlaceholder}
+                  </p>
+                </li>
+                <li>
+                  <a
+                    href={projectContactUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1 font-mono text-xs tracking-[0.08em] uppercase transition-colors"
+                    aria-label="Project contact on GitHub"
+                  >
+                    GitHub Project
+                    <ExternalLink className="h-3 w-3" aria-hidden="true" />
+                  </a>
+                </li>
+              </ul>
+            </address>
+          </section>
         </div>
       </div>
 
