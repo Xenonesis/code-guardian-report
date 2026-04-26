@@ -2,7 +2,6 @@
 
 import { initializeApp } from "firebase/app";
 import { enableNetwork, disableNetwork } from "firebase/firestore";
-import { getAuth, GithubAuthProvider } from "firebase/auth";
 import { logger } from "@/utils/logger";
 
 const requiredEnvVars = [
@@ -43,31 +42,6 @@ const app = initializeApp(firebaseConfig);
 import { createOptimizedFirestore } from "./firestore-config";
 
 export const db = createOptimizedFirestore(app);
-export const auth = getAuth(app);
-
-// Configure auth persistence and settings
-auth.settings.appVerificationDisabledForTesting = false;
-
-// Auth Providers - GitHub only
-export const githubProvider = new GithubAuthProvider();
-
-// Configure GitHub provider for better popup handling and COOP compatibility
-githubProvider.addScope("user:email");
-githubProvider.addScope("read:user");
-githubProvider.addScope("repo"); // Access to repositories
-githubProvider.addScope("user"); // Access to user profile
-githubProvider.setCustomParameters({
-  allow_signup: "true",
-});
-
-// Configure auth for better COOP handling
-if (typeof window !== "undefined") {
-  // Set auth language to browser language
-  auth.languageCode = navigator.language || "en";
-
-  // Configure auth settings for better popup handling
-  auth.settings.appVerificationDisabledForTesting = false;
-}
 
 // Export network control functions
 export { enableNetwork, disableNetwork };

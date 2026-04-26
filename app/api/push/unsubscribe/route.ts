@@ -4,6 +4,8 @@ import {
   isFirebaseAdminConfigured,
 } from "@/lib/firebaseAdmin";
 
+export const dynamic = "force-dynamic";
+
 interface UnsubscribePayload {
   userId?: string;
   endpoint?: string;

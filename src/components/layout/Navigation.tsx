@@ -46,7 +46,7 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
     const githubProvider = user?.providerData?.find(
       (p) => p.providerId === "github.com"
     );
-    const githubUserId = githubProvider?.uid;
+    const githubUserId = githubProvider?.id;
     return (
       userProfile?.githubMetadata?.avatarUrl ||
       githubProvider?.photoURL ||

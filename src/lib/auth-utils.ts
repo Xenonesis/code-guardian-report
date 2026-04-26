@@ -34,59 +34,38 @@ export const showRedirectLoadingMessage = () => {
 
 // Helper function to handle auth errors gracefully
 export const handleAuthError = (error: any, _context: string) => {
-  // User-friendly error messages
+  // User-friendly error messages for NextAuth
   const errorMessages: Record<string, string> = {
-    "auth/popup-blocked":
-      "Popup was blocked by your browser. We'll redirect you instead.",
-    "auth/popup-closed-by-user": "Sign-in was cancelled. Please try again.",
-    "auth/network-request-failed":
-      "Network error. Please check your connection and try again.",
-    "auth/too-many-requests":
-      "Too many attempts. Please wait a moment and try again.",
-    "auth/user-disabled":
-      "This account has been disabled. Please contact support.",
-    "auth/user-not-found": "No account found with this email address.",
-    "auth/wrong-password": "Incorrect password. Please try again.",
-    "auth/email-already-in-use": "An account with this email already exists.",
-    "auth/weak-password":
-      "Password is too weak. Please choose a stronger password.",
-    "auth/invalid-email": "Please enter a valid email address.",
-    "auth/account-exists-with-different-credential":
-      "An account with this email already exists with a different sign-in method.",
+    "OAuthCallback": "Authentication failed. Please try again.",
+    "OAuthCreateAccount": "Failed to create account. Please try again.",
+    "EmailCreateAccount": "Failed to create account. Please try again.",
+    "Callback": "Authentication callback failed. Please try again.",
+    "OAuthAccountNotLinked": "Account not linked. Please sign in with your original method.",
+    "EmailSignin": "Failed to send email. Please try again.",
+    "CredentialsSignin": "Invalid credentials. Please try again.",
+    "SessionRequired": "You must be signed in to access this resource.",
+    "Default": "An unexpected error occurred. Please try again.",
   };
 
-  const userMessage =
-    errorMessages[error.code] ||
-    "An unexpected error occurred. Please try again.";
+  const errorCode = error?.code || error?.name || "Default";
+  const userMessage = errorMessages[errorCode] || errorMessages["Default"];
 
-  // Don't show error toast for popup-blocked and account-exists since we handle them specially
-  if (
-    error.code !== "auth/popup-blocked" &&
-    error.code !== "auth/account-exists-with-different-credential"
-  ) {
-    toast.error("Authentication Error", {
-      description: userMessage,
-      duration: 5000,
-    });
-  }
+  toast.error("Authentication Error", {
+    description: userMessage,
+    duration: 5000,
+  });
 
   return userMessage;
 };
 
-// Helper function to extract provider info from Firebase auth error
+// Helper function to extract provider info from auth error
 export const getProviderFromError = (error: any): string | null => {
-  if (error.customData?.providerId) {
-    return error.customData.providerId;
-  }
-  if (error.credential?.providerId) {
-    return error.credential.providerId;
-  }
-  return null;
+  return error?.provider || error?.providerId || null;
 };
 
-// Helper function to get email from Firebase auth error
+// Helper function to get email from auth error
 export const getEmailFromError = (error: any): string | null => {
-  return error.customData?.email || error.email || null;
+  return error?.email || null;
 };
 
 // Helper to clean up URL after redirect authentication

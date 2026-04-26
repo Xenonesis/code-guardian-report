@@ -56,22 +56,22 @@ export const useFirebaseAnalysis = () => {
 
   // Initialize Firebase storage with user authentication
   useEffect(() => {
-    if (user?.uid) {
-      firebaseAnalysisStorage.setUserId(user.uid);
+    if (user?.id) {
+      firebaseAnalysisStorage.setUserId(user.id);
       loadInitialData();
     } else {
       firebaseAnalysisStorage.setUserId(null);
       // Fallback to local storage when not authenticated
       loadLocalData();
     }
-  }, [user?.uid, isAuthenticated]);
+  }, [user?.id, isAuthenticated]);
 
   // Monitor online status
   useEffect(() => {
     const handleOnline = () => {
       setIsOnline(true);
       setSyncStatus("synced");
-      if (user?.uid) {
+      if (user?.id) {
         syncPendingData();
       }
     };
@@ -88,11 +88,11 @@ export const useFirebaseAnalysis = () => {
       window.removeEventListener("online", handleOnline);
       window.removeEventListener("offline", handleOffline);
     };
-  }, [user?.uid, isAuthenticated]);
+  }, [user?.id, isAuthenticated]);
 
   // Subscribe to real-time updates when authenticated
   useEffect(() => {
-    if (!user?.uid || !isOnline) return;
+    if (!user?.id || !isOnline) return;
 
     const unsubscribe = firebaseAnalysisStorage.subscribe((data) => {
       setAnalysisHistory(data);
@@ -111,7 +111,7 @@ export const useFirebaseAnalysis = () => {
     return () => {
       unsubscribe();
     };
-  }, [user?.uid, isOnline]);
+  }, [user?.id, isOnline]);
 
   const loadInitialData = async () => {
     try {
@@ -121,7 +121,7 @@ export const useFirebaseAnalysis = () => {
       loadLocalData();
 
       // Then load cloud data if online
-      if (isOnline && user?.uid) {
+      if (isOnline && user?.id) {
         const cloudHistory =
           await firebaseAnalysisStorage.getUserAnalysisHistory();
         setAnalysisHistory(cloudHistory);
@@ -154,7 +154,7 @@ export const useFirebaseAnalysis = () => {
   };
 
   const syncPendingData = async () => {
-    if (!user?.uid || !isOnline) return;
+    if (!user?.id || !isOnline) return;
 
     try {
       setIsSyncing(true);
@@ -208,7 +208,7 @@ export const useFirebaseAnalysis = () => {
         setHasLocalData(true);
 
         // Store to Firebase if user is authenticated and online
-        if (user?.uid && isOnline) {
+        if (user?.id && isOnline) {
           setIsSyncing(true);
           setSyncStatus("pending");
 
@@ -241,7 +241,7 @@ export const useFirebaseAnalysis = () => {
         setIsSyncing(false);
       }
     },
-    [selectedFile, user?.uid, isOnline]
+    [selectedFile, user?.id, isOnline]
   );
 
   const startAnalysis = useCallback(() => {
@@ -325,7 +325,7 @@ export const useFirebaseAnalysis = () => {
 
   const exportAnalysisToCloud = useCallback(
     async (results: AnalysisResults, file: File, tags: string[] = []) => {
-      if (!user?.uid) {
+      if (!user?.id) {
         throw new Error("User must be authenticated to export to cloud");
       }
 
@@ -342,11 +342,11 @@ export const useFirebaseAnalysis = () => {
         throw error;
       }
     },
-    [user?.uid]
+    [user?.id]
   );
 
   const retrySync = useCallback(async () => {
-    if (!user?.uid || !isOnline) return;
+    if (!user?.id || !isOnline) return;
 
     try {
       await syncPendingData();
@@ -354,7 +354,7 @@ export const useFirebaseAnalysis = () => {
       logger.error("Error retrying sync:", error);
       setSyncStatus("error");
     }
-  }, [user?.uid, isOnline]);
+  }, [user?.id, isOnline]);
 
   // Computed state
   const analysisState: FirebaseAnalysisState = {

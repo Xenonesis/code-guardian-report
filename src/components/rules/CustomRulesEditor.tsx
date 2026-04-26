@@ -72,7 +72,7 @@ const CustomRulesEditor: React.FC = () => {
 
     setIsLoading(true);
     try {
-      const data = await CustomRulesEngine.getRules(user.uid);
+      const data = await CustomRulesEngine.getRules(user.id);
       setRules(data);
     } catch (error) {
       logger.error("Failed to load rules:", error);
@@ -85,7 +85,7 @@ const CustomRulesEditor: React.FC = () => {
     if (!user) return;
 
     try {
-      const data = await CustomRulesEngine.getRuleCategories(user.uid);
+      const data = await CustomRulesEngine.getRuleCategories(user.id);
       setCategories(data);
     } catch (error) {
       logger.error("Failed to load categories:", error);
@@ -135,7 +135,7 @@ const CustomRulesEditor: React.FC = () => {
     if (!user) return;
 
     try {
-      const json = await CustomRulesEngine.exportRules(user.uid);
+      const json = await CustomRulesEngine.exportRules(user.id);
       const blob = new Blob([json], { type: "application/json" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
@@ -153,7 +153,7 @@ const CustomRulesEditor: React.FC = () => {
 
     try {
       const text = await file.text();
-      const result = await CustomRulesEngine.importRules(user.uid, text);
+      const result = await CustomRulesEngine.importRules(user.id, text);
 
       if (result.imported > 0) {
         await loadRules();
@@ -230,7 +230,7 @@ const CustomRulesEditor: React.FC = () => {
               <CreateRuleDialog
                 onSubmit={handleCreateRule}
                 onClose={() => setIsCreateDialogOpen(false)}
-                userId={user.uid}
+                userId={user.id}
               />
             </DialogContent>
           </Dialog>
@@ -365,7 +365,7 @@ const CustomRulesEditor: React.FC = () => {
                       if (!user) return;
                       try {
                         await CustomRulesEngine.createFromTemplate(
-                          user.uid,
+                          user.id,
                           template.name
                         );
                         await loadRules();

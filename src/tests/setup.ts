@@ -108,17 +108,6 @@ vi.mock("firebase/firestore", () => ({
   disableNetwork: vi.fn().mockResolvedValue(undefined),
 }));
 
-// Mock Firebase Auth
-vi.mock("firebase/auth", () => ({
-  getAuth: vi.fn(() => ({})),
-  signInWithPopup: vi.fn(),
-  signOut: vi.fn(),
-  onAuthStateChanged: vi.fn(),
-  GithubAuthProvider: vi.fn(),
-  linkWithCredential: vi.fn(),
-  fetchSignInMethodsForEmail: vi.fn(),
-}));
-
 // Mock Firebase App
 vi.mock("firebase/app", () => ({
   initializeApp: vi.fn(() => ({})),
@@ -129,6 +118,5 @@ vi.mock("firebase/app", () => ({
 // Mock the firebase lib
 vi.mock("@/lib/firebase", () => ({
   db: {},
-  auth: {},
   app: {},
 }));

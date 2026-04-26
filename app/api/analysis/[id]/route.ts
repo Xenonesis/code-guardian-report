@@ -3,6 +3,9 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
+// Force dynamic rendering - this route uses auth and database
+export const dynamic = "force-dynamic";
+
 // GET /api/analysis/[id] - Get specific analysis
 export async function GET(
   _request: NextRequest,

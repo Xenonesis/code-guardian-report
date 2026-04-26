@@ -90,20 +90,20 @@ export const HistoryPage = ({
   const { user: currentUser } = useAuth();
 
   const loadAnalysisHistory = useCallback(async () => {
-    if (!currentUser?.uid) {
+    if (!currentUser?.id) {
       logger.debug("No user authenticated for history loading");
       return;
     }
 
-    logger.debug("Loading analysis history for user:", currentUser.uid);
+    logger.debug("Loading analysis history for user:", currentUser.id);
     setIsLoading(true);
 
     try {
-      firebaseAnalysisStorage.setUserId(currentUser.uid);
+      firebaseAnalysisStorage.setUserId(currentUser.id);
       logger.debug("Firebase service user ID set");
 
       const history = await firebaseAnalysisStorage.getUserAnalysisHistory(
-        currentUser.uid
+        currentUser.id
       );
       logger.debug(`Retrieved history: ${history.length} analyses`);
       logger.debug("History data:", history);
@@ -149,13 +149,13 @@ export const HistoryPage = ({
   }, [currentUser, toast]);
 
   useEffect(() => {
-    if (!currentUser?.uid) return;
+    if (!currentUser?.id) return;
 
     const unsubscribe = firebaseAnalysisStorage.subscribe((data) => {
       setAnalysisHistory(data);
     });
 
-    firebaseAnalysisStorage.setUserId(currentUser.uid);
+    firebaseAnalysisStorage.setUserId(currentUser.id);
 
     loadAnalysisHistory();
 
@@ -164,17 +164,17 @@ export const HistoryPage = ({
     return () => {
       unsubscribe?.();
     };
-  }, [currentUser?.uid]);
+  }, [currentUser?.id]);
 
   useEffect(() => {
     filterHistory();
   }, [analysisHistory, searchTerm, selectedTimeRange, selectedSeverity]);
 
   const loadUserStats = async () => {
-    if (!currentUser?.uid) return;
+    if (!currentUser?.id) return;
 
     try {
-      const stats = await firebaseAnalysisStorage.getUserStats(currentUser.uid);
+      const stats = await firebaseAnalysisStorage.getUserStats(currentUser.id);
       setUserStats(stats);
     } catch (error) {
       logger.error("Error loading user stats:", error);
@@ -298,7 +298,7 @@ export const HistoryPage = ({
     try {
       const exportData = {
         user: {
-          id: currentUser?.uid,
+          id: currentUser?.id,
           email: currentUser?.email,
           exportDate: new Date().toISOString(),
         },

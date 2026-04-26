@@ -39,7 +39,7 @@ export default function FeedbackPage() {
           name,
           email,
           message,
-          userId: user?.uid,
+          userId: user?.id,
         }),
       });
 

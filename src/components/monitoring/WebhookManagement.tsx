@@ -70,7 +70,7 @@ const WebhookManagement: React.FC = () => {
 
     setIsLoading(true);
     try {
-      const data = await WebhookManager.getWebhooks(user.uid);
+      const data = await WebhookManager.getWebhooks(user.id);
       setWebhooks(data);
     } catch (error) {
       logger.error("Failed to load webhooks:", error);
@@ -89,7 +89,7 @@ const WebhookManagement: React.FC = () => {
 
     try {
       await WebhookManager.createWebhook({
-        userId: user.uid,
+        userId: user.id,
         provider: data.provider,
         repositoryId: data.repositoryName.toLowerCase().replace(/\s+/g, "-"),
         repositoryName: data.repositoryName,

@@ -1,9 +1,24 @@
 import { PrismaClient } from "@prisma/client";
 
-const globalForPrisma = global as unknown as { prisma: PrismaClient };
+declare global {
+  var prisma: PrismaClient | undefined;
+}
 
-export const prisma = globalForPrisma.prisma || new PrismaClient();
+// Singleton pattern with lazy initialization
+// Prisma client is only created when first accessed
+function getPrismaClient(): PrismaClient {
+  if (!globalThis.prisma) {
+    globalThis.prisma = new PrismaClient({
+      log: process.env.NODE_ENV === "development" ? ["query", "error", "warn"] : ["error"],
+    });
+  }
+  return globalThis.prisma;
+}
 
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
-
-export default prisma;
+// Export a proxy that lazily initializes Prisma on first use
+export const prisma = new Proxy({} as PrismaClient, {
+  get: (_target, prop) => {
+    const client = getPrismaClient();
+    return (client as any)[prop];
+  },
+});

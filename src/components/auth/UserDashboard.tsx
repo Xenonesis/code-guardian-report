@@ -77,7 +77,7 @@ const UserDashboard: React.FC = () => {
     if (!user) return;
 
     try {
-      const q = query(collection(db, "tasks"), where("userId", "==", user.uid));
+      const q = query(collection(db, "tasks"), where("userId", "==", user.id));
       const querySnapshot = await getDocs(q);
       const userTasks: Task[] = [];
 
@@ -113,7 +113,7 @@ const UserDashboard: React.FC = () => {
         description: newTaskDescription,
         completed: false,
         createdAt: new Date(),
-        userId: user.uid,
+        userId: user.id,
       };
 
       await addDoc(collection(db, "tasks"), newTask);
@@ -300,9 +300,9 @@ const UserDashboard: React.FC = () => {
         const results = await engine.analyzeCodebase(zipFile);
 
         // Store results
-        if (user?.uid) {
+        if (user?.id) {
           const storage = new GitHubAnalysisStorageService();
-          await storage.storeRepositoryAnalysis(user.uid, {
+          await storage.storeRepositoryAnalysis(user.id, {
             name: repoInfo.repo,
             fullName: `${repoInfo.owner}/${repoInfo.repo}`,
             description: `Analysis of ${repoInfo.owner}/${repoInfo.repo}`,

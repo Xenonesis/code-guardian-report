@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { isValidGitHubUsername } from "@/utils/githubValidation";
 
+export const dynamic = "force-dynamic";
+
 function getBearerToken(request: NextRequest): string | null {
   const authHeader = request.headers.get("authorization");
   const match = authHeader?.match(/^Bearer\s+(.+)$/i);

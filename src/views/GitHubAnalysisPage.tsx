@@ -95,7 +95,7 @@ export const GitHubAnalysisPage: React.FC = () => {
 
   useEffect(() => {
     const loadDashboardStats = async () => {
-      if (!user?.uid) return;
+      if (!user?.id) return;
 
       try {
         const { GitHubAnalysisStorageService } =
@@ -103,8 +103,8 @@ export const GitHubAnalysisPage: React.FC = () => {
         const storageService = new GitHubAnalysisStorageService();
 
         const [repos, trends] = await Promise.all([
-          storageService.getUserRepositories(user.uid),
-          storageService.getSecurityTrends(user.uid),
+          storageService.getUserRepositories(user.id),
+          storageService.getSecurityTrends(user.id),
         ]);
 
         setDashboardStats({
@@ -120,7 +120,7 @@ export const GitHubAnalysisPage: React.FC = () => {
     };
 
     loadDashboardStats();
-  }, [user?.uid, selectedTab]);
+  }, [user?.id, selectedTab]);
 
   const {
     repositories,
@@ -383,9 +383,9 @@ export const GitHubAnalysisPage: React.FC = () => {
 
         toast.loading("Saving analysis results...", { id: progressToastId });
 
-        if (user?.uid) {
+        if (user?.id) {
           const storageService = new GitHubAnalysisStorageService();
-          await storageService.storeRepositoryAnalysis(user.uid, {
+          await storageService.storeRepositoryAnalysis(user.id, {
             name: repoInfo.repo,
             fullName: `${repoInfo.owner}/${repoInfo.repo}`,
             description:
@@ -404,7 +404,7 @@ export const GitHubAnalysisPage: React.FC = () => {
             duration: Number.parseFloat(results.analysisTime) || 0,
           });
 
-          firebaseAnalysisStorage.setUserId(user.uid);
+          firebaseAnalysisStorage.setUserId(user.id);
           const fileForStorage = new File(
             [zipFile],
             `${repoInfo.owner}-${repoInfo.repo}.zip`,
@@ -717,15 +717,15 @@ export const GitHubAnalysisPage: React.FC = () => {
           <div className="space-y-6">
             {selectedTab === "overview" && (
               <div className="animate-in fade-in space-y-8 duration-500">
-                <SecurityAnalyticsSection userId={user.uid} />
-                <RepositoryActivityAnalytics userId={user.uid} />
+                <SecurityAnalyticsSection userId={user.id} />
+                <RepositoryActivityAnalytics userId={user.id} />
               </div>
             )}
 
             {selectedTab === "repositories" && (
               <div className="animate-in fade-in duration-500">
                 <RepositoryAnalysisGrid
-                  userId={user.uid}
+                  userId={user.id}
                   liveRepositories={repositories}
                   onAnalyzeRepository={handleAnalyzeRepository}
                   isLoadingLive={reposLoading}
@@ -735,32 +735,32 @@ export const GitHubAnalysisPage: React.FC = () => {
 
             {selectedTab === "history" && (
               <div className="animate-in fade-in duration-500">
-                <AnalysisHistorySection userId={user.uid} />
+                <AnalysisHistorySection userId={user.id} />
               </div>
             )}
 
             {selectedTab === "analytics" && (
               <div className="animate-in fade-in space-y-8 duration-500">
-                <SecurityAnalyticsSection userId={user.uid} detailed />
-                <RepositoryActivityAnalytics userId={user.uid} detailed />
+                <SecurityAnalyticsSection userId={user.id} detailed />
+                <RepositoryActivityAnalytics userId={user.id} detailed />
               </div>
             )}
 
             {selectedTab === "comparison" && (
               <div className="animate-in fade-in duration-500">
-                <RepositoryComparisonTool userId={user.uid} />
+                <RepositoryComparisonTool userId={user.id} />
               </div>
             )}
 
             {selectedTab === "quality" && (
               <div className="animate-in fade-in duration-500">
-                <CodeQualityAnalytics userId={user.uid} />
+                <CodeQualityAnalytics userId={user.id} />
               </div>
             )}
 
             {selectedTab === "patterns" && (
               <div className="animate-in fade-in duration-500">
-                <VulnerabilityPatternAnalytics userId={user.uid} />
+                <VulnerabilityPatternAnalytics userId={user.id} />
               </div>
             )}
 

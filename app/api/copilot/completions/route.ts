@@ -6,6 +6,8 @@ import { createHash } from "node:crypto";
 import { PRODUCTION_CONFIG } from "@/config/security";
 import { checkRateLimit } from "@/lib/rate-limit";
 
+export const dynamic = "force-dynamic";
+
 interface CopilotMessage {
   role: string;
   content: string;

@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { PRODUCTION_CONFIG } from "@/config/security";
 import { checkRateLimit } from "@/lib/rate-limit";
 
+export const dynamic = "force-dynamic";
+
 /**
  * GitHub Repository Download Proxy with Caching
  *

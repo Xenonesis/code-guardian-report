@@ -5,6 +5,8 @@ import {
 } from "@/lib/firebaseAdmin";
 import { checkRateLimit } from "@/lib/rate-limit";
 
+export const dynamic = "force-dynamic";
+
 const MAX_MESSAGE_LENGTH = 5000;
 
 interface FeedbackPayload {

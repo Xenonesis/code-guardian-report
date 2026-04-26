@@ -50,12 +50,12 @@ export const useEnhancedAnalysis = () => {
 
   // Sync userId with Firebase storage whenever user changes
   useEffect(() => {
-    if (user?.uid) {
-      firebaseAnalysisStorage.setUserId(user.uid);
+    if (user?.id) {
+      firebaseAnalysisStorage.setUserId(user.id);
     } else {
       firebaseAnalysisStorage.setUserId(null);
     }
-  }, [user?.uid]);
+  }, [user?.id]);
 
   // Initialize from storage on mount
   useEffect(() => {
@@ -109,8 +109,8 @@ export const useEnhancedAnalysis = () => {
       if (fileToUse) {
         try {
           // Get current user ID from Firebase Auth if not provided
-          // CRITICAL: Always use the latest user.uid from auth context
-          const currentUserId = userId || user?.uid;
+          // CRITICAL: Always use the latest user.id from auth context
+          const currentUserId = userId || user?.id;
 
           const storageResult =
             await analysisIntegrationService.handleAnalysisComplete(
