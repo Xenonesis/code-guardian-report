@@ -1,8 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import {
-  getFirebaseAdmin,
-  isFirebaseAdminConfigured,
-} from "@/lib/firebaseAdmin";
 
 export const dynamic = "force-dynamic";
 
@@ -16,10 +12,9 @@ interface ScheduledNotificationPayload {
 }
 
 export async function GET() {
-  const configured = isFirebaseAdminConfigured();
   return NextResponse.json({
     status: "push schedule endpoint is working",
-    configured,
+    configured: false,
     timestamp: new Date().toISOString(),
   });
 }
@@ -55,50 +50,12 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check if Firebase Admin is configured
-    if (!isFirebaseAdminConfigured()) {
-      console.warn(
-        "Push schedule: Firebase Admin not configured, notification not persisted"
-      );
-      return NextResponse.json(
-        {
-          success: false,
-          configured: false,
-          error:
-            "Push scheduling storage is not configured. Set Firebase Admin credentials.",
-        },
-        { status: 503 }
-      );
-    }
-
-    const { db } = getFirebaseAdmin();
-
-    // Create scheduled notification record in Firestore
-    const scheduledNotification = {
-      title: body.title,
-      body: body.body,
-      scheduledTime: body.scheduledTime,
-      scheduledTimestamp: scheduledDate.getTime(),
-      userId: body.userId,
-      icon: body.icon || "/icons/icon-192x192.png",
-      data: body.data || {},
-      status: "scheduled",
-      createdAt: new Date().toISOString(),
-    };
-
-    // Store in Firestore - Cloud Functions will process scheduled notifications
-    const docRef = await db
-      .collection("scheduledNotifications")
-      .add(scheduledNotification);
-
+    // Push scheduling disabled - Firebase removed
     return NextResponse.json({
-      success: true,
-      message: "Notification scheduled successfully",
-      scheduledNotification: {
-        id: docRef.id,
-        scheduledTime: scheduledNotification.scheduledTime,
-        status: scheduledNotification.status,
-      },
+      success: false,
+      scheduled: false,
+      error: "Push scheduling is not available",
+      timestamp: new Date().toISOString(),
     });
   } catch (error) {
     console.error("Push schedule error:", error);

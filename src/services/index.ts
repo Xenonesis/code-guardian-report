@@ -2,7 +2,6 @@
 
 // Storage services
 export * from "./storage/analysisStorage";
-export * from "./storage/firebaseAnalysisStorage";
 export * from "./storage/offlineManager";
 
 // AI services

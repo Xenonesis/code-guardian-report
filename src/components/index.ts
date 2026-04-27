@@ -37,13 +37,6 @@ export { PWAMobileBanner } from "./pwa/PWAMobileBanner";
 export { PWAQuickActions } from "./pwa/PWAQuickActions";
 export { PWADashboard } from "./pwa/PWADashboard";
 
-// Firebase components
-export { FirebaseAnalyticsDashboard } from "./firebase/FirebaseAnalyticsDashboard";
-export { FirestoreStatus } from "./firebase/FirestoreStatus";
-export { FirestoreHealthChecker } from "./firebase/FirestoreHealthChecker";
-export { FirestoreErrorNotification } from "./firebase/FirestoreErrorNotification";
-export { StorageStatus } from "./firebase/StorageStatus";
-
 // AI components
 export { AISecurityInsights } from "./ai/AISecurityInsights";
 export { AIKeyManager } from "./ai/AIKeyManager";

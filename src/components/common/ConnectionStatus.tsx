@@ -2,24 +2,14 @@
 
 // components/ConnectionStatus.tsx
 import React, { useState, useEffect } from "react";
-import {
-  AlertCircle,
-  CheckCircle,
-  Wifi,
-  WifiOff,
-  Database,
-  AlertTriangle,
-} from "lucide-react";
+import { AlertCircle, CheckCircle, Wifi, WifiOff } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { enableNetwork, disableNetwork } from "firebase/firestore";
-import { db } from "@/lib/firebase";
-import { logger } from "@/utils/logger";
 
 interface ConnectionStatusProps {
   className?: string;
 }
 
-type ConnectionState = "online" | "offline" | "firebase-error";
+type ConnectionState = "online" | "offline";
 
 export const ConnectionStatus: React.FC<ConnectionStatusProps> = ({
   className,
@@ -27,32 +17,17 @@ export const ConnectionStatus: React.FC<ConnectionStatusProps> = ({
   const [connectionState, setConnectionState] =
     useState<ConnectionState>("online");
   const [showStatus, setShowStatus] = useState(false);
-  const [_firebaseConnected, _setFirebaseConnected] = useState(true);
 
   useEffect(() => {
     const handleOnline = () => {
       setConnectionState("online");
       setShowStatus(true);
       setTimeout(() => setShowStatus(false), 3000);
-
-      // Re-enable Firebase network (if configured)
-      if (db) {
-        enableNetwork(db).catch((err) =>
-          logger.warn("Failed to re-enable Firebase network", err)
-        );
-      }
     };
 
     const handleOffline = () => {
       setConnectionState("offline");
       setShowStatus(true);
-
-      // Disable Firebase network to prevent connection attempts (if configured)
-      if (db) {
-        disableNetwork(db).catch((err) =>
-          logger.warn("Failed to disable Firebase network", err)
-        );
-      }
     };
 
     window.addEventListener("online", handleOnline);
@@ -90,18 +65,10 @@ export const ConnectionStatus: React.FC<ConnectionStatusProps> = ({
           className: "border-red-500 bg-red-50",
           textClassName: "text-red-800",
         };
-      case "firebase-error":
-        return {
-          icon: <AlertCircle className="h-4 w-4 text-yellow-600" />,
-          secondIcon: <AlertTriangle className="h-4 w-4 text-yellow-600" />,
-          message: "Database connection issues - retrying...",
-          className: "border-yellow-500 bg-yellow-50",
-          textClassName: "text-yellow-800",
-        };
       default:
         return {
           icon: <CheckCircle className="h-4 w-4 text-green-600" />,
-          secondIcon: <Database className="h-4 w-4 text-green-600" />,
+          secondIcon: <Wifi className="h-4 w-4 text-green-600" />,
           message: "Connected",
           className: "border-green-500 bg-green-50",
           textClassName: "text-green-800",

@@ -1,8 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import {
-  getFirebaseAdmin,
-  isFirebaseAdminConfigured,
-} from "@/lib/firebaseAdmin";
 
 export const dynamic = "force-dynamic";
 
@@ -90,26 +86,8 @@ export async function POST(request: NextRequest) {
       console.error("[Client Error]", JSON.stringify(errorLog, null, 2));
     }
 
-    if (!isFirebaseAdminConfigured()) {
-      return NextResponse.json(
-        {
-          success: false,
-          logged: false,
-          persisted: false,
-          error:
-            "Error log storage is not configured. Set Firebase Admin credentials.",
-        },
-        {
-          status: 503,
-          headers: {
-            "Cache-Control": "no-store",
-          },
-        }
-      );
-    }
-
-    const { db } = getFirebaseAdmin();
-    const docRef = await db.collection("errorLogs").add(errorLog);
+    // Error log storage disabled - Firebase removed
+    const docRef = { id: `error-${Date.now()}` };
 
     return NextResponse.json(
       {

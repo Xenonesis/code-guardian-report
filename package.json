@@ -103,8 +103,6 @@
     "clsx": "^2.1.1",
     "esprima": "^4.0.1",
     "esquery": "^1.7.0",
-    "firebase": "^12.11.0",
-    "firebase-admin": "^13.7.0",
     "framer-motion": "^12.38.0",
     "html2canvas": "^1.4.1",
     "jspdf": "^4.2.1",

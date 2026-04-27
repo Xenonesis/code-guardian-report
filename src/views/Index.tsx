@@ -6,10 +6,8 @@ import { AnalysisTabs } from "@/components/pages/home/AnalysisTabs";
 import { StorageBanner } from "@/components/pages/home/StorageBanner";
 import { useAnalysisHandlers } from "@/components/pages/home/AnalysisHandlers";
 import { useEnhancedAnalysis } from "@/hooks/useEnhancedAnalysis";
-import { Skeleton } from "@/components/ui/skeleton";
 
 const FloatingChatBot = lazy(() => import("@/components/ai/FloatingChatBot"));
-const StorageStatus = lazy(() => import("@/components/firebase/StorageStatus"));
 const AnalysisHistoryModal = lazy(
   () => import("@/components/analysis/AnalysisHistoryModal")
 );
@@ -17,7 +15,6 @@ const AnalysisHistoryModal = lazy(
 const Index = () => {
   const [currentTab, setCurrentTab] = useState("upload");
   const [isRedirecting, setIsRedirecting] = useState(false);
-  const [showStorageStatus, setShowStorageStatus] = useState(false);
   const [showHistoryModal, setShowHistoryModal] = useState(false);
 
   const {
@@ -36,28 +33,22 @@ const Index = () => {
     restoreFromHistory,
   } = useEnhancedAnalysis();
 
-  const {
-    handleAnalysisCompleteWithRedirect,
-    handleClearStoredData,
-    handleExportAnalysis,
-    handleImportAnalysis,
-    handleOptimizeStorage,
-    handleRestoreFromHistory,
-  } = useAnalysisHandlers({
-    hasStoredData,
-    onAnalysisComplete: (results, file) =>
-      handleAnalysisComplete(results, undefined, file),
-    onSetCurrentTab: setCurrentTab,
-    onSetIsRedirecting: setIsRedirecting,
-    onClearStoredData: clearStoredData,
-    onExportAnalysis: exportAnalysis,
-    onImportAnalysis: importAnalysis,
-    onOptimizeStorage: optimizeStorage,
-    onRestoreFromHistory: (analysisData) => {
-      restoreFromHistory(analysisData);
-      setShowHistoryModal(false);
-    },
-  });
+  const { handleAnalysisCompleteWithRedirect, handleRestoreFromHistory } =
+    useAnalysisHandlers({
+      hasStoredData,
+      onAnalysisComplete: (results, file) =>
+        handleAnalysisComplete(results, undefined, file),
+      onSetCurrentTab: setCurrentTab,
+      onSetIsRedirecting: setIsRedirecting,
+      onClearStoredData: clearStoredData,
+      onExportAnalysis: exportAnalysis,
+      onImportAnalysis: importAnalysis,
+      onOptimizeStorage: optimizeStorage,
+      onRestoreFromHistory: (analysisData) => {
+        restoreFromHistory(analysisData);
+        setShowHistoryModal(false);
+      },
+    });
 
   const handleStartAnalysis = () => {
     setCurrentTab("upload");
@@ -72,27 +63,7 @@ const Index = () => {
         storedAnalysis={storedAnalysis}
         storageStats={storageStats}
         isNewFile={isNewFile}
-        showStorageStatus={showStorageStatus}
-        onToggleStorageStatus={() => setShowStorageStatus(!showStorageStatus)}
       />
-
-      {}
-      {showStorageStatus && (
-        <div className="mx-auto mb-6 max-w-6xl">
-          <Suspense fallback={<Skeleton className="h-32 rounded-lg" />}>
-            <StorageStatus
-              hasStoredData={hasStoredData}
-              storedAnalysis={storedAnalysis}
-              storageStats={storageStats}
-              onClearData={handleClearStoredData}
-              onExportAnalysis={handleExportAnalysis}
-              onImportAnalysis={handleImportAnalysis}
-              onOptimizeStorage={handleOptimizeStorage}
-              onShowHistory={() => setShowHistoryModal(true)}
-            />
-          </Suspense>
-        </div>
-      )}
 
       <AnalysisTabs
         currentTab={currentTab}

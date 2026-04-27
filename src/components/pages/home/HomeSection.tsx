@@ -38,14 +38,12 @@ const retryImport = <T,>(
 const FloatingChatBot = lazy(() =>
   retryImport(() => import("@/components/ai/FloatingChatBot"))
 );
-const StorageStatus = lazy(() => import("@/components/firebase/StorageStatus"));
 const AnalysisHistoryModal = lazy(
   () => import("@/components/analysis/AnalysisHistoryModal")
 );
 
 export const HomeSection: React.FC = () => {
   const [isRedirecting, setIsRedirecting] = useState(false);
-  const [showStorageStatus, setShowStorageStatus] = useState(false);
   const [showHistoryModal, setShowHistoryModal] = useState(false);
   const { currentTab, setCurrentTab, navigateTo } = useNavigation();
 
@@ -99,27 +97,21 @@ export const HomeSection: React.FC = () => {
     ]
   );
 
-  const {
-    handleAnalysisCompleteWithRedirect,
-    handleClearStoredData,
-    handleExportAnalysis,
-    handleImportAnalysis,
-    handleOptimizeStorage,
-    handleRestoreFromHistory,
-  } = useAnalysisHandlers({
-    hasStoredData,
-    onAnalysisComplete: handleAnalysisCompleteWithFile,
-    onSetCurrentTab: setCurrentTab,
-    onSetIsRedirecting: setIsRedirecting,
-    onClearStoredData: clearStoredData,
-    onExportAnalysis: exportAnalysis,
-    onImportAnalysis: importAnalysis,
-    onOptimizeStorage: optimizeStorage,
-    onRestoreFromHistory: (analysisData) => {
-      restoreFromHistory(analysisData);
-      setShowHistoryModal(false);
-    },
-  });
+  const { handleAnalysisCompleteWithRedirect, handleRestoreFromHistory } =
+    useAnalysisHandlers({
+      hasStoredData,
+      onAnalysisComplete: handleAnalysisCompleteWithFile,
+      onSetCurrentTab: setCurrentTab,
+      onSetIsRedirecting: setIsRedirecting,
+      onClearStoredData: clearStoredData,
+      onExportAnalysis: exportAnalysis,
+      onImportAnalysis: importAnalysis,
+      onOptimizeStorage: optimizeStorage,
+      onRestoreFromHistory: (analysisData) => {
+        restoreFromHistory(analysisData);
+        setShowHistoryModal(false);
+      },
+    });
 
   const handleStartAnalysis = () => {
     navigateTo("home", "upload");
@@ -139,31 +131,7 @@ export const HomeSection: React.FC = () => {
           storedAnalysis={storedAnalysis}
           storageStats={storageStats}
           isNewFile={isNewFile}
-          showStorageStatus={showStorageStatus}
-          onToggleStorageStatus={() => setShowStorageStatus(!showStorageStatus)}
         />
-
-        {/* Storage Status Component */}
-        {showStorageStatus && (
-          <div className="mx-auto mb-6 max-w-6xl">
-            <Suspense
-              fallback={
-                <div className="bg-muted dark:bg-foreground h-32 animate-pulse rounded-lg"></div>
-              }
-            >
-              <StorageStatus
-                hasStoredData={hasStoredData}
-                storedAnalysis={storedAnalysis}
-                storageStats={storageStats}
-                onClearData={handleClearStoredData}
-                onExportAnalysis={handleExportAnalysis}
-                onImportAnalysis={handleImportAnalysis}
-                onOptimizeStorage={handleOptimizeStorage}
-                onShowHistory={() => setShowHistoryModal(true)}
-              />
-            </Suspense>
-          </div>
-        )}
 
         <AnalysisTabs
           currentTab={currentTab}

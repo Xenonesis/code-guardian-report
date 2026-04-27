@@ -2,17 +2,6 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "@/lib/auth-context";
 import { useNavigation } from "@/lib/navigation-context";
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  addDoc,
-  deleteDoc,
-  doc,
-  updateDoc,
-} from "firebase/firestore";
-import { db } from "@/lib/firebase";
 import { useGitHubRepositories } from "@/hooks/useGitHubRepositories";
 import GitHubRepositoryPermissionModal from "@/components/github/GitHubRepositoryPermissionModal";
 import GitHubRepositoryList from "@/components/github/GitHubRepositoryList";
@@ -21,21 +10,9 @@ import { GitFork } from "lucide-react";
 import { toast } from "sonner";
 
 import { logger } from "@/utils/logger";
-interface Task {
-  id: string;
-  title: string;
-  description: string;
-  completed: boolean;
-  createdAt: Date;
-  userId: string;
-}
 
 const UserDashboard: React.FC = () => {
   const { user, userProfile, logout } = useAuth();
-  const [tasks, setTasks] = useState<Task[]>([]);
-  const [newTaskTitle, setNewTaskTitle] = useState("");
-  const [newTaskDescription, setNewTaskDescription] = useState("");
-  const [loading, setLoading] = useState(false);
   const [showPermissionModal, setShowPermissionModal] = useState(false);
   const [showUsernameInput, setShowUsernameInput] = useState(false);
   const [showGitHubRepos, setShowGitHubRepos] = useState(false);
@@ -73,82 +50,6 @@ const UserDashboard: React.FC = () => {
     enabled: !userProfile?.isGitHubUser, // For email/password users linking GitHub
   });
 
-  const fetchTasks = async () => {
-    if (!user || !db) return;
-
-    try {
-      const q = query(collection(db, "tasks"), where("userId", "==", user.id));
-      const querySnapshot = await getDocs(q);
-      const userTasks: Task[] = [];
-
-      querySnapshot.forEach((doc) => {
-        userTasks.push({
-          id: doc.id,
-          ...doc.data(),
-          createdAt: doc.data().createdAt.toDate(),
-        } as Task);
-      });
-
-      setTasks(
-        userTasks.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
-      );
-    } catch (error) {
-      logger.warn(
-        "Firestore connection error - tasks feature unavailable:",
-        error
-      );
-      // You could show a message to the user here if needed
-      setTasks([]);
-    }
-  };
-
-  const addTask = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!user || !newTaskTitle.trim() || !db) return;
-
-    setLoading(true);
-    try {
-      const newTask = {
-        title: newTaskTitle,
-        description: newTaskDescription,
-        completed: false,
-        createdAt: new Date(),
-        userId: user.id,
-      };
-
-      await addDoc(collection(db, "tasks"), newTask);
-      setNewTaskTitle("");
-      setNewTaskDescription("");
-      await fetchTasks();
-    } catch (error) {
-      logger.warn("Firestore connection error - unable to add task:", error);
-      // You could show a toast notification here
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const toggleTask = async (taskId: string, completed: boolean) => {
-    if (!db) return;
-    try {
-      const taskRef = doc(db, "tasks", taskId);
-      await updateDoc(taskRef, { completed: !completed });
-      await fetchTasks();
-    } catch (error) {
-      logger.warn("Firestore connection error - unable to update task:", error);
-    }
-  };
-
-  const deleteTask = async (taskId: string) => {
-    if (!db) return;
-    try {
-      await deleteDoc(doc(db, "tasks", taskId));
-      await fetchTasks();
-    } catch (error) {
-      logger.warn("Firestore connection error - unable to delete task:", error);
-    }
-  };
-
   const handleLogout = async () => {
     try {
       await logout();
@@ -156,10 +57,6 @@ const UserDashboard: React.FC = () => {
       logger.error("Error signing out:", error);
     }
   };
-
-  useEffect(() => {
-    fetchTasks();
-  }, [user]);
 
   // Show permission modal if user has GitHub account but hasn't granted/denied permission
   useEffect(() => {
@@ -247,8 +144,6 @@ const UserDashboard: React.FC = () => {
         await import("@/services/githubRepositoryService");
       const { EnhancedAnalysisEngine } =
         await import("@/services/enhancedAnalysisEngine");
-      const { GitHubAnalysisStorageService } =
-        await import("@/services/storage/GitHubAnalysisStorageService");
 
       const repoInfo = githubRepositoryService.parseGitHubUrl(repoUrl);
       if (!repoInfo) {
@@ -268,9 +163,6 @@ const UserDashboard: React.FC = () => {
               repoInfo.repo
             );
             branch = details.defaultBranch;
-            // Update stored metadata with stars/forks
-            var stars = details.stars;
-            var forks = details.forks;
           } catch {
             branch = "main";
           }
@@ -300,27 +192,6 @@ const UserDashboard: React.FC = () => {
         toast.loading("Analyzing code...", { id: toastId });
         const engine = new EnhancedAnalysisEngine();
         const results = await engine.analyzeCodebase(zipFile);
-
-        // Store results
-        if (user?.id) {
-          const storage = new GitHubAnalysisStorageService();
-          await storage.storeRepositoryAnalysis(user.id, {
-            name: repoInfo.repo,
-            fullName: `${repoInfo.owner}/${repoInfo.repo}`,
-            description: `Analysis of ${repoInfo.owner}/${repoInfo.repo}`,
-            url: repoUrl,
-            securityScore: results.summary.securityScore / 10,
-            issuesFound: results.issues.length,
-            criticalIssues: results.summary.criticalIssues,
-            language:
-              typeof results.languageDetection?.primaryLanguage === "string"
-                ? results.languageDetection.primaryLanguage
-                : results.languageDetection?.primaryLanguage?.name || "Unknown",
-            stars: typeof stars === "number" ? stars : 0,
-            forks: typeof forks === "number" ? forks : 0,
-            duration: parseFloat(results.analysisTime) || 0,
-          });
-        }
 
         toast.success(
           `Analysis complete! Found ${results.issues.length} issues.`,
@@ -448,148 +319,6 @@ const UserDashboard: React.FC = () => {
                   />
                 </div>
               ) : null}
-            </div>
-
-            <div className="border-border bg-card rounded-lg border p-6 shadow">
-              <h2 className="text-foreground mb-4 text-lg font-semibold dark:text-white">
-                Task Statistics
-              </h2>
-              <div className="space-y-3">
-                <div className="dark:text-muted-foreground flex justify-between text-gray-600">
-                  <span>Total Tasks</span>
-                  <span className="font-semibold">{tasks.length}</span>
-                </div>
-                <div className="flex justify-between text-green-600 dark:text-green-400">
-                  <span>Completed</span>
-                  <span className="font-semibold">
-                    {tasks.filter((task) => task.completed).length}
-                  </span>
-                </div>
-                <div className="flex justify-between text-yellow-600 dark:text-yellow-400">
-                  <span>Pending</span>
-                  <span className="font-semibold">
-                    {tasks.filter((task) => !task.completed).length}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Tasks Manager */}
-          <div className="lg:col-span-2">
-            <div className="border-border rounded-lg border bg-white p-6 shadow dark:border-transparent dark:bg-[#252538]">
-              <h2 className="text-foreground mb-4 text-lg font-semibold dark:text-white">
-                Task Manager
-              </h2>
-
-              <form
-                onSubmit={addTask}
-                className="border-border bg-muted/50 dark:border-border mb-6 rounded-lg border p-4 dark:bg-[#1e1e2f]"
-              >
-                <div className="grid grid-cols-1 gap-4">
-                  <div>
-                    <label
-                      htmlFor="taskTitle"
-                      className="text-foreground dark:text-muted-foreground mb-1 block text-sm font-medium"
-                    >
-                      Task Title
-                    </label>
-                    <input
-                      type="text"
-                      id="taskTitle"
-                      value={newTaskTitle}
-                      onChange={(e) => setNewTaskTitle(e.target.value)}
-                      className="border-border text-foreground dark:border-border w-full rounded-md border bg-white px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:outline-none dark:bg-[#2c2c3e] dark:text-white"
-                      placeholder="Enter task title..."
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="taskDescription"
-                      className="text-foreground dark:text-muted-foreground mb-1 block text-sm font-medium"
-                    >
-                      Description (Optional)
-                    </label>
-                    <textarea
-                      id="taskDescription"
-                      value={newTaskDescription}
-                      onChange={(e) => setNewTaskDescription(e.target.value)}
-                      className="border-border text-foreground dark:border-border w-full rounded-md border bg-white px-3 py-2 focus:ring-2 focus:ring-purple-500 focus:outline-none dark:bg-[#2c2c3e] dark:text-white"
-                      placeholder="Enter task description..."
-                      rows={3}
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    className="focus:ring-ring rounded-md bg-gradient-to-r from-purple-600 to-blue-500 px-4 py-2 text-white hover:opacity-90 focus:ring-2 focus:outline-none disabled:opacity-50"
-                  >
-                    {loading ? "Adding..." : "Add Task"}
-                  </button>
-                </div>
-              </form>
-
-              <div className="space-y-3">
-                {tasks.length === 0 ? (
-                  <p className="text-muted-foreground dark:text-muted-foreground py-8 text-center">
-                    No tasks yet. Add your first task above!
-                  </p>
-                ) : (
-                  tasks.map((task) => (
-                    <div
-                      key={task.id}
-                      className={`rounded-lg border p-4 ${
-                        task.completed
-                          ? "border-green-200 bg-green-50 dark:border-green-600 dark:bg-green-900/30"
-                          : "border-border bg-card"
-                      }`}
-                    >
-                      <div className="flex items-start justify-between">
-                        <div className="flex items-start space-x-3">
-                          <input
-                            type="checkbox"
-                            checked={task.completed}
-                            onChange={() => toggleTask(task.id, task.completed)}
-                            className="border-border text-primary focus:ring-ring mt-1 h-4 w-4 rounded"
-                          />
-                          <div>
-                            <h3
-                              className={`font-medium ${
-                                task.completed
-                                  ? "text-muted-foreground dark:text-muted-foreground line-through"
-                                  : "text-foreground dark:text-white"
-                              }`}
-                            >
-                              {task.title}
-                            </h3>
-                            {task.description && (
-                              <p
-                                className={`mt-1 text-sm ${
-                                  task.completed
-                                    ? "text-muted-foreground"
-                                    : "dark:text-muted-foreground text-gray-600"
-                                }`}
-                              >
-                                {task.description}
-                              </p>
-                            )}
-                            <p className="text-muted-foreground mt-2 text-xs">
-                              Created: {task.createdAt.toLocaleDateString()}
-                            </p>
-                          </div>
-                        </div>
-                        <button
-                          onClick={() => deleteTask(task.id)}
-                          className="text-sm font-medium text-red-500 hover:text-red-700"
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    </div>
-                  ))
-                )}
-              </div>
             </div>
           </div>
         </div>

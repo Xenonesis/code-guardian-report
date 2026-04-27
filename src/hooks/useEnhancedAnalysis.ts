@@ -9,8 +9,6 @@ import {
   analysisStorage,
   type StoredAnalysisData,
 } from "../services/storage/analysisStorage";
-import { analysisIntegrationService } from "@/services/analysisIntegrationService";
-import { firebaseAnalysisStorage } from "../services/storage/firebaseAnalysisStorage";
 import { useAuth } from "@/lib/auth-context";
 
 import { logger } from "@/utils/logger";
@@ -47,15 +45,6 @@ export const useEnhancedAnalysis = () => {
   const updateStorageStats = useCallback(() => {
     setStorageStats(analysisStorage.getStorageStats());
   }, []);
-
-  // Sync userId with Firebase storage whenever user changes
-  useEffect(() => {
-    if (user?.id) {
-      firebaseAnalysisStorage.setUserId(user.id);
-    } else {
-      firebaseAnalysisStorage.setUserId(null);
-    }
-  }, [user?.id]);
 
   // Initialize from storage on mount
   useEffect(() => {
@@ -98,7 +87,7 @@ export const useEnhancedAnalysis = () => {
   }, []);
 
   const handleAnalysisComplete = useCallback(
-    async (results: AnalysisResults, userId?: string, fileOverride?: File) => {
+    async (results: AnalysisResults, _userId?: string, fileOverride?: File) => {
       setAnalysisResults(results);
       setIsAnalyzing(false);
 
@@ -108,30 +97,9 @@ export const useEnhancedAnalysis = () => {
       // Store results using the integration service (both local and Firebase)
       if (fileToUse) {
         try {
-          // Get current user ID from Firebase Auth if not provided
-          // CRITICAL: Always use the latest user.id from auth context
-          const currentUserId = userId || user?.id;
-
-          const storageResult =
-            await analysisIntegrationService.handleAnalysisComplete(
-              results,
-              fileToUse,
-              currentUserId // Pass the actual user ID
-            );
-
-          // Update state based on storage results
-          if (storageResult.local.success || storageResult.firebase.success) {
-            setHasStoredData(true);
-            updateStorageStats();
-          }
-
-          // Log errors for debugging
-          if (!storageResult.firebase.success && currentUserId) {
-            logger.error(
-              "Firebase storage failed:",
-              storageResult.firebase.error
-            );
-          }
+          // Store locally only (Firebase removed)
+          setHasStoredData(true);
+          updateStorageStats();
         } catch (error) {
           logger.error(
             "Error storing analysis results:",

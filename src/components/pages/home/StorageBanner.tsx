@@ -8,8 +8,8 @@ interface StorageBannerProps {
   storedAnalysis: StoredAnalysisData | null;
   storageStats: StorageStats;
   isNewFile: boolean;
-  showStorageStatus: boolean;
-  onToggleStorageStatus: () => void;
+  showStorageStatus?: boolean;
+  onToggleStorageStatus?: () => void;
 }
 
 export const StorageBanner = ({
@@ -28,8 +28,8 @@ export const StorageBanner = ({
     <div className="mx-auto mb-6 max-w-6xl">
       <div className="glass-card-ultra flex items-center justify-between p-4">
         <div className="flex items-center gap-3">
-          <div className="h-2 w-2 animate-pulse rounded-full bg-primary"></div>
-          <span className="text-sm font-medium text-foreground">
+          <div className="bg-primary h-2 w-2 animate-pulse rounded-full"></div>
+          <span className="text-foreground text-sm font-medium">
             {hasStoredData
               ? storedAnalysis
                 ? `Previous analysis for "${storedAnalysis.fileName}" is available${!isNewFile ? " (same file detected)" : ""}`
@@ -37,12 +37,14 @@ export const StorageBanner = ({
               : `Storage ${storageStats.usagePercentage.toFixed(0)}% full`}
           </span>
         </div>
-        <button
-          onClick={onToggleStorageStatus}
-          className="text-sm font-medium text-primary hover:text-primary/80"
-        >
-          {showStorageStatus ? "Hide Details" : "View Details"}
-        </button>
+        {onToggleStorageStatus && (
+          <button
+            onClick={onToggleStorageStatus}
+            className="text-primary hover:text-primary/80 text-sm font-medium"
+          >
+            {showStorageStatus ? "Hide Details" : "View Details"}
+          </button>
+        )}
       </div>
     </div>
   );

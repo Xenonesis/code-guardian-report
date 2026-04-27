@@ -21,10 +21,6 @@ import {
 import { randomUUID } from "node:crypto";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import { createMcpServer } from "../server.js";
-import {
-  isFirebaseAdminConfigured,
-  getFirebaseAdmin,
-} from "../../lib/firebaseAdmin.js";
 
 const PORT = parseInt(process.env["MCP_HTTP_PORT"] ?? "3100", 10);
 const HOST = process.env["MCP_HTTP_HOST"] ?? "127.0.0.1";
@@ -46,18 +42,7 @@ async function getOrCreateSession(): Promise<SessionEntry> {
     sessionIdGenerator: () => sessionId,
   });
 
-  // Optionally connect to Firestore
-  let firestoreDb: FirebaseFirestore.Firestore | undefined;
-  if (isFirebaseAdminConfigured()) {
-    try {
-      const { db } = getFirebaseAdmin();
-      firestoreDb = db;
-    } catch {
-      // Fall through to in-memory
-    }
-  }
-
-  const { server } = createMcpServer({ firestoreDb });
+  const { server } = createMcpServer();
   await server.connect(transport);
 
   const entry: SessionEntry = { transport, createdAt: Date.now() };

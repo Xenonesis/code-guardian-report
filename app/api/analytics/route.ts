@@ -1,8 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import {
-  getFirebaseAdmin,
-  isFirebaseAdminConfigured,
-} from "@/lib/firebaseAdmin";
 import { checkRateLimit } from "@/lib/rate-limit";
 
 export const dynamic = "force-dynamic";
@@ -194,25 +190,13 @@ async function handleSingleAnalytics(
     ip: request.headers.get("x-forwarded-for")?.split(",")[0] || "unknown",
   };
 
-  if (!isFirebaseAdminConfigured()) {
-    return NextResponse.json(
-      {
-        error:
-          "Analytics storage is not configured. Set Firebase Admin credentials.",
-      },
-      { status: 503 }
-    );
-  }
-
-  const { db } = getFirebaseAdmin();
-  await db.collection("analytics").add(analyticsRecord);
-
+  // Analytics recording disabled - Firebase removed
   return NextResponse.json(
     {
       success: true,
-      message: "Analytics event recorded",
+      message: "Analytics event accepted (storage disabled)",
       eventId: analyticsRecord.id,
-      persisted: true,
+      persisted: false,
     },
     {
       headers: {
@@ -239,31 +223,14 @@ async function handleBatchAnalytics(
     userAgent: request.headers.get("user-agent") || "unknown",
   }));
 
-  if (!isFirebaseAdminConfigured()) {
-    return NextResponse.json(
-      {
-        error:
-          "Analytics storage is not configured. Set Firebase Admin credentials.",
-      },
-      { status: 503 }
-    );
-  }
-
-  const { db } = getFirebaseAdmin();
-  const batch = db.batch();
-  processedEvents.forEach((event) => {
-    const ref = db.collection("analytics").doc(event.id);
-    batch.set(ref, event);
-  });
-  await batch.commit();
-
+  // Analytics recording disabled - Firebase removed
   return NextResponse.json(
     {
       success: true,
-      message: `${processedEvents.length} analytics events recorded`,
+      message: `${processedEvents.length} analytics events accepted (storage disabled)`,
       batchId,
       eventCount: processedEvents.length,
-      persisted: true,
+      persisted: false,
     },
     {
       headers: {

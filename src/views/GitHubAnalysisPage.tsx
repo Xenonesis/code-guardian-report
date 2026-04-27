@@ -16,13 +16,6 @@ import {
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { RepositoryAnalysisGrid } from "@/components/github/RepositoryAnalysisGrid";
-import { AnalysisHistorySection } from "@/components/github/AnalysisHistorySection";
-import { SecurityAnalyticsSection } from "@/components/github/SecurityAnalyticsSection";
-import { RepositoryActivityAnalytics } from "@/components/github/RepositoryActivityAnalytics";
-import { RepositoryComparisonTool } from "@/components/github/RepositoryComparisonTool";
-import { CodeQualityAnalytics } from "@/components/github/CodeQualityAnalytics";
-import { VulnerabilityPatternAnalytics } from "@/components/github/VulnerabilityPatternAnalytics";
 import { useGitHubRepositories } from "@/hooks/useGitHubRepositories";
 import GitHubUsernameInput from "@/components/github/GitHubUsernameInput";
 import GitHubRepositoryPermissionModal from "@/components/github/GitHubRepositoryPermissionModal";
@@ -94,33 +87,9 @@ export const GitHubAnalysisPage: React.FC = () => {
   });
 
   useEffect(() => {
-    const loadDashboardStats = async () => {
-      if (!user?.id) return;
-
-      try {
-        const { GitHubAnalysisStorageService } =
-          await import("@/services/storage/GitHubAnalysisStorageService");
-        const storageService = new GitHubAnalysisStorageService();
-
-        const [repos, trends] = await Promise.all([
-          storageService.getUserRepositories(user.id),
-          storageService.getSecurityTrends(user.id),
-        ]);
-
-        setDashboardStats({
-          repoCount: repos.length,
-          avgScore: trends.stats.averageScore,
-          totalIssues: trends.stats.totalIssues,
-          loading: false,
-        });
-      } catch (error) {
-        logger.error("Failed to load dashboard stats:", error);
-        setDashboardStats((prev) => ({ ...prev, loading: false }));
-      }
-    };
-
-    loadDashboardStats();
-  }, [user?.id, selectedTab]);
+    // Dashboard stats loading disabled - Firebase removed
+    setDashboardStats((prev) => ({ ...prev, loading: false }));
+  }, [user]);
 
   const {
     repositories,
@@ -307,11 +276,6 @@ export const GitHubAnalysisPage: React.FC = () => {
         await import("@/services/githubRepositoryService");
       const { EnhancedAnalysisEngine } =
         await import("@/services/enhancedAnalysisEngine");
-      const { GitHubAnalysisStorageService } =
-        await import("@/services/storage/GitHubAnalysisStorageService");
-      const { firebaseAnalysisStorage } =
-        await import("@/services/storage/firebaseAnalysisStorage");
-
       const repoInfo = githubRepositoryService.parseGitHubUrl(repoUrl);
       if (!repoInfo) {
         toast.error("Invalid GitHub repository URL");
@@ -380,43 +344,6 @@ export const GitHubAnalysisPage: React.FC = () => {
 
         const analysisEngine = new EnhancedAnalysisEngine();
         const results = await analysisEngine.analyzeCodebase(zipFile);
-
-        toast.loading("Saving analysis results...", { id: progressToastId });
-
-        if (user?.id) {
-          const storageService = new GitHubAnalysisStorageService();
-          await storageService.storeRepositoryAnalysis(user.id, {
-            name: repoInfo.repo,
-            fullName: `${repoInfo.owner}/${repoInfo.repo}`,
-            description:
-              repoDetails?.description ||
-              `Analysis of ${repoInfo.owner}/${repoInfo.repo}`,
-            url: repoUrl,
-            securityScore: results.summary.securityScore / 10,
-            issuesFound: results.issues.length,
-            criticalIssues: results.summary.criticalIssues,
-            language:
-              typeof results.languageDetection?.primaryLanguage === "string"
-                ? results.languageDetection.primaryLanguage
-                : results.languageDetection?.primaryLanguage?.name || "Unknown",
-            stars: repoDetails?.stars || 0,
-            forks: repoDetails?.forks || 0,
-            duration: Number.parseFloat(results.analysisTime) || 0,
-          });
-
-          firebaseAnalysisStorage.setUserId(user.id);
-          const fileForStorage = new File(
-            [zipFile],
-            `${repoInfo.owner}-${repoInfo.repo}.zip`,
-            { type: "application/zip" }
-          );
-          await firebaseAnalysisStorage.storeAnalysisResults(
-            results,
-            fileForStorage,
-            [`github-${repoInfo.owner}-${repoInfo.repo}`],
-            false
-          );
-        }
 
         toast.success(
           `Analysis complete! Found ${results.issues.length} issues.`,
@@ -715,52 +642,12 @@ export const GitHubAnalysisPage: React.FC = () => {
           )}
 
           <div className="space-y-6">
-            {selectedTab === "overview" && (
-              <div className="animate-in fade-in space-y-8 duration-500">
-                <SecurityAnalyticsSection userId={user.id} />
-                <RepositoryActivityAnalytics userId={user.id} />
-              </div>
-            )}
-
-            {selectedTab === "repositories" && (
+            {(selectedTab === "overview" || selectedTab === "repositories") && (
               <div className="animate-in fade-in duration-500">
-                <RepositoryAnalysisGrid
-                  userId={user.id}
-                  liveRepositories={repositories}
+                <GitHubRepositoryList
+                  repositories={repositories}
                   onAnalyzeRepository={handleAnalyzeRepository}
-                  isLoadingLive={reposLoading}
                 />
-              </div>
-            )}
-
-            {selectedTab === "history" && (
-              <div className="animate-in fade-in duration-500">
-                <AnalysisHistorySection userId={user.id} />
-              </div>
-            )}
-
-            {selectedTab === "analytics" && (
-              <div className="animate-in fade-in space-y-8 duration-500">
-                <SecurityAnalyticsSection userId={user.id} detailed />
-                <RepositoryActivityAnalytics userId={user.id} detailed />
-              </div>
-            )}
-
-            {selectedTab === "comparison" && (
-              <div className="animate-in fade-in duration-500">
-                <RepositoryComparisonTool userId={user.id} />
-              </div>
-            )}
-
-            {selectedTab === "quality" && (
-              <div className="animate-in fade-in duration-500">
-                <CodeQualityAnalytics userId={user.id} />
-              </div>
-            )}
-
-            {selectedTab === "patterns" && (
-              <div className="animate-in fade-in duration-500">
-                <VulnerabilityPatternAnalytics userId={user.id} />
               </div>
             )}
 

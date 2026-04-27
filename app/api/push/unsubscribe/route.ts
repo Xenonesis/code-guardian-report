@@ -1,8 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import {
-  getFirebaseAdmin,
-  isFirebaseAdminConfigured,
-} from "@/lib/firebaseAdmin";
 
 export const dynamic = "force-dynamic";
 
@@ -14,10 +10,9 @@ interface UnsubscribePayload {
 }
 
 export async function GET() {
-  const configured = isFirebaseAdminConfigured();
   return NextResponse.json({
     status: "push unsubscription endpoint is working",
-    configured,
+    configured: false,
     timestamp: new Date().toISOString(),
   });
 }
@@ -44,58 +39,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check if Firebase Admin is configured
-    if (!isFirebaseAdminConfigured()) {
-      console.warn("Push unsubscribe: Firebase Admin not configured");
-      return NextResponse.json(
-        {
-          success: false,
-          configured: false,
-          error:
-            "Push unsubscription storage is not configured. Set Firebase Admin credentials.",
-        },
-        { status: 503 }
-      );
-    }
-
-    const { db } = getFirebaseAdmin();
-    let removedCount = 0;
-
-    if (body.unsubscribeAll && body.userId) {
-      // Delete all subscriptions for user
-      const snapshot = await db
-        .collection("pushSubscriptions")
-        .where("userId", "==", body.userId)
-        .get();
-
-      const batch = db.batch();
-      snapshot.docs.forEach((doc) => batch.delete(doc.ref));
-      await batch.commit();
-      removedCount = snapshot.size;
-    } else if (body.subscriptionId) {
-      // Delete by subscriptionId
-      await db
-        .collection("pushSubscriptions")
-        .doc(body.subscriptionId)
-        .delete();
-      removedCount = 1;
-    } else if (body.endpoint) {
-      // Delete by endpoint
-      const snapshot = await db
-        .collection("pushSubscriptions")
-        .where("endpoint", "==", body.endpoint)
-        .get();
-
-      await Promise.all(snapshot.docs.map((doc) => doc.ref.delete()));
-      removedCount = snapshot.size;
-    }
-
+    // Push unsubscription disabled - Firebase removed
     return NextResponse.json({
-      success: true,
-      message: body.unsubscribeAll
-        ? "All subscriptions removed successfully"
-        : "Subscription removed successfully",
-      removedCount,
+      success: false,
+      configured: false,
+      message: "Push unsubscription is not available",
     });
   } catch (error) {
     console.error("Push unsubscription error:", error);

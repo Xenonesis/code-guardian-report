@@ -1,8 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import {
-  getFirebaseAdmin,
-  isFirebaseAdminConfigured,
-} from "@/lib/firebaseAdmin";
 
 export const dynamic = "force-dynamic";
 
@@ -57,24 +53,12 @@ export async function POST(request: NextRequest) {
       timestamp: new Date().toISOString(),
     };
 
-    if (!isFirebaseAdminConfigured()) {
-      return NextResponse.json(
-        {
-          error:
-            "PWA analytics storage is not configured. Set Firebase Admin credentials.",
-        },
-        { status: 503 }
-      );
-    }
-
-    const { db } = getFirebaseAdmin();
-    await db.collection("pwaAnalytics").add(pwaAnalyticsRecord);
-
+    // PWA analytics recording disabled - Firebase removed
     return NextResponse.json({
       success: true,
-      message: "PWA analytics event recorded",
+      message: "PWA analytics event accepted (storage disabled)",
       eventId: pwaAnalyticsRecord.id,
-      persisted: true,
+      persisted: false,
     });
   } catch (error) {
     console.error("PWA Analytics error:", error);

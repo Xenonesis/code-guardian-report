@@ -1,8 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import {
-  getFirebaseAdmin,
-  isFirebaseAdminConfigured,
-} from "@/lib/firebaseAdmin";
 import { checkRateLimit } from "@/lib/rate-limit";
 
 export const dynamic = "force-dynamic";
@@ -63,10 +59,8 @@ export async function POST(request: NextRequest) {
     }
 
     const body = (await request.json()) as FeedbackPayload;
-    const name = cleanString(body.name, 120) || null;
     const email = cleanString(body.email, 254) || null;
     const message = cleanString(body.message, MAX_MESSAGE_LENGTH);
-    const userId = cleanString(body.userId, 128) || null;
 
     if (!message) {
       return NextResponse.json(
@@ -82,29 +76,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!isFirebaseAdminConfigured()) {
-      return NextResponse.json(
-        {
-          error:
-            "Feedback storage is not configured. Set Firebase Admin credentials.",
-          persisted: false,
-        },
-        { status: 503 }
-      );
-    }
-
-    const { db } = getFirebaseAdmin();
-    const docRef = await db.collection("feedback").add({
-      name,
-      email,
-      message,
-      userId,
-      pageUrl: request.headers.get("referer") || null,
-      userAgent: request.headers.get("user-agent") || "unknown",
-      ip: clientIp,
-      status: "new",
-      createdAt: new Date().toISOString(),
-    });
+    // Feedback storage disabled - Firebase removed
+    const docRef = { id: `feedback-${Date.now()}` };
 
     return NextResponse.json({
       success: true,
