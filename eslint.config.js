@@ -3,6 +3,7 @@ import js from "@eslint/js";
 import tsParser from "@typescript-eslint/parser";
 import tsPlugin from "@typescript-eslint/eslint-plugin";
 import reactPlugin from "eslint-plugin-react";
+import reactHooksPlugin from "eslint-plugin-react-hooks";
 
 import eslintConfigPrettier from "eslint-config-prettier";
 
@@ -40,6 +41,7 @@ export default [
     plugins: {
       "@typescript-eslint": tsPlugin, // Use TypeScript plugin
       react: reactPlugin, // Use React plugin
+      "react-hooks": reactHooksPlugin, // Use React Hooks plugin
     },
     rules: {
       // Add your rules here
@@ -60,6 +62,9 @@ export default [
       // React-specific rules
       "react/react-in-jsx-scope": "off", // Not needed in React 17+
       "react/jsx-uses-vars": "error", // Report variables used in JSX as unused
+      // React Hooks rules
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn",
     },
   },
   eslintConfigPrettier,
