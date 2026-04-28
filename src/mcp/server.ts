@@ -23,15 +23,10 @@ import { registerRiskOptimizerTools } from "./tools/risk-optimizer.js";
 import { registerMemoryTools } from "./tools/memory.js";
 import { registerPipelineTools } from "./tools/pipeline.js";
 
-export interface CreateServerOptions {
-  /** Firestore database instance (omit for in-memory fallback) */
-  firestoreDb?: FirebaseFirestore.Firestore;
-}
-
 /**
  * Create a fully-configured Code Guardian MCP server.
  */
-export function createMcpServer(options: CreateServerOptions = {}): {
+export function createMcpServer(): {
   server: McpServer;
   memory: MemoryStore;
 } {
@@ -61,7 +56,7 @@ export function createMcpServer(options: CreateServerOptions = {}): {
   );
 
   // Create memory store
-  const memory = createMemoryStore(options.firestoreDb);
+  const memory = createMemoryStore();
 
   // Register all components
   registerResources(server);

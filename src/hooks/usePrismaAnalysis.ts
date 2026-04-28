@@ -11,7 +11,7 @@ import {
   AnalysisHistoryQuery,
 } from "../services/storage/prismaAnalysisStorage";
 import { analysisStorage } from "../services/storage/analysisStorage";
-import { useSession } from "next-auth/react";
+import { useAuth } from "@/lib/auth-context";
 
 import { logger } from "@/utils/logger";
 export interface PrismaAnalysisState {
@@ -29,9 +29,7 @@ export interface PrismaAnalysisState {
 }
 
 export const usePrismaAnalysis = () => {
-  const { data: session, status } = useSession();
-  const user = session?.user;
-  const isAuthenticated = status === "authenticated" && !!user;
+  const { user, isAuthenticated } = useAuth();
 
   // State management
   const [analysisResults, setAnalysisResults] =
@@ -50,7 +48,7 @@ export const usePrismaAnalysis = () => {
 
   // Set user ID when authenticated
   useEffect(() => {
-    const userId = (user as { id?: string })?.id;
+    const userId = user?.id;
     if (userId) {
       prismaAnalysisStorage.setUserId(userId);
       loadInitialData();
@@ -69,8 +67,7 @@ export const usePrismaAnalysis = () => {
       setSyncStatus("pending");
 
       // Load from Prisma database
-      const cloudHistory =
-        await prismaAnalysisStorage.getUserAnalysisHistory();
+      const cloudHistory = await prismaAnalysisStorage.getUserAnalysisHistory();
       setAnalysisHistory(cloudHistory);
       setHasCloudData(cloudHistory.length > 0);
 
@@ -109,7 +106,7 @@ export const usePrismaAnalysis = () => {
         setHasLocalData(true);
 
         // If authenticated, also store in cloud
-        const userId = (user as { id?: string })?.id;
+        const userId = user?.id;
         if (isAuthenticated && userId) {
           try {
             const analysisId = await prismaAnalysisStorage.storeAnalysisResults(
@@ -147,7 +144,7 @@ export const usePrismaAnalysis = () => {
 
   // Sync local data to cloud
   const syncToCloud = useCallback(async () => {
-    const userId = (user as { id?: string })?.id;
+    const userId = user?.id;
     if (!isAuthenticated || !userId) {
       logger.warn("Cannot sync: User not authenticated");
       return false;
@@ -171,11 +168,9 @@ export const usePrismaAnalysis = () => {
 
           if (cloudHistory.length === 0) {
             // Create a mock file object for sync
-            const mockFile = new File(
-              [""],
-              localAnalysis.fileName,
-              { size: localAnalysis.fileSize || 0 } as any
-            );
+            const mockFile = new File([""], localAnalysis.fileName, {
+              size: localAnalysis.fileSize || 0,
+            } as any);
 
             // Sync to database
             await prismaAnalysisStorage.storeAnalysisResults(
@@ -221,10 +216,9 @@ export const usePrismaAnalysis = () => {
         analysisStorage.clearCurrentAnalysis();
 
         // Refresh history
-        const userId = (user as { id?: string })?.id;
+        const userId = user?.id;
         if (isAuthenticated && userId) {
-          const history =
-            await prismaAnalysisStorage.getUserAnalysisHistory();
+          const history = await prismaAnalysisStorage.getUserAnalysisHistory();
           setAnalysisHistory(history);
         } else {
           const localHistory = analysisStorage.getAnalysisHistory();
@@ -271,7 +265,10 @@ export const usePrismaAnalysis = () => {
     async (searchTerm: string, filters?: AnalysisHistoryQuery) => {
       try {
         if (isAuthenticated) {
-          return await prismaAnalysisStorage.searchAnalysis(searchTerm, filters);
+          return await prismaAnalysisStorage.searchAnalysis(
+            searchTerm,
+            filters
+          );
         }
 
         // Local search fallback

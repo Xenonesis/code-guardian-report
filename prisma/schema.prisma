@@ -1,8 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,49 +6,36 @@ datasource db {
   provider = "postgresql"
 }
 
-// ============================================
-// User Model (replaces Firebase Auth)
-// ============================================
 model User {
-  id        String   @id @default(uuid())
-  githubId  String   @unique
-  email     String?  @unique
+  id        String           @id @default(cuid())
+  githubId  String           @unique
+  email     String?          @unique
   username  String?
   avatarUrl String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  // Relations
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
   analyses  AnalysisResult[]
-  userStats UserStats?
   settings  UserSettings?
+  userStats UserStats?
 
   @@index([githubId])
   @@index([email])
 }
 
-// ============================================
-// Analysis Results (replaces Firestore "analysisResults" collection)
-// ============================================
 model AnalysisResult {
   id         String   @id @default(uuid())
   userId     String
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
   fileName   String
   fileSize   Int
   fileHash   String
-
-  // Full AnalysisResults JSON - no truncation like Firestore 1MB limit
   results    Json
   metadata   Json?
-
   tags       String[]
   isPublic   Boolean  @default(false)
   syncStatus String   @default("synced")
-
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@index([fileHash])
@@ -61,54 +43,38 @@ model AnalysisResult {
   @@index([isPublic])
 }
 
-// ============================================
-// User Statistics (replaces Firestore "userStats" collection)
-// ============================================
 model UserStats {
-  id                   String   @id @default(uuid())
-  userId               String   @unique
-  user                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  totalAnalyses        Int      @default(0)
-  totalFilesAnalyzed   Int      @default(0)
-  totalIssuesFound     Int      @default(0)
-  totalBytesAnalyzed   Int      @default(0)
-  averageSecurityScore Int?     @default(0)
+  id                   String    @id @default(uuid())
+  userId               String    @unique
+  totalAnalyses        Int       @default(0)
+  totalFilesAnalyzed   Int       @default(0)
+  totalIssuesFound     Int       @default(0)
+  totalBytesAnalyzed   Int       @default(0)
+  averageSecurityScore Int?      @default(0)
   lastAnalysis         DateTime?
-
-  updatedAt            DateTime @updatedAt
+  updatedAt            DateTime  @updatedAt
+  user                 User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-// ============================================
-// User Settings (replaces Firestore "settings" collection)
-// ============================================
 model UserSettings {
   id            String   @id @default(uuid())
   userId        String   @unique
-  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
   theme         String   @default("system")
   notifications Json?
   analysisPrefs Json?
   privacyPrefs  Json?
-
   updatedAt     DateTime @updatedAt
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-// ============================================
-// GitHub Repositories (replaces Firestore "githubRepos" collection)
-// ============================================
 model GitHubRepo {
   id              String   @id @default(uuid())
   userId          String
-
   repoName        String
   repoUrl         String
   owner           String
   isPrivate       Boolean  @default(false)
-
   analysisResults Json?
-
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 
@@ -116,18 +82,13 @@ model GitHubRepo {
   @@index([repoName])
 }
 
-// ============================================
-// Webhooks (replaces Firestore "webhooks" collection)
-// ============================================
 model Webhook {
   id        String   @id @default(uuid())
   userId    String
-
   url       String
   events    String[]
   isActive  Boolean  @default(true)
   secret    String?
-
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

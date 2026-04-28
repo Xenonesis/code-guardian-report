@@ -1,7 +1,7 @@
 "use client";
 
-import React, { createContext, useContext, ReactNode } from "react";
-import { useSession, signIn, signOut } from "next-auth/react";
+import React, { createContext, useContext, ReactNode, useState } from "react";
+import { neonAuth } from "@/lib/neon-auth";
 import { logger } from "@/utils/logger";
 
 interface UserProfile {
@@ -34,6 +34,7 @@ interface AuthContextType {
   user: UserProfile | null;
   userProfile: UserProfile | null;
   loading: boolean;
+  isAuthenticated: boolean;
   signInWithGithub: () => Promise<void>;
   logout: () => Promise<void>;
   isGitHubUser: boolean;
@@ -70,33 +71,40 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const { data: session, status } = useSession();
-  const [accountConflict, setAccountConflict] = React.useState({
+  // v0.2: useSession is a React hook (Better Auth React adapter)
+  const sessionData = neonAuth.useSession();
+
+  const [accountConflict, setAccountConflict] = useState({
     isOpen: false,
     email: "",
     existingProvider: "password",
     attemptedProvider: "github.com",
   });
-  const [isLinkingAccounts, setIsLinkingAccounts] = React.useState(false);
+  const [isLinkingAccounts, setIsLinkingAccounts] = useState(false);
 
-  const loading = status === "loading";
+  const loading = sessionData.isPending;
 
-  const userProfile: UserProfile | null = session?.user
+  const userProfile: UserProfile | null = sessionData.data?.user
     ? {
-        id: (session.user as any).id || "",
-        email: session.user.email || null,
-        name: session.user.name || null,
-        image: session.user.image || null,
-        githubId: (session.user as any).githubId,
+        id: sessionData.data.user.id || "",
+        email: sessionData.data.user.email || null,
+        name: sessionData.data.user.name || null,
+        image: sessionData.data.user.image || null,
+        githubId: sessionData.data.user.id,
+        isGitHubUser: true,
       }
     : null;
 
   const user = userProfile;
+  const isAuthenticated = !!userProfile;
   const isGitHubUser = !!userProfile?.githubId;
 
   const signInWithGithub = async () => {
     try {
-      await signIn("github", { callbackUrl: "/" });
+      await neonAuth.signIn.social({
+        provider: "github",
+        callbackURL: window.location.origin + "/",
+      });
     } catch (error) {
       logger.error("Error signing in with GitHub:", error);
       throw error;
@@ -105,7 +113,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const logout = async () => {
     try {
-      await signOut({ callbackUrl: "/" });
+      await neonAuth.signOut({
+        fetchOptions: {
+          onSuccess: () => {
+            window.location.href = "/";
+          },
+        },
+      });
       try {
         localStorage.removeItem("github_oauth_token");
         localStorage.removeItem("github_copilot_auth");
@@ -131,6 +145,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     user,
     userProfile,
     loading,
+    isAuthenticated,
     signInWithGithub,
     logout,
     isGitHubUser,

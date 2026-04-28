@@ -70,7 +70,7 @@ function validateRequest(request: NextRequest): {
   const suspiciousPatterns = [
     /<script/i,
     /javascript:/i,
-    /on\w+\s*=/i,
+    /\bon\w+\s*=/i,
     /union\s+select/i,
     /\bor\b.*=.*\bor\b/i,
     /'\s*or\s+'?/i,

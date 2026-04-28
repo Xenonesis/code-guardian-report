@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/lib/auth";
+import { auth } from "@/lib/auth/server";
 import { prisma } from "@/lib/prisma";
 
 // Force dynamic rendering - this route uses auth and database
@@ -12,12 +11,12 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const session = await getServerSession(authOptions);
+    const { data: session } = await auth.getSession();
     if (!session?.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const userId = (session.user as any).id;
+    const userId = session.user.id;
     const { id } = params;
 
     const analysis = await prisma.analysisResult.findFirst({
@@ -50,12 +49,12 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   try {
-    const session = await getServerSession(authOptions);
+    const { data: session } = await auth.getSession();
     if (!session?.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const userId = (session.user as any).id;
+    const userId = session.user.id;
     const { id } = params;
     const body = await request.json();
 
@@ -99,12 +98,12 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    const session = await getServerSession(authOptions);
+    const { data: session } = await auth.getSession();
     if (!session?.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const userId = (session.user as any).id;
+    const userId = session.user.id;
     const { id } = params;
 
     // Verify ownership and get file info for stats update
@@ -137,7 +136,8 @@ export async function DELETE(
           totalFilesAnalyzed: Math.max(0, currentStats.totalFilesAnalyzed - 1),
           totalIssuesFound: Math.max(
             0,
-            currentStats.totalIssuesFound - ((analysis.results as any)?.issues?.length || 0)
+            currentStats.totalIssuesFound -
+              ((analysis.results as any)?.issues?.length || 0)
           ),
           totalBytesAnalyzed: Math.max(
             0,

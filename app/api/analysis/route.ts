@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/lib/auth";
+import { auth } from "@/lib/auth/server";
 import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
@@ -8,12 +7,12 @@ export const dynamic = "force-dynamic";
 // GET /api/analysis - Get user's analysis history
 export async function GET(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
+    const { data: session } = await auth.getSession();
     if (!session?.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const userId = (session.user as any).id;
+    const userId = session.user.id;
     if (!userId) {
       return NextResponse.json({ error: "User ID not found" }, { status: 400 });
     }
@@ -27,7 +26,9 @@ export async function GET(request: NextRequest) {
     const analyses = await prisma.analysisResult.findMany({
       where: {
         userId,
-        ...(fileName && { fileName: { contains: fileName, mode: "insensitive" } }),
+        ...(fileName && {
+          fileName: { contains: fileName, mode: "insensitive" },
+        }),
         ...(startDate && { createdAt: { gte: new Date(startDate) } }),
         ...(endDate && { createdAt: { lte: new Date(endDate) } }),
       },
@@ -48,18 +49,19 @@ export async function GET(request: NextRequest) {
 // POST /api/analysis - Create new analysis
 export async function POST(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
+    const { data: session } = await auth.getSession();
     if (!session?.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const userId = (session.user as any).id;
+    const userId = session.user.id;
     if (!userId) {
       return NextResponse.json({ error: "User ID not found" }, { status: 400 });
     }
 
     const body = await request.json();
-    const { fileName, fileSize, fileHash, results, metadata, tags, isPublic } = body;
+    const { fileName, fileSize, fileHash, results, metadata, tags, isPublic } =
+      body;
 
     if (!fileName || !results) {
       return NextResponse.json(

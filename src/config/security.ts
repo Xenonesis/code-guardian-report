@@ -58,6 +58,8 @@ export const CSP_DIRECTIVES = {
     "https://vercel.live",
     "https://vitals.vercel-insights.com",
     "wss://*.firebaseio.com",
+    "https://*.neon.tech",
+    "https://*.neonauth.ap-southeast-1.aws.neon.tech",
   ],
   "frame-src": [
     "'self'",

@@ -27,7 +27,6 @@ class ProductionHealthChecker {
 
     await this.checkEnvironmentVariables();
     await this.checkServiceWorker();
-    await this.checkFirebaseConnection();
     await this.checkPerformance();
     await this.checkSecurityHeaders();
 
@@ -88,35 +87,6 @@ class ProductionHealthChecker {
         name: "Service Worker",
         status: "fail",
         message: "Service worker not supported",
-      });
-    }
-  }
-
-  /**
-   * Check Firebase connection
-   */
-  private async checkFirebaseConnection(): Promise<void> {
-    try {
-      // Check if Firebase is configured
-      const firebaseApiKey = env.get("NEXT_PUBLIC_FIREBASE_API_KEY");
-      if (firebaseApiKey) {
-        this.checks.push({
-          name: "Firebase Connection",
-          status: "pass",
-          message: "Firebase is configured",
-        });
-      } else {
-        this.checks.push({
-          name: "Firebase Connection",
-          status: "fail",
-          message: "Firebase API key not found",
-        });
-      }
-    } catch (error) {
-      this.checks.push({
-        name: "Firebase Connection",
-        status: "fail",
-        message: error instanceof Error ? error.message : "Unknown error",
       });
     }
   }
