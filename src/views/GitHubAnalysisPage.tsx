@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, Suspense, lazy } from "react";
+import React, { useEffect, useState, Suspense, lazy, useRef } from "react";
 import { useAuth } from "@/lib/auth-context";
 import { useNavigation } from "@/lib/navigation-context";
 import {
@@ -117,6 +117,10 @@ export const GitHubAnalysisPage: React.FC = () => {
     }
   }, [reposError]);
 
+  // Track whether we've already initiated a fetch for the current username to
+  // prevent duplicate calls from React Strict Mode double-invocation or dep re-runs.
+  const fetchInitiatedRef = useRef<string | null>(null);
+
   useEffect(() => {
     const autoFetchGitHubData = async () => {
       if (!isGitHubUser) return;
@@ -126,9 +130,7 @@ export const GitHubAnalysisPage: React.FC = () => {
         userProfile?.githubMetadata?.login ||
         null;
 
-      if (!username) {
-        return;
-      }
+      if (!username) return;
 
       if (!isValidGitHubUsername(username)) {
         const storedUsername = localStorage.getItem("github_username");
@@ -139,16 +141,16 @@ export const GitHubAnalysisPage: React.FC = () => {
         return;
       }
 
-      const storedUsername = localStorage.getItem("github_username");
-      if (storedUsername !== username) {
-        localStorage.setItem("github_username", username);
-        localStorage.setItem("github_repo_permission", "granted");
-        const success = await setManualUsername(username);
-        if (success) {
-          logger.debug("Auto-fetched GitHub data for:", username);
-        }
-      } else if (repositories.length === 0 && !reposLoading) {
-        refreshRepositories?.();
+      // Skip if we already fetched for this username (prevents Strict Mode double-invoke)
+      if (fetchInitiatedRef.current === username) return;
+      fetchInitiatedRef.current = username;
+
+      localStorage.setItem("github_username", username);
+      localStorage.setItem("github_repo_permission", "granted");
+
+      const success = await setManualUsername(username);
+      if (success) {
+        logger.debug("Auto-fetched GitHub data for:", username);
       }
     };
 
@@ -158,9 +160,6 @@ export const GitHubAnalysisPage: React.FC = () => {
     userProfile?.githubUsername,
     userProfile?.githubMetadata?.login,
     setManualUsername,
-    repositories.length,
-    reposLoading,
-    refreshRepositories,
   ]);
 
   const nonGithubConnected = !isGitHubUser;

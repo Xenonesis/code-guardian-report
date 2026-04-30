@@ -1,6 +1,12 @@
 "use client";
 
-import React, { createContext, useContext, ReactNode, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  ReactNode,
+  useState,
+  useEffect,
+} from "react";
 import { neonAuth } from "@/lib/neon-auth";
 import { logger } from "@/utils/logger";
 
@@ -81,6 +87,75 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     attemptedProvider: "github.com",
   });
   const [isLinkingAccounts, setIsLinkingAccounts] = useState(false);
+  const [resolvedGithubUsername, setResolvedGithubUsername] = useState<
+    string | null
+  >(() => {
+    // Initialize from localStorage cache to avoid async delay on first render
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("github_username");
+    }
+    return null;
+  });
+
+  // Resolve the real GitHub username (login) from the avatar URL numeric ID
+  useEffect(() => {
+    const avatarUrl = sessionData.data?.user?.image;
+    if (!avatarUrl) return;
+
+    // GitHub avatar URLs follow the pattern: https://avatars.githubusercontent.com/u/{numericId}?v=4
+    const match = avatarUrl.match(
+      /avatars\.githubusercontent\.com\/u\/([0-9]+)/
+    );
+    if (!match) return;
+
+    const githubNumericId = match[1];
+    const cacheKey = `github_login_id_${githubNumericId}`;
+
+    // Check localStorage cache first (24h TTL)
+    const cached =
+      typeof window !== "undefined" ? localStorage.getItem(cacheKey) : null;
+    if (cached) {
+      const parsed = (() => {
+        try {
+          return JSON.parse(cached);
+        } catch {
+          return null;
+        }
+      })();
+      if (
+        parsed?.login &&
+        parsed?.cachedAt &&
+        Date.now() - parsed.cachedAt < 24 * 60 * 60 * 1000
+      ) {
+        setResolvedGithubUsername(parsed.login);
+        localStorage.setItem("github_username", parsed.login);
+        localStorage.setItem("github_repo_permission", "granted");
+        return;
+      }
+    }
+
+    // Fetch the GitHub login by numeric user ID (no auth token needed, 60 req/hr limit)
+    fetch(`https://api.github.com/user/${githubNumericId}`)
+      .then((r) => {
+        if (!r.ok) throw new Error(`GitHub API ${r.status}`);
+        return r.json();
+      })
+      .then((data) => {
+        if (data.login) {
+          logger.debug(`Resolved GitHub login: ${data.login}`);
+          setResolvedGithubUsername(data.login);
+          localStorage.setItem("github_username", data.login);
+          localStorage.setItem("github_repo_permission", "granted");
+          localStorage.setItem(
+            cacheKey,
+            JSON.stringify({ login: data.login, cachedAt: Date.now() })
+          );
+        }
+      })
+      .catch((err) => {
+        logger.debug("Could not resolve GitHub username from avatar URL:", err);
+      });
+  }, [sessionData.data?.user?.image]);
 
   const loading = sessionData.isPending;
 
@@ -92,6 +167,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         image: sessionData.data.user.image || null,
         githubId: sessionData.data.user.id,
         isGitHubUser: true,
+        displayName: sessionData.data.user.name || null,
+        photoURL: sessionData.data.user.image || null,
+        githubUsername: resolvedGithubUsername,
+        githubMetadata: {
+          login: resolvedGithubUsername || undefined,
+          avatarUrl: sessionData.data.user.image || undefined,
+          htmlUrl: resolvedGithubUsername
+            ? `https://github.com/${resolvedGithubUsername}`
+            : undefined,
+        },
       }
     : null;
 
