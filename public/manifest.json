@@ -185,12 +185,6 @@
   },
   "handle_links": "preferred",
   "capture_links": "existing-client-navigate",
-  "scope_extensions": [
-    {
-      "type": "url",
-      "origin": "https://code-guardian-report.vercel.app"
-    }
-  ],
   "id": "code-guardian-enterprise",
   
   "background_sync": ["file-upload", "analysis-data", "user-preferences", "offline-sync", "analytics-data"],

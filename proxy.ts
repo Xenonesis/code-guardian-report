@@ -6,11 +6,11 @@ import { CSP_DIRECTIVES, SECURITY_HEADERS } from "./src/config/security";
  * Handles security headers, rate limiting headers, and request validation
  */
 
-function buildContentSecurityPolicy(nonce: string): string {
+function buildContentSecurityPolicy(nonce?: string): string {
   const directives = Object.entries(CSP_DIRECTIVES).map(([key, values]) => {
     const entries = [...values];
 
-    if (key === "script-src") {
+    if (key === "script-src" && nonce) {
       entries.push(`'nonce-${nonce}'`);
       // Runtime policy should never allow eval in production.
       if (process.env.NODE_ENV === "production") {
@@ -98,12 +98,15 @@ export function proxy(request: NextRequest) {
     return new NextResponse("Bad Request", { status: 400 });
   }
 
-  // Generate nonce for CSP
-  const nonce = generateNonce();
+  // Generate nonce for CSP only in production.
+  const nonce =
+    process.env.NODE_ENV === "production" ? generateNonce() : undefined;
 
   // Propagate nonce into the request so server components/layout can use it.
   const requestHeaders = new Headers(request.headers);
-  requestHeaders.set("x-nonce", nonce);
+  if (nonce) {
+    requestHeaders.set("x-nonce", nonce);
+  }
 
   // Create response
   const response = NextResponse.next({
@@ -124,7 +127,9 @@ export function proxy(request: NextRequest) {
   );
 
   // Echo nonce for diagnostics and optional client-side consumers.
-  response.headers.set("x-nonce", nonce);
+  if (nonce) {
+    response.headers.set("x-nonce", nonce);
+  }
 
   // Add cache headers for static assets
   const pathname = request.nextUrl.pathname;
