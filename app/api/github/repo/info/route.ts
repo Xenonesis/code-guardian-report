@@ -18,6 +18,19 @@ function isValidRepoPart(value: string): boolean {
   return /^[a-zA-Z0-9._-]+$/.test(value);
 }
 
+function githubRepoFetch(owner: string, repo: string, token: string | null) {
+  return fetch(
+    `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}`,
+    {
+      headers: {
+        Accept: "application/vnd.github+json",
+        "User-Agent": "CodeGuardian-Security-Scanner/15.0.0",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+    }
+  );
+}
+
 export async function POST(request: NextRequest) {
   try {
     const clientIp =
@@ -49,18 +62,19 @@ export async function POST(request: NextRequest) {
     }
 
     const token = getBearerToken(request);
-    const response = await fetch(
-      `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}`,
-      {
-        headers: {
-          Accept: "application/vnd.github+json",
-          "User-Agent": "CodeGuardian-Security-Scanner/15.0.0",
-          ...(token ? { Authorization: `Bearer ${token}` } : {}),
-        },
-      }
-    );
+    let response = await githubRepoFetch(owner, repo, token);
+    let responseText = await response.text();
 
-    const responseText = await response.text();
+    // Some GitHub fine-grained tokens can return 404/403 for public repos
+    // outside their scope; retry anonymously before surfacing an error.
+    if (!response.ok && token && [401, 403, 404].includes(response.status)) {
+      const fallbackResponse = await githubRepoFetch(owner, repo, null);
+      if (fallbackResponse.ok) {
+        response = fallbackResponse;
+        responseText = await fallbackResponse.text();
+      }
+    }
+
     if (!response.ok) {
       return NextResponse.json(
         {
@@ -76,7 +90,10 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("GitHub repository info proxy error:", error);
     return NextResponse.json(
-      { error: "Failed to fetch repository info" },
+      {
+        error: "Failed to fetch repository info",
+        details: error instanceof Error ? error.message : String(error),
+      },
       { status: 500 }
     );
   }

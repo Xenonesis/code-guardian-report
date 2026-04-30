@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "code-guardian": {
+      "command": "node",
+      "args": ["dist/mcp/mcp/transports/stdio.js"],
+      "cwd": "C:\\Users\\addy\\Downloads\\code-guardian-report"
+    }
+  }
+}
