@@ -30,8 +30,11 @@
     "typescript": "^6.0.2"
   },
   "overrides": {
-    "fast-xml-parser": "^5.3.4",
-    "@tootallnate/once": ">=3.0.1"
+    "fast-xml-parser": ">=5.7.0",
+    "@tootallnate/once": ">=3.0.1",
+    "path-to-regexp": ">=0.1.13",
+    "protobufjs": ">=7.5.5",
+    "uuid": ">=14.0.0"
   },
   "private": true
 }
