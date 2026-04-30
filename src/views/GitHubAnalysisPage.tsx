@@ -102,6 +102,7 @@ export const GitHubAnalysisPage: React.FC = () => {
     denyPermission,
     setManualUsername,
     githubUser,
+    githubUsername: hookGithubUsername,
     refreshRepositories,
   } = useGitHubRepositories({
     email: userProfile?.email || null,
@@ -141,12 +142,17 @@ export const GitHubAnalysisPage: React.FC = () => {
         return;
       }
 
-      // Skip if we already fetched for this username (prevents Strict Mode double-invoke)
-      if (fetchInitiatedRef.current === username) return;
-      fetchInitiatedRef.current = username;
-
+      // Always keep localStorage in sync with the resolved username
       localStorage.setItem("github_username", username);
       localStorage.setItem("github_repo_permission", "granted");
+
+      // If the hook already has this username from its own localStorage init,
+      // no need to call setManualUsername — it already fetched or is fetching.
+      if (hookGithubUsername === username) return;
+
+      // Guard against Strict Mode double-invocation for the same username
+      if (fetchInitiatedRef.current === username) return;
+      fetchInitiatedRef.current = username;
 
       const success = await setManualUsername(username);
       if (success) {
@@ -159,6 +165,7 @@ export const GitHubAnalysisPage: React.FC = () => {
     isGitHubUser,
     userProfile?.githubUsername,
     userProfile?.githubMetadata?.login,
+    hookGithubUsername,
     setManualUsername,
   ]);
 
@@ -377,6 +384,8 @@ export const GitHubAnalysisPage: React.FC = () => {
         <div className="fixed inset-0 z-0">
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:60px_60px] opacity-20" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#ffffff_100%)] opacity-80 dark:bg-[radial-gradient(circle_at_center,transparent_0%,#000000_100%)]" />
+          <div className="bg-primary/10 pointer-events-none absolute top-1/4 left-1/4 h-96 w-96 rounded-full blur-[100px]" />
+          <div className="bg-primary/5 pointer-events-none absolute right-1/4 bottom-1/4 h-96 w-96 rounded-full blur-[120px]" />
         </div>
 
         <Card className="border-border/40 bg-card/80 relative z-10 w-full max-w-4xl overflow-hidden shadow-2xl backdrop-blur-sm dark:border-white/10 dark:bg-black/40">
@@ -387,7 +396,10 @@ export const GitHubAnalysisPage: React.FC = () => {
               </div>
 
               <h1 className="font-display text-foreground mb-4 text-3xl font-bold tracking-tight md:text-4xl dark:text-white">
-                GITHUB <span className="text-primary">ANALYSIS</span>
+                GITHUB{" "}
+                <span className="from-primary to-primary/60 bg-gradient-to-r bg-clip-text text-transparent">
+                  ANALYSIS
+                </span>
               </h1>
               <p className="text-muted-foreground mb-8 font-mono text-sm leading-relaxed dark:text-slate-400">
                 CONNECT_GITHUB // ENABLE_ADVANCED_SECURITY_PROTOCOLS
@@ -400,7 +412,7 @@ export const GitHubAnalysisPage: React.FC = () => {
                 <Button
                   onClick={signInWithGithub}
                   size="lg"
-                  className="border-border/50 w-full border bg-[#24292F] font-bold text-white shadow-lg hover:bg-[#24292F]/80 dark:border-white/10"
+                  className="border-border/50 w-full border bg-[#24292F] font-bold text-white shadow-lg transition-all duration-300 hover:scale-[1.02] hover:bg-[#24292F]/90 hover:shadow-xl active:scale-95 dark:border-white/10"
                 >
                   <GitFork className="mr-2 h-5 w-5" />
                   Continue with GitHub
@@ -452,7 +464,7 @@ export const GitHubAnalysisPage: React.FC = () => {
                   <div key={i} className="group flex gap-4">
                     <div
                       className={cn(
-                        "group-hover:border-primary/30 border-border/40 bg-background flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg border shadow-sm transition-colors dark:border-white/10 dark:bg-white/5",
+                        "group-hover:border-primary/50 group-hover:bg-primary/5 border-border/40 bg-background flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg border shadow-sm transition-all duration-300 group-hover:shadow-[0_0_15px_-3px_rgba(16,185,129,0.2)] dark:border-white/10 dark:bg-white/5",
                         feature.color
                       )}
                     >
@@ -484,6 +496,8 @@ export const GitHubAnalysisPage: React.FC = () => {
       <div className="fixed inset-0 z-0">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:60px_60px] opacity-20" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,hsl(var(--background))_100%)] opacity-80 dark:bg-[radial-gradient(circle_at_center,transparent_0%,#000000_100%)]" />
+        <div className="bg-primary/5 pointer-events-none absolute top-1/4 left-1/4 h-[500px] w-[500px] rounded-full blur-[120px]" />
+        <div className="bg-primary/5 pointer-events-none absolute right-1/4 bottom-1/4 h-[500px] w-[500px] rounded-full blur-[120px]" />
       </div>
 
       <div className="relative z-10 bg-transparent">
@@ -531,7 +545,7 @@ export const GitHubAnalysisPage: React.FC = () => {
           {/* Repository Selection Card */}
           {repositories.length > 0 && (
             <div className="mb-8">
-              <Card className="border-border/50 bg-background/40 p-4 shadow-sm backdrop-blur-sm sm:p-6 dark:border-white/10 dark:bg-black/40">
+              <Card className="hover:border-primary/20 border-border/50 bg-background/40 p-4 shadow-sm backdrop-blur-sm transition-all duration-300 hover:shadow-[0_8px_30px_-10px_rgba(0,0,0,0.1)] sm:p-6 dark:border-white/10 dark:bg-black/40">
                 <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                   <div className="flex min-w-0 items-center gap-3">
                     <div className="bg-primary/10 border-primary/20 rounded-lg border p-2">
@@ -552,7 +566,7 @@ export const GitHubAnalysisPage: React.FC = () => {
                       size="sm"
                       onClick={() => refreshRepositories?.()}
                       disabled={reposLoading}
-                      className="border-border/50 text-foreground/80 hover:bg-muted w-full font-mono text-xs sm:w-auto dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/5"
+                      className="border-border/50 text-foreground/80 hover:bg-muted hover:border-primary/30 w-full font-mono text-xs transition-all duration-300 active:scale-95 sm:w-auto dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/5"
                     >
                       {reposLoading ? "SCANNING..." : "REFRESH_NODES"}
                     </Button>
@@ -560,7 +574,7 @@ export const GitHubAnalysisPage: React.FC = () => {
                       variant="outline"
                       size="sm"
                       onClick={() => setShowGitHubRepos(!showGitHubRepos)}
-                      className="border-border/50 text-foreground/80 hover:bg-muted w-full font-mono text-xs sm:w-auto dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/5"
+                      className="border-border/50 text-foreground/80 hover:bg-muted hover:border-primary/30 w-full font-mono text-xs transition-all duration-300 active:scale-95 sm:w-auto dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/5"
                     >
                       {showGitHubRepos ? "HIDE_LIST" : "SHOW_LIST"}
                     </Button>
@@ -585,20 +599,21 @@ export const GitHubAnalysisPage: React.FC = () => {
             !isGitHubUser &&
             !permissionGranted && (
               <div className="mb-8">
-                <Card className="hover:border-primary/30 border-border/50 bg-background/40 border-2 border-dashed p-8 text-center backdrop-blur-sm transition-colors dark:border-white/10 dark:bg-black/40">
-                  <div className="border-border/50 bg-muted/50 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full border dark:border-white/10 dark:bg-white/5">
-                    <GitFork className="text-foreground h-8 w-8" />
+                <Card className="hover:border-primary/50 border-border/50 bg-background/40 group relative overflow-hidden border-2 border-dashed p-8 text-center backdrop-blur-sm transition-all duration-500 hover:shadow-[0_0_30px_-5px_rgba(16,185,129,0.15)] dark:border-white/10 dark:bg-black/40">
+                  <div className="from-primary/5 absolute inset-0 bg-gradient-to-b to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                  <div className="border-border/50 bg-muted/50 group-hover:border-primary/30 group-hover:bg-primary/10 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full border transition-transform duration-500 group-hover:scale-110 dark:border-white/10 dark:bg-white/5">
+                    <GitFork className="text-foreground group-hover:text-primary h-8 w-8 transition-colors duration-500" />
                   </div>
-                  <h3 className="font-display text-foreground mb-2 text-xl font-bold">
+                  <h3 className="font-display text-foreground relative z-10 mb-2 text-xl font-bold">
                     CONNECT_GITHUB_ACCOUNT
                   </h3>
-                  <p className="text-muted-foreground mx-auto mb-6 max-w-md font-mono text-xs">
+                  <p className="text-muted-foreground relative z-10 mx-auto mb-6 max-w-md font-mono text-xs">
                     Link your GitHub username to automatically load your
                     repositories for security analysis.
                   </p>
                   <Button
                     onClick={openConnectGitHubPrompt}
-                    className="border-border/50 bg-muted/50 text-foreground hover:bg-muted border font-bold dark:border-white/20 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
+                    className="border-border/50 bg-muted/50 text-foreground hover:bg-primary hover:text-primary-foreground relative z-10 border font-bold transition-all duration-300 hover:scale-105 active:scale-95 dark:border-white/20 dark:bg-white/10 dark:text-white"
                   >
                     <GitFork className="mr-2 h-4 w-4" />
                     INITIALIZE_CONNECTION
@@ -659,8 +674,8 @@ export const GitHubAnalysisPage: React.FC = () => {
 
                   <div className="relative z-10 flex flex-col justify-between gap-6 md:flex-row md:items-center">
                     <div className="flex min-w-0 items-center gap-4 sm:gap-5">
-                      <div className="border-primary/30 bg-background/40 flex h-14 w-14 items-center justify-center rounded-2xl border shadow-[0_0_15px_-5px_rgba(16,185,129,0.3)] sm:h-16 sm:w-16 dark:bg-black/40">
-                        <FileCode className="text-primary h-8 w-8" />
+                      <div className="border-primary/30 bg-background/40 flex h-14 w-14 items-center justify-center rounded-2xl border shadow-[0_0_20px_-5px_rgba(16,185,129,0.4)] transition-transform hover:scale-105 sm:h-16 sm:w-16 dark:bg-black/40">
+                        <FileCode className="text-primary h-8 w-8 animate-pulse" />
                       </div>
                       <div className="min-w-0">
                         <h2 className="font-display text-foreground mb-1 text-xl font-bold tracking-wide sm:text-2xl dark:text-white">
@@ -693,7 +708,7 @@ export const GitHubAnalysisPage: React.FC = () => {
                           setAnalyzedRepoName("");
                           setSelectedTab("overview");
                         }}
-                        className="border-border/50 text-muted-foreground hover:bg-muted/50 w-full sm:w-auto dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/5"
+                        className="border-border/50 text-muted-foreground hover:bg-muted/50 w-full transition-all duration-300 hover:scale-105 active:scale-95 sm:w-auto dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/5"
                       >
                         <ArrowLeft className="mr-2 h-4 w-4" />
                         BACK_TO_DASHBOARD
@@ -733,17 +748,17 @@ export const GitHubAnalysisPage: React.FC = () => {
                       <div
                         key={i}
                         className={cn(
-                          "bg-background/20 rounded-lg border p-4 backdrop-blur-sm transition-all dark:bg-black/20",
+                          "bg-background/20 rounded-lg border p-4 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg dark:bg-black/20",
                           stat.color === "red" &&
-                            "border-red-500/30 text-red-500",
+                            "border-red-500/30 text-red-500 hover:border-red-500/50 hover:shadow-red-500/20",
                           stat.color === "orange" &&
-                            "border-orange-500/30 text-orange-500",
+                            "border-orange-500/30 text-orange-500 hover:border-orange-500/50 hover:shadow-orange-500/20",
                           stat.color === "yellow" &&
-                            "border-amber-500/30 text-amber-500",
+                            "border-amber-500/30 text-amber-500 hover:border-amber-500/50 hover:shadow-amber-500/20",
                           stat.color === "blue" &&
-                            "border-emerald-500/30 text-emerald-500",
+                            "border-emerald-500/30 text-emerald-500 hover:border-emerald-500/50 hover:shadow-emerald-500/20",
                           stat.color === "slate" &&
-                            "border-border/50 text-muted-foreground dark:border-white/10 dark:text-slate-400"
+                            "border-border/50 text-muted-foreground hover:shadow-border/20 hover:border-border/80 dark:border-white/10 dark:text-slate-400"
                         )}
                       >
                         <div className="font-display mb-1 text-2xl font-bold">

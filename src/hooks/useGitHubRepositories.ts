@@ -1,5 +1,5 @@
 // hooks/useGitHubRepositories.ts
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { logger } from "@/utils/logger";
 import { isValidGitHubUsername } from "@/utils/githubValidation";
 
@@ -44,7 +44,9 @@ export const useGitHubRepositories = ({
     return null;
   });
   const [githubUser, setGithubUser] = useState<GitHubUserProfile | null>(null);
-  const [initialized, setInitialized] = useState(false);
+  // useRef instead of useState so React Strict Mode's double-mount cannot reset
+  // the initialized flag and cause a duplicate fetch on remount.
+  const initializedRef = useRef(false);
 
   const getGitHubAccessToken = (): string | null => {
     if (typeof window === "undefined") return null;
@@ -247,11 +249,11 @@ export const useGitHubRepositories = ({
 
   useEffect(() => {
     const initializeGitHubData = async () => {
-      // Prevent double initialization
-      if (initialized) return;
+      // Prevent double initialization (especially React Strict Mode double-mount)
+      if (initializedRef.current) return;
+      initializedRef.current = true;
 
       if (!enabled) {
-        setInitialized(true);
         return;
       }
 
@@ -267,7 +269,6 @@ export const useGitHubRepositories = ({
           );
           localStorage.removeItem("github_username");
           localStorage.removeItem("github_repo_permission");
-          setInitialized(true);
           return;
         }
 
@@ -276,7 +277,6 @@ export const useGitHubRepositories = ({
           fetchRepositories(storedUsername),
           fetchUserProfile(storedUsername),
         ]);
-        setInitialized(true);
         return;
       }
 
@@ -289,12 +289,10 @@ export const useGitHubRepositories = ({
           await fetchUserProfile(username);
         }
       }
-
-      setInitialized(true);
     };
 
     initializeGitHubData();
-  }, [email, enabled, initialized]);
+  }, [email, enabled]);
 
   const grantPermission = async () => {
     if (githubUsername) {
