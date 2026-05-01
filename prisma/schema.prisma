@@ -95,3 +95,106 @@ model Webhook {
   @@index([userId])
   @@index([isActive])
 }
+
+model Feedback {
+  id        String   @id @default(uuid())
+  userId    String?
+  email     String?
+  message   String
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([createdAt])
+}
+
+model ErrorLog {
+  id             String   @id @default(uuid())
+  userId         String?
+  message        String
+  stack          String?
+  componentStack String?
+  url            String?
+  userAgent      String?
+  ipAddress      String?
+  errorHash      String
+  deduplicated   Boolean  @default(false)
+  extra          Json?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([userId])
+  @@index([errorHash])
+  @@index([createdAt])
+}
+
+model AnalyticsEvent {
+  id         String   @id @default(uuid())
+  userId     String?
+  event      String
+  properties Json?
+  sessionId  String?
+  pageUrl    String?
+  referrer   String?
+  userAgent  String?
+  ipAddress  String?
+  createdAt  DateTime @default(now())
+
+  @@index([userId])
+  @@index([event])
+  @@index([sessionId])
+  @@index([createdAt])
+}
+
+model PWAAnalyticsEvent {
+  id         String   @id @default(uuid())
+  userId     String?
+  event      String
+  properties Json?
+  sessionId  String?
+  userAgent  String?
+  createdAt  DateTime @default(now())
+
+  @@index([userId])
+  @@index([event])
+  @@index([sessionId])
+  @@index([createdAt])
+}
+
+model PushSubscription {
+  id             String   @id @default(uuid())
+  userId         String
+  endpoint       String   @unique
+  p256dh         String
+  auth           String
+  userAgent      String?
+  deviceType     String?
+  expirationTime DateTime?
+  isActive       Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([userId])
+  @@index([isActive])
+}
+
+model ScheduledNotification {
+  id              String   @id @default(uuid())
+  userId          String
+  title           String
+  body            String
+  icon            String?
+  data            Json?
+  scheduledTime   DateTime
+  sent            Boolean  @default(false)
+  sentAt          DateTime?
+  subscriptionId  String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([userId])
+  @@index([scheduledTime])
+  @@index([sent])
+}

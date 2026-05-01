@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { checkRateLimit } from "@/lib/rate-limit";
+import { prisma } from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 
 export const dynamic = "force-dynamic";
 
@@ -152,7 +154,8 @@ export async function POST(request: NextRequest) {
       return handleBatchAnalytics(
         body as AnalyticsBatchPayload,
         request,
-        rateLimit
+        rateLimit,
+        clientIp
       );
     }
 
@@ -161,7 +164,12 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: validationError }, { status: 400 });
     }
 
-    return handleSingleAnalytics(body as AnalyticsPayload, request, rateLimit);
+    return handleSingleAnalytics(
+      body as AnalyticsPayload,
+      request,
+      rateLimit,
+      clientIp
+    );
   } catch (error) {
     console.error("Analytics error:", error);
     return NextResponse.json(
@@ -174,29 +182,28 @@ export async function POST(request: NextRequest) {
 async function handleSingleAnalytics(
   body: AnalyticsPayload,
   request: NextRequest,
-  rateLimit: { remaining: number; resetAt: number }
+  rateLimit: { remaining: number; resetAt: number },
+  clientIp: string
 ) {
-  // Create analytics record
-  const analyticsRecord = {
-    id: `analytics-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-    userId: body.userId || "anonymous",
-    event: body.event,
-    properties: body.properties || {},
-    sessionId: body.sessionId || null,
-    pageUrl: body.pageUrl || request.headers.get("referer") || null,
-    referrer: body.referrer || null,
-    userAgent: request.headers.get("user-agent") || "unknown",
-    timestamp: new Date().toISOString(),
-    ip: request.headers.get("x-forwarded-for")?.split(",")[0] || "unknown",
-  };
+  const event = await prisma.analyticsEvent.create({
+    data: {
+      userId: body.userId || null,
+      event: body.event,
+      properties: (body.properties as Prisma.InputJsonValue) || undefined,
+      sessionId: body.sessionId || null,
+      pageUrl: body.pageUrl || request.headers.get("referer") || null,
+      referrer: body.referrer || null,
+      userAgent: request.headers.get("user-agent") || "unknown",
+      ipAddress: clientIp,
+    },
+  });
 
-  // Analytics recording disabled - Firebase removed
   return NextResponse.json(
     {
       success: true,
-      message: "Analytics event accepted (storage disabled)",
-      eventId: analyticsRecord.id,
-      persisted: false,
+      message: "Analytics event recorded",
+      eventId: event.id,
+      persisted: true,
     },
     {
       headers: {
@@ -210,27 +217,34 @@ async function handleSingleAnalytics(
 async function handleBatchAnalytics(
   body: AnalyticsBatchPayload,
   request: NextRequest,
-  rateLimit: { remaining: number; resetAt: number }
+  rateLimit: { remaining: number; resetAt: number },
+  clientIp: string
 ) {
   const batchId = `batch-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-  const processedEvents = body.events.map((event, index) => ({
-    id: `${batchId}-${index}`,
-    userId: body.userId || "anonymous",
+  const userAgent = request.headers.get("user-agent") || "unknown";
+
+  const eventsToCreate = body.events.map((event) => ({
+    userId: body.userId || null,
     event: event.event,
-    properties: event.properties || {},
+    properties: (event.properties as Prisma.InputJsonValue) || undefined,
     sessionId: body.sessionId || null,
-    timestamp: event.timestamp || new Date().toISOString(),
-    userAgent: request.headers.get("user-agent") || "unknown",
+    pageUrl: null,
+    referrer: null,
+    userAgent,
+    ipAddress: clientIp,
   }));
 
-  // Analytics recording disabled - Firebase removed
+  await prisma.analyticsEvent.createMany({
+    data: eventsToCreate,
+  });
+
   return NextResponse.json(
     {
       success: true,
-      message: `${processedEvents.length} analytics events accepted (storage disabled)`,
+      message: `${eventsToCreate.length} analytics events recorded`,
       batchId,
-      eventCount: processedEvents.length,
-      persisted: false,
+      eventCount: eventsToCreate.length,
+      persisted: true,
     },
     {
       headers: {

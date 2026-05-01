@@ -3,6 +3,7 @@
  * Firebase Cloud Functions for Code Guardian
  * Handles webhook processing, background tasks, and scheduled jobs
  */
+
 var __createBinding =
   (this && this.__createBinding) ||
   (Object.create

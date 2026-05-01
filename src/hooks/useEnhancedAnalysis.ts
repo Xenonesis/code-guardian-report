@@ -94,10 +94,11 @@ export const useEnhancedAnalysis = () => {
       // Use fileOverride if provided, otherwise use selectedFile
       const fileToUse = fileOverride || selectedFile;
 
-      // Store results using the integration service (both local and Firebase)
+      // Store results using the integration service (both local and server)
       if (fileToUse) {
         try {
-          // Store locally only (Firebase removed)
+          // Store locally via the storage service
+          await analysisStorage.storeAnalysisResults(results, fileToUse);
           setHasStoredData(true);
           updateStorageStats();
         } catch (error) {

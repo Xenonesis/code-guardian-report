@@ -1,26 +1,9 @@
 import React from "react";
-import {
-  TrendingUp,
-  GitBranch,
-  Shield,
-  Activity,
-  BarChart3,
-  Code2,
-  AlertTriangle,
-  FileCode,
-} from "lucide-react";
+import { TrendingUp, GitBranch, FileCode } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { AnalysisResults } from "@/hooks/useAnalysis";
 
-export type TabId =
-  | "overview"
-  | "repositories"
-  | "history"
-  | "analytics"
-  | "comparison"
-  | "quality"
-  | "patterns"
-  | "results";
+export type TabId = "overview" | "repositories" | "results";
 
 interface GitHubNavigationTabsProps {
   selectedTab: TabId;
@@ -36,11 +19,6 @@ export const GitHubNavigationTabs: React.FC<GitHubNavigationTabsProps> = ({
   const tabs = [
     { id: "overview", icon: TrendingUp, label: "Overview" },
     { id: "repositories", icon: GitBranch, label: "Repositories" },
-    { id: "history", icon: Activity, label: "History" },
-    { id: "analytics", icon: Shield, label: "Analytics" },
-    { id: "comparison", icon: BarChart3, label: "Compare" },
-    { id: "quality", icon: Code2, label: "Quality" },
-    { id: "patterns", icon: AlertTriangle, label: "Patterns" },
   ];
 
   return (

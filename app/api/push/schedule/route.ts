@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 
 export const dynamic = "force-dynamic";
 
@@ -12,9 +14,13 @@ interface ScheduledNotificationPayload {
 }
 
 export async function GET() {
+  const vapidPublicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
+  const vapidPrivateKey = process.env.VAPID_PRIVATE_KEY;
+  const configured = !!(vapidPublicKey && vapidPrivateKey);
+
   return NextResponse.json({
     status: "push schedule endpoint is working",
-    configured: false,
+    configured,
     timestamp: new Date().toISOString(),
   });
 }
@@ -50,11 +56,24 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Push scheduling disabled - Firebase removed
+    // Store scheduled notification using Prisma
+    const notification = await prisma.scheduledNotification.create({
+      data: {
+        userId: body.userId,
+        title: body.title,
+        body: body.body,
+        icon: body.icon || null,
+        data: (body.data as Prisma.InputJsonValue) || undefined,
+        scheduledTime: scheduledDate,
+      },
+    });
+
     return NextResponse.json({
-      success: false,
-      scheduled: false,
-      error: "Push scheduling is not available",
+      success: true,
+      scheduled: true,
+      notificationId: notification.id,
+      scheduledTime: scheduledDate.toISOString(),
+      message: "Notification scheduled successfully",
       timestamp: new Date().toISOString(),
     });
   } catch (error) {

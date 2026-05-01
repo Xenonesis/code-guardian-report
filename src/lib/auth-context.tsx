@@ -6,6 +6,7 @@ import React, {
   ReactNode,
   useState,
   useEffect,
+  useMemo,
 } from "react";
 import { neonAuth } from "@/lib/neon-auth";
 import { logger } from "@/utils/logger";
@@ -159,26 +160,28 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const loading = sessionData.isPending;
 
-  const userProfile: UserProfile | null = sessionData.data?.user
-    ? {
-        id: sessionData.data.user.id || "",
-        email: sessionData.data.user.email || null,
-        name: sessionData.data.user.name || null,
-        image: sessionData.data.user.image || null,
-        githubId: sessionData.data.user.id,
-        isGitHubUser: true,
-        displayName: sessionData.data.user.name || null,
-        photoURL: sessionData.data.user.image || null,
-        githubUsername: resolvedGithubUsername,
-        githubMetadata: {
-          login: resolvedGithubUsername || undefined,
-          avatarUrl: sessionData.data.user.image || undefined,
-          htmlUrl: resolvedGithubUsername
-            ? `https://github.com/${resolvedGithubUsername}`
-            : undefined,
-        },
-      }
-    : null;
+  const userProfile: UserProfile | null = useMemo(() => {
+    return sessionData.data?.user
+      ? {
+          id: sessionData.data.user.id || "",
+          email: sessionData.data.user.email || null,
+          name: sessionData.data.user.name || null,
+          image: sessionData.data.user.image || null,
+          githubId: sessionData.data.user.id,
+          isGitHubUser: true,
+          displayName: sessionData.data.user.name || null,
+          photoURL: sessionData.data.user.image || null,
+          githubUsername: resolvedGithubUsername,
+          githubMetadata: {
+            login: resolvedGithubUsername || undefined,
+            avatarUrl: sessionData.data.user.image || undefined,
+            htmlUrl: resolvedGithubUsername
+              ? `https://github.com/${resolvedGithubUsername}`
+              : undefined,
+          },
+        }
+      : null;
+  }, [sessionData.data?.user, resolvedGithubUsername]);
 
   const user = userProfile;
   const isAuthenticated = !!userProfile;

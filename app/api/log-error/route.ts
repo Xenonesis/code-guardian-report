@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 
 export const dynamic = "force-dynamic";
 
@@ -66,35 +68,52 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    const errorLog: ErrorLog & { serverTimestamp: string; ip: string | null } =
-      {
+    const ipAddress =
+      request.headers.get("x-forwarded-for") ||
+      request.headers.get("x-real-ip");
+
+    // Store error log using Prisma
+    const errorLog = await prisma.errorLog.create({
+      data: {
         message: body.message,
-        digest: body.digest,
-        url: body.url,
-        userAgent: body.userAgent,
-        timestamp: body.timestamp,
-        stack: body.stack,
-        componentStack: body.componentStack,
-        extra: body.extra,
-        serverTimestamp: new Date().toISOString(),
-        ip:
-          request.headers.get("x-forwarded-for") ||
-          request.headers.get("x-real-ip"),
-      };
+        stack: body.stack || null,
+        componentStack: body.componentStack || null,
+        url: body.url || null,
+        userAgent: body.userAgent || request.headers.get("user-agent") || null,
+        ipAddress: ipAddress || null,
+        errorHash,
+        extra: (body.extra as Prisma.InputJsonValue) || undefined,
+      },
+    });
 
     if (process.env.NODE_ENV === "development") {
-      console.error("[Client Error]", JSON.stringify(errorLog, null, 2));
+      console.error(
+        "[Client Error]",
+        JSON.stringify(
+          {
+            message: body.message,
+            digest: body.digest,
+            url: body.url,
+            userAgent: body.userAgent,
+            timestamp: body.timestamp,
+            stack: body.stack,
+            componentStack: body.componentStack,
+            extra: body.extra,
+            serverTimestamp: new Date().toISOString(),
+            ip: ipAddress,
+          },
+          null,
+          2
+        )
+      );
     }
-
-    // Error log storage disabled - Firebase removed
-    const docRef = { id: `error-${Date.now()}` };
 
     return NextResponse.json(
       {
         success: true,
         logged: true,
         persisted: true,
-        logId: docRef.id,
+        logId: errorLog.id,
       },
       {
         status: 200,

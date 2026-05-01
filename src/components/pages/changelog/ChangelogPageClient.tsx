@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { GitHubRelease, GitHubCommit } from "@/services/api/githubService";
 import { ChangelogPageLayout } from "./ChangelogPageLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -216,14 +216,8 @@ const STATIC_RELEASES: GitHubRelease[] = [
 - Fixed 181 ESLint errors related to unused variables and imports
 - Resolved TypeScript compilation errors in production builds
 - Fixed unused catch block error parameters
-- Corrected unused React imports in functional components
-
-### Performance
-
-- Reduced bundle size through code cleanup
-- Faster build times with optimized imports
-- Improved type checking speed`,
-    published_at: "2026-01-31T00:00:00Z",
+- Corrected unused React imports in functional components`,
+    published_at: "2026-02-01T00:00:00Z",
     html_url:
       "https://github.com/Xenonesis/code-guardian-report/releases/tag/12.0.0",
     author: {
@@ -232,192 +226,80 @@ const STATIC_RELEASES: GitHubRelease[] = [
       html_url: "https://github.com/Xenonesis",
     },
   },
-  {
-    id: 1100,
-    tag_name: "11.0.0",
-    name: "Version 11.0.0",
-    body: `### Added
-
-- **Major Features**:
-  - Complete rewrite with Next.js 16 App Router
-  - Enhanced multi-language support (15+ programming languages)
-  - AI-powered security insights and fix suggestions
-  - Progressive Web App (PWA) capabilities
-  - GitHub repository integration with OAuth authentication
-  - Advanced analytics dashboard with real-time metrics
-  - Custom rules engine for organization-specific patterns
-  - Multiple export formats (PDF, JSON, SARIF, CSV)
-
-- **Security Analysis**:
-  - Complete OWASP Top 10 coverage
-  - CWE mapping for all vulnerabilities
-  - Secret detection for 50+ credential types
-  - Dependency vulnerability scanning
-  - Framework-specific security checks
-
-- **User Experience**:
-  - Real-time analysis with progress tracking
-  - Interactive charts and visualizations
-  - Dark/light theme support
-  - Responsive design for mobile and desktop
-  - Offline analysis capabilities
-
-### Changed
-
-- 300% faster analysis engine
-- 50% reduction in bundle size
-- Improved accessibility (WCAG 2.1 AA compliant)
-- Enhanced mobile experience
-- Better error handling and logging
-
-### Fixed
-
-- Fixed XSS detection false positives
-- Resolved memory leaks in large file analysis
-- Fixed GitHub OAuth token refresh
-- Corrected PDF export formatting issues
-- Fixed language detection accuracy
-
-### Security
-
-- Enhanced Content Security Policy (CSP)
-- Implemented strict security headers
-- Added rate limiting for API endpoints
-- Improved input validation and sanitization`,
-    published_at: "2025-01-31T00:00:00Z",
-    html_url:
-      "https://github.com/Xenonesis/code-guardian-report/releases/tag/11.0.0",
-    author: {
-      login: "Xenonesis",
-      avatar_url: "https://github.com/Xenonesis.png",
-      html_url: "https://github.com/Xenonesis",
-    },
-  },
-  {
-    id: 1000,
-    tag_name: "10.0.0",
-    name: "Version 10.0.0",
-    body: `### Added
-
-- Initial public release
-- Core security analysis engine
-- Multi-language support (JavaScript, TypeScript, Python, Java)
-- Basic reporting functionality
-- File upload analysis`,
-    published_at: "2024-12-15T00:00:00Z",
-    html_url:
-      "https://github.com/Xenonesis/code-guardian-report/releases/tag/10.0.0",
-    author: {
-      login: "Xenonesis",
-      avatar_url: "https://github.com/Xenonesis.png",
-      html_url: "https://github.com/Xenonesis",
-    },
-  },
 ];
 
-// Simple Markdown Parser Component
-const SimpleMarkdown = ({ content }: { content: string }) => {
-  if (!content) return null;
+interface SimpleMarkdownProps {
+  content: string;
+}
 
-  const lines = content.split("\n");
-
+const SimpleMarkdown: React.FC<SimpleMarkdownProps> = ({ content }) => {
   return (
-    <div className="text-muted-foreground space-y-1 text-sm">
-      {lines.map((line, index) => {
-        // Handle headers
-        if (line.startsWith("# ")) {
-          return (
-            <h1
-              key={index}
-              className="text-foreground mt-4 mb-2 text-lg font-bold"
-            >
-              {line.replace("# ", "")}
-            </h1>
-          );
-        }
-        if (line.startsWith("## ")) {
-          return (
-            <h2
-              key={index}
-              className="text-foreground mt-3 mb-1 text-base font-bold"
-            >
-              {line.replace("## ", "")}
-            </h2>
-          );
-        }
+    <div className="space-y-2 text-sm leading-relaxed">
+      {content.split("\n").map((line, index) => {
         if (line.startsWith("### ")) {
           return (
-            <h3
-              key={index}
-              className="text-foreground mt-2 mb-1 text-sm font-bold"
-            >
-              {line.replace("### ", "")}
+            <h3 key={index} className="text-foreground mt-4 text-sm font-bold">
+              {line.slice(4)}
             </h3>
           );
         }
-
-        // Handle list items
-        const isList =
-          line.trim().startsWith("- ") || line.trim().startsWith("* ");
-        const cleanLine = line.replace(/^(\s*)([-*])\s+/, "");
-
-        // Parse bold and links
-        const parts = cleanLine.split(/(\*\*.*?\*\*|\[.*?\]\(.*?\))/g);
-
-        const renderedParts = parts.map((part, i) => {
-          if (part.startsWith("**") && part.endsWith("**")) {
-            return (
-              <strong key={i} className="text-foreground">
-                {part.slice(2, -2)}
-              </strong>
-            );
-          }
-          if (
-            part.startsWith("[") &&
-            part.includes("](") &&
-            part.endsWith(")")
-          ) {
-            const [text, url] = part.slice(1, -1).split("](");
-            return (
-              <a
-                key={i}
-                href={url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary inline-flex items-center gap-0.5 hover:underline"
-              >
-                {text}
-                <ExternalLink className="h-3 w-3" />
-              </a>
-            );
-          }
-          return part;
-        });
-
-        if (isList) {
+        if (line.startsWith("- ")) {
           return (
-            <div key={index} className="ml-2 flex items-start gap-2">
-              <span className="bg-primary mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full" />
-              <p>{renderedParts}</p>
-            </div>
+            <li key={index} className="text-foreground ml-4 list-disc">
+              {line.slice(2)}
+            </li>
           );
         }
-
-        if (line.trim() === "") {
-          return <div key={index} className="h-2" />;
+        if (line === "") {
+          return <div key={index} />;
         }
-
-        return <p key={index}>{renderedParts}</p>;
+        return (
+          <p key={index} className="text-foreground">
+            {line}
+          </p>
+        );
       })}
     </div>
   );
 };
 
 export default function ChangelogPageClient() {
-  const [releases] = useState<GitHubRelease[]>(STATIC_RELEASES);
-  const [commits] = useState<GitHubCommit[]>(STATIC_COMMITS);
+  const [releases, setReleases] = useState<GitHubRelease[]>(STATIC_RELEASES);
+  const [commits, setCommits] = useState<GitHubCommit[]>(STATIC_COMMITS);
   const [activeTab, setActiveTab] = useState("releases");
   const [visibleCommits, setVisibleCommits] = useState(20);
+  const [loading, setLoading] = useState(true);
+  const [source, setSource] = useState<"github" | "offline">("offline");
+
+  useEffect(() => {
+    const fetchChangelog = async () => {
+      try {
+        const response = await fetch("/api/changelog?type=all&limit=100");
+        if (!response.ok) throw new Error("Failed to fetch changelog");
+
+        const data = await response.json();
+        if (data.success) {
+          if (data.releases && data.releases.length > 0) {
+            setReleases(data.releases);
+          }
+          if (data.commits && data.commits.length > 0) {
+            setCommits(data.commits);
+          }
+          setSource(data.source || "offline");
+        }
+      } catch (error) {
+        console.warn(
+          "Failed to fetch live changelog, using static fallback:",
+          error
+        );
+        setSource("offline");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchChangelog();
+  }, []);
 
   const handleShowMoreCommits = () => {
     setVisibleCommits((prev) => prev + 20);
@@ -444,6 +326,11 @@ export default function ChangelogPageClient() {
         commits: commits.length,
       }}
     >
+      {!loading && source === "offline" && (
+        <div className="mb-6 rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800 dark:border-amber-700 dark:bg-amber-900/20 dark:text-amber-200">
+          📦 Showing cached changelog data. Live data may be more recent.
+        </div>
+      )}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="mx-auto mb-8 grid w-full grid-cols-2 sm:w-[400px]">
           <TabsTrigger value="releases" className="flex items-center gap-2">

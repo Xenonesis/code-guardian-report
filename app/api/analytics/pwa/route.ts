@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 
 export const dynamic = "force-dynamic";
 
@@ -42,23 +44,21 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create PWA analytics record
-    const pwaAnalyticsRecord = {
-      id: `pwa-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-      event: body.event,
-      userId: body.userId || null,
-      sessionId: body.sessionId || null,
-      properties: body.properties || {},
-      userAgent: request.headers.get("user-agent") || "unknown",
-      timestamp: new Date().toISOString(),
-    };
+    const event = await prisma.pWAAnalyticsEvent.create({
+      data: {
+        userId: body.userId || null,
+        event: body.event,
+        properties: (body.properties as Prisma.InputJsonValue) || undefined,
+        sessionId: body.sessionId || null,
+        userAgent: request.headers.get("user-agent") || "unknown",
+      },
+    });
 
-    // PWA analytics recording disabled - Firebase removed
     return NextResponse.json({
       success: true,
-      message: "PWA analytics event accepted (storage disabled)",
-      eventId: pwaAnalyticsRecord.id,
-      persisted: false,
+      message: "PWA analytics event recorded",
+      eventId: event.id,
+      persisted: true,
     });
   } catch (error) {
     console.error("PWA Analytics error:", error);

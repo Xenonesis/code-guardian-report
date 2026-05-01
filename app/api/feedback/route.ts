@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { checkRateLimit } from "@/lib/rate-limit";
+import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
 
@@ -59,7 +60,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = (await request.json()) as FeedbackPayload;
-    const email = cleanString(body.email, 254) || null;
+    const email = cleanString(body.email, 254);
     const message = cleanString(body.message, MAX_MESSAGE_LENGTH);
 
     if (!message) {
@@ -76,13 +77,21 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Feedback storage disabled - Firebase removed
-    const docRef = { id: `feedback-${Date.now()}` };
+    // Store feedback using Prisma
+    const feedback = await prisma.feedback.create({
+      data: {
+        message,
+        email: email || null,
+        userId: body.userId || null,
+        ipAddress: clientIp,
+        userAgent: request.headers.get("user-agent") || null,
+      },
+    });
 
     return NextResponse.json({
       success: true,
       persisted: true,
-      feedbackId: docRef.id,
+      feedbackId: feedback.id,
     });
   } catch (error) {
     console.error("Feedback submission error:", error);

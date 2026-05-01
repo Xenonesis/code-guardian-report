@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
 
@@ -10,9 +11,13 @@ interface UnsubscribePayload {
 }
 
 export async function GET() {
+  const vapidPublicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
+  const vapidPrivateKey = process.env.VAPID_PRIVATE_KEY;
+  const configured = !!(vapidPublicKey && vapidPrivateKey);
+
   return NextResponse.json({
     status: "push unsubscription endpoint is working",
-    configured: false,
+    configured,
     timestamp: new Date().toISOString(),
   });
 }
@@ -39,11 +44,25 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Push unsubscription disabled - Firebase removed
+    // Unsubscribe using Prisma
+    if (body.subscriptionId) {
+      await prisma.pushSubscription.delete({
+        where: { id: body.subscriptionId },
+      });
+    } else if (body.endpoint) {
+      await prisma.pushSubscription.delete({
+        where: { endpoint: body.endpoint },
+      });
+    } else if (body.unsubscribeAll && body.userId) {
+      await prisma.pushSubscription.deleteMany({
+        where: { userId: body.userId },
+      });
+    }
+
     return NextResponse.json({
-      success: false,
-      configured: false,
-      message: "Push unsubscription is not available",
+      success: true,
+      configured: true,
+      message: "Push subscription removed successfully",
     });
   } catch (error) {
     console.error("Push unsubscription error:", error);

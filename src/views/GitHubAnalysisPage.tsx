@@ -39,30 +39,13 @@ export const GitHubAnalysisPage: React.FC = () => {
   const { user, userProfile, isGitHubUser, signInWithGithub } = useAuth();
   const { navigateTo: _navigateTo } = useNavigation();
   const [selectedTab, setSelectedTab] = useState<
-    | "overview"
-    | "repositories"
-    | "history"
-    | "analytics"
-    | "comparison"
-    | "quality"
-    | "patterns"
-    | "results"
+    "overview" | "repositories" | "results"
   >(() => {
     const stored =
       typeof window !== "undefined"
         ? localStorage.getItem("github_selected_tab")
         : null;
-    return (
-      (stored as
-        | "overview"
-        | "repositories"
-        | "history"
-        | "analytics"
-        | "comparison"
-        | "quality"
-        | "patterns"
-        | "results") || "overview"
-    );
+    return (stored as "overview" | "repositories" | "results") || "overview";
   });
   const [showPermissionModal, setShowPermissionModal] = useState(false);
   const [showUsernameInput, setShowUsernameInput] = useState(false);
