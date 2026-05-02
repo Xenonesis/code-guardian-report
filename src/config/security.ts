@@ -54,6 +54,8 @@ export const CSP_DIRECTIVES = {
     "https://raw.githubusercontent.com",
     "https://avatars.githubusercontent.com",
     "https://codeload.github.com",
+    "https://objects.githubusercontent.com",
+    "https://github.com",
     "https://*.firebaseio.com",
     "https://*.googleapis.com",
     "https://*.firebase.com",
@@ -65,6 +67,9 @@ export const CSP_DIRECTIVES = {
     "https://*.neonauth.ap-southeast-1.aws.neon.tech",
     "https://api.osv.dev",
     "https://pypi.org",
+    "https://registry.npmjs.org",
+    "https://*.s3.amazonaws.com",
+    "https://*.blob.core.windows.net",
   ],
   "frame-src": [
     "'self'",
