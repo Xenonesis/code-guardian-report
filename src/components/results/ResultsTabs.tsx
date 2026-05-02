@@ -146,37 +146,39 @@ export const ResultsTabs: React.FC<ResultsTabsProps> = ({ results }) => {
           </div>
         </div>
 
-        <AnimatePresence mode="wait">
-          <TabsContent
-            key="tab-overview"
-            value="overview"
-            className="mt-0 space-y-6"
-            forceMount={undefined}
-          >
+        <TabsContent
+          value="overview"
+          className="mt-0 space-y-6"
+          forceMount={undefined}
+        >
+          <AnimatePresence mode="wait">
             <motion.div
               variants={tabContentVariants}
               initial="hidden"
               animate="visible"
-              key="overview"
+              exit="exit"
+              key="overview-content"
             >
               <ErrorBoundary fallback={tabErrorFallback}>
                 <SecurityOverview results={results} />
               </ErrorBoundary>
             </motion.div>
-          </TabsContent>
+          </AnimatePresence>
+        </TabsContent>
 
-          {hasLanguageDetection && results.languageDetection && (
-            <TabsContent
-              key="tab-language-detection"
-              value="language-detection"
-              className="mt-0 space-y-6"
-              forceMount={undefined}
-            >
+        {hasLanguageDetection && results.languageDetection && (
+          <TabsContent
+            value="language-detection"
+            className="mt-0 space-y-6"
+            forceMount={undefined}
+          >
+            <AnimatePresence mode="wait">
               <motion.div
                 variants={tabContentVariants}
                 initial="hidden"
                 animate="visible"
-                key="languages"
+                exit="exit"
+                key="languages-content"
               >
                 <ErrorBoundary fallback={tabErrorFallback}>
                   <LanguageDetectionDisplay
@@ -184,20 +186,22 @@ export const ResultsTabs: React.FC<ResultsTabsProps> = ({ results }) => {
                   />
                 </ErrorBoundary>
               </motion.div>
-            </TabsContent>
-          )}
+            </AnimatePresence>
+          </TabsContent>
+        )}
 
-          <TabsContent
-            key="tab-dependency-analysis"
-            value="dependency-analysis"
-            className="mt-0 space-y-6"
-            forceMount={undefined}
-          >
+        <TabsContent
+          value="dependency-analysis"
+          className="mt-0 space-y-6"
+          forceMount={undefined}
+        >
+          <AnimatePresence mode="wait">
             <motion.div
               variants={tabContentVariants}
               initial="hidden"
               animate="visible"
-              key="deps"
+              exit="exit"
+              key="deps-content"
             >
               <ErrorBoundary fallback={tabErrorFallback}>
                 <DependencyAnalysisDisplay
@@ -206,44 +210,48 @@ export const ResultsTabs: React.FC<ResultsTabsProps> = ({ results }) => {
                 />
               </ErrorBoundary>
             </motion.div>
-          </TabsContent>
+          </AnimatePresence>
+        </TabsContent>
 
-          <TabsContent
-            key="tab-ai-insights"
-            value="ai-insights"
-            className="mt-0 space-y-6"
-            forceMount={undefined}
-          >
+        <TabsContent
+          value="ai-insights"
+          className="mt-0 space-y-6"
+          forceMount={undefined}
+        >
+          <AnimatePresence mode="wait">
             <motion.div
               variants={tabContentVariants}
               initial="hidden"
               animate="visible"
-              key="ai"
+              exit="exit"
+              key="ai-content"
             >
               <ErrorBoundary fallback={tabErrorFallback}>
                 <AISecurityInsights results={results} />
               </ErrorBoundary>
             </motion.div>
-          </TabsContent>
+          </AnimatePresence>
+        </TabsContent>
 
-          <TabsContent
-            key="tab-metrics"
-            value="metrics"
-            className="mt-0 space-y-6"
-            forceMount={undefined}
-          >
+        <TabsContent
+          value="metrics"
+          className="mt-0 space-y-6"
+          forceMount={undefined}
+        >
+          <AnimatePresence mode="wait">
             <motion.div
               variants={tabContentVariants}
               initial="hidden"
               animate="visible"
-              key="metrics"
+              exit="exit"
+              key="metrics-content"
             >
               <ErrorBoundary fallback={tabErrorFallback}>
                 <SecurityMetricsDashboard results={results} />
               </ErrorBoundary>
             </motion.div>
-          </TabsContent>
-        </AnimatePresence>
+          </AnimatePresence>
+        </TabsContent>
       </Tabs>
     </div>
   );

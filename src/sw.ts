@@ -98,7 +98,9 @@ self.addEventListener("message", (event) => {
   if (event.data && event.data.type === "PRELOAD_ROUTES") {
     const routes = event.data.routes as string[];
     routes.forEach((route) => {
-      fetch(route).catch(() => {});
+      fetch(route).catch((error) => {
+        console.warn(`[SW Dev] Preload failed for ${route}:`, error.message);
+      });
     });
   }
 });

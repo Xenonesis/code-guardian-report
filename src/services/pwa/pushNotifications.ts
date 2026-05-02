@@ -10,7 +10,7 @@ export interface NotificationPayload {
   icon?: string;
   badge?: string;
   image?: string;
-  data?: any;
+  data?: Record<string, unknown>;
   actions?: NotificationAction[];
   tag?: string;
   requireInteraction?: boolean;
@@ -187,8 +187,15 @@ class PushNotificationService {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        title: payload.title,
+        body: payload.body,
+        icon: payload.icon,
+        badge: payload.badge,
+        tag: payload.tag,
+        data: payload.data,
+        actions: payload.actions,
+        requireInteraction: payload.requireInteraction,
         subscription: this.subscription.toJSON(),
-        payload,
       }),
     });
 
@@ -199,7 +206,8 @@ class PushNotificationService {
 
   async scheduleNotification(
     payload: NotificationPayload,
-    delay: number
+    delay: number,
+    userId?: string
   ): Promise<void> {
     // Skip API calls in development mode or when no backend is available
     if (
@@ -214,15 +222,24 @@ class PushNotificationService {
       return;
     }
 
+    if (!userId) {
+      throw new Error("User ID is required to schedule notifications");
+    }
+
+    const scheduledTime = new Date(Date.now() + delay).toISOString();
+
     const response = await fetch("/api/push/schedule", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        subscription: this.subscription?.toJSON(),
-        payload,
-        delay,
+        title: payload.title,
+        body: payload.body,
+        icon: payload.icon,
+        data: payload.data,
+        scheduledTime,
+        userId,
       }),
     });
 
@@ -264,7 +281,7 @@ class PushNotificationService {
     }
   }
 
-  private handlePushMessage(payload: any): void {
+  private handlePushMessage(payload: Record<string, unknown>): void {
     // Dispatch custom event for app to handle
     window.dispatchEvent(
       new CustomEvent("pushNotification", {

@@ -60,6 +60,8 @@ export const CSP_DIRECTIVES = {
     "wss://*.firebaseio.com",
     "https://*.neon.tech",
     "https://*.neonauth.ap-southeast-1.aws.neon.tech",
+    "https://api.osv.dev",
+    "https://pypi.org",
   ],
   "frame-src": [
     "'self'",
