@@ -93,7 +93,7 @@ export const GitHubProfileHeader: React.FC<GitHubProfileHeaderProps> = ({
       </div>
 
       {/* Stats Cards */}
-      <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4 lg:min-w-[500px]">
+      <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
         {[
           {
             label: "Analyzed",

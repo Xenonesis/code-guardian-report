@@ -274,11 +274,18 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
                         className={cn(
                           "h-3.5 w-3.5 transition-all duration-200",
                           active
-                            ? "opacity-90"
+                            ? "scale-110 opacity-90"
                             : "opacity-50 group-hover:scale-110 group-hover:opacity-80"
                         )}
                       />
-                      {item.label}
+                      <span
+                        className={cn(
+                          "transition-all duration-200",
+                          active ? "font-bold" : "font-medium"
+                        )}
+                      >
+                        {item.label}
+                      </span>
                       {item.badge && (
                         <span
                           className={cn(

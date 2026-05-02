@@ -149,7 +149,7 @@ export default function HistoryPage() {
   }
 
   return (
-    <div className="bg-background min-h-screen p-4 sm:p-8">
+    <div className="bg-background min-h-screen p-4 pt-24 sm:p-8 sm:pt-28">
       <div className="mx-auto max-w-7xl">
         {/* Header */}
         <div className="mb-8">
@@ -175,19 +175,53 @@ export default function HistoryPage() {
 
         {/* Empty State */}
         {!error && history.length === 0 && (
-          <Card>
-            <CardContent className="py-12 text-center">
-              <FileText className="text-muted-foreground mx-auto mb-4 h-16 w-16" />
-              <h3 className="text-foreground mb-2 text-xl font-semibold">
+          <Card className="border-border/50 bg-card/80 overflow-hidden backdrop-blur-sm">
+            <CardContent className="py-16 text-center">
+              <div className="from-primary/10 to-primary/5 mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br">
+                <FileText className="text-primary h-12 w-12" />
+              </div>
+              <h3 className="text-foreground mb-3 text-2xl font-bold">
                 No Analysis History
               </h3>
-              <p className="text-muted-foreground mb-4">
-                You haven't analyzed any files yet. Start by uploading a file
-                for analysis.
+              <p className="text-muted-foreground mx-auto mb-6 max-w-md">
+                You haven't analyzed any files yet. Upload your code to get
+                started with AI-powered security analysis, vulnerability
+                detection, and automated repair suggestions.
               </p>
-              <Button onClick={() => (window.location.href = "/")}>
-                Analyze Code
-              </Button>
+              <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+                <Button
+                  onClick={() => (window.location.href = "/")}
+                  size="lg"
+                  className="from-primary to-primary/90 min-w-[200px] bg-gradient-to-r px-8 shadow-lg transition-all hover:scale-105 hover:shadow-xl"
+                >
+                  Analyze Code Now
+                </Button>
+                <Button
+                  variant="outline"
+                  size="lg"
+                  onClick={() => (window.location.href = "/help")}
+                  className="border-border/50 min-w-[200px]"
+                >
+                  View Help Guide
+                </Button>
+              </div>
+              <div className="text-muted-foreground mt-8 grid grid-cols-1 gap-4 text-sm sm:grid-cols-3">
+                <div className="bg-muted/30 rounded-lg p-4">
+                  <Shield className="text-primary mx-auto mb-2 h-6 w-6" />
+                  <p className="font-medium">Security Scanning</p>
+                  <p className="text-xs">Detect vulnerabilities</p>
+                </div>
+                <div className="bg-muted/30 rounded-lg p-4">
+                  <CheckCircle className="text-primary mx-auto mb-2 h-6 w-6" />
+                  <p className="font-medium">Quality Analysis</p>
+                  <p className="text-xs">Code quality metrics</p>
+                </div>
+                <div className="bg-muted/30 rounded-lg p-4">
+                  <AlertTriangle className="text-primary mx-auto mb-2 h-6 w-6" />
+                  <p className="font-medium">Issue Detection</p>
+                  <p className="text-xs">Find & fix problems</p>
+                </div>
+              </div>
             </CardContent>
           </Card>
         )}

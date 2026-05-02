@@ -22,8 +22,8 @@ export const GitHubNavigationTabs: React.FC<GitHubNavigationTabsProps> = ({
   ];
 
   return (
-    <div className="scrollbar-hide border-border mt-12 flex items-center gap-1 overflow-x-auto border-b pb-0">
-      <div className="flex gap-2">
+    <div className="scrollbar-hide border-border mt-8 flex items-center gap-1 overflow-x-auto border-b pb-0 sm:mt-12">
+      <div className="flex min-w-max gap-2">
         {tabs.map((tab) => (
           <button
             key={tab.id}

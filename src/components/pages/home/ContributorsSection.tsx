@@ -253,7 +253,7 @@ export const ContributorsSection = () => {
             {/* Decorative elements behind grid */}
             <div className="from-background pointer-events-none absolute inset-0 z-20 bg-gradient-to-tr via-transparent to-transparent opacity-0 lg:opacity-100" />
 
-            <div className="relative z-10 grid grid-cols-4 gap-2 sm:grid-cols-5 sm:gap-3 md:grid-cols-6 md:gap-4">
+            <div className="relative z-10 grid grid-cols-3 gap-2 sm:grid-cols-4 sm:gap-3 md:grid-cols-6 md:gap-4">
               {loading
                 ? // Loading skeletons
                   Array.from({ length: 18 }).map((_, i) => (

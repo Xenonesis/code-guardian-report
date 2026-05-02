@@ -1,5 +1,4 @@
 import React from "react";
-import { PageLayout } from "@/components/layout/PageLayout";
 import { Shield, Scale, Calendar, Globe } from "lucide-react";
 import { APP_VERSION_WITH_PREFIX } from "@/utils/version";
 
@@ -19,7 +18,7 @@ export const LegalPageLayout: React.FC<LegalPageLayoutProps> = ({
   icon = <Scale className="h-8 w-8" />,
 }) => {
   return (
-    <PageLayout>
+    <>
       {/* Industrial Background */}
       <div className="pointer-events-none fixed inset-0 z-0">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:60px_60px] opacity-20" />
@@ -80,7 +79,7 @@ export const LegalPageLayout: React.FC<LegalPageLayoutProps> = ({
           </div>
         </div>
       </div>
-    </PageLayout>
+    </>
   );
 };
 

@@ -445,6 +445,7 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({
                               size="icon"
                               className="h-8 w-8"
                               onClick={() => handleMarkAsRead(notification.id)}
+                              aria-label="Mark as read"
                             >
                               <Check className="h-4 w-4" />
                             </Button>
@@ -454,6 +455,7 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({
                             size="icon"
                             className="h-8 w-8"
                             onClick={() => handleDismiss(notification.id)}
+                            aria-label="Dismiss notification"
                           >
                             <X className="h-4 w-4" />
                           </Button>

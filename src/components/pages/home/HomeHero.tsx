@@ -45,7 +45,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ onStartAnalysis }) => {
                 color: "transparent",
               }}
             >
-              Guardian
+              Guardian{" "}
             </span>
             <br />
             <span className="text-primary">Enterprise</span>
