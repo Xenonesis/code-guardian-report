@@ -122,9 +122,12 @@ ${suggestion.testingRecommendations.map((rec, i) => `${i + 1}. ${rec}`).join("\n
       issue?.category !== "Secret Detection" && issue?.type !== "Secret"
   );
 
+  // Combine all issues for display - show both secret and other security issues
+  const allIssues = [...secretIssues, ...otherIssues];
+
   // Prepare files for provenance monitoring (deduplicated by filename)
   const seenFiles = new Set<string>();
-  const filesForProvenance = otherIssues
+  const filesForProvenance = allIssues
     .filter((issue) => {
       if (seenFiles.has(issue.filename)) return false;
       seenFiles.add(issue.filename);
@@ -463,7 +466,7 @@ ${suggestion.testingRecommendations.map((rec, i) => `${i + 1}. ${rec}`).join("\n
 
       {/* Grouped Security Issues */}
       <IssuesByGroup
-        issues={otherIssues}
+        issues={allIssues}
         expandedIssues={expandedIssues}
         onToggleExpand={toggleIssueExpansion}
         primaryLanguage={primaryLanguage}
