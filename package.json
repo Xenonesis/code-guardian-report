@@ -30,6 +30,7 @@
     "clean:all": "rimraf .next node_modules/.cache dist out .turbo",
     "postbuild": "echo 'Build completed successfully!'",
     "prepare": "node -e \"if (!process.env.CI && !process.env.VERCEL) try { require('child_process').execSync('husky', { stdio: 'inherit' }) } catch (e) {}\"",
+    "postinstall": "prisma generate",
     "update-contributors": "node scripts/update-contributors.js",
     "setup-git-hooks": "node scripts/setup-git-hooks.js",
     "test": "vitest run",
