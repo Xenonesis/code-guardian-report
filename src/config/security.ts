@@ -51,6 +51,7 @@ export const CSP_DIRECTIVES = {
     "'self'",
     "https://api.github.com",
     "https://*.github.com",
+    "https://raw.githubusercontent.com",
     "https://*.firebaseio.com",
     "https://*.googleapis.com",
     "https://*.firebase.com",
