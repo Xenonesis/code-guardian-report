@@ -47,6 +47,12 @@ export async function GET() {
   checks.push(envCheck);
   if (envCheck.status === "fail") overallStatus = "degraded";
 
+  const dbCheck = await checkDatabase();
+  checks.push(dbCheck);
+  if (dbCheck.status === "fail") overallStatus = "unhealthy";
+  if (dbCheck.status === "warn" && overallStatus === "healthy")
+    overallStatus = "degraded";
+
   const memoryCheck = await checkMemory();
   checks.push(memoryCheck);
   if (memoryCheck.status === "fail") overallStatus = "unhealthy";
@@ -79,6 +85,41 @@ export async function GET() {
       "Content-Type": "application/health+json",
     },
   });
+}
+
+/**
+ * Check Neon DB connectivity with a direct HTTP ping using @neondatabase/serverless
+ */
+async function checkDatabase(): Promise<HealthStatus["checks"][0]> {
+  const dbUrl = process.env.DATABASE_URL;
+  if (!dbUrl) {
+    return {
+      name: "database",
+      status: "fail",
+      message: "DATABASE_URL environment variable is not set",
+    };
+  }
+
+  const t0 = Date.now();
+  try {
+    const { neon } = await import("@neondatabase/serverless");
+    const sql = neon(dbUrl);
+    await sql`SELECT 1`;
+    const responseTime = Date.now() - t0;
+    return {
+      name: "database",
+      status: "pass",
+      message: `Neon DB connected (${responseTime}ms)`,
+      responseTime,
+    };
+  } catch (err) {
+    return {
+      name: "database",
+      status: "fail",
+      message: `Neon DB unreachable: ${err instanceof Error ? err.message : "unknown error"}`,
+      responseTime: Date.now() - t0,
+    };
+  }
 }
 
 /**
@@ -140,13 +181,15 @@ async function checkMemory(): Promise<HealthStatus["checks"][0]> {
 }
 
 /**
- * Check environment configuration
+ * Check environment configuration (Neon DB and Neon Auth)
  */
 function checkEnvironment(): HealthStatus["checks"][0] {
-  const requiredEnvVars = ["NODE_ENV"];
+  const requiredEnvVars = ["NODE_ENV", "DATABASE_URL", "NEON_AUTH_BASE_URL"];
   const optionalEnvVars = [
-    "NEXT_PUBLIC_FIREBASE_API_KEY",
-    "NEXT_PUBLIC_FIREBASE_PROJECT_ID",
+    "NEON_AUTH_COOKIE_SECRET",
+    "NEXT_PUBLIC_VAPID_PUBLIC_KEY",
+    "VAPID_PRIVATE_KEY",
+    "GITHUB_TOKEN",
   ];
 
   const missingRequired = requiredEnvVars.filter((v) => !process.env[v]);
@@ -164,7 +207,7 @@ function checkEnvironment(): HealthStatus["checks"][0] {
     return {
       name: "environment",
       status: "warn",
-      message: `Missing optional env vars: ${missingOptional.length} (some features may be disabled)`,
+      message: `Missing optional env vars: ${missingOptional.join(", ")} (some features may be disabled)`,
     };
   }
 

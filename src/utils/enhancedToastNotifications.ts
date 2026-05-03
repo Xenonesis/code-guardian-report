@@ -34,17 +34,17 @@ export const enhancedNotifications = {
     });
   },
 
-  firebaseError: () => {
-    notify.error("Connection Error", {
-      message: "Unable to connect to Firebase. Using local storage only.",
+  databaseError: () => {
+    notify.error("Database Error", {
+      message: "Unable to connect to Neon DB. Check your connection.",
       priority: "high",
       category: "storage",
     });
   },
 
-  firebaseReconnected: () => {
-    notify.success("Firebase Connected", {
-      message: "Cloud storage is now available.",
+  databaseReconnected: () => {
+    notify.success("Database Connected", {
+      message: "Neon DB is now available.",
       priority: "normal",
       category: "storage",
     });

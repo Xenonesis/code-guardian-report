@@ -16,7 +16,7 @@ type ShowToastFunction = (
 interface ToastNotificationsService {
   offline: () => void;
   online: () => void;
-  firebaseError: () => void;
+  databaseError: () => void;
   mockDataWarning: () => void;
   success: (message: string) => void;
   error: (message: string) => void;
@@ -37,9 +37,8 @@ declare global {
     showToast?: ShowToastFunction;
     toastNotifications?: ToastNotificationsService;
 
-    // Firebase test utilities (development only)
-    testFirebaseIntegration?: () => Promise<void>;
-    testFirebaseConnection?: () => Promise<boolean>;
+    // Neon DB test utilities (development only)
+    testNeonConnection?: () => Promise<boolean>;
 
     // PWA standalone mode detection (iOS Safari)
     navigator: Navigator & {

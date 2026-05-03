@@ -59,20 +59,20 @@ export const toastNotifications = {
     );
   },
 
-  firebaseError: () => {
+  databaseError: () => {
     showToast(
       "error",
-      "Connection Error",
-      "Unable to connect to Firebase. Using local storage only.",
+      "Database Error",
+      "Unable to connect to Neon DB. Check your connection.",
       6000
     );
   },
 
-  firebaseReconnected: () => {
+  databaseReconnected: () => {
     showToast(
       "success",
-      "Firebase Connected",
-      "Cloud storage is now available.",
+      "Database Connected",
+      "Neon DB is now available.",
       3000
     );
   },
@@ -158,7 +158,7 @@ export const toastNotifications = {
       showToast(
         "warning",
         "Using Sample Data",
-        "Firebase unavailable. Displaying sample data for testing.",
+        "Database unavailable. Displaying sample data for testing.",
         6000
       );
     }

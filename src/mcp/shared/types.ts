@@ -125,7 +125,7 @@ export interface RiskOptimization {
 export interface McpServerConfig {
   name: string;
   version: string;
-  firebaseEnabled: boolean;
+  neonEnabled: boolean;
   maxFileSizeBytes: number;
   scanTimeoutMs: number;
   memoryTtlDays: number;
@@ -134,7 +134,7 @@ export interface McpServerConfig {
 export const DEFAULT_CONFIG: McpServerConfig = {
   name: "code-guardian",
   version: "15.0.0",
-  firebaseEnabled: true,
+  neonEnabled: true,
   maxFileSizeBytes: 10 * 1024 * 1024, // 10 MB
   scanTimeoutMs: 120_000, // 2 minutes
   memoryTtlDays: 30,
