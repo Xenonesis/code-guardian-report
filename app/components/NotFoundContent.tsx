@@ -1,83 +1,134 @@
 "use client";
 
 import Link from "next/link";
-import { Home, Search, ArrowLeft, FileQuestion } from "lucide-react";
+import { Home, Search, ArrowLeft, Terminal } from "lucide-react";
 
 export default function NotFoundContent() {
   return (
-    <div className="from-background via-background to-muted/30 flex min-h-screen items-center justify-center bg-gradient-to-br p-4">
-      <div className="w-full max-w-lg text-center">
-        {/* 404 Illustration */}
-        <div className="relative mb-8">
-          {/* Background glow */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="h-48 w-48 rounded-full bg-gradient-to-br from-blue-500/10 via-indigo-500/10 to-purple-500/10 blur-3xl" />
-          </div>
+    <div className="bg-background relative flex min-h-screen items-center justify-center overflow-hidden p-4">
+      {/* Scan line effect */}
+      <div className="pointer-events-none absolute inset-0 opacity-[0.03]">
+        <div
+          className="h-full w-full"
+          style={{
+            backgroundImage: `repeating-linear-gradient(
+              0deg,
+              transparent,
+              transparent 2px,
+              hsl(var(--foreground)) 2px,
+              hsl(var(--foreground)) 4px
+            )`,
+          }}
+        />
+      </div>
 
-          {/* Icon */}
-          <div className="relative flex justify-center">
-            <div className="border-border/30 flex h-24 w-24 items-center justify-center rounded-2xl border bg-gradient-to-br from-blue-600/20 via-indigo-600/20 to-purple-600/20 backdrop-blur-sm">
-              <FileQuestion className="text-primary h-12 w-12" />
+      {/* Hex dump background pattern */}
+      <div className="pointer-events-none absolute top-0 right-0 h-64 w-64 overflow-hidden font-mono text-[10px] leading-none opacity-[0.02] select-none">
+        {Array.from({ length: 16 }).map((_, i) => (
+          <div key={i} className="whitespace-nowrap">
+            {Array.from({ length: 32 }).map((_, j) => (
+              <span key={j}>
+                {Math.floor(Math.random() * 16)
+                  .toString(16)
+                  .toUpperCase()}
+              </span>
+            ))}
+          </div>
+        ))}
+      </div>
+
+      <div className="relative z-10 w-full max-w-lg">
+        {/* Terminal Error Card */}
+        <div className="border-border bg-card relative overflow-hidden rounded-lg border-2 shadow-2xl">
+          {/* Header bar */}
+          <div className="border-border bg-muted/50 border-b px-6 py-3">
+            <div className="flex items-center gap-2 font-mono text-xs">
+              <Terminal className="text-primary h-4 w-4" />
+              <span className="text-muted-foreground">ERROR_TERMINAL</span>
+              <span className="text-primary/60 ml-auto animate-pulse">●</span>
             </div>
           </div>
-        </div>
 
-        {/* Error Message */}
-        <div className="mb-8 space-y-4">
-          <h1 className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-7xl font-bold text-transparent">
-            404
-          </h1>
-          <h2 className="text-foreground text-2xl font-semibold">
-            Page Not Found
-          </h2>
-          <p className="text-muted-foreground mx-auto max-w-md leading-relaxed">
-            The page you&apos;re looking for doesn&apos;t exist or has been
-            moved. Check the URL or navigate back to safety.
-          </p>
-        </div>
+          {/* Content */}
+          <div className="p-8">
+            {/* 404 Display */}
+            <div className="mb-8 text-center">
+              <div className="text-primary font-mono text-9xl font-bold tracking-tighter opacity-20">
+                404
+              </div>
+              <div className="-mt-12 font-mono text-6xl font-bold tracking-tight uppercase">
+                NOT_FOUND
+              </div>
+            </div>
 
-        {/* Action Buttons */}
-        <div className="mb-8 flex flex-col justify-center gap-3 sm:flex-row">
-          <Link
-            href="/"
-            className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-3 font-medium text-white shadow-lg transition-all hover:from-blue-700 hover:to-indigo-700 hover:shadow-xl active:scale-[0.98]"
-          >
-            <Home className="h-4 w-4" />
-            Go Home
-          </Link>
-          <button
-            onClick={() =>
-              typeof window !== "undefined" && window.history.back()
-            }
-            className="bg-muted/50 text-foreground hover:bg-muted border-border/50 inline-flex items-center justify-center gap-2 rounded-xl border px-6 py-3 font-medium transition-all active:scale-[0.98]"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Go Back
-          </button>
-        </div>
+            {/* Error Details */}
+            <div className="border-primary/30 mb-8 space-y-2 border-l-2 pl-4 font-mono text-sm">
+              <p className="text-muted-foreground">{`> REQUESTED_RESOURCE: NULL`}</p>
+              <p className="text-muted-foreground">{`> STATUS: MISSING`}</p>
+              <p className="text-muted-foreground">{`> ACTION_REQUIRED: REDIRECT`}</p>
+              <p className="text-primary animate-pulse">{`> _`}</p>
+            </div>
 
-        {/* Quick Links */}
-        <div className="bg-card/50 border-border/30 rounded-xl border p-4 backdrop-blur-sm">
-          <p className="text-muted-foreground mb-3 text-sm">
-            <Search className="mr-1 inline h-4 w-4" />
-            Popular destinations
-          </p>
-          <div className="flex flex-wrap justify-center gap-2">
-            {[
-              { label: "Upload Analysis", href: "/?tab=upload" },
-              { label: "GitHub Analysis", href: "/github-analysis" },
-              { label: "Reports", href: "/?tab=reports" },
-              { label: "Help", href: "/help" },
-              { label: "About", href: "/about" },
-            ].map((link) => (
+            {/* Action Buttons - Terminal Style */}
+            <div className="mb-8 flex flex-col gap-3 sm:flex-row">
               <Link
-                key={link.href}
-                href={link.href}
-                className="bg-muted/50 text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg px-3 py-1.5 text-sm transition-colors"
+                href="/"
+                className="group border-border hover:border-primary bg-background hover:bg-primary/5 relative flex items-center justify-center gap-2 border-2 px-6 py-3 font-mono text-sm transition-all duration-200"
               >
-                {link.label}
+                <Home className="h-4 w-4" />
+                <span>RETURN_HOME</span>
+                <ArrowLeft className="h-3 w-3 opacity-0 transition-opacity group-hover:opacity-100" />
               </Link>
-            ))}
+              <button
+                onClick={() =>
+                  typeof window !== "undefined" && window.history.back()
+                }
+                className="group border-border hover:border-primary bg-background hover:bg-primary/5 relative flex items-center justify-center gap-2 border-2 px-6 py-3 font-mono text-sm transition-all duration-200"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                <span>GO_BACK</span>
+              </button>
+            </div>
+
+            {/* Quick Links - Terminal Menu */}
+            <div className="bg-muted/30 border-border rounded-lg border p-4">
+              <div className="mb-3 flex items-center gap-2 font-mono text-xs tracking-wider uppercase">
+                <Search className="h-3 w-3" />
+                <span>AVAILABLE_DESTINATIONS</span>
+              </div>
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                {[
+                  { label: "UPLOAD", href: "/?tab=upload" },
+                  { label: "GITHUB", href: "/github-analysis" },
+                  { label: "REPORTS", href: "/?tab=reports" },
+                  { label: "HELP", href: "/help" },
+                  { label: "ABOUT", href: "/about" },
+                ].map((link, index) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="group border-border hover:border-primary/50 bg-background hover:bg-primary/5 flex items-center gap-2 rounded border px-3 py-2 font-mono text-xs transition-all duration-200"
+                  >
+                    <span className="text-muted-foreground/50">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span>{link.label}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Footer status bar */}
+          <div className="border-border bg-muted/30 border-t px-6 py-3">
+            <div className="flex items-center justify-between font-mono text-xs">
+              <span className="text-muted-foreground">
+                SYSTEM_STATUS: ERROR
+              </span>
+              <span className="text-primary/60">
+                [{new Date().getFullYear()}]
+              </span>
+            </div>
           </div>
         </div>
       </div>
