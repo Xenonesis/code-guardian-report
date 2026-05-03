@@ -49,7 +49,6 @@ export const GitHubAnalysisPage: React.FC = () => {
   });
   const [showPermissionModal, setShowPermissionModal] = useState(false);
   const [showUsernameInput, setShowUsernameInput] = useState(false);
-  const [showGitHubRepos, setShowGitHubRepos] = useState(true);
   const [analysisResults, setAnalysisResults] =
     useState<AnalysisResults | null>(null);
   const [analyzedRepoName, setAnalyzedRepoName] = useState<string>("");
@@ -224,7 +223,7 @@ export const GitHubAnalysisPage: React.FC = () => {
     const t = toast.loading("Fetching your repositories...");
     await grantPermission();
     toast.success("GitHub repositories loaded successfully!", { id: t });
-    setShowGitHubRepos(true);
+    setSelectedTab("repositories");
   };
 
   const handleDenyGitHubAccess = () => {
@@ -239,7 +238,7 @@ export const GitHubAnalysisPage: React.FC = () => {
     const t = toast.loading("Fetching your repositories...");
     await setManualUsername(username);
     toast.success("GitHub repositories loaded successfully!", { id: t });
-    setShowGitHubRepos(true);
+    setSelectedTab("repositories");
   };
 
   const handleSkipUsernameInput = () => {
@@ -362,102 +361,106 @@ export const GitHubAnalysisPage: React.FC = () => {
 
   if (!user) {
     return (
-      <div className="bg-background selection:bg-primary/20 selection:text-primary relative flex min-h-screen items-center justify-center overflow-hidden p-4">
-        {/* Industrial Background */}
+      <div className="bg-background selection:bg-primary/20 selection:text-primary relative flex min-h-[calc(100vh-4rem)] items-center justify-center overflow-hidden p-4">
+        {/* Premium Background */}
         <div className="fixed inset-0 z-0">
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:60px_60px] opacity-20" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#ffffff_100%)] opacity-80 dark:bg-[radial-gradient(circle_at_center,transparent_0%,#000000_100%)]" />
-          <div className="bg-primary/10 pointer-events-none absolute top-1/4 left-1/4 h-96 w-96 rounded-full blur-[100px]" />
-          <div className="bg-primary/5 pointer-events-none absolute right-1/4 bottom-1/4 h-96 w-96 rounded-full blur-[120px]" />
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] opacity-20" />
+          <div className="from-background via-background/90 to-background/50 absolute inset-0 bg-gradient-to-tr" />
+          <div className="bg-primary/20 pointer-events-none absolute -top-1/4 -left-1/4 h-[800px] w-[800px] rounded-full blur-[150px]" />
+          <div className="pointer-events-none absolute -right-1/4 -bottom-1/4 h-[800px] w-[800px] rounded-full bg-purple-500/10 blur-[150px]" />
         </div>
 
-        <Card className="border-border/40 bg-card/80 relative z-10 w-full max-w-4xl overflow-hidden shadow-2xl backdrop-blur-sm dark:border-white/10 dark:bg-black/40">
-          <div className="grid grid-cols-1 md:grid-cols-2">
-            <div className="flex flex-col justify-center p-8 md:p-12">
-              <div className="border-border/40 bg-muted/50 mb-8 flex h-16 w-16 items-center justify-center rounded-2xl border shadow-lg dark:border-white/10 dark:bg-white/5">
-                <GitFork className="text-foreground h-8 w-8 dark:text-white" />
+        <Card className="border-border/30 bg-background/60 relative z-10 w-full max-w-5xl overflow-hidden shadow-2xl backdrop-blur-2xl">
+          <div className="grid grid-cols-1 md:grid-cols-5">
+            <div className="col-span-3 flex flex-col justify-center p-8 md:p-16">
+              <div className="border-primary/20 bg-primary/10 mb-8 flex h-16 w-16 items-center justify-center rounded-2xl border shadow-lg">
+                <GitFork className="text-primary h-8 w-8" />
               </div>
 
-              <h1 className="font-display text-foreground mb-4 text-3xl font-bold tracking-tight md:text-4xl dark:text-white">
-                GITHUB{" "}
-                <span className="from-primary to-primary/60 bg-gradient-to-r bg-clip-text text-transparent">
-                  ANALYSIS
+              <h1 className="font-display text-foreground mb-4 text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
+                GitHub{" "}
+                <span className="from-primary bg-gradient-to-r to-purple-500 bg-clip-text text-transparent">
+                  Analysis
                 </span>
               </h1>
-              <p className="text-muted-foreground mb-8 font-mono text-sm leading-relaxed dark:text-slate-400">
-                CONNECT_GITHUB // ENABLE_ADVANCED_SECURITY_PROTOCOLS
-                <br />
-                System will perform automated vulnerability scanning on
+              <p className="text-muted-foreground mb-10 max-w-md text-lg leading-relaxed">
+                Connect your GitHub account to enable advanced security
+                protocols and perform automated vulnerability scanning on your
                 repositories.
               </p>
 
-              <div className="space-y-4">
+              <div className="max-w-sm space-y-4">
                 <Button
                   onClick={signInWithGithub}
                   size="lg"
-                  className="border-border/50 w-full border bg-[#24292F] font-bold text-white shadow-lg transition-all duration-300 hover:scale-[1.02] hover:bg-[#24292F]/90 hover:shadow-xl active:scale-95 dark:border-white/10"
+                  className="bg-foreground text-background hover:bg-foreground/90 w-full font-semibold shadow-xl transition-all duration-300 hover:-translate-y-1"
                 >
                   <GitFork className="mr-2 h-5 w-5" />
-                  Continue with GitHub
+                  Authenticate with GitHub
                 </Button>
 
-                {!user && (
-                  <p className="text-muted-foreground text-center font-mono text-xs dark:text-slate-500">
-                    NO_ACCOUNT?{" "}
-                    <a
-                      href="https://github.com/signup"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-primary hover:text-primary/80 hover:underline"
-                    >
-                      INITIALIZE_REGISTRATION
-                    </a>
-                  </p>
-                )}
+                <p className="text-muted-foreground text-center text-sm">
+                  Don't have an account?{" "}
+                  <a
+                    href="https://github.com/signup"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary font-medium hover:underline"
+                  >
+                    Sign up for GitHub
+                  </a>
+                </p>
               </div>
             </div>
 
-            <div className="border-border/40 bg-muted/30 flex flex-col justify-center border-l p-8 md:p-12 dark:border-white/10 dark:bg-black/20">
-              <h3 className="font-display text-foreground mb-6 flex items-center gap-2 font-bold tracking-wide dark:text-white">
+            <div className="border-border/30 bg-muted/20 col-span-2 flex flex-col justify-center border-l p-8 md:p-12">
+              <h3 className="font-display text-foreground mb-8 flex items-center gap-2 text-lg font-semibold tracking-wide">
                 <Shield className="text-primary h-5 w-5" />
-                PREMIUM_MODULES
+                Premium Features
               </h3>
 
-              <div className="space-y-6">
+              <div className="space-y-8">
                 {[
                   {
                     icon: BarChart3,
-                    title: "DEEP_SCAN",
-                    desc: "Comprehensive security scanning and code quality metrics",
-                    color: "text-primary",
+                    title: "Deep Security Scan",
+                    desc: "Comprehensive security scanning and code quality metrics for all your repositories.",
+                    color: "text-blue-500",
+                    bg: "bg-blue-500/10",
+                    border: "border-blue-500/20",
                   },
                   {
                     icon: Activity,
-                    title: "REAL_TIME_MONITOR",
-                    desc: "Monitor repository health and vulnerability patterns",
+                    title: "Real-time Monitoring",
+                    desc: "Monitor repository health and vulnerability patterns as they emerge.",
                     color: "text-primary",
+                    bg: "bg-primary/10",
+                    border: "border-primary/20",
                   },
                   {
                     icon: Lock,
-                    title: "THREAT_PREVENTION",
-                    desc: "Identify critical issues before they become threats",
-                    color: "text-muted-foreground dark:text-slate-400",
+                    title: "Threat Prevention",
+                    desc: "Identify critical issues and architectural flaws before they become threats.",
+                    color: "text-purple-500",
+                    bg: "bg-purple-500/10",
+                    border: "border-purple-500/20",
                   },
                 ].map((feature, i) => (
-                  <div key={i} className="group flex gap-4">
+                  <div key={i} className="group flex gap-5">
                     <div
                       className={cn(
-                        "group-hover:border-primary/50 group-hover:bg-primary/5 border-border/40 bg-background flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg border shadow-sm transition-all duration-300 group-hover:shadow-[0_0_15px_-3px_rgba(16,185,129,0.2)] dark:border-white/10 dark:bg-white/5",
-                        feature.color
+                        "flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl border transition-all duration-300 group-hover:scale-110",
+                        feature.bg,
+                        feature.border
                       )}
                     >
-                      <feature.icon className="h-5 w-5" />
+                      <feature.icon className={cn("h-6 w-6", feature.color)} />
                     </div>
                     <div>
-                      <h4 className="text-foreground font-mono text-sm font-bold dark:text-white">
+                      <h4 className="text-foreground text-base font-semibold">
                         {feature.title}
                       </h4>
-                      <p className="text-muted-foreground mt-1 text-xs leading-relaxed dark:text-slate-500">
+                      <p className="text-muted-foreground mt-1 text-sm leading-relaxed">
                         {feature.desc}
                       </p>
                     </div>
@@ -470,8 +473,6 @@ export const GitHubAnalysisPage: React.FC = () => {
       </div>
     );
   }
-
-  if (!user) return null;
 
   return (
     <div className="bg-background text-foreground selection:bg-primary/20 selection:text-primary relative min-h-screen overflow-hidden">
@@ -525,82 +526,39 @@ export const GitHubAnalysisPage: React.FC = () => {
 
         {/* Main Content */}
         <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-          {/* Repository Selection Card */}
-          {repositories.length > 0 && (
-            <div className="mb-8">
-              <Card className="hover:border-primary/20 border-border/50 bg-background/40 p-4 shadow-sm backdrop-blur-sm transition-all duration-300 hover:shadow-[0_8px_30px_-10px_rgba(0,0,0,0.1)] sm:p-6 dark:border-white/10 dark:bg-black/40">
-                <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                  <div className="flex min-w-0 items-center gap-3">
-                    <div className="bg-primary/10 border-primary/20 rounded-lg border p-2">
-                      <GitFork className="text-primary h-5 w-5" />
-                    </div>
-                    <div className="min-w-0">
-                      <h2 className="font-display text-foreground text-lg font-bold tracking-wide">
-                        ACTIVE REPOSITORIES
-                      </h2>
-                      <p className="text-muted-foreground font-mono text-xs break-words">
-                        SELECT_TARGET // ({repositories.length} NODES_DETECTED)
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => refreshRepositories?.()}
-                      disabled={reposLoading}
-                      className="border-border/50 text-foreground/80 hover:bg-muted hover:border-primary/30 w-full font-mono text-xs transition-all duration-300 active:scale-95 sm:w-auto dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/5"
-                    >
-                      {reposLoading ? "SCANNING..." : "REFRESH_NODES"}
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => setShowGitHubRepos(!showGitHubRepos)}
-                      className="border-border/50 text-foreground/80 hover:bg-muted hover:border-primary/30 w-full font-mono text-xs transition-all duration-300 active:scale-95 sm:w-auto dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/5"
-                    >
-                      {showGitHubRepos ? "HIDE_LIST" : "SHOW_LIST"}
-                    </Button>
-                  </div>
-                </div>
-                {showGitHubRepos && (
-                  <div className="animate-in fade-in slide-in-from-top-4 duration-300">
-                    <GitHubRepositoryList
-                      repositories={repositories}
-                      onAnalyzeRepository={handleAnalyzeRepository}
-                      loading={reposLoading}
-                    />
-                  </div>
-                )}
-              </Card>
-            </div>
-          )}
-
-          {/* Empty State / Connect Prompt */}
-          {repositories.length === 0 &&
+          {/* Missing GitHub Account Premium Dashboard State */}
+          {!isGitHubUser &&
+            !hasGitHubAccount &&
+            !permissionGranted &&
             !reposLoading &&
-            !isGitHubUser &&
-            !permissionGranted && (
-              <div className="mb-8">
-                <Card className="hover:border-primary/50 border-border/50 bg-background/40 group relative overflow-hidden border-2 border-dashed p-8 text-center backdrop-blur-sm transition-all duration-500 hover:shadow-[0_0_30px_-5px_rgba(16,185,129,0.15)] dark:border-white/10 dark:bg-black/40">
-                  <div className="from-primary/5 absolute inset-0 bg-gradient-to-b to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                  <div className="border-border/50 bg-muted/50 group-hover:border-primary/30 group-hover:bg-primary/10 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full border transition-transform duration-500 group-hover:scale-110 dark:border-white/10 dark:bg-white/5">
-                    <GitFork className="text-foreground group-hover:text-primary h-8 w-8 transition-colors duration-500" />
+            repositories.length === 0 && (
+              <div className="animate-in fade-in slide-in-from-bottom-4 mb-8 duration-700">
+                <Card className="border-border/40 bg-background/60 relative overflow-hidden p-8 text-center shadow-2xl backdrop-blur-xl sm:p-12">
+                  <div className="bg-primary/5 pointer-events-none absolute inset-0" />
+                  <div className="relative z-10 mx-auto flex max-w-2xl flex-col items-center">
+                    <div className="border-primary/20 bg-primary/10 ring-primary/5 mb-6 flex h-24 w-24 items-center justify-center rounded-full border shadow-lg ring-8">
+                      <GitFork className="text-primary h-12 w-12" />
+                    </div>
+                    <h2 className="font-display text-foreground mb-4 text-3xl font-bold tracking-tight sm:text-4xl">
+                      Connect Your Workspace
+                    </h2>
+                    <p className="text-muted-foreground mb-8 text-lg leading-relaxed">
+                      You're logged in, but your GitHub account isn't connected
+                      yet. Link your account to instantly unlock deep security
+                      scanning, vulnerability analysis, and real-time repository
+                      monitoring.
+                    </p>
+                    <div className="flex w-full flex-col gap-4 sm:w-auto sm:flex-row">
+                      <Button
+                        onClick={openConnectGitHubPrompt}
+                        size="lg"
+                        className="bg-foreground text-background hover:bg-foreground/90 w-full font-semibold shadow-xl transition-all duration-300 hover:-translate-y-1 sm:w-auto"
+                      >
+                        <GitFork className="mr-2 h-5 w-5" />
+                        Connect GitHub Account
+                      </Button>
+                    </div>
                   </div>
-                  <h3 className="font-display text-foreground relative z-10 mb-2 text-xl font-bold">
-                    CONNECT_GITHUB_ACCOUNT
-                  </h3>
-                  <p className="text-muted-foreground relative z-10 mx-auto mb-6 max-w-md font-mono text-xs">
-                    Link your GitHub username to automatically load your
-                    repositories for security analysis.
-                  </p>
-                  <Button
-                    onClick={openConnectGitHubPrompt}
-                    className="border-border/50 bg-muted/50 text-foreground hover:bg-primary hover:text-primary-foreground relative z-10 border font-bold transition-all duration-300 hover:scale-105 active:scale-95 dark:border-white/20 dark:bg-white/10 dark:text-white"
-                  >
-                    <GitFork className="mr-2 h-4 w-4" />
-                    INITIALIZE_CONNECTION
-                  </Button>
                 </Card>
               </div>
             )}
@@ -639,11 +597,85 @@ export const GitHubAnalysisPage: React.FC = () => {
           )}
 
           <div className="space-y-6">
-            {(selectedTab === "overview" || selectedTab === "repositories") && (
+            {selectedTab === "overview" && repositories.length > 0 && (
+              <div className="animate-in fade-in space-y-6 duration-500">
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                  <Card className="border-border/40 bg-background/40 p-6 shadow-sm backdrop-blur-sm transition-shadow hover:shadow-md">
+                    <h3 className="font-display mb-4 flex items-center gap-2 text-lg font-semibold">
+                      <Activity className="text-primary h-5 w-5" />
+                      Activity Overview
+                    </h3>
+                    <p className="text-muted-foreground text-sm">
+                      Select the Repositories tab to view and analyze your code.
+                      We currently track {repositories.length} repositories
+                      across your account.
+                    </p>
+                    <Button
+                      variant="outline"
+                      className="border-border/50 mt-6 w-full sm:w-auto"
+                      onClick={() => handleTabChange("repositories")}
+                    >
+                      <GitFork className="mr-2 h-4 w-4" />
+                      View Repositories
+                    </Button>
+                  </Card>
+
+                  <Card className="border-border/40 bg-background/40 p-6 shadow-sm backdrop-blur-sm transition-shadow hover:shadow-md">
+                    <h3 className="font-display mb-4 flex items-center gap-2 text-lg font-semibold">
+                      <Shield className="text-primary h-5 w-5" />
+                      Security Posture
+                    </h3>
+                    <p className="text-muted-foreground text-sm">
+                      Run deep security scans on your repositories to detect
+                      vulnerabilities, secrets, and architectural flaws.
+                    </p>
+                    <Button
+                      variant="outline"
+                      className="border-border/50 mt-6 w-full sm:w-auto"
+                      onClick={() => handleTabChange("repositories")}
+                    >
+                      Start Analysis
+                    </Button>
+                  </Card>
+                </div>
+              </div>
+            )}
+
+            {selectedTab === "repositories" && (
               <div className="animate-in fade-in duration-500">
+                {repositories.length > 0 && (
+                  <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="flex min-w-0 items-center gap-3">
+                      <div className="bg-primary/10 border-primary/20 rounded-lg border p-2">
+                        <GitFork className="text-primary h-5 w-5" />
+                      </div>
+                      <div className="min-w-0">
+                        <h2 className="font-display text-foreground text-lg font-bold tracking-wide">
+                          ACTIVE REPOSITORIES
+                        </h2>
+                        <p className="text-muted-foreground truncate text-sm">
+                          Select a repository to begin analysis
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => refreshRepositories?.()}
+                        disabled={reposLoading}
+                        className="border-border/50 text-foreground/80 hover:bg-muted w-full transition-all active:scale-95 sm:w-auto"
+                      >
+                        {reposLoading ? "Refreshing..." : "Refresh Nodes"}
+                      </Button>
+                    </div>
+                  </div>
+                )}
+
                 <GitHubRepositoryList
                   repositories={repositories}
                   onAnalyzeRepository={handleAnalyzeRepository}
+                  loading={reposLoading}
                 />
               </div>
             )}
@@ -689,7 +721,7 @@ export const GitHubAnalysisPage: React.FC = () => {
                         onClick={() => {
                           setAnalysisResults(null);
                           setAnalyzedRepoName("");
-                          setSelectedTab("overview");
+                          setSelectedTab("repositories");
                         }}
                         className="border-border/50 text-muted-foreground hover:bg-muted/50 w-full transition-all duration-300 hover:scale-105 active:scale-95 sm:w-auto dark:border-white/10 dark:text-slate-300 dark:hover:bg-white/5"
                       >
