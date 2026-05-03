@@ -379,7 +379,7 @@ export const GitHubAnalysisPage: React.FC = () => {
 
               <h1 className="font-display text-foreground mb-4 text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
                 GitHub{" "}
-                <span className="from-primary bg-gradient-to-r to-purple-500 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-purple-400 to-fuchsia-400 bg-clip-text text-transparent">
                   Analysis
                 </span>
               </h1>
