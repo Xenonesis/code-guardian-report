@@ -452,7 +452,7 @@ export const AIKeyManager: React.FC = () => {
               <Bot className="h-6 w-6 text-white" />
             </div>
             <div>
-              <h2 className="font-display from-foreground to-primary bg-gradient-to-r bg-clip-text text-2xl font-bold tracking-tight text-transparent">
+              <h2 className="font-display from-foreground bg-gradient-to-r to-emerald-400 bg-clip-text text-2xl font-bold tracking-tight text-transparent">
                 AI ANALYSIS INTEGRATION
               </h2>
               <p className="text-muted-foreground text-sm">

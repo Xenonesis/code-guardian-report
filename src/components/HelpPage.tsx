@@ -156,7 +156,7 @@ export const HelpPage: React.FC<HelpPageProps> = ({ className = "" }) => {
 
               <h1 className="font-display text-foreground mb-6 text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl dark:text-white">
                 HELP &{" "}
-                <span className="from-primary bg-gradient-to-r to-emerald-400 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
                   SUPPORT
                 </span>
               </h1>

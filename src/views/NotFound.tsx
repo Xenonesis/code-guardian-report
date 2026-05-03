@@ -27,7 +27,7 @@ const NotFound = () => {
             <div className="animate-bounce-in bg-primary mx-auto mb-6 w-fit rounded-full p-4">
               <Shield className="text-primary-foreground h-12 w-12" />
             </div>
-            <CardTitle className="bg-primary mb-4 bg-clip-text text-6xl font-bold text-transparent sm:text-8xl">
+            <CardTitle className="mb-4 bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-6xl font-bold text-transparent sm:text-8xl">
               404
             </CardTitle>
             <CardTitle className="text-foreground mb-2 text-2xl font-bold sm:text-3xl">
