@@ -406,38 +406,73 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
                           duration: 0.18,
                           ease: [0.22, 1, 0.36, 1],
                         }}
-                        className="border-border/50 bg-popover/95 absolute right-0 z-50 mt-2 w-56 overflow-hidden rounded-xl border shadow-[0_16px_40px_-16px_hsl(var(--foreground)/0.5)] backdrop-blur-xl"
+                        className="border-border/50 bg-popover/95 absolute right-0 z-50 mt-2 w-64 overflow-hidden rounded-2xl border shadow-[0_20px_50px_-12px_hsl(var(--foreground)/0.6)] backdrop-blur-2xl"
                       >
-                        <div className="border-border/40 bg-muted/20 border-b px-3 py-2.5">
-                          <p className="text-foreground truncate text-sm font-semibold">
-                            {userProfile?.displayName ||
-                              userProfile?.githubUsername ||
-                              "User"}
-                          </p>
-                          <p className="text-muted-foreground truncate text-xs">
-                            {user?.email}
-                          </p>
+                        {/* User Info Header */}
+                        <div className="border-border/40 from-muted/30 to-muted/10 border-b bg-gradient-to-br px-4 py-4">
+                          <div className="flex items-start gap-3">
+                            {getGithubAvatarUrl() ? (
+                              <img
+                                src={getGithubAvatarUrl() as string}
+                                alt="Profile"
+                                className="ring-primary/20 h-11 w-11 rounded-xl object-cover ring-2"
+                              />
+                            ) : (
+                              <div className="bg-primary/15 ring-primary/20 flex h-11 w-11 items-center justify-center rounded-xl ring-2">
+                                <span className="text-primary text-sm font-bold">
+                                  {getUserInitials()}
+                                </span>
+                              </div>
+                            )}
+                            <div className="flex-1 overflow-hidden">
+                              <p className="text-foreground truncate text-sm leading-tight font-semibold">
+                                {userProfile?.displayName ||
+                                  userProfile?.githubUsername ||
+                                  "User"}
+                              </p>
+                              <p className="text-muted-foreground mt-0.5 truncate text-xs">
+                                {user?.email}
+                              </p>
+                            </div>
+                          </div>
                         </div>
-                        <div className="p-1.5">
+
+                        {/* Menu Items */}
+                        <div className="p-2">
                           <button
                             onClick={() => {
                               handleNavigate("history");
                               setShowUserDropdown(false);
                             }}
-                            className="text-foreground hover:bg-muted flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors"
+                            className="text-foreground hover:bg-muted/60 group flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all"
                           >
-                            <History className="text-muted-foreground h-4 w-4" />
-                            Scan History
+                            <div className="bg-primary/10 group-hover:bg-primary/20 flex h-8 w-8 items-center justify-center rounded-lg transition-colors">
+                              <History className="text-primary h-4 w-4" />
+                            </div>
+                            <div className="flex-1 text-left">
+                              <p className="font-medium">Scan History</p>
+                              <p className="text-muted-foreground text-xs">
+                                View previous analyses
+                              </p>
+                            </div>
                           </button>
+
                           <button
                             onClick={() => {
                               logout();
                               setShowUserDropdown(false);
                             }}
-                            className="text-destructive hover:bg-destructive/8 flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors"
+                            className="text-destructive hover:bg-destructive/8 group flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all"
                           >
-                            <LogOut className="h-4 w-4" />
-                            Sign Out
+                            <div className="bg-destructive/10 group-hover:bg-destructive/20 flex h-8 w-8 items-center justify-center rounded-lg transition-colors">
+                              <LogOut className="h-4 w-4" />
+                            </div>
+                            <div className="flex-1 text-left">
+                              <p className="font-medium">Sign Out</p>
+                              <p className="text-destructive/70 text-xs">
+                                End your session
+                              </p>
+                            </div>
                           </button>
                         </div>
                       </motion.div>
