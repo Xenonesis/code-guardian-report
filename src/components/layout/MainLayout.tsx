@@ -42,7 +42,7 @@ export function MainLayout({ children }: MainLayoutProps) {
 
   return (
     <div
-      className="flex min-h-screen w-full flex-col overflow-x-clip"
+      className="flex min-h-screen w-full flex-col overflow-x-clip antialiased"
       role="application"
       aria-label="Code Guardian Security Analysis Application"
     >

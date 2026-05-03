@@ -3,7 +3,7 @@
 @layer components {
   /* Enhanced Interactive Elements - Professional */
   .interactive-card {
-    @apply relative cursor-pointer overflow-hidden rounded-lg border border-slate-200 bg-white p-6 shadow-sm transition-all duration-200 hover:shadow-md dark:border-slate-800 dark:bg-slate-900;
+    @apply relative cursor-pointer overflow-hidden rounded-lg border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:shadow-lg dark:border-slate-800 dark:bg-slate-900;
   }
 
   .interactive-card::before {
@@ -12,6 +12,11 @@
 
   .interactive-card:hover {
     @apply -translate-y-1 transform;
+
+    border-color: hsl(var(--primary) / 30%);
+    box-shadow:
+      0 10px 30px -10px hsl(var(--primary) / 15%),
+      0 4px 12px -4px hsl(var(--foreground) / 5%);
   }
 
   .interactive-card:active {

@@ -55,9 +55,11 @@ const Footer: React.FC<FooterProps> = ({ className = "" }) => {
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-2">
-            <div className="mb-4 flex items-center gap-2.5">
-              <Shield className="text-primary h-5 w-5" />
-              <span className="font-display text-lg">Code Guardian</span>
+            <div className="mb-5 flex items-center gap-2.5">
+              <Shield className="text-primary h-6 w-6" />
+              <span className="font-display text-xl font-medium">
+                Code Guardian
+              </span>
             </div>
             <p className="text-muted-foreground mb-6 max-w-sm text-sm leading-relaxed">
               Enterprise-grade static code analysis powered by AI. Comprehensive
@@ -68,14 +70,14 @@ const Footer: React.FC<FooterProps> = ({ className = "" }) => {
                 href="https://github.com/Xenonesis/code-guardian-report"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="border-border text-muted-foreground hover:text-foreground hover:border-primary/40 border p-2 transition-colors"
+                className="border-border text-muted-foreground hover:text-primary hover:border-primary/60 rounded-lg border p-2.5 transition-all duration-200 hover:scale-105"
                 aria-label="GitHub"
               >
                 <GitFork className="h-4 w-4" />
               </a>
               <a
                 href="mailto:contact@codeguardian.dev"
-                className="border-border text-muted-foreground hover:text-foreground hover:border-primary/40 border p-2 transition-colors"
+                className="border-border text-muted-foreground hover:text-primary hover:border-primary/60 rounded-lg border p-2.5 transition-all duration-200 hover:scale-105"
                 aria-label="Email"
               >
                 <Mail className="h-4 w-4" />
@@ -85,23 +87,23 @@ const Footer: React.FC<FooterProps> = ({ className = "" }) => {
 
           {/* Platform */}
           <div>
-            <h4 className="text-foreground mb-4 font-mono text-xs tracking-[0.16em] uppercase">
+            <h4 className="text-foreground mb-5 font-mono text-xs tracking-[0.16em] uppercase">
               Platform
             </h4>
-            <ul className="space-y-2.5">
+            <ul className="space-y-3">
               {platformLinks.map((link) => (
                 <li key={link.label}>
                   {link.id ? (
                     <button
                       onClick={() => scrollToSection(link.id!)}
-                      className="text-muted-foreground hover:text-foreground font-mono text-xs tracking-[0.08em] uppercase transition-colors"
+                      className="text-muted-foreground hover:text-primary font-mono text-xs tracking-[0.08em] uppercase transition-colors"
                     >
                       {link.label}
                     </button>
                   ) : (
                     <Link
                       href={link.href!}
-                      className="text-muted-foreground hover:text-foreground font-mono text-xs tracking-[0.08em] uppercase transition-colors"
+                      className="text-muted-foreground hover:text-primary font-mono text-xs tracking-[0.08em] uppercase transition-colors"
                     >
                       {link.label}
                     </Link>
@@ -113,15 +115,15 @@ const Footer: React.FC<FooterProps> = ({ className = "" }) => {
 
           {/* Company */}
           <div>
-            <h4 className="text-foreground mb-4 font-mono text-xs tracking-[0.16em] uppercase">
+            <h4 className="text-foreground mb-5 font-mono text-xs tracking-[0.16em] uppercase">
               Company
             </h4>
-            <ul className="space-y-2.5">
+            <ul className="space-y-3">
               {companyLinks.map((link) => (
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1 font-mono text-xs tracking-[0.08em] uppercase transition-colors"
+                    className="text-muted-foreground hover:text-primary inline-flex items-center gap-1 font-mono text-xs tracking-[0.08em] uppercase transition-colors"
                   >
                     {link.label}
                     {link.href.startsWith("http") && (

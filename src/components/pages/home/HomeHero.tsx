@@ -10,9 +10,9 @@ interface HomeHeroProps {
 export const HomeHero: React.FC<HomeHeroProps> = ({ onStartAnalysis }) => {
   return (
     <HeroSection
-      title=""
-      description=""
-      className="section-glow border-border relative flex min-h-[80vh] flex-col items-center justify-center border-b border-dashed px-4 py-20 sm:px-6"
+      title="Code Guardian Enterprise"
+      description="AI-Powered Security Analysis Platform"
+      className="section-glow border-border relative flex min-h-[85vh] flex-col items-center justify-center border-b border-dashed px-4 py-24 sm:px-6 lg:py-32"
     >
       {/* Technical Grid Overlay */}
       <div
@@ -35,13 +35,13 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ onStartAnalysis }) => {
           </div>
         </div>
 
-        <div className="animate-fade-in space-y-6">
-          <h1 className="font-display text-foreground xs:text-4xl text-3xl leading-none tracking-tight uppercase sm:text-6xl md:text-8xl">
+        <div className="animate-fade-in space-y-8">
+          <h1 className="font-display text-foreground xs:text-5xl text-4xl leading-[0.9] tracking-tight uppercase sm:text-7xl md:text-9xl">
             Code{" "}
             <span
               className="text-transparent"
               style={{
-                WebkitTextStroke: "1px hsl(var(--primary))",
+                WebkitTextStroke: "2px hsl(var(--primary))",
                 color: "transparent",
               }}
             >
@@ -59,27 +59,27 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ onStartAnalysis }) => {
             <span>[ Automated Repair ]</span>
           </div>
 
-          <p className="text-muted-foreground border-border mx-auto mt-8 max-w-2xl border-t border-dashed pt-4 font-mono text-sm leading-relaxed">
+          <p className="text-muted-foreground border-border mx-auto mt-10 max-w-2xl border-t border-dashed pt-6 font-mono text-sm leading-relaxed sm:text-base">
             Mission-critical code security infrastructure. Deploy autonomous
             vulnerability scanning agents directly to your repository.
           </p>
         </div>
 
         {/* CTA */}
-        <div className="animate-fade-in-delay-1 mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <div className="animate-fade-in-delay-1 mt-14 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6">
           <Button
             onClick={onStartAnalysis}
             size="lg"
-            className="btn-primary hover:bg-primary/90 border-primary bg-primary text-primary-foreground h-14 w-full rounded-none border px-8 text-base font-bold tracking-wider uppercase shadow-none hover:translate-y-0 sm:w-auto"
+            className="btn-primary hover:bg-primary/90 border-primary bg-primary text-primary-foreground shadow-primary/20 hover:shadow-primary/30 h-14 w-full rounded-none border px-10 text-base font-bold tracking-wider uppercase shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl sm:w-auto"
           >
             Initiate Scan
-            <ArrowRight className="ml-2 h-4 w-4" />
+            <ArrowRight className="ml-2 h-5 w-5" />
           </Button>
 
           <Button
             variant="outline"
             size="lg"
-            className="border-foreground/20 text-foreground hover:bg-foreground hover:text-background h-14 w-full rounded-none border bg-transparent px-8 font-mono text-base font-bold tracking-wider uppercase shadow-none sm:w-auto"
+            className="border-foreground/20 text-foreground hover:bg-foreground hover:text-background h-14 w-full rounded-none border bg-transparent px-10 font-mono text-base font-bold tracking-wider uppercase shadow-none transition-all duration-300 hover:scale-105 sm:w-auto"
           >
             View System Demo
           </Button>
