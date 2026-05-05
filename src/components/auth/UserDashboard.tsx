@@ -6,7 +6,7 @@ import { useGitHubRepositories } from "@/hooks/useGitHubRepositories";
 import GitHubRepositoryPermissionModal from "@/components/github/GitHubRepositoryPermissionModal";
 import GitHubRepositoryList from "@/components/github/GitHubRepositoryList";
 import GitHubUsernameInput from "@/components/github/GitHubUsernameInput";
-import { GitFork } from "lucide-react";
+import { GitFork, Mail, User, ExternalLink, Github } from "lucide-react";
 import { toast } from "sonner";
 
 import { logger } from "@/utils/logger";
@@ -230,6 +230,10 @@ const UserDashboard: React.FC = () => {
     );
   }
 
+  const displayName = userProfile.name || userProfile.displayName || "User";
+  const githubUsername =
+    userProfile.githubUsername || userProfile.githubMetadata?.login || null;
+
   return (
     <div className="bg-muted/50 text-foreground dark:text-muted-foreground min-h-screen dark:bg-gradient-to-br dark:from-[#0d0d1f] dark:via-[#1b1b3a] dark:to-[#0d0d1f]">
       {/* GitHub Permission Modal */}
@@ -254,14 +258,27 @@ const UserDashboard: React.FC = () => {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-start justify-between gap-3 py-4 sm:flex-row sm:items-center">
             <div className="flex items-center gap-4">
-              {/* GitHub Profile Avatar Only */}
               {getGithubAvatarUrl() ? (
                 <img
                   src={getGithubAvatarUrl() as string}
                   alt="Profile"
                   className="h-12 w-12 rounded-full border-2 border-purple-500 shadow-md"
                 />
-              ) : null}
+              ) : (
+                <div className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-purple-500 bg-purple-100 shadow-md dark:bg-purple-900/30">
+                  <User className="h-6 w-6 text-purple-600 dark:text-purple-400" />
+                </div>
+              )}
+              <div>
+                <p className="text-foreground font-semibold" aria-label="User display name">
+                  {displayName}
+                </p>
+                {userProfile.email && (
+                  <p className="text-muted-foreground text-sm">
+                    {userProfile.email}
+                  </p>
+                )}
+              </div>
             </div>
             <button
               onClick={handleLogout}
@@ -309,16 +326,62 @@ const UserDashboard: React.FC = () => {
           {/* Profile and Stats */}
           <div className="space-y-6 lg:col-span-1">
             <div className="border-border rounded-lg border bg-white p-6 shadow dark:border-transparent dark:bg-[#252538]">
-              {/* Profile Avatar Only */}
-              {getGithubAvatarUrl() ? (
-                <div className="flex justify-center">
+              {/* Profile Avatar */}
+              <div className="flex flex-col items-center gap-4">
+                {getGithubAvatarUrl() ? (
                   <img
                     src={getGithubAvatarUrl() as string}
                     alt="Profile"
-                    className="h-20 w-20 rounded-full border-4 border-purple-500 shadow-lg"
+                    className="h-24 w-24 rounded-full border-4 border-purple-500 shadow-lg"
                   />
+                ) : (
+                  <div className="flex h-24 w-24 items-center justify-center rounded-full border-4 border-purple-500 bg-purple-100 shadow-lg dark:bg-purple-900/30">
+                    <User className="h-12 w-12 text-purple-600 dark:text-purple-400" />
+                  </div>
+                )}
+                <div className="w-full text-center">
+                  <h2 className="text-foreground text-xl font-bold">
+                    {displayName}
+                  </h2>
+                  {githubUsername && (
+                    <a
+                      href={`https://github.com/${githubUsername}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-1 inline-flex items-center gap-1 text-sm text-purple-600 hover:underline dark:text-purple-400"
+                    >
+                      <Github className="h-3.5 w-3.5" />@{githubUsername}
+                      <ExternalLink className="h-3 w-3 opacity-60" />
+                    </a>
+                  )}
                 </div>
-              ) : null}
+              </div>
+
+              {/* Profile Details */}
+              <div className="mt-5 space-y-3 border-t border-gray-100 pt-5 dark:border-white/10">
+                {userProfile.email && (
+                  <div className="flex items-center gap-3 text-sm">
+                    <Mail className="text-muted-foreground h-4 w-4 shrink-0" />
+                    <span className="text-foreground truncate">
+                      {userProfile.email}
+                    </span>
+                  </div>
+                )}
+                {githubUsername && (
+                  <div className="flex items-center gap-3 text-sm">
+                    <Github className="text-muted-foreground h-4 w-4 shrink-0" />
+                    <a
+                      href={`https://github.com/${githubUsername}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1 text-purple-600 hover:underline dark:text-purple-400"
+                    >
+                      {githubUsername}
+                      <ExternalLink className="h-3 w-3 opacity-60" />
+                    </a>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
