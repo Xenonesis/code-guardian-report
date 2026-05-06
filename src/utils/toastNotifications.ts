@@ -181,6 +181,13 @@ export const toastNotifications = {
   },
 };
 
+declare global {
+  interface Window {
+    showToast: typeof showToast;
+    toastNotifications: typeof toastNotifications;
+  }
+}
+
 export function setupGlobalToast() {
   if (typeof window !== "undefined") {
     window.showToast = showToast;
