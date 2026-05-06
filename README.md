@@ -10,8 +10,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Version](https://img.shields.io/badge/version-15.0.0-blue.svg)](https://github.com/Xenonesis/code-guardian-report/releases)
 [![Node.js](https://img.shields.io/badge/node-22.x-green.svg)](https://nodejs.org/)
-[![Next.js](https://img.shields.io/badge/Next.js-16.2.1-black.svg)](https://nextjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-blue.svg)](https://www.typescriptlang.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-16.2.4-black.svg)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-6.0.3-blue.svg)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-19.2.4-61DAFB.svg)](https://react.dev/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/Xenonesis/code-guardian-report/pulls)
 
@@ -34,6 +34,7 @@
   - [GitHub Integration](#github-integration)
   - [Report Generation](#report-generation)
   - [AI-Powered Features](#ai-powered-features)
+  - [MCP Integration](#mcp-integration)
 - [Multi-Language Support](#multi-language-support)
 - [Security Analysis](#security-analysis)
   - [Vulnerability Detection](#vulnerability-detection)
@@ -106,6 +107,7 @@ Our mission is to democratize enterprise-grade security analysis by providing de
 - **Real-Time Analysis**: Instant feedback as you upload or analyze code
 - **Comprehensive Reports**: Detailed PDF and JSON exports with actionable insights
 - **GitHub Integration**: Analyze repositories directly from GitHub with OAuth authentication
+- **MCP Integration**: Full Model Context Protocol support for IDE integration
 - **Offline Capable**: Full Progressive Web App support for offline analysis
 - **Zero Configuration**: Works out of the box with sensible defaults
 - **Extensible**: Custom rules engine for organization-specific security patterns
@@ -204,7 +206,85 @@ Our mission is to democratize enterprise-grade security analysis by providing de
 - **Local Models**: Support for locally-hosted models via API
 - **Model Discovery**: Automatic detection and configuration of available models
 
-### 4. GitHub Repository Analysis
+### 4. Model Context Protocol (MCP) Integration
+
+#### MCP Server Implementation
+
+Code Guardian now includes a full-featured MCP server that enables seamless integration with AI-powered development environments and tools.
+
+#### Available MCP Tools (19 Tools)
+
+**Scanner Agent**
+
+- `scan_file` - Scan individual files for vulnerabilities
+- `scan_codebase` - Perform comprehensive security audits
+- `detect_secrets` - Find hardcoded credentials and API keys
+- `scan_dependencies` - Check for vulnerable dependencies
+
+**DataFlow Agent**
+
+- `analyze_data_flow` - Track data movement and identify injection points
+
+**Metrics Agent**
+
+- `calculate_metrics` - Generate security scores and metrics
+
+**ExploitSim Agent**
+
+- `build_exploit_graph` - Visualize attack chains
+- `simulate_exploit` - Test exploit scenarios
+- `get_attack_paths` - Identify potential attack routes
+
+**PatchGen Agent**
+
+- `generate_patch` - Create automated security fixes
+- `preview_patch` - Review changes before applying
+- `apply_patch` - Implement security patches
+
+**Validation Agent**
+
+- `validate_patch` - Verify fix effectiveness
+- `run_regression` - Test for side effects
+- `check_confidence` - Assess patch quality
+
+**RiskOptimizer Agent**
+
+- `optimize_patches` - Prioritize fixes by risk
+
+**Memory Agent**
+
+- `query_memory` - Access previous analysis results
+
+**Pipeline Agent**
+
+- `full_security_pipeline` - Complete end-to-end analysis
+- `quick_scan` - Fast security assessment
+
+#### MCP Transport Support
+
+- **STDIO Transport**: For command-line integration
+- **HTTP Transport**: For web-based integrations
+- **VS Code Integration**: Works seamlessly with GitHub Copilot Chat
+
+#### Usage Examples
+
+```bash
+# Build MCP server
+npm run mcp:build
+
+# Run via STDIO
+npm run mcp:stdio
+
+# Run via HTTP
+npm run mcp:http
+
+# Development mode
+npm run mcp:dev
+```
+
+For detailed MCP usage instructions, see [MCP_TOOLS_REFERENCE.md](MCP_TOOLS_REFERENCE.md)
+
+### 5. GitHub Repository Analysis
 
 ![GitHub Integration](public/github-pro.png)
 
@@ -523,6 +603,13 @@ code-guardian-report/
 │   ├── config/                   # Configuration files
 │   │   ├── constants.ts          # Application constants
 │   │   ├── pwa.ts                # PWA configuration
+│   ├── mcp/                      # Model Context Protocol
+│   │   ├── memory/               # Memory store for MCP
+│   │   ├── prompts/              # MCP prompts
+│   │   ├── resources/            # MCP resources
+│   │   ├── tools/                # MCP tools (19 tools)
+│   │   ├── transports/           # MCP transport implementations
+│   │   └── server.ts             # MCP server factory
 │   │   └── security.ts           # Security configuration
 │   ├── hooks/                    # Custom React hooks
 │   │   ├── useAnalysis.ts        # Analysis hook
@@ -636,19 +723,19 @@ code-guardian-report/
 
 #### Core Framework
 
-- **Next.js 16.2.1**: React framework with App Router, Server Components, and API routes
+- **Next.js 16.2.4**: React framework with App Router, Server Components, and API routes
 - **React 19.2.4**: Latest React with improved performance and concurrent features
-- **TypeScript 5.9.3**: Type-safe development with advanced type features
+- **TypeScript 6.0.3**: Type-safe development with advanced type features
 
 #### UI/UX Libraries
 
 - **Tailwind CSS 4.2.2**: Utility-first CSS framework for rapid UI development
 - **Radix UI**: Unstyled, accessible component primitives
   - Dialog, Popover, Select, Tabs, Toast, Tooltip, and more
-- **Framer Motion 12.29.2**: Production-ready animation library
-- **Lucide React 0.563.0**: Beautiful, consistent icon set
-- **Recharts 3.7.0**: Composable charting library for data visualization
-- **Lenis 1.3.17**: Smooth scrolling library
+- **Framer Motion 12.38.0**: Production-ready animation library
+- **Lucide React 0.577.0**: Beautiful, consistent icon set
+- **Recharts 3.8.0**: Composable charting library for data visualization
+- **Lenis 1.3.20**: Smooth scrolling library
 
 #### State Management & Data Flow
 
@@ -707,6 +794,28 @@ code-guardian-report/
 - **Data Flow Analyzer**: Data flow tracking
 - **Metrics Calculator**: Code quality metrics
 
+### MCP Integration
+
+#### Model Context Protocol
+
+- **@modelcontextprotocol/sdk 1.27.1**: Official MCP SDK for tool and resource integration
+- **MCP Server**: Full-featured MCP server with 19 security analysis tools
+- **STDIO Transport**: Command-line integration support
+- **HTTP Transport**: Web-based integration support
+- **Memory Store**: Persistent analysis result storage
+
+#### MCP Tools
+
+- **Scanner Agent**: File and codebase scanning, secret detection, dependency analysis
+- **DataFlow Agent**: Data flow tracking and injection point identification
+- **Metrics Agent**: Security scoring and metrics calculation
+- **ExploitSim Agent**: Exploit graph building, simulation, and attack path analysis
+- **PatchGen Agent**: Automated patch generation and application
+- **Validation Agent**: Patch validation, regression testing, and confidence checking
+- **RiskOptimizer Agent**: Risk-based patch prioritization
+- **Memory Agent**: Historical analysis result queries
+- **Pipeline Agent**: Full security pipeline and quick scan workflows
+
 ### Progressive Web App
 
 #### PWA Technologies
@@ -717,6 +826,7 @@ code-guardian-report/
 - **Service Workers**: Offline functionality and caching
 - **Push API**: Browser push notifications
 - **Background Sync**: Offline operation queuing
+- **Web Push 3.6.7**: Push notification protocol implementation
 
 ### Build & Development Tools
 
@@ -724,7 +834,7 @@ code-guardian-report/
 
 - **Next.js Compiler**: Fast Rust-based compiler
 - **Turbopack**: Ultra-fast bundler (optional)
-- **PostCSS 8.5.6**: CSS transformations
+- **PostCSS 8.5.12**: CSS transformations
 - **Tailwind CSS Compiler**: JIT CSS generation
 
 #### Code Quality
@@ -1051,6 +1161,48 @@ firebase init
 # ☑ Storage (file storage)
 # ☑ Hosting (deployment)
 ```
+
+#### 🔌 MCP Integration (Optional)
+
+**When to configure:** If you want to use the Model Context Protocol (MCP) server for IDE integration and AI-powered development environments.
+
+**MCP Server Setup:**
+
+```bash
+# Build the MCP server
+npm run mcp:build
+
+# Run via STDIO (for VS Code integration)
+npm run mcp:stdio
+
+# Run via HTTP (for web-based integrations)
+npm run mcp:http
+
+# Development mode with hot reload
+npm run mcp:dev
+
+# Inspect MCP server
+npm run mcp:inspect
+```
+
+**VS Code Integration:**
+
+1. Install GitHub Copilot Chat extension
+2. Configure MCP server in VS Code settings:
+
+```json
+{
+  "mcp.servers": {
+    "code-guardian": {
+      "command": "node",
+      "args": ["dist/mcp/mcp/transports/stdio.js"],
+      "cwd": "/path/to/code-guardian-report"
+    }
+  }
+}
+```
+
+For detailed MCP usage instructions, see [MCP_TOOLS_REFERENCE.md](MCP_TOOLS_REFERENCE.md).
 
 #### 📊 Analytics (Optional)
 
@@ -5445,61 +5597,6 @@ Special thanks to all contributors who have helped make Code Guardian Report bet
 
 <h3 style="color: white; margin-bottom: 20px;">**Repository Statistics**</h3>
 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   <table style="margin: 0 auto;">
     <tr>
       <td align="center" style="padding: 15px;">
@@ -5546,7 +5643,7 @@ Special thanks to all contributors who have helped make Code Guardian Report bet
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">483 commits</span>
         </div>
       </td>
-    
+
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/65916846?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
@@ -5558,7 +5655,7 @@ Special thanks to all contributors who have helped make Code Guardian Report bet
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">157 commits</span>
         </div>
       </td>
-    
+
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/in/15368?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
@@ -5570,7 +5667,7 @@ Special thanks to all contributors who have helped make Code Guardian Report bet
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">113 commits</span>
         </div>
       </td>
-    
+
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/142787780?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
@@ -5582,8 +5679,9 @@ Special thanks to all contributors who have helped make Code Guardian Report bet
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">10 commits</span>
         </div>
       </td>
-    
+
     </tr>
+
 <tr>
 
       <td align="center" style="padding: 20px;">
@@ -5596,7 +5694,7 @@ Special thanks to all contributors who have helped make Code Guardian Report bet
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">5 commits</span>
         </div>
       </td>
-    
+
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/164482191?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
@@ -5608,7 +5706,7 @@ Special thanks to all contributors who have helped make Code Guardian Report bet
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">4 commits</span>
         </div>
       </td>
-    
+
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/176881379?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
@@ -5620,7 +5718,7 @@ Special thanks to all contributors who have helped make Code Guardian Report bet
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">3 commits</span>
         </div>
       </td>
-    
+
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/in/1143301?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
@@ -5632,7 +5730,7 @@ Special thanks to all contributors who have helped make Code Guardian Report bet
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">3 commits</span>
         </div>
       </td>
-    
+
     </tr>
 
 </table>
