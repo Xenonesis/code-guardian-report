@@ -1,5 +1,5 @@
 import { AnalysisResults } from "@/types/security-types";
-import type { jsPDF } from "jspdf";
+import jsPDF from "jspdf";
 
 import { logger } from "@/utils/logger";
 
@@ -23,9 +23,10 @@ export class PDFExportService {
     options: PDFReportOptions = {}
   ): Promise<Blob> {
     try {
-      const { jsPDF } = await import("jspdf");
+      const jsPDFModule = await import("jspdf");
+      const jsPDFClass = jsPDFModule.default;
 
-      this.doc = new jsPDF();
+      this.doc = new jsPDFClass();
 
       // Reset cursor
       this.currentY = 20;
@@ -362,7 +363,7 @@ export class PDFExportService {
         useCORS: true,
         allowTaint: true,
         backgroundColor: "#ffffff",
-      });
+      } as Parameters<typeof html2canvas>[1]);
       return canvas.toDataURL("image/png");
     } catch (error) {
       logger.error("Error capturing element:", error);

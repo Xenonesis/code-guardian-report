@@ -23,6 +23,31 @@ interface DependencyAnalysisDisplayProps {
 export const DependencyAnalysisDisplay: React.FC<
   DependencyAnalysisDisplayProps
 > = ({ dependencyAnalysis, isLoading }) => {
+  const [showAllVulnerabilities, setShowAllVulnerabilities] = useState(false);
+  const [showAllOutdated, setShowAllOutdated] = useState(false);
+
+  const INITIAL_DISPLAY_COUNT = 10;
+
+  // Compute a dependency health score (0-100)
+  const healthScore = useMemo(() => {
+    if (!dependencyAnalysis) return 0;
+    const summary = dependencyAnalysis.summary;
+    const total = summary.totalPackages || 1;
+    const vulnPenalty = Math.min(
+      40,
+      (summary.vulnerablePackages / total) * 200
+    );
+    const outdatedPenalty = Math.min(
+      30,
+      (summary.outdatedPackages / total) * 100
+    );
+    const riskPenalty = Math.min(30, summary.overallRiskScore * 3);
+    return Math.max(
+      0,
+      Math.round(100 - vulnPenalty - outdatedPenalty - riskPenalty)
+    );
+  }, [dependencyAnalysis]);
+
   // Handle case where dependency analysis failed or is undefined
   if (isLoading) {
     return (
@@ -164,29 +189,6 @@ export const DependencyAnalysisDisplay: React.FC<
     supplyChainRisks,
     recommendations,
   } = dependencyAnalysis;
-
-  const [showAllVulnerabilities, setShowAllVulnerabilities] = useState(false);
-  const [showAllOutdated, setShowAllOutdated] = useState(false);
-
-  const INITIAL_DISPLAY_COUNT = 10;
-
-  // Compute a dependency health score (0-100)
-  const healthScore = useMemo(() => {
-    const total = summary.totalPackages || 1;
-    const vulnPenalty = Math.min(
-      40,
-      (summary.vulnerablePackages / total) * 200
-    );
-    const outdatedPenalty = Math.min(
-      30,
-      (summary.outdatedPackages / total) * 100
-    );
-    const riskPenalty = Math.min(30, summary.overallRiskScore * 3);
-    return Math.max(
-      0,
-      Math.round(100 - vulnPenalty - outdatedPenalty - riskPenalty)
-    );
-  }, [summary]);
 
   const getSeverityColor = (severity: string) => {
     switch (severity.toLowerCase()) {

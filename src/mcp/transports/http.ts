@@ -19,7 +19,7 @@ import {
   type ServerResponse,
 } from "node:http";
 import { randomUUID } from "node:crypto";
-import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
+import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp";
 import { createMcpServer } from "../server.js";
 
 const PORT = parseInt(process.env["MCP_HTTP_PORT"] ?? "3100", 10);

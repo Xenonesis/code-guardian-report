@@ -9,7 +9,7 @@
  *   node dist/mcp/transports/stdio.js           # Production (after mcp:build)
  */
 
-import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio";
 import { createMcpServer } from "../server.js";
 
 async function main(): Promise<void> {

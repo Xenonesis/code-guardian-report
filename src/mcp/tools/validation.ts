@@ -111,7 +111,15 @@ export function registerValidationTools(
       inputSchema: RunRegressionSchema,
       annotations: { readOnlyHint: true },
     },
-    async ({ originalCode, patchedCode, filename }) => {
+    async ({
+      originalCode,
+      patchedCode,
+      filename,
+    }: {
+      originalCode: string;
+      patchedCode: string;
+      filename: string;
+    }) => {
       try {
         const origAnalyzer = new SecurityAnalyzer();
         await origAnalyzer.initializeAnalysisContext([
@@ -180,7 +188,7 @@ export function registerValidationTools(
       inputSchema: CheckConfidenceSchema,
       annotations: { readOnlyHint: true },
     },
-    async ({ issueJson, code }) => {
+    async ({ issueJson, code }: { issueJson: string; code: string }) => {
       try {
         const issue = parseIssueJson(issueJson);
         const lines = code.split("\n");

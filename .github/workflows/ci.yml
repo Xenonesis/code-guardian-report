@@ -303,12 +303,10 @@ jobs:
           echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Create GitHub Release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref_name }}
-          release_name: Code Guardian Enterprise ${{ github.ref_name }}
+          name: Code Guardian Enterprise ${{ github.ref_name }}
           body: |
             ## What's New in ${{ github.ref_name }}
 
@@ -320,3 +318,6 @@ jobs:
             - [Report Issues](https://github.com/Xenonesis/code-guardian-report/issues)
           draft: false
           prerelease: false
+          generate_release_notes: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

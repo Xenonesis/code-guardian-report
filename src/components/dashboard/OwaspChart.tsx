@@ -70,7 +70,7 @@ export const OwaspChart: React.FC<OwaspChartProps> = ({
               />
               <YAxis />
               <RechartsTooltip
-                formatter={(value, _name, props) => [
+                formatter={(value: number, _name: string, props: any) => [
                   value,
                   props.payload.fullName,
                 ]}
