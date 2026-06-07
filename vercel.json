@@ -5,7 +5,7 @@
   "trailingSlash": false,
 
   "buildCommand": "npm run build",
-  "installCommand": "npm ci",
+  "installCommand": "npm install --legacy-peer-deps",
   "outputDirectory": ".next",
 
   "regions": ["iad1"],
