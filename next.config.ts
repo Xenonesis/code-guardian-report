@@ -15,9 +15,6 @@ const nextConfig: NextConfig = {
   // Trigger new deployment for CSP update
   reactStrictMode: true,
 
-  // Enable standalone output for Docker deployments
-  output: isProd ? "standalone" : undefined,
-
   // TypeScript strict mode - catch errors at build time
   typescript: {
     ignoreBuildErrors: false,
