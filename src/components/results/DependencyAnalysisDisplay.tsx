@@ -117,7 +117,7 @@ export const DependencyAnalysisDisplay: React.FC<
                   </ul>
 
                   <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
-                    <div className="border-border bg-card/70 p-3/30 rounded-lg border">
+                    <div className="border-border bg-card/70 rounded-lg border p-3">
                       <p className="text-foreground mb-1 text-xs font-semibold">
                         JavaScript/TypeScript
                       </p>
@@ -125,7 +125,7 @@ export const DependencyAnalysisDisplay: React.FC<
                         package.json, yarn.lock
                       </p>
                     </div>
-                    <div className="border-border bg-card/70 p-3/30 rounded-lg border">
+                    <div className="border-border bg-card/70 rounded-lg border p-3">
                       <p className="text-foreground mb-1 text-xs font-semibold">
                         Python
                       </p>
@@ -133,7 +133,7 @@ export const DependencyAnalysisDisplay: React.FC<
                         requirements.txt
                       </p>
                     </div>
-                    <div className="border-border bg-card/70 p-3/30 rounded-lg border">
+                    <div className="border-border bg-card/70 rounded-lg border p-3">
                       <p className="text-foreground mb-1 text-xs font-semibold">
                         Java (Maven/Gradle)
                       </p>
@@ -141,7 +141,7 @@ export const DependencyAnalysisDisplay: React.FC<
                         pom.xml, build.gradle
                       </p>
                     </div>
-                    <div className="border-border bg-card/70 p-3/30 rounded-lg border">
+                    <div className="border-border bg-card/70 rounded-lg border p-3">
                       <p className="text-foreground mb-1 text-xs font-semibold">
                         PHP
                       </p>
@@ -149,7 +149,7 @@ export const DependencyAnalysisDisplay: React.FC<
                         composer.json, composer.lock
                       </p>
                     </div>
-                    <div className="border-border bg-card/70 p-3/30 rounded-lg border">
+                    <div className="border-border bg-card/70 rounded-lg border p-3">
                       <p className="text-foreground mb-1 text-xs font-semibold">
                         Rust
                       </p>
@@ -157,7 +157,7 @@ export const DependencyAnalysisDisplay: React.FC<
                         Cargo.toml, Cargo.lock
                       </p>
                     </div>
-                    <div className="border-border bg-card/70 p-3/30 rounded-lg border">
+                    <div className="border-border bg-card/70 rounded-lg border p-3">
                       <p className="text-foreground mb-1 text-xs font-semibold">
                         Ruby
                       </p>
@@ -190,8 +190,9 @@ export const DependencyAnalysisDisplay: React.FC<
     recommendations,
   } = dependencyAnalysis;
 
-  const getSeverityColor = (severity: string) => {
-    switch (severity.toLowerCase()) {
+  const getSeverityColor = (severity: string | undefined) => {
+    const sev = severity?.toLowerCase() ?? "unknown";
+    switch (sev) {
       case "critical":
         return "bg-red-500 text-white";
       case "high":

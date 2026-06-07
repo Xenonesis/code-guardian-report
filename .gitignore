@@ -388,3 +388,8 @@ test-mcp-stdio.js
 # END OF GITIGNORE
 # ============================================================================
 /generated/prisma
+
+# Build artifacts
+build_output.txt
+build_output2.txt
+test_output.txt

@@ -885,7 +885,7 @@ export class LanguageDetectionService {
     const languages: LanguageInfo[] = [];
     for (const [langName, stats] of languageMap.entries()) {
       const fileRatio = stats.fileCount / totalFiles;
-      const sizeRatio = stats.totalSize / totalSize;
+      const sizeRatio = totalSize > 0 ? stats.totalSize / totalSize : 0;
 
       // Enhanced scoring algorithm
       // - Base confidence from pattern matching (40%)

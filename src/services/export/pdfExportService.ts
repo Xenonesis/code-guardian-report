@@ -1,5 +1,5 @@
 import { AnalysisResults } from "@/types/security-types";
-import jsPDF from "jspdf";
+import type jsPDF from "jspdf";
 
 import { logger } from "@/utils/logger";
 
@@ -12,12 +12,6 @@ export interface PDFReportOptions {
 }
 
 export class PDFExportService {
-  private doc: jsPDF | null = null;
-  private currentY: number = 20;
-  private pageWidth: number = 210;
-  private pageHeight: number = 297;
-  private margin: number = 20;
-
   async generateReport(
     results: AnalysisResults,
     options: PDFReportOptions = {}
@@ -26,46 +20,67 @@ export class PDFExportService {
       const jsPDFModule = await import("jspdf");
       const jsPDFClass = jsPDFModule.default;
 
-      this.doc = new jsPDFClass();
-
-      // Reset cursor
-      this.currentY = 20;
+      const doc = new jsPDFClass();
+      let currentY = 20;
+      const pageWidth = 210;
+      const pageHeight = 297;
+      const margin = 20;
 
       // Set up document
-      this.doc.setFont("helvetica");
-      this.doc.setFontSize(20);
+      doc.setFont("helvetica");
+      doc.setFontSize(20);
 
       // Title
       const title = options.customTitle || "Code Guardian Security Report";
-      this.doc.text(title, this.pageWidth / 2, this.currentY, {
+      doc.text(title, pageWidth / 2, currentY, {
         align: "center",
       });
-      this.currentY += 15;
+      currentY += 15;
 
       // Metadata
-      this.addMetadata(results);
+      currentY = this.addMetadata(doc, results, currentY, margin);
 
       // Executive Summary
-      this.addExecutiveSummary(results);
+      currentY = this.addExecutiveSummary(doc, results, currentY, margin);
 
       // Security Issues
-      this.addSecurityIssues(results, options);
+      currentY = this.addSecurityIssues(
+        doc,
+        results,
+        options,
+        currentY,
+        pageWidth,
+        pageHeight,
+        margin
+      );
 
       // Metrics
-      this.addMetrics(results);
+      currentY = this.addMetrics(doc, results, currentY, margin);
 
       // Chart snapshots from the current dashboard view
       if (options.includeCharts) {
-        await this.addCharts(options.chartSelectors);
+        currentY = await this.addCharts(
+          doc,
+          options.chartSelectors,
+          currentY,
+          pageWidth,
+          pageHeight,
+          margin
+        );
       }
 
       // Language Detection
       if (results.languageDetection) {
-        this.addLanguageDetection(results.languageDetection);
+        currentY = this.addLanguageDetection(
+          doc,
+          results.languageDetection,
+          currentY,
+          margin
+        );
       }
 
       // Generate PDF blob
-      const pdfBlob = this.doc.output("blob");
+      const pdfBlob = doc.output("blob");
       return pdfBlob;
     } catch (error) {
       logger.error("Error generating PDF report:", error);
@@ -73,16 +88,19 @@ export class PDFExportService {
     }
   }
 
-  private addMetadata(results: AnalysisResults): void {
-    if (!this.doc) return;
+  private addMetadata(
+    doc: jsPDF,
+    results: AnalysisResults,
+    currentY: number,
+    margin: number
+  ): number {
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "bold");
+    doc.text("Report Metadata", margin, currentY);
+    currentY += 8;
 
-    this.doc.setFontSize(12);
-    this.doc.setFont("helvetica", "bold");
-    this.doc.text("Report Metadata", this.margin, this.currentY);
-    this.currentY += 8;
-
-    this.doc.setFont("helvetica", "normal");
-    this.doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
 
     const metadata = [
       `Analysis Date: ${new Date().toLocaleDateString()}`,
@@ -93,24 +111,27 @@ export class PDFExportService {
     ];
 
     metadata.forEach((item) => {
-      if (!this.doc) return;
-      this.doc.text(item, this.margin + 5, this.currentY);
-      this.currentY += 5;
+      doc.text(item, margin + 5, currentY);
+      currentY += 5;
     });
 
-    this.currentY += 10;
+    currentY += 10;
+    return currentY;
   }
 
-  private addExecutiveSummary(results: AnalysisResults): void {
-    if (!this.doc) return;
+  private addExecutiveSummary(
+    doc: jsPDF,
+    results: AnalysisResults,
+    currentY: number,
+    margin: number
+  ): number {
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "bold");
+    doc.text("Executive Summary", margin, currentY);
+    currentY += 8;
 
-    this.doc.setFontSize(12);
-    this.doc.setFont("helvetica", "bold");
-    this.doc.text("Executive Summary", this.margin, this.currentY);
-    this.currentY += 8;
-
-    this.doc.setFont("helvetica", "normal");
-    this.doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
 
     const summary = [
       `Security Score: ${results.summary.securityScore}/100`,
@@ -122,110 +143,113 @@ export class PDFExportService {
     ];
 
     summary.forEach((item) => {
-      if (!this.doc) return;
-      this.doc.text(item, this.margin + 5, this.currentY);
-      this.currentY += 5;
+      doc.text(item, margin + 5, currentY);
+      currentY += 5;
     });
 
-    this.currentY += 10;
+    currentY += 10;
+    return currentY;
   }
 
   private addSecurityIssues(
+    doc: jsPDF,
     results: AnalysisResults,
-    options: PDFReportOptions
-  ): void {
-    if (!this.doc) return;
-
+    options: PDFReportOptions,
+    currentY: number,
+    pageWidth: number,
+    pageHeight: number,
+    margin: number
+  ): number {
     if (results.issues.length === 0) {
-      this.doc.setFontSize(12);
-      this.doc.setFont("helvetica", "bold");
-      this.doc.text("Security Issues", this.margin, this.currentY);
-      this.currentY += 8;
+      doc.setFontSize(12);
+      doc.setFont("helvetica", "bold");
+      doc.text("Security Issues", margin, currentY);
+      currentY += 8;
 
-      this.doc.setFont("helvetica", "normal");
-      this.doc.setFontSize(10);
-      this.doc.text(
-        "No security issues found.",
-        this.margin + 5,
-        this.currentY
-      );
-      this.currentY += 15;
-      return;
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(10);
+      doc.text("No security issues found.", margin + 5, currentY);
+      currentY += 15;
+      return currentY;
     }
 
-    this.doc.setFontSize(12);
-    this.doc.setFont("helvetica", "bold");
-    this.doc.text(
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "bold");
+    doc.text(
       `Security Issues (${results.issues.length} found)`,
-      this.margin,
-      this.currentY
+      margin,
+      currentY
     );
-    this.currentY += 8;
+    currentY += 8;
 
-    this.doc.setFont("helvetica", "normal");
-    this.doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
 
     results.issues.forEach((issue, index) => {
-      if (!this.doc) return;
-      if (this.currentY > this.pageHeight - 50) {
-        this.doc.addPage();
-        this.currentY = 20;
+      if (currentY > pageHeight - 50) {
+        doc.addPage();
+        currentY = 20;
       }
 
       // Issue header
-      this.doc.setFont("helvetica", "bold");
-      this.doc.text(
+      doc.setFont("helvetica", "bold");
+      doc.text(
         `${index + 1}. ${issue.severity} - ${issue.type}`,
-        this.margin,
-        this.currentY
+        margin,
+        currentY
       );
-      this.currentY += 5;
+      currentY += 5;
 
       // Issue details
-      this.doc.setFont("helvetica", "normal");
-      this.doc.text(`File: ${issue.filename}`, this.margin + 5, this.currentY);
-      this.currentY += 4;
+      doc.setFont("helvetica", "normal");
+      doc.text(`File: ${issue.filename}`, margin + 5, currentY);
+      currentY += 4;
 
       if (issue.line) {
-        this.doc.text(`Line: ${issue.line}`, this.margin + 5, this.currentY);
-        this.currentY += 4;
+        doc.text(`Line: ${issue.line}`, margin + 5, currentY);
+        currentY += 4;
       }
 
-      this.doc.text(
-        `Message: ${issue.message}`,
-        this.margin + 5,
-        this.currentY
-      );
-      this.currentY += 4;
+      doc.text(`Message: ${issue.message}`, margin + 5, currentY);
+      currentY += 4;
 
       if (issue.recommendation) {
-        this.doc.text(
+        doc.text(
           `Recommendation: ${issue.recommendation}`,
-          this.margin + 5,
-          this.currentY
+          margin + 5,
+          currentY
         );
-        this.currentY += 4;
+        currentY += 4;
       }
 
       if (options.includeCodeSnippets && issue.codeSnippet) {
-        const snippetLines = this.doc.splitTextToSize(
+        const snippetLines = doc.splitTextToSize(
           `Snippet: ${issue.codeSnippet}`,
-          this.pageWidth - this.margin * 2 - 10
+          pageWidth - margin * 2 - 10
         );
 
-        this.doc.setFont("courier", "normal");
-        this.doc.text(snippetLines, this.margin + 5, this.currentY);
-        this.currentY += snippetLines.length * 4;
-        this.doc.setFont("helvetica", "normal");
+        doc.setFont("courier", "normal");
+        doc.text(snippetLines, margin + 5, currentY);
+        currentY += snippetLines.length * 4;
+        doc.setFont("helvetica", "normal");
       }
 
-      this.currentY += 8;
+      currentY += 8;
     });
+
+    return currentY;
   }
 
-  private async addCharts(chartSelectors?: string[]): Promise<void> {
-    if (!this.doc || typeof document === "undefined") {
-      return;
+  private async addCharts(
+    doc: jsPDF,
+    chartSelectors?: string[],
+    currentY = 20,
+    pageWidth = 210,
+    pageHeight = 297,
+    margin = 20
+  ): Promise<number> {
+    if (typeof document === "undefined") {
+      return currentY;
     }
 
     const selectors =
@@ -250,58 +274,63 @@ export class PDFExportService {
     }
 
     if (chartElements.length === 0) {
-      return;
+      return currentY;
     }
 
-    if (this.currentY > this.pageHeight - 110) {
-      this.doc.addPage();
-      this.currentY = 20;
+    if (currentY > pageHeight - 110) {
+      doc.addPage();
+      currentY = 20;
     }
 
-    this.doc.setFontSize(12);
-    this.doc.setFont("helvetica", "bold");
-    this.doc.text("Chart Snapshots", this.margin, this.currentY);
-    this.currentY += 8;
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "bold");
+    doc.text("Chart Snapshots", margin, currentY);
+    currentY += 8;
 
     for (const [index, element] of chartElements.entries()) {
-      if (this.currentY > this.pageHeight - 95) {
-        this.doc.addPage();
-        this.currentY = 20;
+      if (currentY > pageHeight - 95) {
+        doc.addPage();
+        currentY = 20;
       }
 
       const imageData = await this.captureElementAsImage(element);
-      const targetWidth = this.pageWidth - this.margin * 2;
+      const targetWidth = pageWidth - margin * 2;
       const targetHeight = 70;
 
-      this.doc.setFontSize(10);
-      this.doc.setFont("helvetica", "normal");
-      this.doc.text(`Chart ${index + 1}`, this.margin, this.currentY);
-      this.currentY += 4;
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "normal");
+      doc.text(`Chart ${index + 1}`, margin, currentY);
+      currentY += 4;
 
-      this.doc.addImage(
+      doc.addImage(
         imageData,
         "PNG",
-        this.margin,
-        this.currentY,
+        margin,
+        currentY,
         targetWidth,
         targetHeight,
         undefined,
         "FAST"
       );
-      this.currentY += targetHeight + 8;
+      currentY += targetHeight + 8;
     }
+
+    return currentY;
   }
 
-  private addMetrics(results: AnalysisResults): void {
-    if (!this.doc) return;
+  private addMetrics(
+    doc: jsPDF,
+    results: AnalysisResults,
+    currentY: number,
+    margin: number
+  ): number {
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "bold");
+    doc.text("Quality Metrics", margin, currentY);
+    currentY += 8;
 
-    this.doc.setFontSize(12);
-    this.doc.setFont("helvetica", "bold");
-    this.doc.text("Quality Metrics", this.margin, this.currentY);
-    this.currentY += 8;
-
-    this.doc.setFont("helvetica", "normal");
-    this.doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
 
     const metrics = [
       `Vulnerability Density: ${results.metrics.vulnerabilityDensity.toFixed(2)}`,
@@ -315,44 +344,48 @@ export class PDFExportService {
     }
 
     metrics.forEach((item) => {
-      if (!this.doc) return;
-      this.doc.text(item, this.margin + 5, this.currentY);
-      this.currentY += 5;
+      doc.text(item, margin + 5, currentY);
+      currentY += 5;
     });
 
-    this.currentY += 10;
+    currentY += 10;
+    return currentY;
   }
 
-  private addLanguageDetection(detection: any): void {
-    if (!this.doc) return;
+  private addLanguageDetection(
+    doc: jsPDF,
+    detection: any,
+    currentY: number,
+    margin: number
+  ): number {
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "bold");
+    doc.text("Language Detection", margin, currentY);
+    currentY += 8;
 
-    this.doc.setFontSize(12);
-    this.doc.setFont("helvetica", "bold");
-    this.doc.text("Language Detection", this.margin, this.currentY);
-    this.currentY += 8;
-
-    this.doc.setFont("helvetica", "normal");
-    this.doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
 
     if (detection.primaryLanguage) {
-      this.doc.text(
+      doc.text(
         `Primary Language: ${detection.primaryLanguage.name}`,
-        this.margin + 5,
-        this.currentY
+        margin + 5,
+        currentY
       );
-      this.currentY += 5;
+      currentY += 5;
     }
 
     if (detection.frameworks && detection.frameworks.length > 0) {
-      this.doc.text(
+      doc.text(
         `Frameworks: ${detection.frameworks.map((f: any) => f.name).join(", ")}`,
-        this.margin + 5,
-        this.currentY
+        margin + 5,
+        currentY
       );
-      this.currentY += 5;
+      currentY += 5;
     }
 
-    this.currentY += 10;
+    currentY += 10;
+    return currentY;
   }
 
   async captureElementAsImage(element: HTMLElement): Promise<string> {
