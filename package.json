@@ -111,6 +111,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.4.0",
+    "esbuild-wasm": "^0.28.0",
     "esprima": "^4.0.1",
     "esquery": "^1.7.0",
     "framer-motion": "^12.40.0",
