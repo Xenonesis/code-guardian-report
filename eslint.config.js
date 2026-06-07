@@ -17,7 +17,6 @@ export default [
       "out/**",
       ".turbo/**",
       "public/sw.js",
-      "functions/lib/**",
       "coverage/**",
       "*.config.js",
       "*.config.mjs",
@@ -68,6 +67,13 @@ export default [
       // React Hooks rules
       "react-hooks/rules-of-hooks": "error",
       "react-hooks/exhaustive-deps": "warn",
+    },
+  },
+  // Allow `any` in type definitions and test files
+  {
+    files: ["**/*.d.ts", "**/types/**", "**/*.test.*", "**/__tests__/**"],
+    rules: {
+      "@typescript-eslint/no-explicit-any": "off",
     },
   },
   eslintConfigPrettier,

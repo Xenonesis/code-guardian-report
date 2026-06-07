@@ -390,3 +390,6 @@ build_output.txt
 build_output2.txt
 test_output.txt
 .vercel
+
+# Pi agent state
+.pi/

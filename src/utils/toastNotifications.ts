@@ -18,7 +18,7 @@ export function showToast(
   description?: string,
   duration?: number
 ) {
-  const options: any = {
+  const options: { description?: string; duration?: number } = {
     description,
     duration: duration || 4000,
   };
