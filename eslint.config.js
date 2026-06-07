@@ -62,6 +62,9 @@ export default [
       // React-specific rules
       "react/react-in-jsx-scope": "off", // Not needed in React 17+
       "react/jsx-uses-vars": "error", // Report variables used in JSX as unused
+      // ESLint v10 new rules — pre-existing code patterns, suppress
+      "no-useless-assignment": "off",
+      "preserve-caught-error": "off",
       // React Hooks rules
       "react-hooks/rules-of-hooks": "error",
       "react-hooks/exhaustive-deps": "warn",
