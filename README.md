@@ -8,11 +8,11 @@
 [![Security Audit](https://github.com/Xenonesis/code-guardian-report/workflows/Security%20Audit/badge.svg)](https://github.com/Xenonesis/code-guardian-report/actions)
 [![CodeQL](https://github.com/Xenonesis/code-guardian-report/workflows/CodeQL/badge.svg)](https://github.com/Xenonesis/code-guardian-report/security/code-scanning)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-15.0.0-blue.svg)](https://github.com/Xenonesis/code-guardian-report/releases)
+[![Version](https://img.shields.io/badge/version-15.5.0-blue.svg)](https://github.com/Xenonesis/code-guardian-report/releases)
 [![Node.js](https://img.shields.io/badge/node-22.x-green.svg)](https://nodejs.org/)
-[![Next.js](https://img.shields.io/badge/Next.js-16.2.4-black.svg)](https://nextjs.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-16.2.7-black.svg)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-6.0.3-blue.svg)](https://www.typescriptlang.org/)
-[![React](https://img.shields.io/badge/React-19.2.4-61DAFB.svg)](https://react.dev/)
+[![React](https://img.shields.io/badge/React-19.2.7-61DAFB.svg)](https://react.dev/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/Xenonesis/code-guardian-report/pulls)
 
 ---
@@ -373,7 +373,7 @@ For detailed MCP usage instructions, see [MCP_TOOLS_REFERENCE.md](MCP_TOOLS_REFE
 - **Install Prompts**: One-click installation on desktop and mobile
 - **Background Sync**: Automatic synchronization when connection restored
 - **Push Notifications**: Real-time alerts for analysis completion
-- **Service Worker**: Advanced caching and offline support
+- **Service Worker**: Advanced caching and offline support (served via `/sw/sw.js` route)
 - **App-Like Experience**: Native app feel on web and mobile
 
 #### Offline Features
@@ -723,19 +723,19 @@ code-guardian-report/
 
 #### Core Framework
 
-- **Next.js 16.2.4**: React framework with App Router, Server Components, and API routes
-- **React 19.2.4**: Latest React with improved performance and concurrent features
+- **Next.js 16.2.7**: React framework with App Router, Server Components, and API routes (Turbopack by default)
+- **React 19.2.7**: Latest React with improved performance and concurrent features
 - **TypeScript 6.0.3**: Type-safe development with advanced type features
 
 #### UI/UX Libraries
 
-- **Tailwind CSS 4.2.2**: Utility-first CSS framework for rapid UI development
+- **Tailwind CSS 4.3.0**: Utility-first CSS framework for rapid UI development
 - **Radix UI**: Unstyled, accessible component primitives
   - Dialog, Popover, Select, Tabs, Toast, Tooltip, and more
-- **Framer Motion 12.38.0**: Production-ready animation library
-- **Lucide React 0.577.0**: Beautiful, consistent icon set
-- **Recharts 3.8.0**: Composable charting library for data visualization
-- **Lenis 1.3.20**: Smooth scrolling library
+- **Framer Motion 12.40.0**: Production-ready animation library
+- **Lucide React 1.17.0**: Consistent icon set (brand icons removed; use inline SVGs)
+- **Recharts 3.8.1**: Composable charting library for data visualization
+- **Lenis 1.3.23**: Smooth scrolling library
 
 #### State Management & Data Flow
 
@@ -776,16 +776,16 @@ code-guardian-report/
 
 #### Parsers & AST
 
-- **@babel/parser 7.28.6**: JavaScript/TypeScript parsing
-- **@babel/traverse 7.28.6**: AST traversal
-- **@babel/types 7.28.6**: AST manipulation
-- **Acorn 8.15.0**: Fast JavaScript parser
+- **@babel/parser 7.29.7**: JavaScript/TypeScript parsing
+- **@babel/traverse 7.29.7**: AST traversal
+- **@babel/types 7.29.7**: AST manipulation
+- **Acorn 8.16.0**: Fast JavaScript parser
 - **Esprima 4.0.1**: ECMAScript parser
 - **ESQuery 1.7.0**: CSS-like query language for AST
-- **@lezer/python 1.1.18**: Python language parser
+- **@lezer/python 1.1.19**: Python language parser
 - **@lezer/java 1.1.3**: Java language parser
-- **@lezer/cpp 1.1.5**: C++ language parser
-- **web-tree-sitter 0.26.3**: Multi-language parser
+- **@lezer/cpp 1.1.6**: C++ language parser
+- **web-tree-sitter 0.26.9**: Multi-language parser
 
 #### Analysis Tools
 
@@ -798,7 +798,7 @@ code-guardian-report/
 
 #### Model Context Protocol
 
-- **@modelcontextprotocol/sdk 1.27.1**: Official MCP SDK for tool and resource integration
+- **@modelcontextprotocol/sdk 1.29.0**: Official MCP SDK for tool and resource integration
 - **MCP Server**: Full-featured MCP server with 19 security analysis tools
 - **STDIO Transport**: Command-line integration support
 - **HTTP Transport**: Web-based integration support
@@ -820,8 +820,8 @@ code-guardian-report/
 
 #### PWA Technologies
 
-- **Serwist 9.5.7**: Service worker library for Next.js
-- **@serwist/next 9.5.7**: Next.js integration
+- **Serwist 9.5.11**: Service worker library (runtime)
+- **@serwist/turbopack 9.5.11**: Turbopack-compatible service worker bundling
 - **Web App Manifest**: PWA configuration
 - **Service Workers**: Offline functionality and caching
 - **Push API**: Browser push notifications
@@ -834,21 +834,21 @@ code-guardian-report/
 
 - **Next.js Compiler**: Fast Rust-based compiler
 - **Turbopack**: Ultra-fast bundler (optional)
-- **PostCSS 8.5.12**: CSS transformations
+- **PostCSS 8.5.15**: CSS transformations
 - **Tailwind CSS Compiler**: JIT CSS generation
 
 #### Code Quality
 
-- **ESLint 9.39.2**: JavaScript/TypeScript linting
-- **@typescript-eslint**: TypeScript-specific rules
-- **Prettier 3.8.1**: Code formatting
-- **Stylelint 17.0.0**: CSS linting
-- **lint-staged 16.2.7**: Pre-commit linting
+- **ESLint 10.4.1**: JavaScript/TypeScript linting
+- **@typescript-eslint 8.60.1**: TypeScript-specific rules
+- **Prettier 3.8.3**: Code formatting
+- **Stylelint 17.13.0**: CSS linting
+- **lint-staged 17.0.7**: Pre-commit linting
 
 #### Testing
 
-- **Vitest 4.0.18**: Fast unit test framework
-- **Jest 30.2.0**: JavaScript testing framework
+- **Vitest 4.1.8**: Fast unit test framework
+- **Jest 30.4.2**: JavaScript testing framework
 - **@testing-library/react 16.3.2**: React component testing
 - **@testing-library/jest-dom 6.9.1**: Custom Jest matchers
 - **happy-dom 20.3.9**: Lightweight DOM implementation
@@ -864,9 +864,9 @@ code-guardian-report/
 
 #### Monitoring & Analytics
 
-- **@vercel/analytics 1.6.1**: Performance analytics
-- **@vercel/speed-insights 1.3.1**: Real-user monitoring
-- **web-vitals 5.1.0**: Core Web Vitals measurement
+- **@vercel/analytics 2.0.1**: Performance analytics
+- **@vercel/speed-insights 2.0.0**: Real-user monitoring
+- **web-vitals 5.3.0**: Core Web Vitals measurement
 - **Custom Analytics**: Application-specific metrics
 
 ### Security Technologies
@@ -1009,10 +1009,10 @@ cd code-guardian-report
 
 ```bash
 # Install all dependencies
-npm install
+npm install --legacy-peer-deps
 
 # Or use clean install for reproducible builds (recommended for CI/CD)
-npm ci
+npm ci --legacy-peer-deps
 ```
 
 This will install all required dependencies including:
@@ -1040,7 +1040,7 @@ npm run dev
 **Expected output:**
 
 ```
-▲ Next.js 16.1.5
+▲ Next.js 16.2.7 (Turbopack)
 - Local:        http://localhost:3000
 - Ready in 3.2s
 ```
@@ -3350,36 +3350,20 @@ The `vercel.json` file includes:
 ```json
 {
   "framework": "nextjs",
+  "cleanUrls": true,
   "buildCommand": "npm run build",
-  "installCommand": "npm ci",
+  "installCommand": "npm install --legacy-peer-deps",
   "regions": ["iad1"],
   "functions": {
     "app/api/**/*.ts": {
       "maxDuration": 30,
       "memory": 1024
     }
-  },
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "X-Frame-Options",
-          "value": "DENY"
-        },
-        {
-          "key": "Strict-Transport-Security",
-          "value": "max-age=31536000; includeSubDomains; preload"
-        }
-      ]
-    }
-  ]
+  }
 }
 ```
+
+> **Note:** `--legacy-peer-deps` is required because `eslint-plugin-react` is not yet compatible with ESLint 10.x.
 
 ### Docker Deployment
 
@@ -3484,6 +3468,8 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
   CMD node -e "require('http').get('http://localhost:3000/api/health', (r) => { process.exit(r.statusCode === 200 ? 0 : 1); })"
 
 CMD ["node", "server.js"]
+
+> **Note:** For Docker deployments, you must set `output: "standalone"` back in `next.config.ts`, or use `next start` instead of the standalone server.
 ```
 
 #### Docker Best Practices
@@ -5597,38 +5583,6 @@ Special thanks to all contributors who have helped make Code Guardian Report bet
 
 <h3 style="color: white; margin-bottom: 20px;">**Repository Statistics**</h3>
 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   <table style="margin: 0 auto;">
     <tr>
       <td align="center" style="padding: 15px;">
@@ -5675,7 +5629,7 @@ Special thanks to all contributors who have helped make Code Guardian Report bet
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">490 commits</span>
         </div>
       </td>
-    
+
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/65916846?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
@@ -5687,7 +5641,7 @@ Special thanks to all contributors who have helped make Code Guardian Report bet
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">157 commits</span>
         </div>
       </td>
-    
+
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/in/15368?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
@@ -5699,7 +5653,7 @@ Special thanks to all contributors who have helped make Code Guardian Report bet
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">145 commits</span>
         </div>
       </td>
-    
+
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/142787780?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
@@ -5711,8 +5665,9 @@ Special thanks to all contributors who have helped make Code Guardian Report bet
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">10 commits</span>
         </div>
       </td>
-    
+
     </tr>
+
 <tr>
 
       <td align="center" style="padding: 20px;">
@@ -5725,7 +5680,7 @@ Special thanks to all contributors who have helped make Code Guardian Report bet
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">5 commits</span>
         </div>
       </td>
-    
+
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/164482191?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
@@ -5737,7 +5692,7 @@ Special thanks to all contributors who have helped make Code Guardian Report bet
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">4 commits</span>
         </div>
       </td>
-    
+
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/u/176881379?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
@@ -5749,7 +5704,7 @@ Special thanks to all contributors who have helped make Code Guardian Report bet
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">3 commits</span>
         </div>
       </td>
-    
+
 
       <td align="center" style="padding: 20px;">
         <img src="https://avatars.githubusercontent.com/in/1143301?v=4" width="100" height="100" style="border-radius: 50%; border: 4px solid white; box-shadow: 0 6px 16px rgba(0,0,0,0.4);"/>
@@ -5761,7 +5716,7 @@ Special thanks to all contributors who have helped make Code Guardian Report bet
           <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 8px; font-size: 10px; color: white; margin: 2px;">3 commits</span>
         </div>
       </td>
-    
+
     </tr>
 
 </table>

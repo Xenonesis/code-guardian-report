@@ -1,5 +1,6 @@
 # Code Guardian Enterprise - Production Dockerfile
 # Multi-stage build for optimized production image
+# Note: For standalone output, set `output: "standalone"` in next.config.ts
 
 # ============================================
 # Stage 1: Dependencies
@@ -13,8 +14,8 @@ RUN apk add --no-cache libc6-compat
 # Copy package files
 COPY package.json package-lock.json ./
 
-# Install dependencies
-RUN npm ci --only=production --ignore-scripts
+# Install ALL dependencies (including devDependencies for build)
+RUN npm ci --legacy-peer-deps
 
 # ============================================
 # Stage 2: Builder
@@ -50,8 +51,9 @@ RUN adduser --system --uid 1001 nextjs
 
 # Copy necessary files from builder
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next/standalone ./
-COPY --from=builder /app/.next/static ./.next/static
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./package.json
 
 # Set ownership
 RUN chown -R nextjs:nodejs /app
@@ -66,5 +68,5 @@ EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
   CMD node -e "require('http').get('http://localhost:3000/api/health', (r) => { process.exit(r.statusCode === 200 ? 0 : 1); }).on('error', () => process.exit(1));"
 
-# Start the application
-CMD ["node", "server.js"]
+# Start the application using Next.js start
+CMD ["node", "node_modules/next/dist/bin/next", "start"]
