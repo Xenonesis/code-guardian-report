@@ -336,10 +336,6 @@ security-reports/
 temp-uploads/
 user-data/
 
-# PWA / Service Worker (generated during build)
-public/sw.js
-public/swe-worker-*.js
-public/workbox-*.js
 
 # Development notes
 NOTES.md

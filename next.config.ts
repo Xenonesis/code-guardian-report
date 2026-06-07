@@ -70,11 +70,8 @@ const nextConfig: NextConfig = {
     },
   },
 
-  // Turbopack configuration for Next.js 16+
-  // Set root to project directory to silence multiple lockfiles warning
-  turbopack: {
-    root: process.cwd(),
-  },
+  // Turbopack config — required empty object for Next.js 16 to allow webpack plugins
+  turbopack: {},
 
   // Configure image optimization
   images: {
