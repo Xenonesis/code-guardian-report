@@ -1,16 +1,9 @@
 import type { NextConfig } from "next";
-import withSerwistInit from "@serwist/next";
-
-const withSerwist = withSerwistInit({
-  swSrc: "src/sw.ts",
-  swDest: "public/sw.js",
-  reloadOnOnline: true,
-  disable: process.env.NODE_ENV === "development",
-});
+import { withSerwist } from "@serwist/turbopack";
 
 const isProd = process.env.NODE_ENV === "production";
 
-const nextConfig: NextConfig = {
+const baseConfig: NextConfig = {
   // Enable React strict mode for better development experience
   // Trigger new deployment for CSP update
   reactStrictMode: true,
@@ -302,6 +295,6 @@ const nextConfig: NextConfig = {
       fullUrl: process.env.NODE_ENV === "development",
     },
   },
-};
+} as NextConfig;
 
-export default withSerwist(nextConfig);
+export default withSerwist(baseConfig);
