@@ -141,18 +141,47 @@ class GitHubRepositoryService {
   }
 
   /**
+   * Fetch with Bearer token, silently retry without token on auth errors
+   * (some GitHub fine-grained tokens return 404/403 for public repos outside scope)
+   */
+  private async fetchWithAuthFallback(
+    url: string,
+    body: object,
+    token: string | null = this.getGitHubAccessToken()
+  ): Promise<Response> {
+    const headers: Record<string, string> = {
+      "Content-Type": "application/json",
+    };
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers: token
+        ? { ...headers, Authorization: `Bearer ${token}` }
+        : headers,
+      body: JSON.stringify(body),
+    });
+
+    if (!response.ok && token && [401, 403, 404].includes(response.status)) {
+      const fallback = await fetch(url, {
+        method: "POST",
+        headers,
+        body: JSON.stringify(body),
+      });
+      if (fallback.ok) return fallback;
+    }
+
+    return response;
+  }
+
+  /**
    * Get repository information
    */
   async getRepositoryInfo(owner: string, repo: string) {
     try {
-      const response = await fetch("/api/github/repo/info", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          ...this.authHeaders(),
-        },
-        body: JSON.stringify({ owner, repo }),
-      });
+      const response = await this.fetchWithAuthFallback(
+        "/api/github/repo/info",
+        { owner, repo }
+      );
 
       if (!response.ok) {
         const payload = await response.json().catch(() => ({}));
