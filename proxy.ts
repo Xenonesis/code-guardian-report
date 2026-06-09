@@ -152,6 +152,9 @@ export function proxy(request: NextRequest) {
   return response;
 }
 
+// Default export required by Next.js middleware loader (dev mode with Turbopack)
+export default proxy;
+
 // Configure which paths the middleware runs on
 export const config = {
   matcher: [

@@ -54,14 +54,17 @@ const baseConfig: NextConfig = {
       "recharts",
       "framer-motion",
     ],
-    // Enable server actions for future use
+    // Enable server actions
     serverActions: {
       bodySizeLimit: "2mb",
     },
   },
 
-  // Turbopack config — required empty object for Next.js 16 to allow webpack plugins
-  turbopack: {},
+  // Turbopack config — explicitly set project root to avoid lockfile ambiguity warnings
+  // See: https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory
+  turbopack: {
+    root: __dirname,
+  },
 
   // Configure image optimization
   images: {
