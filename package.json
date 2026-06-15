@@ -136,14 +136,14 @@
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@types/jest": "^30.0.0",
-    "@types/node": "^25.9.2",
+    "@types/node": "^25.9.3",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@types/web-push": "^3.6.4",
-    "@typescript-eslint/eslint-plugin": "^8.60.1",
+    "@typescript-eslint/eslint-plugin": "^8.61.0",
     "@typescript-eslint/parser": "^8.60.1",
-    "eslint": "^10.4.1",
-    "eslint-config-next": "^16.2.7",
+    "eslint": "^10.5.0",
+    "eslint-config-next": "^16.2.9",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-markdown": "^5.1.0",
     "eslint-plugin-react": "^7.37.5",
@@ -161,7 +161,7 @@
     "stylelint-config-standard": "^40.0.0",
     "tsc-alias": "^1.8.17",
     "tsx": "^4.22.4",
-    "vitest": "^4.1.8"
+    "vitest": "^4.1.9"
   },
   "engines": {
     "node": "22.x",
