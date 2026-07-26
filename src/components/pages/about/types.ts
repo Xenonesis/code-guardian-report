@@ -47,7 +47,8 @@ export interface Tool {
   features: string[];
   rating: number;
   downloads: string;
-  comingSoon?: boolean;
+  installed?: boolean;
+  version?: string;
 }
 
 export interface ToolCardProps {

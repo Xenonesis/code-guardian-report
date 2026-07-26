@@ -149,6 +149,7 @@
     "eslint-plugin-markdown": "^5.1.0",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.1.1",
+    "fake-indexeddb": "^6.2.5",
     "happy-dom": "^20.10.2",
     "husky": "^9.1.7",
     "jest": "^30.4.2",

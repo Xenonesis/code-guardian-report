@@ -10,7 +10,8 @@ export interface Tool {
   features: string[];
   rating: number;
   downloads: string;
-  comingSoon?: boolean;
+  installed?: boolean;
+  version?: string;
 }
 
 interface ToolCardProps {
@@ -84,13 +85,18 @@ export const ToolCard: React.FC<ToolCardProps> = ({
               <span className="text-muted-foreground">INSTALLS:</span>
               <span className="text-primary">{tool.downloads}</span>
             </div>
-            {tool.comingSoon ? (
-              <div className="mt-2 border border-yellow-500/50 bg-yellow-500/10 px-3 py-1 font-mono text-xs text-yellow-500">
-                STATUS: PENDING
+            {tool.installed ? (
+              <div className="mt-2 flex items-center gap-1 border border-green-500/50 bg-green-500/10 px-3 py-1 font-mono text-xs text-green-500">
+                <span>🟢 INSTALLED</span>
+                {tool.version && (
+                  <span className="text-muted-foreground text-[10px]">
+                    ({tool.version})
+                  </span>
+                )}
               </div>
             ) : (
-              <div className="mt-2 border border-green-500/50 bg-green-500/10 px-3 py-1 font-mono text-xs text-green-500">
-                STATUS: ACTIVE
+              <div className="mt-2 border border-blue-500/50 bg-blue-500/10 px-3 py-1 font-mono text-xs text-blue-500">
+                ⚪ CLI AVAILABLE
               </div>
             )}
           </div>
@@ -152,12 +158,17 @@ export const ToolCard: React.FC<ToolCardProps> = ({
               <Download className="h-3 w-3" /> {tool.downloads}
             </span>
           </div>
-          {tool.comingSoon ? (
-            <span className="animate-pulse text-yellow-500">
-              INITIALIZING...
+          {tool.installed ? (
+            <span className="flex items-center gap-1 font-bold text-green-500">
+              🟢 INSTALLED{" "}
+              {tool.version && (
+                <span className="text-muted-foreground text-[10px] font-normal">
+                  ({tool.version})
+                </span>
+              )}
             </span>
           ) : (
-            <span className="text-green-500">● ACTIVE</span>
+            <span className="text-blue-500">⚪ CLI AVAILABLE</span>
           )}
         </div>
       </div>

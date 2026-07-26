@@ -153,17 +153,6 @@ export const toastNotifications = {
     );
   },
 
-  mockDataWarning: () => {
-    if (process.env.NODE_ENV === "development") {
-      showToast(
-        "warning",
-        "Using Sample Data",
-        "Database unavailable. Displaying sample data for testing.",
-        6000
-      );
-    }
-  },
-
   success: (message: string) => {
     showToast("success", message, undefined, 3000);
   },

@@ -513,6 +513,13 @@ export class DataFlowAnalyzer {
         cvssScore: this.getCVSSScore(sink.type),
         cweId: this.getCWEId(sink.type),
         owaspCategory: this.getOWASPCategory(sink.type),
+        taintFlows: [
+          {
+            source: `${flow.source.type}:${flow.source.variableName}`,
+            sink: `${sink.type}:${sink.functionName}`,
+            path: flow.path,
+          },
+        ],
       };
     });
   }

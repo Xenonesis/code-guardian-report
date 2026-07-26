@@ -36,7 +36,7 @@ const SkipLink = () => (
  * MainLayout - Persistent shell for all pages with navigation and footer
  */
 export function MainLayout({ children }: MainLayoutProps) {
-  const { online, firebaseConnected, usingMockData } = useConnectionStatus();
+  const { online, apiConnected } = useConnectionStatus();
   // Using navigation context just to ensure it's initialized if needed,
   // but mostly relying on useNavigation inside components.
 
@@ -65,17 +65,10 @@ export function MainLayout({ children }: MainLayoutProps) {
           message="You are currently offline. Some features may be limited."
         />
         <ConnectionStatusBanner
-          show={!firebaseConnected && online}
-          type="firebase-error"
-          message="Unable to connect to Firebase. Using local storage only."
+          show={!apiConnected && online}
+          type="api-error"
+          message="Unable to connect to backend API. Using local storage only."
         />
-        {process.env.NODE_ENV === "development" && (
-          <ConnectionStatusBanner
-            show={usingMockData}
-            type="mock-data"
-            message="Displaying sample data for testing. Connect to see your real data."
-          />
-        )}
       </div>
 
       {/* Navigation — portaled to document.body, no wrapper needed */}

@@ -198,3 +198,20 @@ model ScheduledNotification {
   @@index([scheduledTime])
   @@index([sent])
 }
+
+model McpMemoryEntry {
+  id        String    @id @default(uuid())
+  sessionId String
+  type      String
+  summary   String
+  data      Json      @default("{}")
+  tags      String[]
+  expiresAt DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@index([sessionId])
+  @@index([type])
+  @@index([createdAt])
+  @@index([expiresAt])
+}

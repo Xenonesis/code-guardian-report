@@ -132,11 +132,13 @@ const PATCH_TEMPLATES: PatchTemplate[] = [
   },
 ];
 
-function generatePatchForIssue(
+import { AIService } from "@/services/ai/aiService";
+
+async function generatePatchForIssue(
   issue: SecurityIssue,
   code: string,
   filename: string
-): PatchSuggestion {
+): Promise<PatchSuggestion> {
   let patchedCode = code;
   let description = `Fix ${issue.type} vulnerability (${issue.cweId ?? "unknown CWE"})`;
   let confidence = 60;
@@ -161,9 +163,29 @@ function generatePatchForIssue(
     }
   }
 
-  // If no template matched, try generic fix based on severity
+  // If no template matched, try LLM fallback code synthesis
   if (!applied) {
-    // Add a TODO comment at the vulnerable line
+    try {
+      const aiService = new AIService();
+      const llmPatched = await aiService.generatePatchCode(
+        issue,
+        code,
+        filename
+      );
+      if (llmPatched && llmPatched.trim() !== "" && llmPatched !== code) {
+        patchedCode = llmPatched;
+        description = `Synthesized AI code fix for ${issue.type} via LLM`;
+        confidence = 75;
+        effort = "Medium";
+        applied = true;
+      }
+    } catch (_err) {
+      // LLM synthesis unavailable or failed; fall back to TODO comment injection
+    }
+  }
+
+  // If both template and LLM synthesis failed, fallback to TODO comment
+  if (!applied) {
     const lines = patchedCode.split("\n");
     const lineIdx = Math.max(0, issue.line - 1);
     if (lineIdx < lines.length) {
@@ -205,14 +227,14 @@ export function registerPatchGenTools(
       title: "Generate Patch",
       description:
         "Generate a security patch for a specific vulnerability. " +
-        "Uses CWE-aware code transform templates to produce a fixed version of the code. " +
+        "Uses CWE-aware code transform templates or dynamic LLM synthesis to produce a fixed version of the code. " +
         "Returns the patched code, unified diff, confidence score, and effort estimate.",
       inputSchema: GeneratePatchSchema,
     },
     async ({ issueJson, code, filename }) => {
       try {
         const issue = parseIssueJson(issueJson);
-        const patch = generatePatchForIssue(issue, code, filename);
+        const patch = await generatePatchForIssue(issue, code, filename);
 
         await memory.save({
           sessionId: "default",

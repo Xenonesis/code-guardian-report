@@ -872,8 +872,7 @@ Please provide a realistic, actionable remediation roadmap with specific timelin
           .map(
             (i: SecurityIssue) =>
               (i as unknown as Record<string, unknown>).owaspCategory as
-                | string
-                | undefined
+                string | undefined
           )
           .filter(Boolean)
       ),
@@ -1371,6 +1370,64 @@ Provide strategic security trends analysis with industry benchmarking, emerging 
     } catch (error) {
       throw new Error(
         `Failed to generate trends analysis: ${error instanceof Error ? error.message : "Unknown error"}`
+      );
+    }
+  }
+
+  async generatePatchCode(
+    issue: SecurityIssue,
+    code: string,
+    filename: string
+  ): Promise<string> {
+    logger.debug(`Generating LLM patch for ${issue.type} in ${filename}`);
+
+    const systemPrompt = {
+      role: "system" as const,
+      content: `You are an expert secure coding specialist. Given a vulnerability report and the corresponding source code file, produce a clean, drop-in replacement for the code that fixes the vulnerability without altering business logic or breaking existing features.
+IMPORTANT RULES:
+1. Return ONLY the complete, fixed source code for the file, or just the necessary code block if appropriate, without markdown formatting, backticks, or explanatory text if possible. If you must use markdown code blocks, wrap only the code in \`\`\` ... \`\`\`.
+2. Do not insert "// TODO: SECURITY FIX REQUIRED" comments; provide a real functional code fix.
+3. Preserve existing indentation, comments, and structure.`,
+    };
+
+    const userPrompt = {
+      role: "user" as const,
+      content: `Vulnerability Details:
+- Issue Type: ${issue.type}
+- Severity: ${issue.severity}
+- CWE: ${issue.cweId || "N/A"}
+- Message: ${issue.message}
+- Line: ${issue.line}
+- Recommendation: ${issue.recommendation}
+
+Original Code (${filename}):
+\`\`\`
+${code}
+\`\`\`
+
+Please provide the corrected drop-in replacement code.`,
+    };
+
+    try {
+      let response = await this.generateResponse([systemPrompt, userPrompt]);
+      // Clean up markdown fences if LLM returned them
+      response = response.trim();
+      if (response.startsWith("```")) {
+        const lines = response.split("\n");
+        lines.shift(); // remove opening ```
+        if (
+          lines.length > 0 &&
+          lines[lines.length - 1]!.trim().startsWith("```")
+        ) {
+          lines.pop(); // remove closing ```
+        }
+        response = lines.join("\n");
+      }
+      return response;
+    } catch (error) {
+      logger.error("LLM patch generation failed:", error);
+      throw new Error(
+        `Failed to generate LLM patch: ${error instanceof Error ? error.message : "Unknown error"}`
       );
     }
   }

@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 interface ConnectionStatusBannerProps {
   show?: boolean;
   message?: string;
-  type?: "offline" | "firebase-error" | "mock-data";
+  type?: "offline" | "api-error";
   onDismiss?: () => void;
 }
 
@@ -41,22 +41,14 @@ export const ConnectionStatusBanner: React.FC<ConnectionStatusBannerProps> = ({
       defaultMessage:
         "You are currently offline. Some features may be limited.",
     },
-    "firebase-error": {
+    "api-error": {
       icon: AlertTriangle,
       className:
         "bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800",
       iconClassName: "text-red-600 dark:text-red-400",
       textClassName: "text-red-800 dark:text-red-200",
       defaultMessage:
-        "Unable to connect to Firebase. Using local storage only.",
-    },
-    "mock-data": {
-      icon: AlertTriangle,
-      className:
-        "bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-800",
-      iconClassName: "text-yellow-600 dark:text-yellow-400",
-      textClassName: "text-yellow-800 dark:text-yellow-200",
-      defaultMessage: "Displaying sample data. Connect to see your real data.",
+        "Unable to connect to backend API. Please check your network.",
     },
   };
 
@@ -96,12 +88,10 @@ export const ConnectionStatusBanner: React.FC<ConnectionStatusBannerProps> = ({
 export const useConnectionStatus = () => {
   const [status, setStatus] = useState<{
     online: boolean;
-    firebaseConnected: boolean;
-    usingMockData: boolean;
+    apiConnected: boolean;
   }>({
     online: typeof navigator !== "undefined" ? navigator.onLine : true,
-    firebaseConnected: true,
-    usingMockData: false,
+    apiConnected: true,
   });
 
   useEffect(() => {
@@ -120,17 +110,12 @@ export const useConnectionStatus = () => {
     };
   }, []);
 
-  const setFirebaseStatus = (connected: boolean) => {
-    setStatus((prev) => ({ ...prev, firebaseConnected: connected }));
-  };
-
-  const setMockDataStatus = (usingMock: boolean) => {
-    setStatus((prev) => ({ ...prev, usingMockData: usingMock }));
+  const setApiStatus = (connected: boolean) => {
+    setStatus((prev) => ({ ...prev, apiConnected: connected }));
   };
 
   return {
     ...status,
-    setFirebaseStatus,
-    setMockDataStatus,
+    setApiStatus,
   };
 };

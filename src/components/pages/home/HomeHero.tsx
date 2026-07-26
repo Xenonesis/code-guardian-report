@@ -2,12 +2,15 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { HeroSection } from "@/components/layout/HeroSection";
 import { ArrowRight } from "lucide-react";
+import { useNavigation } from "@/lib/navigation-context";
 
 interface HomeHeroProps {
   onStartAnalysis: () => void;
 }
 
 export const HomeHero: React.FC<HomeHeroProps> = ({ onStartAnalysis }) => {
+  const { navigateTo } = useNavigation();
+
   return (
     <HeroSection
       title="Code Guardian Enterprise"
@@ -38,30 +41,13 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ onStartAnalysis }) => {
         <div className="animate-fade-in space-y-8">
           <h1 className="font-display text-foreground xs:text-5xl text-4xl leading-[0.9] tracking-tight uppercase sm:text-7xl md:text-9xl">
             Code{" "}
-            <span
-              className="text-transparent"
-              style={{
-                WebkitTextStroke: "2px hsl(var(--primary))",
-                color: "transparent",
-              }}
-            >
-              Guardian{" "}
+            <span className="bg-gradient-to-r from-violet-500 via-indigo-500 to-purple-500 bg-clip-text text-transparent">
+              Guardian
             </span>
-            <br />
-            <span className="text-primary">Enterprise</span>
           </h1>
-
-          <div className="text-muted-foreground flex flex-wrap items-center justify-center gap-2 font-mono text-[10px] tracking-wider uppercase sm:gap-4 sm:text-xs sm:tracking-widest">
-            <span>[ Static Analysis ]</span>
-            <span className="text-primary hidden sm:inline">•</span>
-            <span>[ Vulnerability Detection ]</span>
-            <span className="text-primary hidden sm:inline">•</span>
-            <span>[ Automated Repair ]</span>
-          </div>
-
-          <p className="text-muted-foreground border-border mx-auto mt-10 max-w-2xl border-t border-dashed pt-6 font-mono text-sm leading-relaxed sm:text-base">
-            Mission-critical code security infrastructure. Deploy autonomous
-            vulnerability scanning agents directly to your repository.
+          <p className="text-muted-foreground mx-auto max-w-3xl font-mono text-base font-normal tracking-wide sm:text-xl">
+            Next-generation static analysis and real-time vulnerability
+            detection powered by multi-model AI engines.
           </p>
         </div>
 
@@ -79,9 +65,10 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ onStartAnalysis }) => {
           <Button
             variant="outline"
             size="lg"
+            onClick={() => navigateTo("about")}
             className="border-foreground/20 text-foreground hover:bg-foreground hover:text-background h-14 w-full rounded-none border bg-transparent px-10 font-mono text-base font-bold tracking-wider uppercase shadow-none transition-all duration-300 hover:scale-105 sm:w-auto"
           >
-            View System Demo
+            Explore Scanners
           </Button>
         </div>
 

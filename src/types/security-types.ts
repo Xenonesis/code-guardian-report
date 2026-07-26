@@ -50,6 +50,7 @@ export interface SecurityIssue {
   aiSummary?: string; // AI-generated summary
   affectedFunction?: string; // Function where issue was found
   effort?: "Low" | "Medium" | "High"; // Remediation effort (duplicate of remediation.effort for backward compat)
+  taintFlows?: Array<{ source: string; sink: string; path: string[] }>; // Dynamic taint tracking flow paths
 }
 
 export interface AnalysisResults {

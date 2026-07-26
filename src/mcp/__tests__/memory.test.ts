@@ -5,7 +5,11 @@
  */
 
 import { describe, it, expect, beforeEach } from "vitest";
-import { InMemoryStore, createMemoryStore } from "../memory/database";
+import {
+  InMemoryStore,
+  PrismaMemoryStore,
+  createMemoryStore,
+} from "../memory/database";
 
 describe("InMemoryStore", () => {
   let store: InMemoryStore;
@@ -238,11 +242,58 @@ describe("InMemoryStore", () => {
   });
 });
 
+// ── PrismaMemoryStore ──────────────────────────────────────────────
+
+describe("PrismaMemoryStore", () => {
+  it("falls back to InMemoryStore when DATABASE_URL is missing or db is unreachable", async () => {
+    const store = new PrismaMemoryStore();
+    const entry = await store.save({
+      sessionId: "sess_prisma",
+      type: "note",
+      summary: "test fallback",
+      data: { key: "val" },
+      tags: ["fallback"],
+    });
+
+    expect(entry.id).toBeTruthy();
+    expect(entry.summary).toBe("test fallback");
+
+    const retrieved = await store.getById(entry.id);
+    expect(retrieved?.summary).toBe("test fallback");
+
+    const queried = await store.query({ sessionId: "sess_prisma" });
+    expect(queried).toHaveLength(1);
+
+    const deleted = await store.deleteById(entry.id);
+    expect(deleted).toBe(true);
+
+    const expiredCount = await store.deleteExpired();
+    expect(typeof expiredCount).toBe("number");
+  });
+});
+
 // ── createMemoryStore factory ──────────────────────────────────────
 
 describe("createMemoryStore", () => {
-  it("returns InMemoryStore when no db is provided", () => {
+  it("returns InMemoryStore when MCP_USE_IN_MEMORY is set to true", () => {
+    const orig = process.env.MCP_USE_IN_MEMORY;
+    process.env.MCP_USE_IN_MEMORY = "true";
     const store = createMemoryStore();
     expect(store).toBeInstanceOf(InMemoryStore);
+    if (orig !== undefined) process.env.MCP_USE_IN_MEMORY = orig;
+    else delete process.env.MCP_USE_IN_MEMORY;
+  });
+
+  it("returns PrismaMemoryStore when DATABASE_URL is present and MCP_USE_IN_MEMORY is not true", () => {
+    const origDb = process.env.DATABASE_URL;
+    const origMem = process.env.MCP_USE_IN_MEMORY;
+    process.env.DATABASE_URL = "postgresql://user:pass@localhost:5432/test";
+    process.env.MCP_USE_IN_MEMORY = "false";
+    const store = createMemoryStore();
+    expect(store).toBeInstanceOf(PrismaMemoryStore);
+    if (origDb !== undefined) process.env.DATABASE_URL = origDb;
+    else delete process.env.DATABASE_URL;
+    if (origMem !== undefined) process.env.MCP_USE_IN_MEMORY = origMem;
+    else delete process.env.MCP_USE_IN_MEMORY;
   });
 });

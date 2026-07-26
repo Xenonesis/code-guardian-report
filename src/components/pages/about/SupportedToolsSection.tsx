@@ -1,6 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ToolCard, Tool } from "./ToolCard";
 import { Filter, Grid, List, Search, Activity, Cpu } from "lucide-react";
+import {
+  ExternalScannerService,
+  ExternalScannerStatus,
+} from "@/services/security/externalScanners";
 
 interface SupportedToolsSectionProps {
   className?: string;
@@ -12,7 +16,24 @@ export const SupportedToolsSection: React.FC<SupportedToolsSectionProps> = ({
   const [filter, setFilter] = useState<string>("all");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [searchTerm, setSearchTerm] = useState("");
-  const supportedTools: Tool[] = [
+  const [scannerStatuses, setScannerStatuses] = useState<
+    ExternalScannerStatus[]
+  >([]);
+
+  useEffect(() => {
+    const checkStatus = async () => {
+      try {
+        const service = new ExternalScannerService();
+        const statuses = await service.checkAllScannersStatus();
+        setScannerStatuses(statuses);
+      } catch (_err) {
+        // Ignore errors checking status
+      }
+    };
+    checkStatus();
+  }, []);
+
+  const baseSupportedTools: Tool[] = [
     {
       name: "Bandit",
       language: "Python",
@@ -108,9 +129,22 @@ export const SupportedToolsSection: React.FC<SupportedToolsSectionProps> = ({
       ],
       rating: 4.4,
       downloads: "500K+",
-      comingSoon: true,
     },
   ];
+
+  const supportedTools: Tool[] = baseSupportedTools.map((tool) => {
+    const status = scannerStatuses.find(
+      (s) => s.name.toLowerCase() === tool.name.toLowerCase()
+    );
+    if (status && status.installed) {
+      return {
+        ...tool,
+        installed: true,
+        version: status.version,
+      };
+    }
+    return tool;
+  });
 
   const filteredTools = supportedTools.filter((tool) => {
     const matchesFilter =
