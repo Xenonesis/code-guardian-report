@@ -5,7 +5,37 @@ All notable changes to Code Guardian Report will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [15.0.0] - 2026-02-26
+## [16.0.0] - 2026-07-27
+
+### Added
+
+- **Version 16.0.0** release with major dependency upgrades, security patches, and build system overhaul.
+- Server-side proxy API route for GitHub contributors (`/api/github/repo/contributors`) to fix CORS/network errors.
+- `.nvmrc` file pinning Node.js to 26.3.0 for consistent development environments.
+
+### Changed
+
+- **Dependencies**: Upgraded 51 packages across patch, minor, and safe-major ranges:
+  - Next.js 16.2.7 → 16.2.12, React 19.2.7 → 19.2.8
+  - Prisma 7.8.0 → 7.9.0, Framer Motion 12.40.0 → 12.42.2
+  - Lucide React 1.17.0 → 1.27.0, Recharts 3.8.1 → 3.10.1
+  - ESLint 10.4.1 → 10.8.0, Prettier 3.8.3 → 3.9.6
+  - TailwindCSS 4.3.0 → 4.3.3, Vitest 4.1.8 → 4.1.10
+  - All 12 Radix UI packages, Better Auth 1.6.14 → 1.6.25
+- **Dockerfile**: Base image updated from `node:22-alpine` to `node:26-alpine`, migrated from `npm ci` to `pnpm install --frozen-lockfile`.
+- **Build system**: Updated build scripts to use `--webpack` flag (Next.js 16 now defaults to Turbopack).
+- **GitHub sign-in**: Reverted to use `neonAuth.signIn.social()` via the Better Auth proxy instead of Kratos self-service redirect flow.
+- **Font preloading**: Added `preload: false` to Instrument Serif and JetBrains Mono to suppress unused font preload warnings.
+
+### Fixed
+
+- **Critical Dependabot alert**: Added overrides to force `better-auth` to 1.6.25 (fixes OAuth refresh-token replay CVE).
+- **Lenis chunk loading error**: Wrapped dynamic import in try-catch for graceful degradation during Fast Refresh.
+- **fetchWithAuthFallback**: Added try-catch with anonymous retry on network errors.
+- **get-session 404**: Wrapped auth handler to return 200 with `{ user: null }` instead of 404 when unauthenticated.
+- **apple-touch-icon**: Fixed reference from `.png` to `.svg` to resolve 404.
+- **Child_process bundling**: Added webpack client-side fallback and lazy dynamic require for server-only modules.
+- **Font preload warnings**: Suppressed by disabling preload on unused font variants.
 
 ### Changed
 

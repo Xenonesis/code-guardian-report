@@ -9582,4 +9582,151 @@ export const STATIC_COMMITS: GitHubCommit[] = [
       html_url: "https://github.com/Xenonesis",
     },
   },
+  {
+    sha: "09592417e7a6b1cb168e7b1781aed2d6e29b7f9c",
+    commit: {
+      author: {
+        name: "Xenonesis",
+        email: "noreply@github.com",
+        date: "2026-07-27T00:51:28+05:30",
+      },
+      message: "Fix production build: add webpack fallback for child_process",
+    },
+    html_url:
+      "https://github.com/Xenonesis/code-guardian-report/commit/09592417e7a6b1cb168e7b1781aed2d6e29b7f9c",
+    author: {
+      login: "Xenonesis",
+      avatar_url: "https://github.com/Xenonesis.png",
+      html_url: "https://github.com/Xenonesis",
+    },
+  },
+  {
+    sha: "5aad1a23e9d24aed22621ba250012a1b52ede66a",
+    commit: {
+      author: {
+        name: "Xenonesis",
+        email: "noreply@github.com",
+        date: "2026-07-27T00:45:13+05:30",
+      },
+      message: "Fix critical Dependabot alert: better-auth OAuth vulnerability",
+    },
+    html_url:
+      "https://github.com/Xenonesis/code-guardian-report/commit/5aad1a23e9d24aed22621ba250012a1b52ede66a",
+    author: {
+      login: "Xenonesis",
+      avatar_url: "https://github.com/Xenonesis.png",
+      html_url: "https://github.com/Xenonesis",
+    },
+  },
+  {
+    sha: "0b835cc441493fa660c7cf26bb99051f89f4c667",
+    commit: {
+      author: {
+        name: "Xenonesis",
+        email: "noreply@github.com",
+        date: "2026-07-27T00:30:20+05:30",
+      },
+      message:
+        "Bump safe majors: @types/node, web-vitals, Node 26, pnpm Dockerfile",
+    },
+    html_url:
+      "https://github.com/Xenonesis/code-guardian-report/commit/0b835cc441493fa660c7cf26bb99051f89f4c667",
+    author: {
+      login: "Xenonesis",
+      avatar_url: "https://github.com/Xenonesis.png",
+      html_url: "https://github.com/Xenonesis",
+    },
+  },
+  {
+    sha: "9abee8b3ae98b7b7cb790c8a1d74b201e8dd06b8",
+    commit: {
+      author: {
+        name: "Xenonesis",
+        email: "noreply@github.com",
+        date: "2026-07-27T00:22:20+05:30",
+      },
+      message: "Bump dependencies: patch + minor updates across 51 packages",
+    },
+    html_url:
+      "https://github.com/Xenonesis/code-guardian-report/commit/9abee8b3ae98b7b7cb790c8a1d74b201e8dd06b8",
+    author: {
+      login: "Xenonesis",
+      avatar_url: "https://github.com/Xenonesis.png",
+      html_url: "https://github.com/Xenonesis",
+    },
+  },
+  {
+    sha: "9fff0bc0d8cd2a4034a32f44fd6e5096749c957a",
+    commit: {
+      author: {
+        name: "Xenonesis",
+        email: "noreply@github.com",
+        date: "2026-07-26T23:12:40+05:30",
+      },
+      message:
+        "Polish UI: navigation, footer, feedback page, and GitHub analysis layout",
+    },
+    html_url:
+      "https://github.com/Xenonesis/code-guardian-report/commit/9fff0bc0d8cd2a4034a32f44fd6e5096749c957a",
+    author: {
+      login: "Xenonesis",
+      avatar_url: "https://github.com/Xenonesis.png",
+      html_url: "https://github.com/Xenonesis",
+    },
+  },
+  {
+    sha: "0ebbbe6438cb317aad5f12ef33ffe981c682f9f1",
+    commit: {
+      author: {
+        name: "Xenonesis",
+        email: "noreply@github.com",
+        date: "2026-07-26T22:40:43+05:30",
+      },
+      message: "Fix GitHub sign-in flow and polish auth UX",
+    },
+    html_url:
+      "https://github.com/Xenonesis/code-guardian-report/commit/0ebbbe6438cb317aad5f12ef33ffe981c682f9f1",
+    author: {
+      login: "Xenonesis",
+      avatar_url: "https://github.com/Xenonesis.png",
+      html_url: "https://github.com/Xenonesis",
+    },
+  },
+  {
+    sha: "8e06903cc94fe04aeec7c546b73b4fa5c3744efe",
+    commit: {
+      author: {
+        name: "Xenonesis",
+        email: "noreply@github.com",
+        date: "2026-07-26T22:00:52+05:30",
+      },
+      message:
+        "Fix GitHub sign-in: use Better Auth proxy instead of self-service redirect",
+    },
+    html_url:
+      "https://github.com/Xenonesis/code-guardian-report/commit/8e06903cc94fe04aeec7c546b73b4fa5c3744efe",
+    author: {
+      login: "Xenonesis",
+      avatar_url: "https://github.com/Xenonesis.png",
+      html_url: "https://github.com/Xenonesis",
+    },
+  },
+  {
+    sha: "f5be176bcbbfb6137f35ec83205288086fe6177e",
+    commit: {
+      author: {
+        name: "Xenonesis",
+        email: "noreply@github.com",
+        date: "2026-07-26T12:38:35+05:30",
+      },
+      message: "Fix console errors and add GitHub contributors proxy",
+    },
+    html_url:
+      "https://github.com/Xenonesis/code-guardian-report/commit/f5be176bcbbfb6137f35ec83205288086fe6177e",
+    author: {
+      login: "Xenonesis",
+      avatar_url: "https://github.com/Xenonesis.png",
+      html_url: "https://github.com/Xenonesis",
+    },
+  },
 ];
