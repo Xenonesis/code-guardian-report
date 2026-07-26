@@ -6,12 +6,16 @@
  * to execute them directly against codebase files or projects.
  */
 
-import { exec } from "child_process";
-import { promisify } from "util";
 import { logger } from "@/utils/logger";
-import type { SecurityIssue } from "@/types/security-types";
 
-const execAsync = promisify(exec);
+// Dynamic imports for Node.js built-ins (only available server-side)
+let execAsync:
+  | ((
+      cmd: string,
+      opts?: object
+    ) => Promise<{ stdout: string; stderr: string }>)
+  | null = null;
+import type { SecurityIssue } from "@/types/security-types";
 
 export interface ExternalScannerStatus {
   name: string;
@@ -29,6 +33,21 @@ export interface ExternalScanResult {
   rawOutput?: string;
   executionTimeMs: number;
   error?: string;
+}
+
+/**
+ * Lazy init execAsync — only available server-side.
+ * Client-side calls will gracefully return empty/disabled results.
+ */
+function ensureExec() {
+  if (execAsync) return execAsync;
+  if (typeof window === "undefined") {
+    const cp = require("child_process");
+
+    const { promisify } = require("util");
+    execAsync = promisify(cp.exec);
+  }
+  return execAsync;
 }
 
 const SUPPORTED_SCANNERS: Omit<
@@ -98,7 +117,9 @@ export class ExternalScannerService {
         scanner.command === "eslint"
           ? "npx --no-install eslint --version"
           : `${scanner.command} --version`;
-      const { stdout } = await execAsync(cmd, { timeout: 3000 });
+      const fn = ensureExec();
+      if (!fn) return { ...scanner, installed: false };
+      const { stdout } = await fn(cmd, { timeout: 3000 });
       const version =
         stdout
           .trim()
@@ -152,7 +173,9 @@ export class ExternalScannerService {
         cmd = `${scanner.command} ${targetPath}`;
       }
 
-      const { stdout } = await execAsync(cmd, { timeout: 30000 });
+      const fn = ensureExec();
+      if (!fn) throw new Error("exec not available in this environment");
+      const { stdout } = await fn(cmd, { timeout: 30000 });
       const elapsed = Math.round(performance.now() - startMs);
 
       const issues = this.parseScannerOutput(scanner.name, stdout);

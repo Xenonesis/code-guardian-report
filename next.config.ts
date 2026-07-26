@@ -105,6 +105,7 @@ const baseConfig: NextConfig = {
         crypto: false,
         stream: false,
         buffer: false,
+        child_process: false,
       };
     }
 

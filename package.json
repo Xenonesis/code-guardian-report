@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "next dev",
     "dev:turbo": "next dev --turbo",
-    "build": "next build",
-    "build:prod": "npm run clean && npm run lint && npm run type-check && next build",
+    "build": "next build --webpack",
+    "build:prod": "npm run clean && npm run lint && npm run type-check && next build --webpack",
     "build:analyze": "ANALYZE=true next build",
     "start": "next start",
     "start:prod": "NODE_ENV=production next start -p ${PORT:-3000}",
