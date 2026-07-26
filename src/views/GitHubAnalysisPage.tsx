@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState, Suspense, lazy, useRef } from "react";
+import Link from "next/link";
 import { useAuth } from "@/lib/auth-context";
 import { useNavigation } from "@/lib/navigation-context";
 import {
@@ -373,6 +374,19 @@ export const GitHubAnalysisPage: React.FC = () => {
         <Card className="border-border/30 bg-background/60 relative z-10 w-full max-w-5xl overflow-hidden shadow-2xl backdrop-blur-2xl">
           <div className="grid grid-cols-1 md:grid-cols-5">
             <div className="col-span-3 flex flex-col justify-center p-8 md:p-16">
+              <div className="mb-6">
+                <Link href="/">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="text-muted-foreground hover:text-foreground -ml-3"
+                  >
+                    <ArrowLeft className="mr-2 h-4 w-4" />
+                    Back to Dashboard
+                  </Button>
+                </Link>
+              </div>
+
               <div className="border-primary/20 bg-primary/10 mb-8 flex h-16 w-16 items-center justify-center rounded-2xl border shadow-lg">
                 <GitFork className="text-primary h-8 w-8" />
               </div>
@@ -506,6 +520,19 @@ export const GitHubAnalysisPage: React.FC = () => {
           <div className="bg-background/40 absolute inset-0 backdrop-blur-sm dark:bg-black/40" />
 
           <div className="relative z-10 mx-auto max-w-7xl px-4 pt-24 pb-12 sm:px-6 lg:px-8">
+            <div className="mb-6 flex items-center justify-between">
+              <Link href="/">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="border-border/50 text-muted-foreground hover:bg-muted/50 hover:text-foreground transition-all dark:border-white/10 dark:hover:bg-white/5"
+                >
+                  <ArrowLeft className="mr-2 h-4 w-4" />
+                  Back to Dashboard
+                </Button>
+              </Link>
+            </div>
+
             <GitHubProfileHeader
               githubAvatarUrl={githubAvatarUrl}
               githubDisplayName={githubDisplayName}

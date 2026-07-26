@@ -16,6 +16,7 @@ import {
   FileClock,
   Zap,
   Cpu,
+  BookOpen,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -178,6 +179,7 @@ export const Navigation: React.FC<NavigationProps> = ({ className }) => {
     ...(user ? [{ id: "history", label: "History", icon: History }] : []),
     { id: "github-analysis", label: "GitHub", icon: GitFork, badge: "Pro" },
     { id: "mcp-setup", label: "MCP", icon: Cpu, badge: "New" },
+    { id: "help", label: "Docs", icon: BookOpen },
     { id: "changelog", label: "Changelog", icon: FileClock },
     { id: "legal", label: "Legal", icon: Shield },
   ];

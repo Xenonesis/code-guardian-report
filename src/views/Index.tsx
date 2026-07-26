@@ -1,4 +1,4 @@
-import { useState, Suspense, lazy } from "react";
+import { useState, useEffect, Suspense, lazy } from "react";
 
 import { PageLayout } from "@/components/layout/PageLayout";
 import { HomeHero } from "@/components/pages/home/HomeHero";
@@ -13,7 +13,17 @@ const AnalysisHistoryModal = lazy(
 );
 
 const Index = () => {
-  const [currentTab, setCurrentTab] = useState("upload");
+  const [currentTab, setCurrentTab] = useState(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const tabParam =
+        params.get("tab") || window.location.hash.replace("#", "");
+      if (["upload", "ai-config", "prompts", "results"].includes(tabParam)) {
+        return tabParam;
+      }
+    }
+    return "upload";
+  });
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [showHistoryModal, setShowHistoryModal] = useState(false);
 
@@ -53,6 +63,35 @@ const Index = () => {
   const handleStartAnalysis = () => {
     setCurrentTab("upload");
   };
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const restoreDataStr = localStorage.getItem("restore_analysis_data");
+    const restoreId = localStorage.getItem("restore_analysis_id");
+    if (restoreDataStr) {
+      try {
+        const data = JSON.parse(restoreDataStr);
+        restoreFromHistory(data);
+        setCurrentTab("results");
+        localStorage.removeItem("restore_analysis_data");
+        localStorage.removeItem("restore_analysis_id");
+      } catch (err) {
+        console.error("Failed to restore analysis data from storage", err);
+      }
+    } else if (restoreId) {
+      const historyObj = getAnalysisHistory();
+      const all = [
+        ...(historyObj.currentAnalysis ? [historyObj.currentAnalysis] : []),
+        ...(historyObj.previousAnalyses || []),
+      ];
+      const found = all.find((item) => item.id === restoreId);
+      if (found) {
+        restoreFromHistory(found);
+        setCurrentTab("results");
+      }
+      localStorage.removeItem("restore_analysis_id");
+    }
+  }, [restoreFromHistory, getAnalysisHistory]);
 
   return (
     <PageLayout noContainer={true}>

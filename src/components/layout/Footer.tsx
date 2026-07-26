@@ -4,21 +4,27 @@ import * as React from "react";
 import { Shield, Mail, GitFork, ArrowUpRight, Terminal } from "lucide-react";
 import { APP_VERSION_WITH_PREFIX } from "@/utils/version";
 import Link from "next/link";
+import { useConnectionStatus } from "@/components/common/ConnectionStatusBanner";
 
 interface FooterProps {
   className?: string;
 }
 
 const Footer: React.FC<FooterProps> = ({ className = "" }) => {
+  const { online, apiConnected } = useConnectionStatus();
+
   const platformLinks = [
     { label: "Upload Code", href: "/#upload" },
     { label: "AI Analysis", href: "/#ai-config" },
+    { label: "GitHub Analysis", href: "/github-analysis" },
+    { label: "MCP Setup", href: "/mcp-setup" },
     { label: "Results", href: "/#results" },
     { label: "Feedback", href: "/feedback" },
   ];
 
   const companyLinks = [
     { label: "About", href: "/about" },
+    { label: "Documentation", href: "/help" },
     { label: "Changelog", href: "/changelog" },
     { label: "Privacy", href: "/privacy" },
     { label: "Terms", href: "/terms" },
@@ -187,7 +193,19 @@ const Footer: React.FC<FooterProps> = ({ className = "" }) => {
             <div className="text-muted-foreground flex items-center gap-4">
               <span className="flex items-center gap-2">
                 <Terminal className="h-3 w-3" />
-                STATUS: ONLINE
+                {!online ? (
+                  <span className="font-bold text-orange-500">
+                    STATUS: OFFLINE // LOCAL STORAGE ONLY
+                  </span>
+                ) : !apiConnected ? (
+                  <span className="font-bold text-red-500">
+                    STATUS: API DISCONNECTED // LOCAL STORAGE ONLY
+                  </span>
+                ) : (
+                  <span className="text-green-500">
+                    STATUS: ONLINE // ALL SYSTEMS OPERATIONAL
+                  </span>
+                )}
               </span>
               <span className="hidden sm:inline">|</span>
               <span className="hidden sm:inline">UPTIME: 99.9%</span>

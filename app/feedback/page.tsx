@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -71,6 +73,18 @@ export default function FeedbackPage() {
 
   return (
     <div className="container mx-auto max-w-2xl px-4 py-20">
+      <div className="mb-6">
+        <Link href="/">
+          <Button
+            variant="outline"
+            size="sm"
+            className="border-border/50 text-muted-foreground hover:bg-muted/50 hover:text-foreground transition-all"
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to Dashboard
+          </Button>
+        </Link>
+      </div>
       <Card className="space-y-6 p-8 shadow-lg">
         <div className="space-y-2 text-center">
           <h1 className="text-3xl font-bold">Share Your Feedback</h1>

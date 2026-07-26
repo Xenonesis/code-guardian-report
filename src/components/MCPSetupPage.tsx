@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import {
   Terminal,
   Copy,
@@ -21,6 +23,7 @@ import {
   Server,
   Network,
   BookOpen,
+  ArrowLeft,
 } from "lucide-react";
 
 interface CopyButtonProps {
@@ -438,6 +441,19 @@ Accept: application/json, text/event-stream
       <div className="relative z-10 pt-16">
         <div className="container mx-auto px-4 py-16 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-5xl">
+            <div className="mb-8 flex items-center justify-start">
+              <Link href="/">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="border-border/50 text-muted-foreground hover:bg-muted/50 hover:text-foreground transition-all dark:border-white/10 dark:hover:bg-white/5"
+                >
+                  <ArrowLeft className="mr-2 h-4 w-4" />
+                  Back to Dashboard
+                </Button>
+              </Link>
+            </div>
+
             {/* ── Header ── */}
             <div className="mb-16 text-center">
               <div className="border-primary/30 bg-primary/5 text-primary mb-6 inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-medium backdrop-blur-sm">
@@ -611,7 +627,7 @@ FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY----
             </div>
 
             {/* Client Tab Bar */}
-            <div className="border-border/50 mb-0 flex overflow-x-auto overflow-y-hidden rounded-t-xl border border-b-0 bg-black/50 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <div className="border-border/50 mb-0 flex [scrollbar-width:none] overflow-x-auto overflow-y-hidden rounded-t-xl border border-b-0 bg-black/50 [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
               {(
                 Object.keys(clientConfigs) as Array<keyof typeof clientConfigs>
               ).map((key) => {

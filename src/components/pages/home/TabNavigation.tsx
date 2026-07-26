@@ -1,6 +1,12 @@
 import React from "react";
 import { UploadCloud, Sliders, MessageSquare, BarChart3 } from "lucide-react";
 import { TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { AnalysisResults } from "@/hooks/useAnalysis";
 
 interface TabNavigationProps {
@@ -19,7 +25,7 @@ export const TabNavigation: React.FC<TabNavigationProps> = ({
 
   return (
     <TabsList
-      className="mb-4 flex w-full gap-1 overflow-x-auto rounded-lg border border-border bg-card p-1 sm:mb-6 sm:justify-center sm:gap-1 scrollbar-hide"
+      className="border-border bg-card scrollbar-hide mb-4 flex w-full gap-1 overflow-x-auto rounded-lg border p-1 sm:mb-6 sm:justify-center sm:gap-1"
       role="tablist"
       aria-label="Main navigation tabs"
     >
@@ -59,23 +65,36 @@ export const TabNavigation: React.FC<TabNavigationProps> = ({
         <span className="whitespace-nowrap">Prompts</span>
       </TabsTrigger>
 
-      <TabsTrigger
-        value="results"
-        className={`${tabClass} ${
-          isRedirecting ? "animate-pulse" : ""
-        }`}
-        disabled={!analysisResults}
-        role="tab"
-        aria-controls="results-panel"
-        aria-selected={currentTab === "results"}
-        aria-disabled={!analysisResults}
-        aria-label="Results"
-      >
-        <BarChart3 className="h-4 w-4" aria-hidden="true" />
-        <span className="whitespace-nowrap">
-          {isRedirecting ? "Loading..." : "Results"}
-        </span>
-      </TabsTrigger>
+      <TooltipProvider delayDuration={200}>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <span className="inline-block">
+              <TabsTrigger
+                value="results"
+                className={`${tabClass} ${
+                  isRedirecting ? "animate-pulse" : ""
+                }`}
+                disabled={!analysisResults}
+                role="tab"
+                aria-controls="results-panel"
+                aria-selected={currentTab === "results"}
+                aria-disabled={!analysisResults}
+                aria-label="Results"
+              >
+                <BarChart3 className="h-4 w-4" aria-hidden="true" />
+                <span className="whitespace-nowrap">
+                  {isRedirecting ? "Loading..." : "Results"}
+                </span>
+              </TabsTrigger>
+            </span>
+          </TooltipTrigger>
+          {!analysisResults && (
+            <TooltipContent className="border border-white/10 bg-black/90 font-mono text-xs text-white shadow-xl">
+              <p>Run a code scan to unlock analysis results</p>
+            </TooltipContent>
+          )}
+        </Tooltip>
+      </TooltipProvider>
     </TabsList>
   );
 };

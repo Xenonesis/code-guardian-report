@@ -98,10 +98,14 @@ export default function HistoryPage() {
     return "text-red-600";
   };
 
-  const handleViewAnalysis = (_analysisId: string) => {
-    // Navigate to analysis results view
-    // This would need to be implemented based on your routing structure
-    window.location.href = `/`;
+  const handleViewAnalysis = (analysisId: string) => {
+    const target = history.find((item) => item.id === analysisId);
+    if (target) {
+      localStorage.setItem("restore_analysis_data", JSON.stringify(target));
+    } else {
+      localStorage.setItem("restore_analysis_id", analysisId);
+    }
+    window.location.href = `/?tab=results`;
   };
 
   const handleDeleteAnalysis = (analysisId: string) => {
