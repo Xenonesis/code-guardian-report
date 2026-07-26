@@ -149,12 +149,38 @@ export class EnhancedAnalysisEngine {
 
     if (zipFile) {
       try {
-        const fileContents = await this.extractZipContents(zipFile);
+        let fileContents: FileContent[] = [];
+        const fileName = (zipFile as any).name || "archive.zip";
+        const fileType = (zipFile as any).type || "";
+        const isZip =
+          fileName.toLowerCase().endsWith(".zip") ||
+          fileType === "application/zip" ||
+          fileType === "application/x-zip-compressed";
+
+        if (isZip) {
+          fileContents = await this.extractZipContents(zipFile);
+        } else {
+          // Single source code file upload
+          let content = "";
+          if (typeof (zipFile as any).text === "function") {
+            content = await (zipFile as any).text();
+          } else {
+            const buffer = await zipFile.arrayBuffer();
+            content = new TextDecoder().decode(buffer);
+          }
+          fileContents = [
+            {
+              filename: fileName,
+              content,
+              size: content.length,
+            },
+          ];
+        }
         totalFiles = fileContents.length;
 
         if (totalFiles === 0) {
           throw new Error(
-            "This ZIP file does not contain any code files. Please upload a ZIP file with source code (.js, .py, .java, .ts, etc.)"
+            "The uploaded file or archive does not contain any valid code files. Please upload source code (.js, .py, .java, .ts, etc.)"
           );
         }
 

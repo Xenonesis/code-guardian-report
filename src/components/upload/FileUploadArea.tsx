@@ -26,7 +26,7 @@ export const FileUploadArea: React.FC<FileUploadAreaProps> = ({
       onDragOver={onDragOver}
       onDragLeave={onDragLeave}
       onDrop={onDrop}
-      aria-label="File upload area. Drag and drop a zip file here or click to browse files"
+      aria-label="File upload area. Drag and drop a zip archive or source code file here or click to browse files"
     >
       <div
         className="absolute inset-0 bg-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
@@ -40,7 +40,7 @@ export const FileUploadArea: React.FC<FileUploadAreaProps> = ({
           />
         </div>
         <h3 className="text-foreground mb-3 text-lg font-bold sm:mb-4 sm:text-xl lg:text-2xl">
-          Drop your .zip file here
+          Drop your .zip or code file here
         </h3>
         <div className="mb-4 flex items-center justify-center gap-4 sm:mb-6">
           <div
@@ -74,16 +74,17 @@ export const FileUploadArea: React.FC<FileUploadAreaProps> = ({
             Browse Files
           </label>
           <p className="text-muted-foreground text-xs">
-            Or drag and drop your zip file anywhere in this area
+            Or drag and drop your .zip archive or source code file anywhere in
+            this area
           </p>
         </div>
         <input
           id="file-upload"
           type="file"
-          accept=".zip,application/zip,application/x-zip-compressed"
+          accept=".zip,application/zip,application/x-zip-compressed,.js,.jsx,.ts,.tsx,.py,.java,.go,.rb,.php,.cs,.cpp,.c,.h,.rs,.sql,.sh,.json,.yaml,.yml"
           className="sr-only"
           onChange={onFileInput}
-          aria-label="Choose zip file to upload"
+          aria-label="Choose zip archive or source code file to upload"
         />
         <div className="bg-muted border-border mt-4 border p-3 font-mono text-xs sm:mt-6 sm:p-4 sm:text-sm">
           <div className="space-y-1">

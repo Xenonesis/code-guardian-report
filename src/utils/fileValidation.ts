@@ -1,62 +1,78 @@
 export const validateZipFile = async (
   file: File
 ): Promise<{ isValid: boolean; message: string }> => {
-  // Check for valid file type and extension
   const allowedTypes = ["application/zip", "application/x-zip-compressed"];
   const isValidType = allowedTypes.includes(file.type);
-  const isValidExtension = file.name.toLowerCase().endsWith(".zip");
+  const isZipExtension = file.name.toLowerCase().endsWith(".zip");
 
-  if (!isValidType && !isValidExtension) {
+  const codeExtensions = [
+    ".js",
+    ".jsx",
+    ".ts",
+    ".tsx",
+    ".mjs",
+    ".cjs",
+    ".py",
+    ".pyw",
+    ".java",
+    ".php",
+    ".rb",
+    ".go",
+    ".cs",
+    ".cpp",
+    ".c",
+    ".h",
+    ".hpp",
+    ".rs",
+    ".kt",
+    ".swift",
+    ".vue",
+    ".svelte",
+    ".json",
+    ".yaml",
+    ".yml",
+    ".xml",
+    ".htm",
+    ".html",
+    ".css",
+    ".scss",
+    ".sass",
+    ".sh",
+    ".bash",
+    ".sql",
+    ".dockerfile",
+    ".env",
+    "dockerfile",
+    "makefile",
+  ];
+
+  if (!isValidType && !isZipExtension) {
+    const isCodeFile = codeExtensions.some(
+      (ext) =>
+        file.name.toLowerCase().endsWith(ext) || file.name.toLowerCase() === ext
+    );
+    if (isCodeFile) {
+      if (file.size === 0) {
+        return {
+          isValid: false,
+          message:
+            "The uploaded file is empty. Please upload a valid source code file.",
+        };
+      }
+      return { isValid: true, message: "" };
+    }
     return {
       isValid: false,
-      message: "Invalid file format. Please upload a .zip file.",
+      message:
+        "Invalid file format. Please upload a .zip archive or a supported source code file (.js, .py, .ts, .java, etc.).",
     };
   }
+
   try {
     const JSZip = (await import("jszip")).default;
     const arrayBuffer = await file.arrayBuffer();
     const zipData = await JSZip.loadAsync(arrayBuffer);
 
-    const codeExtensions = [
-      ".js",
-      ".jsx",
-      ".ts",
-      ".tsx",
-      ".mjs",
-      ".cjs",
-      ".py",
-      ".pyw",
-      ".java",
-      ".php",
-      ".rb",
-      ".go",
-      ".cs",
-      ".cpp",
-      ".c",
-      ".h",
-      ".hpp",
-      ".rs",
-      ".kt",
-      ".swift",
-      ".vue",
-      ".svelte",
-      ".json",
-      ".yaml",
-      ".yml",
-      ".xml",
-      ".htm",
-      ".html",
-      ".css",
-      ".scss",
-      ".sass",
-      ".sh",
-      ".bash",
-      ".sql",
-      ".dockerfile",
-      ".env",
-      "dockerfile",
-      "makefile",
-    ];
     const files = Object.keys(zipData.files).filter(
       (name) => !zipData.files[name].dir
     );
