@@ -14,12 +14,14 @@ const instrumentSerif = Instrument_Serif({
   style: ["normal", "italic"],
   weight: "400",
   display: "swap",
+  preload: false,
 });
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
   subsets: ["latin"],
   display: "swap",
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -47,7 +49,7 @@ export const metadata: Metadata = {
   manifest: "/manifest.json",
   icons: {
     icon: [{ url: "/shield-favicon.svg", type: "image/svg+xml" }],
-    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
+    apple: [{ url: "/apple-touch-icon.svg", sizes: "180x180" }],
   },
   openGraph: {
     type: "website",

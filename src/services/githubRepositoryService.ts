@@ -141,8 +141,9 @@ class GitHubRepositoryService {
   }
 
   /**
-   * Fetch with Bearer token, silently retry without token on auth errors
-   * (some GitHub fine-grained tokens return 404/403 for public repos outside scope)
+   * Fetch with Bearer token, silently retry without token on auth or network errors
+   * (some GitHub fine-grained tokens return 404/403 for public repos outside scope,
+   *  and malformed tokens can cause transport errors in dev mode)
    */
   private async fetchWithAuthFallback(
     url: string,
@@ -153,24 +154,41 @@ class GitHubRepositoryService {
       "Content-Type": "application/json",
     };
 
-    const response = await fetch(url, {
-      method: "POST",
-      headers: token
-        ? { ...headers, Authorization: `Bearer ${token}` }
-        : headers,
-      body: JSON.stringify(body),
-    });
-
-    if (!response.ok && token && [401, 403, 404].includes(response.status)) {
-      const fallback = await fetch(url, {
+    // First attempt: try with token if available
+    try {
+      const response = await fetch(url, {
         method: "POST",
-        headers,
+        headers: token
+          ? { ...headers, Authorization: `Bearer ${token}` }
+          : headers,
         body: JSON.stringify(body),
       });
-      if (fallback.ok) return fallback;
-    }
 
-    return response;
+      if (response.ok) return response;
+
+      // Retry without token on auth errors
+      if (token && [401, 403, 404].includes(response.status)) {
+        const fallback = await fetch(url, {
+          method: "POST",
+          headers,
+          body: JSON.stringify(body),
+        });
+        if (fallback.ok) return fallback;
+      }
+
+      return response;
+    } catch {
+      // Network error — retry without token before surfacing
+      if (token) {
+        const fallback = await fetch(url, {
+          method: "POST",
+          headers,
+          body: JSON.stringify(body),
+        });
+        if (fallback.ok) return fallback;
+      }
+      throw new Error("NetworkError when attempting to fetch resource");
+    }
   }
 
   /**
@@ -278,18 +296,18 @@ class GitHubRepositoryService {
    */
   async getContributors(owner: string, repo: string): Promise<any[]> {
     try {
-      const response = await fetch(
-        `${this.baseUrl}/repos/${owner}/${repo}/contributors?per_page=100`,
-        {
-          headers: {
-            Accept: "application/vnd.github+json",
-            ...this.authHeaders(),
-          },
-        }
+      const response = await this.fetchWithAuthFallback(
+        "/api/github/repo/contributors",
+        { owner, repo }
       );
 
       if (!response.ok) {
-        throw new Error(`Failed to fetch contributors: ${response.statusText}`);
+        const payload = await response.json().catch(() => ({}));
+        throw new Error(
+          payload.error ||
+            payload.details ||
+            `Failed to fetch contributors: ${response.statusText}`
+        );
       }
 
       return await response.json();

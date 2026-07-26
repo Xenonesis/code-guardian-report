@@ -280,7 +280,14 @@ const baseConfig: NextConfig = {
   // Rewrites for cleaner URLs
   async rewrites() {
     return {
-      beforeFiles: [],
+      beforeFiles: [
+        // Map /sw.js to the Serwist service worker route at /sw/sw.js
+        // Serwist creates its route at /sw/[path] but the browser expects /sw.js
+        {
+          source: "/sw.js",
+          destination: "/sw/sw.js",
+        },
+      ],
       afterFiles: [],
       fallback: [],
     };
