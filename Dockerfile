@@ -5,22 +5,25 @@
 # ============================================
 # Stage 1: Dependencies
 # ============================================
-FROM node:22-alpine AS deps
+FROM node:26-alpine AS deps
 WORKDIR /app
 
 # Install dependencies for native modules
 RUN apk add --no-cache libc6-compat
 
 # Copy package files
-COPY package.json package-lock.json ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+
+# Install pnpm
+RUN corepack enable && corepack prepare pnpm@latest --activate
 
 # Install ALL dependencies (including devDependencies for build)
-RUN npm ci --legacy-peer-deps
+RUN pnpm install --frozen-lockfile
 
 # ============================================
 # Stage 2: Builder
 # ============================================
-FROM node:22-alpine AS builder
+FROM node:26-alpine AS builder
 WORKDIR /app
 
 # Copy dependencies from deps stage
@@ -32,12 +35,12 @@ ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
 
 # Build the application
-RUN npm run build
+RUN pnpm run build
 
 # ============================================
 # Stage 3: Runner (Production)
 # ============================================
-FROM node:22-alpine AS runner
+FROM node:26-alpine AS runner
 WORKDIR /app
 
 # Set environment variables
