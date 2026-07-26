@@ -170,9 +170,9 @@
     "npm": ">=9.0.0"
   },
   "overrides": {
-    "better-auth": "$better-auth",
+    "better-auth": "1.6.25",
     "@better-auth/passkey": {
-      "better-auth": "$better-auth"
+      "better-auth": "1.6.25"
     },
     "fast-xml-parser": ">=5.7.0",
     "@tootallnate/once": ">=3.0.1",
