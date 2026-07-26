@@ -1,6 +1,9 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { neonAuth } from "@/lib/neon-auth";
+import { useState } from "react";
+
 // Github icon: inline SVG — lucide-react v1 removed brand icons
 function GithubIcon({ className }: { className?: string }) {
   return (
@@ -14,7 +17,6 @@ function GithubIcon({ className }: { className?: string }) {
     </svg>
   );
 }
-import { useState } from "react";
 
 interface NeonAuthButtonProps {
   mode?: "login" | "register";
@@ -24,41 +26,24 @@ interface NeonAuthButtonProps {
 /**
  * Neon Auth Button Component
  *
- * This button redirects users to Neon Auth for GitHub OAuth authentication.
- *
- * Prerequisites:
- * 1. Neon Auth must be enabled in your Neon project
- * 2. GitHub OAuth must be configured in Neon Auth settings
- * 3. NEON_AUTH_URL must be set in .env.local
+ * Signs in via Better Auth proxy at /api/auth/sign-in/social.
  */
 export function NeonAuthButton({
-  mode = "login",
   redirectTo = "/dashboard",
 }: NeonAuthButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleAuth = () => {
-    const authUrl =
-      process.env.NEXT_PUBLIC_NEON_AUTH_URL || process.env.NEON_AUTH_URL;
-
-    if (!authUrl) {
-      console.error("NEON_AUTH_URL not configured");
-      alert(
-        "Neon Auth is not configured. Please check your environment variables."
-      );
-      return;
-    }
-
+  const handleAuth = async () => {
     setIsLoading(true);
-
-    // Construct the Neon Auth URL with GitHub provider
-    const flow = mode === "login" ? "login" : "registration";
-    const returnTo = encodeURIComponent(redirectTo);
-
-    // Redirect to Neon Auth
-    const neonAuthUrl = `${authUrl}/self-service/${flow}/browser?return_to=${returnTo}`;
-
-    window.location.href = neonAuthUrl;
+    try {
+      await neonAuth.signIn.social({
+        provider: "github",
+        callbackURL: window.location.origin + redirectTo,
+      });
+    } catch (error) {
+      console.error("Failed to sign in with GitHub:", error);
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -69,13 +54,7 @@ export function NeonAuthButton({
       className="flex w-full items-center gap-2"
     >
       <GithubIcon className="h-4 w-4" />
-      {isLoading
-        ? mode === "login"
-          ? "Connecting..."
-          : "Signing up..."
-        : mode === "login"
-          ? "Continue with GitHub"
-          : "Sign up with GitHub"}
+      {isLoading ? "Connecting..." : "Continue with GitHub"}
     </Button>
   );
 }
