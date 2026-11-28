@@ -59,12 +59,18 @@ export default function LegalPageClient() {
         onValueChange={handleTabChange}
         className="w-full"
       >
-        <TabsList className="mx-auto mb-8 grid w-full grid-cols-2 sm:w-[400px]">
-          <TabsTrigger value="privacy" className="flex items-center gap-2">
+        <TabsList className="mx-auto mb-8 grid h-auto w-full grid-cols-1 gap-2 p-2 sm:w-[400px] sm:grid-cols-2 sm:gap-0 sm:p-1">
+          <TabsTrigger
+            value="privacy"
+            className="flex w-full items-center justify-center gap-2 px-3 py-2 whitespace-nowrap"
+          >
             <Shield className="h-4 w-4" />
             Privacy Policy
           </TabsTrigger>
-          <TabsTrigger value="terms" className="flex items-center gap-2">
+          <TabsTrigger
+            value="terms"
+            className="flex w-full items-center justify-center gap-2 px-3 py-2 whitespace-nowrap"
+          >
             <FileText className="h-4 w-4" />
             Terms of Service
           </TabsTrigger>
