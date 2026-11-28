@@ -181,12 +181,7 @@ const NotificationCenter: React.FC<NotificationCenterProps> = ({
       </SheetTrigger>
 
       <SheetContent
-        className="border-border/70 bg-card text-card-foreground w-full overflow-hidden border-l opacity-100 shadow-[0_24px_60px_-30px_hsl(var(--foreground)/0.7)] filter-none backdrop-blur-none sm:max-w-xl"
-        style={{
-          backgroundColor: "hsl(var(--card))",
-          color: "hsl(var(--card-foreground))",
-          opacity: 1,
-        }}
+        className="border-border/70 bg-card text-card-foreground w-full overflow-hidden border-l shadow-[0_24px_60px_-30px_hsl(var(--foreground)/0.7)] sm:max-w-xl"
       >
         {showPreferences ? (
           <div>
